@@ -45,6 +45,10 @@ const TranningMainPageRouter = require("./routes/training/trainningMainPageData.
 const HomePageDataRouter = require("./routes/home/homePageData.routes");
 const HireMainPageDataRoutes = require("./routes/hire/hireMainPageData.routes");
 const NavbarGroupTabImageManageRoutes = require("./routes/navbarGroupTabHandel.routes");
+const deleteImageRoute = require("./routes/deleteImage.routes");
+const categoryRoute = require("./routes/category/category.routes");
+const subcategoryRoute = require("./routes/subcategory/subcategory.routes");
+
 
 const app = express();
 
@@ -62,7 +66,6 @@ app.use(cors({ origin: "*", credentials: true }));
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-// Winston middleware to log requests with colored status
 app.use((req, res, next) => {
   const start = Date.now();
   res.on("finish", () => {
@@ -82,7 +85,6 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-// Middleware to set no-cache headers globally
 const setNoCache = (req, res, next) => {
   res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
   res.set("Pragma", "no-cache");
@@ -90,13 +92,18 @@ const setNoCache = (req, res, next) => {
   next();
 };
 
-// Apply the middleware globally to all routes
 app.use(setNoCache);
 
-// API routes
 
 //  auth api
 app.use("/api/auth-user", userRouter);
+app.use("/api/delete-image", deleteImageRoute);
+
+// category
+app.use("/api/category",categoryRoute);
+// sub category
+app.use("/api/subcategory",subcategoryRoute);
+
 
 //  homepage & Global componet api
 app.use("/api/homepage", HomePageDataRouter);
@@ -159,6 +166,9 @@ app.use("*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-app.listen(port, "0.0.0.0", () =>
-  console.log(`Server started on http://localhost:${port}`),
+app.listen(
+  port,
+  "0.0.0.0",
+  () => console.log(`Server started on http://localhost:${port}`),
+  //  console.log("Server running on all devices"),
 );

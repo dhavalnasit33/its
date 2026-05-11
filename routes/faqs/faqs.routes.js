@@ -49,10 +49,8 @@ router.post("/", protect, async (req, res) => {
 //category fetch route
 router.get("/categories", async (req, res) => {
   try {
-    // અહીં 'faqs' ને બદલે 'FaqModel' વાપરવું કારણ કે તમે ઉપર એ જ નામ આપ્યું છે
     const rawCategories = await FaqModel.distinct("categories");
 
-    // જો ડેટાબેઝ ખાલી હોય અથવા કેટેગરીઝ ન મળે
     if (!rawCategories || rawCategories.length === 0) {
       return res.status(200).json({
         success: true,
@@ -60,7 +58,6 @@ router.get("/categories", async (req, res) => {
       });
     }
 
-    // ડેટા ક્લીનઅપ: null કાઢવા, સ્પેસ કાઢવી અને યુનિક વેલ્યુ રાખવી
     const cleanCategories = [
       ...new Set(
         rawCategories
@@ -70,7 +67,6 @@ router.get("/categories", async (req, res) => {
       ),
     ];
 
-    // સોર્ટિંગ (A to Z)
     cleanCategories.sort((a, b) =>
       a.localeCompare(b, "en", { sensitivity: "base" }),
     );

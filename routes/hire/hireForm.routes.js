@@ -1,18 +1,21 @@
 const express = require("express");
-const HireForm = require('../../models/hire/hireForm')
+const HireForm = require("../../models/hire/hireForm");
 const router = express.Router();
 const axios = require("axios");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY;
-const path = require('path');
+const path = require("path");
 const { protect } = require("../../middlewares/auth");
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 /**
@@ -64,7 +67,6 @@ const transporter = nodemailer.createTransport({
  *           type: string
  *           format: date-time
  */
-
 
 /**
  * @swagger
@@ -118,7 +120,7 @@ const transporter = nodemailer.createTransport({
  *               properties:
  *                 success:
  *                   type: boolean
- *                 message: 
+ *                 message:
  *                   type: string
  *                 data:
  *                   $ref: '#/components/schemas/HireForm'
@@ -128,60 +130,65 @@ const transporter = nodemailer.createTransport({
  *         description: Server error
  */
 
-
 // POST /api/hire-form
 router.post("/", async (req, res) => {
-    try {
-        const { name, email, phone, recruitment, subject, message,
-            //  captchaToken
-             } = req.body;
+  try {
+    const {
+      name,
+      email,
+      phone,
+      recruitment,
+      subject,
+      message,
+      //  captchaToken
+    } = req.body;
 
-        // Validate required fields
-        if (!name || !email || !phone || !recruitment || !subject || !message) {
-            return res.status(400).json({
-                success: false,
-                message: "Please provide all required fields",
-            });
-        }
+    // Validate required fields
+    if (!name || !email || !phone || !recruitment || !subject || !message) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide all required fields",
+      });
+    }
 
-        // if (!captchaToken) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Captcha is required",
-        //     });
-        // }
+    // if (!captchaToken) {
+    //     return res.status(400).json({
+    //         success: false,
+    //         message: "Captcha is required",
+    //     });
+    // }
 
-        // const response = await axios.post("https://www.google.com/recaptcha/api/siteverify", null, // no JSON body, Google expects form-encoded
-        //     {
-        //         params: {
-        //             secret: RECAPTCHA_SECRET,
-        //             response: captchaToken,
-        //         },
-        //     }
-        // );
-        // if (!response.data.success) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Captcha verification failed"
-        //     });
-        // }
+    // const response = await axios.post("https://www.google.com/recaptcha/api/siteverify", null, // no JSON body, Google expects form-encoded
+    //     {
+    //         params: {
+    //             secret: RECAPTCHA_SECRET,
+    //             response: captchaToken,
+    //         },
+    //     }
+    // );
+    // if (!response.data.success) {
+    //     return res.status(400).json({
+    //         success: false,
+    //         message: "Captcha verification failed"
+    //     });
+    // }
 
-        const newHireForm = new HireForm({
-            name,
-            email,
-            phone,
-            recruitment,
-            subject,
-            message,
-        });
+    const newHireForm = new HireForm({
+      name,
+      email,
+      phone,
+      recruitment,
+      subject,
+      message,
+    });
 
-        const savedHireForm = await newHireForm.save();
-        // --- Admin Mail ---
-        let adminMailOptions = {
-            from: `"${name}" <${email}>`,
-            to: process.env.EMAIL_USER, // company inbox
-            subject: `📌 New Hire Request - ${subject}`,
-            html: `
+    const savedHireForm = await newHireForm.save();
+    // --- Admin Mail ---
+    let adminMailOptions = {
+      from: `"${name}" <${email}>`,
+      to: process.env.EMAIL_USER, // company inbox
+      subject: `📌 New Hire Request - ${subject}`,
+      html: `
         <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:700px; margin:auto;">
             <h2 style="color:#333;">New Hire Request</h2>
             <p>You have received a new hire request from <b>${name}</b></p>
@@ -196,16 +203,16 @@ router.post("/", async (req, res) => {
             <br/>
             <p style="color:#555;">Best Regards,<br/>Inspire Techno Solution Website</p>
         </div>
-    `
-        };
-        await transporter.sendMail(adminMailOptions);
+    `,
+    };
+    await transporter.sendMail(adminMailOptions);
 
-        // --- User Mail ---
-        let userMailOptions = {
-            from: `"Inspire Techno Solution" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: "✅ We Received Your Hire Request - Inspire Techno Solution",
-            html: `
+    // --- User Mail ---
+    let userMailOptions = {
+      from: `"Inspire Techno Solution" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "✅ We Received Your Hire Request - Inspire Techno Solution",
+      html: `
         <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:600px; margin:auto;">
             <div style="text-align:center; margin-bottom:20px;">
                 <img src="cid:companylogo" alt="Inspire Techno Solution" style="width:120px;"/>
@@ -230,32 +237,31 @@ router.post("/", async (req, res) => {
             </p>
         </div>
     `,
-            attachments: [
-                {
-                    filename: 'logo.png',
-                    path: path.join(__dirname, '../../assets/logo.png'),
-                    cid: 'companylogo'
-                }
-            ]
-        };
-        await transporter.sendMail(userMailOptions);
+      attachments: [
+        {
+          filename: "logo.png",
+          path: path.join(__dirname, "../../assets/logo.png"),
+          cid: "companylogo",
+        },
+      ],
+    };
+    await transporter.sendMail(userMailOptions);
 
-        res.status(201).json({
-            success: true,
-            message: "Hire form submitted successfully",
-            data: savedHireForm,
-        });
-    } catch (error) {
-        console.error("Error submitting hire form:", error);
-        res.status(500).json({
-            success: false,
-            message: "Server Error",
-        });
-    }
+    res.status(201).json({
+      success: true,
+      message: "Hire form submitted successfully",
+      data: savedHireForm,
+    });
+  } catch (error) {
+    console.error("Error submitting hire form:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
 });
 
-
-//GET API  
+//GET API
 
 /**
  * @swagger
@@ -308,48 +314,46 @@ router.post("/", async (req, res) => {
  *         description: Server error
  */
 
-router.get('/', async (req, res) => {
-    try {
-        const { page = 1, limit = 10, category = '' } = req.query;
-        let query = {};
+router.get("/", async (req, res) => {
+  try {
+    const { page = 1, limit = 10, category = "" } = req.query;
+    let query = {};
 
-        if (category) {
-            query = {
-                ...query,
-                subject: { $regex: category, $options: 'i' } // case-insensitive search
-            };
-        }
-
-        const skip = (page - 1) * limit;
-
-        const [hireForms, total] = await Promise.all([
-            HireForm.find(query)
-                .sort({ createdAt: -1 })
-                .skip(skip)
-                .limit(Number(limit))
-                .lean(),
-            HireForm.countDocuments(query)
-        ]);
-
-        res.status(200).json({
-            success: true,
-            data: hireForms,
-            pagination: {
-                current: Number(page),
-                pages: Math.ceil(total / limit),
-                total
-            }
-        });
-    } catch (error) {
-        console.error("Error retrieving hire forms:", error);
-        res.status(500).json({
-            success: false,
-            message: "Server Error"
-        });
+    if (category) {
+      query = {
+        ...query,
+        subject: { $regex: category, $options: "i" }, // case-insensitive search
+      };
     }
+
+    const skip = (page - 1) * limit;
+
+    const [hireForms, total] = await Promise.all([
+      HireForm.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(Number(limit))
+        .lean(),
+      HireForm.countDocuments(query),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: hireForms,
+      pagination: {
+        current: Number(page),
+        pages: Math.ceil(total / limit),
+        total,
+      },
+    });
+  } catch (error) {
+    console.error("Error retrieving hire forms:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
 });
-
-
 
 /**
  * @swagger
@@ -376,29 +380,27 @@ router.get('/', async (req, res) => {
  */
 
 router.delete("/:id", protect, async (req, res) => {
-    try {
-        const { id } = req.params;
-        const deletedHireForm = await HireForm.findByIdAndDelete(id);
-        if (!deletedHireForm) {
-            return res.status(404).json(
-                {
-                    success: false,
-                    message: "Hire form not found",
-                }
-            );
-        }
-        res.status(200).json({
-            success: true,
-            message: "Hire form deleted successfully",
-            data: deletedHireForm,
-        });
-    } catch (error) {
-        console.error("Error deleting hire form:", error);
-        res.status(500).json({
-            success: false,
-            message: "Server Error",
-        });
+  try {
+    const { id } = req.params;
+    const deletedHireForm = await HireForm.findByIdAndDelete(id);
+    if (!deletedHireForm) {
+      return res.status(404).json({
+        success: false,
+        message: "Hire form not found",
+      });
     }
+    res.status(200).json({
+      success: true,
+      message: "Hire form deleted successfully",
+      data: deletedHireForm,
+    });
+  } catch (error) {
+    console.error("Error deleting hire form:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
 });
 
 module.exports = router;

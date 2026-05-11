@@ -1,8 +1,15 @@
-const express = require('express');
-const Service = require('../../models/ourServices/ourServies');
-const { protect } = require('../../middlewares/auth'); 
-const { syncSeoData, deleteSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
-const cleanupImages = require('../../middlewares/cleanupImages');
+const mongoose = require("mongoose");
+const express = require("express");
+const Service = require("../../models/ourServices/ourServies");
+const SubcategoryModel = require("../../models/subcategory/subcategory.model");
+const CategoryModel = require("../../models/category/category.model");
+const { protect } = require("../../middlewares/auth");
+const {
+  syncSeoData,
+  deleteSeoData,
+  forceDeleteSeoData,
+} = require("../../utils/seoSync");
+const cleanupImages = require("../../middlewares/cleanupImages");
 const router = express.Router();
 
 /**
@@ -159,7 +166,6 @@ const router = express.Router();
  *             $ref: '#/components/schemas/FAQ'
  */
 
-
 /**
  * @swagger
  * /api/service:
@@ -183,54 +189,53 @@ const router = express.Router();
  *         description: Server error
  */
 
-router.post('/', protect, async (req, res) => {
-    try {
-        const { category, subCategory, slug, mainTitle } = req.body;
+router.post("/", protect, async (req, res) => {
+  try {
+    const { category, subCategory, slug, mainTitle } = req.body;
 
-        if (!slug) {
-            return res.status(400).json({
-                success: false,
-                message: "Slug is required"
-            });
-        }
-
-        const slugExists = await Service.findOne({ slug });
-        if (slugExists) {
-            return res.status(400).json({
-                success: false,
-                message: "Slug already exists, please choose another one"
-            });
-        }
-        const checkService = await Service.findOne({ category, subCategory });
-        if (checkService) {
-            return res.status(400).json({
-                success: false,
-                message: "Service already exists in this category",
-            });
-        }
-
-        const newService = new Service(req.body);
-        const result = await newService.save();
-
-        try {
-            await syncSeoData(subCategory, slug, mainTitle, 'service', result._id);
-        } catch (seoError) {
-            console.warn('SEO sync warning:', seoError.message);
-            // Don't fail the request if SEO sync fails
-        }
-
-        res.status(201).json({
-            success: true,
-            message: "Service created successfully",
-            data: result
-        });
-    } catch (error) {
-        console.error("Error saving service:", error);
-        res.status(500).json({
-            success: false,
-            message: "Error saving service",
-        });
+    if (!slug) {
+      return res.status(400).json({
+        success: false,
+        message: "Slug is required",
+      });
     }
+
+    const slugExists = await Service.findOne({ slug });
+    if (slugExists) {
+      return res.status(400).json({
+        success: false,
+        message: "Slug already exists, please choose another one",
+      });
+    }
+    const checkService = await Service.findOne({ category, subCategory });
+    if (checkService) {
+      return res.status(400).json({
+        success: false,
+        message: "Service already exists in this category",
+      });
+    }
+
+    const newService = new Service(req.body);
+    const result = await newService.save();
+
+    try {
+      await syncSeoData(subCategory, slug, mainTitle, "service", result._id);
+    } catch (seoError) {
+      console.warn("SEO sync warning:", seoError.message);
+    }
+
+    res.status(201).json({
+      success: true,
+      message: "Service created successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error saving service:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error saving service",
+    });
+  }
 });
 
 /**
@@ -265,38 +270,38 @@ router.post('/', protect, async (req, res) => {
  *         description: Error fetching services
  */
 
-router.get('/', async (req, res) => {
-    try {
-        const { page = 1, limit = 10, category, subCategory } = req.query;
-        let filter = {};
-        if (category) filter.category = category;
-        if (subCategory) filter.subCategory = subCategory;
+router.get("/", async (req, res) => {
+  try {
+    const { page = 1, limit = 10, category, subCategory } = req.query;
+    let filter = {};
+    if (category) filter.category = category;
+    if (subCategory) filter.subCategory = subCategory;
 
-        const skip = (page - 1) * limit;
-        const [services, total] = await Promise.all([
-            Service.find(filter)
-                .sort({ createdAt: -1 })
-                .skip(skip)
-                .limit(Number(limit))
-                .lean(),
-            Service.countDocuments(filter)
-        ]);
-        res.status(200).json({
-            success: true,
-            data: services,
-            pagination: {
-                current: Number(page),
-                pages: Math.ceil(total / limit),
-                total
-            }
-        });
-    } catch (error) {
-        console.error("Error fetching services:", error);
-        res.status(500).json({
-            success: false,
-            message: "Error fetching services",
-        });
-    }
+    const skip = (page - 1) * limit;
+    const [services, total] = await Promise.all([
+      Service.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(Number(limit))
+        .lean(),
+      Service.countDocuments(filter),
+    ]);
+    res.status(200).json({
+      success: true,
+      data: services,
+      pagination: {
+        current: Number(page),
+        pages: Math.ceil(total / limit),
+        total,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching services:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching services",
+    });
+  }
 });
 
 /**
@@ -312,21 +317,21 @@ router.get('/', async (req, res) => {
  *         description: Error fetching categories
  */
 
-router.get('/categories', async (req, res) => {
-    try {
-        const services = await Service.find().select('category subCategory -_id');
-        res.status(200).json({
-            success: true,
-            message: "Category list fetched successfully",
-            data: services
-        });
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-        res.status(500).json({
-            success: false,
-            message: "Error fetching categories",
-        });
-    }
+router.get("/categories", async (req, res) => {
+  try {
+    const services = await Service.find().select("category subCategory -_id");
+    res.status(200).json({
+      success: true,
+      message: "Category list fetched successfully",
+      data: services,
+    });
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching categories",
+    });
+  }
 });
 
 /**
@@ -373,24 +378,24 @@ router.get('/categories', async (req, res) => {
  *       500:
  *         description: Error fetching service
  */
-router.get('/admin-id', protect, async (req, res) => {
-    try {
-        const service = await Service.find().select('_id category subCategory mainTitle');
-        res.status(200).json({
-            success: true,
-            message: "Service get successfully",
-            data: service
-        });
-    } catch (error) {
-        console.error("Error fetching service by slug:", error);
-        res.status(500).json({
-            success: false,
-            message: "Error fetching service",
-        });
-    }
+router.get("/admin-id", protect, async (req, res) => {
+  try {
+    const service = await Service.find().select(
+      "_id category subCategory mainTitle",
+    );
+    res.status(200).json({
+      success: true,
+      message: "Service get successfully",
+      data: service,
+    });
+  } catch (error) {
+    console.error("Error fetching service by slug:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching service",
+    });
+  }
 });
-
-
 
 /**
  * @swagger
@@ -412,28 +417,28 @@ router.get('/admin-id', protect, async (req, res) => {
  *       500:
  *         description: Error fetching service
  */
-router.get('/:subCategory', async (req, res) => {
-    try {
-        const { subCategory } = req.params;
-        const service = await Service.findOne({ subCategory });
-        if (!service) {
-            return res.status(404).json({
-                success: false,
-                message: "Service not found",
-            });
-        }
-        res.status(200).json({
-            success: true,
-            message: "Service fetched successfully",
-            data: service
-        });
-    } catch (error) {
-        console.error("Error fetching service:", error);
-        res.status(500).json({
-            success: false,
-            message: "Error fetching service",
-        });
+router.get("/:subCategory", async (req, res) => {
+  try {
+    const { subCategory } = req.params;
+    const service = await Service.findOne({ subCategory });
+    if (!service) {
+      return res.status(404).json({
+        success: false,
+        message: "Service not found",
+      });
     }
+    res.status(200).json({
+      success: true,
+      message: "Service fetched successfully",
+      data: service,
+    });
+  } catch (error) {
+    console.error("Error fetching service:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching service",
+    });
+  }
 });
 
 /**
@@ -456,34 +461,170 @@ router.get('/:subCategory', async (req, res) => {
  *       500:
  *         description: Error fetching service
  */
-router.get('/slug/:slug', async (req, res) => {
-    try {
-        const { slug } = req.params;
-        const service = await Service.findOne({ slug });
-        if (!service) {
-            return res.status(404).json({
-                success: false,
-                message: "Service not found",
-            });
-        }
-        res.status(200).json({
-            success: true,
-            message: "Service fetched successfully",
-            data: service
-        });
-    } catch (error) {
-        console.error("Error fetching service by slug:", error);
-        res.status(500).json({
-            success: false,
-            message: "Error fetching service",
-        });
+router.get("/slug/:slug", async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const service = await Service.findOne({ slug });
+    if (!service) {
+      return res.status(404).json({
+        success: false,
+        message: "Service not found",
+      });
     }
+    res.status(200).json({
+      success: true,
+      message: "Service fetched successfully",
+      data: service,
+    });
+  } catch (error) {
+    console.error("Error fetching service by slug:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching service",
+    });
+  }
 });
 
+/**
+ * @swagger
+ * /api/service/id/{id}:
+ *   get:
+ *     summary: Get service by ID
+ *     tags: [Services]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Service fetched successfully
+ *       400:
+ *         description: Invalid ID
+ *       404:
+ *         description: Service not found
+ *       500:
+ *         description: Error fetching service
+ */
+router.get("/id/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid ID",
+      });
+    }
 
+    const service = await Service.findById(id);
 
+    if (!service) {
+      return res.status(404).json({
+        success: false,
+        message: "Service not found",
+      });
+    }
 
+    res.status(200).json({
+      success: true,
+      message: "Service fetched successfully",
+      data: service,
+    });
+  } catch (error) {
+    console.error("Error fetching service by ID:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching service",
+    });
+  }
+});
+
+/**
+ * @swagger
+ * /api/service/bulk-delete:
+ *   delete:
+ *     summary: Bulk delete services by IDs
+ *     tags: [Services]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["64a7c8e8f9d8a2a3f1234567", "64a7c8e8f9d8a2a3f1234568"]
+ *     responses:
+ *       200:
+ *         description: Services deleted successfully
+ *       400:
+ *         description: No IDs provided or invalid IDs
+ *       500:
+ *         description: Error deleting services
+ */
+router.delete("/bulk-delete", protect, async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of IDs to delete",
+      });
+    }
+
+    const invalidIds = ids.filter((id) => !mongoose.Types.ObjectId.isValid(id));
+    if (invalidIds.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid IDs: ${invalidIds.join(", ")}`,
+      });
+    }
+
+    const services = await Service.find({ _id: { $in: ids } });
+
+    if (services.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No services found with the provided IDs",
+      });
+    }
+
+    for (const service of services) {
+      try {
+        await forceDeleteSeoData(service.slug);
+      } catch (seoError) {
+        console.warn(
+          `SEO delete warning for slug ${service.slug}:`,
+          seoError.message,
+        );
+      }
+    }
+
+    const result = await Service.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: `${result.deletedCount} service(s) deleted successfully`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (error) {
+    console.error("Error bulk deleting services:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error deleting services",
+    });
+  }
+});
 
 /**
  * @swagger
@@ -515,88 +656,101 @@ router.get('/slug/:slug', async (req, res) => {
  *         description: Error updating service
  */
 
-router.put('/:id', protect, cleanupImages(Service,"Service"), async (req, res) => {
+router.put(
+  "/:id",
+  protect,
+  cleanupImages(Service, "Service"),
+  async (req, res) => {
     try {
-        const { slug, subCategory, mainTitle } = req.body;
+      const { slug, subCategory, mainTitle } = req.body;
 
-        // ✅ 1. Check if slug is unique (except for current document)
-        const currentService = await Service.findById(req.params.id);
-        if (!currentService) {
-            return res.status(404).json({
-                success: false,
-                message: "Service not found",
-            });
-        }
-
-        // ✅ Check if slug is unique (except for current document)
-        if (slug && slug !== currentService.slug) {
-            const existingService = await Service.findOne({ slug, _id: { $ne: req.params.id } });
-            if (existingService) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Slug already exists. Please use a different one.",
-                });
-            }
-        }
-
-
-        // ✅ 2. Check required fields
-        const requiredFields = [
-            "category",
-            "subCategory",
-            "slug",
-            "mainTitle",
-            "description",
-            "subMainTitle",
-            "subMainTitleDescription"
-        ];
-        for (const field of requiredFields) {
-            if (!req.body[field]) {
-                return res.status(400).json({
-                    success: false,
-                    message: `${field} is required`,
-                });
-            }
-        }
-
-        // ✅ 3. Update service
-        const updatedService = await Service.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        );
-
-        if (!updatedService) {
-            return res.status(404).json({
-                success: false,
-                message: "Service not found",
-            });
-        }
-
-        if (currentService.slug !== updatedService.slug ||
-            currentService.subCategory !== updatedService.subCategory) {
-            try {
-                await syncSeoData(updatedService.subCategory, updatedService.slug, updatedService.mainTitle, 'service', updatedService._id);
-            } catch (seoError) {
-                console.warn('SEO sync warning during update:', seoError.message);
-            }
-        }
-
-
-        res.status(200).json({
-            success: true,
-            message: "Service updated successfully",
-            data: updatedService,
+      // ✅ 1. Check if slug is unique (except for current document)
+      const currentService = await Service.findById(req.params.id);
+      if (!currentService) {
+        return res.status(404).json({
+          success: false,
+          message: "Service not found",
         });
-    } catch (error) {
-        console.error("Error updating service:", error);
-        res.status(500).json({
+      }
+
+      // ✅ Check if slug is unique (except for current document)
+      if (slug && slug !== currentService.slug) {
+        const existingService = await Service.findOne({
+          slug,
+          _id: { $ne: req.params.id },
+        });
+        if (existingService) {
+          return res.status(400).json({
             success: false,
-            message: "Error updating service",
-        });
-    }
-});
+            message: "Slug already exists. Please use a different one.",
+          });
+        }
+      }
 
+      // ✅ 2. Check required fields
+      const requiredFields = [
+        "category",
+        "subCategory",
+        "slug",
+        "mainTitle",
+        "description",
+        "subMainTitle",
+        "subMainTitleDescription",
+      ];
+      for (const field of requiredFields) {
+        if (!req.body[field]) {
+          return res.status(400).json({
+            success: false,
+            message: `${field} is required`,
+          });
+        }
+      }
+
+      // ✅ 3. Update service
+      const updatedService = await Service.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true, runValidators: true },
+      );
+
+      if (!updatedService) {
+        return res.status(404).json({
+          success: false,
+          message: "Service not found",
+        });
+      }
+
+      if (
+        currentService.slug !== updatedService.slug ||
+        currentService.subCategory !== updatedService.subCategory
+      ) {
+        try {
+          await syncSeoData(
+            updatedService.subCategory,
+            updatedService.slug,
+            updatedService.mainTitle,
+            "service",
+            updatedService._id,
+          );
+        } catch (seoError) {
+          console.warn("SEO sync warning during update:", seoError.message);
+        }
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Service updated successfully",
+        data: updatedService,
+      });
+    } catch (error) {
+      console.error("Error updating service:", error);
+      res.status(500).json({
+        success: false,
+        message: "Error updating service",
+      });
+    }
+  },
+);
 
 /**
  * @swagger
@@ -621,35 +775,35 @@ router.put('/:id', protect, cleanupImages(Service,"Service"), async (req, res) =
  *         description: Error deleting service
  */
 
-router.delete('/:id', protect, cleanupImages(Service), async (req, res) => {
-    try {
-        const service = await Service.findById(req.params.id);
-        if (!service) {
-            return res.status(404).json({
-                success: false,
-                message: "Service not found",
-            });
-        }
-
-        try {
-            await forceDeleteSeoData(service.slug);
-        } catch (seoError) {
-            console.warn('SEO delete warning:', seoError.message);
-        }
-
-        await Service.findByIdAndDelete(req.params.id);
-
-        res.status(200).json({
-            success: true,
-            message: "Service deleted successfully",
-        });
-    } catch (error) {
-        console.error("Error deleting service:", error);
-        res.status(500).json({
-            success: false,
-            message: "Error deleting service",
-        });
+router.delete("/:id", protect, cleanupImages(Service), async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id);
+    if (!service) {
+      return res.status(404).json({
+        success: false,
+        message: "Service not found",
+      });
     }
+
+    try {
+      await forceDeleteSeoData(service.slug);
+    } catch (seoError) {
+      console.warn("SEO delete warning:", seoError.message);
+    }
+
+    await Service.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Service deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting service:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error deleting service",
+    });
+  }
 });
 
 module.exports = router;

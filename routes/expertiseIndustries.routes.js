@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const ExpertiseIndustries = require('../models/expertiseIndustries');
-const { protect } = require('../middlewares/auth');
-const cleanupImages = require('../middlewares/cleanupImages');
-const cleanupOldImages = require('../middlewares/cleanupOldImages');
+const ExpertiseIndustries = require("../models/expertiseIndustries");
+const { protect } = require("../middlewares/auth");
+const cleanupImages = require("../middlewares/cleanupImages");
+const cleanupOldImages = require("../middlewares/cleanupOldImages");
 
 /**
  * @swagger
@@ -55,13 +55,13 @@ const cleanupOldImages = require('../middlewares/cleanupOldImages');
  *       500:
  *         description: Error creating expertise industry
  */
-router.post('/', protect, async (req, res) => {
+router.post("/", protect, async (req, res) => {
   try {
-    const { title, image } = req.body;
-    if (!title || !image) {
+    const { title, description, image } = req.body;
+    if (!title || !image || !description) {
       return res.status(400).json({
         success: false,
-        message: 'Missing required fields (title, image)',
+        message: "Missing required fields (title, image, description)",
       });
     }
 
@@ -69,21 +69,27 @@ router.post('/', protect, async (req, res) => {
     if (existingExpertise) {
       return res.status(400).json({
         success: false,
-        message: 'Expertise already exists',
+        message: "Expertise already exists",
       });
     }
 
-    const expertise = new ExpertiseIndustries({ title, image });
+    const expertise = new ExpertiseIndustries({ title, image, description });
     await expertise.save();
 
     res.status(201).json({
       success: true,
-      message: 'Expertise created successfully',
+      message: "Expertise created successfully",
       data: expertise,
     });
   } catch (error) {
-    console.error('Error creating expertise:', error);
-    res.status(500).json({ success: false, message: 'Error creating expertise' });
+    console.error("Error creating expertise:", error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error creating expertise",
+        error: error.message,
+      });
   }
 });
 
@@ -118,14 +124,14 @@ router.post('/', protect, async (req, res) => {
  *       500:
  *         description: Error fetching expertise industries
  */
-router.get('/admin', async (req, res) => {
+router.get("/admin", async (req, res) => {
   try {
-    const { page = 1, limit = 10, value = '' } = req.query;
+    const { page = 1, limit = 10, value = "" } = req.query;
     const skip = (page - 1) * limit;
 
     let query = {};
     if (value) {
-      query = { title: { $regex: value, $options: 'i' } };
+      query = { title: { $regex: value, $options: "i" } };
     }
 
     const [expertise, count] = await Promise.all([
@@ -147,8 +153,10 @@ router.get('/admin', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Error fetching expertise:', error);
-    res.status(500).json({ success: false, message: 'Error fetching expertise' });
+    console.error("Error fetching expertise:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error fetching expertise" });
   }
 });
 
@@ -167,13 +175,13 @@ router.get('/admin', async (req, res) => {
  *       500:
  *         description: Error fetching expertise industries
  */
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const expertise = await ExpertiseIndustries.find();
     if (!expertise || expertise.length === 0) {
       return res.status(404).json({
         success: false,
-        message: 'Expertise not found',
+        message: "Expertise not found",
       });
     }
     res.status(200).json({
@@ -181,8 +189,8 @@ router.get('/', async (req, res) => {
       data: expertise,
     });
   } catch (error) {
-    console.error('Error to get expertise', error);
-    res.status(500).json({ success: false, message: 'Error to get expertise' });
+    console.error("Error to get expertise", error);
+    res.status(500).json({ success: false, message: "Error to get expertise" });
   }
 });
 
@@ -217,48 +225,57 @@ router.get('/', async (req, res) => {
  *       500:
  *         description: Error updating expertise industry
  */
-router.put('/:id', protect,cleanupOldImages(ExpertiseIndustries,"ExpertiseIndustry"), async (req, res) => {
-  try {
-    const { title, image } = req.body;
-    const id = req.params.id;
+router.put(
+  "/:id",
+  protect,
+  cleanupOldImages(ExpertiseIndustries, "ExpertiseIndustry"),
+  async (req, res) => {
+    try {
+      const { title, image, description } = req.body;
+      const id = req.params.id;
 
-    if (!title || !image) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields (title, image)',
+      if (!title || !image || !description) {
+        return res.status(400).json({
+          success: false,
+          message: "Missing required fields (title, image)",
+        });
+      }
+
+      const existingExpertise = await ExpertiseIndustries.findById(id);
+      if (!existingExpertise) {
+        return res.status(404).json({
+          success: false,
+          message: "Expertise not found",
+        });
+      }
+
+      const existingTitle = await ExpertiseIndustries.findOne({ title });
+      if (existingTitle && existingTitle._id.toString() !== id) {
+        return res.status(400).json({
+          success: false,
+          message: "Title already exists",
+        });
+      }
+
+      existingExpertise.title = title;
+      existingExpertise.image = image;
+      existingExpertise.description = description;
+
+      await existingExpertise.save();
+
+      res.status(200).json({
+        success: true,
+        message: "Expertise updated successfully",
+        data: existingExpertise,
       });
+    } catch (error) {
+      console.error("Error updating expertise:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Error updating expertise" });
     }
-
-    const existingExpertise = await ExpertiseIndustries.findById(id);
-    if (!existingExpertise) {
-      return res.status(404).json({
-        success: false,
-        message: 'Expertise not found',
-      });
-    }
-
-    const existingTitle = await ExpertiseIndustries.findOne({ title });
-    if (existingTitle && existingTitle._id.toString() !== id) {
-      return res.status(400).json({
-        success: false,
-        message: 'Title already exists',
-      });
-    }
-
-    existingExpertise.title = title;
-    existingExpertise.image = image;
-    await existingExpertise.save();
-
-    res.status(200).json({
-      success: true,
-      message: 'Expertise updated successfully',
-      data: existingExpertise,
-    });
-  } catch (error) {
-    console.error('Error updating expertise:', error);
-    res.status(500).json({ success: false, message: 'Error updating expertise' });
-  }
-});
+  },
+);
 
 // ----------------- DELETE -----------------
 /**
@@ -283,26 +300,33 @@ router.put('/:id', protect,cleanupOldImages(ExpertiseIndustries,"ExpertiseIndust
  *       500:
  *         description: Error deleting expertise industry
  */
-router.delete('/:id', protect, cleanupImages(ExpertiseIndustries), async (req, res) => {
-  try {
-    const id = req.params.id;
-    const expertise = await ExpertiseIndustries.findById(id);
-    if (!expertise) {
-      return res.status(404).json({
-        success: false,
-        message: 'Expertise not found',
-      });
-    }
+router.delete(
+  "/:id",
+  protect,
+  cleanupImages(ExpertiseIndustries),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const expertise = await ExpertiseIndustries.findById(id);
+      if (!expertise) {
+        return res.status(404).json({
+          success: false,
+          message: "Expertise not found",
+        });
+      }
 
-    await ExpertiseIndustries.findByIdAndDelete(id);
-    res.status(200).json({
-      success: true,
-      message: 'Expertise deleted successfully',
-    });
-  } catch (error) {
-    console.error('Error deleting expertise:', error);
-    res.status(500).json({ success: false, message: 'Error deleting expertise' });
-  }
-});
+      await ExpertiseIndustries.findByIdAndDelete(id);
+      res.status(200).json({
+        success: true,
+        message: "Expertise deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting expertise:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Error deleting expertise" });
+    }
+  },
+);
 
 module.exports = router;

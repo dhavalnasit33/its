@@ -1,4 +1,3 @@
-// services/imageService.js
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -7,24 +6,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-/**
- * Extract Cloudinary publicId from URL
- */
 function extractPublicId(url) {
   if (!url) return null;
   try {
-    const parts = url.split("/");
-    const publicIdWithExt = parts[parts.length - 1];
-    return publicIdWithExt.split(".")[0];
+    const match = url.match(/\/upload\/(?:v\d+\/)?(.+)\.[a-zA-Z]+$/);
+    return match ? match[1] : null;
   } catch (err) {
     console.error("⚠️ Failed to extract publicId:", err.message);
     return null;
   }
 }
 
-/**
- * Delete a single image from Cloudinary
- */
 async function deleteImage(imageUrl) {
   if (!imageUrl) return;
 
@@ -35,24 +27,21 @@ async function deleteImage(imageUrl) {
     const result = await cloudinary.uploader.destroy(publicId);
 
     if (result.result === "ok") {
-      console.log(`✅ Successfully deleted: ${imageUrl}`);
+      console.log(`✅ Successfully deleted: ${publicId}`);
     } else if (result.result === "not found") {
-      console.warn(`⚠️ Image not found on Cloudinary: ${imageUrl}`);
+      console.warn(`⚠️ Image not found on Cloudinary: ${publicId}`);
     } else {
-      console.error(`❌ Failed to delete: ${imageUrl}`, result);
+      console.error(`❌ Failed to delete: ${publicId}`, result);
     }
   } catch (err) {
-    console.error(`❌ Error deleting image: ${imageUrl}`, err.message);
+    console.error(`❌ Error deleting image: ${publicId}`, err.message);
   }
 }
 
-/**
- * Delete multiple images
- */
 async function deleteImages(imageUrls = []) {
   for (const url of imageUrls) {
     await deleteImage(url);
   }
 }
 
-module.exports = { deleteImage, deleteImages };
+module.exports = { deleteImage, deleteImages, extractPublicId };

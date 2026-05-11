@@ -145,6 +145,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 /**
@@ -223,20 +226,23 @@ const transporter = nodemailer.createTransport({
  *         description: Server error
  */
 
-router.post("/", secureUpload, async (req, res) => {
+router.post("/", secureUpload(), async (req, res) => {
   try {
     const {
       firstname,
       lastname,
       email,
       subject,
+      budget,
       phone,
       message,
-    //   captchaToken,
+      //   captchaToken,
     } = req.body;
     console.log("🚀 ~ message:", message);
     console.log("🚀 ~ phone:", phone);
     console.log("🚀 ~ subject:", subject);
+    console.log("🚀 ~ budget:", budget);
+
     console.log("🚀 ~ email:", email);
     console.log("🚀 ~ lastname:", lastname);
     console.log("🚀 ~ firstname:", firstname);
@@ -294,8 +300,10 @@ router.post("/", secureUpload, async (req, res) => {
       email,
       phone,
       subject,
+      budget,
       message,
       fileUrl,
+      source: req.body.source,
     });
 
     await newContact.save();
@@ -369,11 +377,10 @@ router.post("/", secureUpload, async (req, res) => {
                 </div>
             `,
       attachments: [
-        // ✅ Added comma before this
         {
           filename: "logo.png",
-          path: path.join(__dirname, "../../assets/logo.png"), // make sure logo exists here
-          cid: "companylogo", // must match src="cid:companylogo"
+          path: path.join(__dirname, "../../assets/logo.png"),
+          cid: "companylogo",
         },
       ],
     };
