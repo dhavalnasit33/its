@@ -1,0 +1,599 @@
+@import "tailwindcss";
+/* @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700&family=Bricolage+Grotesque:wght@400;600&display=swap');
+
+body {
+  font-family: "Exo 2", sans-serif !important;
+} */
+
+/* Hide default cursor everywhere */
+/* body,
+button,
+a,
+img {
+  cursor: none !important;
+} */
+
+/* html, body {
+  overflow-x: hidden;
+} */
+
+/* globals.css */
+
+body {
+  font-family: var(--font-exo2), system-ui, sans-serif !important;
+}
+.font-inter {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+.font-bricolage {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom styles for Swiper Navigation Arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #d68029 !important; /* Your brand's orange color */
+  background-color: white;
+  border-radius: 50%;
+  width: 44px !important;
+  height: 44px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease-in-out;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #d68029; /* A light orange for hover */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px !important; /* Make the arrow icon smaller */
+  font-weight: 900;
+}
+
+/* Custom styles for Swiper Pagination Dots */
+.swiper-pagination-bullet-active {
+  background-color: #d68029 !important; /* Your brand's orange color */
+}
+
+.common_background_gradient::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: url("/aboutus/elips-about-us.png") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  position: absolute;
+  background-size: cover !important;
+  filter: blur(100px);
+  top: 2%;
+  left: 0;
+  z-index: 0;
+}
+
+.common_background_gradient {
+  position: relative;
+  /* contain ::before inside */
+  /* overflow: hidden; */
+  /* prevent background from causing scroll */
+}
+
+.common_htags.left_htags h2 {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.common_htags.left_htags h2::after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 20px;
+  background-image: url("/Line-1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  left: 0;
+  bottom: -10px;
+}
+
+.rhombus_icon_list {
+  list-style: none;
+  padding-left: 30px;
+  margin: 0;
+}
+
+.rhombus_icon_list li {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.rhombus_icon_list li::before {
+  content: "";
+  position: absolute;
+  background-image: url("/square-list-icon.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 15px;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 1024px) {
+  .blog_hero_section::after {
+    content: "" !important;
+    position: absolute;
+    background: url("/blog/Lines.png");
+    background-size: cover !important;
+    background-position: center center;
+    height: 241% !important;
+    width: 100% !important;
+    top: -112% !important;
+    left: 0% !important;
+    z-index: -1;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (max-width: 1023px) {
+  .blog_hero_section::after {
+    display: none !important;
+  }
+}
+
+/* New styles for category list items */
+.category-list li {
+  position: relative;
+  padding-left: 20px;
+  transition: all 0.3s ease;
+}
+
+.category-list li::before {
+  content: "•";
+  color: #d68029;
+  position: absolute;
+  left: 0;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+/* Add these styles to your global CSS file or a relevant CSS module */
+/* 
+.category-button {
+  background-color: #f7ede3;
+  color: #d68029;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #f7ede3;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+}
+
+.category-button:hover {
+  background-color: #d68029;
+  color: #ffffff;
+  border-color: #d68029;
+} */
+
+/* .services_offer_list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url("/blog/icon-list-icon.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+} */
+
+/* Custom unordered list styling */
+.custom-unordered-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.custom-unordered-list li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 2rem;
+}
+
+.custom-unordered-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(2px);
+  width: 20px;
+  height: 20px;
+  background-image: url("/blog/icon-list-icon.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Custom ordered list styling */
+.custom-ordered-list {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: ordered-counter;
+}
+
+.custom-ordered-list li {
+  position: relative;
+
+  margin-bottom: 0.5rem;
+  padding-left: 2rem;
+  counter-increment: ordered-counter;
+  color: black;
+  border-bottom: 1.5px solid #000;
+}
+
+.custom-ordered-list li::before {
+  content: counter(ordered-counter) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: bold;
+  /* color: #d68029; */
+  font-size: 1.1rem;
+}
+
+.bar {
+  display: inline-block;
+  width: 10px;
+  height: 40px;
+  /* This is Tailwind's orange-500 color */
+  background-color: #f97316;
+  border-radius: 6px;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+/* Animation delay for the wave effect */
+.bar:nth-child(2) {
+  animation-delay: -1s;
+}
+
+.bar:nth-child(3) {
+  animation-delay: -0.8s;
+}
+
+@keyframes bounce {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+  }
+
+  20% {
+    transform: scaleY(1);
+  }
+}
+
+.common_button {
+  color: #fff !important;
+  padding: 10px 30px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  font-size: 16px !important;
+  letter-spacing: 0.02em;
+  min-width: 200px;
+  font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 300ms ease 0ms;
+  line-height: normal !important;
+  background-color: transparent !important;
+  overflow: hidden !important;
+  height: fit-content !important;
+  transition: all 1s ease;
+  z-index: 10;
+}
+
+.common_button::before {
+  background: #d68029;
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  left: 0;
+}
+
+.common_button:after {
+  background-color: #12203d;
+  opacity: 0.5;
+  transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  content: "";
+  position: absolute;
+  height: 0%;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  z-index: -1;
+  transition: all 0.75s ease 0s;
+}
+
+.about_menu_mails ul li::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("/navbar/Menu-List-Icon.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transform: translateY(4px);
+}
+
+/* Updated code with media query */
+@media (min-width: 1024px) {
+  .hire_hero_section::after {
+    content: "" !important;
+    position: absolute;
+    background: url("/hire/Line.png") center center / contain no-repeat !important;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1 !important;
+  }
+
+  .hire_hero_section {
+    position: relative;
+    /* contain ::before inside */
+    overflow: hidden;
+    /* prevent background from causing scroll */
+  }
+}
+
+.hire_developers_list ul li::before {
+  content: "";
+  width: 22px;
+  height: 22px;
+  background-image: url("/hire/Check-Icon-Solid.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+
+.hiring_model_benefits h4::after {
+  content: "";
+  background-image: url("/hire/Line-1-2.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 59px;
+  height: 13px;
+  transform: translate(-50%, 0);
+}
+
+@media (min-width: 1024px) {
+  .hire_wordpress_its_inner_sec::after {
+    content: "" !important;
+    position: absolute;
+    background: url("/hire/Frame1.png");
+    background-size: cover !important;
+    height: 200px;
+    width: 200px;
+    top: -15%;
+    right: -7%;
+    background-repeat: no-repeat;
+    transform: rotate(47deg);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .process_image_box_block .elementor-image-box-wrapper:after {
+    content: "";
+    background-image: url("/hire/arrow-bar-down-1.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .process_image_box_block.first_item .elementor-image-box-img::after {
+    background-image: url("/hire/First.png");
+  }
+
+  .process_image_box_block.middle_item .elementor-image-box-img::after {
+    background-image: url("/hire/Middle.png");
+  }
+
+  .process_image_box_block.last_item .elementor-image-box-img::after {
+    background-image: url("/hire/Last.png");
+  }
+
+  .process_image_box_block .elementor-image-box-img::after {
+    content: "";
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: calc(100% + 4%);
+    height: 28px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .why-its-section::after {
+    content: "" !important;
+    position: absolute;
+    background: url("/hire/main/Group-1000013400.png") center center / contain
+      no-repeat !important;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1 !important;
+  }
+}
+
+/* For line-clamp utility */
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+ 
+
+/* Add this to your main CSS file */
+
+.testimonial-card {
+  /* Add a smooth transition for the transform effect */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slick-center .testimonial-card {
+  /* Move the centered card up and scale it slightly */
+  transform: translateY(-25px) scale(1.05);
+}
+
+
+
+
+/*----new global css---*/
+
+.slider_heading{
+  /* display: block;
+  font-size: clamp(36px, 6vw, 74px);
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  background: linear-gradient(135deg, #fc4a1a, #f7b733 45%, #fde68a 75%, #fc4a1a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: nxh-grad-shift 5s linear infinite; */
+  display: block;
+  font-size: clamp(36px,5.5vw,74px);
+  line-height: 1.2;
+  letter-spacing: -.03em !important;
+  font-family: var(--font-bricolage),system-ui,sans-serif;
+  background: linear-gradient(135deg,#fc4a1a,#f7b733 45%,#fde68a 75%,#fc4a1a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: nxh-grad-shift 5s linear infinite;
+  transition:opacity .42s ease,transform .42s cubic-bezier(.22,1,.36,1);
+  will-change: opacity,transform;
+}
+
+@keyframes nxh-grad-shift {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}
+
+@media (max-width: 768px){
+  .slider_heading{
+    font-size: clamp(26px,4.5vw,44px)!important;
+  }
+}
+
+.primary_button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid transparent;
+  background: linear-gradient(118.87deg, #d68029 3%, #f7b733 70%);
+  background-size: 200% auto;
+  transition: background-position .4s ease;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.primary_button:hover {
+  background-position: 100%;
+  box-shadow: 0 0 28px 6px rgba(252,74,26,.45),0 4px 20px rgba(247,183,51,.3);
+  /* background: none !important; */
+  /* border: 1px solid #fff; */
+  /* transform: translateY(-2px) !important; */
+}
+.mist-animation {
+  animation: mistMove 6s ease-in-out infinite alternate;
+}
+
+@keyframes mistMove {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(35px, 25px) scale(1.1);
+  }
+}
+.yellow-text strong{
+    color: hsla(33,96%,81%,.95);
+    font-weight: 600;
+}
+@keyframes nxh-shine {
+  0% {
+    left: -100%;
+  }
+  40%,100% {
+    left: 150%;
+  }
+}
+
+.animate-shine {
+  animation: nxh-shine 3.5s ease-in-out 1s infinite;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #6f6f6f;
+}
+
+.clipped-bottom{
+  /* clip-path: polygon(0 0, calc(50% - 93px) .74px, calc(50% - 86px) 1.48px, calc(50% - 81px) 2.96px, calc(50% - 75px) 5.92px, calc(50% - 68px) 10.36px, calc(50% - 63.5px) 14.06px, calc(50% - 58px) 19.24px, calc(50% - 53px) 24.42px, calc(50% - 48px) 30.34px, calc(50% - 44px) 35.52px, calc(50% - 40px) 42.18px, calc(50% - 36px) 48.84px, calc(50% - 33px) 55.5px, calc(50% - 31px) 61.42px, calc(50% - 29px) 67.34px, calc(50% - 27px) 74px, calc(50% - 22px) 74px, calc(50% - 28px) 39.96px, calc(50% - 29px) 28.12px, calc(50% - 30px) 0, calc(50% + 30px) 0, calc(50% + 29px) 28.12px, calc(50% + 28px) 39.96px, calc(50% + 22px) 74px, calc(50% + 27px) 74px, calc(50% + 29px) 67.34px, calc(50% + 31px) 61.42px, calc(50% + 33px) 55.5px, calc(50% + 36px) 48.84px, calc(50% + 40px) 42.18px, calc(50% + 44px) 35.52px, calc(50% + 48px) 30.34px, calc(50% + 53px) 24.42px, calc(50% + 58px) 19.24px, calc(50% + 63.5px) 14.06px, calc(50% + 68px) 10.36px, calc(50% + 75px) 5.92px, calc(50% + 81px) 2.96px, calc(50% + 86px) 1.48px, calc(50% + 93px) .74px, 100% 0, 100% 100%, 0 100%); */
+  /* transform: rotate(180deg); */
+  clip-path: polygon(0% 0%, 0% 82.5%, 1.69492% 84.3293%, 3.38983% 86.1385%, 5.08475% 87.9078%, 6.77966% 89.6179%, 8.47458% 91.25%, 10.1695% 92.7862%, 11.8644% 94.2098%, 13.5593% 95.505%, 15.2542% 96.6578%, 16.9492% 97.6555%, 18.6441% 98.487%, 20.339% 99.1435%, 22.0339% 99.6176%, 23.7288% 99.9041%, 25.4237% 100%, 27.1186% 99.9041%, 28.8136% 99.6176%, 30.5085% 99.1435%, 32.2034% 98.487%, 33.8983% 97.6555%, 35.5932% 96.6578%, 37.2881% 95.505%, 38.9831% 94.2098%, 40.678% 92.7862%, 42.3729% 91.25%, 44.0678% 89.6179%, 45.7627% 87.9078%, 47.4576% 86.1385%, 49.1525% 84.3293%, 50.8475% 82.5%, 52.5424% 80.6708%, 54.2373% 78.8616%, 55.9322% 77.0922%, 57.6271% 75.3821%, 59.322% 73.75%, 61.017% 72.2138%, 62.7119% 70.7902%, 64.4068% 69.495%, 66.1017% 68.3422%, 67.7966% 67.3446%, 69.4915% 66.513%, 71.1864% 65.8565%, 72.8814% 65.3824%, 74.5763% 65.0959%, 76.2712% 65%, 77.9661% 65.0959%, 79.661% 65.3824%, 81.3559% 65.8565%, 83.0509% 66.513%, 84.7458% 67.3446%, 86.4407% 68.3422%, 88.1356% 69.495%, 89.8305% 70.7902%, 91.5254% 72.2138%, 93.2203% 73.75%, 94.9153% 75.3821%, 96.6102% 77.0922%, 98.3051% 78.8616%, 100% 80.6708%, 100% 0%); 
+  shape-outside: polygon(0% 0%, 0% 82.5%, 1.69492% 84.3293%, 3.38983% 86.1385%, 5.08475% 87.9078%, 6.77966% 89.6179%, 8.47458% 91.25%, 10.1695% 92.7862%, 11.8644% 94.2098%, 13.5593% 95.505%, 15.2542% 96.6578%, 16.9492% 97.6555%, 18.6441% 98.487%, 20.339% 99.1435%, 22.0339% 99.6176%, 23.7288% 99.9041%, 25.4237% 100%, 27.1186% 99.9041%, 28.8136% 99.6176%, 30.5085% 99.1435%, 32.2034% 98.487%, 33.8983% 97.6555%, 35.5932% 96.6578%, 37.2881% 95.505%, 38.9831% 94.2098%, 40.678% 92.7862%, 42.3729% 91.25%, 44.0678% 89.6179%, 45.7627% 87.9078%, 47.4576% 86.1385%, 49.1525% 84.3293%, 50.8475% 82.5%, 52.5424% 80.6708%, 54.2373% 78.8616%, 55.9322% 77.0922%, 57.6271% 75.3821%, 59.322% 73.75%, 61.017% 72.2138%, 62.7119% 70.7902%, 64.4068% 69.495%, 66.1017% 68.3422%, 67.7966% 67.3446%, 69.4915% 66.513%, 71.1864% 65.8565%, 72.8814% 65.3824%, 74.5763% 65.0959%, 76.2712% 65%, 77.9661% 65.0959%, 79.661% 65.3824%, 81.3559% 65.8565%, 83.0509% 66.513%, 84.7458% 67.3446%, 86.4407% 68.3422%, 88.1356% 69.495%, 89.8305% 70.7902%, 91.5254% 72.2138%, 93.2203% 73.75%, 94.9153% 75.3821%, 96.6102% 77.0922%, 98.3051% 78.8616%, 100% 80.6708%, 100% 0%);
+}
+.clipped-top {
+  /* clip-path: polygon(0 0, calc(50% - 93px) .74px, calc(50% - 86px) 1.48px, calc(50% - 81px) 2.96px, calc(50% - 75px) 5.92px, calc(50% - 68px) 10.36px, calc(50% - 63.5px) 14.06px, calc(50% - 58px) 19.24px, calc(50% - 53px) 24.42px, calc(50% - 48px) 30.34px, calc(50% - 44px) 35.52px, calc(50% - 40px) 42.18px, calc(50% - 36px) 48.84px, calc(50% - 33px) 55.5px, calc(50% - 31px) 61.42px, calc(50% - 29px) 67.34px, calc(50% - 27px) 74px, calc(50% - 22px) 74px, calc(50% - 28px) 39.96px, calc(50% - 29px) 28.12px, calc(50% - 30px) 0, calc(50% + 30px) 0, calc(50% + 29px) 28.12px, calc(50% + 28px) 39.96px, calc(50% + 22px) 74px, calc(50% + 27px) 74px, calc(50% + 29px) 67.34px, calc(50% + 31px) 61.42px, calc(50% + 33px) 55.5px, calc(50% + 36px) 48.84px, calc(50% + 40px) 42.18px, calc(50% + 44px) 35.52px, calc(50% + 48px) 30.34px, calc(50% + 53px) 24.42px, calc(50% + 58px) 19.24px, calc(50% + 63.5px) 14.06px, calc(50% + 68px) 10.36px, calc(50% + 75px) 5.92px, calc(50% + 81px) 2.96px, calc(50% + 86px) 1.48px, calc(50% + 93px) .74px, 100% 0, 100% 100%, 0 100%); */
+  clip-path: polygon(0% 0%, 0% 82.5%, 1.69492% 84.3293%, 3.38983% 86.1385%, 5.08475% 87.9078%, 6.77966% 89.6179%, 8.47458% 91.25%, 10.1695% 92.7862%, 11.8644% 94.2098%, 13.5593% 95.505%, 15.2542% 96.6578%, 16.9492% 97.6555%, 18.6441% 98.487%, 20.339% 99.1435%, 22.0339% 99.6176%, 23.7288% 99.9041%, 25.4237% 100%, 27.1186% 99.9041%, 28.8136% 99.6176%, 30.5085% 99.1435%, 32.2034% 98.487%, 33.8983% 97.6555%, 35.5932% 96.6578%, 37.2881% 95.505%, 38.9831% 94.2098%, 40.678% 92.7862%, 42.3729% 91.25%, 44.0678% 89.6179%, 45.7627% 87.9078%, 47.4576% 86.1385%, 49.1525% 84.3293%, 50.8475% 82.5%, 52.5424% 80.6708%, 54.2373% 78.8616%, 55.9322% 77.0922%, 57.6271% 75.3821%, 59.322% 73.75%, 61.017% 72.2138%, 62.7119% 70.7902%, 64.4068% 69.495%, 66.1017% 68.3422%, 67.7966% 67.3446%, 69.4915% 66.513%, 71.1864% 65.8565%, 72.8814% 65.3824%, 74.5763% 65.0959%, 76.2712% 65%, 77.9661% 65.0959%, 79.661% 65.3824%, 81.3559% 65.8565%, 83.0509% 66.513%, 84.7458% 67.3446%, 86.4407% 68.3422%, 88.1356% 69.495%, 89.8305% 70.7902%, 91.5254% 72.2138%, 93.2203% 73.75%, 94.9153% 75.3821%, 96.6102% 77.0922%, 98.3051% 78.8616%, 100% 80.6708%, 100% 0%); 
+  shape-outside: polygon(0% 0%, 0% 82.5%, 1.69492% 84.3293%, 3.38983% 86.1385%, 5.08475% 87.9078%, 6.77966% 89.6179%, 8.47458% 91.25%, 10.1695% 92.7862%, 11.8644% 94.2098%, 13.5593% 95.505%, 15.2542% 96.6578%, 16.9492% 97.6555%, 18.6441% 98.487%, 20.339% 99.1435%, 22.0339% 99.6176%, 23.7288% 99.9041%, 25.4237% 100%, 27.1186% 99.9041%, 28.8136% 99.6176%, 30.5085% 99.1435%, 32.2034% 98.487%, 33.8983% 97.6555%, 35.5932% 96.6578%, 37.2881% 95.505%, 38.9831% 94.2098%, 40.678% 92.7862%, 42.3729% 91.25%, 44.0678% 89.6179%, 45.7627% 87.9078%, 47.4576% 86.1385%, 49.1525% 84.3293%, 50.8475% 82.5%, 52.5424% 80.6708%, 54.2373% 78.8616%, 55.9322% 77.0922%, 57.6271% 75.3821%, 59.322% 73.75%, 61.017% 72.2138%, 62.7119% 70.7902%, 64.4068% 69.495%, 66.1017% 68.3422%, 67.7966% 67.3446%, 69.4915% 66.513%, 71.1864% 65.8565%, 72.8814% 65.3824%, 74.5763% 65.0959%, 76.2712% 65%, 77.9661% 65.0959%, 79.661% 65.3824%, 81.3559% 65.8565%, 83.0509% 66.513%, 84.7458% 67.3446%, 86.4407% 68.3422%, 88.1356% 69.495%, 89.8305% 70.7902%, 91.5254% 72.2138%, 93.2203% 73.75%, 94.9153% 75.3821%, 96.6102% 77.0922%, 98.3051% 78.8616%, 100% 80.6708%, 100% 0%);
+  transform: rotate(180deg);
+}

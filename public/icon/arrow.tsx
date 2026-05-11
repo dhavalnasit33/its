@@ -1,0 +1,18 @@
+export default function ArrowIcon({ color = "#fff" }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M5 12h14M13 6l6 6-6 6"
+      />
+    </svg>
+  );
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="60" viewBox="0 0 60 60" fill="none">
+  <rect width="60" height="60" fill="url(#pattern0)"></rect>
+  <defs>
+    <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+      <use xlink:href="#image0_2681_2196" transform="scale(0.0212766)"></use>
+    </pattern>
+    <image id="image0_2681_2196" width="47" height="47" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAAAvCAYAAABzJ5OsAAAENElEQVRoBdWXPW7bQBCFXaRPkQsESBmESJAyhS0lvWqX7gMEiKgihgt3cmXZgcgg1zDgG7jWDWQhB3DjCyj+ZmfoEUVSf7RECSCW2p/ZN2/fzA4PDrb4G198fv1v8P7L+fn5qy1uW99Wk0F0U5+1LVuaDKKHvWR+Mvj4djKIpshny5xtvt395Yfve8m8sv4wuYpGm9OwZQsEqkhmEB1veevNtru/jK4BvleSIat44EhnLzINGcWkAusEax44cxqXeSQ4r6KRSiUDbuC5Ze8vo1PazQRZ82oAoW3TuDEOcM04N0ipcYyPB9GxB85/48ZyPK31NaKFVWWcjCJZxUsCiQTdR6eNAOxBZBeQAvdZRU9j2tjLyWcVwHISPJpxRP9eQt7xnb4r6yaXmXI3Y11OpGE5Pq91r3MYdRfUFCd3ynLR5rOBOgvQgydocbbIxk768rr2zOdPhRTauNwOaxawRTmcLPN800bXO2G5alMnnZmAZY0bk/zfSPbtIvLSMYdntT9foNm8nbbqwJy2fTotktZOQfvNye0w7ft415rnoVEp8+uv4ZtvP39/ojXAAPTyIfMAfhHrrXjYaXfTs6Ne+od3s1db2+qlh2zQipPbo27yg/8Ar8rh4TSC1qvmAZLxo27Sb8fJFCc2Bo5Bnlac3mGUB7Zts6oNWEeGoS2a50/Mj7fjZMQ+kOP713pnc5gw8GI4Tu9gyU4Ah9q9v+94AMVj/2mRAnNZw8m1eukYO/TlQTGuY/382Nr/BUycnqgjIwPgnap61/kj1gMae0Vgnk85PSkar60PhjnemScedmDa+nxQl0nIAAWCRDLjRXNtzUotoGCuTLMrGXOTRV69dMwJ4XCt4DFmUmnFyeOqKU3XHxbJRRkfiWSe5FQrcCMoH7honA1Fx0HLBHE/+y95+zlALSa84+04PZEgfsrvLwLawNOKzskeAiy9s9MwYPnWBypAPfPIAxl6+y/6DjueIfsvR6/p0t5x1OZa+6LgljUOMGOxUcAWOaCXzSO3YVVmwCkc3Ko0DLywy8WktYwxXKRz+gje7JH/CQ5KWSHjT/o2G7ZH7a0EkrumizbMsoRe9QYy3wanQjEHGWVgq8bK1sz1c8QGgI3nJhR04JxlDtaLDa1zzHFrC5ZLV8heG5bDks70qNWJkc/LZZvn+xeBZb7JktiBKEsAeVsr/VcHpDS1U6DVWr4vktF6fhnDOCKBy0eHFndymwabj7BuwDlBe1/GdukcjPjNKAu8M/Yu5YLWJcaian1ufigtQknNieIYD6dgN3MpoHUGTAIZg+jaWKS85RMu1PehNOCLqJuehRPk+h92ICIflCYbreFFnrbXOjhL17C5BWMeRNkigPAwP2Qw/SihtAhZSup77JbZqK0fIICQj4nsgzm5DYUVrXwuSvAZOJFPyPm3om35Dh52liWgCPx/weYQWJLtUVkAAAAASUVORK5CYII="></image>
+  </defs>
+</svg>

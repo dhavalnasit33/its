@@ -1,0 +1,36 @@
+/** @type {import('svgo').Config} */
+module.exports = {
+  multipass: true, // optimize multiple times until it’s as small as possible
+  plugins: [
+    "removeDoctype",
+    "removeXMLProcInst",
+    "removeComments",
+    "removeMetadata",
+    "removeTitle",
+    "removeDesc",
+    "removeUselessDefs",
+    "removeXMLNS",
+    "removeEditorsNSData",
+    "cleanupAttrs",
+    "inlineStyles",
+    "minifyStyles",
+    "convertStyleToAttrs",
+    "cleanupIDs",
+    "convertPathData",
+    "convertTransform",
+    "removeUnknownsAndDefaults",
+    "removeNonInheritableGroupAttrs",
+    "removeUselessStrokeAndFill",
+    "removeUnusedNS",
+    "cleanupNumericValues",
+    "cleanupListOfValues",
+    "moveElemsAttrsToGroup",
+    "moveGroupAttrsToElems",
+    "collapseGroups",
+    "removeRasterImages",
+    "mergePaths",
+    "convertShapeToPath",
+    "sortAttrs",
+    "removeDimensions", // removes width/height but keeps viewBox
+  ],
+};
