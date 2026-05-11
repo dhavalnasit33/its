@@ -19,7 +19,10 @@ import {
     FormControl,
     FormMessage,
 } from "@/components/ui/form";
+import { useRouter } from "next/navigation";
+
 import {
+
     Select,
     SelectContent,
     SelectItem,
@@ -30,12 +33,13 @@ import FormStepper from "@/components/ui/FormStepper";
 import PageHeader from "@/components/shared/PageHeader";
 import { TiptapEditorNoSSR } from "@/components/shared/TiptapEditor";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, PlusCircle, Trash2, UploadCloud } from "lucide-react";
+import { ArrowLeft, Loader2, PlusCircle, Trash2, UploadCloud } from "lucide-react";
 import apiService from "@/lib/apiService";
 import { OurServicesMainFormValues, OurServicesMainSchema } from "@/types";
 import InfoIcon from "@mui/icons-material/Info";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import BuildIcon from "@mui/icons-material/Build";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 interface ServiceOption {
     _id: string;
@@ -373,6 +377,8 @@ const SimplePointsArray = ({
 export default function OurServicesMainForm({ initialData, onSubmit }: any) {
     const { toast } = useToast();
     const [step, setStep] = useState(1);
+    const router = useRouter();
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [services, setServices] = useState<ServiceOption[]>([]);
     const [isSectionUploading, setSectionUploading] = useState<string | null>(
@@ -448,27 +454,16 @@ export default function OurServicesMainForm({ initialData, onSubmit }: any) {
     const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
     return (
-        // FIXED: Wrap everything in FormProvider
         <FormProvider {...form}>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(handleFormSubmit)}
                     className="space-y-8"
                 >
-                    <FormStepper
-                        currentStep={step}
-                        onStepClick={setStep}
-                        steps={["Basic Info", "Hero Sections", "Technology Details"]}
-                        icons={{
-                            "1": <InfoIcon />,
-                            "2": <ViewCarouselIcon />,
-                            "3": <BuildIcon />,
-                        }}
-                    />
 
-                    {/* Step 1 */}
-                    {step === 1 && (
-                        <div className="border p-6 rounded-lg shadow-sm space-y-4">
+
+                    <Card>
+                        <CardContent className="space-y-6">
                             <PageHeader title="Basic Information" />
                             <FormField
                                 control={form.control}
@@ -506,23 +501,24 @@ export default function OurServicesMainForm({ initialData, onSubmit }: any) {
                                     </FormItem>
                                 )}
                             />
-                        </div>
-                    )}
+                        </CardContent>
+                    </Card>
 
-                    {/* Step 2 */}
-                    {step === 2 && (
-                        <div className="space-y-6">
-                            <div className="flex justify-between items-center">
-                                <PageHeader title="Hero Sections" />
-                                <Button
-                                    type="button"
-                                    onClick={() =>
-                                        appendHero({ title: "", image: "", points: [] })
-                                    }
-                                >
-                                    <PlusCircle className="mr-2 h-4 w-4" /> Add Section
-                                </Button>
-                            </div>
+                    <Card>
+                        <div className="flex justify-between items-center border-b mx-5">
+                            <CardHeader className="text-3xl font-bold border-0 px-0">Hero Sections</CardHeader>
+                            <Button
+                                type="button"
+                                onClick={() =>
+                                    appendHero({ title: "", image: "", points: [] })
+                                }
+                            >
+                                <PlusCircle className="mr-2 h-4 w-4" /> Add Section
+                            </Button>
+                        </div>
+                        <CardContent className="space-y-6">
+
+
                             {heroFields.map((field, index) => (
                                 <div
                                     key={field.id}
@@ -629,29 +625,34 @@ export default function OurServicesMainForm({ initialData, onSubmit }: any) {
                                     />
                                 </div>
                             ))}
-                        </div>
-                    )}
 
-                    {/* Step 3 */}
-                    {step === 3 && (
-                        <div className="space-y-6">
-                            <div className="flex justify-between items-center">
-                                <PageHeader title="Technology Details" />
-                                <Button
-                                    type="button"
-                                    onClick={() =>
-                                        appendTechDetail({
-                                            title: "",
-                                            description: "",
-                                            image: "",
-                                            technologyDetail: [],
-                                            developmentDetail: [],
-                                        })
-                                    }
-                                >
-                                    <PlusCircle className="mr-2 h-4 w-4" /> Add Section
-                                </Button>
-                            </div>
+                        </CardContent>
+                    </Card>
+
+
+
+
+                    <Card>
+                        <div className="flex justify-between items-center border-b mx-5">
+                            <CardHeader className="text-3xl font-bold border-0 px-0">Technology Details</CardHeader>
+                            <Button
+                                type="button"
+                                onClick={() =>
+                                    appendTechDetail({
+                                        title: "",
+                                        description: "",
+                                        image: "",
+                                        technologyDetail: [],
+                                        developmentDetail: [],
+                                    })
+                                }
+                            >
+                                <PlusCircle className="mr-2 h-4 w-4" /> Add Section
+                            </Button>
+                        </div>
+
+                        <CardContent className="space-y-6">
+
                             {techDetailFields.map((field, index) => (
                                 <div
                                     key={field.id}
@@ -780,27 +781,19 @@ export default function OurServicesMainForm({ initialData, onSubmit }: any) {
                                     />
                                 </div>
                             ))}
-                        </div>
-                    )}
+                        </CardContent>
+                    </Card>
 
-                    {/* Navigation */}
-                    <div className="flex justify-between pt-4">
-                        {step > 1 ? (
-                            <Button type="button" variant="secondary" onClick={prevStep}>
-                                Previous
-                            </Button>
-                        ) : (
-                            <div />
-                        )}
-                        {step < 3 ? (
-                            <Button type="button" onClick={nextStep}>
-                                Next
-                            </Button>
-                        ) : (
-                            <Button type="submit" disabled={isSubmitting}>
-                                {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
-                            </Button>
-                        )}
+
+                    <div className="flex justify-between mt-4">
+                        <Button type="button" onClick={() => router.back()}>
+                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            Back
+                        </Button>
+                        <Button type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
+                        </Button>
+
                     </div>
                 </form>
             </Form>

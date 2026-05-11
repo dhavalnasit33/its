@@ -32,7 +32,7 @@ export const navItemsList: NavItem[] = [
     children: [
       { href: "/dashboard/service-manager", label: "Service Manager", icon: Boxes },
       // { href: "/dashboard/service-Tecnology", label: "Service Technology", icon: LayoutList },
-      // { href: "/dashboard/service-main-page", label: "Service Main Page", icon: ToolCase },
+      { href: "/dashboard/service-main-page", label: "Service Main Page", icon: ToolCase },
     ],
   },
 

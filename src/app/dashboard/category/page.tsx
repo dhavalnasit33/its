@@ -39,7 +39,6 @@ export default function CategoryPage() {
     const isAllSelected = items.length > 0 && selectedIds.length === items.length;
     const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
 
-    // ✅ page parameter accept kare che - service page jevi j
     const fetchItems = async (page = 1) => {
         setIsLoading(true);
         try {
@@ -57,11 +56,9 @@ export default function CategoryPage() {
 
             if (res.success) {
                 setItems(res.data);
-                // ✅ Backend pagination response hoy to set karo, nahi to count thi calculate karo
                 if (res.pagination) {
                     setPagination(res.pagination);
                 } else {
-                    // Backend pagination nahi moklto hoy to manually set karo
                     const total = res.count || res.data.length;
                     const pages = Math.ceil(total / limit);
                     setPagination({ current: page, pages: pages || 1, total });
@@ -131,7 +128,8 @@ export default function CategoryPage() {
                                 Delete Selected ({selectedIds.length})
                             </Button>
                         )}
-                        <Button onClick={() => router.push("/dashboard/category/create")}>
+                        <Button 
+                        onClick={() => router.push("/dashboard/category/create")}>
                             <PlusCircle className="mr-2 h-4 w-4" /> Add New
                         </Button>
                     </div>

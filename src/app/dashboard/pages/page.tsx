@@ -1,9 +1,10 @@
+
 'use client';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Edit, MoreHorizontal, PlusCircle, Trash2 } from 'lucide-react';
+import { Edit, MoreHorizontal, PlusCircle, Search, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import PageHeader from '@/components/shared/PageHeader';
@@ -11,58 +12,59 @@ import apiService from '@/lib/apiService';
 import { useToast } from '@/hooks/use-toast';
 import BulkDeletepageDialog from '@/components/dashboard/pages/BulkDeletePageDialog';
 import DeletePageDialog from '@/components/dashboard/pages/DeletePageDialog';
-// import DeletecategoryManageDialog from '@/components/dashboard/category/DeleteCategoryDialog';
-// import BulkDeletecategoryManagerDialog from '@/components/dashboard/category/BulkDeleteCategoryDiolog';
 
-interface Category {
+interface PageItem {
     _id: string;
-    category: string;
+    page_title: string;
+    page_description?: string;
+    slug: string;
     image?: string;
+    seo?: {
+        title?: string;
+        keyphrase?: string;
+        seoDescription?: string;
+        featureImage?: string;
+    };
     createdAt: string;
 }
 
-export default function CreatePages() {
+export default function PagesListPage() {
     const router = useRouter();
     const { toast } = useToast();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
-    const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
-    const [selectedItem, setSelectedItem] = useState<Category | null>(null);
-    const [items, setItems] = useState<Category[]>([]);
-    const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
+    const [items, setItems] = useState<PageItem[]>([]);
+    const [searchQuery, setSearchQuery] = useState("");
     const [pagination, setPagination] = useState({ current: 1, pages: 1, total: 0 });
     const [limit] = useState(10);
+
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+    const [selectedItem, setSelectedItem] = useState<PageItem | null>(null);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
 
     const isAllSelected = items.length > 0 && selectedIds.length === items.length;
     const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
 
-    const fetchItems = async (page = 1) => {
+    const fetchItems = async (page = 1, search = searchQuery) => {
         setIsLoading(true);
         try {
             const query = new URLSearchParams({
                 page: String(page),
                 limit: String(limit),
+                ...(search ? { search } : {}),
             });
 
             const res = await apiService<{
                 success: boolean;
-                data: Category[];
-                count: number;
+                data: PageItem[];
                 pagination: { current: number; pages: number; total: number };
             }>(`/page?${query.toString()}`, { method: "GET" });
 
             if (res.success) {
                 setItems(res.data);
-                if (res.pagination) {
-                    setPagination(res.pagination);
-                } else {
-                    const total = res.count || res.data.length;
-                    const pages = Math.ceil(total / limit);
-                    setPagination({ current: page, pages: pages || 1, total });
-                }
+                setPagination(res.pagination);
             } else {
                 setItems([]);
             }
@@ -74,31 +76,20 @@ export default function CreatePages() {
         }
     };
 
-    useEffect(() => {
-        fetchItems(1);
-        setSelectedIds([]);
-    }, []);
+    useEffect(() => { fetchItems(1); setSelectedIds([]); }, []);
 
-    const handleCheckboxChange = (id: string) => {
-        setSelectedIds((prev) =>
-            prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-        );
+    const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") fetchItems(1, searchQuery);
     };
 
-    const handleSelectAll = () => {
-        if (selectedIds.length === items.length) setSelectedIds([]);
-        else setSelectedIds(items.map((item) => item._id));
-    };
+    const handleCheckboxChange = (id: string) =>
+        setSelectedIds((prev) => prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]);
 
-    const handleDeleteDialogOpen = (item: Category) => {
-        setSelectedItem(item);
-        setDeleteDialogOpen(true);
-    };
+    const handleSelectAll = () =>
+        setSelectedIds(selectedIds.length === items.length ? [] : items.map((i) => i._id));
 
-    const handleDeleteDialogChange = (open: boolean) => {
-        if (!open) setSelectedItem(null);
-        setDeleteDialogOpen(open);
-    };
+    const handleDeleteDialogOpen = (item: PageItem) => { setSelectedItem(item); setDeleteDialogOpen(true); };
+    const handleDeleteDialogChange = (open: boolean) => { if (!open) setSelectedItem(null); setDeleteDialogOpen(open); };
 
     const handleDeleteSuccess = () => {
         setDeleteDialogOpen(false);
@@ -112,28 +103,43 @@ export default function CreatePages() {
         fetchItems(pagination.current);
     };
 
+    const formatDate = (dateStr: string) =>
+        new Date(dateStr).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+
+    const truncate = (str: string | undefined, n = 40) =>
+        !str ? "—" : str.length > n ? str.slice(0, n) + "…" : str;
+
     return (
         <>
             <PageHeader
-                title="Category Manager"
-                description="Manage all categories"
+                title="Pages"
+                description="Manage all pages"
                 actionButtons={
                     <div className="flex items-center gap-2">
                         {selectedIds.length > 0 && (
-                            <Button
-                                variant="destructive"
-                                onClick={() => setBulkDeleteDialogOpen(true)}
-                            >
+                            <Button variant="destructive" onClick={() => setBulkDeleteDialogOpen(true)}>
                                 <Trash2 className="h-4 w-4 mr-2" />
                                 Delete Selected ({selectedIds.length})
                             </Button>
                         )}
-                        <Button onClick={() => router.push("/dashboard/category/create")}>
+                        <Button onClick={() => router.push("/dashboard/pages/create")}>
                             <PlusCircle className="mr-2 h-4 w-4" /> Add New
                         </Button>
                     </div>
                 }
             />
+
+            <div className="relative w-full max-w-sm mb-4">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <input
+                    className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 pl-9 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleSearch}
+                    placeholder="Search pages… (press Enter)"
+                    type="search"
+                />
+            </div>
 
             <div className="rounded-md shadow-sm">
                 <Table>
@@ -148,8 +154,9 @@ export default function CreatePages() {
                                     className="cursor-pointer w-4 h-4"
                                 />
                             </TableHead>
-                            <TableHead>title</TableHead>
-                            <TableHead>	SEO Title</TableHead>
+                            <TableHead>Title</TableHead>
+                            <TableHead>Slug</TableHead>
+                            <TableHead>SEO Title</TableHead>
                             <TableHead>Meta Desc.</TableHead>
                             <TableHead>Keyphrase</TableHead>
                             <TableHead>Created At</TableHead>
@@ -161,10 +168,9 @@ export default function CreatePages() {
                         {isLoading
                             ? Array.from({ length: 5 }).map((_, i) => (
                                 <TableRow key={i}>
-                                    <TableCell><Skeleton className="h-5 w-5" /></TableCell>
-                                    <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
-                                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                                    <TableCell></TableCell>
+                                    {Array.from({ length: 8 }).map((__, j) => (
+                                        <TableCell key={j}><Skeleton className="h-5 w-24" /></TableCell>
+                                    ))}
                                 </TableRow>
                             ))
                             : items.length > 0
@@ -182,12 +188,12 @@ export default function CreatePages() {
                                             />
                                         </TableCell>
 
-                                        <TableCell>title</TableCell>
-                                        <TableCell>	SEO Title</TableCell>
-                                        <TableCell>Meta Desc.</TableCell>
-                                        <TableCell>Keyphrase</TableCell>
-                                        <TableCell>Created At</TableCell>
-
+                                        <TableCell className="font-medium">{item.page_title}</TableCell>
+                                        <TableCell className="text-muted-foreground text-sm">{item.slug}</TableCell>
+                                        <TableCell>{truncate(item.seo?.title)}</TableCell>
+                                        <TableCell>{truncate(item.seo?.seoDescription)}</TableCell>
+                                        <TableCell>{item.seo?.keyphrase || "—"}</TableCell>
+                                        <TableCell className="text-sm text-muted-foreground">{formatDate(item.createdAt)}</TableCell>
 
                                         <TableCell className="text-right">
                                             <DropdownMenu
@@ -202,17 +208,14 @@ export default function CreatePages() {
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuItem
                                                         onClick={() => {
-                                                            router.push(`/dashboard/category/${item._id}/edit`);
+                                                            router.push(`/dashboard/pages/${item._id}/edit`);
                                                             setDropdownOpen(null);
                                                         }}
                                                     >
                                                         <Edit className="mr-2 h-4 w-4" /> Edit
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem
-                                                        onClick={() => {
-                                                            handleDeleteDialogOpen(item);
-                                                            setDropdownOpen(null);
-                                                        }}
+                                                        onClick={() => { handleDeleteDialogOpen(item); setDropdownOpen(null); }}
                                                         className="text-destructive focus:text-destructive focus:bg-destructive/10"
                                                     >
                                                         <Trash2 className="mr-2 h-4 w-4" /> Delete
@@ -224,8 +227,8 @@ export default function CreatePages() {
                                 ))
                                 : (
                                     <TableRow>
-                                        <TableCell colSpan={4} className="text-center py-8 text-gray-500">
-                                            No categories found.
+                                        <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                                            No pages found.
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -236,11 +239,6 @@ export default function CreatePages() {
             <div className="flex justify-between items-center gap-2 mt-4">
                 <span className="text-sm">
                     Page {pagination.current} of {pagination.pages}
-                    {selectedIds.length > 0 && (
-                        <span className="ml-3 text-blue-600 font-medium">
-                            {selectedIds.length} selected
-                        </span>
-                    )}
                 </span>
                 <div className="flex gap-3">
                     <Button

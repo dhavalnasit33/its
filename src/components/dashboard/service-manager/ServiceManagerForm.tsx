@@ -6,9 +6,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+
 import {
   Form,
   FormControl,
@@ -30,6 +30,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import apiService from "@/lib/apiService";
+import { Input } from "@/components/ui/input";
 // import ImageUpload from "@/components/shared/ImageUpload";
 
 // ---------- Slug ----------
@@ -86,6 +87,17 @@ const servicestepperSchema = z.object({
     question: z.string().min(1, "Question is required"),
     answer: z.string().min(1, "Answer is required"),
   })),
+
+  seo: z.object({
+    title: z.string().min(1, "SEO Title is required"),
+    keyphrase: z.string().min(1, "Keyphrase is required"),
+    seoDescription: z.string().min(1, "SEO Description is required"),
+    featureImage: z.string().optional(),
+  }),
+
+
+
+
 });
 
 export type ServiceStepperFormValues = z.infer<typeof servicestepperSchema>;
@@ -146,6 +158,16 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
         content: [{ name: "", image: "" }],
       },
       faqs: initialData?.faqs || [{ question: "", answer: "" }],
+
+
+
+      seo: initialData?.seo || {
+        title: "",
+        keyphrase: "",
+        seoDescription: "",
+        featureImage: "",
+      },
+
     },
   });
 
@@ -225,31 +247,31 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
     }
   };
 
- useEffect(() => {
+  useEffect(() => {
     if (selectedCategoryId && subCategories.length > 0) {
-        const filtered = subCategories.filter(
-            (s) => s.category === selectedCategoryId  
-        );
-        setFilteredSubCategories(filtered);
-        form.setValue("subCategory", "");
+      const filtered = subCategories.filter(
+        (s) => s.category === selectedCategoryId
+      );
+      setFilteredSubCategories(filtered);
+      form.setValue("subCategory", "");
     } else {
-        setFilteredSubCategories([]);
+      setFilteredSubCategories([]);
     }
-}, [selectedCategoryId, subCategories]);
+  }, [selectedCategoryId, subCategories]);
 
-useEffect(() => {
-    if (isFirstRender.current) { 
-        isFirstRender.current = false; 
-        return; 
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
     }
     if (subCategoryValue) {
-        // subCategory ID છે — name find કરો slug માટે
-        const found = filteredSubCategories.find((s) => s._id === subCategoryValue);
-        if (found) {
-            form.setValue("slug", generateSlug(found.subcategory), { shouldValidate: true });
-        }
+      // subCategory ID છે — name find કરો slug માટે
+      const found = filteredSubCategories.find((s) => s._id === subCategoryValue);
+      if (found) {
+        form.setValue("slug", generateSlug(found.subcategory), { shouldValidate: true });
+      }
     }
-}, [subCategoryValue]);
+  }, [subCategoryValue]);
 
 
   const onDragEnd = (result: DropResult) => {
@@ -287,74 +309,10 @@ useEffect(() => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
 
-            {/* ─────────────── CATEGORY ─────────────── */}
-            {/* <Card>
-              <CardHeader className="text-3xl font-bold">Category</CardHeader>
-              <CardContent className="space-y-4">
-                {["category", "subCategory", "mainTitle"].map((name) => (
-                  <FormField
-                    key={name}
-                    control={form.control}
-                    name={name as any}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{name.charAt(0).toUpperCase() + name.slice(1)}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={`Enter ${name}`} {...field} onBlur={(e) => field.onChange(e.target.value.trim())} />
-                        </FormControl>
-                        <FormMessage className="text-red-600 text-sm mt-1" />
-                      </FormItem>
-                    )}
-                  />
-                ))}
-
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={() => {
-                    const slugValue = form.watch("slug");
-                    const permalink = `${APP_URL}/services/${slugValue}`;
-                    return (
-                      <FormItem>
-                        <FormLabel>Permalink</FormLabel>
-                        <FormControl>
-                          <div>
-                            {slugValue && (
-                              <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
-                                <strong>URL:</strong>{" "}
-                                <a href={permalink} className="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">
-                                  {permalink}
-                                </a>
-                              </div>
-                            )}
-                          </div>
-                        </FormControl>
-                      </FormItem>
-                    );
-                  }}
-                />
-                <FormField control={form.control} name="slug" render={({ field }) => <input type="hidden" {...field} />} />
-
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl><Textarea placeholder="Enter description" {...field} /></FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </Card> */}
-
 
             <Card>
               <CardHeader className="text-3xl font-bold">Category</CardHeader>
               <CardContent className="space-y-4">
-
-                {/* ✅ Category Dropdown */}
                 <FormField
                   control={form.control}
                   name="category"
@@ -445,7 +403,6 @@ useEffect(() => {
                   )}
                 />
 
-                {/* Main Title */}
                 <FormField
                   name="mainTitle"
                   control={form.control}
@@ -464,7 +421,6 @@ useEffect(() => {
                   )}
                 />
 
-                {/* Permalink */}
                 <FormField
                   control={form.control}
                   name="slug"
@@ -501,7 +457,6 @@ useEffect(() => {
                   render={({ field }) => <input type="hidden" {...field} />}
                 />
 
-                {/* Description */}
                 <FormField
                   control={form.control}
                   name="description"
@@ -517,16 +472,6 @@ useEffect(() => {
                 />
               </CardContent>
             </Card>
-
-
-
-
-
-
-
-
-
-
 
             {/* ─────────────── SUBMAIN TITLE ─────────────── */}
             <Card>
@@ -641,50 +586,54 @@ useEffect(() => {
                 </Button>
               </div>
               <CardContent className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="WhyWorkWithThis.title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("WhyWorkWithThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
-                      </FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="WhyWorkWithThis.description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl><Textarea placeholder="Enter description" {...field} value={field.value ?? ""} /></FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
+                <div className="flex flex-col lg:flex-row gap-8">
+                  <div className="flex-1 space-y-8">
+                    <FormField
+                      control={form.control}
+                      name="WhyWorkWithThis.title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Title</FormLabel>
+                          <FormControl>
+                            <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("WhyWorkWithThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="WhyWorkWithThis.description"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description</FormLabel>
+                          <FormControl><Textarea placeholder="Enter description" {...field} value={field.value ?? ""} /></FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
 
-                {/* ✅ Why Work Image */}
-                <FormField
-                  control={form.control}
-                  name="WhyWorkWithThis.image"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Image</FormLabel>
-                      <FormControl>
-                        <ImageUpload
-                          value={field.value || ""}
-                          onChange={(url) => form.setValue("WhyWorkWithThis.image", url, { shouldValidate: true })}
-                          disabled={isSubmitting}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-
+                    <FormField
+                      control={form.control}
+                      name="WhyWorkWithThis.image"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Image</FormLabel>
+                          <FormControl>
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={(url) => form.setValue("WhyWorkWithThis.image", url, { shouldValidate: true })}
+                              disabled={isSubmitting}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
                 <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
                   {form.watch("WhyWorkWithThis")?.content?.map((_, idx) => (
                     <div key={idx} className="space-y-3 border-gray-300 border shadow-md p-5 rounded-md">
@@ -1039,6 +988,88 @@ useEffect(() => {
               </CardContent>
             </Card>
 
+
+            {/* seo data */}
+            <Card>
+              <CardHeader className="text-3xl font-bold !border-black">SEO Settings</CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex flex-col lg:flex-row gap-8">
+                  <div className="flex-1 space-y-8">
+                    <FormField
+                      control={form.control}
+                      name="seo.title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SEO Title</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter SEO title" {...field} />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="seo.keyphrase"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Keyphrase</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter keyphrase" {...field} />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="seo.seoDescription"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SEO Description</FormLabel>
+                          <FormControl>
+                            <Textarea placeholder="Enter SEO description" {...field} />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
+
+                    <FormField
+                      control={form.control}
+                      name="seo.featureImage"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Featured Image</FormLabel>
+                          <FormControl>
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={(url) => form.setValue("seo.featureImage", url, { shouldValidate: true })}
+                              disabled={isSubmitting}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+
+                  </div>
+                </div>
+
+              </CardContent>
+            </Card>
+
+
+
+
+
+
+
+
             {/* ─────────────── SUBMIT ─────────────── */}
             <div className="flex justify-between mt-4">
               <Button type="button" onClick={() => router.back()}>
@@ -1052,7 +1083,7 @@ useEffect(() => {
 
           </form>
         </Form>
-      </CardContent>
+      </CardContent >
     </Card >
   );
 }

@@ -9,8 +9,10 @@ import Link from "next/link";
 import { OurServicesMain, SingleResponse } from "@/types";
 import PageHeader from "@/components/shared/PageHeader";
 import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
+
 import CreateOurServicesMainDialog from "@/components/dashboard/service-main-page/CreateOurServicesMainDialog";
-import EditOurServicesMainDialog from "@/components/dashboard/service-main-page/EditOurServicesMainDialog";
+// import EditOurServicesMainDialog from "@/components/dashboard/service-main-page/EditOurServicesMainDialog";
 
 const LinkedPointDisplay = ({
     points,
@@ -69,6 +71,9 @@ export default function OurServicesMainPage() {
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
 
+
+    const router = useRouter();
+
     const fetchContent = async () => {
         try {
             setLoading(true);
@@ -98,11 +103,19 @@ export default function OurServicesMainPage() {
                 description="Manage the content for the main services page."
                 actionButtons={
                     !data ? (
-                        <Button onClick={() => setCreateDialogOpen(true)}>
+                        <Button
+                            //  onClick={() => setCreateDialogOpen(true)}
+                            onClick={() => router.push("/dashboard/service-main-page/create")}>
+
+
                             Create Content
                         </Button>
                     ) : (
-                        <Button variant="outline" onClick={() => setEditDialogOpen(true)}>
+                        <Button
+                        //  onClick={() => setEditDialogOpen(true)}
+                            onClick={() => router.push("/dashboard/service-main-page/edit")}>
+
+                        
                             Edit Content
                         </Button>
                     )
@@ -199,14 +212,14 @@ export default function OurServicesMainPage() {
                 onOpenChange={setCreateDialogOpen}
                 onSuccess={fetchContent}
             />
-            {data && (
+            {/* {data && (
                 <EditOurServicesMainDialog
                     isOpen={editDialogOpen}
                     onOpenChange={setEditDialogOpen}
                     onSuccess={fetchContent}
                     initialData={data}
                 />
-            )}
+            )} */}
         </div>
     );
 }
