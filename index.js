@@ -48,7 +48,7 @@ const NavbarGroupTabImageManageRoutes = require("./routes/navbarGroupTabHandel.r
 const deleteImageRoute = require("./routes/deleteImage.routes");
 const categoryRoute = require("./routes/category/category.routes");
 const subcategoryRoute = require("./routes/subcategory/subcategory.routes");
-
+const pageRoute = require("./routes/page/page.routes");
 
 const app = express();
 
@@ -94,16 +94,16 @@ const setNoCache = (req, res, next) => {
 
 app.use(setNoCache);
 
-
 //  auth api
 app.use("/api/auth-user", userRouter);
 app.use("/api/delete-image", deleteImageRoute);
 
 // category
-app.use("/api/category",categoryRoute);
+app.use("/api/category", categoryRoute);
 // sub category
-app.use("/api/subcategory",subcategoryRoute);
-
+app.use("/api/subcategory", subcategoryRoute);
+// page route
+app.use("/api/page", pageRoute);
 
 //  homepage & Global componet api
 app.use("/api/homepage", HomePageDataRouter);
