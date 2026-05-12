@@ -10,6 +10,7 @@ import {
   Handshake, LineChart, DoorOpen, Inbox, BookPlus, BookOpenText, BookType,
   SearchCheck, Presentation, Milestone, ToolCase, Server, House,
   SignpostBig, Navigation, FileText, X,
+  Building2,
 } from "lucide-react";
 import NavItems from "./NavItems";
 import { NavItem } from "@/types";
@@ -45,7 +46,17 @@ export const navItemsList: NavItem[] = [
 
     ]
   },
-
+  { href: "/dashboard/About", label: "About", icon: Building2 },
+  {
+    label: "Global-Model",
+    icon: Server,
+    children: [
+      { href: "/dashboard/Why-Choose-ITS", label: "Why Chooes ITS", icon: Info },
+      { href: "/dashboard/EngagementModel", label: "Engagement Model", icon: Layers },
+      { href: "/dashboard/Testimonials", label: "Testimonials", icon: MessageCircle },
+      { href: "/dashboard/expertise-industry", label: "Expertise Industries", icon: Factory },
+    ],
+  },
 
 
 

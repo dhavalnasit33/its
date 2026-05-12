@@ -4,6 +4,7 @@ import * as React from "react";
 import { useState, useRef, useCallback } from "react";
 import { UploadCloud, Loader2, X } from "lucide-react";
 import apiService from "@/lib/apiService";
+import { useToast } from "@/hooks/use-toast";
 
 const CLOUDINARY_CLOUD_NAME = "dctvxbvuz";
 const CLOUDINARY_UPLOAD_PRESET = "ITS_ADMIN";
@@ -22,6 +23,7 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
         const [isDragOver, setIsDragOver] = useState(false);
         const [error, setError] = useState<string | null>(null);
         const inputRef = useRef<HTMLInputElement | null>(null);
+        const { toast } = useToast();
 
         const busy = isUploading || isDeleting || disabled;
 
@@ -58,7 +60,16 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
                 if (!data.secure_url) throw new Error("No URL returned from Cloudinary");
 
                 onChange(data.secure_url);
+                toast({
+                    title: "Success",
+                    description: "Image uploaded successfully.",
+                });
             } catch (err: any) {
+                toast({
+                    title: "Error",
+                    description: "Failed to upload image.",
+                    variant: "destructive",
+                });
                 setError(err.message || "Upload failed");
             } finally {
                 setIsUploading(false);
@@ -107,9 +118,17 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
                     method: "DELETE",
                     body: { imageUrl: value } as any,
                 });
-
+                toast({
+                    title: "Success",
+                    description: "Image deleted successfully.",
+                });
                 onChange("");
             } catch (err: any) {
+                toast({
+                    title: "Error",
+                    description: "Failed to delete image.",
+                    variant: "destructive",
+                });
                 console.warn("Delete warning:", err.message);
                 onChange("");
             } finally {
@@ -122,7 +141,7 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
         };
 
         return (
-            <div ref={ref} className={`flex flex-col gap-1 ${className}`}>
+            <div ref={ref} className={`flex flex-col gap-2 ${className}`}>
                 <input
                     ref={inputRef}
                     type="file"

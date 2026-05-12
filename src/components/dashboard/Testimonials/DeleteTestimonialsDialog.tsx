@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   AlertDialog,
@@ -12,39 +12,43 @@ import {
 } from "@/components/ui/alert-dialog";
 import apiService from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
-import type { HomeChooseIts } from "@/types";
+import type { TestimonialFormValues } from "./TestimonialsForm";
 import { useState } from "react";
 
-interface DeleteHomeChooseItsDialogProps {
+interface DeleteTestimonialsDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  item: HomeChooseIts | null;
+  item: Testimonial | null;
   onSuccess: () => void;
 }
-
-export default function DeleteHomeChooseItsDialog({
+interface Testimonial {
+  _id: string;
+  name: string;
+  description: string;
+  location: string;
+  image: string;
+}
+export default function DeleteTestimonialsDialog({
   isOpen,
   onOpenChange,
   item,
   onSuccess,
-}: DeleteHomeChooseItsDialogProps) {
+}: DeleteTestimonialsDialogProps) {
   const { toast } = useToast();
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
-    if (!item) return;
+    if (!item?._id) return;
     try {
-      setIsDeleting(true)
+      setIsDeleting(true);
       const res = await apiService<{ success: boolean; message: string }>(
-        `/choose_its_home/${item._id}`,
-        { method: "DELETE" }
+        `/testimonials/${item._id}`,
+        { method: "DELETE" },
       );
-
       if (res.success) {
         toast({ title: "Deleted", description: res.message });
         onSuccess();
         onOpenChange(false);
-        // Let parent handle closing
       } else {
         toast({
           title: "Error",
@@ -52,33 +56,34 @@ export default function DeleteHomeChooseItsDialog({
           variant: "destructive",
         });
       }
-      setIsDeleting(false)
+      setIsDeleting(false);
     } catch (error: any) {
+      setIsDeleting(false);
       toast({
         title: "Error",
         description: error.message || "Something went wrong",
         variant: "destructive",
       });
-
     }
   };
+
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
       <AlertDialogContent className=" ">
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Entry</AlertDialogTitle>
+          <AlertDialogTitle>Delete Testimonial</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete{" "}
-            <strong>{item?.title}</strong>? This action cannot be undone.
+            Are you sure you want to delete <strong>{item?.name}</strong>? This
+            action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isDeleting} >Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
-            disabled={isDeleting}
-            // className="bg-red-600 hover:bg-red-700 text-white"
+            // className="bg-red-600 hover:bg-red-700"
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            disabled={isDeleting}
           >
             {isDeleting ? "Deleting..." : "Delete"}
           </AlertDialogAction>

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useCallback, useEffect, useState } from "react";
@@ -14,57 +13,55 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PlusCircle, MoreHorizontal, Edit, Trash2, Search } from "lucide-react";
-
-import DeleteHomeChooseItsDialog from "@/components/dashboard/Why-Choose-ITS/DeleteHomeChooseItsDialog";
+import DeleteEngagementModelDialog from "@/components/dashboard/EngagementModel/DeleteEngagementModelDialog";
+import BulkDeleteEngagementModelDialog from "@/components/dashboard/EngagementModel/BulkDeleteEngagementModelDialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import apiService from "@/lib/apiService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-
+import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { HomeChooseIts } from "@/types";
-import BulkDeleteHomeChooseItsDialog from "@/components/dashboard/Why-Choose-ITS/BulkDeleteHomeChooseItsDialog";
-import { Input } from "@/components/ui/input";
+import type { EngagementModel } from "@/types";
 
 
-export default function WhyChooseITSPage() {
+
+export default function EngagementModelPage() {
   const router = useRouter();
-  const [items, setItems] = useState<HomeChooseIts[]>([]);
-
+  const [items, setItems] = useState<EngagementModel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<HomeChooseIts | null>(null);
+  const [selectedItem, setSelectedItem] = useState<EngagementModel | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
 
-  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null); // track open menu by item id
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [pagination, setPagination] = useState({ current: 1, pages: 1, total: 0 });
-  const [limit] = useState(10);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pages: 1,
+    total: 0,
+  });
 
-
-
-  const fetchItems = useCallback(async (page = 1, search = searchQuery) => {
+  const fetchItems = useCallback(async (page: number = 1, search: string = "") => {
     setIsLoading(true);
     try {
-      const query = new URLSearchParams({
-        page: String(page),
-        limit: String(limit),
-        ...(search ? { search } : {}),
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: "10",
+        search: search,
       });
 
       const res = await apiService<{
         success: boolean;
-        data: HomeChooseIts[];
+        data: EngagementModel[];
         pagination: { current: number; pages: number; total: number };
-      }>(`/choose_its_home/admin?${query.toString()}`, { method: "GET" });
+      }>(`/engagement-model/admin?${params.toString()}`, { method: "GET" });
 
       if (res.success) {
         setItems(res.data);
@@ -77,7 +74,7 @@ export default function WhyChooseITSPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [limit, searchQuery]);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -90,13 +87,11 @@ export default function WhyChooseITSPage() {
     setSelectedIds([]);
   }, [searchQuery]);
 
-
-
-  const handleEditDialogOpen = (item: HomeChooseIts) => {
-    router.push(`/dashboard/Why-Choose-ITS/${item._id}/edit`);
+  const handleEditDialogOpen = (item: EngagementModel) => {
+    router.push(`/dashboard/EngagementModel/${item._id}/edit`);
   };
 
-  const handleDeleteDialogOpen = (item: HomeChooseIts) => {
+  const handleDeleteDialogOpen = (item: EngagementModel) => {
     setSelectedItem(item);
     setDeleteDialogOpen(true);
   };
@@ -106,15 +101,11 @@ export default function WhyChooseITSPage() {
     setDeleteDialogOpen(open);
   };
 
-
-
-
   const handleDeleteSuccess = () => {
     setDeleteDialogOpen(false);
     setSelectedIds((prev) => prev.filter((id) => id !== selectedItem?._id));
     fetchItems(pagination.current);
   };
-
 
   const handleBulkDeleteSuccess = () => {
     setSelectedIds([]);
@@ -122,14 +113,7 @@ export default function WhyChooseITSPage() {
     fetchItems(pagination.current);
   };
 
-
-  const handleCheckboxChange = (id: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
-  };
-
-  const handleSelectAll = () => {
+  const toggleSelectAll = () => {
     if (selectedIds.length === items.length) {
       setSelectedIds([]);
     } else {
@@ -137,44 +121,41 @@ export default function WhyChooseITSPage() {
     }
   };
 
-  const isAllSelected = items.length > 0 && selectedIds.length === items.length;
-  const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
+  const toggleSelectItem = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
 
 
   return (
-    <div>
+    <div data-cursor >
       <PageHeader
-        title="Why Choose ITS"
-        description="Manage the Why Choose ITS entries"
+        title="Engagement Models"
+        description="Manage Engagement Model entries"
         actionButtons={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
 
-            <Link href="/dashboard/Why-Choose-ITS/create">
+            <Link href="/dashboard/EngagementModel/create">
               <Button
-              // className="px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
+
               >
                 <PlusCircle className="mr-2 h-4 w-4" /> Add New
               </Button>
             </Link>
           </div>
-
         }
-
       />
       <div className="flex items-center justify-between gap-3  mb-4">
+
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            // className="felx h-10 w-full rounded-md border-input bg-background px-3 py-2 pl-[30px] "
+            placeholder="Search models..."
+            // className="pl-9 h-10 rounded-lg border-gray-300 focus:ring-blue-500"
             value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setPagination((prev) => ({ ...prev, current: 1 }));
-            }}
-            placeholder="Search why choose its..."
-            type="search"
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-8 w-full"
-
           />
         </div>
         {selectedIds.length > 0 && (
@@ -187,82 +168,80 @@ export default function WhyChooseITSPage() {
           </Button>
         )}
       </div>
-
-
       {/* Table */}
-      <div className="rounded-md border shadow-sm ">
-        <Table>
+      <div className="rounded-md  border shadow-sm">
+        <Table className="">
           <TableHeader>
-            <TableRow >
-              <TableHead className="w-10">
+            <TableRow>
+              <TableHead className="w-12">
                 <input
                   type="checkbox"
-                  checked={isAllSelected}
-                  ref={(el) => {
-                    if (el) el.indeterminate = isIndeterminate;
-                  }}
-                  onChange={handleSelectAll}
-                  className="cursor-pointer w-4 h-4"
+                  className="h-4 w-4 rounded border-gray-300"
+                  checked={selectedIds.length === items.length && items.length > 0}
+                  onChange={toggleSelectAll}
                 />
-              </TableHead>
-              <TableHead >Image</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
 
-          <TableBody >
+              </TableHead>
+              <TableHead className="w-20">Image</TableHead>
+              <TableHead className="w-1/4">Title</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead className="text-right w-24">Actions</TableHead>
+            </TableRow>
+
+          </TableHeader>
+          <TableBody>
             {isLoading
               ? Array.from({ length: 5 }).map((_, i) => (
                 <TableRow key={i}>
-                  <TableCell><Skeleton className="h-5 w-5" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-4" /></TableCell>
+                  <TableCell><Skeleton className="h-10 w-10" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-48" /></TableCell>
-                  <TableCell><Skeleton className="h-10 w-10" /></TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               ))
 
               : items.length > 0
-                ? items.map((item) => (
-                  <TableRow
-                    key={item._id}
+                ? items.map((item, index) => (
+                  <TableRow key={item._id}
 
                   >
                     <TableCell>
                       <input
                         type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300"
                         checked={selectedIds.includes(item._id)}
-                        onChange={() => handleCheckboxChange(item._id)}
-                        className="cursor-pointer w-4 h-4"
+                        onChange={() => toggleSelectItem(item._id)}
                       />
-                    </TableCell>
 
+                    </TableCell>
                     <TableCell>
-                      {item.image && (
-                        <img src={item.image} alt={item.title} className="h-8 w-10 object-cover rounded" />
+                      {item.modelImage && (
+                        <img src={item.modelImage} data-cursor alt={item.modelTitle} className="h-8 w-10 object-cover rounded" />
                       )}
                     </TableCell>
-                    <TableCell>{item.title}</TableCell>
-                    <TableCell>{item.description}</TableCell>
-                    <TableCell className="text-right ">
+                    <TableCell className="font-medium">{item.modelTitle}</TableCell>
+                    <TableCell className="max-w-md truncate">{item.modelDescription}</TableCell>
+                    <TableCell className="text-right">
                       <DropdownMenu
                         open={dropdownOpen === item._id}
                         onOpenChange={(open) => setDropdownOpen(open ? item._id : null)}
                       >
+
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon">
-                            <MoreHorizontal className="h-4 w-4 " />
+                            <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
 
-                        <DropdownMenuContent align="end" className="">
+
+                        <DropdownMenuContent align="end" className="bg-white border dark:border-gray-300">
                           <DropdownMenuItem
                             onClick={() => {
                               handleEditDialogOpen(item);
                               setDropdownOpen(null);
                             }}
+
                           >
                             <Edit className="mr-2 h-4 w-4" /> Edit
                           </DropdownMenuItem>
@@ -277,52 +256,51 @@ export default function WhyChooseITSPage() {
                             <Trash2 className="mr-2 h-4 w-4" /> Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
+
                       </DropdownMenu>
                     </TableCell>
-
                   </TableRow>
                 ))
                 : (
                   <TableRow>
                     <TableCell colSpan={5} className="text-center h-24">No entries found.</TableCell>
-                  </TableRow>
+                  </TableRow >
 
                 )}
           </TableBody>
         </Table>
       </div>
 
-      <div className="flex justify-between items-center gap-2 mt-4">
-        <span className="text-sm">
-          Page {pagination.current} of {pagination.pages}
-          {selectedIds.length > 0 && (
-            <span className="ml-3 text-blue-600 font-medium">
-              {selectedIds.length} selected
-            </span>
-          )}
-        </span>
-        <div className="flex gap-3">
-          <Button
-            className="bg-blue-600 text-white"
-            disabled={pagination.current === 1 || isLoading}
-            onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
-          >
-            Previous
-          </Button>
-          <Button
-            className="bg-blue-600 text-white"
-            disabled={pagination.current === pagination.pages || isLoading}
-            onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
-          >
-            Next
-          </Button>
+      {/* Pagination */}
+      {pagination.pages > 1 && (
+        <div className="flex items-center justify-between mt-6 px-2">
+          <p className="text-sm text-muted-foreground">
+            Showing page {pagination.current} of {pagination.pages}
+          </p>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={pagination.current === 1}
+              onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={pagination.current === pagination.pages}
+              onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
+            >
+              Next
+            </Button>
+          </div>
         </div>
-      </div>
-
+      )}
 
       {/* Delete Dialog */}
       {selectedItem && (
-        <DeleteHomeChooseItsDialog
+        <DeleteEngagementModelDialog
           isOpen={deleteDialogOpen}
           onOpenChange={handleDeleteDialogChange}
           item={selectedItem}
@@ -331,7 +309,7 @@ export default function WhyChooseITSPage() {
       )}
 
       {/* Bulk Delete Dialog */}
-      <BulkDeleteHomeChooseItsDialog
+      <BulkDeleteEngagementModelDialog
         isOpen={bulkDeleteDialogOpen}
         onOpenChange={setBulkDeleteDialogOpen}
         selectedIds={selectedIds}

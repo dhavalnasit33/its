@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+
 import PageHeader from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
@@ -12,7 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PlusCircle, MoreHorizontal, Edit, Trash2, Eye, Search } from "lucide-react";
+import { PlusCircle, MoreHorizontal, Edit, Trash2, Eye, Search, Filter } from "lucide-react";
+
 import DeleteServiceManagerDialog from "@/components/dashboard/service-manager/DeleteServiceManagerDialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import apiService from "@/lib/apiService";
@@ -25,6 +27,15 @@ import {
 import type { ServiceManager } from "@/types/index";
 import { useToast } from "@/hooks/use-toast";
 import BulkDeleteServiceManagerDialog from "@/components/dashboard/service-manager/BulkDeleteServiceManagerDialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 
 export default function ServiceManagerPage() {
   const [items, setItems] = useState<ServiceManager[]>([]);
@@ -34,7 +45,9 @@ export default function ServiceManagerPage() {
   const [pagination, setPagination] = useState({ current: 1, pages: 1, total: 0 });
   const [limit] = useState(10);
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
   const router = useRouter();
+
   const params = useParams();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -46,13 +59,14 @@ export default function ServiceManagerPage() {
 
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
-  const fetchItems = async (page = 1, category = categoryFilter) => {
+  const fetchItems = useCallback(async (page = 1, category = categoryFilter, search = searchQuery) => {
     setIsLoading(true);
     try {
       const query = new URLSearchParams({
         page: String(page),
         limit: String(limit),
         ...(category ? { category } : {}),
+        ...(search ? { search } : {}),
       });
 
       const res = await apiService<{
@@ -73,12 +87,45 @@ export default function ServiceManagerPage() {
     } finally {
       setIsLoading(false);
     }
+  }, [categoryFilter, limit, searchQuery]);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await apiService<{
+        success: boolean;
+        data: { category: string; subCategory: string }[];
+      }>("/service/categories", { method: "GET" });
+      if (res.success) {
+        const uniqueCategories = [
+          ...new Set(
+            res.data.map((s) =>
+              (s.category || "").toString().trim().replace(/\s+/g, " ")
+            ).filter(cat => cat !== "")
+          ),
+        ];
+        setCategories(uniqueCategories);
+      }
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
   };
 
   useEffect(() => {
-    fetchItems(1);
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      fetchItems(pagination.current, categoryFilter, searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [pagination.current, categoryFilter, searchQuery, fetchItems]);
+
+  useEffect(() => {
     setSelectedIds([]);
-  }, [categoryFilter]);
+  }, [categoryFilter, searchQuery]);
+
 
   const handleDeleteDialogOpen = (item: ServiceManager) => {
     setSelectedItem(item);
@@ -179,44 +226,53 @@ export default function ServiceManagerPage() {
 
         <div className="relative w-full max-w-sm">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <input
-            className="felx h-10 w-full rounded-md border-input bg-background px-3 py-2 pl-[30px] "
+          <Input
+            // className="felx h-10 w-full rounded-md border-input bg-background px-3 py-2 pl-[30px] "
+            className="pl-8 w-full"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search pages..."
-            type="search"
-          /></div>
-
-        <div>
-          <label className="font-medium">Category:</label>
-          <select
-            value={categoryFilter}
             onChange={(e) => {
-              setCategoryFilter(e.target.value);
+              setSearchQuery(e.target.value);
               setPagination((prev) => ({ ...prev, current: 1 }));
             }}
-            className="border rounded px-3 py-1 border-gray-300"
-          >
-            <option value="">All</option>
-            {[
-              ...new Set(
-                items.map((s) =>
-                  (s.category || "").toString().trim().replace(/\s+/g, " ")
-                )
-              ),
-            ].map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
+            placeholder="Search pages..."
+            type="search"
+          />
+
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2">
+            <label className="font-medium whitespace-nowrap">Category:</label>
+            <Select
+              value={categoryFilter || "all"}
+              onValueChange={(v) => {
+                setCategoryFilter(v === "all" ? "" : v);
+                setPagination((prev) => ({ ...prev, current: 1 }));
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <Filter className="mr-2 h-4 w-4" />
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+
+            </Select>
+          </div>
+
         </div>
       </div>
 
-      <div className="rounded-md  shadow-sm">
+      <div className="rounded-md border shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow className="hover:bg-gray-200">
+            <TableRow >
               <TableHead className="w-10">
                 <input
                   type="checkbox"
@@ -252,10 +308,6 @@ export default function ServiceManagerPage() {
                 ? items.map((item, index) => (
                   <TableRow
                     key={item._id}
-                    className={`border hover:bg-gray-200 dark:border-gray-300 ${selectedIds.includes(item._id)
-                      ? "bg-gray-300"
-                      : ""
-                      }`}
                   >
                     <TableCell>
                       <input
@@ -329,18 +381,19 @@ export default function ServiceManagerPage() {
         <div className="flex gap-3">
           <Button
             className="bg-blue-600 text-white"
-            disabled={pagination.current === 1}
-            onClick={() => fetchItems(pagination.current - 1)}
+            disabled={pagination.current === 1 || isLoading}
+            onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
           >
             Previous
           </Button>
           <Button
             className="bg-blue-600 text-white"
-            disabled={pagination.current === pagination.pages}
-            onClick={() => fetchItems(pagination.current + 1)}
+            disabled={pagination.current === pagination.pages || isLoading}
+            onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
           >
             Next
           </Button>
+
         </div>
       </div>
       {selectedItem && (

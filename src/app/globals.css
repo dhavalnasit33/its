@@ -1,143 +1,110 @@
 @import "tailwindcss";
 
-/* -------------------------
-   1) Runtime variables (HSL strings)
-   Put these outside @layer so they exist at runtime
-   ------------------------- */
-:root {
-  --background: hsl(210 17% 98%);
-  --foreground: hsl(215 28% 17%);
-
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(215 28% 17%);
-
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(215 28% 17%);
-
-  /* --primary: hsl(243 75% 59%); */
-  --primary: 243 75% 59%;
-  --primary-foreground: 0 0% 100%;
-
-  --secondary: hsl(210 17% 92%);
-  --secondary-foreground: hsl(215 28% 25%);
-
-  --muted: hsl(210 17% 92%);
-  --muted-foreground: hsl(215 20% 45%);
-
-  --accent: hsl(160 70% 37%);
-  --accent-foreground: hsl(0 0% 100%);
-
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(0 0% 98%);
-
-  --border: hsl(210 17% 88%);
-  --input: hsl(210 17% 88%);
-  --ring: hsl(243 75% 59%);
-
-  --radius: 0.5rem;
-
-  /* Sidebar - Fixed with proper values */
-  --sidebar-background: hsl(0 0% 100%);
-  --sidebar-foreground: hsl(215 28% 17%);
-  --sidebar-primary: hsl(243 75% 59%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(210 17% 95%);
-  --sidebar-accent-foreground: hsl(215 28% 17%);
-  --sidebar-border: hsl(210 17% 88%);
-  --sidebar-ring: hsl(243 75% 59%);
-}
-
-/* Dark theme variables (still outside @layer) */
-.dark {
-  --background: hsl(215 28% 17%);
-  --foreground: hsl(210 17% 98%);
-
-  --card: hsl(215 28% 22%);
-  --card-foreground: hsl(210 17% 98%);
-
-  --popover: hsl(215 28% 22%);
-  --popover-foreground: hsl(210 17% 98%);
-
-  --primary: hsl(243 75% 69%);
-  --primary-foreground: hsl(215 28% 10%);
-
-  --secondary: hsl(215 28% 25%);
-  --secondary-foreground: hsl(210 17% 98%);
-
-  --muted: hsl(215 28% 25%);
-  --muted-foreground: hsl(210 17% 65%);
-
-  --accent: hsl(160 70% 47%);
-  --accent-foreground: hsl(215 28% 10%);
-
-  --destructive: hsl(0 72% 51%);
-  --destructive-foreground: hsl(0 0% 98%);
-
-  --border: hsl(215 28% 30%);
-  --input: hsl(215 28% 30%);
-  --ring: hsl(243 75% 69%);
-
-  /* Dark sidebar */
-  --sidebar-background: hsl(215 28% 15%);
-  --sidebar-foreground: hsl(210 17% 90%);
-  --sidebar-primary: hsl(243 75% 69%);
-  --sidebar-primary-foreground: hsl(215 28% 10%);
-  --sidebar-accent: hsl(215 28% 25%);
-  --sidebar-accent-foreground: hsl(210 17% 98%);
-  --sidebar-border: hsl(215 28% 28%);
-  --sidebar-ring: hsl(243 75% 69%);
-}
-
-/* -------------------------
-   2) Map tokens to Tailwind's theme using @theme inline
-   Define --color-<name> variables here so Tailwind v4
-   generates utilities like bg-<name>, text-<name>, etc.
-   ------------------------- */
 @theme inline {
-  /* basic */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  /* primary / semantic */
-  /* --color-primary: var(--primary); */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
 
-  /* structural */
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
+  --color-sidebar-background: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  /* sidebar tokens - ADD ALL SIDEBAR VARIABLES */
-  --color-sidebar-background: var(--sidebar-background);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 
-/* -------------------------
-   3) Base rules (you can keep @layer base for utility application)
-   ------------------------- */
-@layer base {
-  * { box-sizing: border-box; }
+:root {
+  --background: 210 17% 98%; /* #f9fafb Light Gray */
+  --foreground: 215 28% 17%; /* #111827 Dark Gray */
+  --card: 0 0% 100%; /* #ffffff White */
+  --card-foreground: 215 28% 17%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 28% 17%;
+  --primary: 243 75% 59%; /* #4f46e5 Indigo */
+  --primary-foreground: 0 0% 100%; /* White text on primary */
+  --secondary: 210 17% 92%; /* Lighter gray for secondary elements */
+  --secondary-foreground: 215 28% 25%;
+  --muted: 210 17% 92%;
+  --muted-foreground: 215 20% 45%;
+  --accent: 160 70% 37%; /* #10b981 Emerald */
+  --accent-foreground: 0 0% 100%; /* White text on accent */
+  --destructive: 0 84.2% 60.2%; /* #ef4444 Red */
+  --destructive-foreground: 0 0% 98%;
+  --border: 210 17% 88%; /* Slightly darker gray for borders */
+  --input: 210 17% 88%;
+  --ring: 243 75% 59%; /* Indigo for focus rings */
+  --radius: 0.5rem;
 
+  /* Sidebar specific colors */
+  --sidebar-background: 210 20% 96%; /* Slightly off-white for sidebar */
+  --sidebar-foreground: 215 28% 25%; /* Darker text for sidebar */
+  --sidebar-primary: 243 75% 59%; /* Indigo for active/primary items in sidebar */
+  --sidebar-primary-foreground: 0 0% 100%; /* White text */
+  --sidebar-accent: 210 17% 90%; /* Hover/accent state in sidebar */
+  --sidebar-accent-foreground: 215 28% 17%; /* Text color for hover/accent */
+  --sidebar-border: 210 17% 85%;
+  --sidebar-ring: 243 75% 59%;
+}
+
+.dark {
+  --background: 215 28% 17%; /* Dark Gray */
+  --foreground: 210 17% 98%; /* Light Gray */
+  --card: 215 28% 22%; /* Slightly lighter dark gray */
+  --card-foreground: 210 17% 98%;
+  --popover: 215 28% 22%;
+  --popover-foreground: 210 17% 98%;
+  --primary: 243 75% 69%; /* Lighter Indigo for dark mode */
+  --primary-foreground: 215 28% 10%; /* Darker text on primary */
+  --secondary: 215 28% 25%;
+  --secondary-foreground: 210 17% 98%;
+  --muted: 215 28% 25%;
+  --muted-foreground: 210 17% 65%;
+  --accent: 160 70% 47%; /* Lighter Emerald for dark mode */
+  --accent-foreground: 215 28% 10%;
+  --destructive: 0 72% 51%; /* Dark mode red */
+  --destructive-foreground: 0 0% 98%;
+  --border: 215 28% 30%;
+  --input: 215 28% 30%;
+  --ring: 243 75% 69%;
+
+  /* Dark Sidebar specific colors */
+  --sidebar-background: 215 28% 15%; /* Even darker for sidebar */
+  --sidebar-foreground: 210 17% 90%;
+  --sidebar-primary: 243 75% 69%;
+  --sidebar-primary-foreground: 215 28% 10%;
+  --sidebar-accent: 215 28% 25%;
+  --sidebar-accent-foreground: 210 17% 98%;
+  --sidebar-border: 215 28% 28%;
+  --sidebar-ring: 243 75% 69%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
   body {
-    /* now these utilities exist: bg-background, text-foreground */
     @apply bg-background text-foreground;
     font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -145,12 +112,24 @@
   }
 }
 
-/* Optional: custom scrollbar (uses runtime variables) */
-::-webkit-scrollbar { width:8px; height:8px; }
-::-webkit-scrollbar-track { background: color-mix(in srgb, var(--background) 50%, transparent); border-radius:10px; }
-::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--primary) 60%, transparent); border-radius:10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background) / 0.5);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.7);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
 
+/* Base rules for prose and tiptap */
 @layer base {
   .prose ul {
     @apply list-disc list-outside pl-5;

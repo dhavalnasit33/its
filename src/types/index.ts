@@ -810,12 +810,24 @@ export const GoalsSchema = z.object({
   valuesDescription: z.string().min(5, "Values description is required"),
   valuesImage: z.string().url("Values image URL is required"),
 });
+export const AboutUsSEOSchema = z.object({
+  title: z.string(),
+  keyphrase: z.string(),
+  seoDescription: z.string(),
+  featureImage: z.string().nullable().optional().or(z.literal("")),
+});
+
+
+
 
 export const AboutUsContentSchema = z.object({
   heroSection: HeroSectionAboutUsSchema,
   whoWeAre: WhoWeAreSchema,
   goals: GoalsSchema,
+  seo: AboutUsSEOSchema,
 });
+
+
 
 export type AboutUsContentFormValues = z.infer<typeof AboutUsContentSchema>;
 
@@ -846,9 +858,16 @@ export interface AboutUsContent {
     valuesDescription: string;
     valuesImage: string;
   };
+  seo: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage: string | null;
+  };
   createdAt: string;
   updatedAt: string;
 }
+
 
 /* -------------------- Training Main Page Content -------------------- */
 export const TrainingMainPageDataSchema = z.object({

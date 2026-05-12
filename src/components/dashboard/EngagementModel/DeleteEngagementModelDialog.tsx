@@ -12,22 +12,16 @@ import {
 } from "@/components/ui/alert-dialog";
 import apiService from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
-import type { HomeChooseIts } from "@/types";
 import { useState } from "react";
 
-interface DeleteHomeChooseItsDialogProps {
+interface DeleteEngagementModelDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  item: HomeChooseIts | null;
+  item: { _id: string; modelTitle: string } | null;
   onSuccess: () => void;
 }
 
-export default function DeleteHomeChooseItsDialog({
-  isOpen,
-  onOpenChange,
-  item,
-  onSuccess,
-}: DeleteHomeChooseItsDialogProps) {
+export default function DeleteEngagementModelDialog({ isOpen, onOpenChange, item, onSuccess }: DeleteEngagementModelDialogProps) {
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false)
 
@@ -35,51 +29,35 @@ export default function DeleteHomeChooseItsDialog({
     if (!item) return;
     try {
       setIsDeleting(true)
-      const res = await apiService<{ success: boolean; message: string }>(
-        `/choose_its_home/${item._id}`,
-        { method: "DELETE" }
-      );
-
+      const res = await apiService<{ success: boolean; message: string }>(`/engagement-model/${item._id}`, { method: "DELETE" });
       if (res.success) {
         toast({ title: "Deleted", description: res.message });
         onSuccess();
         onOpenChange(false);
-        // Let parent handle closing
+
       } else {
-        toast({
-          title: "Error",
-          description: res.message,
-          variant: "destructive",
-        });
+        toast({ title: "Error", description: res.message, variant: "destructive" });
       }
       setIsDeleting(false)
+
     } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message || "Something went wrong",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: error.message || "Something went wrong", variant: "destructive" });
 
     }
   };
+
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialogContent className=" ">
+      <AlertDialogContent className="bg-white">
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Entry</AlertDialogTitle>
+          <AlertDialogTitle>Delete Engagement Model</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete{" "}
-            <strong>{item?.title}</strong>? This action cannot be undone.
+            Are you sure you want to delete <strong>{item?.modelTitle}</strong>? This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isDeleting} >Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={handleDelete}
-            disabled={isDeleting}
-            // className="bg-red-600 hover:bg-red-700 text-white"
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-          >
+          <AlertDialogAction onClick={handleDelete} disabled={isDeleting} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
             {isDeleting ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
