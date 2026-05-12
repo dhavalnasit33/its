@@ -99,6 +99,21 @@ const router = express.Router();
  *           $ref: '#/components/schemas/WhoWeAre'
  *         goals:
  *           $ref: '#/components/schemas/Goals'
+ *         seo:
+ *           type: object
+ *           properties:
+ *             title:
+ *               type: string
+ *               example: "ITS - About Us"
+ *             keyphrase:
+ *               type: string
+ *               example: "it solutions company"
+ *             seoDescription:
+ *               type: string
+ *               example: "Learn more about our IT solutions..."
+ *             featureImage:
+ *               type: string
+ *               example: https://example.com/seo-image.jpg
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -146,7 +161,7 @@ const router = express.Router();
  */
 router.post('/', protect, async (req, res) => {
     try {
-        const { heroSection, whoWeAre, goals } = req.body;
+        const { heroSection, whoWeAre, goals, seo } = req.body;
 
         // Validate required fields based on your schema requirements
         if (!heroSection || !whoWeAre || !goals) {
@@ -182,7 +197,7 @@ router.post('/', protect, async (req, res) => {
             }
         }
 
-        const aboutUs = new AboutUs({ heroSection, whoWeAre, goals });
+        const aboutUs = new AboutUs({ heroSection, whoWeAre, goals, seo });
         await aboutUs.save();
 
         res.status(201).json({
@@ -265,11 +280,11 @@ router.get('/', async (req, res) => {
  */
 router.put('/:id', protect, cleanupOldImages(AboutUs, "AboutUs"), async (req, res) => {
     try {
-        const { heroSection, whoWeAre, goals } = req.body;
+        const { heroSection, whoWeAre, goals, seo } = req.body;
 
         const updatedAboutUs = await AboutUs.findByIdAndUpdate(
             req.params.id,
-            { heroSection, whoWeAre, goals },
+            { heroSection, whoWeAre, goals, seo },
             { new: true, runValidators: true }
         );
 

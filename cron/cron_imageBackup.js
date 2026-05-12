@@ -8,7 +8,7 @@ const imageConfig = require("../config/imageConfig");
 // Models
 const models = {
     Testimonial: require("../models/testimonials"),
-    ExpertiseIndustry: require("../models/expertiseIndustries"),
+    ExpertiseIndustries: require("../models/expertiseIndustries"),
     EngagementModel: require("../models/engagementModel"),
     CreativeWork: require("../models/portfolio/creativeWork"),
     ServiceTechnologyList: require("../models/ourServices/tecnologySection"),

@@ -131,7 +131,10 @@ router.get("/admin", async (req, res) => {
 
     let query = {};
     if (value) {
-      query = { title: { $regex: value, $options: "i" } };
+      query.$or = [
+        { title: { $regex: value, $options: "i" } },
+        { description: { $regex: value, $options: "i" } },
+      ];
     }
 
     const [expertise, count] = await Promise.all([
@@ -194,6 +197,46 @@ router.get("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/expertise-industries/{id}:
+ *   get:
+ *     summary: Get a single expertise industry by ID
+ *     tags: [ExpertiseIndustries]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Expertise industry fetched successfully
+ *       404:
+ *         description: Expertise industry not found
+ *       500:
+ *         description: Server error
+ */
+router.get("/:id", async (req, res) => {
+  try {
+    const data = await ExpertiseIndustries.findById(req.params.id);
+    if (!data) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Data Fetched Successfully",
+      data,
+    });
+  } catch (error) {
+    console.error("Error fetching single expertise", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
 // ----------------- UPDATE -----------------
 /**
  * @swagger
@@ -228,7 +271,7 @@ router.get("/", async (req, res) => {
 router.put(
   "/:id",
   protect,
-  cleanupOldImages(ExpertiseIndustries, "ExpertiseIndustry"),
+  cleanupOldImages(ExpertiseIndustries, "ExpertiseIndustries"),
   async (req, res) => {
     try {
       const { title, image, description } = req.body;
@@ -328,5 +371,60 @@ router.delete(
     }
   },
 );
+
+/**
+ * @swagger
+ * /api/expertise-industries/bulk-delete:
+ *   post:
+ *     summary: Bulk delete expertise industries
+ *     tags: [ExpertiseIndustries]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Expertise industries deleted successfully
+ *       400:
+ *         description: Missing IDs
+ *       500:
+ *         description: Server error
+ */
+router.post("/bulk-delete", protect, cleanupImages.cleanupBulkImages(ExpertiseIndustries), async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of IDs to delete",
+      });
+    }
+
+    const result = await ExpertiseIndustries.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: `${result.deletedCount} items deleted successfully`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (error) {
+    console.error(" Error to bulk delete data", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
 
 module.exports = router;

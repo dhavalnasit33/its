@@ -1,10 +1,10 @@
 // config/imageConfig.js
 module.exports = {
   // ✅ Testimonials
-  Testimonial: ["image"],
+  Testimonials: ["image"],
 
   // ✅ ExpertiseIndustries
-  ExpertiseIndustry: ["image"],
+  ExpertiseIndustries: ["image"],
 
   // ✅ EngagementModel
   EngagementModel: ["modelImage"],
@@ -59,11 +59,13 @@ module.exports = {
 
   // ✅ AboutUs
   AboutUs: [
+    "heroSection.image",
     "heroSection.points[].image",
     "whoWeAre.image",
     "goals.missionImage",
     "goals.visionImage",
     "goals.valuesImage",
+    "seo.featureImage",
   ],
 
   // ✅ NavbarGroupTabImageManage

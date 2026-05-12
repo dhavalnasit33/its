@@ -94,7 +94,10 @@ function getNestedValue(obj, path) {
 function cleanupImages(model) {
   return async (req, res, next) => {
     try {
-      const record = await model.findById(req.params.id);
+      const id = req.params.id || req.body.id;
+      if (!id) return next();
+
+      const record = await model.findById(id);
       if (!record) return res.status(404).json({ message: "Record not found" });
 
       console.log(`🧹 Starting image cleanup for: ${model.modelName}`);
@@ -110,4 +113,34 @@ function cleanupImages(model) {
   };
 }
 
-module.exports = cleanupImages;
+/**
+ * Cleanup middleware for bulk delete: finds multiple records by ids, deletes all images
+ */
+function cleanupBulkImages(model) {
+  return async (req, res, next) => {
+    try {
+      const { ids } = req.body;
+      if (!ids || !Array.isArray(ids) || ids.length === 0) {
+        return next();
+      }
+
+      const records = await model.find({ _id: { $in: ids } });
+      if (records.length === 0) return next();
+
+      console.log(`🧹 Starting bulk image cleanup for: ${model.modelName}`);
+      for (const record of records) {
+        await deleteImagesByConfig(record.toObject(), model.modelName);
+      }
+      console.log("✅ Bulk image cleanup complete");
+
+      req.records = records;
+      next();
+    } catch (err) {
+      console.error("❌ Bulk image cleanup error:", err);
+      res.status(500).json({ message: "Server error during bulk image cleanup" });
+    }
+  };
+}
+
+cleanupImages.cleanupBulkImages = cleanupBulkImages;
+module.exports = cleanupImages;

@@ -81,10 +81,21 @@ const GoalsSchema = new mongoose.Schema({
     }
 }, { _id: false });
 
+const SEOSchema = new mongoose.Schema(
+    {
+        title: { type: String, default: "" },
+        keyphrase: { type: String, default: "" },
+        seoDescription: { type: String, default: "" },
+        featureImage: { type: String, default: null },
+    },
+    { _id: false },
+);
+
 const AboutUsSchema = new mongoose.Schema({
-    heroSection : HeroSectionSchema,
+    heroSection: HeroSectionSchema,
     whoWeAre: WhoWeAreSchema,
     goals: GoalsSchema,
+    seo: SEOSchema,
 }, { timestamps: true });
 
 module.exports = mongoose.model('AboutUs', AboutUsSchema);

@@ -1,6 +1,6 @@
 const express = require('express');
 const Testimonials = require('../models/testimonials');
-const { protect } = require('../middlewares/auth');  
+const { protect } = require('../middlewares/auth');
 const cleanupImages = require('../middlewares/cleanupImages');
 const cleanupOldImages = require('../middlewares/cleanupOldImages');
 const router = express.Router();
@@ -104,6 +104,70 @@ router.post('/', protect, async (req, res) => {
 
 /**
  * @swagger
+ * /api/testimonials/admin:
+ *   get:
+ *     summary: Get paginated testimonials for admin with search
+ *     tags: [Testimonials]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Paginated list of testimonials
+ *       500:
+ *         description: Server error
+ */
+router.get("/admin", protect, async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const search = req.query.search || "";
+
+        let query = {};
+        if (search) {
+            query.$or = [
+                { name: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } },
+            ];
+        }
+
+        const total = await Testimonials.countDocuments(query);
+        const data = await Testimonials.find(query)
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .sort({ createdAt: -1 });
+
+        res.json({
+            success: true,
+            message: "Data Fetched Successfully",
+            data,
+            pagination: {
+                current: page,
+                pages: Math.ceil(total / limit),
+                total,
+            },
+        });
+    } catch (error) {
+        console.error("Error fetching admin testimonials", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+/**
+ * @swagger
  * /api/testimonials:
  *   get:
  *     summary: Get all testimonials with pagination
@@ -191,6 +255,46 @@ router.get('/', async (req, res) => {
 /**
  * @swagger
  * /api/testimonials/{id}:
+ *   get:
+ *     summary: Get a single testimonial by ID
+ *     tags: [Testimonials]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Testimonial data fetched successfully
+ *       404:
+ *         description: Testimonial not found
+ *       500:
+ *         description: Server error
+ */
+router.get("/:id", async (req, res) => {
+    try {
+        const data = await Testimonials.findById(req.params.id);
+        if (!data) {
+            return res.status(404).json({
+                success: false,
+                message: "Data not found",
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: "Data Fetched Successfully",
+            data,
+        });
+    } catch (error) {
+        console.error("Error fetching single testimonial", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+/**
+ * @swagger
+ * /api/testimonials/{id}:
  *   put:
  *     summary: Update a testimonial by ID
  *     tags: [Testimonials]
@@ -228,7 +332,7 @@ router.get('/', async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.put('/:id', protect, cleanupOldImages(Testimonials,"Testimonial"), async (req, res) => {
+router.put('/:id', protect, cleanupOldImages(Testimonials, "Testimonials"), async (req, res) => {
     try {
         const id = req.params.id;
         const { name, image, location, description } = req.body;
@@ -314,5 +418,62 @@ router.delete('/:id', protect, cleanupImages(Testimonials), async (req, res) => 
         });
     }
 });
+
+
+/**
+ * @swagger
+ * /api/testimonials/bulk-delete:
+ *   post:
+ *     summary: Bulk delete testimonials
+ *     tags: [Testimonials]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Testimonials deleted successfully
+ *       400:
+ *         description: Missing IDs
+ *       500:
+ *         description: Server error
+ */
+router.post("/bulk-delete", protect, cleanupImages.cleanupBulkImages(Testimonials), async (req, res) => {
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide an array of IDs to delete",
+            });
+        }
+
+        const result = await Testimonials.deleteMany({ _id: { $in: ids } });
+
+        res.status(200).json({
+            success: true,
+            message: `${result.deletedCount} items deleted successfully`,
+            deletedCount: result.deletedCount,
+        });
+    } catch (error) {
+        console.error(" Error to bulk delete data", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
+    }
+});
+
 
 module.exports = router;

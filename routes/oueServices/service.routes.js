@@ -875,10 +875,19 @@ router.post("/", protect, async (req, res) => {
 // ─── GET — All Services (paginated) ───
 router.get("/", async (req, res) => {
   try {
-    const { page = 1, limit = 10, category, subCategory } = req.query;
+    const { page = 1, limit = 10, category, subCategory, search = "" } = req.query;
     let filter = {};
     if (category) filter.category = category;
     if (subCategory) filter.subCategory = subCategory;
+
+    if (search) {
+      filter.$or = [
+        { mainTitle: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } },
+        { subCategory: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
 
     const skip = (page - 1) * limit;
     const [services, total] = await Promise.all([

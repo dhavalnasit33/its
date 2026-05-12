@@ -27,7 +27,7 @@ const cleanupOldImages = require('../../middlewares/cleanupOldImages');
 // // @access   Private
 
 // router.put('/:id', protect, async (req, res) => {
-    
+
 
 // })
 
@@ -109,6 +109,73 @@ router.post('/', protect, async (req, res) => {
 
 /**
  * @swagger
+ * /api/choose_its_home/admin:
+ *   get:
+ *     summary: Get paginated "Why Choose Us" entries for admin with search
+ *     tags: [ChooseItsHome]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of items per page
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search query for title or description
+ *     responses:
+ *       200:
+ *         description: Paginated list of entries
+ *       500:
+ *         description: Server error
+ */
+router.get("/admin", protect, async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const search = req.query.search || "";
+
+        let query = {};
+
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } }
+            ];
+        }
+
+        const total = await HomeChooseIts.countDocuments(query);
+        const data = await HomeChooseIts.find(query)
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .sort({ createdAt: -1 });
+
+        res.json({
+            success: true,
+            message: 'Data is Fetched Sucessfully',
+            data,
+            pagination: {
+                current: page,
+                pages: Math.ceil(total / limit),
+                total,
+            },
+        });
+    } catch (err) {
+        console.error("Error fetching admin choose its data", err);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+/**
+ * @swagger
  * /api/choose_its_home:
  *   get:
  *     summary: Get all "Why Choose Us" entries
@@ -138,6 +205,49 @@ router.get('/', async (req, res) => {
         })
     }
 });
+
+/**
+ * @swagger
+ * /api/choose_its_home/{id}:
+ *   get:
+ *     summary: Get a "Why Choose Us" entry by ID
+ *     tags: [ChooseItsHome]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Entry ID
+ *     responses:
+ *       200:
+ *         description: Entry fetched successfully
+ *       404:
+ *         description: Entry not found
+ */
+router.get('/:id', async (req, res) => {
+    try {
+        const homeChooseIts = await HomeChooseIts.findById(req.params.id);
+        if (!homeChooseIts) {
+            return res.status(404).json({
+                success: false,
+                message: 'Data not found',
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: 'Data Fetched Successfully',
+            data: homeChooseIts
+        });
+    } catch (error) {
+        console.error("Error fetching single data", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+    }
+});
+
 
 /**
  * @swagger
@@ -172,7 +282,7 @@ router.get('/', async (req, res) => {
  *       404:
  *         description: Entry not found
  */
-router.put('/:id', protect,cleanupOldImages(HomeChooseIts,"HomeChooseIts"), async (req, res) => {
+router.put('/:id', protect, cleanupOldImages(HomeChooseIts, "HomeChooseIts"), async (req, res) => {
     try {
         // check the data is exist or not
         const homeChooseIts = await HomeChooseIts.findById(req.params.id);
@@ -224,7 +334,7 @@ router.put('/:id', protect,cleanupOldImages(HomeChooseIts,"HomeChooseIts"), asyn
  *       404:
  *         description: Entry not found
  */
-router.delete('/:id', protect,cleanupImages(HomeChooseIts), async (req, res) => {
+router.delete('/:id', protect, cleanupImages(HomeChooseIts), async (req, res) => {
     try {
         // check the data is exist or not
         const homeChooseIts = await HomeChooseIts.findById(req.params.id);
@@ -243,6 +353,37 @@ router.delete('/:id', protect,cleanupImages(HomeChooseIts), async (req, res) => 
     }
     catch (error) {
         console.error(" Error to delete data", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        })
+    }
+});
+
+
+// bulk delete api 
+router.post('/bulk-delete', protect, cleanupImages.cleanupBulkImages(HomeChooseIts), async (req, res) => {
+    try {
+        const { ids } = req.body;
+
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide an array of IDs to delete',
+            });
+        }
+
+        // delete data
+        const result = await HomeChooseIts.deleteMany({ _id: { $in: ids } });
+
+        res.status(200).json({
+            success: true,
+            message: `${result.deletedCount} items deleted successfully`,
+            deletedCount: result.deletedCount
+        });
+    }
+    catch (error) {
+        console.error(" Error to bulk delete data", error);
         res.status(500).json({
             success: false,
             message: "Server Error"
