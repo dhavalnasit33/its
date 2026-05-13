@@ -55,8 +55,17 @@ export const navItemsList: NavItem[] = [
       { href: "/dashboard/EngagementModel", label: "Engagement Model", icon: Layers },
       { href: "/dashboard/Testimonials", label: "Testimonials", icon: MessageCircle },
       { href: "/dashboard/expertise-industry", label: "Expertise Industries", icon: Factory },
+      { href: "/dashboard/ReadOurReview", label: "Read Our Review", icon: Navigation },
     ],
   },
+  {
+    label: "Portfolio",
+    icon: Layers2,
+    children: [
+      { href: "/dashboard/portfolio", label: "Portfolio Main page", icon: Layers2 },
+      { href: "/dashboard/creativeWork", label: "Creative Work", icon: Pickaxe },
+    ]
+  }
 
 
 

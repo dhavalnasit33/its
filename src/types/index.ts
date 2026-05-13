@@ -102,6 +102,17 @@ export const TestimonialsSchema = z.object({
 
 export type Testimonials = z.infer<typeof TestimonialsSchema>;
 
+/* -------------------- ReadOurReview -------------------- */
+export const ReadOurReviewSchema = z.object({
+  _id: z.string().optional(),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  image: z.string().url("Image required"),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
+});
+
+export type ReadOurReview = z.infer<typeof ReadOurReviewSchema>;
+
 /* -------------------- Service Manager -------------------- */
 export interface FAQ {
   question: string;
@@ -267,6 +278,12 @@ export const PortfolioContentFormValues = z.object({
       }),
     ),
   }),
+  seo: z.object({
+    title: z.string(),
+    keyphrase: z.string(),
+    seoDescription: z.string(),
+    featureImage: z.string().nullable().optional().or(z.literal("")),
+  }),
 });
 
 export type PortfolioContentFormValues = z.infer<
@@ -283,6 +300,12 @@ export interface PortfolioContent {
       label: string;
       image: string;
     }[];
+  };
+  seo: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage: string | null;
   };
   createdAt: string;
   updatedAt: string;
