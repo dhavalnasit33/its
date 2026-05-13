@@ -111,12 +111,15 @@ export default function EditOurServicesMainDialog({
                     Back
                 </Button>
             </div>
+            {/* <OurServicesMainForm
+                onSubmit={handleUpdate}
+                initialData={transformInitialDataForForm(initialData)}
+            /> */}
             <OurServicesMainForm
+            key={initialData?._id}
                 onSubmit={handleUpdate}
                 initialData={transformInitialDataForForm(initialData)}
             />
         </>
     )
-
-
 }

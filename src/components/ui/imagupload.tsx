@@ -160,7 +160,7 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
                     className={[
                         "relative border-2 border-dashed rounded-xl overflow-hidden",
                         "flex justify-center items-center",
-                        "h-[170px] w-[220px]",
+                        className ||"h-[170px] w-[220px]",
                         "transition-all duration-200",
                         isDragOver
                             ? "border-primary bg-primary/5 scale-[1.02]"

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle,  } from "@/components/ui/card";
+// ShadowCard
 import { Button } from "@/components/ui/button";
 import apiService from "@/lib/apiService";
 import Image from "next/image";
@@ -113,8 +114,14 @@ export default function OurServicesMainPage() {
                     ) : (
                         <Button
                         //  onClick={() => setEditDialogOpen(true)}
-                            onClick={() => router.push("/dashboard/service-main-page/edit")}>
+                            // onClick={() => router.push("/dashboard/service-main-page/edit")}>
+                    onClick={() => {
+                            console.log("✅ Edit button clicked");
+                            console.log("📦 Current Data:", data);
 
+                            router.push("/dashboard/service-main-page/edit");
+                        }}
+                        >
                         
                             Edit Content
                         </Button>

@@ -44,7 +44,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           {accessibleNavItems.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
               {accessibleNavItems.map((item) => {
                 const Icon = item.icon || Settings;
                 return (
@@ -52,7 +52,7 @@ export default function DashboardPage() {
                     key={item.href}
                     href={item.href!}
                     className={cn(
-                        "group flex flex-col items-center justify-center p-4 rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-200",
+                        "group flex flex-col items-center justify-center p-4 rounded-lg border border-gray-300 bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-200",
                         "hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       )}
                   >
