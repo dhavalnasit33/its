@@ -57,6 +57,13 @@ const router = express.Router();
  *           type: string
  *         heroSection:
  *           $ref: '#/components/schemas/HeroSection'
+ *         seo:
+ *           type: object
+ *           properties:
+ *             title: { type: string }
+ *             keyphrase: { type: string }
+ *             seoDescription: { type: string }
+ *             featureImage: { type: string }
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -89,7 +96,7 @@ const router = express.Router();
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { heroSection } = req.body;
+        const { heroSection, seo } = req.body;
         if (
             !heroSection ||
             !heroSection.title ||
@@ -101,7 +108,7 @@ router.post("/", protect, async (req, res) => {
                 .json({ success: false, message: "Hero section fields are required" });
         }
 
-        const portfolioContent = new PortfolioContent({ heroSection });
+        const portfolioContent = new PortfolioContent({ heroSection, seo });
         await portfolioContent.save();
 
         res
@@ -184,9 +191,10 @@ router.put("/:id", protect,cleanupOldImages(PortfolioContent,"PortfolioContent")
                 .json({ success: false, message: "Portfolio content not found" });
         }
 
+        const { heroSection, seo } = req.body;
         const updatedContent = await PortfolioContent.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            { heroSection, seo },
             {
                 new: true,
                 runValidators: true,

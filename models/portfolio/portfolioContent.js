@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 
+const SEOSchema = new mongoose.Schema(
+  {
+    title: { type: String, default: "" },
+    keyphrase: { type: String, default: "" },
+    seoDescription: { type: String, default: "" },
+    featureImage: { type: String, default: null },
+  },
+  { _id: false },
+);
+
 const portfolioContentSchema = new mongoose.Schema({
     heroSection: {
         title: {
@@ -24,7 +34,8 @@ const portfolioContentSchema = new mongoose.Schema({
                 required: true
             }
         }]
-    }
+    },
+    seo: SEOSchema,
 }, { timestamps: true })
 
 module.exports = mongoose.model('PortfolioContent', portfolioContentSchema);

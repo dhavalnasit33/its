@@ -9,6 +9,9 @@ module.exports = {
   // ✅ EngagementModel
   EngagementModel: ["modelImage"],
 
+  // ✅ ReadOurReview
+  ReadOurReview: ["image"],
+
   // ✅ seo-manager 
   SeoManager: ["cover_image"],
 
@@ -85,7 +88,8 @@ module.exports = {
   // ✅ PortfolioContent
   PortfolioContent: [
     "heroSection.image",
-    "heroSection.points[].image"
+    "heroSection.points[].image",
+    "seo.featureImage"
   ],
 
   // ✅ TrainingMainPageData

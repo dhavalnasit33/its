@@ -205,6 +205,46 @@ router.get('/', async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /api/creative-work/{id}:
+ *   get:
+ *     summary: Get a single creative work by ID
+ *     tags: [CreativeWork]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Creative work fetched successfully
+ *       404:
+ *         description: Creative work not found
+ *       500:
+ *         description: Server error
+ */
+router.get("/:id", async (req, res) => {
+  try {
+    const data = await CreativeWork.findById(req.params.id);
+    if (!data) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Data Fetched Successfully",
+      data,
+    });
+  } catch (error) {
+    console.error("Error fetching single creative work", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
 
 
 /**
@@ -323,6 +363,61 @@ router.delete('/:id', protect,cleanupImages(CreativeWork), async (req, res) => {
             message: 'Server Error',
         });
     }
+});
+
+/**
+ * @swagger
+ * /api/creative-work/bulk-delete:
+ *   post:
+ *     summary: Bulk delete creative works
+ *     tags: [CreativeWork]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Creative works deleted successfully
+ *       400:
+ *         description: Missing IDs
+ *       500:
+ *         description: Server error
+ */
+router.post("/bulk-delete", protect, cleanupImages.cleanupBulkImages(CreativeWork), async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of IDs to delete",
+      });
+    }
+
+    const result = await CreativeWork.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: `${result.deletedCount} items deleted successfully`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (error) {
+    console.error(" Error to bulk delete data", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
 });
 
 module.exports = router;
