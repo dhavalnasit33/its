@@ -1,5 +1,6 @@
 'use client';
 import CategoryFrom, { categorycreateFormValues } from '@/components/dashboard/category/categoryform';
+import PageHeader from '@/components/shared/PageHeader';
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/hooks/use-toast';
 import apiService from '@/lib/apiService';
@@ -51,14 +52,18 @@ export default function CreateCategoryManagerDialogProps({
 
   return (
     <>
-      <div className="flex justify-between itmes-center border-b py-4 mb-4">
-        <h1 className="text-2xl font-bold">Create category</h1>
-        <Button
+      <div className="space-y-4">
+        {/* <h1 className="text-2xl font-bold">Create category</h1> */}
+         <PageHeader
+            title="Create category"
+            description="Create a new Services "
+            />
+        {/* <Button
           onClick={() => router.push("/dashboard/category")}
         >
           <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </Button> */}
       </div>
       <CategoryFrom onSubmit={handleCreate} initialData={null} />
 

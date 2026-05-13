@@ -1,6 +1,7 @@
 
 'use client';
 import SubCategoryForm, { SubcategoryFormValues } from '@/components/dashboard/subcategory/subcategoryFrom';
+import PageHeader from '@/components/shared/PageHeader';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import apiService from '@/lib/apiService';
@@ -28,15 +29,19 @@ export default function CreateSubCategoryPage() {
 
   return (
     <>
-      <div className="flex justify-between items-center border-b py-4 mb-6">
-        <div>
+      <div className="space-y-4">
+        {/* <div>
           <h1 className="text-2xl font-bold">Create Subcategory</h1>
           <p className="text-sm text-muted-foreground mt-1">Add a new subcategory to the system</p>
         </div>
         <Button onClick={() => router.push('/dashboard/subcategory')}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
-        </Button>
+        </Button> */}
+         <PageHeader
+                    title="Create Subcategory"
+                    description="Add a new subcategory to the system"
+                    />
       </div>
       <SubCategoryForm onSubmit={handleCreate} initialData={null} />
     </>

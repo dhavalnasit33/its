@@ -8,6 +8,7 @@ import apiService from "@/lib/apiService";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryFrom, { categorycreateFormValues } from "@/components/dashboard/category/categoryform";
+import PageHeader from "@/components/shared/PageHeader";
 
 export default function EditCetegoryPage() {
   const params = useParams();
@@ -87,12 +88,16 @@ export default function EditCetegoryPage() {
 
   return (
     <>
-      <div className="flex justify-between items-center border-b py-4 mb-4">
-        <h1 className="text-2xl font-bold">Edit category</h1>
+      <div className="space-y-4">
+        {/* <h1 className="text-2xl font-bold">Edit category</h1>
         <Button onClick={() => router.push("/dashboard/category")}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
-        </Button>
+        </Button> */}
+        <PageHeader
+            title="Edit category"
+            description="Update category details "
+            />
       </div>
 
       <CategoryFrom onSubmit={handleEdit} initialData={initialData} />

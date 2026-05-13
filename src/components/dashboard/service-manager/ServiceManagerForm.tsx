@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2, Plus, Trash2 } from "lucide-react";
 import { TiptapEditorNoSSR } from "@/components/shared/TiptapEditor";
 import {
   DragDropContext,
@@ -26,7 +26,7 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import apiService from "@/lib/apiService";
@@ -304,15 +304,20 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
   };
 
   return (
-    <Card className="px-0 py-0">
-      <CardContent className="bg-gray-100">
+    <Card >
+      <div className="p-6">
+      {/* <CardContent > */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
-
-
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+             <div className="lg:col-span-2 space-y-8">
             <Card>
-              <CardHeader className="text-3xl font-bold">Category</CardHeader>
-              <CardContent className="space-y-4">
+              <CardHeader>
+                <CardTitle> 
+                  Category
+              </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <FormField
                   control={form.control}
                   name="category"
@@ -475,20 +480,12 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
             {/* ─────────────── SUBMAIN TITLE ─────────────── */}
             <Card>
-              <div className="flex justify-between items-center border-b">
-                <CardHeader className="text-3xl font-bold border-0">SubMain Title</CardHeader>
-                <Button
-                  type="button"
-                  className="m-3"
-                  onClick={() => {
-                    const arr = form.getValues("contentBlocks") || [];
-                    form.setValue("contentBlocks", [...arr, { title: "", description: "", image: "" }], { shouldDirty: true, shouldValidate: true });
-                  }}
-                >
-                  Add Content Block
-                </Button>
-              </div>
-              <CardContent className="space-y-4">
+              <CardHeader>
+                <CardTitle>SubMain Title</CardTitle>
+              </CardHeader>
+            <CardContent className=" space-y-6">
+              
+              {/* <div className="space-y-4 "> */}
                 <FormField
                   control={form.control}
                   name="subMainTitle"
@@ -511,11 +508,38 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                     </FormItem>
                   )}
                 />
+                <div className="flex items-center justify-between">
+                  <FormLabel>Feature Points</FormLabel>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                      onClick={() => {
+                        const arr = form.getValues("contentBlocks") || [];
+                        form.setValue("contentBlocks", [...arr, { title: "", description: "", image: "" }], { shouldDirty: true, shouldValidate: true });
+                      }}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Content Block
+                  </Button>
+                </div>
 
-                <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                   {form.watch("contentBlocks")?.map((block, idx) => (
-                    <div key={idx} className="space-y-3 border-gray-300 border p-4 rounded-md">
-                      <h4 className="font-semibold">Content Block {idx + 1}</h4>
+                    <Card key={idx} className="relative p-4 border-dashed">
+                         <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                        onClick={() => {
+                          const arr = form.getValues("contentBlocks") || [];
+                          form.setValue("contentBlocks", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                        }}
+                      >
+                         <Trash2 className="h-4 w-4" />
+                      </Button>
+                      <div className="space-y-4 pt-4">
                       {["title", "description"].map((fieldName) => (
                         <FormField
                           key={fieldName}
@@ -548,46 +572,28 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                                 value={field.value || ""}
                                 onChange={(url) => form.setValue(`contentBlocks.${idx}.image`, url, { shouldValidate: true })}
                                 disabled={isSubmitting}
+                                className="w-full h-32"
                               />
                             </FormControl>
                             <FormMessage className="text-red-600 text-sm mt-1" />
                           </FormItem>
                         )}
                       />
-
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={() => {
-                          const arr = form.getValues("contentBlocks") || [];
-                          form.setValue("contentBlocks", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
-                        }}
-                      >
-                        Delete Block
-                      </Button>
-                    </div>
+                      </div>
+                    </Card>
                   ))}
                 </div>
+              {/* </div> */}
               </CardContent>
             </Card>
 
             <Card>
-              <div className="flex justify-between border-b items-center">
-                <CardHeader className="text-3xl font-bold border-0">Why Work</CardHeader>
-                <Button
-                  type="button"
-                  className="m-3"
-                  onClick={() => {
-                    const arr = form.getValues("WhyWorkWithThis").content || [];
-                    form.setValue("WhyWorkWithThis.content", [...arr, { title: "", description: "" }], { shouldDirty: true, shouldValidate: true });
-                  }}
-                >
-                  Add Content
-                </Button>
-              </div>
-              <CardContent className="space-y-4">
+                <CardHeader>
+                  <CardTitle>Why Work</CardTitle>
+                </CardHeader>
+              <CardContent className="space-y-6">
                 <div className="flex flex-col lg:flex-row gap-8">
-                  <div className="flex-1 space-y-8">
+                  <div className="flex-1 space-y-6">
                     <FormField
                       control={form.control}
                       name="WhyWorkWithThis.title"
@@ -613,31 +619,45 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                       )}
                     />
                   </div>
-                  <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
-
-                    <FormField
-                      control={form.control}
-                      name="WhyWorkWithThis.image"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Image</FormLabel>
-                          <FormControl>
-                            <ImageUpload
-                              value={field.value || ""}
-                              onChange={(url) => form.setValue("WhyWorkWithThis.image", url, { shouldValidate: true })}
-                              disabled={isSubmitting}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
                 </div>
-                <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+                <div className="flex items-center justify-between">
+                  <FormLabel>Work Points</FormLabel>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                      onClick={() => {
+                        const arr = form.getValues("WhyWorkWithThis").content || [];
+                        form.setValue("WhyWorkWithThis.content", [...arr, { title: "", description: "" }], { shouldDirty: true, shouldValidate: true });
+                      }}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Content
+                  </Button>
+                </div>
+
+
+
+
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                   {form.watch("WhyWorkWithThis")?.content?.map((_, idx) => (
-                    <div key={idx} className="space-y-3 border-gray-300 border shadow-md p-5 rounded-md">
-                      <h5 className="font-semibold">Content {idx + 1}</h5>
+                    <Card key={idx} className="relative p-4 border-dashed">
+                      {/* <h5 className="font-semibold">Content {idx + 1}</h5> */}
+
+                       <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                        onClick={() => {
+                          const arr = form.getValues("WhyWorkWithThis.content") || [];
+                          form.setValue("WhyWorkWithThis.content", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+
+                      <div className="space-y-4 pt-4">
                       {["title", "description"].map((f) => (
                         <FormField
                           key={f}
@@ -657,17 +677,8 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                           )}
                         />
                       ))}
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={() => {
-                          const arr = form.getValues("WhyWorkWithThis.content") || [];
-                          form.setValue("WhyWorkWithThis.content", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </div>
+                      </div>
+                    </Card>
                   ))}
                 </div>
               </CardContent>
@@ -676,8 +687,12 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
             {/* ─────────────── TOOLS & TECHNOLOGY ─────────────── */}
             <DragDropContext onDragEnd={onDragEnd}>
               <Card>
-                <div className="flex justify-between items-center border-b">
-                  <CardHeader className="text-3xl font-bold border-0">Tools & Technology</CardHeader>
+                {/* <div className="flex justify-between items-center border-b">
+                  <CardHeader>
+                    <CardTitle>
+                      Tools & Technology
+                      </CardTitle>
+                    </CardHeader>
                   <Button
                     type="button"
                     className="m-3"
@@ -688,8 +703,11 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                   >
                     Add Section
                   </Button>
-                </div>
-                <CardContent className="space-y-4">
+                </div> */}
+                <CardHeader>
+                  <CardTitle>Tools & Technology</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
                   <FormField
                     control={form.control}
                     name="toolsAndTechnology.title"
@@ -717,34 +735,55 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                     )}
                   />
 
+
+
+
+              <div className="flex items-center justify-between">
+                  <FormLabel>Technology Points</FormLabel>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                      onClick={() => {
+                      const arr = form.getValues("toolsAndTechnology.details") || [];
+                      form.setValue("toolsAndTechnology.details", [...arr, { section: 0, title: "", keyPoints: [""] }], { shouldDirty: true, shouldValidate: true });
+                    }}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Section
+                  </Button>
+                </div>
+
                   <Droppable droppableId="sections" type="section">
                     {(provided) => (
-                      <div ref={provided.innerRef} className="grid gap-4 grid-cols-1 lg:grid-cols-2" {...provided.droppableProps}>
+                      <div ref={provided.innerRef} className="grid gap-4 grid-cols-1 md:grid-cols-2" {...provided.droppableProps}>
                         {form.watch("toolsAndTechnology")?.details?.map((detail, idx) => (
                           <Draggable key={idx} draggableId={`section-${idx}`} index={idx}>
                             {(provided) => (
-                              <div ref={provided.innerRef} {...provided.draggableProps} className="border p-4 mt-3 border-gray-300 rounded-md space-y-3">
-                                <div className="flex justify-between items-center border-b border-gray-300 p-2" {...provided.dragHandleProps}>
-                                  <h3 className="text-lg font-semibold">Section {idx + 1}</h3>
+                              <Card ref={provided.innerRef} {...provided.draggableProps}  className="relative p-4 border-dashed">
+                                <div className="border-b  p-2 " {...provided.dragHandleProps}>
+                                  <h3 className="text-md font-semibold">Section {idx + 1}</h3>
                                   <Button
                                     type="button"
-                                    variant="destructive"
-                                    className="px-2 py-1 text-sm"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                                     onClick={() => {
                                       const arr = form.getValues("toolsAndTechnology.details") || [];
                                       if (arr.length > 1) form.setValue("toolsAndTechnology.details", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
                                     }}
                                   >
-                                    Delete Section
+                                    <Trash2 className="h-4 w-4" />
                                   </Button>
                                 </div>
 
+                               <div className="space-y-4 pt-6">
                                 <FormField
                                   control={form.control}
                                   name={`toolsAndTechnology.details.${idx}.section`}
                                   render={({ field }) => (
                                     <FormItem className="border p-2 border-gray-300 rounded flex items-center gap-6">
-                                      <FormLabel>Select Section</FormLabel>
+                                      <FormLabel className="mb-0">Select Section</FormLabel>
                                       <FormControl>
                                         <div className="flex gap-6">
                                           {[1, 2, 3, 4].map((num) => (
@@ -792,13 +831,15 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                                               />
                                               <Button
                                                 type="button"
-                                                className="bg-red-500 text-white hover:bg-red-700 h-10"
+                                                variant="ghost"
+                                                size="icon"
+                                                className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                                                 onClick={() => {
                                                   const arr = form.getValues(`toolsAndTechnology.details.${idx}.keyPoints`) || [];
                                                   if (arr.length > 1) form.setValue(`toolsAndTechnology.details.${idx}.keyPoints`, arr.filter((_, i) => i !== kidx), { shouldDirty: true, shouldValidate: true });
                                                 }}
                                               >
-                                                Delete
+                                                <Trash2 className="h-4 w-4" />
                                               </Button>
                                             </div>
                                           )}
@@ -811,14 +852,19 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
                                 <Button
                                   type="button"
+                                  variant="outline"
+                                  size="sm"
                                   onClick={() => {
                                     const arr = form.getValues(`toolsAndTechnology.details.${idx}.keyPoints`) || [];
                                     form.setValue(`toolsAndTechnology.details.${idx}.keyPoints`, [...arr, ""], { shouldDirty: true, shouldValidate: true });
                                   }}
                                 >
+                                  <Plus className="h-4 w-4 mr-2" />
                                   Add Key Point
                                 </Button>
-                              </div>
+
+                                </div>
+                              </Card>
                             )}
                           </Draggable>
                         ))}
@@ -832,8 +878,12 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
             {/* ─────────────── WHY COMPANY PREFERS ─────────────── */}
             <Card>
-              <div className="flex justify-between border-b items-center">
-                <CardHeader className="text-3xl font-bold border-0">Why Company Prefers</CardHeader>
+              {/* <div className="flex justify-between border-b items-center">
+                <CardHeader>
+                  <CardTitle>
+                    Why Company Prefers
+                  </CardTitle> 
+                </CardHeader>
                 <Button
                   type="button"
                   className="m-3"
@@ -844,8 +894,11 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                 >
                   Add
                 </Button>
-              </div>
-              <CardContent className="space-y-4">
+              </div> */}
+               <CardHeader>
+                  <CardTitle>Why Company Prefers</CardTitle>
+                </CardHeader>
+              <CardContent className="space-y-6">
                 <FormField
                   control={form.control}
                   name="whyCompanyPerfersThis.title"
@@ -873,10 +926,40 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                   )}
                 />
 
-                <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+                <div className="flex items-center justify-between">
+                  <FormLabel>Prefer Points</FormLabel>
+                   <Button
+                  type="button"
+                   variant="outline"
+                    size="sm"
+                  onClick={() => {
+                    const current = form.getValues("whyCompanyPerfersThis.content") || [];
+                    form.setValue("whyCompanyPerfersThis.content", [...current, { name: "", image: "" }], { shouldDirty: true, shouldValidate: true });
+                  }}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add
+                </Button>
+                </div>
+
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                   {form.watch("whyCompanyPerfersThis")?.content?.map((c, cidx) => (
-                    <div key={cidx} className="border p-5 mt-3 border-gray-300 rounded-md shadow-md space-y-3">
-                      <h4 className="font-semibold">Content Block {cidx + 1}</h4>
+                    <Card key={cidx}  className="relative p-4 border-dashed">
+                      {/* <h4 className="font-semibold">Content Block {cidx + 1}</h4> */}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                        size="icon"
+                        className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                          onClick={() => {
+                            const current = form.getValues("whyCompanyPerfersThis.content") || [];
+                            if (current.length > 1) form.setValue("whyCompanyPerfersThis.content", current.filter((_, i) => i !== cidx), { shouldDirty: true, shouldValidate: true });
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+
+                      <div className="space-y-4 pt-4">
 
                       <FormField
                         control={form.control}
@@ -904,6 +987,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                                 value={field.value || ""}
                                 onChange={(url) => form.setValue(`whyCompanyPerfersThis.content.${cidx}.image`, url, { shouldValidate: true })}
                                 disabled={isSubmitting}
+                                className="w-full h-32"
                               />
                             </FormControl>
                             <FormMessage className="text-red-600 text-sm mt-1" />
@@ -911,19 +995,10 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                         )}
                       />
 
-                      <div className="flex justify-end">
-                        <Button
-                          type="button"
-                          className="bg-red-500 text-white hover:bg-red-700"
-                          onClick={() => {
-                            const current = form.getValues("whyCompanyPerfersThis.content") || [];
-                            if (current.length > 1) form.setValue("whyCompanyPerfersThis.content", current.filter((_, i) => i !== cidx), { shouldDirty: true, shouldValidate: true });
-                          }}
-                        >
-                          Delete
-                        </Button>
+                     
+
                       </div>
-                    </div>
+                    </Card>
                   ))}
                 </div>
               </CardContent>
@@ -931,8 +1006,12 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
             {/* ─────────────── FAQ ─────────────── */}
             <Card>
-              <div className="flex justify-between border-b items-center">
-                <CardHeader className="text-3xl font-bold border-0">FAQ</CardHeader>
+              {/* <div className="flex justify-between border-b items-center">
+                <CardHeader>
+                  <CardTitle>
+                    FAQ
+                  </CardTitle>
+                </CardHeader>
                 <Button
                   type="button"
                   className="m-3"
@@ -943,7 +1022,10 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                 >
                   Add FAQ
                 </Button>
-              </div>
+              </div> */}
+              <CardHeader>
+                  <CardTitle>FAQ</CardTitle>
+                </CardHeader>
               <CardContent className="space-y-4">
                 {form.watch("faqs")?.map((f, idx) => (
                   <div key={idx} className="border border-gray-300 shadow-md p-5 rounded-md flex flex-col gap-4">
@@ -951,14 +1033,17 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                       <h3 className="font-semibold">Question {idx + 1}</h3>
                       <Button
                         type="button"
-                        variant="destructive"
+                         variant="ghost"
+                          size="icon"
+                          className=" text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                         onClick={() => {
                           const arr = form.getValues("faqs") || [];
                           if (arr.length > 1) form.setValue("faqs", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
                         }}
                       >
-                        Delete
+                        <Trash2 className="h-4 w-4" />
                       </Button>
+
                     </div>
                     <FormField
                       control={form.control}
@@ -991,10 +1076,15 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
             {/* seo data */}
             <Card>
-              <CardHeader className="text-3xl font-bold !border-black">SEO Settings</CardHeader>
-              <CardContent className="space-y-4">
+              <CardHeader>
+                <CardTitle className="text-primary">
+                  SEO Settings
+                </CardTitle>
+              </CardHeader>
+              
+              <CardContent className="space-y-6">
                 <div className="flex flex-col lg:flex-row gap-8">
-                  <div className="flex-1 space-y-8">
+                  <div className="flex-1 space-y-6">
                     <FormField
                       control={form.control}
                       name="seo.title"
@@ -1037,7 +1127,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                       )}
                     />
                   </div>
-                  <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
+                  {/* <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
 
                     <FormField
                       control={form.control}
@@ -1057,13 +1147,58 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                       )}
                     />
 
-                  </div>
+                  </div> */}
                 </div>
 
               </CardContent>
             </Card>
-
-
+            </div>
+            <div className="space-y-8 lg:col-span-1">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Service Manager Images</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="WhyWorkWithThis.image"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Why Work Image</FormLabel>
+                          <FormControl>
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={(url) => form.setValue("WhyWorkWithThis.image", url, { shouldValidate: true })}
+                              disabled={isSubmitting}
+                               className="w-full h-48"
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="seo.featureImage"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SEO Feature Image (Social Share)</FormLabel>
+                          <FormControl>
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={(url) => form.setValue("seo.featureImage", url, { shouldValidate: true })}
+                              disabled={isSubmitting}
+                              className="w-full h-48"
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
 
 
 
@@ -1071,7 +1206,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
 
             {/* ─────────────── SUBMIT ─────────────── */}
-            <div className="flex justify-between mt-4">
+            <div className="flex justify-end gap-3 border-t pt-6 mt-8">
               <Button type="button" onClick={() => router.back()}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back
@@ -1081,9 +1216,34 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
               </Button>
             </div>
 
+{/* 
+            <div className="flex justify-end gap-3 border-t pt-6 mt-8">
+            {onCancel && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onCancel}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+            )}
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {initialData ? "Updating..." : "Creating..."}
+                </>
+              ) : (
+                initialData ? "Update About Us" : "Create About Us"
+              )}
+            </Button>
+          </div> */}
+
           </form>
         </Form>
-      </CardContent >
+      {/* </CardContent > */}
+      </div>
     </Card >
   );
 }

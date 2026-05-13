@@ -8,6 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import SubCategoryForm, { SubcategoryFormValues } from '@/components/dashboard/subcategory/subcategoryFrom';
+import PageHeader from '@/components/shared/PageHeader';
 
 export default function EditSubCategoryPage() {
   const params = useParams();
@@ -80,15 +81,19 @@ export default function EditSubCategoryPage() {
 
   return (
     <>
-      <div className="flex justify-between items-center border-b py-4 mb-6">
-        <div>
+      <div className="space-y-4">
+        {/* <div>
           <h1 className="text-2xl font-bold">Edit Subcategory</h1>
           <p className="text-sm text-muted-foreground mt-1">Update subcategory details</p>
         </div>
         <Button onClick={() => router.push('/dashboard/subcategory')}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
-        </Button>
+        </Button> */}
+         <PageHeader
+            title="Edit Subcategory"
+            description="Update subcategory details"
+          />
       </div>
       <SubCategoryForm onSubmit={handleEdit} initialData={initialData} />
     </>

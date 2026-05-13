@@ -2,9 +2,12 @@
 'use client';
 
 import PageCreate, { PageFormValues } from '@/components/dashboard/pages/createpagefrom';
+import PageHeader from '@/components/shared/PageHeader';
 import { Button } from '@/components/ui/button';
+import { CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import apiService from '@/lib/apiService';
+import Card from '@mui/material/Card';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -32,12 +35,11 @@ export default function CreatePagePage() {
 
   return (
     <>
-      <div className="flex justify-between items-center border-b py-4 mb-6">
-        <h1 className="text-2xl font-bold">Create Page</h1>
-        <Button onClick={() => router.push("/dashboard/pages")}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
+      <div className="space-y-6">
+        <PageHeader
+          title="Create Page"
+          description="Create a new Page"
+        />
       </div>
       <PageCreate onSubmit={handleCreate} initialData={null} />
     </>

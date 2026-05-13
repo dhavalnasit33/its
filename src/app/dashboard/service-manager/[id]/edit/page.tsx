@@ -9,6 +9,7 @@ import type { ServiceManager } from "@/types/index";
 import ServiceStepperForm, { ServiceStepperFormValues } from "@/components/dashboard/service-manager/ServiceManagerForm";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import PageHeader from "@/components/shared/PageHeader";
 
 export default function EditServicePage() {
     const params = useParams();
@@ -92,12 +93,11 @@ export default function EditServicePage() {
 
     return (
         <>
-            <div className="flex justify-between items-center border-b py-4 mb-4">
-                <h1 className="text-2xl font-bold">Edit Service</h1>
-                <Button onClick={() => router.push("/dashboard/service-manager")}>
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back
-                </Button>
+            <div className="space-y-6">
+                 <PageHeader
+                    title="Edit Service"
+                    description="Update Services "
+                    />
             </div>
             
             <ServiceStepperForm onSubmit={handleEdit} initialData={initialData} />

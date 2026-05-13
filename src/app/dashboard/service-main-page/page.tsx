@@ -98,7 +98,7 @@ export default function OurServicesMainPage() {
     if (loading) return <p className="p-6">Loading...</p>;
 
     return (
-        <div className="p-6">
+        <>
             <PageHeader
                 title="Our Services Page Content"
                 description="Manage the content for the main services page."
@@ -227,6 +227,6 @@ export default function OurServicesMainPage() {
                     initialData={data}
                 />
             )} */}
-        </div>
+        </>
     );
 }

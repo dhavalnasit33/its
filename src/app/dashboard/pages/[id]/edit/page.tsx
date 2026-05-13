@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import PageCreate, { PageFormValues } from "@/components/dashboard/pages/createpagefrom";
+import PageHeader from "@/components/shared/PageHeader";
 
 export default function EditPagePage() {
   const { id }    = useParams<{ id: string }>();
@@ -97,12 +98,11 @@ export default function EditPagePage() {
 
   return (
     <>
-      <div className="flex justify-between items-center border-b py-4 mb-6">
-        <h1 className="text-2xl font-bold">Edit Page</h1>
-        <Button onClick={() => router.push("/dashboard/pages")}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
+      <div className="space-y-6">
+        <PageHeader
+          title="Edit Page"
+          description="Update a Page"
+        />
       </div>
       <PageCreate initialData={initialData} onSubmit={handleSubmit} />
     </>

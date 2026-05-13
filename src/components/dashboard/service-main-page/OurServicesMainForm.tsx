@@ -33,13 +33,14 @@ import FormStepper from "@/components/ui/FormStepper";
 import PageHeader from "@/components/shared/PageHeader";
 import { TiptapEditorNoSSR } from "@/components/shared/TiptapEditor";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, PlusCircle, Trash2, UploadCloud } from "lucide-react";
+import { ArrowLeft, Loader2, Plus, PlusCircle, Trash2, UploadCloud } from "lucide-react";
 import apiService from "@/lib/apiService";
 import { OurServicesMainFormValues, OurServicesMainSchema } from "@/types";
 import InfoIcon from "@mui/icons-material/Info";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import BuildIcon from "@mui/icons-material/Build";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import CkEditor from "@/components/ui/ckediter";
 
 interface ServiceOption {
     _id: string;
@@ -90,32 +91,32 @@ const PointsWithServiceArray = ({
                 <FormLabel>Development Points (With Service Link)</FormLabel>
                 <Button
                     type="button"
+                    variant="outline"
                     size="sm"
                     onClick={() => append({ label: "", image: "", serviceId: "" })}
                 >
-                    Add Point
+                     <Plus className="mr-2 h-4 w-4" />Add Point
                 </Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                 {fields.map((field, pointIndex) => (
-                    <div
+                    <Card
                         key={field.id}
-                        className="flex flex-col gap-2 border p-3 rounded-md bg-slate-50"
+                        className="relative p-4 border-dashed"
                     >
-                        <div className="flex justify-between items-center">
-                            <h4 className="font-semibold">Development Point {pointIndex + 1}</h4>
+                            {/* <h4 className="font-semibold text-md ">Development Point {pointIndex + 1}</h4> */}
                             <Button
                                 type="button"
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => remove(pointIndex)}
-                                className="h-6 w-6 bg-red-100 hover:bg-red-200"
+                                className="absolute top-2 right-2  text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                             >
-                                <Trash2 className="h-4 w-4 text-red-600" />
+                                <Trash2 className="h-4 w-4 " />
                             </Button>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="flex flex-col md:flex-row gap-2">
+                        <div className=" space-y-4 pt-4">
+                            <div className="flex flex-col md:flex-row gap-4">
+                                {/* <div className="space-y-4 pt-6"></div> */}
                                 <FormField
                                     control={control}
                                     name={`${fieldName}.${pointIndex}.label`}
@@ -228,7 +229,7 @@ const PointsWithServiceArray = ({
                                 )}
                             />
                         </div>
-                    </div>
+                    </Card>
                 ))}
             </div>
         </div>
@@ -256,32 +257,33 @@ const SimplePointsArray = ({
                 <FormLabel>Technology Points (No Link)</FormLabel>
                 <Button
                     type="button"
+                    variant="outline"
                     size="sm"
+                    
                     onClick={() => append({ label: "", image: "" })}
                 >
-                    Add Point
+                    <Plus className="mr-2 h-4 w-4" /> Add Point
                 </Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                 {fields.map((field, pointIndex) => (
-                    <div
+                    <Card
                         key={field.id}
-                        className="flex flex-col gap-2 border p-3 rounded-md bg-slate-50"
+                        className="border-dashed p-4 relative "
                     >
                         <div className="flex justify-between items-center">
-                            <h4 className="font-semibold">Technology Point {pointIndex + 1}</h4>
+                            {/* <h4 className="font-semibold">Technology Point {pointIndex + 1}</h4> */}
                             <Button
                                 type="button"
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => remove(pointIndex)}
-                                className="h-6 w-6 bg-red-100 hover:bg-red-200"
+                                className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                             >
-                                <Trash2 className="h-4 w-4 text-red-600" />
+                                <Trash2 className="h-4 w-4" />
                             </Button>
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="flex flex-col md:flex-row gap-2">
+                        <div className="space-y-4 pt-4">
                                 <FormField
                                     control={control}
                                     name={`${fieldName}.${pointIndex}.label`}
@@ -295,7 +297,6 @@ const SimplePointsArray = ({
                                         </FormItem>
                                     )}
                                 />
-                            </div>
                             <FormField
                                 control={control}
                                 name={`${fieldName}.${pointIndex}.image`}
@@ -367,7 +368,7 @@ const SimplePointsArray = ({
                                 )}
                             />
                         </div>
-                    </div>
+                    </Card>
                 ))}
             </div>
         </div>
@@ -384,6 +385,7 @@ export default function OurServicesMainForm({ initialData, onSubmit }: any) {
     const [isSectionUploading, setSectionUploading] = useState<string | null>(
         null
     );
+    const [content, setContent] = useState('');
 
     const form = useForm<OurServicesMainFormValues>({
         resolver: zodResolver(OurServicesMainSchema),
@@ -454,349 +456,352 @@ export default function OurServicesMainForm({ initialData, onSubmit }: any) {
     const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
     return (
-        <FormProvider {...form}>
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(handleFormSubmit)}
-                    className="space-y-8"
-                >
-
-
-                    <Card>
-                        <CardContent className="space-y-6">
-                            <PageHeader title="Basic Information" />
-                            <FormField
-                                control={form.control}
-                                name="mainTitle"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Main Title</FormLabel>
-                                        <FormControl>
-                                            <div className="border rounded-md">
+        <Card >
+            <FormProvider {...form}>
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(handleFormSubmit)}
+                        className="space-y-8 p-6"
+                    >
+                        <Card>
+                            <CardContent className="space-y-6 mt-6">
+                                {/* <PageHeader title="Basic Information" /> */}
+                                <CardTitle>Basic Information</CardTitle>
+                                <FormField
+                                    control={form.control}
+                                    name="mainTitle"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Main Title</FormLabel>
+                                            <FormControl>
                                                 <TiptapEditorNoSSR
                                                     value={field.value}
                                                     onChange={field.onChange}
                                                 />
-                                            </div>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="description"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Description</FormLabel>
-                                        <FormControl>
-                                            <div className="border rounded-md">
-                                                <TiptapEditorNoSSR
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                />
-                                            </div>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </CardContent>
-                    </Card>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="description"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Description</FormLabel>
+                                            <FormControl>
+                                                    <TiptapEditorNoSSR
+                                                        value={field.value}
+                                                        onChange={field.onChange}
+                                                    />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </CardContent>
+                        </Card>
 
-                    <Card>
-                        <div className="flex justify-between items-center border-b mx-5">
-                            <CardHeader className="text-3xl font-bold border-0 px-0">Hero Sections</CardHeader>
-                            <Button
-                                type="button"
-                                onClick={() =>
-                                    appendHero({ title: "", image: "", points: [] })
-                                }
-                            >
-                                <PlusCircle className="mr-2 h-4 w-4" /> Add Section
-                            </Button>
-                        </div>
-                        <CardContent className="space-y-6">
-
-
-                            {heroFields.map((field, index) => (
-                                <div
-                                    key={field.id}
-                                    className="border p-4 rounded-lg shadow-sm relative space-y-4"
+                        <Card>
+                            <CardContent className="flex justify-between items-center pt-6 ">
+                                <CardTitle>Hero Sections</CardTitle>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() =>
+                                        appendHero({ title: "", image: "", points: [] })
+                                    }
                                 >
-                                    <div className="flex justify-between items-center">
-                                        <h3 className="font-semibold text-lg">
-                                            Hero Section {index + 1}
-                                        </h3>
-                                        {heroFields.length > 1 && (
-                                            <Button
-                                                type="button"
-                                                variant="destructive"
-                                                size="sm"
-                                                onClick={() => removeHero(index)}
-                                            >
-                                                Remove Section
-                                            </Button>
-                                        )}
-                                    </div>
-                                    <div className="grid md:grid-cols-2 gap-4">
+                                    <Plus className="mr-2 h-4 w-4" /> Add Section
+                                </Button>
+                            </CardContent>
+                            <CardContent className="space-y-6">
+
+
+                                {heroFields.map((field, index) => (
+                                    <Card
+                                        key={field.id}
+                                        className="relative p-4 border-dashed space-y-4"
+                                    >
+                                        {/* <div className="flex justify-between items-center"> */}
+                                            <h3 className="font-semibold text-md">
+                                                Hero Section {index + 1}
+                                            </h3>
+                                            {heroFields.length > 1 && (
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                                    onClick={() => removeHero(index)}
+                                                >
+                                                   <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            )}
+                                        {/* </div> */}
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <FormField
+                                                control={form.control}
+                                                name={`heroSections.${index}.title`}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Section Title</FormLabel>
+                                                        <FormControl>
+                                                            <Input {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name={`heroSections.${index}.image`}
+                                                render={({ field: imageField }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Section Image</FormLabel>
+                                                        <div className="flex items-center gap-4">
+                                                            <Input
+                                                                type="file"
+                                                                className="hidden"
+                                                                id={`hero-section-image-${index}`}
+                                                                onChange={async (e) => {
+                                                                    if (e.target.files?.[0]) {
+                                                                        setSectionUploading(`hero-${index}`);
+                                                                        try {
+                                                                            await handleImageUpload(
+                                                                                e.target.files[0],
+                                                                                (url) =>
+                                                                                    form.setValue(
+                                                                                        `heroSections.${index}.image`,
+                                                                                        url,
+                                                                                        { shouldValidate: true }
+                                                                                    )
+                                                                            );
+                                                                            toast({ title: "Success" });
+                                                                        } catch (err) {
+                                                                            toast({
+                                                                                title: "Error",
+                                                                                variant: "destructive",
+                                                                            });
+                                                                        } finally {
+                                                                            setSectionUploading(null);
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                            <Button
+                                                                type="button"
+                                                                onClick={() =>
+                                                                    document
+                                                                        .getElementById(`hero-section-image-${index}`)
+                                                                        ?.click()
+                                                                }
+                                                                disabled={isSectionUploading === `hero-${index}`}
+                                                            >
+                                                                {isSectionUploading === `hero-${index}` ? (
+                                                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                                                ) : (
+                                                                    <UploadCloud className="h-4 w-4 mr-2" />
+                                                                )}{" "}
+                                                                Upload Image
+                                                            </Button>
+                                                            {imageField.value && (
+                                                                <img
+                                                                    src={imageField.value}
+                                                                    alt="preview"
+                                                                    className="h-16 w-16 object-cover rounded-md"
+                                                                />
+                                                            )}
+                                                        </div>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </div>
+                                        <PointsWithServiceArray
+                                            control={form.control}
+                                            fieldName={`heroSections.${index}.points`}
+                                            services={services}
+                                        />
+                                    </Card>
+                                ))}
+
+                            </CardContent>
+                        </Card>
+
+
+
+
+                        <Card>
+                            <CardContent className="flex justify-between items-center pt-6">
+                                <CardTitle>Technology Details</CardTitle>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() =>
+                                        appendTechDetail({
+                                            title: "",
+                                            description: "",
+                                            image: "",
+                                            technologyDetail: [],
+                                            developmentDetail: [],
+                                        })
+                                    }
+                                >
+                                    <Plus className="mr-2 h-4 w-4" /> Add Section
+                                </Button>
+                            </CardContent>
+
+                            <CardContent className="space-y-6">
+
+                                {techDetailFields.map((field, index) => (
+                                    <Card
+                                        key={field.id}
+                                        className="border-dashed p-4  relative space-y-4"
+                                    >
+                                        {/* <div className="flex justify-between items-center"> */}
+                                            <h3 className="font-semibold text-md">
+                                                Tech Detail Section {index + 1}
+                                            </h3>
+                                            {techDetailFields.length > 1 && (
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                                    onClick={() => removeTechDetail(index)}
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            )}
+                                        {/* </div> */}
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <FormField
+                                                control={form.control}
+                                                name={`technologyDetails.${index}.title`}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Section Title</FormLabel>
+                                                        <FormControl>
+                                                            <Input {...field} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name={`technologyDetails.${index}.image`}
+                                                render={({ field: imageField }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Section Image</FormLabel>
+                                                        <div className="flex items-center gap-4">
+                                                            <Input
+                                                                type="file"
+                                                                className="hidden"
+                                                                id={`tech-section-image-${index}`}
+                                                                onChange={async (e) => {
+                                                                    if (e.target.files?.[0]) {
+                                                                        setSectionUploading(`tech-${index}`);
+                                                                        try {
+                                                                            await handleImageUpload(
+                                                                                e.target.files[0],
+                                                                                (url) =>
+                                                                                    form.setValue(
+                                                                                        `technologyDetails.${index}.image`,
+                                                                                        url,
+                                                                                        { shouldValidate: true }
+                                                                                    )
+                                                                            );
+                                                                            toast({ title: "Success" });
+                                                                        } catch (err) {
+                                                                            toast({
+                                                                                title: "Error",
+                                                                                variant: "destructive",
+                                                                            });
+                                                                        } finally {
+                                                                            setSectionUploading(null);
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                            <Button
+                                                                type="button"
+                                                                onClick={() =>
+                                                                    document
+                                                                        .getElementById(`tech-section-image-${index}`)
+                                                                        ?.click()
+                                                                }
+                                                                disabled={isSectionUploading === `tech-${index}`}
+                                                            >
+                                                                {isSectionUploading === `tech-${index}` ? (
+                                                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                                                ) : (
+                                                                    <UploadCloud className="h-4 w-4 mr-2" />
+                                                                )}{" "}
+                                                                Upload Image
+                                                            </Button>
+                                                            {imageField.value && (
+                                                                <img
+                                                                    src={imageField.value}
+                                                                    alt="preview"
+                                                                    className="h-16 w-16 object-cover rounded-md"
+                                                                />
+                                                            )}
+                                                        </div>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </div>
                                         <FormField
                                             control={form.control}
-                                            name={`heroSections.${index}.title`}
+                                            name={`technologyDetails.${index}.description`}
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Section Title</FormLabel>
+                                                    <FormLabel>Section Description</FormLabel>
                                                     <FormControl>
-                                                        <Input {...field} />
+                                                            <TiptapEditorNoSSR
+                                                                value={field.value}
+                                                                onChange={field.onChange}
+                                                            />
+                                                            {/* <CkEditor
+                                                                value={content}
+                                                                onChange={(data) => setContent(data)}
+                                                                /> */}
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
-                                        <FormField
+                                        <SimplePointsArray
                                             control={form.control}
-                                            name={`heroSections.${index}.image`}
-                                            render={({ field: imageField }) => (
-                                                <FormItem>
-                                                    <FormLabel>Section Image</FormLabel>
-                                                    <div className="flex items-center gap-4">
-                                                        <Input
-                                                            type="file"
-                                                            className="hidden"
-                                                            id={`hero-section-image-${index}`}
-                                                            onChange={async (e) => {
-                                                                if (e.target.files?.[0]) {
-                                                                    setSectionUploading(`hero-${index}`);
-                                                                    try {
-                                                                        await handleImageUpload(
-                                                                            e.target.files[0],
-                                                                            (url) =>
-                                                                                form.setValue(
-                                                                                    `heroSections.${index}.image`,
-                                                                                    url,
-                                                                                    { shouldValidate: true }
-                                                                                )
-                                                                        );
-                                                                        toast({ title: "Success" });
-                                                                    } catch (err) {
-                                                                        toast({
-                                                                            title: "Error",
-                                                                            variant: "destructive",
-                                                                        });
-                                                                    } finally {
-                                                                        setSectionUploading(null);
-                                                                    }
-                                                                }
-                                                            }}
-                                                        />
-                                                        <Button
-                                                            type="button"
-                                                            onClick={() =>
-                                                                document
-                                                                    .getElementById(`hero-section-image-${index}`)
-                                                                    ?.click()
-                                                            }
-                                                            disabled={isSectionUploading === `hero-${index}`}
-                                                        >
-                                                            {isSectionUploading === `hero-${index}` ? (
-                                                                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                                                            ) : (
-                                                                <UploadCloud className="h-4 w-4 mr-2" />
-                                                            )}{" "}
-                                                            Upload Image
-                                                        </Button>
-                                                        {imageField.value && (
-                                                            <img
-                                                                src={imageField.value}
-                                                                alt="preview"
-                                                                className="h-16 w-16 object-cover rounded-md"
-                                                            />
-                                                        )}
-                                                    </div>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
+                                            fieldName={`technologyDetails.${index}.technologyDetail`}
                                         />
-                                    </div>
-                                    <PointsWithServiceArray
-                                        control={form.control}
-                                        fieldName={`heroSections.${index}.points`}
-                                        services={services}
-                                    />
-                                </div>
-                            ))}
-
-                        </CardContent>
-                    </Card>
+                                        <PointsWithServiceArray
+                                            control={form.control}
+                                            fieldName={`technologyDetails.${index}.developmentDetail`}
+                                            services={services}
+                                        />
+                                    </Card>
+                                ))}
+                            </CardContent>
+                        </Card>
 
 
-
-
-                    <Card>
-                        <div className="flex justify-between items-center border-b mx-5">
-                            <CardHeader className="text-3xl font-bold border-0 px-0">Technology Details</CardHeader>
-                            <Button
-                                type="button"
-                                onClick={() =>
-                                    appendTechDetail({
-                                        title: "",
-                                        description: "",
-                                        image: "",
-                                        technologyDetail: [],
-                                        developmentDetail: [],
-                                    })
-                                }
-                            >
-                                <PlusCircle className="mr-2 h-4 w-4" /> Add Section
+                        <div className="flex justify-end gap-3 border-t pt-6 mt-8">
+                            <Button type="button" onClick={() => router.back()}>
+                                <ArrowLeft className="h-4 w-4 mr-2" />
+                                Back
                             </Button>
+                            <Button type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
+                            </Button>
+
                         </div>
-
-                        <CardContent className="space-y-6">
-
-                            {techDetailFields.map((field, index) => (
-                                <div
-                                    key={field.id}
-                                    className="border p-4 rounded-lg shadow-sm relative space-y-4"
-                                >
-                                    <div className="flex justify-between items-center">
-                                        <h3 className="font-semibold text-lg">
-                                            Tech Detail Section {index + 1}
-                                        </h3>
-                                        {techDetailFields.length > 1 && (
-                                            <Button
-                                                type="button"
-                                                variant="destructive"
-                                                size="sm"
-                                                onClick={() => removeTechDetail(index)}
-                                            >
-                                                Remove Section
-                                            </Button>
-                                        )}
-                                    </div>
-                                    <div className="grid md:grid-cols-2 gap-4">
-                                        <FormField
-                                            control={form.control}
-                                            name={`technologyDetails.${index}.title`}
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Section Title</FormLabel>
-                                                    <FormControl>
-                                                        <Input {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name={`technologyDetails.${index}.image`}
-                                            render={({ field: imageField }) => (
-                                                <FormItem>
-                                                    <FormLabel>Section Image</FormLabel>
-                                                    <div className="flex items-center gap-4">
-                                                        <Input
-                                                            type="file"
-                                                            className="hidden"
-                                                            id={`tech-section-image-${index}`}
-                                                            onChange={async (e) => {
-                                                                if (e.target.files?.[0]) {
-                                                                    setSectionUploading(`tech-${index}`);
-                                                                    try {
-                                                                        await handleImageUpload(
-                                                                            e.target.files[0],
-                                                                            (url) =>
-                                                                                form.setValue(
-                                                                                    `technologyDetails.${index}.image`,
-                                                                                    url,
-                                                                                    { shouldValidate: true }
-                                                                                )
-                                                                        );
-                                                                        toast({ title: "Success" });
-                                                                    } catch (err) {
-                                                                        toast({
-                                                                            title: "Error",
-                                                                            variant: "destructive",
-                                                                        });
-                                                                    } finally {
-                                                                        setSectionUploading(null);
-                                                                    }
-                                                                }
-                                                            }}
-                                                        />
-                                                        <Button
-                                                            type="button"
-                                                            onClick={() =>
-                                                                document
-                                                                    .getElementById(`tech-section-image-${index}`)
-                                                                    ?.click()
-                                                            }
-                                                            disabled={isSectionUploading === `tech-${index}`}
-                                                        >
-                                                            {isSectionUploading === `tech-${index}` ? (
-                                                                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                                                            ) : (
-                                                                <UploadCloud className="h-4 w-4 mr-2" />
-                                                            )}{" "}
-                                                            Upload Image
-                                                        </Button>
-                                                        {imageField.value && (
-                                                            <img
-                                                                src={imageField.value}
-                                                                alt="preview"
-                                                                className="h-16 w-16 object-cover rounded-md"
-                                                            />
-                                                        )}
-                                                    </div>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                    <FormField
-                                        control={form.control}
-                                        name={`technologyDetails.${index}.description`}
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Section Description</FormLabel>
-                                                <FormControl>
-                                                    <div className="border rounded-md">
-                                                        <TiptapEditorNoSSR
-                                                            value={field.value}
-                                                            onChange={field.onChange}
-                                                        />
-                                                    </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <SimplePointsArray
-                                        control={form.control}
-                                        fieldName={`technologyDetails.${index}.technologyDetail`}
-                                    />
-                                    <PointsWithServiceArray
-                                        control={form.control}
-                                        fieldName={`technologyDetails.${index}.developmentDetail`}
-                                        services={services}
-                                    />
-                                </div>
-                            ))}
-                        </CardContent>
-                    </Card>
-
-
-                    <div className="flex justify-between mt-4">
-                        <Button type="button" onClick={() => router.back()}>
-                            <ArrowLeft className="h-4 w-4 mr-2" />
-                            Back
-                        </Button>
-                        <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
-                        </Button>
-
-                    </div>
-                </form>
-            </Form>
-        </FormProvider>
+                    </form>
+                </Form>
+            </FormProvider>
+        </Card>
     );
 }

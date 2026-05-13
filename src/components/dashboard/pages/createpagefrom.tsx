@@ -278,7 +278,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
 
 const seoSchema = z.object({
@@ -374,13 +374,20 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
 
     return (
         // <ShadowCard>
+         <Card>
+        <CardContent className="p-6">
         <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 flex flex-col lg:flex-row gap-8">
+                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
 
-                    <div className="flex-1 space-y-4 ">
+                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2 space-y-8">
                     
                         <Card className="shadow-none">
-                            <CardHeader className="text-xl font-bold">Page Details</CardHeader>
+                            <CardHeader>
+                                <CardTitle>
+                                    Page Details
+                                </CardTitle>
+                                </CardHeader>
                             <CardContent className="space-y-4">
                                 <FormField
                                     control={form.control}
@@ -417,7 +424,11 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                         </Card>
                 
                         <Card  className="shadow-none">
-                            <CardHeader className="text-xl font-bold">SEO Settings</CardHeader>
+                            <CardHeader>
+                                <CardTitle className="text-primary">
+                                    SEO Settings
+                                </CardTitle>
+                            </CardHeader>
                             <CardContent className="space-y-4">
 
                                 <div className="flex flex-col lg:flex-row gap-8">
@@ -475,26 +486,9 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                             </CardContent>
                         </Card>
                 
-                        <div className="flex gap-3 justify-end pt-4">
-                            <Button
-                                type="button"
-                                variant="secondary"
-                                onClick={() => router.push("/dashboard/pages")}
-                                disabled={isSubmitting}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="submit"
-                                className="px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? "Saving..." : initialData ? "Update" : "Save"}
-                            </Button>
-                        </div>
                     </div>
     
-                    <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
+                    <div className="space-y-8 lg:col-span-1">
                         <FormField
                             control={form.control}
                             name="seo.featureImage"
@@ -508,7 +502,7 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                                                 form.setValue("seo.featureImage", url, { shouldValidate: true })
                                             }
                                             disabled={isSubmitting}
-                                            className="w-full h-[170px]"
+                                            className="w-full h-48"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -516,7 +510,28 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                             )}
                         />
                     </div>
+                  </div>
+
+                    <div className="flex justify-end gap-3 border-t pt-6 mt-8">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => router.push("/dashboard/pages")}
+                            disabled={isSubmitting}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            type="submit"
+                            className="px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? "Saving..." : initialData ? "Update" : "Save"}
+                        </Button>
+                    </div>
                 </form>
         </Form>
+        </CardContent>
+        </Card>
     );
 }

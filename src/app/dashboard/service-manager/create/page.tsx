@@ -6,6 +6,7 @@ import ServiceStepperForm, { ServiceStepperFormValues } from "@/components/dashb
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import PageHeader from "@/components/shared/PageHeader";
 
 interface CreateServiceManagerDialogProps {
     isOpen: boolean;
@@ -42,14 +43,11 @@ export default function CreateServiceManagerDialog({
 
     return (
         <>
-            <div className="flex justify-between itmes-center border-b py-4 mb-4">
-                <h1 className="text-2xl font-bold">Create Service</h1>
-                <Button
-                    onClick={() => router.push("/dashboard/service-manager")}
-                >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back
-                </Button>
+            <div className="space-y-6">
+                <PageHeader
+                    title="Create Service"
+                    description="Create a new Services "
+                />
             </div>
             <ServiceStepperForm onSubmit={handleCreate} initialData={null} />
 

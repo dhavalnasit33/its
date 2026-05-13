@@ -52,7 +52,7 @@ export default function CategoryFrom({ initialData, onSubmit }: categoryManagerF
     return (
         <>
             <Card>
-                <CardContent>
+                <CardContent className="pt-6">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
 

@@ -14,6 +14,7 @@ import OurServicesMainForm from "@/components/dashboard/service-main-page/OurSer
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import PageHeader from "@/components/shared/PageHeader";
 
 
 interface EditDialogProps {
@@ -104,13 +105,12 @@ export default function EditOurServicesMainDialog({
 
     return (
         <>
-            <div className="flex justify-between items-center border-b py-4 mb-4">
-                <h1 className="text-2xl font-bold">Edit service-main-page</h1>
-                <Button onClick={() => router.push("/dashboard/service-main-page")}>
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back
-                </Button>
-            </div>
+            <div className="space-y-6">
+                <PageHeader
+                    title="Edit service-main-page"
+                    description="update a service page"
+                />
+                </div>
             {/* <OurServicesMainForm
                 onSubmit={handleUpdate}
                 initialData={transformInitialDataForForm(initialData)}
