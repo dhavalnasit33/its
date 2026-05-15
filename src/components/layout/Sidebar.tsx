@@ -27,6 +27,16 @@ export const navItemsList: NavItem[] = [
   { label: "manegment", isTitle: true },
 
   { href: "/dashboard/pages", label: "All pages", icon: Layers },
+
+  {
+    label: "Category",
+    icon: Briefcase,
+    children: [
+      { href: "/dashboard/category", label: "Category", icon: Boxes },
+      { href: "/dashboard/subcategory", label: "Subcategory", icon: Boxes },
+
+    ]
+  },
   {
     label: "Our Services",
     icon: Briefcase,
@@ -38,15 +48,36 @@ export const navItemsList: NavItem[] = [
   },
 
   {
-    label: "Category",
-    icon: Briefcase,
+    label: "Hire",
+    icon: SignpostBig,
     children: [
-      { href: "/dashboard/category", label: "Category", icon: Boxes },
-      { href: "/dashboard/subcategory", label: "Subcategory", icon: Boxes },
-
+      { href: "/dashboard/hire-main-page", label: "Hire Main Page ", icon: ToolCase },
+    ],
+  },
+  { href: "/dashboard/About", label: "About Us", icon: Building2 },
+  {
+    label: "Career",
+    icon: GraduationCap,
+    children: [
+      { href: "/dashboard/career", label: "Career", icon: Boxes },
+      { href: "/dashboard/openning-position", label: "Openning Position", icon: ClipboardList },
     ]
   },
-  { href: "/dashboard/About", label: "About", icon: Building2 },
+  {
+    label: "Portfolio",
+    icon: Layers2,
+    children: [
+      { href: "/dashboard/portfolio", label: "Portfolio Main page", icon: Layers2 },
+      { href: "/dashboard/creativeWork", label: "Creative Work", icon: Pickaxe },
+    ]
+  },
+  {
+    label: "Traing",
+    icon: GraduationCap,
+    children: [
+      { href: "/dashboard/trainingMainPage", label: "Training MainPage Data", icon: Presentation },
+    ]
+  },
   {
     label: "Global-Model",
     icon: Server,
@@ -58,18 +89,6 @@ export const navItemsList: NavItem[] = [
       { href: "/dashboard/ReadOurReview", label: "Read Our Review", icon: Navigation },
     ],
   },
-  {
-    label: "Portfolio",
-    icon: Layers2,
-    children: [
-      { href: "/dashboard/portfolio", label: "Portfolio Main page", icon: Layers2 },
-      { href: "/dashboard/creativeWork", label: "Creative Work", icon: Pickaxe },
-    ]
-  }
-
-
-
-
 
 
 

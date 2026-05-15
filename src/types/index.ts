@@ -259,11 +259,11 @@ export const OpenningPositionSchema = z.object({
     .string()
     .min(1, "Image is required")
     .url("A valid image URL is required"),
-  openning: z.number().int().positive("Openning must be a positive number"),
+  openning: z.union([z.number(), z.string()]),
   qualifications: z
     .string()
     .min(2, "Qualifications must be at least 2 characters"),
-  experience: z.string().min(2, "Experience must be at least 2 characters"),
+  experience: z.string().min(1, "Experience is required"),
 });
 
 export const PortfolioContentFormValues = z.object({
@@ -563,6 +563,12 @@ export const CareerContentSchema = z.object({
   heroSection: CareerHeroSectionSchema,
   careerAtIts: CareerAtItsSchema,
   whyJoinIts: WhyJoinItsSchema,
+  seo: z.object({
+    title: z.string(),
+    keyphrase: z.string(),
+    seoDescription: z.string(),
+    featureImage: z.string().nullable().optional().or(z.literal("")),
+  }),
   createdAt: z.string().optional(),
   updatedAt: z.string().optional(),
 });
@@ -574,6 +580,12 @@ export interface CareerContent {
   heroSection: CareerHeroSection;
   careerAtIts: CareerAtIts;
   whyJoinIts: WhyJoinIts;
+  seo: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage: string | null;
+  };
   createdAt?: string;
   updatedAt?: string;
 }
@@ -951,6 +963,12 @@ export const TrainingMainPageDataSchema = z.object({
       )
       .min(1, "At least one detail box is required"),
   }),
+  seo: z.object({
+    title: z.string(),
+    keyphrase: z.string(),
+    seoDescription: z.string(),
+    featureImage: z.string().nullable().optional().or(z.literal("")),
+  }),
 });
 
 export type TrainingMainPageDataFormValues = z.infer<
@@ -1000,6 +1018,12 @@ export interface TrainingMainPageData {
       title: string;
       description: string;
     }[];
+  };
+  seo: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage: string | null;
   };
   createdAt?: string;
   updatedAt?: string;
@@ -1055,6 +1079,12 @@ export const OurServicesMainSchema = z.object({
   technologyDetails: z
     .array(OurServiceTechnologyDetailSchema)
     .min(1, "At least one technology detail section is required"),
+  seo: z.object({
+    title: z.string().optional().or(z.literal("")),
+    keyphrase: z.string().optional().or(z.literal("")),
+    seoDescription: z.string().optional().or(z.literal("")),
+    featureImage: z.string().optional().or(z.literal("")),
+  }),
 });
 
 export type OurServicesMainFormValues = z.infer<typeof OurServicesMainSchema>;
@@ -1087,6 +1117,12 @@ export interface OurServicesMain {
     technologyDetail: { label: string; image: string }[]; // Simple points
     developmentDetail: OurServicesMain["heroSections"][0]["points"]; // Points with populated serviceId
   }[];
+  seo?: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage: string | null;
+  };
 }
 
 /* -------------------- Home Page Content -------------------- */
@@ -1310,6 +1346,12 @@ export const HireMainPageDataSchema = z.object({
   pricePathAndFAQ: z
     .string()
     .min(1, "A hire page for pricing and FAQ must be selected"),
+  seo: z.object({
+    title: z.string().optional().or(z.literal("")),
+    keyphrase: z.string().optional().or(z.literal("")),
+    seoDescription: z.string().optional().or(z.literal("")),
+    featureImage: z.string().optional().or(z.literal("")),
+  }),
 });
 
 export type HireMainPageDataFormValues = z.infer<typeof HireMainPageDataSchema>;
@@ -1367,6 +1409,12 @@ export interface HireMainPageData {
     buttonTitle: string;
   }[];
   pricePathAndFAQ: HirePageLink;
+  seo?: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage: string | null;
+  };
   createdAt?: string;
   updatedAt?: string;
 }

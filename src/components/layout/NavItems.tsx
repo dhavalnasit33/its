@@ -56,7 +56,7 @@ function NavItemWithChildren({
 					"flex items-center rounded-md px-3 py-2.5 justify-between w-full transition-colors duration-150",
 					"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar-background",
 					isChildActive
-						? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
+						? "text-sidebar-primary bg-sidebar-primary/10 font-medium"
 						: "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
 					isMobile ? "text-base" : "text-sm"
 				)}

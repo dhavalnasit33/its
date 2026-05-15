@@ -145,3 +145,335 @@
 .tiptap mark {
   @apply bg-yellow-200 rounded px-0.5;
 }
+/* =========================
+   CKEditor Main Editable Area
+========================= */
+
+.ck-editor__editable_inline {
+  min-height: 250px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 16px !important;
+}
+
+/* =========================
+   Editor Typography
+========================= */
+
+.ck-content {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* =========================
+   Dropdown Scroll Fix
+========================= */
+/* 
+.ck.ck-dropdown .ck-dropdown__panel {
+  max-height: 300px !important;
+  overflow-y: auto !important;
+} */
+
+/* Dropdown panel fix */
+/* Normal dropdowns only */
+.ck.ck-dropdown .ck-dropdown__panel {
+  min-width: 220px !important;
+}
+
+/* Floating balloon toolbar fix */
+.ck.ck-balloon-panel {
+  z-index: 999999 !important;
+  overflow: visible !important;
+}
+
+/* Table toolbar fix */
+.ck.ck-balloon-panel .ck-toolbar {
+  flex-wrap: nowrap !important;
+  overflow: visible !important;
+}
+
+/* Prevent internal scrollbar */
+.ck.ck-balloon-panel .ck-toolbar__items {
+  overflow: visible !important;
+}
+
+/* Better floating UI */
+.ck-body-wrapper {
+  z-index: 999999 !important;
+}
+
+.ck.ck-dropdown__panel-visible {
+  overflow: visible !important;
+}
+
+/* Prevent scrollbar over buttons */
+.ck.ck-list {
+  padding-right: 8px !important;
+}
+
+/* Better dropdown item spacing */
+.ck.ck-list__item .ck-button {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+/* =========================
+   Bullet & Number Lists
+========================= */
+
+.ck-content ul,
+.ck-editor__editable ul {
+  list-style-type: disc !important;
+  padding-left: 24px !important;
+}
+
+.ck-content ol,
+.ck-editor__editable ol {
+  list-style-type: decimal !important;
+  padding-left: 24px !important;
+}
+
+.ck-content li,
+.ck-editor__editable li {
+  margin-bottom: 4px;
+}
+
+/* =========================
+   Headings
+========================= */
+
+.ck-content h1 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.ck-content h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.ck-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.ck-content h4 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* =========================
+   Links
+========================= */
+
+.ck-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* =========================
+   Blockquote
+========================= */
+
+.ck-content blockquote {
+  border-left: 4px solid #d1d5db;
+  padding-left: 16px;
+  color: #555;
+  margin: 16px 0;
+  font-style: italic;
+}
+
+/* =========================
+   Code Block
+========================= */
+
+.ck-content pre {
+  background: #f3f4f6;
+  color: #111827;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: monospace;
+}
+
+/* =========================
+   Tables
+========================= */
+
+.ck-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ck-content table td,
+.ck-content table th {
+  border: 1px solid #d1d5db;
+  padding: 8px;
+}
+
+.ck-content table th {
+  background: #f9fafb;
+  font-weight: bold;
+}
+
+.ck-content .table {
+  overflow-x: auto;
+}
+
+/* =========================
+   Images
+========================= */
+
+.ck-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* =========================
+   Toolbar
+========================= */
+
+.ck.ck-editor {
+  width: 100%;
+}
+
+/* .ck.ck-toolbar {
+  flex-wrap: wrap !important;
+  align-items: center;
+  border: none !important;
+} */
+ .ck.ck-toolbar {
+  flex-wrap: wrap !important;
+  align-items: center;
+  border: none !important;
+  gap: 4px;
+}
+
+/* .ck.ck-toolbar__items {
+  flex-wrap: wrap !important;
+  row-gap: 4px;
+} */
+
+
+.ck.ck-toolbar__items {
+  display: flex !important;
+  align-items: center;
+}
+
+.ck.ck-button {
+  margin: 2px !important;
+}
+
+.ck.ck-editor__top {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ck-toolbar-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* =========================
+   Source Editing Area
+========================= */
+
+/* .ck-source-editing-area textarea {
+  min-height: 300px !important;
+  font-family: monospace;
+} */
+/* Source editing wrapper */
+.ck-source-editing-area {
+  max-height: 500px !important;
+}
+
+/* Source editing textarea */
+.ck-source-editing-area textarea {
+  min-height: 200px !important;
+  max-height: 500px !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  resize: vertical !important;
+
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.6;
+
+  white-space: pre-wrap !important;
+  box-sizing: border-box;
+}
+/* =========================
+   Alignment
+========================= */
+
+.ck-content .text-left {
+  text-align: left;
+}
+
+.ck-content .text-center {
+  text-align: center;
+}
+
+.ck-content .text-right {
+  text-align: right;
+}
+
+.ck-content .text-justify {
+  text-align: justify;
+}
+
+/* Floating balloon panels */
+.ck.ck-balloon-panel {
+  z-index: 9999 !important;
+  max-width: 95vw !important;
+}
+
+/* Balloon toolbar */
+.ck.ck-toolbar.ck-toolbar_grouping {
+  flex-wrap: wrap !important;
+  max-width: 500px;
+}
+
+/* Table toolbar popup */
+.ck.ck-dropdown__panel {
+  max-width: 300px !important;
+  overflow-x: auto;
+}
+
+/* Prevent cutoff */
+.ck-body-wrapper {
+  z-index: 9999 !important;
+}
+
+/* Table selected cells */
+.ck-content .table table td.ck-editor__editable_selected,
+.ck-content .table table th.ck-editor__editable_selected {
+  background: #dbeafe !important;
+}
+
+/* Better table spacing */
+.ck-content .table {
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+/* Responsive floating toolbar */
+.ck.ck-balloon-panel .ck-toolbar {
+  flex-wrap: wrap !important;
+}
+/* CKEditor floating UI fix */
+.ck-body-wrapper {
+  z-index: 999999 !important;
+}
+
+.ck.ck-balloon-panel {
+  z-index: 999999 !important;
+}
+
+.ck-powered-by {
+  display: none !important;
+}
+
+

@@ -1,79 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle,  } from "@/components/ui/card";
-// ShadowCard
-import { Button } from "@/components/ui/button";
 import apiService from "@/lib/apiService";
-import Image from "next/image";
-import Link from "next/link";
-import { OurServicesMain, SingleResponse } from "@/types";
+import { OurServicesMain, SingleResponse, OurServicesMainFormValues } from "@/types";
 import PageHeader from "@/components/shared/PageHeader";
-import { Badge } from "@/components/ui/badge";
-import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import OurServicesMainForm from "@/components/dashboard/service-main-page/OurServicesMainForm";
+import { Loader2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
-import CreateOurServicesMainDialog from "@/components/dashboard/service-main-page/CreateOurServicesMainDialog";
-// import EditOurServicesMainDialog from "@/components/dashboard/service-main-page/EditOurServicesMainDialog";
-
-const LinkedPointDisplay = ({
-    points,
-}: {
-    points: OurServicesMain["heroSections"][0]["points"];
-}) => (
-    <div className="grid grid-cols-1 lg:grid-cols-2  gap-2 ">
-        {points.map((point, pIdx) => (
-            <Link
-                key={pIdx}
-                href="#"
-                target="_blank"
-            >
-                <Badge
-                    variant="secondary"
-                    className="flex items-center gap-2 p-2 hover:bg-gray-200 transition-colors"
-                >
-                    <img
-                        src={point.image}
-                        alt={point.label}
-                        className="h-6 w-6 rounded-full object-cover"
-                    />
-                    <span>{point.label}</span>
-                </Badge>
-            </Link>
-        ))}
-    </div>
-);
-
-const SimplePointDisplay = ({
-    points,
-}: {
-    points: { label: string; image: string }[];
-}) => (
-    <div className="flex flex-wrap gap-2 ">
-        {points.map((point, pIdx) => (
-            <Badge
-                key={pIdx}
-                variant="outline"
-                className="flex items-center gap-2 p-2"
-            >
-                <img
-                    src={point.image}
-                    alt={point.label}
-                    className="h-7 w-7 rounded-full object-cover"
-                />
-                <span>{point.label}</span>
-            </Badge>
-        ))}
-    </div>
-);
 
 export default function OurServicesMainPage() {
+    const { toast } = useToast();
     const [data, setData] = useState<OurServicesMain | null>(null);
     const [loading, setLoading] = useState(true);
-    const [createDialogOpen, setCreateDialogOpen] = useState(false);
-    const [editDialogOpen, setEditDialogOpen] = useState(false);
-
-
-    const router = useRouter();
 
     const fetchContent = async () => {
         try {
@@ -81,11 +21,19 @@ export default function OurServicesMainPage() {
             const res = await apiService<SingleResponse<OurServicesMain[]>>(
                 "/service-main/admin"
             );
-            if (res.success && res.data.length > 0) setData(res.data[0]);
-            else setData(null);
+            // The API returns an array, we take the first one if it exists
+            if (res.success && res.data && res.data.length > 0) {
+                setData(res.data[0]);
+            } else {
+                setData(null);
+            }
         } catch (error) {
             console.error("❌ Error fetching services content:", error);
-            setData(null);
+            toast({
+                title: "Error",
+                description: "Failed to load service page content.",
+                variant: "destructive",
+            });
         } finally {
             setLoading(false);
         }
@@ -95,138 +43,114 @@ export default function OurServicesMainPage() {
         fetchContent();
     }, []);
 
-    if (loading) return <p className="p-6">Loading...</p>;
+    const handleSave = async (formData: OurServicesMainFormValues) => {
+        try {
+            if (data?._id) {
+                // Update existing
+                const res = await apiService<SingleResponse<OurServicesMain>>(
+                    `/service-main/${data._id}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                );
+                if (res.success) {
+                    toast({ title: "Success", description: "Service page updated successfully." });
+                    setData(res.data);
+                }
+            } else {
+                // Create new
+                const res = await apiService<SingleResponse<OurServicesMain>>(
+                    "/service-main",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(formData),
+                    }
+                );
+                if (res.success) {
+                    toast({ title: "Success", description: "Service page created successfully." });
+                    setData(res.data);
+                }
+            }
+        } catch (error: any) {
+            toast({
+                title: "Error",
+                description: error.message || "Failed to save content.",
+                variant: "destructive",
+            });
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex h-[400px] items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    // Map internal data to form values
+    const formInitialData: OurServicesMainFormValues | null = data ? {
+        mainTitle: data.mainTitle,
+        description: data.description,
+        heroSections: data.heroSections.map(hs => ({
+            title: hs.title,
+            image: hs.image,
+            points: hs.points.map(p => ({
+                label: p.label,
+                image: p.image,
+                serviceId: typeof p.serviceId === 'object' ? p.serviceId._id : p.serviceId
+            }))
+        })),
+        technologyDetails: data.technologyDetails.map(td => ({
+            title: td.title,
+            description: td.description,
+            image: td.image,
+            technologyDetail: td.technologyDetail.map(p => ({ label: p.label, image: p.image })),
+            developmentDetail: td.developmentDetail.map(p => ({
+                label: p.label,
+                image: p.image,
+                serviceId: typeof p.serviceId === 'object' ? p.serviceId._id : p.serviceId
+            }))
+        })),
+        seo: {
+            title: data.seo?.title || "",
+            keyphrase: data.seo?.keyphrase || "",
+            seoDescription: data.seo?.seoDescription || "",
+            featureImage: data.seo?.featureImage || "",
+        }
+    } : null;
 
     return (
-        <>
-            <PageHeader
-                title="Our Services Page Content"
-                description="Manage the content for the main services page."
-                actionButtons={
-                    !data ? (
-                        <Button
-                            //  onClick={() => setCreateDialogOpen(true)}
-                            onClick={() => router.push("/dashboard/service-main-page/create")}>
-
-
-                            Create Content
-                        </Button>
-                    ) : (
-                        <Button
-                        //  onClick={() => setEditDialogOpen(true)}
-                            // onClick={() => router.push("/dashboard/service-main-page/edit")}>
-                    onClick={() => {
-                            console.log("✅ Edit button clicked");
-                            console.log("📦 Current Data:", data);
-
-                            router.push("/dashboard/service-main-page/edit");
-                        }}
-                        >
-                        
-                            Edit Content
-                        </Button>
-                    )
-                }
-            />
-
-            {data ? (
-                <Card className="mt-6">
-                    <CardHeader>
-                        <CardTitle>Main Content</CardTitle>
-                        <div
-                            className="prose prose-sm max-w-none mt-2"
-                            dangerouslySetInnerHTML={{ __html: data.mainTitle }}
-                        />
-                    </CardHeader>
-                    <CardContent>
-                        <div
-                            className="prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: data.description }}
-                        />
-
-                        <h3 className="text-xl font-semibold mt-6 mb-4 border-t pt-4">
-                            Hero Sections
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {data.heroSections.map((section, idx) => (
-                                <Card key={idx}>
-                                    <CardHeader>
-                                        <CardTitle className="text-lg">{section.title}</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="flex flex-col  gap-2">
-
-                                            <Image
-                                                src={section.image}
-                                                alt={section.title}
-                                                width={80}
-                                                height={80}
-                                                className="rounded-md my-2 object-cover"
-                                            />
-                                            <div className="flex flex-col gap-2">
-                                                <h4 className="font-semibold mt-4 mb-2">Points:</h4>
-                                                <LinkedPointDisplay points={section.points} />
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-
-                        <h3 className="text-xl font-semibold mt-6 mb-4 border-t pt-4">
-                            Technology Details
-                        </h3>
-                        <div className="grid gap-6 md:grid-cols-2">
-                            {data.technologyDetails.map((detail, idx) => (
-                                <Card key={idx}>
-                                    <CardHeader>
-                                        <CardTitle className="text-lg">{detail.title}</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <Image
-                                            src={detail.image}
-                                            alt={detail.title}
-                                            width={200}
-                                            height={100}
-                                            className="rounded-md my-2 object-cover"
-                                        />
-                                        <div
-                                            className="prose prose-sm max-w-none mt-2"
-                                            dangerouslySetInnerHTML={{ __html: detail.description }}
-                                        />
-                                        <h4 className="font-semibold mt-4 mb-2">
-                                            Technology Details:
-                                        </h4>
-                                        <SimplePointDisplay points={detail.technologyDetail} />
-                                        <h4 className="font-semibold mt-4 mb-2">
-                                            Development Details:
-                                        </h4>
-                                        <LinkedPointDisplay points={detail.developmentDetail} />
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
-            ) : (
-                <p className="mt-6 text-center text-muted-foreground">
-                    No content found. Please create it.
-                </p>
-            )}
-
-            <CreateOurServicesMainDialog
-                isOpen={createDialogOpen}
-                onOpenChange={setCreateDialogOpen}
-                onSuccess={fetchContent}
-            />
-            {/* {data && (
-                <EditOurServicesMainDialog
-                    isOpen={editDialogOpen}
-                    onOpenChange={setEditDialogOpen}
-                    onSuccess={fetchContent}
-                    initialData={data}
-                />
-            )} */}
-        </>
+        <div className="p-6 w-full "> {/* container mx-auto py-6 space-y-6 */}
+            {/* <PageHeader
+                title="Service Main Page Management"
+                description="Modernize and manage your IT services main page content and SEO settings."
+            /> */}
+            <Card>
+                <CardContent className="p-6">
+                    <div className="mb-6">
+                        <h2 className="text-2xl font-bold">
+                            {
+                                data?._id ? "Update" : "Create"
+                            }
+                            Service Main Page Management
+                        </h2>
+                        <p className="text-muted-foreground">Manage your service main page content and SEO settings.</p>
+                    </div>
+                    <OurServicesMainForm
+                        initialData={formInitialData}
+                        onSubmit={handleSave}
+                        onCancel={() => fetchContent()}
+                    />
+                </CardContent>
+            </Card >
+        </div >
     );
 }
