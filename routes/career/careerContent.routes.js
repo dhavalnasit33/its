@@ -80,6 +80,13 @@ const cleanupOldImages = require("../../middlewares/cleanupOldImages");
  *           $ref: '#/components/schemas/CareerAtIts'
  *         whyJoinIts:
  *           $ref: '#/components/schemas/WhyJoinIts'
+ *         seo:
+ *           type: object
+ *           properties:
+ *             title: { type: string }
+ *             keyphrase: { type: string }
+ *             seoDescription: { type: string }
+ *             featureImage: { type: string }
  */
 
 /**
@@ -106,7 +113,7 @@ const cleanupOldImages = require("../../middlewares/cleanupOldImages");
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { heroSection, careerAtIts, whyJoinIts } = req.body;
+        const { heroSection, careerAtIts, whyJoinIts, seo } = req.body;
 
         if (!heroSection || !careerAtIts || !whyJoinIts) {
             return res.status(400).json({
@@ -128,6 +135,7 @@ router.post("/", protect, async (req, res) => {
             heroSection,
             careerAtIts,
             whyJoinIts,
+            seo,
         });
         await newCareerContent.save();
 
@@ -206,7 +214,7 @@ router.get("/", async (req, res) => {
 router.put("/:id", protect, cleanupOldImages(CareerContent,"CareerContent"), async (req, res) => {
     try {
         const id = req.params.id;
-        const { heroSection, careerAtIts, whyJoinIts } = req.body;
+        const { heroSection, careerAtIts, whyJoinIts, seo } = req.body;
 
         const careerContent = await CareerContent.findById(id);
         if (!careerContent) {
@@ -219,6 +227,7 @@ router.put("/:id", protect, cleanupOldImages(CareerContent,"CareerContent"), asy
         if (heroSection) careerContent.heroSection = heroSection;
         if (careerAtIts) careerContent.careerAtIts = careerAtIts;
         if (whyJoinIts) careerContent.whyJoinIts = whyJoinIts;
+        if (seo) careerContent.seo = seo;
 
         await careerContent.save();
         res.status(200).json({

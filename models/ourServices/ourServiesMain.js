@@ -31,12 +31,23 @@ const TechnologyDetailSchema = new mongoose.Schema({
     developmentDetail: [ManualPointSchema],
 });
 
+const SEOSchema = new mongoose.Schema(
+    {
+        title: { type: String, default: "" },
+        keyphrase: { type: String, default: "" },
+        seoDescription: { type: String, default: "" },
+        featureImage: { type: String, default: null },
+    },
+    { _id: false },
+);
+
 const OurServicesSchema = new mongoose.Schema(
     {
         mainTitle: { type: String, required: true },
         description: { type: String, required: true },
         heroSections: [HeroSectionSchema],
         technologyDetails: [TechnologyDetailSchema],
+        seo: SEOSchema,
     },
     { timestamps: true }
 );

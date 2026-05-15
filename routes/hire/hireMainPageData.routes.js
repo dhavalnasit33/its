@@ -181,6 +181,13 @@ const router = express.Router();
  *           type: string
  *           description: ObjectId reference to HirePageData
  *           example: "507f1f77bcf86cd799439011"
+ *         seo:
+ *           type: object
+ *           properties:
+ *             title: { type: string }
+ *             keyphrase: { type: string }
+ *             seoDescription: { type: string }
+ *             featureImage: { type: string }
  */
 
 /**
@@ -227,6 +234,7 @@ router.post("/", protect, async (req, res) => {
             whyChooseItsForDedicatedResources,
             hireDedicatedResourcesAndTalents,
             pricePathAndFAQ,
+            seo,
         } = req.body;
 
         // Basic validation
@@ -515,7 +523,10 @@ router.put("/:id", protect,cleanupOldImages(HireMainPageData,"HireMainPageData")
             }
         }
 
-        const updated = await HireMainPageData.findByIdAndUpdate(id, req.body, {
+        const updated = await HireMainPageData.findByIdAndUpdate(id, {
+            ...req.body,
+            seo: req.body.seo
+        }, {
             new: true,
             runValidators: true,
         }).populate(populateOptions);

@@ -10,7 +10,7 @@ const openningPositionSchema = new mongoose.Schema({
         default: null
     },
     openning: {
-        type: [Number, String], // Allows number or string
+        type: [String],   // Number, // Allows number or string  
         required: true
     },
     qualifications: {

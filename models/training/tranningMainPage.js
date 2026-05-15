@@ -116,11 +116,22 @@ const rightCoursePickSectionSchema = new mongoose.Schema({
 
 }, { _id: false })
 
+const SEOSchema = new mongoose.Schema(
+    {
+        title: { type: String, default: "" },
+        keyphrase: { type: String, default: "" },
+        seoDescription: { type: String, default: "" },
+        featureImage: { type: String, default: null },
+    },
+    { _id: false },
+);
+
 const TranningMainPageSchema = new mongoose.Schema({
     heroSection: HeroSectionSchema,
     aboutusSection: AboutusSectionSchema,
     itsInstituteFacilitiesSection: ITSInstituteFacilitiesSectionSchema,
-    rightCoursePickSection: rightCoursePickSectionSchema
+    rightCoursePickSection: rightCoursePickSectionSchema,
+    seo: SEOSchema,
 }, { timestamps: true });
 
 module.exports = mongoose.model('TrainingMainPageData', TranningMainPageSchema)

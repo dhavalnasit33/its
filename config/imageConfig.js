@@ -27,7 +27,8 @@ module.exports = {
     "heroSections.points[].image",
     "technologyDetails.image",
     "technologyDetails.technologyDetail[].image",
-    "technologyDetails.developmentDetail[].image"
+    "technologyDetails.developmentDetail[].image",
+    "seo.featureImage"
   ],
 
   // ✅ Service (complex one)
@@ -55,6 +56,7 @@ module.exports = {
     "heroSection.image",
     "careerAtIts.image",
     "whyJoinIts.points[].image",
+    "seo.featureImage",
   ],
 
   // ✅ Blog
@@ -82,7 +84,8 @@ module.exports = {
     "developmentTeamSection.image",
     "dedicatedDeveloperSection.services[].serviceItemBox[].image",
     "whyHireDeveloperforYourProject.detailBox[].image",
-    "whyChooseItsForDedicatedResources.detailBox[].image"
+    "whyChooseItsForDedicatedResources.detailBox[].image",
+    "seo.featureImage"
   ],
 
   // ✅ PortfolioContent
@@ -98,7 +101,8 @@ module.exports = {
     "aboutusSection.image",
     "itsInstituteFacilitiesSection.points[].image",
     "rightCoursePickSection.cardBox[].image",
-    "rightCoursePickSection.detailbox[].image"
+    "rightCoursePickSection.detailbox[].image",
+    "seo.featureImage"
   ],
 
   // ✅ HomePageData

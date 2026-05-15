@@ -114,6 +114,13 @@ const router = express.Router();
  *           type: array
  *           items:
  *             $ref: "#/components/schemas/TechnologyDetail"
+ *         seo:
+ *           type: object
+ *           properties:
+ *             title: { type: string }
+ *             keyphrase: { type: string }
+ *             seoDescription: { type: string }
+ *             featureImage: { type: string }
  */
 
 // --------------------------------------------------------------------
@@ -171,6 +178,7 @@ router.post("/", protect, async (req, res) => {
       description,
       heroSections,
       technologyDetails,
+      seo: req.body.seo
     });
 
     await newService.save();
@@ -422,7 +430,13 @@ router.put("/:id", protect,cleanupOldImages(OurServicesMain,"OurServicesMain"), 
 
     const updatedService = await OurServicesMain.findByIdAndUpdate(
       req.params.id,
-      { mainTitle, description, heroSections, technologyDetails },
+      { 
+        mainTitle, 
+        description, 
+        heroSections, 
+        technologyDetails,
+        seo: req.body.seo
+      },
       { new: true, runValidators: true }
     ).populate([
       {

@@ -103,6 +103,16 @@ const hireDedicatedResourcesAndTalentsSchema = mongoose.Schema({
     }
 }, { _id: false });
 
+const SEOSchema = new mongoose.Schema(
+    {
+        title: { type: String, default: "" },
+        keyphrase: { type: String, default: "" },
+        seoDescription: { type: String, default: "" },
+        featureImage: { type: String, default: null },
+    },
+    { _id: false },
+);
+
 const HireMainPageDataSchema = mongoose.Schema({
     mainTitle: {
         type: String,
@@ -121,7 +131,8 @@ const HireMainPageDataSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'HirePageData',
         required: true
-    }
+    },
+    seo: SEOSchema,
 }, { timestamps: true });
 
 module.exports = mongoose.model('HireMainPageData', HireMainPageDataSchema)

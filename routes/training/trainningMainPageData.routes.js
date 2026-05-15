@@ -115,6 +115,13 @@ const router = express.Router();
  *           $ref: '#/components/schemas/TrainingITSInstituteFacilitiesSection'
  *         rightCoursePickSection:
  *           $ref: '#/components/schemas/TrainingRightCoursePickSection'
+ *         seo:
+ *           type: object
+ *           properties:
+ *             title: { type: string }
+ *             keyphrase: { type: string }
+ *             seoDescription: { type: string }
+ *             featureImage: { type: string }
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -152,6 +159,7 @@ router.post("/", protect, async (req, res) => {
       aboutusSection,
       itsInstituteFacilitiesSection,
       rightCoursePickSection,
+      seo,
     } = req.body;
 
     if (
@@ -166,7 +174,13 @@ router.post("/", protect, async (req, res) => {
       });
     }
 
-    const trainingContent = new TrainingMainPageData(req.body);
+    const trainingContent = new TrainingMainPageData({
+      heroSection,
+      aboutusSection,
+      itsInstituteFacilitiesSection,
+      rightCoursePickSection,
+      seo,
+    });
     await trainingContent.save();
 
     res.status(201).json({
@@ -252,9 +266,23 @@ router.put("/:id", protect,cleanupOldImages(TrainingMainPageData,"TrainingMainPa
       });
     }
 
+    const {
+      heroSection,
+      aboutusSection,
+      itsInstituteFacilitiesSection,
+      rightCoursePickSection,
+      seo,
+    } = req.body;
+
     const updatedContent = await TrainingMainPageData.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      {
+        heroSection,
+        aboutusSection,
+        itsInstituteFacilitiesSection,
+        rightCoursePickSection,
+        seo,
+      },
       { new: true, runValidators: true }
     );
 

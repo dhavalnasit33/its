@@ -107,6 +107,80 @@ router.post('/', protect, async (req, res) => {
 
 /**
  * @swagger
+ * /api/opennig-position/admin:
+ *   get:
+ *     summary: Get paginated job openings for admin with search and filter
+ *     tags: [OpenningPosition]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: experience
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: qualifications
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Paginated list
+ */
+router.get("/admin", protect, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search || "";
+    const experience = req.query.experience || "";
+    const qualifications = req.query.qualifications || "";
+
+    let query = {};
+    if (search) {
+      query.name = { $regex: search, $options: "i" };
+    }
+    if (experience) {
+      query.experience = { $regex: experience, $options: "i" };
+    }
+    if (qualifications) {
+      query.qualifications = qualifications;
+    }
+
+    const total = await OpenningPosition.countDocuments(query);
+    const data = await OpenningPosition.find(query)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      message: "Data Fetched Successfully",
+      data,
+      pagination: {
+        current: page,
+        pages: Math.ceil(total / limit),
+        total,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching admin openings", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
+/**
+ * @swagger
  * /api/opennig-position:
  *   get:
  *     summary: Get all job openings
@@ -138,6 +212,41 @@ router.get('/', async (req, res) => {
             message: "Server Error"
         });
     }
+});
+
+/**
+ * @swagger
+ * /api/opennig-position/{id}:
+ *   get:
+ *     summary: Get a single job opening by ID
+ *     tags: [OpenningPosition]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Data Fetched Successfully
+ *       404:
+ *         description: Not found
+ */
+router.get("/:id", async (req, res) => {
+  try {
+    const data = await OpenningPosition.findById(req.params.id);
+    if (!data) {
+      return res.status(404).json({ success: false, message: "Data not found" });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Data Fetched Successfully",
+      data,
+    });
+  } catch (error) {
+    console.error("Error fetching single opening", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
 });
 
 /**
@@ -305,4 +414,66 @@ router.delete('/:id', protect, cleanupImages(OpenningPosition),async (req, res) 
     }
 });
 
-module.exports = router; 
+/**
+ * @swagger
+ * /api/opennig-position/bulk-delete:
+ *   post:
+ *     summary: Bulk delete job openings
+ *     tags: [OpenningPosition]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Items deleted successfully
+ *       400:
+ *         description: Conflict with existing applications
+ *       500:
+ *         description: Server error
+ */
+router.post("/bulk-delete", protect, cleanupImages.cleanupBulkImages(OpenningPosition), async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of IDs to delete",
+      });
+    }
+
+    // Check if any of these positions have applications
+    const appliedCount = await ApplyPosition.countDocuments({ positionApplied: { $in: ids } });
+    if (appliedCount > 0) {
+        return res.status(400).json({
+            success: false,
+            message: `Cannot bulk delete. Some job openings have applications (${appliedCount} total). Remove related ApplyPosition records first.`,
+        });
+    }
+
+    const result = await OpenningPosition.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: `${result.deletedCount} items deleted successfully`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (error) {
+    console.error("Error bulk deleting openings", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
+module.exports = router;
+ 
