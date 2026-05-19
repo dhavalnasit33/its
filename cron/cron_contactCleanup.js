@@ -3,13 +3,14 @@ const path = require('path');
 const fs = require('fs');
 const Contact = require('../models/footer/contact_footer')
 const ApplyPosition = require('../models/career/applyForPosition')
+const Enquiry = require('../models/enquiry/Enquiry')
 
 // Run daily at 00:05 (server time). Fields: sec min hour day month dow
 const job_delete_record = new CronJob("0 5 0 * * *", async () => {
     console.log("⏰ Running daily cleanup job...");
 
-    // compute cutoff as start of today minus 15 full says
-    // this keeps  records from the last 15 days inclusice, and deletes anything *before* that
+    // compute cutoff as start of today minus 15 full days
+    // this keeps records from the last 15 days inclusive, and deletes anything *before* that
 
     const today = new Date();
     today.setHours(0, 0, 0, 0)
@@ -17,7 +18,7 @@ const job_delete_record = new CronJob("0 5 0 * * *", async () => {
     console.log(`🗓️ Cutoff (keep >= this date): ${cutoff.toISOString().slice(0, 10)}`);
 
     try {
-        // find records strictly older than the 15-day  window
+        // find records strictly older than the 15-day window
         const expiredContacts = await Contact.find({ createdAt: { $lt: cutoff } });
 
         for (const contact of expiredContacts) {
@@ -30,7 +31,7 @@ const job_delete_record = new CronJob("0 5 0 * * *", async () => {
                     console.log(`🗑 Deleted file: ${absolutePath}`);
                 } catch (error) {
                     if (error.code !== 'ENOENT') {
-                        console.error("❌ File delete error:", err);
+                        console.error("❌ File delete error:", error);
                     } else {
                         console.warn(`⚠️ File not found (already gone): ${absolutePath}`);
                     }
@@ -38,11 +39,11 @@ const job_delete_record = new CronJob("0 5 0 * * *", async () => {
             }
 
             await Contact.findByIdAndDelete(contact._id);
-            console.log(`🗑 Deleted record: ${contact.firstname, contact.lastname}`);
+            console.log(`🗑 Deleted record: ${contact.firstname} ${contact.lastname}`);
         }
-        console.log(`✅ Cleanup complete. Removed ${expiredContacts.length} records.`);
+        console.log(`✅ Cleanup complete in Contact. Removed ${expiredContacts.length} records.`);
 
-        //find recorde strictly older than 15-day widow in apply position
+        // find records strictly older than 15-day window in apply position
         const expiredApplyPositions = await ApplyPosition.find({ createdAt: { $lt: cutoff } });
 
         for (const applyPosition of expiredApplyPositions) {
@@ -55,7 +56,7 @@ const job_delete_record = new CronJob("0 5 0 * * *", async () => {
                     console.log(`🗑 Deleted file: ${absolutePath}`);
                 } catch (error) {
                     if (error.code !== 'ENOENT') {
-                        console.error("❌ File delete error:", err);
+                        console.error("❌ File delete error:", error);
                     } else {
                         console.warn(`⚠️ File not found (already gone): ${absolutePath}`);
                     }
@@ -65,8 +66,32 @@ const job_delete_record = new CronJob("0 5 0 * * *", async () => {
             console.log(`🗑 Deleted record: ${applyPosition.name}`);
         }
         console.log(`✅ Cleanup complete in Apply position. Removed ${expiredApplyPositions.length} records.`);
+
+        // find expired enquiries strictly older than 15-day window
+        const expiredEnquiries = await Enquiry.find({ createdAt: { $lt: cutoff } });
+
+        for (const enquiry of expiredEnquiries) {
+            if (enquiry.fileUrl) {
+                const absolutePath = path.isAbsolute(enquiry.fileUrl)
+                    ? enquiry.fileUrl
+                    : path.join(process.cwd(), enquiry.fileUrl);
+                try {
+                    await fs.promises.unlink(absolutePath);
+                    console.log(`🗑 Deleted file: ${absolutePath}`);
+                } catch (error) {
+                    if (error.code !== 'ENOENT') {
+                        console.error("❌ File delete error:", error);
+                    } else {
+                        console.warn(`⚠️ File not found (already gone): ${absolutePath}`);
+                    }
+                }
+            }
+            await Enquiry.findByIdAndDelete(enquiry._id);
+            console.log(`🗑 Deleted record: ${enquiry.name}`);
+        }
+        console.log(`✅ Cleanup complete in Enquiries. Removed ${expiredEnquiries.length} records.`);
     } catch (error) {
-        console.error("❌ Cleanup job error:", err);
+        console.error("❌ Cleanup job error:", error);
     }
 })
 

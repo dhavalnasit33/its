@@ -41,6 +41,7 @@ const ExpertiseIndustriesRouter = require("./routes/expertiseIndustries.routes")
 const portfolioContentRouter = require("./routes/portfolio/portfolioContent.routes");
 const careerContentRouter = require("./routes/career/careerContent.routes");
 const seoManagerRouter = require("./routes/seo/seoManager.routes");
+const yoastSEORouter = require("./routes/seo/yoastSEO.routes");
 const TranningContactFooterRouter = require("./routes/footer/training_contact_footer.routes");
 const TranningMainPageRouter = require("./routes/training/trainningMainPageData.routes");
 const HomePageDataRouter = require("./routes/home/homePageData.routes");
@@ -50,6 +51,8 @@ const deleteImageRoute = require("./routes/deleteImage.routes");
 const categoryRoute = require("./routes/category/category.routes");
 const subcategoryRoute = require("./routes/subcategory/subcategory.routes");
 const pageRoute = require("./routes/page/page.routes");
+const EnquiriesRouter = require("./routes/enquiry/enquiry.routes");
+const websiteSettingsRouter = require("./routes/website/websiteSettings.routes");
 
 const app = express();
 
@@ -117,6 +120,8 @@ app.use("/api/read-our-review", ReadOurReviewRouter);
 //  footer from api
 app.use("/api/contact", ContactRouter);
 app.use("/api/tranning-contact", TranningContactFooterRouter);
+app.use("/api/enquiries", EnquiriesRouter);
+app.use("/api/website-settings", websiteSettingsRouter);
 
 //  our-service api
 app.use("/api/service", ServiceRouter);
@@ -153,6 +158,7 @@ app.use("/api/training-main-page", TranningMainPageRouter);
 
 //  seo manager api
 app.use("/api/seo-manager", seoManagerRouter);
+app.use("/api/yoast-seo", yoastSEORouter);
 
 // navbar
 app.use("/api/navbar-group-tab-image-manage", NavbarGroupTabImageManageRoutes);
