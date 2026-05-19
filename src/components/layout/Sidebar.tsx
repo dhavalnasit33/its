@@ -10,7 +10,7 @@ import {
   Handshake, LineChart, DoorOpen, Inbox, BookPlus, BookOpenText, BookType,
   SearchCheck, Presentation, Milestone, ToolCase, Server, House,
   SignpostBig, Navigation, FileText, X,
-  Building2,
+  Building2, Mail, Settings
 } from "lucide-react";
 import NavItems from "./NavItems";
 import { NavItem } from "@/types";
@@ -89,6 +89,11 @@ export const navItemsList: NavItem[] = [
       { href: "/dashboard/ReadOurReview", label: "Read Our Review", icon: Navigation },
     ],
   },
+  { href: "/dashboard/enquiries", label: "Contact List (Enquiry)", icon: Mail },
+  { label: "Yoast SEO", isTitle: true },
+  { href: "/dashboard/yoast-seo", label: "Yoast SEO Manager", icon: SearchCheck },
+  { href: "/dashboard/website-settings", label: "Website Settings", icon: Settings },
+
 
 
 

@@ -1418,3 +1418,90 @@ export interface HireMainPageData {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface Enquiry {
+  _id: string;
+  type: "Career" | "Training" | "Contact" | "Hire" | "FooterForm";
+  name: string;
+  firstname?: string;
+  lastname?: string;
+  email: string;
+  phone: string;
+  message: string;
+  subject?: string;
+  // Career Specific
+  graduation?: string;
+  experience?: string;
+  positionApplied?: {
+    _id: string;
+    name: string;
+  } | null;
+  currentCTC?: string;
+  noticePeriod?: string;
+  // Training Specific
+  location?: string;
+  selectedCourse?: string;
+  // Contact/Hire Specific
+  budget?: string;
+  recruitment?: string;
+  source?: string;
+  // File
+  fileUrl?: string | null;
+  // Admin Metadata
+  status: "Pending" | "Reviewed" | "Contacted" | "Closed";
+  adminNotes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/* -------------------- Yoast SEO -------------------- */
+export interface YoastSEO {
+  _id: string;
+  seo_keyphrase: string;
+  seo_title: string;
+  meta_description: string;
+  cover_image: string;
+  page_description: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface YoastSEOFormValues {
+  seo_keyphrase: string;
+  seo_title: string;
+  meta_description: string;
+  cover_image: string;
+  page_description: string;
+}
+
+/* -------------------- Website Settings -------------------- */
+export interface SocialMedia {
+  _id?: string;
+  socialMediaName: string;
+  link: string;
+}
+
+export interface WebsiteSettingsEmail {
+  _id?: string;
+  email: string;
+  emailType: "hr" | "sales" | "contact";
+}
+
+export interface WebsiteSettings {
+  _id: string;
+  favicon: string;
+  address: string[];
+  emails: WebsiteSettingsEmail[];
+  phone: string[];
+  social_media: SocialMedia[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface WebsiteSettingsFormValues {
+  favicon: string;
+  address: { value: string }[];
+  emails: { email: string; emailType: "hr" | "sales" | "contact" }[];
+  phone: { value: string }[];
+  social_media: { socialMediaName: string; link: string }[];
+}
