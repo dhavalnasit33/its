@@ -48,18 +48,15 @@ export default function OpenningPositionPage() {
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedExperience, setSelectedExperience] = useState("");
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pages: 1,
-    total: 0,
-  });
+  const [pagination, setPagination] = useState({ current: 1, pages: 1, total: 0, });
+  const [limit] = useState(10);
 
   const fetchItems = useCallback(async (page: number = 1, search: string = "", exp: string = "") => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams({
-        page: page.toString(),
-        limit: "10",
+         page: page.toString(),
+        limit: limit.toString(),
         ...(search ? { search } : {}),
         ...(exp ? { experience: exp } : {}),
       });
@@ -68,7 +65,7 @@ export default function OpenningPositionPage() {
 
       if (res.success) {
         setItems(res.data);
-        setPagination(res.pagination);
+        if (res.pagination) setPagination(res.pagination);
       } else {
         setItems([]);
       }

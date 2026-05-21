@@ -258,7 +258,13 @@ export default function TrainingMainPageDataForm({
                                     <div className="grid grid-cols-1 gap-4">
                                         {aboutDetails.map((item, index) => (
                                             <Card key={item.id} className="p-4 relative border-dashed">
-                                                <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2 text-destructive" onClick={() => removeAboutDetail(index)}>
+                                                <Button 
+                                                    type="button" 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                                    onClick={() => removeAboutDetail(index)}
+                                                >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                                 <div className="space-y-4 pt-4">
@@ -304,7 +310,13 @@ export default function TrainingMainPageDataForm({
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {facilityPoints.map((item, index) => (
                                         <Card key={item.id} className="p-4 relative border-dashed">
-                                            <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2 text-destructive" onClick={() => removeFacilityPoint(index)}>
+                                            <Button 
+                                                type="button" 
+                                                variant="ghost" 
+                                                size="icon" 
+                                                className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                                onClick={() => removeFacilityPoint(index)}
+                                            >
                                                 <Trash2 className="h-4 w-4" />
                                             </Button>
                                             <div className="space-y-4 pt-4">
@@ -350,7 +362,13 @@ export default function TrainingMainPageDataForm({
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {courseCards.map((item, index) => (
                                             <Card key={item.id} className="p-4 relative border-dashed">
-                                                <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2 text-destructive" onClick={() => removeCourseCard(index)}>
+                                                <Button 
+                                                    type="button" 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                                    onClick={() => removeCourseCard(index)}
+                                                >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                                 <div className="space-y-4 pt-4">
@@ -410,7 +428,13 @@ export default function TrainingMainPageDataForm({
                                     <div className="grid grid-cols-1 gap-4">
                                         {courseDetails.map((item, index) => (
                                             <Card key={item.id} className="p-4 relative border-dashed">
-                                                <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2 text-destructive" onClick={() => removeCourseDetail(index)}>
+                                                <Button 
+                                                    type="button" 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                                    onClick={() => removeCourseDetail(index)}
+                                                >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                                 <div className="space-y-4 pt-4">
@@ -445,7 +469,7 @@ export default function TrainingMainPageDataForm({
 
                         {/* SEO Text Content */}
                         <Card>
-                            <CardHeader><CardTitle>SEO Settings</CardTitle></CardHeader>
+                            <CardHeader><CardTitle className="text-primary">SEO Settings</CardTitle></CardHeader>
                             <CardContent className="space-y-6">
                                 <FormField
                                     control={form.control as any}

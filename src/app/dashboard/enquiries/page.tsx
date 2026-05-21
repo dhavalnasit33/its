@@ -244,259 +244,265 @@ export default function EnquiriesPage() {
         description="View and manage all Career, Training, Contact, and Hire enquiries submitted from the public website in one unified dashboard."
       />
 
-      {/* Analytics Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <Card className="bg-gradient-to-br from-indigo-50/70 to-white border-indigo-100 shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="p-4 pb-2">
-            <span className="text-xs text-indigo-600 font-semibold uppercase tracking-wider">Total Requests</span>
-          </CardHeader>
-          <CardContent className="p-4 pt-0">
-            <div className="text-3xl font-extrabold text-indigo-950">{stats.total}</div>
-            <p className="text-[11px] text-muted-foreground mt-1">Combined submissions</p>
-          </CardContent>
-        </Card>
+      <Card>
+        <CardContent className="pt-6 space-y-8">
+          {/* Analytics Stats Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <Card className="bg-gradient-to-br from-indigo-50/70 to-white border-indigo-100 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="p-4 pb-2">
+                <span className="text-xs text-indigo-600 font-semibold uppercase tracking-wider">Total Requests</span>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <div className="text-3xl font-extrabold text-indigo-950">{stats.total}</div>
+                <p className="text-[11px] text-muted-foreground mt-1">Combined submissions</p>
+              </CardContent>
+            </Card>
 
-        <Card className="bg-gradient-to-br from-amber-50/70 to-white border-amber-100 shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="p-4 pb-2">
-            <span className="text-xs text-amber-600 font-semibold uppercase tracking-wider">Pending</span>
-          </CardHeader>
-          <CardContent className="p-4 pt-0">
-            <div className="text-3xl font-extrabold text-amber-850">{stats.pending}</div>
-            <p className="text-[11px] text-muted-foreground mt-1">Awaiting review</p>
-          </CardContent>
-        </Card>
+            <Card className="bg-gradient-to-br from-amber-50/70 to-white border-amber-100 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="p-4 pb-2">
+                <span className="text-xs text-amber-600 font-semibold uppercase tracking-wider">Pending</span>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <div className="text-3xl font-extrabold text-amber-850">{stats.pending}</div>
+                <p className="text-[11px] text-muted-foreground mt-1">Awaiting review</p>
+              </CardContent>
+            </Card>
 
-        <Card className="bg-gradient-to-br from-blue-50/70 to-white border-blue-100 shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="p-4 pb-2">
-            <span className="text-xs text-blue-600 font-semibold uppercase tracking-wider">Reviewed</span>
-          </CardHeader>
-          <CardContent className="p-4 pt-0">
-            <div className="text-3xl font-extrabold text-blue-850">{stats.reviewed}</div>
-            <p className="text-[11px] text-muted-foreground mt-1">Marked as reviewed</p>
-          </CardContent>
-        </Card>
+            <Card className="bg-gradient-to-br from-blue-50/70 to-white border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="p-4 pb-2">
+                <span className="text-xs text-blue-600 font-semibold uppercase tracking-wider">Reviewed</span>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <div className="text-3xl font-extrabold text-blue-850">{stats.reviewed}</div>
+                <p className="text-[11px] text-muted-foreground mt-1">Marked as reviewed</p>
+              </CardContent>
+            </Card>
 
-        <Card className="bg-gradient-to-br from-teal-50/70 to-white border-teal-100 shadow-sm hover:shadow-md transition-shadow">
-          <CardHeader className="p-4 pb-2">
-            <span className="text-xs text-teal-600 font-semibold uppercase tracking-wider">Contacted</span>
-          </CardHeader>
-          <CardContent className="p-4 pt-0">
-            <div className="text-3xl font-extrabold text-teal-850">{stats.contacted}</div>
-            <p className="text-[11px] text-muted-foreground mt-1">Outreached to user</p>
-          </CardContent>
-        </Card>
+            <Card className="bg-gradient-to-br from-teal-50/70 to-white border-teal-100 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="p-4 pb-2">
+                <span className="text-xs text-teal-600 font-semibold uppercase tracking-wider">Contacted</span>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <div className="text-3xl font-extrabold text-teal-850">{stats.contacted}</div>
+                <p className="text-[11px] text-muted-foreground mt-1">Outreached to user</p>
+              </CardContent>
+            </Card>
 
-        <Card className="bg-gradient-to-br from-slate-50 to-white border-slate-200 shadow-sm hover:shadow-md transition-shadow col-span-2 md:col-span-1">
-          <CardHeader className="p-4 pb-2">
-            <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Closed</span>
-          </CardHeader>
-          <CardContent className="p-4 pt-0">
-            <div className="text-3xl font-extrabold text-slate-800">{stats.closed}</div>
-            <p className="text-[11px] text-muted-foreground mt-1">Resolved requests</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Filters Toolbar */}
-      <div className="bg-white p-4 border rounded-xl shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div className="flex flex-1 flex-col sm:flex-row gap-3 w-full">
-          {/* Search bar */}
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search by name, email, phone, or subject..."
-              className="pl-9 h-10 w-full"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            <Card className="bg-gradient-to-br from-slate-50 to-white border-slate-200 shadow-sm hover:shadow-md transition-shadow col-span-2 md:col-span-1">
+              <CardHeader className="p-4 pb-2">
+                <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Closed</span>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <div className="text-3xl font-extrabold text-slate-800">{stats.closed}</div>
+                <p className="text-[11px] text-muted-foreground mt-1">Resolved requests</p>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Type filter */}
-          <Select value={filterType} onValueChange={setFilterType}>
-            <SelectTrigger className="w-full sm:w-[160px] h-10">
-              <SelectValue placeholder="Filter by Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="Contact">Contact Page</SelectItem>
-              <SelectItem value="Career">Career / Applied</SelectItem>
-              <SelectItem value="Training">Training Page</SelectItem>
-              <SelectItem value="Hire">Hire Developer</SelectItem>
-              <SelectItem value="FooterForm">Footer Form</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {/* Status filter */}
-          <Select value={filterStatus} onValueChange={setFilterStatus}>
-            <SelectTrigger className="w-full sm:w-[160px] h-10">
-              <SelectValue placeholder="Filter by Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="Pending">Pending</SelectItem>
-              <SelectItem value="Reviewed">Reviewed</SelectItem>
-              <SelectItem value="Contacted">Contacted</SelectItem>
-              <SelectItem value="Closed">Closed</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Bulk Delete / Reset Filters */}
-        <div className="flex items-center gap-3 w-full md:w-auto justify-end border-t md:border-none pt-3 md:pt-0">
-          {(searchQuery || filterType !== "all" || filterStatus !== "all") && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs"
-              onClick={() => {
-                setSearchQuery("");
-                setFilterType("all");
-                setFilterStatus("all");
-              }}
-            >
-              Clear Filters
-            </Button>
-          )}
-
-          {selectedIds.length > 0 && (
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => setBulkDeleteDialogOpen(true)}
-              className="shadow-sm transition-transform active:scale-95"
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete Selected ({selectedIds.length})
-            </Button>
-          )}
-        </div>
-      </div>
-
-      {/* Main Table */}
-      <div className="rounded-xl border shadow-sm bg-white overflow-hidden">
-        <Table>
-          <TableHeader className="bg-slate-50">
-            <TableRow>
-              <TableHead className="w-12">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
-                  checked={selectedIds.length === items.length && items.length > 0}
-                  onChange={toggleSelectAll}
+          {/* Filters Toolbar */}
+          <div className="bg-white p-4 border rounded-xl shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex flex-1 flex-col sm:flex-row gap-3 w-full">
+              {/* Search bar */}
+              <div className="relative flex-1">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by name, email, phone, or subject..."
+                  className="pl-9 h-10 w-full"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
-              </TableHead>
-              <TableHead className="w-32">Type</TableHead>
-              <TableHead>Sender Information</TableHead>
-              <TableHead>Phone</TableHead>
-              <TableHead>Subject / Request Topic</TableHead>
-              <TableHead className="w-32">Status</TableHead>
-              <TableHead className="w-40">Date Submitted</TableHead>
-              <TableHead className="text-right w-24">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading ? (
-              Array.from({ length: 5 }).map((_, i) => (
-                <TableRow key={i}>
-                  <TableCell><Skeleton className="h-4 w-4" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-24" /></TableCell>
-                  <TableCell>
-                    <div className="space-y-1">
-                      <Skeleton className="h-5 w-32" />
-                      <Skeleton className="h-4 w-40" />
-                    </div>
-                  </TableCell>
-                  <TableCell><Skeleton className="h-5 w-24" /></TableCell>
-                  <TableCell><Skeleton className="h-5 w-48" /></TableCell>
-                  <TableCell><Skeleton className="h-6 w-20" /></TableCell>
-                  <TableCell><Skeleton className="h-5 w-28" /></TableCell>
-                  <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto rounded-full" /></TableCell>
-                </TableRow>
-              ))
-            ) : items.length > 0 ? (
-              items.map((item) => (
-                <TableRow key={item._id} className="hover:bg-slate-50/50 transition-colors">
-                  <TableCell>
+              </div>
+
+              {/* Type filter */}
+              <Select value={filterType} onValueChange={setFilterType}>
+                <SelectTrigger className="w-full sm:w-[160px] h-10">
+                  <SelectValue placeholder="Filter by Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="Contact">Contact Page</SelectItem>
+                  <SelectItem value="Career">Career / Applied</SelectItem>
+                  <SelectItem value="Training">Training Page</SelectItem>
+                  <SelectItem value="Hire">Hire Developer</SelectItem>
+                  <SelectItem value="FooterForm">Footer Form</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Status filter */}
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger className="w-full sm:w-[160px] h-10">
+                  <SelectValue placeholder="Filter by Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="Pending">Pending</SelectItem>
+                  <SelectItem value="Reviewed">Reviewed</SelectItem>
+                  <SelectItem value="Contacted">Contacted</SelectItem>
+                  <SelectItem value="Closed">Closed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Bulk Delete / Reset Filters */}
+            <div className="flex items-center gap-3 w-full md:w-auto justify-end border-t md:border-none pt-3 md:pt-0">
+              {(searchQuery || filterType !== "all" || filterStatus !== "all") && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setFilterType("all");
+                    setFilterStatus("all");
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              )}
+
+              {selectedIds.length > 0 && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => setBulkDeleteDialogOpen(true)}
+                  className="shadow-sm transition-transform active:scale-95"
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Selected ({selectedIds.length})
+                </Button>
+              )}
+            </div>
+          </div>
+
+          
+          </CardContent>
+          
+      </Card>
+      {/* Main Table */}
+          <div className="rounded-md border shadow-sm">
+            <Table>
+              <TableHeader >
+                <TableRow>
+                  <TableHead className="w-10">
                     <input
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
-                      checked={selectedIds.includes(item._id)}
-                      onChange={() => toggleSelectItem(item._id)}
+                      checked={selectedIds.length === items.length && items.length > 0}
+                      onChange={toggleSelectAll}
                     />
-                  </TableCell>
-                  <TableCell>{getTypeBadge(item.type)}</TableCell>
-                  <TableCell>
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-slate-900">{item.name}</span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                        <Mail className="h-3 w-3 inline" />
-                        {item.email}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="font-medium text-slate-700">{item.phone}</TableCell>
-                  <TableCell className="max-w-[240px] truncate text-slate-800">
-                    {item.type === "Training" ? (
-                      <span className="font-medium text-slate-900">
-                        Course Pick: {item.selectedCourse || "Not specified"}
-                      </span>
-                    ) : item.type === "Career" ? (
-                      <span className="font-medium text-slate-900">
-                        Apply: {item.positionApplied?.name || "General Application"}
-                      </span>
-                    ) : (
-                      item.subject || <span className="text-muted-foreground italic">No Subject</span>
-                    )}
-                  </TableCell>
-                  <TableCell>{getStatusBadge(item.status)}</TableCell>
-                  <TableCell className="text-muted-foreground text-xs font-medium">
-                    <span className="flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5" />
-                      {new Date(item.createdAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="hover:bg-slate-100 rounded-full h-8 w-8">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-40 bg-white border shadow-md">
-                        <DropdownMenuItem onClick={() => openDetails(item)} className="cursor-pointer">
-                          <Eye className="mr-2 h-4 w-4 text-blue-600" /> View details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => {
-                            setEnquiryToDelete(item);
-                            setDeleteDialogOpen(true);
-                          }}
-                          className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" /> Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+                  </TableHead>
+                  <TableHead className="w-32">Type</TableHead>
+                  <TableHead>Sender Information</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Subject / Request Topic</TableHead>
+                  <TableHead className="w-32">Status</TableHead>
+                  <TableHead className="w-40">Date Submitted</TableHead>
+                  <TableHead className="text-right w-24">Actions</TableHead>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={8} className="text-center h-32 text-muted-foreground">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <AlertCircle className="h-8 w-8 text-slate-400" />
-                    <span>No enquiries found matching your search criteria.</span>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              </TableHeader>
+              <TableBody>
+                {isLoading ? (
+                  Array.from({ length: 5 }).map((_, i) => (
+                    <TableRow key={i}>
+                      <TableCell><Skeleton className="h-4 w-4" /></TableCell>
+                      <TableCell><Skeleton className="h-6 w-24" /></TableCell>
+                      <TableCell>
+                        <div className="space-y-1">
+                          <Skeleton className="h-5 w-32" />
+                          <Skeleton className="h-4 w-40" />
+                        </div>
+                      </TableCell>
+                      <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+                      <TableCell><Skeleton className="h-5 w-48" /></TableCell>
+                      <TableCell><Skeleton className="h-6 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-5 w-28" /></TableCell>
+                      <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto rounded-full" /></TableCell>
+                    </TableRow>
+                  ))
+                ) : items.length > 0 ? (
+                  items.map((item) => (
+                    <TableRow key={item._id} className="hover:bg-slate-50/50 transition-colors">
+                      <TableCell>
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 rounded border-gray-300 accent-primary cursor-pointer"
+                          checked={selectedIds.includes(item._id)}
+                          onChange={() => toggleSelectItem(item._id)}
+                        />
+                      </TableCell>
+                      <TableCell>{getTypeBadge(item.type)}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-slate-900">{item.name}</span>
+                          <span className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
+                            <Mail className="h-3 w-3 inline" />
+                            {item.email}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-medium text-slate-700">{item.phone}</TableCell>
+                      <TableCell className="max-w-[240px] truncate text-slate-800">
+                        {item.type === "Training" ? (
+                          <span className="font-medium text-slate-900">
+                            Course Pick: {item.selectedCourse || "Not specified"}
+                          </span>
+                        ) : item.type === "Career" ? (
+                          <span className="font-medium text-slate-900">
+                            Apply: {item.positionApplied?.name || "General Application"}
+                          </span>
+                        ) : (
+                          item.subject || <span className="text-muted-foreground italic">No Subject</span>
+                        )}
+                      </TableCell>
+                      <TableCell>{getStatusBadge(item.status)}</TableCell>
+                      <TableCell className="text-muted-foreground text-xs font-medium">
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="h-3.5 w-3.5" />
+                          {new Date(item.createdAt).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="hover:bg-slate-100 rounded-full h-8 w-8">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-40 bg-white border shadow-md">
+                            <DropdownMenuItem onClick={() => openDetails(item)} className="cursor-pointer">
+                              <Eye className="mr-2 h-4 w-4 text-blue-600" /> View details
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setEnquiryToDelete(item);
+                                setDeleteDialogOpen(true);
+                              }}
+                              className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
+                            >
+                              <Trash2 className="mr-2 h-4 w-4" /> Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={8} className="text-center h-32 text-muted-foreground">
+                      <div className="flex flex-col items-center justify-center gap-2">
+                        <AlertCircle className="h-8 w-8 text-slate-400" />
+                        <span>No enquiries found matching your search criteria.</span>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
 
       {/* Pagination Controls */}
       {pagination.pages > 1 && (

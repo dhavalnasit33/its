@@ -89,6 +89,27 @@ export const EngagementModelSchema = z.object({
 
 export type EngagementModel = z.infer<typeof EngagementModelSchema>;
 
+
+/*------------------Blog----------*/
+export const blogSchema = z.object({
+  categories: z.string().min(2, "Category required"),
+  subCategories: z.string().min(2, "SubCategory required"),
+  slug: z.string().min(1).max(200),
+  image: z.string().url("Valid image URL required"),
+  details: z.object({
+    title: z.string().min(2, "Title required"),
+    description: z.string().min(5, "Description required"),
+    author: z.string().min(2, "Author required"),
+    answerOrDetails: z.string().min(5, "Answer/Details required"),
+  }),
+  seo_title: z.string().optional(),
+  meta_description: z.string().max(500, "Meta description is too long").optional(),
+  seo_keyphrase: z.string().optional(),
+  cover_image: z.string().url("Must be a valid URL").optional().or(z.literal("")),
+});
+
+export type Blogs = z.infer<typeof blogSchema>;
+
 /* -------------------- Testimonials -------------------- */
 export const TestimonialsSchema = z.object({
   _id: z.string().optional(),
@@ -1197,6 +1218,13 @@ const OverseasWebAgenciesSchema = z.object({
   detail: OverseasDetailSchema,
 });
 
+const SEOSchema= z.object({
+    title: z.string(),
+    keyphrase: z.string(),
+    seoDescription: z.string(),
+    featureImage: z.string().nullable().optional().or(z.literal("")),
+  });
+
 // Main Schema for the form
 export const HomePageDataSchema = z.object({
   heroSecton: HeroSectionSchema,
@@ -1204,6 +1232,7 @@ export const HomePageDataSchema = z.object({
   aisection: aiSectionSchema,
   aboutOurCompany: AboutOurCompanySchema,
   overseasWebAgencies: OverseasWebAgenciesSchema,
+  seo: SEOSchema
 });
 
 export type HomePageDataFormValues = z.infer<typeof HomePageDataSchema>;
@@ -1264,6 +1293,12 @@ export interface HomePageData {
       title: string;
       subtitle: string;
     };
+  };
+  seo: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage: string | null;
   };
   createdAt?: string;
   updatedAt?: string;

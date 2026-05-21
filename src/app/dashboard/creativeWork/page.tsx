@@ -146,15 +146,14 @@ export default function CreativeWorkPage() {
         }
       />
 
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-3 w-full max-w-2xl">
-          <div className="relative flex-1">
+       <div className="flex items-center justify-between gap-3  mb-4">
+          <div className="relative w-full max-w-sm">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search by title..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8"
+              className="pl-9 h-10 rounded-lg border-gray-300 focus:ring-blue-500"
             />
           </div>
           
@@ -174,6 +173,8 @@ export default function CreativeWorkPage() {
             </SelectContent>
           </Select>
         </div>
+
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
 
         {selectedIds.length > 0 && (
           <Button

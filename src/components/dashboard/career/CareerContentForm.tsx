@@ -265,7 +265,7 @@ export default function CareerContentForm({
 
                         {/* SEO Text Content */}
                         <Card>
-                            <CardHeader><CardTitle>SEO Settings</CardTitle></CardHeader>
+                            <CardHeader><CardTitle className="text-primary">SEO Settings</CardTitle></CardHeader>
                             <CardContent className="space-y-6">
                                 <FormField
                                     control={form.control as any}

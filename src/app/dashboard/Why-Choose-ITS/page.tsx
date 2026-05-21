@@ -51,7 +51,7 @@ export default function WhyChooseITSPage() {
 
 
 
-  const fetchItems = useCallback(async (page = 1, search = searchQuery) => {
+  const fetchItems = useCallback(async (page : number = 1, search = searchQuery) => {
     setIsLoading(true);
     try {
       const query = new URLSearchParams({
@@ -244,7 +244,7 @@ export default function WhyChooseITSPage() {
                         <img src={item.image} alt={item.title} className="h-8 w-10 object-cover rounded" />
                       )}
                     </TableCell>
-                    <TableCell>{item.title}</TableCell>
+                    <TableCell className="font-medium">{item.title}</TableCell>
                     <TableCell>{item.description}</TableCell>
                     <TableCell className="text-right ">
                       <DropdownMenu
@@ -292,32 +292,31 @@ export default function WhyChooseITSPage() {
         </Table>
       </div>
 
-      <div className="flex justify-between items-center gap-2 mt-4">
-        <span className="text-sm">
-          Page {pagination.current} of {pagination.pages}
-          {selectedIds.length > 0 && (
-            <span className="ml-3 text-blue-600 font-medium">
-              {selectedIds.length} selected
-            </span>
-          )}
-        </span>
-        <div className="flex gap-3">
-          <Button
-            className="bg-blue-600 text-white"
-            disabled={pagination.current === 1 || isLoading}
-            onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
-          >
-            Previous
-          </Button>
-          <Button
-            className="bg-blue-600 text-white"
-            disabled={pagination.current === pagination.pages || isLoading}
-            onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
-          >
-            Next
-          </Button>
+      {pagination.pages > 1 && (
+        <div className="flex items-center justify-between mt-6 px-2">
+          <p className="text-sm text-muted-foreground">
+            Showing page {pagination.current} of {pagination.pages}
+          </p>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={pagination.current === 1}
+              onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={pagination.current === pagination.pages}
+              onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
+            >
+              Next
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
 
       {/* Delete Dialog */}

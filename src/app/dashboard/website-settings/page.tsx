@@ -126,7 +126,7 @@ export default function WebsiteSettingsPage() {
 
   return (
     <div className="p-6 w-full space-y-6">
-      <Card className="border border-slate-100 shadow-md bg-white">
+      <Card>
         <CardContent className="p-6">
           <div className="mb-6">
             <h2 className="text-2xl font-bold tracking-tight text-slate-800">

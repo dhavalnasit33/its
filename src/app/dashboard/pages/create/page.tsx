@@ -41,7 +41,10 @@ export default function CreatePagePage() {
           description="Create a new Page"
         />
       </div>
-      <PageCreate onSubmit={handleCreate} initialData={null} />
+      <PageCreate 
+        onSubmit={handleCreate} 
+        initialData={null} 
+        />
     </>
   );
 }

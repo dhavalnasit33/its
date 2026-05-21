@@ -118,17 +118,17 @@ export default function YoastSEOForm({
 
           {/* Left Column: Form Fields (Col span 8) */}
           <div className="lg:col-span-8 space-y-6">
-            <Card className="border border-slate-100 shadow-sm">
-              <CardHeader className="bg-slate-50/50 border-b">
-                <CardTitle className="text-base font-bold text-slate-800">Focus Settings</CardTitle>
+            <Card >
+              <CardHeader >
+                <CardTitle >Focus Settings</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6 p-6">
+              <CardContent className="space-y-6 p-6 pt-0">
                 <FormField
                   control={form.control}
                   name="seo_keyphrase"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-slate-700 font-bold flex items-center gap-1.5">
+                      <FormLabel className=" flex items-center gap-1.5">
                         Focus Keyphrase
                         <span title="The search term you want this page to rank for.">
                           <HelpCircle className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
@@ -155,7 +155,7 @@ export default function YoastSEOForm({
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex justify-between items-center">
-                        <FormLabel className="text-slate-700 font-bold">SEO Title</FormLabel>
+                        <FormLabel>SEO Title</FormLabel>
                         <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${getScoreColor(watchedTitle, 40, 60)}`}>
                           Title Length: {watchedTitle?.length || 0} chars ({getScoreStatus(watchedTitle, 40, 60)})
                         </span>
@@ -181,7 +181,7 @@ export default function YoastSEOForm({
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex justify-between items-center">
-                        <FormLabel className="text-slate-700 font-bold">Meta Description</FormLabel>
+                        <FormLabel>Meta Description</FormLabel>
                         <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${getScoreColor(watchedMetaDesc, 120, 160)}`}>
                           Desc Length: {watchedMetaDesc?.length || 0} chars ({getScoreStatus(watchedMetaDesc, 120, 160)})
                         </span>
@@ -204,17 +204,17 @@ export default function YoastSEOForm({
               </CardContent>
             </Card>
 
-            <Card className="border border-slate-100 shadow-sm">
-              <CardHeader className="bg-slate-50/50 border-b">
-                <CardTitle className="text-base font-bold text-slate-800">Page Content</CardTitle>
+            <Card >
+              <CardHeader >
+                <CardTitle>Page Content</CardTitle>
               </CardHeader>
-              <CardContent className="p-6">
+              <CardContent className="p-6 pt-0">
                 <FormField
                   control={form.control}
                   name="page_description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-slate-700 font-bold mb-2 block">Page Content / Description</FormLabel>
+                      <FormLabel>Page Content / Description</FormLabel>
                       <FormControl>
                         <CustomCKEditor value={field.value} onChange={field.onChange} />
                       </FormControl>
@@ -229,11 +229,10 @@ export default function YoastSEOForm({
           {/* Right Column: Google Search Snippet & Social OG Image (Col span 4) */}
           <div className="lg:col-span-4 space-y-6">
             {/* 1. Cover Image / OG Image */}
-            <Card className="border border-slate-100 shadow-sm">
-              <CardHeader className="bg-slate-50/50 border-b p-4">
-                <CardTitle className="text-sm font-bold text-slate-800">Social Feature Image</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4 space-y-4">
+            <Card >
+          
+              <CardContent className="p-6 space-y-6 ">
+                <CardTitle>Social Feature Image</CardTitle>
                 <FormField
                   control={form.control}
                   name="cover_image"

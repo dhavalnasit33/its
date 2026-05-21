@@ -147,10 +147,10 @@ export default function CreativeWorkForm({ initialData, onSubmit, onCancel }: Cr
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
+                {initialData ? "Updating..." : "Creating..."}
               </>
             ) : (
-              "Save Creative Work"
+              initialData ? "Update Creative Work" : "Create Creative Work"
             )}
           </Button>
         </div>

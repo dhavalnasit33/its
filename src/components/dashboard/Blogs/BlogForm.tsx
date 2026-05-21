@@ -9,16 +9,17 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { UploadCloud, Loader2 } from "lucide-react";
-import { TiptapEditorNoSSR } from "@/components/shared/TiptapEditor";
 import { Textarea } from "@/components/ui/textarea";
+import CustomCKEditor from "@/components/shared/Ckeditor";
+import CardHeader from "@mui/material/CardHeader";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import ImageUpload from "@/components/ui/imagupload";
 
 
 // ---------- Slug generation function ----------
 const generateSlug = (text: string): string => {
-  // 1. Remove HTML tags
   const plainText = text.replace(/<[^>]+>/g, "");
 
-  // 2. Generate clean slug
   return plainText
     .toLowerCase()
     .trim()
@@ -56,12 +57,13 @@ export type BlogFormValues = z.infer<typeof blogSchema>;
 interface BlogFormProps {
   initialData?: BlogFormValues | null;
   onSubmit: (data: BlogFormValues) => Promise<void>;
+  onCancel?: () => void;
 }
 
 const CLOUDINARY_CLOUD_NAME = "dctvxbvuz";
 const CLOUDINARY_UPLOAD_PRESET = "ITS_ADMIN";
 
-export default function BlogForm({ initialData, onSubmit }: BlogFormProps) {
+export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogFormProps) {
   const { toast } = useToast();
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -105,8 +107,9 @@ export default function BlogForm({ initialData, onSubmit }: BlogFormProps) {
   }, [initialData, form]);
 
   // Upload Image
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  // const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+    const handleImageUpload = async (file: File) => {
     if (!file) return;
 
     setIsUploading(true);
@@ -132,8 +135,9 @@ export default function BlogForm({ initialData, onSubmit }: BlogFormProps) {
     }
   };
 
-  const handleCoverImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  // const handleCoverImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  const handleCoverImageUpload = async (file: File) => {
     if (!file) return;
 
     setIsUploading(true);
@@ -170,234 +174,270 @@ export default function BlogForm({ initialData, onSubmit }: BlogFormProps) {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        {/* Category */}
-        <FormField control={form.control} name="categories" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Category</FormLabel>
-            <FormControl><Input placeholder="Enter category" {...field} /></FormControl>
-            <FormMessage />
-          </FormItem>
-        )} />
-
-        {/* SubCategory */}
-        <FormField control={form.control} name="subCategories" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Sub Category</FormLabel>
-            <FormControl><Input placeholder="Enter sub category" {...field} /></FormControl>
-            <FormMessage />
-          </FormItem>
-        )} />
-
-        {/* Image Upload */}
-        <FormField control={form.control} name="image" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Image</FormLabel>
-            <div className="flex items-center gap-4 ">
-              <Input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                ref={imageInputRef}
-                onChange={handleImageUpload}
-                disabled={isUploading || isSubmitting}
-              />
-              <Button
-                type="button"
-                className=" border border-gray-300"
-                onClick={() => imageInputRef.current?.click()}
-                disabled={isUploading || isSubmitting}
-              >
-                {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UploadCloud className="mr-2 h-4 w-4" />}
-                Upload Image
-              </Button>
-
-              {field.value && (
-                <img src={field.value} alt="Preview" className="h-16 w-16 rounded-md object-cover border" />
-              )}
-            </div>
-            <FormMessage />
-          </FormItem>
-        )} />
-
-        {/* Details: Title */}
-        <FormField control={form.control} name="details.title" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Title</FormLabel>
-            <FormControl>
-              <div className="border-gray-300 shadow-md rounded-md">
-                <TiptapEditorNoSSR
-                  value={field.value || ""}
-                  onChange={(value) => {
-                    field.onChange(value);
-                    form.setValue("details.title", value, {
-                      shouldDirty: true,
-                      shouldTouch: true,
-                      shouldValidate: true,
-                    });
-                  }}
-                />
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )} />
-        <FormField
-          control={form.control}
-          name="slug"
-          render={() => {
-            const slugValue = form.watch("slug");
-            const permalink = `${APP_URL}/services/${slugValue}`;
-
-            return (
+    <Card>
+      <CardContent className="p-6">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-8">
+                <Card className="shadow-none">
+                  <CardContent className="p-6 space-y-6">
+            {/* Category */}
+            <FormField control={form.control as any} name="categories" render={({ field }) => (
               <FormItem>
-                <FormLabel>Permalink</FormLabel>
+                <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <div className="space-y-1">
-                    {slugValue && (
-                      <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
-                        <strong>URL:</strong>{" "}
-                        <a
-                          href={permalink}
-                          className="text-blue-600 hover:underline break-all"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {permalink}
-                        </a>
-                      </div>
-                    )}
-                  </div>
+                  <Input placeholder="Enter category" {...field} />
                 </FormControl>
-              </FormItem>
-            );
-          }}
-        />
-
-        {/* Hidden slug field for submission */}
-        <FormField
-          control={form.control}
-          name="slug"
-          render={({ field }) => <input type="hidden" {...field} />}
-        />
-        {/* Details: Description */}
-        <FormField control={form.control} name="details.description" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Description</FormLabel>
-            <FormControl>
-              <div className="border-gray-300 shadow-md rounded-md">
-                <TiptapEditorNoSSR
-                  value={field.value || ""}
-                  onChange={(value) => {
-                    field.onChange(value);
-                    form.setValue("details.description", value, {
-                      shouldDirty: true,
-                      shouldTouch: true,
-                      shouldValidate: true,
-                    });
-                  }}
-                />
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )} />
-
-        {/* Details: Author */}
-        <FormField
-          control={form.control}
-          name="details.author"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Author</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter author name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-
-        {/* Details: Answer */}
-        <FormField control={form.control} name="details.answerOrDetails" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Answer / Details</FormLabel>
-            <FormControl>
-              <div className="border border-gray-300 shadow-md rounded-md max-h-72 overflow-y-auto">
-                <TiptapEditorNoSSR
-                  value={field.value || ""}
-                  onChange={(value) => {
-                    field.onChange(value);
-                    form.setValue("details.answerOrDetails", value, {
-                      shouldDirty: true,
-                      shouldTouch: true,
-                      shouldValidate: true,
-                    });
-                  }}
-                />
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )} />
-        <details className="group rounded-lg border bg-gray-50 p-4 open:shadow-lg">
-          <summary className="cursor-pointer text-lg font-medium text-gray-800 group-open:text-blue-600">
-            SEO Settings
-          </summary>
-          <div className="mt-4 space-y-6 pt-4 border-t">
-            {/* SEO Title */}
-            <FormField control={form.control} name="seo_title" render={({ field }) => (
-              <FormItem>
-                <FormLabel>SEO Title</FormLabel>
-                <FormControl><Input placeholder="Enter the SEO title (for search results)" {...field} /></FormControl>
                 <FormMessage />
               </FormItem>
             )} />
 
-            {/* SEO Keyphrase */}
-            <FormField control={form.control} name="seo_keyphrase" render={({ field }) => (
+            {/* SubCategory */}
+            <FormField control={form.control} name="subCategories" render={({ field }) => (
               <FormItem>
-                <FormLabel>SEO Keyphrases</FormLabel>
-                <FormControl><Textarea rows={2} placeholder="Enter keywords separated by commas" {...field} /></FormControl>
+                <FormLabel>Sub Category</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter sub category" {...field} />
+                  </FormControl>
                 <FormMessage />
               </FormItem>
             )} />
 
-            {/* Meta Description */}
-            <FormField control={form.control} name="meta_description" render={({ field }) => (
+            {/* Image Upload */}
+            <FormField control={form.control} name="image" render={({ field }) => (
               <FormItem>
-                <FormLabel>Meta Description</FormLabel>
-                <FormControl><Textarea rows={3} placeholder="Enter a brief summary for search results" {...field} /></FormControl>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  {/* <Input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    ref={imageInputRef}
+                    onChange={handleImageUpload}
+                    disabled={isUploading || isSubmitting}
+                  /> */}
+                  <ImageUpload
+                    type="file"
+                    accept="image/*"
+                    value={field.value || ""}
+                    ref={imageInputRef}
+                    onChange={handleImageUpload}
+                    disabled={isUploading || isSubmitting}
+                    className="w-68 h-48"
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )} />
 
-            {/* Cover Image */}
-            <FormField control={form.control} name="cover_image" render={({ field }) => (
+            {/* Details: Title */}
+            <FormField control={form.control} name="details.title" render={({ field }) => (
               <FormItem>
-                <FormLabel>Cover Image (for Social Media)</FormLabel>
-                <div className="flex items-center gap-4">
-                  <Input type="file" accept="image/*" className="hidden" ref={coverImageInputRef} onChange={handleCoverImageUpload} disabled={isUploading} />
-                  <Button type="button" variant="outline" onClick={() => coverImageInputRef.current?.click()} disabled={isUploading}>
-                    {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UploadCloud className="mr-2 h-4 w-4" />}
-                    Upload Cover Image
-                  </Button>
-                  {field.value && <img src={field.value} alt="Cover Preview" className="h-16 w-16 rounded-md object-cover border" />}
-                </div>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                    <CustomCKEditor value={field.value || ""}  onChange={(value) => {
+                        field.onChange(value);
+                        form.setValue("details.title", value, {
+                          shouldDirty: true,
+                          shouldTouch: true,
+                          shouldValidate: true,
+                        });
+                      }}
+                      />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )} />
-          </div>
-        </details>
+            <FormField
+              control={form.control}
+              name="slug"
+              render={() => {
+                const slugValue = form.watch("slug");
+                const permalink = `${APP_URL}/services/${slugValue}`;
 
-        <div className="flex justify-end">
-          <Button type="submit" className="bg-blue-500 text-white hover:bg-blue-600" disabled={isSubmitting || isUploading}>
-            {isSubmitting ? "Saving..." : "Save"}
-          </Button>
-        </div>
-      </form>
-    </Form>
+                return (
+                  <FormItem>
+                    <FormLabel>Permalink</FormLabel>
+                    <FormControl>
+                      <div className="space-y-1">
+                        {slugValue && (
+                          <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                            <strong>URL:</strong>{" "}
+                            <a
+                              href={permalink}
+                              className="text-blue-600 hover:underline break-all"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {permalink}
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </FormControl>
+                  </FormItem>
+                );
+              }}
+            />
+
+            {/* Hidden slug field for submission */}
+            <FormField
+              control={form.control}
+              name="slug"
+              render={({ field }) => <input type="hidden" {...field} />}
+            />
+            {/* Details: Description */}
+            <FormField control={form.control} name="details.description" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                    <CustomCKEditor
+                      value={field.value || ""}
+                      onChange={(value) => {
+                        field.onChange(value);
+                        form.setValue("details.description", value, {
+                          shouldDirty: true,
+                          shouldTouch: true,
+                          shouldValidate: true,
+                        });
+                      }}
+                    />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )} />
+
+            {/* Details: Author */}
+            <FormField
+              control={form.control}
+              name="details.author"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Author</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter author name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+
+            {/* Details: Answer */}
+            <FormField control={form.control} name="details.answerOrDetails" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Answer / Details</FormLabel>
+                <FormControl>
+                    <CustomCKEditor
+                      value={field.value || ""}
+                      onChange={(value) => {
+                        field.onChange(value);
+                        form.setValue("details.answerOrDetails", value, {
+                          shouldDirty: true,
+                          shouldTouch: true,
+                          shouldValidate: true,
+                        });
+                      }}
+                    />
+                </FormControl>
+                <FormMessage/>
+              </FormItem>
+            )} 
+            />
+            </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6 ">
+               <CardTitle className="text-primary">SEO Settings</CardTitle>
+                    <div className=" space-y-6  ">
+                      {/* SEO Title */}
+                      <FormField control={form.control} name="seo_title" render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SEO Title</FormLabel>
+                          <FormControl><Input placeholder="Enter the SEO title (for search results)" {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+
+                      {/* SEO Keyphrase */}
+                      <FormField control={form.control} name="seo_keyphrase" render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SEO Keyphrases</FormLabel>
+                          <FormControl><Textarea rows={2} placeholder="Enter keywords separated by commas" {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+
+                      {/* Meta Description */}
+                      <FormField control={form.control} name="meta_description" render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Meta Description</FormLabel>
+                          <FormControl><Textarea rows={3} placeholder="Enter a brief summary for search results" {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                      </div>
+                </CardContent>
+            </Card>
+            </div>
+            
+             <div className="space-y-8 lg:col-span-1">
+              <Card>
+                  <CardContent className="space-y-6 pt-6">
+                      {/* Cover Image */}
+                      <CardTitle>SEO Media</CardTitle>
+                      <FormField control={form.control} name="cover_image" render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Cover Image (for Social Media)</FormLabel>
+                          <FormControl>
+                            <ImageUpload
+                            type="file" accept="image/*"
+                              value={field.value || ""}
+                              ref={coverImageInputRef} 
+                              onChange={handleCoverImageUpload}
+                              disabled={isUploading}
+                              className="w-full h-48"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                    {/* </div> */}
+                  </CardContent>
+              </Card>
+            </div>
+
+            
+            </div>
+            <div className="flex justify-end gap-3 border-t pt-6 mt-8">
+              {onCancel && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onCancel}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
+              )}
+
+              <Button type="submit" disabled={isSubmitting || isUploading }>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {initialData ? "Updating..." : "Creating..."}
+                  </>
+                ) : (
+                  initialData ? "Update Blog" : "Create Blog"
+                )}
+              </Button>
+            </div>
+            
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }

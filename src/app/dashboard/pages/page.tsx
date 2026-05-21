@@ -64,7 +64,7 @@ export default function PagesListPage() {
 
             if (res.success) {
                 setItems(res.data);
-                setPagination(res.pagination);
+                if (res.pagination) setPagination(res.pagination);
             } else {
                 setItems([]);
             }
@@ -141,7 +141,7 @@ export default function PagesListPage() {
                 />
             </div>
 
-            <div className="rounded-md shadow-sm">
+            <div className="rounded-md border shadow-sm">
                 <Table>
                     <TableHeader>
                         <TableRow className="hover:bg-gray-100">
@@ -189,11 +189,11 @@ export default function PagesListPage() {
                                         </TableCell>
 
                                         <TableCell className="font-medium">{item.page_title}</TableCell>
-                                        <TableCell className="text-muted-foreground text-sm">{item.slug}</TableCell>
+                                        <TableCell >{item.slug}</TableCell>
                                         <TableCell>{truncate(item.seo?.title)}</TableCell>
                                         <TableCell>{truncate(item.seo?.seoDescription)}</TableCell>
                                         <TableCell>{item.seo?.keyphrase || "—"}</TableCell>
-                                        <TableCell className="text-sm text-muted-foreground">{formatDate(item.createdAt)}</TableCell>
+                                        <TableCell>{formatDate(item.createdAt)}</TableCell>
 
                                         <TableCell className="text-right">
                                             <DropdownMenu
@@ -236,27 +236,31 @@ export default function PagesListPage() {
                 </Table>
             </div>
 
-            <div className="flex justify-between items-center gap-2 mt-4">
-                <span className="text-sm">
-                    Page {pagination.current} of {pagination.pages}
-                </span>
-                <div className="flex gap-3">
-                    <Button
-                        className="bg-blue-600 text-white"
+            {pagination.pages > 1 && (
+                <div className="flex items-center justify-between mt-6 px-2">
+                    <p className="text-sm text-muted-foreground">
+                        Showing page {pagination.current} of {pagination.pages}
+                    </p>
+                    <div className="flex gap-2">
+                        <Button
+                        variant="outline"
+                        size="sm"
                         disabled={pagination.current === 1}
-                        onClick={() => fetchItems(pagination.current - 1)}
-                    >
+                        onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
+                        >
                         Previous
-                    </Button>
-                    <Button
-                        className="bg-blue-600 text-white"
+                        </Button>
+                        <Button
+                        variant="outline"
+                        size="sm"
                         disabled={pagination.current === pagination.pages}
-                        onClick={() => fetchItems(pagination.current + 1)}
-                    >
+                        onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
+                        >
                         Next
-                    </Button>
+                        </Button>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {selectedItem && (
                 <DeletePageDialog

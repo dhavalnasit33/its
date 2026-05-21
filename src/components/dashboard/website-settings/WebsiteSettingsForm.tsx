@@ -126,10 +126,10 @@ export default function WebsiteSettingsForm({
           <div className="lg:col-span-8 space-y-6">
 
             {/* 1. Address Section */}
-            <Card className="border border-slate-100 shadow-sm">
-              <CardHeader className="bg-slate-50/50 border-b flex flex-row items-center justify-between py-4">
+            <Card>
+              <CardHeader className="border-b flex flex-row items-center justify-between py-4">
                 <div>
-                  <CardTitle className="text-base font-bold text-slate-800 flex items-center gap-2">
+                  <CardTitle className="text-base  flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-indigo-500" />
                     Office Addresses
                   </CardTitle>
@@ -142,9 +142,8 @@ export default function WebsiteSettingsForm({
                   variant="outline"
                   size="sm"
                   onClick={() => appendAddress({ value: "" })}
-                  className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-slate-50 border-indigo-200"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" /> Add Address
+                  <Plus className="h-4 w-4 mr-2" /> Add Address
                 </Button>
               </CardHeader>
               <CardContent className="p-6 space-y-4">
@@ -168,7 +167,7 @@ export default function WebsiteSettingsForm({
                       size="icon"
                       onClick={() => removeAddress(index)}
                       disabled={addressFields.length <= 1}
-                      className="text-slate-400 hover:text-rose-600 h-10 w-10 hover:bg-rose-50"
+                      className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -178,10 +177,10 @@ export default function WebsiteSettingsForm({
             </Card>
 
             {/* 2. Emails Section */}
-            <Card className="border border-slate-100 shadow-sm">
-              <CardHeader className="bg-slate-50/50 border-b flex flex-row items-center justify-between py-4">
+            <Card>
+              <CardHeader className=" border-b flex flex-row items-center justify-between py-4">
                 <div>
-                  <CardTitle className="text-base font-bold text-slate-800 flex items-center gap-2">
+                  <CardTitle className="text-base flex items-center gap-2">
                     <Mail className="h-5 w-5 text-indigo-500" />
                     Contact Emails
                   </CardTitle>
@@ -194,9 +193,9 @@ export default function WebsiteSettingsForm({
                   variant="outline"
                   size="sm"
                   onClick={() => appendEmail({ email: "", emailType: "contact" })}
-                  className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-slate-50 border-indigo-200"
+                  // className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-slate-50 border-indigo-200"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" /> Add Email
+                  <Plus className="h-4 w-4 mr-2" /> Add Email
                 </Button>
               </CardHeader>
               <CardContent className="p-6 space-y-4">
@@ -242,7 +241,7 @@ export default function WebsiteSettingsForm({
                       size="icon"
                       onClick={() => removeEmail(index)}
                       disabled={emailFields.length <= 1}
-                      className="text-slate-400 hover:text-rose-600 h-10 w-10 hover:bg-rose-50 self-end"
+                      className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -252,10 +251,10 @@ export default function WebsiteSettingsForm({
             </Card>
 
             {/* 3. Phone Numbers Section */}
-            <Card className="border border-slate-100 shadow-sm">
-              <CardHeader className="bg-slate-50/50 border-b flex flex-row items-center justify-between py-4">
+            <Card >
+              <CardHeader className=" border-b flex flex-row items-center justify-between py-4">
                 <div>
-                  <CardTitle className="text-base font-bold text-slate-800 flex items-center gap-2">
+                  <CardTitle className="text-base flex items-center gap-2">
                     <Phone className="h-5 w-5 text-indigo-500" />
                     Phone Numbers
                   </CardTitle>
@@ -268,9 +267,8 @@ export default function WebsiteSettingsForm({
                   variant="outline"
                   size="sm"
                   onClick={() => appendPhone({ value: "" })}
-                  className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-slate-50 border-indigo-200"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" /> Add Phone
+                  <Plus className="h-4 w-4 mr-2" /> Add Phone
                 </Button>
               </CardHeader>
               <CardContent className="p-6 space-y-4">
@@ -294,7 +292,7 @@ export default function WebsiteSettingsForm({
                       size="icon"
                       onClick={() => removePhone(index)}
                       disabled={phoneFields.length <= 1}
-                      className="text-slate-400 hover:text-rose-600 h-10 w-10 hover:bg-rose-50"
+                      className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -304,10 +302,10 @@ export default function WebsiteSettingsForm({
             </Card>
 
             {/* 4. Social Media Section */}
-            <Card className="border border-slate-100 shadow-sm">
-              <CardHeader className="bg-slate-50/50 border-b flex flex-row items-center justify-between py-4">
+            <Card >
+              <CardHeader className=" border-b flex flex-row items-center justify-between py-4">
                 <div>
-                  <CardTitle className="text-base font-bold text-slate-800 flex items-center gap-2">
+                  <CardTitle className="text-base flex items-center gap-2">
                     <Share2 className="h-5 w-5 text-indigo-500" />
                     Social Media Channels
                   </CardTitle>
@@ -320,9 +318,8 @@ export default function WebsiteSettingsForm({
                   variant="outline"
                   size="sm"
                   onClick={() => appendSocial({ socialMediaName: "", link: "" })}
-                  className="h-8 text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:bg-slate-50 border-indigo-200"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" /> Add Social Profile
+                  <Plus className="h-4 w-4 mr-2" /> Add Social Profile
                 </Button>
               </CardHeader>
               <CardContent className="p-6 space-y-4">
@@ -334,7 +331,7 @@ export default function WebsiteSettingsForm({
                         name={`social_media.${index}.socialMediaName`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-xs font-bold text-slate-600">Platform Name</FormLabel>
+                            <FormLabel className="text-xs ">Platform Name</FormLabel>
                             <FormControl>
                               <Input placeholder="e.g. Skype, Teams, Facebook, LinkedIn" {...field} />
                             </FormControl>
@@ -348,7 +345,7 @@ export default function WebsiteSettingsForm({
                         name={`social_media.${index}.link`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-xs font-bold text-slate-600">Channel URL</FormLabel>
+                            <FormLabel className="text-xs ">Channel URL</FormLabel>
                             <FormControl>
                               <Input placeholder="e.g. https://linkedin.com/company/inspire" {...field} />
                             </FormControl>
@@ -363,7 +360,7 @@ export default function WebsiteSettingsForm({
                       size="icon"
                       onClick={() => removeSocial(index)}
                       disabled={socialFields.length <= 1}
-                      className="absolute top-2 right-2 text-slate-400 hover:text-rose-600 h-8 w-8 hover:bg-rose-50 sm:static sm:h-10 sm:w-10 sm:self-end"
+                      className="absolute top-2 right-2  h-8 w-8  sm:static sm:h-10 sm:w-10 sm:self-end text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -376,13 +373,11 @@ export default function WebsiteSettingsForm({
 
           {/* Right Column: Favicon Logo Control (Col span 4) */}
           <div className="lg:col-span-4 space-y-6">
-            <Card className="border border-slate-100 shadow-sm overflow-hidden">
-              <CardHeader className="bg-slate-50/50 border-b p-4">
-                <CardTitle className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+            <Card>
+              <CardContent className="p-6  space-y-6">
+                <CardTitle >
                   Favicon Icon Logo
                 </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
                 <FormField
                   control={form.control}
                   name="favicon"
@@ -391,16 +386,14 @@ export default function WebsiteSettingsForm({
                       <ImageUpload
                         value={field.value}
                         onChange={field.onChange}
-                        className="h-[150px] w-[150px] rounded-md overflow-hidden border-2 border-dashed border-slate-200"
+                        className="h-48 w-full "
                       />
                     </FormControl>
                   )}
                 />
-                <div className="text-center">
-                  <span className="text-[10px] text-muted-foreground block max-w-[200px] leading-tight">
-                    The favicon will show up inside browser tabs and bookmark bars. Recommended size: 32x32 pixels (.png or .ico format).
-                  </span>
-                </div>
+                <span className="text-[10px] text-muted-foreground block leading-tight">
+                  The favicon will show up inside browser tabs and bookmark bars. Recommended size: 32x32 pixels (.png or .ico format).
+                </span>
               </CardContent>
             </Card>
 

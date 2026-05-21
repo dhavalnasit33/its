@@ -5,6 +5,7 @@ import BlogForm, { BlogFormValues } from "./BlogForm";
 import apiService from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { Blog } from "@/types";
+import PageHeader from "@/components/shared/PageHeader";
 
 interface EditBlogDialogProps {
   isOpen: boolean;
@@ -83,16 +84,17 @@ export function EditBlogDialog({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg max-h-[90vh]  md:max-w-2xl lg:max-w-5xl xl:max-w-4xl  overflow-y-auto bg-white">
-        <DialogHeader>
-          <DialogTitle>Edit Blog</DialogTitle>
-          <DialogDescription>Update the blog details below.</DialogDescription>
-        </DialogHeader>
-        <div className="py-4">
-          <BlogForm onSubmit={handleEdit} initialData={formData} />
+    <div className="space-y-6">
+          <PageHeader
+            title="Edit Blog"
+            description="Update the blog details below."
+          />
+          <BlogForm
+            onSubmit={handleEdit}
+            // onCancel={() => router.push("/dashboard/Blog")}
+            initialData={formData}
+          />
+    
         </div>
-      </DialogContent>
-    </Dialog>
   );
 }

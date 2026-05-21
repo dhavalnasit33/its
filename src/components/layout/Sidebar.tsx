@@ -28,6 +28,12 @@ export const navItemsList: NavItem[] = [
 
   { href: "/dashboard/pages", label: "All pages", icon: Layers },
 
+  { label: "Home", isTitle: true },
+  
+  { href: "/dashboard/home-page-data", label: "HomePage Data", icon: House },
+
+  
+
   {
     label: "Category",
     icon: Briefcase,
@@ -37,6 +43,7 @@ export const navItemsList: NavItem[] = [
 
     ]
   },
+  { label: "Service", isTitle: true },
   {
     label: "Our Services",
     icon: Briefcase,
@@ -46,7 +53,7 @@ export const navItemsList: NavItem[] = [
       { href: "/dashboard/service-main-page", label: "Service Main Page", icon: ToolCase },
     ],
   },
-
+  { label: "Hire", isTitle: true },
   {
     label: "Hire",
     icon: SignpostBig,
@@ -54,6 +61,11 @@ export const navItemsList: NavItem[] = [
       { href: "/dashboard/hire-main-page", label: "Hire Main Page ", icon: ToolCase },
     ],
   },
+
+  { label: "Blog", isTitle: true },
+  { href: "/dashboard/Blog", label: "Blog", icon: FileText },
+
+  { label: "Abiut Us", isTitle: true },
   { href: "/dashboard/About", label: "About Us", icon: Building2 },
   {
     label: "Career",
@@ -71,8 +83,14 @@ export const navItemsList: NavItem[] = [
       { href: "/dashboard/creativeWork", label: "Creative Work", icon: Pickaxe },
     ]
   },
+  { label: "Faqs", isTitle: true },
+  { 
+    href: "/dashboard/Faqs", 
+    label: "Faqs", 
+    icon: Info 
+  },
   {
-    label: "Traing",
+    label: "Training",
     icon: GraduationCap,
     children: [
       { href: "/dashboard/trainingMainPage", label: "Training MainPage Data", icon: Presentation },

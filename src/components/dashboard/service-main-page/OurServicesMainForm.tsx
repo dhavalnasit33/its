@@ -354,7 +354,7 @@ export default function OurServicesMainForm({
 
                         {/* SEO Settings */}
                         <Card>
-                            <CardHeader><CardTitle>SEO Settings</CardTitle></CardHeader>
+                            <CardHeader><CardTitle className="text-primary">SEO Settings</CardTitle></CardHeader>
                             <CardContent className="space-y-4">
                                 <FormField
                                     control={form.control as any}

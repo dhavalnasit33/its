@@ -116,7 +116,6 @@ export default function HomeChooseItsForm({ initialData, onSubmit, onCancel }: H
           <Button
             type="submit"
             disabled={isSubmitting}
-          // className="px-4 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
           >
             {isSubmitting ? "Saving..." : "Save"}
           </Button>
