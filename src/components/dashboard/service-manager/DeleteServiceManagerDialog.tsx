@@ -72,7 +72,7 @@ export default function DeleteServiceManagerDialog({
 					<div className="space-y-3">
 						<AlertDialogDescription>
 							This action cannot be undone. This will permanently delete the service
-							&quot;<strong>{item.category}</strong>&quot; and remove it from our servers.
+							&quot;<strong>{item.name || item.mainTitle || item.category}</strong>&quot; and remove it from our servers.
 						</AlertDialogDescription>
 					</div>
 				</AlertDialogHeader>

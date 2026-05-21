@@ -1,14 +1,13 @@
-
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import apiService from '@/lib/apiService';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import SubCategoryForm, { SubcategoryFormValues } from '@/components/dashboard/subcategory/subcategoryFrom';
 import PageHeader from '@/components/shared/PageHeader';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function EditSubCategoryPage() {
   const params = useParams();
@@ -42,28 +41,35 @@ export default function EditSubCategoryPage() {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, router, toast]);
 
   const handleEdit = async (data: SubcategoryFormValues) => {
-    const res = await apiService<{ success: boolean; message: string }>(`/subcategory/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    try {
+      const res = await apiService<{ success: boolean; message: string }>(`/subcategory/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      });
 
-    if (res.success) {
-      toast({ title: 'Success', description: res.message });
-      router.push('/dashboard/subcategory');
-    } else {
-      throw new Error(res.message);
+      if (res.success) {
+        toast({ title: 'Success', description: res.message });
+        router.push('/dashboard/subcategory');
+      } else {
+        toast({ title: 'Error', description: res.message, variant: 'destructive' });
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.message || 'Something went wrong',
+        variant: 'destructive',
+      });
     }
   };
 
   if (loading) {
     return (
-      <div className="space-y-4 p-6">
-        <Skeleton className="h-8 w-48" />
-        <Skeleton className="h-40 w-full" />
+      <div className="p-6 flex items-center justify-center min-h-[400px]">
+        <p className="text-gray-500">Loading subcategory data...</p>
       </div>
     );
   }
@@ -80,22 +86,20 @@ export default function EditSubCategoryPage() {
   }
 
   return (
-    <>
-      <div className="space-y-4">
-        {/* <div>
-          <h1 className="text-2xl font-bold">Edit Subcategory</h1>
-          <p className="text-sm text-muted-foreground mt-1">Update subcategory details</p>
-        </div>
-        <Button onClick={() => router.push('/dashboard/subcategory')}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button> */}
-         <PageHeader
-            title="Edit Subcategory"
-            description="Update subcategory details"
+    <div className="space-y-6">
+      <PageHeader
+        title="Edit Subcategory"
+        description="Update subcategory details"
+      />
+      <Card className="border border-slate-100 shadow-sm bg-white">
+        <CardContent className="pt-6">
+          <SubCategoryForm 
+            onSubmit={handleEdit} 
+            initialData={initialData} 
+            onCancel={() => router.push('/dashboard/subcategory')}
           />
-      </div>
-      <SubCategoryForm onSubmit={handleEdit} initialData={initialData} />
-    </>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

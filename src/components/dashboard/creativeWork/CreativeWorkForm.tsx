@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ImageUpload from "@/components/ui/imagupload";
+import apiService from "@/lib/apiService";
 
 const creativeWorkSchema = z.object({
   category: z.string().min(2, "Category is required"),
@@ -30,6 +31,7 @@ interface CreativeWorkFormProps {
 export default function CreativeWorkForm({ initialData, onSubmit, onCancel }: CreativeWorkFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
   const form = useForm<CreativeWorkFormValues>({
     resolver: zodResolver(creativeWorkSchema),
@@ -40,6 +42,27 @@ export default function CreativeWorkForm({ initialData, onSubmit, onCancel }: Cr
       image: "",
     },
   });
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await apiService<{
+          success: boolean;
+          data: { _id: string; category: string }[];
+        }>("/category?moduleType=portfolio&limit=1000", { method: "GET" });
+        if (res.success) {
+          const parsed = res.data.map((cat) => ({
+            id: cat._id,
+            name: (cat.category || "").toString().trim().replace(/\s+/g, " "),
+          }));
+          setCategories(parsed);
+        }
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleFormSubmit: SubmitHandler<CreativeWorkFormValues> = async (data) => {
     setIsSubmitting(true);
@@ -71,9 +94,11 @@ export default function CreativeWorkForm({ initialData, onSubmit, onCancel }: Cr
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="mobile-app">Mobile App</SelectItem>
-                    <SelectItem value="ui-ux">UI/UX</SelectItem>
-                    <SelectItem value="web-development">Web Development</SelectItem>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormControl>

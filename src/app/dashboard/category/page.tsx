@@ -1,10 +1,10 @@
-
 'use client';
+
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Edit, MoreHorizontal, PlusCircle, Trash2 } from 'lucide-react';
+import { Edit, MoreHorizontal, PlusCircle, Trash2, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import PageHeader from '@/components/shared/PageHeader';
@@ -12,10 +12,13 @@ import apiService from '@/lib/apiService';
 import { useToast } from '@/hooks/use-toast';
 import DeletecategoryManageDialog from '@/components/dashboard/category/DeleteCategoryDialog';
 import BulkDeletecategoryManagerDialog from '@/components/dashboard/category/BulkDeleteCategoryDiolog';
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Category {
     _id: string;
     category: string;
+    moduleType: "services" | "blogs" | "portfolio" | "faqs" | "hire";
     image?: string;
     createdAt: string;
 }
@@ -32,20 +35,30 @@ export default function CategoryPage() {
     const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-    // ✅ Pagination state - service page jevi j
+    // Filter and Search States
+    const [searchValue, setSearchValue] = useState("");
+    const [moduleTypeFilter, setModuleTypeFilter] = useState("all");
+
+    // Pagination State
     const [pagination, setPagination] = useState({ current: 1, pages: 1, total: 0 });
     const [limit] = useState(10);
 
     const isAllSelected = items.length > 0 && selectedIds.length === items.length;
     const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
 
-    const fetchItems = async (page = 1) => {
+    const fetchItems = async (page = 1, search = "", moduleType = "all") => {
         setIsLoading(true);
         try {
             const query = new URLSearchParams({
                 page: String(page),
                 limit: String(limit),
             });
+            if (search) {
+                query.append("search", search);
+            }
+            if (moduleType && moduleType !== "all") {
+                query.append("moduleType", moduleType);
+            }
 
             const res = await apiService<{
                 success: boolean;
@@ -74,10 +87,17 @@ export default function CategoryPage() {
         }
     };
 
+    // Debounce search input and handle category fetching
     useEffect(() => {
-        fetchItems(1);
+        const timer = setTimeout(() => {
+            fetchItems(pagination.current, searchValue, moduleTypeFilter);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [pagination.current, searchValue, moduleTypeFilter]);
+
+    useEffect(() => {
         setSelectedIds([]);
-    }, []);
+    }, [searchValue, moduleTypeFilter]);
 
     const handleCheckboxChange = (id: string) => {
         setSelectedIds((prev) =>
@@ -103,13 +123,13 @@ export default function CategoryPage() {
     const handleDeleteSuccess = () => {
         setDeleteDialogOpen(false);
         setSelectedIds((prev) => prev.filter((id) => id !== selectedItem?._id));
-        fetchItems(pagination.current);
+        fetchItems(pagination.current, searchValue, moduleTypeFilter);
     };
 
     const handleBulkDeleteSuccess = () => {
         setSelectedIds([]);
         setBulkDeleteDialogOpen(false);
-        fetchItems(pagination.current);
+        fetchItems(pagination.current, searchValue, moduleTypeFilter);
     };
 
     return (
@@ -119,22 +139,66 @@ export default function CategoryPage() {
                 description="Manage all categories"
                 actionButtons={
                     <div className="flex items-center gap-2">
-                        {selectedIds.length > 0 && (
-                            <Button
-                                variant="destructive"
-                                onClick={() => setBulkDeleteDialogOpen(true)}
-                            >
-                                <Trash2 className="h-4 w-4 mr-2" />
-                                Delete Selected ({selectedIds.length})
-                            </Button>
-                        )}
                         <Button 
-                        onClick={() => router.push("/dashboard/category/create")}>
+                            onClick={() => router.push("/dashboard/category/create")}>
                             <PlusCircle className="mr-2 h-4 w-4" /> Add New
                         </Button>
                     </div>
                 }
             />
+
+            {/* Premium Search and Filtering Controls */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6">
+                <div className="flex flex-1 items-center gap-3 max-w-2xl">
+                    {/* Search Field */}
+                    <div className="relative flex-1 max-w-sm">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            placeholder="Search category name..."
+                            className="pl-8 w-full"
+                            value={searchValue}
+                            onChange={(e) => {
+                                setSearchValue(e.target.value);
+                                setPagination((prev) => ({ ...prev, current: 1 }));
+                            }}
+                        />
+                    </div>
+
+                    {/* Module Filter */}
+                    <div className="w-[180px]">
+                        <Select
+                            value={moduleTypeFilter}
+                            onValueChange={(value) => {
+                                setModuleTypeFilter(value);
+                                setPagination((prev) => ({ ...prev, current: 1 }));
+                            }}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="All Modules" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All Modules</SelectItem>
+                                <SelectItem value="services">Services</SelectItem>
+                                <SelectItem value="blogs">Blogs</SelectItem>
+                                <SelectItem value="portfolio">Portfolio</SelectItem>
+                                <SelectItem value="faqs">FAQs</SelectItem>
+                                <SelectItem value="hire">Hire Page</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+
+                {selectedIds.length > 0 && (
+                    <Button
+                        variant="destructive"
+                        onClick={() => setBulkDeleteDialogOpen(true)}
+                        className="flex items-center gap-2"
+                    >
+                        <Trash2 className="h-4 w-4" />
+                        Delete Selected ({selectedIds.length})
+                    </Button>
+                )}
+            </div>
 
             <div className="rounded-md shadow-sm">
                 <Table>
@@ -150,18 +214,20 @@ export default function CategoryPage() {
                                 />
                             </TableHead>
                             <TableHead>Image</TableHead>
-                            <TableHead>Category</TableHead>
+                            <TableHead>Category Name</TableHead>
+                            <TableHead>Module Assignment</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
 
                     <TableBody>
                         {isLoading
-                            ? Array.from({ length: 5 }).map((_, i) => (
+                             ? Array.from({ length: 5 }).map((_, i) => (
                                 <TableRow key={i}>
                                     <TableCell><Skeleton className="h-5 w-5" /></TableCell>
                                     <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
                             ))
@@ -194,7 +260,13 @@ export default function CategoryPage() {
                                             )}
                                         </TableCell>
 
-                                        <TableCell className="font-medium">{item.category}</TableCell>
+                                        <TableCell className="font-medium text-slate-800">{item.category}</TableCell>
+
+                                        <TableCell>
+                                            <span className="capitalize px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+                                                {item.moduleType}
+                                            </span>
+                                        </TableCell>
 
                                         <TableCell className="text-right">
                                             <DropdownMenu
@@ -231,7 +303,7 @@ export default function CategoryPage() {
                                 ))
                                 : (
                                     <TableRow>
-                                        <TableCell colSpan={4} className="text-center py-8 text-gray-500">
+                                        <TableCell colSpan={5} className="text-center py-8 text-gray-500">
                                             No categories found.
                                         </TableCell>
                                     </TableRow>
@@ -240,7 +312,6 @@ export default function CategoryPage() {
                 </Table>
             </div>
 
-            {/* ✅ Pagination - service page jevi j, fully working */}
             <div className="flex justify-between items-center gap-2 mt-4">
                 <span className="text-sm">
                     Page {pagination.current} of {pagination.pages}
@@ -254,14 +325,14 @@ export default function CategoryPage() {
                     <Button
                         className="bg-blue-600 text-white"
                         disabled={pagination.current === 1}
-                        onClick={() => fetchItems(pagination.current - 1)}
+                        onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
                     >
                         Previous
                     </Button>
                     <Button
                         className="bg-blue-600 text-white"
                         disabled={pagination.current === pagination.pages}
-                        onClick={() => fetchItems(pagination.current + 1)}
+                        onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
                     >
                         Next
                     </Button>

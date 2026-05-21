@@ -158,7 +158,7 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
                     className={[
-                        "relative border-2 border-dashed rounded-xl overflow-hidden",
+                        "relative border-2 border-dashed rounded-xl overflow-hidden group",
                         "flex justify-center items-center",
                         className ||"h-[170px] w-[220px]",
                         "transition-all duration-200",
@@ -174,11 +174,11 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
                             <img src={value} alt="Uploaded preview" className="h-full w-full object-contain" />
 
                             {!busy && (
-                                <div className="absolute inset-0 bg-black/0 hover:bg-black/25 transition-all duration-200 flex items-center justify-center group">
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all duration-200 flex items-center justify-center pointer-events-none">
                                     <button
                                         type="button"
                                         onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
-                                        className="opacity-0 group-hover:opacity-100 bg-white/90 text-gray-700 text-xs font-medium px-3 py-1 rounded-full shadow transition-opacity duration-150"
+                                        className="opacity-0 group-hover:opacity-100 bg-white/90 text-gray-700 text-xs font-medium px-3 py-1 rounded-full shadow transition-opacity duration-150 pointer-events-auto"
                                     >
                                         Change
                                     </button>
@@ -190,7 +190,7 @@ const ImageUpload = React.forwardRef<HTMLDivElement, ImageUploadProps>(
                                 onClick={handleDelete}
                                 disabled={busy}
                                 title="Remove image"
-                                className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 shadow-md hover:bg-red-100 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 shadow-md hover:bg-red-100 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed z-10"
                             >
                                 {isDeleting
                                     ? <Loader2 className="h-4 w-4 animate-spin text-gray-600" />

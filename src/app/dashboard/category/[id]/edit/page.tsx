@@ -1,16 +1,15 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import apiService from "@/lib/apiService";
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import CategoryFrom, { categorycreateFormValues } from "@/components/dashboard/category/categoryform";
 import PageHeader from "@/components/shared/PageHeader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
-export default function EditCetegoryPage() {
+export default function EditCategoryPage() {
   const params = useParams();
   const id = params?.id as string;
   const router = useRouter();
@@ -25,21 +24,24 @@ export default function EditCetegoryPage() {
       try {
         const res = await apiService<{
           success: boolean;
-          data: categorycreateFormValues
+          data: categorycreateFormValues;
         }>(`/category/${id}`, { method: "GET" });
-
 
         if (res.success) {
           setInitialData(res.data);
         } else {
           toast({
             title: "Error",
+            description: "Failed to retrieve category details",
+            variant: "destructive",
           });
           router.push("/dashboard/category");
         }
       } catch (error) {
         toast({
           title: "Error",
+          description: "Something went wrong while fetching details",
+          variant: "destructive",
         });
       } finally {
         setLoading(false);
@@ -66,41 +68,45 @@ export default function EditCetegoryPage() {
       toast({
         title: "Error",
         description: error.message || "Something went wrong",
-        variant: "destructive"
+        variant: "destructive",
       });
     }
   };
 
-  if (loading) return (
-    <div className="p-6 flex items-center justify-center min-h-[400px]">
-      <p className="text-gray-500">Loading category data...</p>
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-[400px]">
+        <p className="text-gray-500">Loading category data...</p>
+      </div>
+    );
+  }
 
-  if (!initialData) return (
-    <div className="p-6 text-center">
-      <p>category not found.</p>
-      <Button onClick={() => router.back()} className="mt-4">
-        Back to List
-      </Button>
-    </div>
-  );
+  if (!initialData) {
+    return (
+      <div className="p-6 text-center">
+        <p className="text-muted-foreground">Category not found.</p>
+        <Button onClick={() => router.push("/dashboard/category")} className="mt-4">
+          Back to List
+        </Button>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div className="space-y-4">
-        {/* <h1 className="text-2xl font-bold">Edit category</h1>
-        <Button onClick={() => router.push("/dashboard/category")}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button> */}
-        <PageHeader
-            title="Edit category"
-            description="Update category details "
-            />
-      </div>
-
-      <CategoryFrom onSubmit={handleEdit} initialData={initialData} />
-    </>
+    <div className="space-y-6">
+      <PageHeader
+        title="Edit Category"
+        description="Update category details"
+      />
+      <Card className="border border-slate-100 shadow-sm bg-white">
+        <CardContent className="pt-6">
+          <CategoryFrom 
+            onSubmit={handleEdit} 
+            initialData={initialData} 
+            onCancel={() => router.push("/dashboard/category")}
+          />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

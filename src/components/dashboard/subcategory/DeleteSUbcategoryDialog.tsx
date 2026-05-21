@@ -104,6 +104,7 @@ import { Loader2, Trash2 } from 'lucide-react';
 interface SubCategoryItem {
   _id: string;
   category: string;
+  categoryName?: string;
   subcategory: string;
 }
 
@@ -159,8 +160,8 @@ export default function DeleteSubcategoryDialog({
           </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete the subcategory{' '}
-            <strong>&quot;{item.subcategory}&quot;</strong> under category{' '}
-            <strong>&quot;{item.category}&quot;</strong>.
+            <strong>&quot;{item.subcategory}&quot;</strong> under parent category{' '}
+            <strong>&quot;{item.categoryName || item.category}&quot;</strong>.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -1,106 +1,147 @@
-'use client';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import ImageUpload from "@/components/ui/imagupload";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+"use client";
+
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ImageUpload from "@/components/ui/imagupload";
 
 const categorySchema = z.object({
-    category: z.string().min(1, "Category is required"),
-    image: z.string().optional(),
-})
+  category: z.string().min(1, "Category is required"),
+  moduleType: z.enum(["services", "blogs", "portfolio", "faqs", "hire"], {
+    message: "Module type is required",
+  }),
+  image: z.string().optional(),
+});
 
 export type categorycreateFormValues = z.infer<typeof categorySchema>;
 
 interface categoryManagerFormprops {
-    initialData?: categorycreateFormValues | null;
-    onSubmit: (data: categorycreateFormValues) => Promise<void>;
+  initialData?: categorycreateFormValues | null;
+  onSubmit: (data: categorycreateFormValues) => Promise<void>;
+  onCancel?: () => void;
 }
 
-export default function CategoryFrom({ initialData, onSubmit }: categoryManagerFormprops) {
-    const { toast } = useToast();
-    const router = useRouter();
-    const [isSubmitting, setIsSubmitting] = useState(false);
+export default function CategoryFrom({ initialData, onSubmit, onCancel }: categoryManagerFormprops) {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const form = useForm<categorycreateFormValues>({
-        resolver: zodResolver(categorySchema),
-        defaultValues: {
-            category: initialData?.category || "",
-            image: initialData?.image || "",
+  const form = useForm<categorycreateFormValues>({
+    resolver: zodResolver(categorySchema),
+    defaultValues: initialData || {
+      category: "",
+      moduleType: "services",
+      image: "",
+    },
+  });
 
-        }
-    })
-    const handleFormSubmit: SubmitHandler<categorycreateFormValues> = async (data) => {
-        console.log("Form data before submit:", data);
-        setIsSubmitting(true);
-        try {
-            await onSubmit(data);
-            form.reset();
-        } catch (error: any) {
-            toast({ title: "Error", description: error.message, variant: "destructive" });
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-    return (
-        <>
-            <Card>
-                <CardContent className="pt-6">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
+  const handleFormSubmit: SubmitHandler<categorycreateFormValues> = async (data) => {
+    setIsSubmitting(true);
+    try {
+      await onSubmit(data);
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-                            <FormField
-                                control={form.control}
-                                name="category"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>category</FormLabel>
-                                        <FormControl><Input placeholder="Enter category" {...field} /></FormControl>
-                                        <FormMessage className="text-red-600 text-sm mt-1" />
-                                    </FormItem>
-                                )}
-                            />
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
+        {/* Category Name */}
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter category name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                            <FormField
-                                control={form.control}
-                                name="image"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Image</FormLabel>
-                                        <FormControl>
-                                            <ImageUpload
-                                                value={field.value || ""}
-                                                onChange={(url) =>
-                                                    form.setValue("image", url, { shouldValidate: true })
-                                                }
-                                                disabled={isSubmitting}
-                                            />
-                                        </FormControl>
-                                        <FormMessage className="text-red-600 text-sm mt-1" />
-                                    </FormItem>
-                                )}
-                            />
-                            <div className="flex justify-between mt-4">
-                                <Button type="button" onClick={() => router.back()}>
-                                    <ArrowLeft className="h-4 w-4 mr-2" />
-                                    Back
-                                </Button>
-                                <Button type="submit" disabled={isSubmitting}>
-                                    {isSubmitting ? "Submitting..." : "Submit"}
-                                </Button>
-                            </div>
-                        </form>
-                    </Form>
-                </CardContent>
-            </Card>
-        </>
-    )
+        {/* Module Assignment */}
+        <FormField
+          control={form.control}
+          name="moduleType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Module Assignment</FormLabel>
+              <FormControl>
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select module assignment" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="services">Services</SelectItem>
+                    <SelectItem value="blogs">Blogs</SelectItem>
+                    <SelectItem value="portfolio">Creative Portfolio</SelectItem>
+                    <SelectItem value="faqs">FAQs</SelectItem>
+                    <SelectItem value="hire">Hire Page</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Category Cover Image */}
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cover/Banner Image</FormLabel>
+              <FormControl>
+                <ImageUpload
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Actions */}
+        <div className="flex justify-end gap-3 pt-4 border-t">
+          {onCancel && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              disabled={isSubmitting}
+            >
+              Cancel
+            </Button>
+          )}
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              "Save Category"
+            )}
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
 }
-

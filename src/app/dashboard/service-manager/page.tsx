@@ -45,7 +45,7 @@ export default function ServiceManagerPage() {
   const [pagination, setPagination] = useState({ current: 1, pages: 1, total: 0 });
   const [limit] = useState(10);
   const [categoryFilter, setCategoryFilter] = useState("");
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
   const router = useRouter();
 
   const params = useParams();
@@ -93,17 +93,14 @@ export default function ServiceManagerPage() {
     try {
       const res = await apiService<{
         success: boolean;
-        data: { category: string; subCategory: string }[];
-      }>("/service/categories", { method: "GET" });
+        data: { _id: string; category: string }[];
+      }>("/category?moduleType=services&limit=1000", { method: "GET" });
       if (res.success) {
-        const uniqueCategories = [
-          ...new Set(
-            res.data.map((s) =>
-              (s.category || "").toString().trim().replace(/\s+/g, " ")
-            ).filter(cat => cat !== "")
-          ),
-        ];
-        setCategories(uniqueCategories);
+        const parsedCategories = res.data.map((cat) => ({
+          id: cat._id,
+          name: (cat.category || "").toString().trim().replace(/\s+/g, " "),
+        }));
+        setCategories(parsedCategories);
       }
     } catch (err) {
       console.error("Error fetching categories:", err);
@@ -257,8 +254,8 @@ export default function ServiceManagerPage() {
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
                 {categories.map((cat) => (
-                  <SelectItem key={cat} value={cat}>
-                    {cat}
+                  <SelectItem key={cat.id} value={cat.id}>
+                    {cat.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -284,9 +281,10 @@ export default function ServiceManagerPage() {
                   className="cursor-pointer w-4 h-4"
                 />
               </TableHead>
+              <TableHead>Name</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Sub Category</TableHead>
-              <TableHead>Main Title</TableHead>
+              {/* <TableHead>Main Title</TableHead> */}
               <TableHead>Slug</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -300,6 +298,7 @@ export default function ServiceManagerPage() {
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                  {/* <TableCell><Skeleton className="h-5 w-32" /></TableCell> */}
                   <TableCell><Skeleton className="h-5 w-48" /></TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -317,9 +316,10 @@ export default function ServiceManagerPage() {
                         className="cursor-pointer w-4 h-4"
                       />
                     </TableCell>
-                    <TableCell>{item.category}</TableCell>
-                    <TableCell>{item.subCategory}</TableCell>
-                    <TableCell>{item.mainTitle}</TableCell>
+                    <TableCell >{(item as any).name || 'N/A'}</TableCell>
+                    <TableCell>{typeof item.category === 'object' && item.category ? (item.category as any).category : item.category}</TableCell>
+                    <TableCell>{typeof item.subCategory === 'object' && item.subCategory ? (item.subCategory as any).subcategory : item.subCategory}</TableCell>
+                    {/* <TableCell>{item.mainTitle}</TableCell> */}
                     <TableCell>{item.slug}</TableCell>
                     <TableCell className="text-right">
                       <DropdownMenu
@@ -360,7 +360,7 @@ export default function ServiceManagerPage() {
                 ))
                 : (
                   <TableRow className="hover:bg-gray-200">
-                    <TableCell colSpan={6} className="text-center py-4">
+                    <TableCell colSpan={7} className="text-center py-4">
                       No services found.
                     </TableCell>
                   </TableRow>

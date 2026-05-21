@@ -1,22 +1,26 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Edit, MoreHorizontal, PlusCircle, Trash2 } from 'lucide-react';
+import { Edit, MoreHorizontal, PlusCircle, Trash2, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PageHeader from '@/components/shared/PageHeader';
 import apiService from '@/lib/apiService';
 import BulkDeleteSubcategoryDialog from '@/components/dashboard/subcategory/BulkDeleteSubcategory';
-import DeletesubcategoryManageDialog from '@/components/dashboard/subcategory/DeleteSUbcategoryDialog';
+import DeleteSubcategoryDialog from '@/components/dashboard/subcategory/DeleteSUbcategoryDialog';
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface SubCategoryItem {
     _id: string;
     category: string;
     categoryName: string;
     subcategory: string;
-    createdAt?: string
+    moduleType: "services" | "blogs" | "hire";
+    createdAt?: string;
 }
 
 export default function SubCategoryPage() {
@@ -32,20 +36,26 @@ export default function SubCategoryPage() {
     const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
     const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
 
+    // Search and filter states
+    const [searchValue, setSearchValue] = useState("");
+    const [moduleTypeFilter, setModuleTypeFilter] = useState("all");
+
     const isAllSelected = items.length > 0 && selectedIds.length === items.length;
     const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
 
-    useEffect(() => {
-        fetchItems(1);
-    }, []);
-
-    const fetchItems = async (page = 1) => {
+    const fetchItems = async (page = 1, search = "", moduleType = "all") => {
         setIsLoading(true);
         try {
             const query = new URLSearchParams({
                 page: String(page),
                 limit: String(limit),
             });
+            if (search) {
+                query.append("search", search);
+            }
+            if (moduleType && moduleType !== "all") {
+                query.append("moduleType", moduleType);
+            }
 
             const res = await apiService<{
                 success: boolean;
@@ -66,6 +76,18 @@ export default function SubCategoryPage() {
             setIsLoading(false);
         }
     };
+
+    // Debounce search input and handle category fetching
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            fetchItems(pagination.current, searchValue, moduleTypeFilter);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [pagination.current, searchValue, moduleTypeFilter]);
+
+    useEffect(() => {
+        setSelectedIds([]);
+    }, [searchValue, moduleTypeFilter]);
 
     const handleCheckboxChange = (id: string) => {
         setSelectedIds((prev) =>
@@ -89,13 +111,13 @@ export default function SubCategoryPage() {
     const handleDeleteSuccess = () => {
         setDeleteDialogOpen(false);
         setSelectedIds((prev) => prev.filter((id) => id !== selectedItem?._id));
-        fetchItems(pagination.current);
+        fetchItems(pagination.current, searchValue, moduleTypeFilter);
     };
 
     const handleBulkDeleteSuccess = () => {
         setSelectedIds([]);
         setBulkDeleteDialogOpen(false);
-        fetchItems(pagination.current);
+        fetchItems(pagination.current, searchValue, moduleTypeFilter);
     };
 
     const handleDeleteDialogOpen = (item: SubCategoryItem) => {
@@ -110,22 +132,63 @@ export default function SubCategoryPage() {
                 description="Manage all subcategories"
                 actionButtons={
                     <div className="flex items-center gap-2">
-                        {selectedIds.length > 0 && (
-                            <Button
-                                variant="destructive"
-                                onClick={() => setBulkDeleteDialogOpen(true)}
-                                className="flex items-center gap-2"
-                            >
-                                <Trash2 className="h-4 w-4" />
-                                Delete Selected ({selectedIds.length})
-                            </Button>
-                        )}
                         <Button onClick={() => router.push('/dashboard/subcategory/create')}>
                             <PlusCircle className="mr-2 h-4 w-4" /> Add New
                         </Button>
                     </div>
                 }
             />
+
+            {/* Premium Search and Filtering Controls */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6">
+                <div className="flex flex-1 items-center gap-3 max-w-2xl">
+                    {/* Search Field */}
+                    <div className="relative flex-1 max-w-sm">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            placeholder="Search subcategory name..."
+                            className="pl-8 w-full"
+                            value={searchValue}
+                            onChange={(e) => {
+                                setSearchValue(e.target.value);
+                                setPagination((prev) => ({ ...prev, current: 1 }));
+                            }}
+                        />
+                    </div>
+
+                    {/* Module Filter */}
+                    <div className="w-[180px]">
+                        <Select
+                            value={moduleTypeFilter}
+                            onValueChange={(value) => {
+                                setModuleTypeFilter(value);
+                                setPagination((prev) => ({ ...prev, current: 1 }));
+                            }}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="All Modules" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All Modules</SelectItem>
+                                <SelectItem value="services">Services</SelectItem>
+                                <SelectItem value="blogs">Blogs</SelectItem>
+                                <SelectItem value="hire">Hire Page</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+
+                {selectedIds.length > 0 && (
+                    <Button
+                        variant="destructive"
+                        onClick={() => setBulkDeleteDialogOpen(true)}
+                        className="flex items-center gap-2 flex-shrink-0"
+                    >
+                        <Trash2 className="h-4 w-4" />
+                        Delete Selected ({selectedIds.length})
+                    </Button>
+                )}
+            </div>
 
             <div className="rounded-md shadow-sm">
                 <Table>
@@ -142,8 +205,9 @@ export default function SubCategoryPage() {
                                     className="cursor-pointer w-4 h-4"
                                 />
                             </TableHead>
-                            <TableHead>Category</TableHead>
-                            <TableHead>Subcategory</TableHead>
+                            <TableHead>Subcategory Name</TableHead>
+                            <TableHead>Parent Category</TableHead>
+                            <TableHead>Module Assignment</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -155,6 +219,7 @@ export default function SubCategoryPage() {
                                     <TableCell><Skeleton className="h-5 w-5" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-10 ml-auto" /></TableCell>
                                 </TableRow>
                             ))
@@ -173,13 +238,12 @@ export default function SubCategoryPage() {
                                             className="cursor-pointer w-4 h-4"
                                         />
                                     </TableCell>
-                                    <TableCell>{item.subcategory}</TableCell>
+                                    <TableCell className="font-medium text-slate-800">{item.subcategory}</TableCell>
+                                    <TableCell className="text-slate-600">{item.categoryName || 'N/A'}</TableCell>
                                     <TableCell>
-                                        {item.categoryName || 'N/A'}
-                                        {/* {item.category && typeof item.category === 'object'
-                                            ? item.category.category
-                                            : (item.category || "N/A")} */}
-                                        {/* {item.category} */}
+                                        <span className="capitalize px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+                                            {item.moduleType || 'N/A'}
+                                        </span>
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <DropdownMenu
@@ -216,7 +280,7 @@ export default function SubCategoryPage() {
                             ))
                         ) : (
                             <TableRow className="hover:bg-gray-200">
-                                <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                                     No subcategories found.
                                 </TableCell>
                             </TableRow>
@@ -224,7 +288,6 @@ export default function SubCategoryPage() {
                     </TableBody>
                 </Table>
             </div>
-
 
             <div className="flex justify-between items-center gap-2 mt-4">
                 <span className="text-sm">
@@ -239,14 +302,14 @@ export default function SubCategoryPage() {
                     <Button
                         className="bg-blue-600 text-white"
                         disabled={pagination.current === 1}
-                        onClick={() => fetchItems(pagination.current - 1)}
+                        onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
                     >
                         Previous
                     </Button>
                     <Button
                         className="bg-blue-600 text-white"
                         disabled={pagination.current === pagination.pages}
-                        onClick={() => fetchItems(pagination.current + 1)}
+                        onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
                     >
                         Next
                     </Button>
@@ -254,7 +317,7 @@ export default function SubCategoryPage() {
             </div>
 
             {selectedItem && (
-                <DeletesubcategoryManageDialog
+                <DeleteSubcategoryDialog
                     isOpen={deleteDialogOpen}
                     onOpenChange={handleDeleteDialogChange}
                     item={selectedItem}

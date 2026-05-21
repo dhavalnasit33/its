@@ -31,6 +31,7 @@ import ImageUpload from "@/components/ui/imagupload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import apiService from "@/lib/apiService";
 import { Input } from "@/components/ui/input";
+import { APP_URL } from "@/config";
 // import ImageUpload from "@/components/shared/ImageUpload";
 
 // ---------- Slug ----------
@@ -40,12 +41,13 @@ const generateSlug = (text: string): string =>
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+
 
 // ---------- Schema ----------
 const servicestepperSchema = z.object({
   category: z.string().min(1, "Category is required"),
   subCategory: z.string().min(1, "Sub Category is required"),
+  name: z.string().min(1, "Name is required"),
   mainTitle: z.string().min(1, "Main Title is required"),
   description: z.string(),
   subMainTitle: z.string().min(1, "Sub MainTitle is required"),
@@ -89,11 +91,11 @@ const servicestepperSchema = z.object({
   })),
 
   seo: z.object({
-    title: z.string().min(1, "SEO Title is required"),
-    keyphrase: z.string().min(1, "Keyphrase is required"),
-    seoDescription: z.string().min(1, "SEO Description is required"),
+    title: z.string().optional(),
+    keyphrase: z.string().optional(),
+    seoDescription: z.string().optional(),
     featureImage: z.string().optional(),
-  }),
+  }).optional(),
 
 
 
@@ -134,8 +136,13 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
   const form = useForm<ServiceStepperFormValues>({
     resolver: zodResolver(servicestepperSchema),
     defaultValues: {
-      category: initialData?.category || "",
-      subCategory: initialData?.subCategory || "",
+      category: typeof initialData?.category === 'object' && initialData.category
+        ? (initialData.category as any)._id
+        : (initialData?.category || ""),
+      subCategory: typeof initialData?.subCategory === 'object' && initialData.subCategory
+        ? (initialData.subCategory as any)._id
+        : (initialData?.subCategory || ""),
+      name: (initialData as any)?.name || "",
       slug: initialData?.slug || "",
       mainTitle: initialData?.mainTitle || "",
       description: initialData?.description || "",
@@ -172,16 +179,17 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
   });
 
 
+  const nameValue = form.watch("name");
   const subCategoryValue = form.watch("subCategory");
   const selectedCategoryId = form.watch("category");
 
 
   useEffect(() => {
     if (isFirstRender.current) { isFirstRender.current = false; return; }
-    if (subCategoryValue) {
-      form.setValue("slug", generateSlug(subCategoryValue), { shouldValidate: true });
+    if (nameValue) {
+      form.setValue("slug", generateSlug(nameValue), { shouldValidate: true });
     }
-  }, [subCategoryValue]);
+  }, [nameValue]);
 
   useEffect(() => {
     fetchCategories();
@@ -253,25 +261,10 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
         (s) => s.category === selectedCategoryId
       );
       setFilteredSubCategories(filtered);
-      form.setValue("subCategory", "");
     } else {
       setFilteredSubCategories([]);
     }
   }, [selectedCategoryId, subCategories]);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    if (subCategoryValue) {
-      // subCategory ID છે — name find કરો slug માટે
-      const found = filteredSubCategories.find((s) => s._id === subCategoryValue);
-      if (found) {
-        form.setValue("slug", generateSlug(found.subcategory), { shouldValidate: true });
-      }
-    }
-  }, [subCategoryValue]);
 
 
   const onDragEnd = (result: DropResult) => {
@@ -306,388 +299,406 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
   return (
     <Card >
       <div className="p-6">
-      {/* <CardContent > */}
+        {/* <CardContent > */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-             <div className="lg:col-span-2 space-y-8">
-            <Card>
-              <CardHeader>
-                <CardTitle> 
-                  Category
-              </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <Select
-                        onValueChange={(val) => {
-                          field.onChange(val);
-                        }}
-                        value={field.value}
-                        disabled={loadingCategories}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue
-                              placeholder={
-                                loadingCategories
-                                  ? "Loading categories..."
-                                  : "Select a category"
-                              }
-                            />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {categories.length > 0 ? (
-                            categories.map((cat) => (
-                              <SelectItem key={cat._id} value={cat._id}>
-                                {cat.category}
-                              </SelectItem>
-                            ))
-                          ) : (
-                            <SelectItem value="none" disabled>
-                              No categories found
-                            </SelectItem>
-                          )}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="subCategory"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Sub Category</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                        disabled={loadingSubCategories || !selectedCategoryId}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue
-                              placeholder={
-                                !selectedCategoryId
-                                  ? "First select a category"
-                                  : loadingSubCategories
-                                    ? "Loading subcategories..."
-                                    : filteredSubCategories.length === 0
-                                      ? "No subcategories found"
-                                      : "Select a subcategory"
-                              }
-                            />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {filteredSubCategories.length > 0 ? (
-                            filteredSubCategories.map((sub) => (
-                              <SelectItem key={sub._id} value={sub._id}>
-                                {sub.subcategory}
-                              </SelectItem>
-                            ))
-                          ) : (
-                            <SelectItem value="none" disabled>
-                              {!selectedCategoryId
-                                ? "Select category first"
-                                : "No subcategories for this category"}
-                            </SelectItem>
-                          )}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  name="mainTitle"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Main Title</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter main title"
-                          {...field}
-                          onBlur={(e) => field.onChange(e.target.value.trim())}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={() => {
-                    const slugValue = form.watch("slug");
-                    const permalink = `${APP_URL}/services/${slugValue}`;
-                    return (
-                      <FormItem>
-                        <FormLabel>Permalink</FormLabel>
-                        <FormControl>
-                          <div>
-                            {slugValue && (
-                              <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
-                                <strong>URL:</strong>{" "}
-                                <a
-                                  href={permalink}
-                                  className="text-blue-600 hover:underline break-all"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {permalink}
-                                </a>
-                              </div>
-                            )}
-                          </div>
-                        </FormControl>
-                      </FormItem>
-                    );
-                  }}
-                />
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={({ field }) => <input type="hidden" {...field} />}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Enter description" {...field} />
-                      </FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </Card>
-
-            {/* ─────────────── SUBMAIN TITLE ─────────────── */}
-            <Card>
-              <CardHeader>
-                <CardTitle>SubMain Title</CardTitle>
-              </CardHeader>
-            <CardContent className=" space-y-6">
-              
-              {/* <div className="space-y-4 "> */}
-                <FormField
-                  control={form.control}
-                  name="subMainTitle"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Sub Main Title</FormLabel>
-                      <FormControl><Input placeholder="Enter sub main title" {...field} /></FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="subMainTitleDescription"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Sub Main Title Description</FormLabel>
-                      <FormControl><Textarea placeholder="Enter sub main title description" {...field} /></FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-                <div className="flex items-center justify-between">
-                  <FormLabel>Feature Points</FormLabel>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                      onClick={() => {
-                        const arr = form.getValues("contentBlocks") || [];
-                        form.setValue("contentBlocks", [...arr, { title: "", description: "", image: "" }], { shouldDirty: true, shouldValidate: true });
-                      }}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Content Block
-                  </Button>
-                </div>
-
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                  {form.watch("contentBlocks")?.map((block, idx) => (
-                    <Card key={idx} className="relative p-4 border-dashed">
-                         <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                        onClick={() => {
-                          const arr = form.getValues("contentBlocks") || [];
-                          form.setValue("contentBlocks", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
-                        }}
-                      >
-                         <Trash2 className="h-4 w-4" />
-                      </Button>
-                      <div className="space-y-4 pt-4">
-                      {["title", "description"].map((fieldName) => (
-                        <FormField
-                          key={fieldName}
-                          control={form.control}
-                          name={`contentBlocks.${idx}.${fieldName}` as any}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}</FormLabel>
-                              <FormControl>
-                                {fieldName === "description"
-                                  ? <Textarea placeholder="Enter description" {...field} />
-                                  : <Input placeholder={`Enter ${fieldName}`} {...field} />
-                                }
-                              </FormControl>
-                              <FormMessage className="text-red-600 text-sm mt-1" />
-                            </FormItem>
-                          )}
-                        />
-                      ))}
-
-                      {/* ✅ ImageUpload component */}
-                      <FormField
-                        control={form.control}
-                        name={`contentBlocks.${idx}.image` as any}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Image</FormLabel>
-                            <FormControl>
-                              <ImageUpload
-                                value={field.value || ""}
-                                onChange={(url) => form.setValue(`contentBlocks.${idx}.image`, url, { shouldValidate: true })}
-                                disabled={isSubmitting}
-                                className="w-full h-32"
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-600 text-sm mt-1" />
-                          </FormItem>
-                        )}
-                      />
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              {/* </div> */}
-              </CardContent>
-            </Card>
-
-            <Card>
-                <CardHeader>
-                  <CardTitle>Why Work</CardTitle>
-                </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex flex-col lg:flex-row gap-8">
-                  <div className="flex-1 space-y-6">
+              <div className="lg:col-span-2 space-y-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>
+                      Category
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
                     <FormField
                       control={form.control}
-                      name="WhyWorkWithThis.title"
+                      name="category"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Title</FormLabel>
+                          <FormLabel>Category</FormLabel>
+                          <Select
+                            onValueChange={(val) => {
+                              field.onChange(val);
+                            }}
+                            value={field.value}
+                            disabled={loadingCategories}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder={
+                                    loadingCategories
+                                      ? "Loading categories..."
+                                      : "Select a category"
+                                  }
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {categories.length > 0 ? (
+                                categories.map((cat) => (
+                                  <SelectItem key={cat._id} value={cat._id}>
+                                    {cat.category}
+                                  </SelectItem>
+                                ))
+                              ) : (
+                                <SelectItem value="none" disabled>
+                                  No categories found
+                                </SelectItem>
+                              )}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="subCategory"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Sub Category</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                            disabled={loadingSubCategories || !selectedCategoryId}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder={
+                                    !selectedCategoryId
+                                      ? "First select a category"
+                                      : loadingSubCategories
+                                        ? "Loading subcategories..."
+                                        : filteredSubCategories.length === 0
+                                          ? "No subcategories found"
+                                          : "Select a subcategory"
+                                  }
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {filteredSubCategories.length > 0 ? (
+                                filteredSubCategories.map((sub) => (
+                                  <SelectItem key={sub._id} value={sub._id}>
+                                    {sub.subcategory}
+                                  </SelectItem>
+                                ))
+                              ) : (
+                                <SelectItem value="none" disabled>
+                                  {!selectedCategoryId
+                                    ? "Select category first"
+                                    : "No subcategories for this category"}
+                                </SelectItem>
+                              )}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      name="name"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name</FormLabel>
                           <FormControl>
-                            <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("WhyWorkWithThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
+                            <Input
+                              placeholder="Enter service name (e.g. ReactJS Development)"
+                              {...field}
+                              onBlur={(e) => field.onChange(e.target.value.trim())}
+                            />
                           </FormControl>
                           <FormMessage className="text-red-600 text-sm mt-1" />
                         </FormItem>
                       )}
                     />
+
                     <FormField
+                      name="mainTitle"
                       control={form.control}
-                      name="WhyWorkWithThis.description"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Description</FormLabel>
-                          <FormControl><Textarea placeholder="Enter description" {...field} value={field.value ?? ""} /></FormControl>
+                          <FormLabel>Main Title</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter main title"
+                              {...field}
+                              onBlur={(e) => field.onChange(e.target.value.trim())}
+                            />
+                          </FormControl>
                           <FormMessage className="text-red-600 text-sm mt-1" />
                         </FormItem>
                       )}
                     />
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <FormLabel>Work Points</FormLabel>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                      onClick={() => {
-                        const arr = form.getValues("WhyWorkWithThis").content || [];
-                        form.setValue("WhyWorkWithThis.content", [...arr, { title: "", description: "" }], { shouldDirty: true, shouldValidate: true });
+
+                    <FormField
+                      control={form.control}
+                      name="slug"
+                      render={() => {
+                        const slugValue = form.watch("slug");
+                        const permalink = `${APP_URL}/${slugValue}`;
+                        return (
+                          <FormItem>
+                            <FormLabel>Permalink</FormLabel>
+                            <FormControl>
+                              <div>
+                                {slugValue && (
+                                  <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                    <strong>URL:</strong>{" "}
+                                    <a
+                                      href={permalink}
+                                      className="text-blue-600 hover:underline break-all"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      {permalink}
+                                    </a>
+                                  </div>
+                                )}
+                              </div>
+                            </FormControl>
+                          </FormItem>
+                        );
                       }}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Content
-                  </Button>
-                </div>
+                    />
+                    <FormField
+                      control={form.control}
+                      name="slug"
+                      render={({ field }) => <input type="hidden" {...field} />}
+                    />
 
+                    <FormField
+                      control={form.control}
+                      name="description"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description</FormLabel>
+                          <FormControl>
+                            <Textarea placeholder="Enter description" {...field} />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                  </CardContent>
+                </Card>
 
+                {/* ─────────────── SUBMAIN TITLE ─────────────── */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>SubMain Title</CardTitle>
+                  </CardHeader>
+                  <CardContent className=" space-y-6">
 
-
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                  {form.watch("WhyWorkWithThis")?.content?.map((_, idx) => (
-                    <Card key={idx} className="relative p-4 border-dashed">
-                      {/* <h5 className="font-semibold">Content {idx + 1}</h5> */}
-
-                       <Button
+                    {/* <div className="space-y-4 "> */}
+                    <FormField
+                      control={form.control}
+                      name="subMainTitle"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Sub Main Title</FormLabel>
+                          <FormControl><Input placeholder="Enter sub main title" {...field} /></FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="subMainTitleDescription"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Sub Main Title Description</FormLabel>
+                          <FormControl><Textarea placeholder="Enter sub main title description" {...field} /></FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="flex items-center justify-between">
+                      <FormLabel>Feature Points</FormLabel>
+                      <Button
                         type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                        variant="outline"
+                        size="sm"
                         onClick={() => {
-                          const arr = form.getValues("WhyWorkWithThis.content") || [];
-                          form.setValue("WhyWorkWithThis.content", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                          const arr = form.getValues("contentBlocks") || [];
+                          form.setValue("contentBlocks", [...arr, { title: "", description: "", image: "" }], { shouldDirty: true, shouldValidate: true });
                         }}
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Content Block
                       </Button>
+                    </div>
 
-                      <div className="space-y-4 pt-4">
-                      {["title", "description"].map((f) => (
+                    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+                      {form.watch("contentBlocks")?.map((block, idx) => (
+                        <Card key={idx} className="relative p-4 border-dashed">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                            onClick={() => {
+                              const arr = form.getValues("contentBlocks") || [];
+                              form.setValue("contentBlocks", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                          <div className="space-y-4 pt-4">
+                            {["title", "description"].map((fieldName) => (
+                              <FormField
+                                key={fieldName}
+                                control={form.control}
+                                name={`contentBlocks.${idx}.${fieldName}` as any}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}</FormLabel>
+                                    <FormControl>
+                                      {fieldName === "description"
+                                        ? <Textarea placeholder="Enter description" {...field} />
+                                        : <Input placeholder={`Enter ${fieldName}`} {...field} />
+                                      }
+                                    </FormControl>
+                                    <FormMessage className="text-red-600 text-sm mt-1" />
+                                  </FormItem>
+                                )}
+                              />
+                            ))}
+
+                            {/* ✅ ImageUpload component */}
+                            <FormField
+                              control={form.control}
+                              name={`contentBlocks.${idx}.image` as any}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Image</FormLabel>
+                                  <FormControl>
+                                    <ImageUpload
+                                      value={field.value || ""}
+                                      onChange={(url) => form.setValue(`contentBlocks.${idx}.image`, url, { shouldValidate: true })}
+                                      disabled={isSubmitting}
+                                      className="w-full h-32"
+                                    />
+                                  </FormControl>
+                                  <FormMessage className="text-red-600 text-sm mt-1" />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                    {/* </div> */}
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Why Work</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="flex flex-col lg:flex-row gap-8">
+                      <div className="flex-1 space-y-6">
                         <FormField
-                          key={f}
                           control={form.control}
-                          name={`WhyWorkWithThis.content.${idx}.${f}` as any}
+                          name="WhyWorkWithThis.title"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>{f}</FormLabel>
+                              <FormLabel>Title</FormLabel>
                               <FormControl>
-                                {f === "description"
-                                  ? <Textarea placeholder="Enter description" {...field} value={field.value ?? ""} />
-                                  : <Input placeholder={`Enter ${f}`} {...field} value={field.value ?? ""} />
-                                }
+                                <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("WhyWorkWithThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
                               </FormControl>
                               <FormMessage className="text-red-600 text-sm mt-1" />
                             </FormItem>
                           )}
                         />
-                      ))}
+                        <FormField
+                          control={form.control}
+                          name="WhyWorkWithThis.description"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Description</FormLabel>
+                              <FormControl><Textarea placeholder="Enter description" {...field} value={field.value ?? ""} /></FormControl>
+                              <FormMessage className="text-red-600 text-sm mt-1" />
+                            </FormItem>
+                          )}
+                        />
                       </div>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <FormLabel>Work Points</FormLabel>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const arr = form.getValues("WhyWorkWithThis").content || [];
+                          form.setValue("WhyWorkWithThis.content", [...arr, { title: "", description: "" }], { shouldDirty: true, shouldValidate: true });
+                        }}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Content
+                      </Button>
+                    </div>
 
-            {/* ─────────────── TOOLS & TECHNOLOGY ─────────────── */}
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Card>
-                {/* <div className="flex justify-between items-center border-b">
+
+
+
+                    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+                      {form.watch("WhyWorkWithThis")?.content?.map((_, idx) => (
+                        <Card key={idx} className="relative p-4 border-dashed">
+                          {/* <h5 className="font-semibold">Content {idx + 1}</h5> */}
+
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                            onClick={() => {
+                              const arr = form.getValues("WhyWorkWithThis.content") || [];
+                              form.setValue("WhyWorkWithThis.content", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+
+                          <div className="space-y-4 pt-4">
+                            {["title", "description"].map((f) => (
+                              <FormField
+                                key={f}
+                                control={form.control}
+                                name={`WhyWorkWithThis.content.${idx}.${f}` as any}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>{f}</FormLabel>
+                                    <FormControl>
+                                      {f === "description"
+                                        ? <Textarea placeholder="Enter description" {...field} value={field.value ?? ""} />
+                                        : <Input placeholder={`Enter ${f}`} {...field} value={field.value ?? ""} />
+                                      }
+                                    </FormControl>
+                                    <FormMessage className="text-red-600 text-sm mt-1" />
+                                  </FormItem>
+                                )}
+                              />
+                            ))}
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* ─────────────── TOOLS & TECHNOLOGY ─────────────── */}
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Card>
+                    {/* <div className="flex justify-between items-center border-b">
                   <CardHeader>
                     <CardTitle>
                       Tools & Technology
@@ -704,181 +715,181 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                     Add Section
                   </Button>
                 </div> */}
-                <CardHeader>
-                  <CardTitle>Tools & Technology</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="toolsAndTechnology.title"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Title</FormLabel>
-                        <FormControl>
-                          <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.title", v, { shouldDirty: true, shouldValidate: true }); }} />
-                        </FormControl>
-                        <FormMessage className="text-red-600 text-sm mt-1" />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="toolsAndTechnology.description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tool Description</FormLabel>
-                        <FormControl>
-                          <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.description", v, { shouldDirty: true, shouldValidate: true }); }} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <CardHeader>
+                      <CardTitle>Tools & Technology</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <FormField
+                        control={form.control}
+                        name="toolsAndTechnology.title"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Title</FormLabel>
+                            <FormControl>
+                              <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.title", v, { shouldDirty: true, shouldValidate: true }); }} />
+                            </FormControl>
+                            <FormMessage className="text-red-600 text-sm mt-1" />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="toolsAndTechnology.description"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Tool Description</FormLabel>
+                            <FormControl>
+                              <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.description", v, { shouldDirty: true, shouldValidate: true }); }} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
 
 
 
-              <div className="flex items-center justify-between">
-                  <FormLabel>Technology Points</FormLabel>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                      onClick={() => {
-                      const arr = form.getValues("toolsAndTechnology.details") || [];
-                      form.setValue("toolsAndTechnology.details", [...arr, { section: 0, title: "", keyPoints: [""] }], { shouldDirty: true, shouldValidate: true });
-                    }}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Section
-                  </Button>
-                </div>
-
-                  <Droppable droppableId="sections" type="section">
-                    {(provided) => (
-                      <div ref={provided.innerRef} className="grid gap-4 grid-cols-1 md:grid-cols-2" {...provided.droppableProps}>
-                        {form.watch("toolsAndTechnology")?.details?.map((detail, idx) => (
-                          <Draggable key={idx} draggableId={`section-${idx}`} index={idx}>
-                            {(provided) => (
-                              <Card ref={provided.innerRef} {...provided.draggableProps}  className="relative p-4 border-dashed">
-                                <div className="border-b  p-2 " {...provided.dragHandleProps}>
-                                  <h3 className="text-md font-semibold">Section {idx + 1}</h3>
-                                  <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="icon"
-                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                                    onClick={() => {
-                                      const arr = form.getValues("toolsAndTechnology.details") || [];
-                                      if (arr.length > 1) form.setValue("toolsAndTechnology.details", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
-                                    }}
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </div>
-
-                               <div className="space-y-4 pt-6">
-                                <FormField
-                                  control={form.control}
-                                  name={`toolsAndTechnology.details.${idx}.section`}
-                                  render={({ field }) => (
-                                    <FormItem className="border p-2 border-gray-300 rounded flex items-center gap-6">
-                                      <FormLabel className="mb-0">Select Section</FormLabel>
-                                      <FormControl>
-                                        <div className="flex gap-6">
-                                          {[1, 2, 3, 4].map((num) => (
-                                            <label key={num} className="flex items-center space-x-2">
-                                              <input type="radio" value={num} checked={field.value === num} onChange={(e) => field.onChange(Number(e.target.value))} className="h-4 w-4 text-blue-600" />
-                                              <span>{num}</span>
-                                            </label>
-                                          ))}
-                                        </div>
-                                      </FormControl>
-                                      <FormMessage className="text-red-600 text-sm mt-1" />
-                                    </FormItem>
-                                  )}
-                                />
-
-                                <FormField
-                                  control={form.control}
-                                  name={`toolsAndTechnology.details.${idx}.title` as any}
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormLabel>Title</FormLabel>
-                                      <FormControl><Input placeholder="Enter Title" {...field} /></FormControl>
-                                      <FormMessage className="text-red-600 text-sm mt-1" />
-                                    </FormItem>
-                                  )}
-                                />
-
-                                <Droppable droppableId={`keypoints-${idx}`} type={`keyPoint-${idx}`}>
-                                  {(provided) => (
-                                    <div ref={provided.innerRef} {...provided.droppableProps} className="space-y-3">
-                                      {detail.keyPoints?.map((kp, kidx) => (
-                                        <Draggable key={kidx} draggableId={`keypoint-${idx}-${kidx}`} index={kidx}>
-                                          {(provided) => (
-                                            <div ref={provided.innerRef} {...provided.draggableProps} className="flex items-center gap-2">
-                                              <div {...provided.dragHandleProps} className="cursor-move p-2 bg-gray-100 rounded">☰</div>
-                                              <FormField
-                                                control={form.control}
-                                                name={`toolsAndTechnology.details.${idx}.keyPoints.${kidx}` as const}
-                                                render={({ field }) => (
-                                                  <FormItem className="flex-1">
-                                                    <FormControl><Input className="w-full h-10" placeholder={`Key Point ${kidx + 1}`} {...field} /></FormControl>
-                                                    <FormMessage className="text-red-600 text-sm mt-1" />
-                                                  </FormItem>
-                                                )}
-                                              />
-                                              <Button
-                                                type="button"
-                                                variant="ghost"
-                                                size="icon"
-                                                className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                                                onClick={() => {
-                                                  const arr = form.getValues(`toolsAndTechnology.details.${idx}.keyPoints`) || [];
-                                                  if (arr.length > 1) form.setValue(`toolsAndTechnology.details.${idx}.keyPoints`, arr.filter((_, i) => i !== kidx), { shouldDirty: true, shouldValidate: true });
-                                                }}
-                                              >
-                                                <Trash2 className="h-4 w-4" />
-                                              </Button>
-                                            </div>
-                                          )}
-                                        </Draggable>
-                                      ))}
-                                      {provided.placeholder}
-                                    </div>
-                                  )}
-                                </Droppable>
-
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => {
-                                    const arr = form.getValues(`toolsAndTechnology.details.${idx}.keyPoints`) || [];
-                                    form.setValue(`toolsAndTechnology.details.${idx}.keyPoints`, [...arr, ""], { shouldDirty: true, shouldValidate: true });
-                                  }}
-                                >
-                                  <Plus className="h-4 w-4 mr-2" />
-                                  Add Key Point
-                                </Button>
-
-                                </div>
-                              </Card>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
+                      <div className="flex items-center justify-between">
+                        <FormLabel>Technology Points</FormLabel>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const arr = form.getValues("toolsAndTechnology.details") || [];
+                            form.setValue("toolsAndTechnology.details", [...arr, { section: 0, title: "", keyPoints: [""] }], { shouldDirty: true, shouldValidate: true });
+                          }}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Section
+                        </Button>
                       </div>
-                    )}
-                  </Droppable>
-                </CardContent>
-              </Card>
-            </DragDropContext>
 
-            {/* ─────────────── WHY COMPANY PREFERS ─────────────── */}
-            <Card>
-              {/* <div className="flex justify-between border-b items-center">
+                      <Droppable droppableId="sections" type="section">
+                        {(provided) => (
+                          <div ref={provided.innerRef} className="grid gap-4 grid-cols-1 md:grid-cols-2" {...provided.droppableProps}>
+                            {form.watch("toolsAndTechnology")?.details?.map((detail, idx) => (
+                              <Draggable key={idx} draggableId={`section-${idx}`} index={idx}>
+                                {(provided) => (
+                                  <Card ref={provided.innerRef} {...provided.draggableProps} className="relative p-4 border-dashed">
+                                    <div className="border-b  p-2 " {...provided.dragHandleProps}>
+                                      <h3 className="text-md font-semibold">Section {idx + 1}</h3>
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                        onClick={() => {
+                                          const arr = form.getValues("toolsAndTechnology.details") || [];
+                                          if (arr.length > 1) form.setValue("toolsAndTechnology.details", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                                        }}
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </div>
+
+                                    <div className="space-y-4 pt-6">
+                                      <FormField
+                                        control={form.control}
+                                        name={`toolsAndTechnology.details.${idx}.section`}
+                                        render={({ field }) => (
+                                          <FormItem className="border p-2 border-gray-300 rounded flex items-center gap-6">
+                                            <FormLabel className="mb-0">Select Section</FormLabel>
+                                            <FormControl>
+                                              <div className="flex gap-6">
+                                                {[1, 2, 3, 4].map((num) => (
+                                                  <label key={num} className="flex items-center space-x-2">
+                                                    <input type="radio" value={num} checked={field.value === num} onChange={(e) => field.onChange(Number(e.target.value))} className="h-4 w-4 text-blue-600" />
+                                                    <span>{num}</span>
+                                                  </label>
+                                                ))}
+                                              </div>
+                                            </FormControl>
+                                            <FormMessage className="text-red-600 text-sm mt-1" />
+                                          </FormItem>
+                                        )}
+                                      />
+
+                                      <FormField
+                                        control={form.control}
+                                        name={`toolsAndTechnology.details.${idx}.title` as any}
+                                        render={({ field }) => (
+                                          <FormItem>
+                                            <FormLabel>Title</FormLabel>
+                                            <FormControl><Input placeholder="Enter Title" {...field} /></FormControl>
+                                            <FormMessage className="text-red-600 text-sm mt-1" />
+                                          </FormItem>
+                                        )}
+                                      />
+
+                                      <Droppable droppableId={`keypoints-${idx}`} type={`keyPoint-${idx}`}>
+                                        {(provided) => (
+                                          <div ref={provided.innerRef} {...provided.droppableProps} className="space-y-3">
+                                            {detail.keyPoints?.map((kp, kidx) => (
+                                              <Draggable key={kidx} draggableId={`keypoint-${idx}-${kidx}`} index={kidx}>
+                                                {(provided) => (
+                                                  <div ref={provided.innerRef} {...provided.draggableProps} className="flex items-center gap-2">
+                                                    <div {...provided.dragHandleProps} className="cursor-move p-2 bg-gray-100 rounded">☰</div>
+                                                    <FormField
+                                                      control={form.control}
+                                                      name={`toolsAndTechnology.details.${idx}.keyPoints.${kidx}` as const}
+                                                      render={({ field }) => (
+                                                        <FormItem className="flex-1">
+                                                          <FormControl><Input className="w-full h-10" placeholder={`Key Point ${kidx + 1}`} {...field} /></FormControl>
+                                                          <FormMessage className="text-red-600 text-sm mt-1" />
+                                                        </FormItem>
+                                                      )}
+                                                    />
+                                                    <Button
+                                                      type="button"
+                                                      variant="ghost"
+                                                      size="icon"
+                                                      className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                                      onClick={() => {
+                                                        const arr = form.getValues(`toolsAndTechnology.details.${idx}.keyPoints`) || [];
+                                                        if (arr.length > 1) form.setValue(`toolsAndTechnology.details.${idx}.keyPoints`, arr.filter((_, i) => i !== kidx), { shouldDirty: true, shouldValidate: true });
+                                                      }}
+                                                    >
+                                                      <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                  </div>
+                                                )}
+                                              </Draggable>
+                                            ))}
+                                            {provided.placeholder}
+                                          </div>
+                                        )}
+                                      </Droppable>
+
+                                      <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                          const arr = form.getValues(`toolsAndTechnology.details.${idx}.keyPoints`) || [];
+                                          form.setValue(`toolsAndTechnology.details.${idx}.keyPoints`, [...arr, ""], { shouldDirty: true, shouldValidate: true });
+                                        }}
+                                      >
+                                        <Plus className="h-4 w-4 mr-2" />
+                                        Add Key Point
+                                      </Button>
+
+                                    </div>
+                                  </Card>
+                                )}
+                              </Draggable>
+                            ))}
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Droppable>
+                    </CardContent>
+                  </Card>
+                </DragDropContext>
+
+                {/* ─────────────── WHY COMPANY PREFERS ─────────────── */}
+                <Card>
+                  {/* <div className="flex justify-between border-b items-center">
                 <CardHeader>
                   <CardTitle>
                     Why Company Prefers
@@ -895,118 +906,118 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                   Add
                 </Button>
               </div> */}
-               <CardHeader>
-                  <CardTitle>Why Company Prefers</CardTitle>
-                </CardHeader>
-              <CardContent className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="whyCompanyPerfersThis.title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
-                      </FormControl>
-                      <FormMessage className="text-red-600 text-sm mt-1" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="whyCompanyPerfersThis.description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.description", v, { shouldDirty: true, shouldValidate: true }); }} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                  <CardHeader>
+                    <CardTitle>Why Company Prefers</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="whyCompanyPerfersThis.title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Title</FormLabel>
+                          <FormControl>
+                            <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="whyCompanyPerfersThis.description"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description</FormLabel>
+                          <FormControl>
+                            <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.description", v, { shouldDirty: true, shouldValidate: true }); }} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <div className="flex items-center justify-between">
-                  <FormLabel>Prefer Points</FormLabel>
-                   <Button
-                  type="button"
-                   variant="outline"
-                    size="sm"
-                  onClick={() => {
-                    const current = form.getValues("whyCompanyPerfersThis.content") || [];
-                    form.setValue("whyCompanyPerfersThis.content", [...current, { name: "", image: "" }], { shouldDirty: true, shouldValidate: true });
-                  }}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add
-                </Button>
-                </div>
+                    <div className="flex items-center justify-between">
+                      <FormLabel>Prefer Points</FormLabel>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const current = form.getValues("whyCompanyPerfersThis.content") || [];
+                          form.setValue("whyCompanyPerfersThis.content", [...current, { name: "", image: "" }], { shouldDirty: true, shouldValidate: true });
+                        }}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add
+                      </Button>
+                    </div>
 
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                  {form.watch("whyCompanyPerfersThis")?.content?.map((c, cidx) => (
-                    <Card key={cidx}  className="relative p-4 border-dashed">
-                      {/* <h4 className="font-semibold">Content Block {cidx + 1}</h4> */}
-                        <Button
-                          type="button"
-                          variant="ghost"
-                        size="icon"
-                        className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                          onClick={() => {
-                            const current = form.getValues("whyCompanyPerfersThis.content") || [];
-                            if (current.length > 1) form.setValue("whyCompanyPerfersThis.content", current.filter((_, i) => i !== cidx), { shouldDirty: true, shouldValidate: true });
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+                      {form.watch("whyCompanyPerfersThis")?.content?.map((c, cidx) => (
+                        <Card key={cidx} className="relative p-4 border-dashed">
+                          {/* <h4 className="font-semibold">Content Block {cidx + 1}</h4> */}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                            onClick={() => {
+                              const current = form.getValues("whyCompanyPerfersThis.content") || [];
+                              if (current.length > 1) form.setValue("whyCompanyPerfersThis.content", current.filter((_, i) => i !== cidx), { shouldDirty: true, shouldValidate: true });
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
 
-                      <div className="space-y-4 pt-4">
+                          <div className="space-y-4 pt-4">
 
-                      <FormField
-                        control={form.control}
-                        name={`whyCompanyPerfersThis.content.${cidx}.name`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                              <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`whyCompanyPerfersThis.content.${cidx}.name`, v, { shouldDirty: true, shouldValidate: true }); }} />
-                            </FormControl>
-                            <FormMessage className="text-red-600 text-sm mt-1" />
-                          </FormItem>
-                        )}
-                      />
+                            <FormField
+                              control={form.control}
+                              name={`whyCompanyPerfersThis.content.${cidx}.name`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Name</FormLabel>
+                                  <FormControl>
+                                    <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`whyCompanyPerfersThis.content.${cidx}.name`, v, { shouldDirty: true, shouldValidate: true }); }} />
+                                  </FormControl>
+                                  <FormMessage className="text-red-600 text-sm mt-1" />
+                                </FormItem>
+                              )}
+                            />
 
-                      {/* ✅ whyCompanyPerfersThis image */}
-                      <FormField
-                        control={form.control}
-                        name={`whyCompanyPerfersThis.content.${cidx}.image`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Image</FormLabel>
-                            <FormControl>
-                              <ImageUpload
-                                value={field.value || ""}
-                                onChange={(url) => form.setValue(`whyCompanyPerfersThis.content.${cidx}.image`, url, { shouldValidate: true })}
-                                disabled={isSubmitting}
-                                className="w-full h-32"
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-600 text-sm mt-1" />
-                          </FormItem>
-                        )}
-                      />
+                            {/* ✅ whyCompanyPerfersThis image */}
+                            <FormField
+                              control={form.control}
+                              name={`whyCompanyPerfersThis.content.${cidx}.image`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Image</FormLabel>
+                                  <FormControl>
+                                    <ImageUpload
+                                      value={field.value || ""}
+                                      onChange={(url) => form.setValue(`whyCompanyPerfersThis.content.${cidx}.image`, url, { shouldValidate: true })}
+                                      disabled={isSubmitting}
+                                      className="w-full h-32"
+                                    />
+                                  </FormControl>
+                                  <FormMessage className="text-red-600 text-sm mt-1" />
+                                </FormItem>
+                              )}
+                            />
 
-                     
 
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* ─────────────── FAQ ─────────────── */}
-            <Card>
-              {/* <div className="flex justify-between border-b items-center">
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* ─────────────── FAQ ─────────────── */}
+                <Card>
+                  {/* <div className="flex justify-between border-b items-center">
                 <CardHeader>
                   <CardTitle>
                     FAQ
@@ -1023,111 +1034,111 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                   Add FAQ
                 </Button>
               </div> */}
-              <CardHeader>
-                  <CardTitle>FAQ</CardTitle>
-                </CardHeader>
-              <CardContent className="space-y-4">
-                {form.watch("faqs")?.map((f, idx) => (
-                  <div key={idx} className="border border-gray-300 shadow-md p-5 rounded-md flex flex-col gap-4">
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-semibold">Question {idx + 1}</h3>
-                      <Button
-                        type="button"
-                         variant="ghost"
-                          size="icon"
-                          className=" text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                        onClick={() => {
-                          const arr = form.getValues("faqs") || [];
-                          if (arr.length > 1) form.setValue("faqs", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
-                        }}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                  <CardHeader>
+                    <CardTitle>FAQ</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {form.watch("faqs")?.map((f, idx) => (
+                      <div key={idx} className="border border-gray-300 shadow-md p-5 rounded-md flex flex-col gap-4">
+                        <div className="flex justify-between items-center">
+                          <h3 className="font-semibold">Question {idx + 1}</h3>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className=" text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                            onClick={() => {
+                              const arr = form.getValues("faqs") || [];
+                              if (arr.length > 1) form.setValue("faqs", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                            }}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
 
-                    </div>
-                    <FormField
-                      control={form.control}
-                      name={`faqs.${idx}.question` as const}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl><Input placeholder="Enter Question" {...field} /></FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`faqs.${idx}.answer` as const}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Answer</FormLabel>
-                          <FormControl>
-                            <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`faqs.${idx}.answer`, v, { shouldDirty: true, shouldValidate: true }); }} />
-                          </FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+                        </div>
+                        <FormField
+                          control={form.control}
+                          name={`faqs.${idx}.question` as const}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl><Input placeholder="Enter Question" {...field} /></FormControl>
+                              <FormMessage className="text-red-600 text-sm mt-1" />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name={`faqs.${idx}.answer` as const}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Answer</FormLabel>
+                              <FormControl>
+                                <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`faqs.${idx}.answer`, v, { shouldDirty: true, shouldValidate: true }); }} />
+                              </FormControl>
+                              <FormMessage className="text-red-600 text-sm mt-1" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
 
 
-            {/* seo data */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-primary">
-                  SEO Settings
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent className="space-y-6">
-                <div className="flex flex-col lg:flex-row gap-8">
-                  <div className="flex-1 space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="seo.title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>SEO Title</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter SEO title" {...field} />
-                          </FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
+                {/* seo data */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-primary">
+                      SEO Settings
+                    </CardTitle>
+                  </CardHeader>
 
-                    <FormField
-                      control={form.control}
-                      name="seo.keyphrase"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Keyphrase</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter keyphrase" {...field} />
-                          </FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
+                  <CardContent className="space-y-6">
+                    <div className="flex flex-col lg:flex-row gap-8">
+                      <div className="flex-1 space-y-6">
+                        <FormField
+                          control={form.control}
+                          name="seo.title"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>SEO Title</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Enter SEO title" {...field} />
+                              </FormControl>
+                              <FormMessage className="text-red-600 text-sm mt-1" />
+                            </FormItem>
+                          )}
+                        />
 
-                    <FormField
-                      control={form.control}
-                      name="seo.seoDescription"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>SEO Description</FormLabel>
-                          <FormControl>
-                            <Textarea placeholder="Enter SEO description" {...field} />
-                          </FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  {/* <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
+                        <FormField
+                          control={form.control}
+                          name="seo.keyphrase"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Keyphrase</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Enter keyphrase" {...field} />
+                              </FormControl>
+                              <FormMessage className="text-red-600 text-sm mt-1" />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="seo.seoDescription"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>SEO Description</FormLabel>
+                              <FormControl>
+                                <Textarea placeholder="Enter SEO description" {...field} />
+                              </FormControl>
+                              <FormMessage className="text-red-600 text-sm mt-1" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      {/* <div className="w-full lg:w-[300px] space-y-6 mt-8 lg:mt-0">
 
                     <FormField
                       control={form.control}
@@ -1148,17 +1159,17 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                     />
 
                   </div> */}
-                </div>
+                    </div>
 
-              </CardContent>
-            </Card>
-            </div>
-            <div className="space-y-8 lg:col-span-1">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Service Manager Images</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="space-y-8 lg:col-span-1">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Service Manager Images</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
                     <FormField
                       control={form.control}
                       name="WhyWorkWithThis.image"
@@ -1170,7 +1181,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                               value={field.value || ""}
                               onChange={(url) => form.setValue("WhyWorkWithThis.image", url, { shouldValidate: true })}
                               disabled={isSubmitting}
-                               className="w-full h-48"
+                              className="w-full h-48"
                             />
                           </FormControl>
                           <FormMessage className="text-red-600 text-sm mt-1" />
@@ -1195,10 +1206,10 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                         </FormItem>
                       )}
                     />
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-          </div>
 
 
 
@@ -1216,7 +1227,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
               </Button>
             </div>
 
-{/* 
+            {/* 
             <div className="flex justify-end gap-3 border-t pt-6 mt-8">
             {onCancel && (
               <Button
@@ -1242,7 +1253,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
           </form>
         </Form>
-      {/* </CardContent > */}
+        {/* </CardContent > */}
       </div>
     </Card >
   );

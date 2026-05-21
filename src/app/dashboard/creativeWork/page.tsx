@@ -34,17 +34,11 @@ import {
 } from "@/components/ui/select";
 import type { CreativeWork, PaginatedResponse } from "@/types";
 
-const categories = [
-  { label: "All Categories", value: "all" },
-  { label: "Mobile App", value: "mobile-app" },
-  { label: "UI/UX", value: "ui-ux" },
-  { label: "Web Development", value: "web-development" },
-];
-
 export default function CreativeWorkPage() {
   const router = useRouter();
   const [items, setItems] = useState<CreativeWork[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<CreativeWork | null>(null);
@@ -59,6 +53,28 @@ export default function CreativeWorkPage() {
     pages: 1,
     total: 0,
   });
+
+  const fetchCategories = async () => {
+    try {
+      const res = await apiService<{
+        success: boolean;
+        data: { _id: string; category: string }[];
+      }>("/category?moduleType=portfolio&limit=1000", { method: "GET" });
+      if (res.success) {
+        const parsedCategories = res.data.map((cat) => ({
+          id: cat._id,
+          name: (cat.category || "").toString().trim().replace(/\s+/g, " "),
+        }));
+        setCategories(parsedCategories);
+      }
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const fetchItems = useCallback(async (page: number = 1, search: string = "", category: string | null = "all") => {
     setIsLoading(true);
@@ -165,9 +181,10 @@ export default function CreativeWorkPage() {
               <SelectValue placeholder="Filter by Category" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
               {categories.map((category) => (
-                <SelectItem key={category.value} value={category.value || "all"}>
-                  {category.label}
+                <SelectItem key={category.id} value={category.id}>
+                  {category.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -236,7 +253,11 @@ export default function CreativeWorkPage() {
                       />
                     )}
                   </TableCell>
-                  <TableCell className="capitalize">{item.category.replace(/-/g, ' ')}</TableCell>
+                  <TableCell className="capitalize">
+                    {typeof item.category === "object" && item.category
+                      ? (item.category as any).category
+                      : (item.category || "").toString().replace(/-/g, " ")}
+                  </TableCell>
                   <TableCell className="font-medium">{item.title}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu

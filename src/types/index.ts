@@ -181,6 +181,7 @@ export interface WhyWorkWith {
 
 export interface ServiceManager {
   title: string;
+  name: string;
   image: string | Blob | undefined | any;
   // image: any;
   _id: string;

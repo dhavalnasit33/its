@@ -26,7 +26,9 @@ export default function EditCreativeWorkPage() {
 
         if (res.success) {
           setInitialData({
-            category: res.data.category,
+            category: typeof res.data.category === "object" && res.data.category
+              ? (res.data.category as any)._id || ""
+              : res.data.category || "",
             title: res.data.title,
             image: res.data.image,
             url: res.data.url || "",

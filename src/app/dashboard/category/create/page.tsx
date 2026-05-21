@@ -1,35 +1,19 @@
 'use client';
+
 import CategoryFrom, { categorycreateFormValues } from '@/components/dashboard/category/categoryform';
 import PageHeader from '@/components/shared/PageHeader';
-import { Button } from '@/components/ui/button'
 import { useToast } from '@/hooks/use-toast';
 import apiService from '@/lib/apiService';
-import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Card, CardContent } from "@/components/ui/card";
 
-
-interface CreateCategoryManagerDialogProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-  onSuccess: () => void;
-}
-
-export default function CreateCategoryManagerDialogProps({
-  isOpen,
-  onOpenChange,
-}: CreateCategoryManagerDialogProps) {
-
+export default function CreateCategoryPage() {
   const { toast } = useToast();
-
   const router = useRouter();
+
   const handleCreate = async (data: categorycreateFormValues) => {
     try {
       console.log("Submitting data:", data);
-      // const res = await apiService<{ success: boolean; message: string }>("/category", {
-      //   method: "POST",
-      //   body: JSON.stringify(data),
-      //   headers: { "Content-Type": "application/json" },
-      // });
       const res = await apiService<{ success: boolean; message: string }>("/category", {
         method: "POST",
         body: JSON.stringify(data),
@@ -43,7 +27,6 @@ export default function CreateCategoryManagerDialogProps({
         router.push("/dashboard/category");
       } else {
         toast({ title: "Error", description: res.message, variant: "destructive" });
-
       }
     } catch (error: any) {
       toast({ title: "Error", description: error.message || "Something went wrong", variant: "destructive" });
@@ -51,23 +34,20 @@ export default function CreateCategoryManagerDialogProps({
   };
 
   return (
-    <>
-      <div className="space-y-4">
-        {/* <h1 className="text-2xl font-bold">Create category</h1> */}
-         <PageHeader
-            title="Create category"
-            description="Create a new Services "
-            />
-        {/* <Button
-          onClick={() => router.push("/dashboard/category")}
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </Button> */}
-      </div>
-      <CategoryFrom onSubmit={handleCreate} initialData={null} />
-
-    </>
-  )
+    <div className="space-y-6">
+      <PageHeader
+        title="Create Category"
+        description="Create a new system assignment category"
+      />
+      <Card className="border border-slate-100 shadow-sm bg-white">
+        <CardContent className="pt-6">
+          <CategoryFrom 
+            onSubmit={handleCreate} 
+            initialData={null} 
+            onCancel={() => router.push("/dashboard/category")}
+          />
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
-

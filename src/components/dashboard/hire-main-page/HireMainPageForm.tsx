@@ -197,7 +197,7 @@ export default function HireMainPageForm({
                         <SelectContent>
                           {hirePageOptions.map((s) => (
                             <SelectItem key={s._id} value={s._id}>
-                              {s.title} ({s.subCategory})
+                              {s.title} ({typeof s.subCategory === 'object' && s.subCategory ? (s.subCategory as any).subcategory : s.subCategory})
                             </SelectItem>
                           ))}
                         </SelectContent>

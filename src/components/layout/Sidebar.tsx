@@ -10,7 +10,7 @@ import {
   Handshake, LineChart, DoorOpen, Inbox, BookPlus, BookOpenText, BookType,
   SearchCheck, Presentation, Milestone, ToolCase, Server, House,
   SignpostBig, Navigation, FileText, X,
-  Building2, Mail, Settings
+  Building2, Mail, Settings, FolderTree, Tag, Tags
 } from "lucide-react";
 import NavItems from "./NavItems";
 import { NavItem } from "@/types";
@@ -35,12 +35,11 @@ export const navItemsList: NavItem[] = [
   
 
   {
-    label: "Category",
-    icon: Briefcase,
+    label: "Category & Subcategory",
+    icon: FolderTree,
     children: [
-      { href: "/dashboard/category", label: "Category", icon: Boxes },
-      { href: "/dashboard/subcategory", label: "Subcategory", icon: Boxes },
-
+      { href: "/dashboard/category", label: "Category", icon: Tag },
+      { href: "/dashboard/subcategory", label: "Subcategory", icon: Tags },
     ]
   },
   { label: "Service", isTitle: true },
