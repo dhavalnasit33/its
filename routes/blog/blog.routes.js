@@ -217,7 +217,7 @@ router.get("/admin", async (req, res) => {
 
     const [blogs, total] = await Promise.all([
       Blog.find(query)
-        .sort({ createdAt: 1 })
+        .sort({ createdAt: -1 })
         .skip(skip)
         .limit(Number(limit))
         .lean(),

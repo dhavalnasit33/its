@@ -119,6 +119,24 @@ router.get("/admin", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const faq = await FaqModel.findById(req.params.id);
+    if (!faq) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Faqs not found" });
+    }
+    res.json({ success: true, data: faq });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+});
+
 //fronted get route
 router.get("/", async (req, res) => {
   console.log("🚀 ~ router.get ~ req.query:", req.query);

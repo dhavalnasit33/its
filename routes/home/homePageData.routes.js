@@ -229,7 +229,7 @@ const router = express.Router();
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies } = req.body;
+        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
 
         // Check if homepage data already exists
         const existingData = await HomePageData.findOne();
@@ -246,6 +246,7 @@ router.post("/", protect, async (req, res) => {
             aisection,
             aboutOurCompany,
             overseasWebAgencies,
+            seo,
         });
 
         await newHomePageData.save();
@@ -423,7 +424,7 @@ router.get("/admin", protect, async (req, res) => {
  */
 router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async (req, res) => {
     try {
-        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies } = req.body;
+        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(400).json({
@@ -440,6 +441,7 @@ router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async
                 aisection,
                 aboutOurCompany,
                 overseasWebAgencies,
+                seo
             },
             { new: true, runValidators: true }
         );
@@ -494,7 +496,7 @@ router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async
  */
 router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async (req, res) => {
     try {
-        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies } = req.body;
+        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
 
         const existingData = await HomePageData.findOne();
 
@@ -508,6 +510,7 @@ router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async 
                     aisection,
                     aboutOurCompany,
                     overseasWebAgencies,
+                    seo
                 },
                 { new: true, runValidators: true }
             );
@@ -525,6 +528,7 @@ router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async 
                 aisection,
                 aboutOurCompany,
                 overseasWebAgencies,
+                seo
             });
 
             await newHomePageData.save();

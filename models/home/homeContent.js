@@ -142,13 +142,23 @@ const OverseasWebAgenciesSchema = new mongoose.Schema({
     },
 }, { _id: false })
 
+const SEOSchema = new mongoose.Schema(
+    {
+        title: { type: String, default: "" },
+        keyphrase: { type: String, default: "" },
+        seoDescription: { type: String, default: "" },
+        featureImage: { type: String, default: null },
+    },
+    { _id: false },
+);
 
 const HomePageDataSchema = new mongoose.Schema({
     heroSecton: HeroSectonSchema,
     reasonsToChoose: ReasonsToChooseSchema,
     aisection: aiSectionSchema,
     aboutOurCompany: AboutOurCompanySchema,
-    overseasWebAgencies: OverseasWebAgenciesSchema
+    overseasWebAgencies: OverseasWebAgenciesSchema,
+    seo: SEOSchema
 }, { timestamps: true })
 
 

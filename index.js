@@ -22,7 +22,6 @@ const userRouter = require("./routes/user.routes");
 const HomeWhyChooseRouter = require("./routes/home/choose_its.routes");
 const EngagementModelRouter = require("./routes/engagementModel.routes");
 const TestimonialRouter = require("./routes/Testimonials.routes");
-const ReadOurReviewRouter = require("./routes/readOurReview.routes");
 const OpenningPositionRouter = require("./routes/career/openningPosition.routes");
 const ContactRouter = require("./routes/footer/contact_footer.routes");
 const ServiceRouter = require("./routes/oueServices/service.routes");
@@ -115,7 +114,6 @@ app.use("/api/choose_its_home", HomeWhyChooseRouter);
 app.use("/api/engagement-model", EngagementModelRouter);
 app.use("/api/testimonials", TestimonialRouter);
 app.use("/api/expertise-industries", ExpertiseIndustriesRouter);
-app.use("/api/read-our-review", ReadOurReviewRouter);
 
 //  footer from api
 app.use("/api/contact", ContactRouter);

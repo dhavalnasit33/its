@@ -113,6 +113,7 @@ module.exports = {
     "aboutOurCompany.deatailBox[].image",
     "aboutOurCompany.image",
     "aboutOurCompany.buttonContent.image",
-    "overseasWebAgencies.image"
+    "overseasWebAgencies.image",
+    "seo.featureImage"
   ]
 };
