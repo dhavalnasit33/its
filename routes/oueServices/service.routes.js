@@ -811,12 +811,16 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const Service = require("../../models/ourServices/ourServies");
+const CategoryModel = require("../../models/category/category.model");
+const SubcategoryModel = require("../../models/subcategory/subcategory.model");
+const { populateMixed } = require("../../utils/mixedPopulate");
 const { protect } = require("../../middlewares/auth");
 const {
   syncSeoData,
   forceDeleteSeoData,
 } = require("../../utils/seoSync");
 const cleanupImages = require("../../middlewares/cleanupImages");
+const cleanupOldImages = require("../../middlewares/cleanupOldImages");
 const router = express.Router();
 
 // ─── POST — Create Service ───
@@ -877,20 +881,48 @@ router.get("/", async (req, res) => {
   try {
     const { page = 1, limit = 10, category, subCategory, search = "" } = req.query;
     let filter = {};
-    if (category) filter.category = category;
-    if (subCategory) filter.subCategory = subCategory;
+
+    if (category) {
+      if (mongoose.Types.ObjectId.isValid(category)) {
+        filter.category = category;
+      } else {
+        const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "services" });
+        if (catDoc) {
+          filter.$or = [
+            { category: category },
+            { category: catDoc._id }
+          ];
+        } else {
+          filter.category = category;
+        }
+      }
+    }
+
+    if (subCategory) {
+      if (mongoose.Types.ObjectId.isValid(subCategory)) {
+        filter.subCategory = subCategory;
+      } else {
+        const subDoc = await SubcategoryModel.findOne({ subcategory: subCategory.trim(), moduleType: "services" });
+        if (subDoc) {
+          filter.$or = [
+            { subCategory: subCategory },
+            { subCategory: subDoc._id }
+          ];
+        } else {
+          filter.subCategory = subCategory;
+        }
+      }
+    }
 
     if (search) {
       filter.$or = [
         { mainTitle: { $regex: search, $options: "i" } },
-        { category: { $regex: search, $options: "i" } },
-        { subCategory: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } },
       ];
     }
 
     const skip = (page - 1) * limit;
-    const [services, total] = await Promise.all([
+    const [rawServices, total] = await Promise.all([
       Service.find(filter)
         .sort({ createdAt: -1 })
         .skip(skip)
@@ -898,6 +930,8 @@ router.get("/", async (req, res) => {
         .lean(),
       Service.countDocuments(filter),
     ]);
+
+    const services = await populateMixed(rawServices, { category: "category", subCategory: "subcategory" });
 
     res.status(200).json({
       success: true,
@@ -920,7 +954,8 @@ router.get("/", async (req, res) => {
 // ─── GET — Categories list ───
 router.get("/categories", async (req, res) => {
   try {
-    const services = await Service.find().select("category subCategory -_id");
+    const rawServices = await Service.find().select("category subCategory -_id").lean();
+    const services = await populateMixed(rawServices, { category: "category", subCategory: "subcategory" });
     res.status(200).json({
       success: true,
       message: "Category list fetched successfully",
@@ -937,9 +972,8 @@ router.get("/categories", async (req, res) => {
 // ─── GET — Admin list (id, category, subCategory, mainTitle) ───
 router.get("/admin-id", protect, async (req, res) => {
   try {
-    const service = await Service.find().select(
-      "_id category subCategory mainTitle"
-    );
+    const rawServices = await Service.find().select("_id category subCategory mainTitle").lean();
+    const service = await populateMixed(rawServices, { category: "category", subCategory: "subcategory" });
     res.status(200).json({
       success: true,
       message: "Service get successfully",
@@ -956,13 +990,14 @@ router.get("/admin-id", protect, async (req, res) => {
 // ─── GET — By slug ───
 router.get("/slug/:slug", async (req, res) => {
   try {
-    const service = await Service.findOne({ slug: req.params.slug });
-    if (!service) {
+    const rawService = await Service.findOne({ slug: req.params.slug }).lean();
+    if (!rawService) {
       return res.status(404).json({
         success: false,
         message: "Service not found",
       });
     }
+    const service = await populateMixed(rawService, { category: "category", subCategory: "subcategory" });
     res.status(200).json({
       success: true,
       message: "Service fetched successfully",
@@ -988,13 +1023,15 @@ router.get("/id/:id", async (req, res) => {
       });
     }
 
-    const service = await Service.findById(id);
-    if (!service) {
+    const rawService = await Service.findById(id).lean();
+    if (!rawService) {
       return res.status(404).json({
         success: false,
         message: "Service not found",
       });
     }
+
+    const service = await populateMixed(rawService, { category: "category", subCategory: "subcategory" });
 
     res.status(200).json({
       success: true,
@@ -1012,15 +1049,29 @@ router.get("/id/:id", async (req, res) => {
 // ─── GET — By subCategory ───
 router.get("/:subCategory", async (req, res) => {
   try {
-    const service = await Service.findOne({
-      subCategory: req.params.subCategory,
-    });
-    if (!service) {
+    let subCategoryFilter = {};
+    if (mongoose.Types.ObjectId.isValid(req.params.subCategory)) {
+      subCategoryFilter.subCategory = req.params.subCategory;
+    } else {
+      const subDoc = await SubcategoryModel.findOne({ subcategory: req.params.subCategory.trim(), moduleType: "services" });
+      if (subDoc) {
+        subCategoryFilter.$or = [
+          { subCategory: req.params.subCategory },
+          { subCategory: subDoc._id }
+        ];
+      } else {
+        subCategoryFilter.subCategory = req.params.subCategory;
+      }
+    }
+
+    const rawService = await Service.findOne(subCategoryFilter).lean();
+    if (!rawService) {
       return res.status(404).json({
         success: false,
         message: "Service not found",
       });
     }
+    const service = await populateMixed(rawService, { category: "category", subCategory: "subcategory" });
     res.status(200).json({
       success: true,
       message: "Service fetched successfully",
@@ -1091,7 +1142,7 @@ router.delete("/bulk-delete", protect, async (req, res) => {
 router.put(
   "/:id",
   protect,
-  cleanupImages(Service, "Service"),
+  cleanupOldImages(Service, "Service"),
   async (req, res) => {
     try {
       const { slug, subCategory, mainTitle } = req.body;
@@ -1122,6 +1173,7 @@ router.put(
       const requiredFields = [
         "category",
         "subCategory",
+        "name",
         "slug",
         "mainTitle",
         "description",

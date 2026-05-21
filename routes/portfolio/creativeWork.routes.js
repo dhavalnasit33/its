@@ -1,5 +1,8 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const CreativeWork = require('../../models/portfolio/creativeWork');
+const CategoryModel = require('../../models/category/category.model');
+const { populateMixed } = require('../../utils/mixedPopulate');
 const { protect } = require('../../middlewares/auth');
 const cleanupImages = require('../../middlewares/cleanupImages');
 const cleanupOldImages = require('../../middlewares/cleanupOldImages');
@@ -171,13 +174,25 @@ router.get('/', async (req, res) => {
 
         let query = {};
         if (category) {
-            query.category = category;
+            if (mongoose.Types.ObjectId.isValid(category)) {
+                query.category = category;
+            } else {
+                const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "portfolio" });
+                if (catDoc) {
+                    query.$or = [
+                        { category: category },
+                        { category: catDoc._id }
+                    ];
+                } else {
+                    query.category = category;
+                }
+            }
         }
         if (value) {
             query.title = { $regex: value, $options: 'i' };
         }
 
-        const [creativeWorks, total] = await Promise.all([
+        const [rawCreativeWorks, total] = await Promise.all([
             CreativeWork.find(query)
                 .sort({ createdAt: -1 })
                 .skip(skip)
@@ -185,6 +200,8 @@ router.get('/', async (req, res) => {
                 .lean(),
             CreativeWork.countDocuments(query),
         ]);
+
+        const creativeWorks = await populateMixed(rawCreativeWorks, { category: "category" });
 
         res.status(200).json({
             success: true,
@@ -226,23 +243,27 @@ router.get('/', async (req, res) => {
  *         description: Server error
  */
 router.get("/:id", async (req, res) => {
-  try {
-    const data = await CreativeWork.findById(req.params.id);
-    if (!data) {
-      return res.status(404).json({
-        success: false,
-        message: "Data not found",
-      });
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ success: false, message: "Invalid ID" });
+        }
+        const rawData = await CreativeWork.findById(req.params.id).lean();
+        if (!rawData) {
+            return res.status(404).json({
+                success: false,
+                message: "Data not found",
+            });
+        }
+        const data = await populateMixed(rawData, { category: "category" });
+        res.status(200).json({
+            success: true,
+            message: "Data Fetched Successfully",
+            data,
+        });
+    } catch (error) {
+        console.error("Error fetching single creative work", error);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
-    res.status(200).json({
-      success: true,
-      message: "Data Fetched Successfully",
-      data,
-    });
-  } catch (error) {
-    console.error("Error fetching single creative work", error);
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
 });
 
 
@@ -278,7 +299,7 @@ router.get("/:id", async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.put('/:id', protect,cleanupOldImages(CreativeWork, "CreativeWork"), async (req, res) => {
+router.put('/:id', protect, cleanupOldImages(CreativeWork, "CreativeWork"), async (req, res) => {
     try {
         const { category, title, url, image } = req.body;
         if (!category || !title || !image) {
@@ -341,7 +362,7 @@ router.put('/:id', protect,cleanupOldImages(CreativeWork, "CreativeWork"), async
  *       500:
  *         description: Server error
  */
-router.delete('/:id', protect,cleanupImages(CreativeWork), async (req, res) => {
+router.delete('/:id', protect, cleanupImages(CreativeWork), async (req, res) => {
     try {
         const creativeWork = await CreativeWork.findById(req.params.id);
         if (!creativeWork) {
@@ -395,29 +416,29 @@ router.delete('/:id', protect,cleanupImages(CreativeWork), async (req, res) => {
  *         description: Server error
  */
 router.post("/bulk-delete", protect, cleanupImages.cleanupBulkImages(CreativeWork), async (req, res) => {
-  try {
-    const { ids } = req.body;
-    if (!ids || !Array.isArray(ids) || ids.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Please provide an array of IDs to delete",
-      });
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide an array of IDs to delete",
+            });
+        }
+
+        const result = await CreativeWork.deleteMany({ _id: { $in: ids } });
+
+        res.status(200).json({
+            success: true,
+            message: `${result.deletedCount} items deleted successfully`,
+            deletedCount: result.deletedCount,
+        });
+    } catch (error) {
+        console.error(" Error to bulk delete data", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
     }
-
-    const result = await CreativeWork.deleteMany({ _id: { $in: ids } });
-
-    res.status(200).json({
-      success: true,
-      message: `${result.deletedCount} items deleted successfully`,
-      deletedCount: result.deletedCount,
-    });
-  } catch (error) {
-    console.error(" Error to bulk delete data", error);
-    res.status(500).json({
-      success: false,
-      message: "Server Error",
-    });
-  }
 });
 
 module.exports = router;

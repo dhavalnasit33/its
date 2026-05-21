@@ -22,11 +22,13 @@ const BlogDetailSchema = new mongoose.Schema({
 const BlogSchema = new mongoose.Schema(
     {
         categories: {
-            type: String,
+            type: mongoose.Schema.Types.Mixed,
+            ref: "CategoryModel",
             required: true
         },
         subCategories: {
-            type: String,
+            type: mongoose.Schema.Types.Mixed,
+            ref: "Subcategory",
             required: true
         },
         image: {

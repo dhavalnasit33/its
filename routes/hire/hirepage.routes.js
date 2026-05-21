@@ -1,5 +1,9 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const HirePageData = require("../../models/hire/hirePageData");
+const CategoryModel = require("../../models/category/category.model");
+const SubcategoryModel = require("../../models/subcategory/subcategory.model");
+const { populateMixed } = require("../../utils/mixedPopulate");
 const { protect } = require("../../middlewares/auth"); 
 const { syncSeoData, deleteSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 const cleanupImages = require("../../middlewares/cleanupImages");
@@ -298,11 +302,39 @@ router.get("/", async (req, res) => {
     try {
         const { page = 1, limit = 10, category, subCategory } = req.query;
         const query = {};
-        if (category) query.category = category;
-        if (subCategory) query.subCategory = subCategory;
+        if (category) {
+            if (mongoose.Types.ObjectId.isValid(category)) {
+                query.category = category;
+            } else {
+                const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "hire" });
+                if (catDoc) {
+                    query.$or = [
+                        { category: category },
+                        { category: catDoc._id }
+                    ];
+                } else {
+                    query.category = category;
+                }
+            }
+        }
+        if (subCategory) {
+            if (mongoose.Types.ObjectId.isValid(subCategory)) {
+                query.subCategory = subCategory;
+            } else {
+                const subDoc = await SubcategoryModel.findOne({ subcategory: subCategory.trim(), moduleType: "hire" });
+                if (subDoc) {
+                    query.$or = [
+                        { subCategory: subCategory },
+                        { subCategory: subDoc._id }
+                    ];
+                } else {
+                    query.subCategory = subCategory;
+                }
+            }
+        }
 
         const skip = (page - 1) * limit;
-        const [data, total] = await Promise.all([
+        const [rawData, total] = await Promise.all([
             HirePageData.find(query)
                 .sort({ createdAt: -1 })
                 .skip(skip)
@@ -310,6 +342,8 @@ router.get("/", async (req, res) => {
                 .lean(),
             HirePageData.countDocuments(query),
         ]);
+
+        const data = await populateMixed(rawData, { category: "category", subCategory: "subcategory" });
 
         res.status(200).json({
             success: true,
@@ -351,14 +385,31 @@ router.get("/", async (req, res) => {
 router.get("/subcategory/:subCategory", async (req, res) => {
     try {
         const { subCategory } = req.params;
-        const data = await HirePageData.find({ subCategory });
-        if (!data?.length)
+        let subCategoryFilter = {};
+        if (mongoose.Types.ObjectId.isValid(subCategory)) {
+            subCategoryFilter.subCategory = subCategory;
+        } else {
+            const subDoc = await SubcategoryModel.findOne({ subcategory: subCategory.trim(), moduleType: "hire" });
+            if (subDoc) {
+                subCategoryFilter.$or = [
+                    { subCategory: subCategory },
+                    { subCategory: subDoc._id }
+                ];
+            } else {
+                subCategoryFilter.subCategory = subCategory;
+            }
+        }
+
+        const rawData = await HirePageData.find(subCategoryFilter).lean();
+        if (!rawData?.length)
             return res
                 .status(404)
                 .json({
                     success: false,
                     message: "No Hire Page Data found for this subCategory",
                 });
+
+        const data = await populateMixed(rawData, { category: "category", subCategory: "subcategory" });
         res.status(200).json({ success: true, data });
     } catch (error) {
         console.error("Error getting Hire Page Data by subCategory:", error);
@@ -392,8 +443,8 @@ router.get("/subcategory/:subCategory", async (req, res) => {
 router.get("/slug/:slug", async (req, res) => {
     try {
         const { slug } = req.params;
-        const hirePageData = await HirePageData.findOne({ slug });
-        if (!hirePageData) {
+        const rawHirePageData = await HirePageData.findOne({ slug }).lean();
+        if (!rawHirePageData) {
             return res
                 .status(404)
                 .json({
@@ -401,6 +452,7 @@ router.get("/slug/:slug", async (req, res) => {
                     message: "No Hire Page Data found for this slug",
                 });
         }
+        const hirePageData = await populateMixed(rawHirePageData, { category: "category", subCategory: "subcategory" });
         res.status(200).json({ success: true, data: hirePageData });
     } catch (error) {
         console.error("Error to get Hire Page Data by slug: ", error);
@@ -410,7 +462,10 @@ router.get("/slug/:slug", async (req, res) => {
 
 router.get('/admin-id', protect, async (req, res) => {
     try {
-        const hirePage = await HirePageData.find().select(('_id category subCategory title'));
+        const rawHirePage = await HirePageData.find()
+            .select('_id category subCategory title')
+            .lean();
+        const hirePage = await populateMixed(rawHirePage, { category: "category", subCategory: "subcategory" });
         res.status(200).json({
             success: true,
             message: "Hirepage Get Sucessfully",
@@ -457,22 +512,32 @@ router.get('/admin-id', protect, async (req, res) => {
  */
 router.get("/categorieswithsubcategories", async (req, res) => {
     try {
-        const structuredCategories = await HirePageData.aggregate([
-            {
-                $group: {
-                    _id: "$category",
-                    subCategories: { $addToSet: "$subCategory" },
-                },
-            },
-            {
-                $project: {
-                    _id: 0,
-                    category: "$_id",
-                    subCategories: 1,
-                },
-            },
-            { $sort: { category: 1 } },
-        ]);
+        const rawHirePages = await HirePageData.find({
+            category: { $exists: true, $ne: null },
+            subCategory: { $exists: true, $ne: null },
+        }).lean();
+
+        const hirePages = await populateMixed(rawHirePages, { category: "category", subCategory: "subcategory" });
+
+        const map = {};
+        hirePages.forEach(page => {
+            if (page.category && page.subCategory) {
+                const catName = page.category.category;
+                const subName = page.subCategory.subcategory;
+                if (catName && subName) {
+                    if (!map[catName]) {
+                        map[catName] = new Set();
+                    }
+                    map[catName].add(subName);
+                }
+            }
+        });
+
+        const structuredCategories = Object.keys(map).map(cat => ({
+            category: cat,
+            subCategories: Array.from(map[cat]).sort((a, b) => a.localeCompare(b))
+        })).sort((a, b) => a.category.localeCompare(b.category));
+
         res.status(200).json({ success: true, data: structuredCategories });
     } catch (error) {
         console.error("Error fetching structured categories:", error);

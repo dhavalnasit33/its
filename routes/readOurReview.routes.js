@@ -2,6 +2,7 @@ const express = require("express");
 const ReadOurReview = require("../models/readOurReview");
 const { protect } = require("../middlewares/auth");
 const cleanupImages = require("../middlewares/cleanupImages");
+const cleanupOldImages = require("../middlewares/cleanupOldImages");
 const router = express.Router();
 
 /**
@@ -187,7 +188,7 @@ router.get("/:id", async (req, res) => {
  *     security:
  *       - bearerAuth: []
  */
-router.put("/:id", protect, cleanupImages(ReadOurReview, "ReadOurReview"), async (req, res) => {
+router.put("/:id", protect, cleanupOldImages(ReadOurReview, "ReadOurReview"), async (req, res) => {
   try {
     const { name, image } = req.body;
     const review = await ReadOurReview.findById(req.params.id);

@@ -2,6 +2,7 @@ const express = require("express");
 const EngagementModel = require("../models/engagementModel");
 const { protect } = require("../middlewares/auth");
 const cleanupImages = require("../middlewares/cleanupImages");
+const cleanupOldImages = require("../middlewares/cleanupOldImages");
 const router = express.Router();
 
 /**
@@ -272,7 +273,7 @@ router.get("/:id", async (req, res) => {
 router.put(
   "/:id",
   protect,
-  cleanupImages(EngagementModel, "EngagementModel"),
+  cleanupOldImages(EngagementModel, "EngagementModel"),
   async (req, res) => {
     try {
       const {

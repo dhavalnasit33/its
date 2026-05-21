@@ -135,13 +135,20 @@ const SEOSchema = new mongoose.Schema(
 const ServiceSchema = new mongoose.Schema(
   {
     category: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
+      ref: "CategoryModel",
       required: true,
     },
     subCategory: {
+      type: mongoose.Schema.Types.Mixed,
+      ref: "Subcategory",
+      required: true,
+    },
+    name: {
       type: String,
       required: true,
     },
+
     slug: {
       type: String,
       required: true,

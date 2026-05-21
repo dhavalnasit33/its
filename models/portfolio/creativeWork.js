@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const creativeWorkSchema = new mongoose.Schema(
     {
         category: {
-            type: String,
+            type: mongoose.Schema.Types.Mixed,
+            ref: "CategoryModel",
             required: true
         },
         title: {

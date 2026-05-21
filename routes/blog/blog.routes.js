@@ -1,5 +1,9 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const Blog = require("../../models/blog/blog.model");
+const CategoryModel = require("../../models/category/category.model");
+const SubcategoryModel = require("../../models/subcategory/subcategory.model");
+const { populateMixed } = require("../../utils/mixedPopulate");
 const { protect } = require("../../middlewares/auth");
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
@@ -205,10 +209,9 @@ router.get("/admin", async (req, res) => {
     if (category) query.categories = category;
     if (subCategories) query.subCategories = subCategories;
 
-    // 🔎 Add search condition if "value" is provided
     if (value) {
       query.$or = [
-        { "details.title": { $regex: value, $options: "i" } }, // search inside array of details
+        { "details.title": { $regex: value, $options: "i" } },
         { seo_title: { $regex: value, $options: "i" } },
       ];
     }
@@ -217,6 +220,8 @@ router.get("/admin", async (req, res) => {
 
     const [blogs, total] = await Promise.all([
       Blog.find(query)
+        .populate("categories", "category image")
+        .populate("subCategories", "subcategory")
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(Number(limit))
@@ -240,41 +245,30 @@ router.get("/admin", async (req, res) => {
 });
 
 // Get API to fetch unique categories + subcategories
-// Get API to fetch unique categories + subcategories
 router.get("/categories", async (req, res) => {
   try {
-    const categories = await Blog.distinct("categories");
-    const subCategories = await Blog.distinct("subCategories");
+    const rawCategories = await Blog.distinct("categories");
+    const rawSubCategories = await Blog.distinct("subCategories");
 
-    // Combine, remove falsy, trim and remove empty strings
-    const combined = [...categories, ...subCategories]
+    const catObjectIds = rawCategories.filter(c => mongoose.Types.ObjectId.isValid(c));
+    const catStrings = rawCategories.filter(c => !mongoose.Types.ObjectId.isValid(c));
+
+    const subObjectIds = rawSubCategories.filter(s => mongoose.Types.ObjectId.isValid(s));
+    const subStrings = rawSubCategories.filter(s => !mongoose.Types.ObjectId.isValid(s));
+
+    const catDocs = await CategoryModel.find({ _id: { $in: catObjectIds } }).select("category");
+    const subDocs = await SubcategoryModel.find({ _id: { $in: subObjectIds } }).select("subcategory");
+
+    const catNames = [...catDocs.map(c => c.category), ...catStrings];
+    const subNames = [...subDocs.map(s => s.subcategory), ...subStrings];
+
+    const combined = [...catNames, ...subNames]
       .filter(Boolean)
       .map((item) => item.trim())
       .filter((item) => item.length);
 
-    // Remove exact duplicates (keeps "Android" and "android" as separate items)
     let uniqueCombined = [...new Set(combined)];
-
-    // Preferred: use Intl.Collator for locale-aware compare,
-    // primary: case-insensitive (sensitivity: 'base'), tiebreaker: uppercase first (caseFirst: 'upper')
-    if (typeof Intl !== "undefined" && Intl.Collator) {
-      const collator = new Intl.Collator("en", {
-        sensitivity: "base",
-        caseFirst: "upper",
-      });
-      uniqueCombined.sort(collator.compare);
-    } else {
-      // Fallback: case-insensitive primary, ASCII case-sensitive fallback (uppercase < lowercase)
-      uniqueCombined.sort((a, b) => {
-        const al = a.toLowerCase();
-        const bl = b.toLowerCase();
-        if (al < bl) return -1;
-        if (al > bl) return 1;
-        if (a < b) return -1;
-        if (a > b) return 1;
-        return 0;
-      });
-    }
+    uniqueCombined.sort((a, b) => a.localeCompare(b));
 
     res.status(200).json({
       success: true,
@@ -286,7 +280,6 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-// Add this route to your blog.routes.js file in the backend
 router.get("/slugs", async (req, res) => {
   try {
     const blogs = await Blog.find().select("slug -_id").lean();
@@ -298,40 +291,31 @@ router.get("/slugs", async (req, res) => {
 
 router.get("/categorieswithsubcategories", async (req, res) => {
   try {
-    const result = await Blog.aggregate([
-      {
-        $match: {
-          categories: { $exists: true, $ne: "" },
-          subCategories: { $exists: true, $ne: "" },
-        },
-      },
-      {
-        $group: {
-          _id: "$categories",
-          subCategories: { $addToSet: "$subCategories" },
-        },
-      },
-      {
-        $project: {
-          category: "$_id",
-          subCategories: 1,
-          _id: 0,
-        },
-      },
-      {
-        $sort: { category: 1 },
-      },
-    ]);
+    const rawBlogs = await Blog.find({
+      categories: { $exists: true, $ne: null },
+      subCategories: { $exists: true, $ne: null },
+    }).lean();
 
-    const filteredResult = result
-      .filter((item) => item.category && item.category.trim() !== "")
-      .map((item) => ({
-        ...item,
-        subCategories: item.subCategories
-          .filter((subCat) => subCat && subCat.trim() !== "")
-          .sort((a, b) => a.localeCompare(b)),
-      }))
-      .filter((item) => item.subCategories.length > 0);
+    const blogs = await populateMixed(rawBlogs, { categories: "category", subCategories: "subcategory" });
+
+    const map = {};
+    blogs.forEach(blog => {
+      if (blog.categories && blog.subCategories) {
+        const catName = blog.categories.category;
+        const subName = blog.subCategories.subcategory;
+        if (catName && subName) {
+          if (!map[catName]) {
+            map[catName] = new Set();
+          }
+          map[catName].add(subName);
+        }
+      }
+    });
+
+    const filteredResult = Object.keys(map).map(cat => ({
+      category: cat,
+      subCategories: Array.from(map[cat]).sort((a, b) => a.localeCompare(b))
+    })).sort((a, b) => a.category.localeCompare(b.category));
 
     res.status(200).json({
       success: true,
@@ -347,54 +331,29 @@ router.get("/categorieswithsubcategories", async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /api/blogs:
- *   get:
- *     summary: Get blogs for frontend with pagination (30 per page) and optional category/subCategory filter
- *     tags: [Blogs]
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           example: 1
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *           example: 30
- *       - in: query
- *         name: category
- *         schema:
- *           type: string
- *           description: Optional filter that matches either category or subCategory
- *     responses:
- *       200:
- *         description: List of blogs
- *       500:
- *         description: Server error
- */
 router.get("/", async (req, res) => {
   try {
     const { page = 1, limit = 30, category = "" } = req.query;
-    console.log("🚀 ~ category:", category);
     const skip = (page - 1) * limit;
 
     let query = {};
     if (category) {
-      const normalizedCategory = category.trim();
-      query = {
-        $or: [
-          { categories: { $regex: `^${normalizedCategory}$`, $options: "i" } },
-          {
-            subCategories: { $regex: `^${normalizedCategory}$`, $options: "i" },
-          },
-        ],
-      };
+      if (mongoose.Types.ObjectId.isValid(category)) {
+        query.categories = category;
+      } else {
+        const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "blogs" });
+        if (catDoc) {
+          query.$or = [
+            { categories: category },
+            { categories: catDoc._id }
+          ];
+        } else {
+          query.categories = category;
+        }
+      }
     }
 
-    const [blogs, count] = await Promise.all([
+    const [rawBlogs, count] = await Promise.all([
       Blog.find(query)
         .sort({ createdAt: -1 })
         .skip(skip)
@@ -402,6 +361,8 @@ router.get("/", async (req, res) => {
         .lean(),
       Blog.countDocuments(query),
     ]);
+
+    const blogs = await populateMixed(rawBlogs, { categories: "category", subCategories: "subcategory" });
 
     res.status(200).json({
       success: true,
@@ -418,33 +379,18 @@ router.get("/", async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /api/blogs/{id}:
- *   get:
- *     summary: Get blog by ID
- *     tags: [Blogs]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Blog found
- *       404:
- *         description: Blog not found
- */
-
 router.get("/:id", async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id);
-    if (!blog) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ success: false, message: "Invalid ID" });
+    }
+    const rawBlog = await Blog.findById(req.params.id).lean();
+    if (!rawBlog) {
       return res
         .status(404)
         .json({ success: false, message: "Blog not found" });
     }
+    const blog = await populateMixed(rawBlog, { categories: "category", subCategories: "subcategory" });
     res.json({ success: true, data: blog });
   } catch (error) {
     res.status(500).json({
@@ -455,33 +401,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /api/blogs/slug/{slug}:
- *   get:
- *     summary: Get blog by slug
- *     tags: [Blogs]
- *     parameters:
- *       - in: path
- *         name: slug
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Blog found
- *       404:
- *         description: Blog not found
- */
-
 router.get("/slug/:slug", async (req, res) => {
   try {
-    const blog = await Blog.findOne({ slug: req.params.slug });
-    if (!blog) {
+    const rawBlog = await Blog.findOne({ slug: req.params.slug }).lean();
+    if (!rawBlog) {
       return res
         .status(404)
         .json({ success: false, message: "Blog not found" });
     }
+    const blog = await populateMixed(rawBlog, { categories: "category", subCategories: "subcategory" });
     res.json({ success: true, data: blog });
   } catch (error) {
     res.status(500).json({

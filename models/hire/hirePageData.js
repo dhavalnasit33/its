@@ -146,11 +146,13 @@ const HireDevelopersAsYourNeeds = new mongoose.Schema({
 
 const HirePageDataSchema = new mongoose.Schema({
     category: {
-        type: String,
+        type: mongoose.Schema.Types.Mixed,
+        ref: "CategoryModel",
         required: true
     },
     subCategory: {
-        type: String,
+        type: mongoose.Schema.Types.Mixed,
+        ref: "Subcategory",
         required: true
     },
     title: {

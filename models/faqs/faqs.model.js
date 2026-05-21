@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const FaqsSchema = new mongoose.Schema(
   {
     categories: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
+      ref: "CategoryModel",
       required: true,
     },
     title: {

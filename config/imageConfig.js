@@ -36,6 +36,7 @@ module.exports = {
     "contentBlocks[].image",
     "WhyWorkWithThis.image",
     "whyCompanyPerfersThis.content[].image",
+    "seo.featureImage"
   ],
 
   // ✅ HomeChooseIts

@@ -1,5 +1,8 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const FaqModel = require("../../models/faqs/faqs.model");
+const CategoryModel = require("../../models/category/category.model");
+const { populateMixed } = require("../../utils/mixedPopulate");
 const { protect } = require("../../middlewares/auth");
 
 const router = express.Router();
@@ -49,31 +52,29 @@ router.post("/", protect, async (req, res) => {
 //category fetch route
 router.get("/categories", async (req, res) => {
   try {
-    const rawCategories = await FaqModel.distinct("categories");
+    const rawCategoryIds = await FaqModel.distinct("categories");
 
-    if (!rawCategories || rawCategories.length === 0) {
+    if (!rawCategoryIds || rawCategoryIds.length === 0) {
       return res.status(200).json({
         success: true,
         data: [],
       });
     }
 
-    const cleanCategories = [
-      ...new Set(
-        rawCategories
-          .filter(Boolean)
-          .map((item) => item.toString().trim())
-          .filter((item) => item.length > 0),
-      ),
-    ];
+    const catObjectIds = rawCategoryIds.filter(c => mongoose.Types.ObjectId.isValid(c));
+    const catStrings = rawCategoryIds.filter(c => !mongoose.Types.ObjectId.isValid(c));
 
-    cleanCategories.sort((a, b) =>
-      a.localeCompare(b, "en", { sensitivity: "base" }),
-    );
+    const dbCategories = await CategoryModel.find({
+      _id: { $in: catObjectIds },
+    }).select("_id category image").lean();
+
+    const stringCategories = catStrings.map(str => ({
+      category: str
+    }));
 
     res.status(200).json({
       success: true,
-      data: cleanCategories,
+      data: [...dbCategories, ...stringCategories],
     });
   } catch (error) {
     console.error("❌ Error getting categories:", error);
@@ -91,11 +92,24 @@ router.get("/admin", async (req, res) => {
     const { page = 1, limit = 10, category = "" } = req.query;
 
     const query = {};
-    if (category) query.categories = category;
+    if (category) {
+      if (mongoose.Types.ObjectId.isValid(category)) {
+        query.categories = category;
+      } else {
+        const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "faqs" });
+        if (catDoc) {
+          query.$or = [
+            { categories: category },
+            { categories: catDoc._id }
+          ];
+        } else {
+          query.categories = category;
+        }
+      }
+    }
     const skip = (page - 1) * limit;
 
-    // અહીં રિઝલ્ટ વેરીએબલનું નામ 'faqData' રાખ્યું છે
-    const [faqData, total] = await Promise.all([
+    const [rawFaqData, total] = await Promise.all([
       FaqModel.find(query)
         .sort({ createdAt: -1 })
         .skip(skip)
@@ -103,6 +117,8 @@ router.get("/admin", async (req, res) => {
         .lean(),
       FaqModel.countDocuments(query),
     ]);
+
+    const faqData = await populateMixed(rawFaqData, { categories: "category" });
 
     res.status(200).json({
       success: true,
@@ -139,16 +155,29 @@ router.get("/:id", async (req, res) => {
 
 //fronted get route
 router.get("/", async (req, res) => {
-  console.log("🚀 ~ router.get ~ req.query:", req.query);
   try {
     const { page = 1, limit = 10, category = "" } = req.query;
 
     const query = {};
-    if (category) query.categories = category;
+    if (category) {
+      if (mongoose.Types.ObjectId.isValid(category)) {
+        query.categories = category;
+      } else {
+        const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "faqs" });
+        if (catDoc) {
+          query.$or = [
+            { categories: category },
+            { categories: catDoc._id }
+          ];
+        } else {
+          query.categories = category;
+        }
+      }
+    }
 
     const skip = (Number(page) - 1) * Number(limit);
 
-    const [faqData, total] = await Promise.all([
+    const [rawFaqData, total] = await Promise.all([
       FaqModel.find(query)
         .sort({ createdAt: -1 })
         .skip(skip)
@@ -156,6 +185,8 @@ router.get("/", async (req, res) => {
         .lean(),
       FaqModel.countDocuments(query),
     ]);
+
+    const faqData = await populateMixed(rawFaqData, { categories: "category" });
 
     res.status(200).json({
       success: true,
