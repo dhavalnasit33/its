@@ -1085,58 +1085,6 @@ router.get("/:subCategory", async (req, res) => {
   }
 });
 
-// ─── DELETE — Bulk delete ───
-router.delete("/bulk-delete", protect, async (req, res) => {
-  try {
-    const { ids } = req.body;
-
-    if (!ids || !Array.isArray(ids) || ids.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Please provide an array of IDs to delete",
-      });
-    }
-
-    const invalidIds = ids.filter(
-      (id) => !mongoose.Types.ObjectId.isValid(id)
-    );
-    if (invalidIds.length > 0) {
-      return res.status(400).json({
-        success: false,
-        message: `Invalid IDs: ${invalidIds.join(", ")}`,
-      });
-    }
-
-    const services = await Service.find({ _id: { $in: ids } });
-    if (services.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No services found with the provided IDs",
-      });
-    }
-
-    for (const service of services) {
-      try {
-        await forceDeleteSeoData(service.slug);
-      } catch (seoError) {
-        console.warn(`SEO delete warning for slug ${service.slug}:`, seoError.message);
-      }
-    }
-
-    const result = await Service.deleteMany({ _id: { $in: ids } });
-
-    res.status(200).json({
-      success: true,
-      message: `${result.deletedCount} service(s) deleted successfully`,
-      deletedCount: result.deletedCount,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error deleting services",
-    });
-  }
-});
 
 // ─── PUT — Update by ID ───
 router.put(
@@ -1263,6 +1211,60 @@ router.delete("/:id", protect, cleanupImages(Service), async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error deleting service",
+    });
+  }
+});
+
+
+// ─── DELETE — Bulk delete ───
+router.post("/bulk-delete", protect, async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of IDs to delete",
+      });
+    }
+
+    const invalidIds = ids.filter(
+      (id) => !mongoose.Types.ObjectId.isValid(id)
+    );
+    if (invalidIds.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid IDs: ${invalidIds.join(", ")}`,
+      });
+    }
+
+    const services = await Service.find({ _id: { $in: ids } });
+    if (services.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No services found with the provided IDs",
+      });
+    }
+
+    for (const service of services) {
+      try {
+        await forceDeleteSeoData(service.slug);
+      } catch (seoError) {
+        console.warn(`SEO delete warning for slug ${service.slug}:`, seoError.message);
+      }
+    }
+
+    const result = await Service.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: `${result.deletedCount} service(s) deleted successfully`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error deleting services",
     });
   }
 });

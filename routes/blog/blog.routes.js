@@ -205,29 +205,67 @@ router.get("/admin", async (req, res) => {
       value = "",
     } = req.query;
 
-    const query = {};
-    if (category) query.categories = category;
-    if (subCategories) query.subCategories = subCategories;
+    const conditions = [];
+
+    if (category) {
+      if (mongoose.Types.ObjectId.isValid(category)) {
+        conditions.push({ categories: category });
+      } else {
+        const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "blogs" });
+        if (catDoc) {
+          conditions.push({
+            $or: [
+              { categories: category },
+              { categories: catDoc._id }
+            ]
+          });
+        } else {
+          conditions.push({ categories: category });
+        }
+      }
+    }
+
+    if (subCategories) {
+      if (mongoose.Types.ObjectId.isValid(subCategories)) {
+        conditions.push({ subCategories: subCategories });
+      } else {
+        const subDoc = await SubcategoryModel.findOne({ subcategory: subCategories.trim(), moduleType: "blogs" });
+        if (subDoc) {
+          conditions.push({
+            $or: [
+              { subCategories: subCategories },
+              { subCategories: subDoc._id }
+            ]
+          });
+        } else {
+          conditions.push({ subCategories: subCategories });
+        }
+      }
+    }
 
     if (value) {
-      query.$or = [
-        { "details.title": { $regex: value, $options: "i" } },
-        { seo_title: { $regex: value, $options: "i" } },
-      ];
+      conditions.push({
+        $or: [
+          { "details.title": { $regex: value, $options: "i" } },
+          { seo_title: { $regex: value, $options: "i" } },
+        ]
+      });
     }
+
+    const query = conditions.length > 0 ? { $and: conditions } : {};
 
     const skip = (page - 1) * limit;
 
-    const [blogs, total] = await Promise.all([
+    const [rawBlogs, total] = await Promise.all([
       Blog.find(query)
-        .populate("categories", "category image")
-        .populate("subCategories", "subcategory")
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(Number(limit))
         .lean(),
       Blog.countDocuments(query),
     ]);
+
+    const blogs = await populateMixed(rawBlogs, { categories: "category", subCategories: "subcategory" });
 
     res.status(200).json({
       success: true,
@@ -512,6 +550,99 @@ router.put(
     }
   },
 );
+
+/**
+ * @swagger
+ * /api/blogs/bulk-delete:
+ *   post:
+ *     summary: Bulk delete blogs (POST)
+ *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Blogs deleted successfully
+ *       400:
+ *         description: Missing or invalid IDs
+ *       500:
+ *         description: Server error
+ *   delete:
+ *     summary: Bulk delete blogs (DELETE)
+ *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Blogs deleted successfully
+ *       400:
+ *         description: Missing or invalid IDs
+ *       500:
+ *         description: Server error
+ */
+const bulkDeleteBlogs = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of IDs to delete",
+      });
+    }
+
+    const invalidIds = ids.filter(
+      (id) => !mongoose.Types.ObjectId.isValid(id)
+    );
+    if (invalidIds.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid IDs: ${invalidIds.join(", ")}`,
+      });
+    }
+
+    const result = await Blog.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: `${result.deletedCount} blog(s) deleted successfully`,
+      deletedCount: result.deletedCount,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+router.post("/bulk-delete", protect, cleanupImages.cleanupBulkImages(Blog), bulkDeleteBlogs);
 
 /**
  * @swagger

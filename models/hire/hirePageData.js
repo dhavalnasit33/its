@@ -144,6 +144,16 @@ const HireDevelopersAsYourNeeds = new mongoose.Schema({
 }, { _id: false });
 
 
+const SEOSchema = new mongoose.Schema(
+    {
+        title: { type: String, default: "" },
+        keyphrase: { type: String, default: "" },
+        seoDescription: { type: String, default: "" },
+        featureImage: { type: String, default: null },
+    },
+    { _id: false }
+);
+
 const HirePageDataSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.Mixed,
@@ -182,6 +192,7 @@ const HirePageDataSchema = new mongoose.Schema({
     unloackPower: unLoackPowerSchema,
     hireingProcess: hireingProcessSchema,
     faq: [FAQSchema],
+    seo: { type: SEOSchema, default: () => ({}) },
 }, { timestamps: true });
 
 module.exports = mongoose.model('HirePageData', HirePageDataSchema);

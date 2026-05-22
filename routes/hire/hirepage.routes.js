@@ -173,6 +173,17 @@ const router = express.Router();
  *           type: array
  *           items:
  *             $ref: '#/components/schemas/FAQ'
+ *         seo:
+ *           type: object
+ *           properties:
+ *             title:
+ *               type: string
+ *             keyphrase:
+ *               type: string
+ *             seoDescription:
+ *               type: string
+ *             featureImage:
+ *               type: string
  */
 
 /**
@@ -199,7 +210,7 @@ const router = express.Router();
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { category, subCategory, title, slug, description, keyPoints, successSpeacks, hireDadiated, hireDevelopersAsYourNeeds, ourExpertise, techStack, whyHireUs, unloackPower, hireingProcess, faq, } = req.body;
+        const { category, subCategory, title, slug, description, keyPoints, successSpeacks, hireDadiated, hireDevelopersAsYourNeeds, ourExpertise, techStack, whyHireUs, unloackPower, hireingProcess, faq, seo, } = req.body;
 
         if (!category || !subCategory || !title || !slug || !description || !keyPoints?.length || !successSpeacks || !hireDadiated || !ourExpertise || !techStack || !whyHireUs || !unloackPower || !hireingProcess || !faq?.length || !hireDevelopersAsYourNeeds
         ) {
@@ -241,6 +252,7 @@ router.post("/", protect, async (req, res) => {
             unloackPower,
             hireingProcess,
             faq,
+            seo: seo || {},
         });
 
         const saved = await hirePageData.save();
@@ -292,6 +304,10 @@ router.post("/", protect, async (req, res) => {
  *         name: subCategory
  *         schema:
  *           type: string
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Paginated Hire Page Data retrieved successfully
@@ -300,7 +316,7 @@ router.post("/", protect, async (req, res) => {
  */
 router.get("/", async (req, res) => {
     try {
-        const { page = 1, limit = 10, category, subCategory } = req.query;
+        const { page = 1, limit = 10, category, subCategory, search = "" } = req.query;
         const query = {};
         if (category) {
             if (mongoose.Types.ObjectId.isValid(category)) {
@@ -330,6 +346,23 @@ router.get("/", async (req, res) => {
                 } else {
                     query.subCategory = subCategory;
                 }
+            }
+        }
+
+        if (search) {
+            const searchFilter = [
+                { title: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } },
+            ];
+            if (query.$or) {
+                const originalOr = query.$or;
+                delete query.$or;
+                query.$and = [
+                    { $or: originalOr },
+                    { $or: searchFilter }
+                ];
+            } else {
+                query.$or = searchFilter;
             }
         }
 
@@ -548,6 +581,54 @@ router.get("/categorieswithsubcategories", async (req, res) => {
 /**
  * @swagger
  * /api/hire-page/{id}:
+ *   get:
+ *     summary: Get a single Hire Page Data by ID
+ *     tags: [HirePageData]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Hire Page Data fetched successfully
+ *       404:
+ *         description: Hire Page Data not found
+ *       500:
+ *         description: Server error
+ */
+router.get("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid ID format",
+            });
+        }
+        const rawHirePageData = await HirePageData.findById(id).lean();
+        if (!rawHirePageData) {
+            return res.status(404).json({
+                success: false,
+                message: "Hire Page Data not found",
+            });
+        }
+        const hirePageData = await populateMixed(rawHirePageData, { category: "category", subCategory: "subcategory" });
+        res.status(200).json({
+            success: true,
+            message: "Data Fetched Successfully",
+            data: hirePageData,
+        });
+    } catch (error) {
+        console.error("Error fetching single Hire Page Data by ID:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+/**
+ * @swagger
+ * /api/hire-page/{id}:
  *   put:
  *     summary: Update Hire Page Data by ID
  *     tags: [HirePageData]
@@ -594,6 +675,7 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
             unloackPower,
             hireingProcess,
             faq,
+            seo,
         } = req.body;
 
         if (
@@ -648,6 +730,7 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
                 unloackPower,
                 hireingProcess,
                 faq,
+                seo: seo || {},
             },
             { new: true, runValidators: true }
         );
@@ -672,6 +755,78 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
         res
             .status(500)
             .json({ success: false, message: "Server error", error: error.message });
+    }
+});
+
+/**
+ * @swagger
+ * /api/hire-page/bulk-delete:
+ *   post:
+ *     summary: Bulk delete Hire Page Data
+ *     tags: [HirePageData]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Hire Page Data deleted successfully
+ *       400:
+ *         description: Missing or invalid IDs
+ *       500:
+ *         description: Server error
+ */
+router.post("/bulk-delete", protect, cleanupImages.cleanupBulkImages(HirePageData), async (req, res) => {
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide an array of IDs to delete",
+            });
+        }
+
+        const invalidIds = ids.filter(id => !mongoose.Types.ObjectId.isValid(id));
+        if (invalidIds.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: `Invalid IDs: ${invalidIds.join(", ")}`,
+            });
+        }
+
+        const records = req.records || [];
+        for (const record of records) {
+            try {
+                await forceDeleteSeoData(record.slug);
+            } catch (seoError) {
+                console.warn(`SEO delete warning for slug ${record.slug}:`, seoError.message);
+            }
+        }
+
+        const result = await HirePageData.deleteMany({ _id: { $in: ids } });
+
+        res.status(200).json({
+            success: true,
+            message: `${result.deletedCount} items deleted successfully`,
+            deletedCount: result.deletedCount,
+        });
+    } catch (error) {
+        console.error(" Error to bulk delete data", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
     }
 });
 

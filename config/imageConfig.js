@@ -47,6 +47,7 @@ module.exports = {
     "successSpeacks.image",
     "hireDadiated.image",
     "unloackPower.image",
+    "seo.featureImage"
   ],
 
   // ✅ OpenningPosition
