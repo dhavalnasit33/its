@@ -146,12 +146,12 @@ export default function HireMainPageForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleFormSubmit as any)} className="space-y-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex-1 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
             {/* Basic Info Section */}
             <Card>
               <CardHeader><CardTitle>Hero & Basic Information</CardTitle></CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 <FormField
                   control={form.control as any}
                   name="mainTitle"
@@ -212,7 +212,7 @@ export default function HireMainPageForm({
             {/* Development Team Section */}
             <Card>
               <CardHeader><CardTitle>Development Team Section</CardTitle></CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 <FormField
                   control={form.control as any}
                   name="developmentTeamSection.heading"
@@ -546,9 +546,9 @@ export default function HireMainPageForm({
             </Card>
           </div>
 
-          <div className=" w-full lg:w-[350px] space-y-6 mt-8 lg:mt-0">
+          <div className="space-y-8 lg:col-span-1">
             {/* Right Column: SEO Feature Image Only */}
-            <Card className="sticky top-24">
+            <Card >
               <CardHeader><CardTitle>Page Media</CardTitle></CardHeader>
               <CardContent className="space-y-6">
                 <FormField

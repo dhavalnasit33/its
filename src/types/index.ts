@@ -240,9 +240,13 @@ export interface Blog {
   createdAt: string; // Also good to have timestamps
   updatedAt: string;
 }
-
+export interface CategoryRef {
+  _id: string;
+  category: string;
+}
 export interface Faqs {
-  categories: string;
+  // categories: string;
+  categories: string | CategoryRef;
   title: string;
   _id: string;
   question: string;

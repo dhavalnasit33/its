@@ -47,13 +47,14 @@ export default function EngagementModelPage() {
     pages: 1,
     total: 0,
   });
+    const [limit] = useState(10);
 
   const fetchItems = useCallback(async (page: number = 1, search: string = "") => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams({
-        page: page.toString(),
-        limit: "10",
+        page: String(page),
+        limit: String(limit),
         search: search,
       });
 

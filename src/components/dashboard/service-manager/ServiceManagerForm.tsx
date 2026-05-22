@@ -32,6 +32,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import apiService from "@/lib/apiService";
 import { Input } from "@/components/ui/input";
 import { APP_URL } from "@/config";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 // import ImageUpload from "@/components/shared/ImageUpload";
 
 // ---------- Slug ----------
@@ -107,6 +108,7 @@ export type ServiceStepperFormValues = z.infer<typeof servicestepperSchema>;
 interface ServiceManagerFormprops {
   initialData?: ServiceStepperFormValues | null;
   onSubmit: (data: ServiceStepperFormValues) => Promise<void>;
+  onCancel?: () => void;
 }
 
 interface CategoryItem {
@@ -121,7 +123,7 @@ interface SubCategoryItem {
 }
 
 
-export default function ServiceStepperForm({ initialData, onSubmit }: ServiceManagerFormprops) {
+export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: ServiceManagerFormprops) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -612,7 +614,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                             <FormItem>
                               <FormLabel>Title</FormLabel>
                               <FormControl>
-                                <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("WhyWorkWithThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
+                                <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("WhyWorkWithThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
                               </FormControl>
                               <FormMessage className="text-red-600 text-sm mt-1" />
                             </FormItem>
@@ -726,7 +728,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                           <FormItem>
                             <FormLabel>Title</FormLabel>
                             <FormControl>
-                              <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.title", v, { shouldDirty: true, shouldValidate: true }); }} />
+                              <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.title", v, { shouldDirty: true, shouldValidate: true }); }} />
                             </FormControl>
                             <FormMessage className="text-red-600 text-sm mt-1" />
                           </FormItem>
@@ -739,7 +741,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                           <FormItem>
                             <FormLabel>Tool Description</FormLabel>
                             <FormControl>
-                              <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.description", v, { shouldDirty: true, shouldValidate: true }); }} />
+                              <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("toolsAndTechnology.description", v, { shouldDirty: true, shouldValidate: true }); }} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -917,7 +919,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                         <FormItem>
                           <FormLabel>Title</FormLabel>
                           <FormControl>
-                            <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
+                            <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.title", v, { shouldDirty: true, shouldValidate: true }); }} />
                           </FormControl>
                           <FormMessage className="text-red-600 text-sm mt-1" />
                         </FormItem>
@@ -930,7 +932,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                            <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.description", v, { shouldDirty: true, shouldValidate: true }); }} />
+                            <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue("whyCompanyPerfersThis.description", v, { shouldDirty: true, shouldValidate: true }); }} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -979,7 +981,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                                 <FormItem>
                                   <FormLabel>Name</FormLabel>
                                   <FormControl>
-                                    <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`whyCompanyPerfersThis.content.${cidx}.name`, v, { shouldDirty: true, shouldValidate: true }); }} />
+                                    <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`whyCompanyPerfersThis.content.${cidx}.name`, v, { shouldDirty: true, shouldValidate: true }); }} />
                                   </FormControl>
                                   <FormMessage className="text-red-600 text-sm mt-1" />
                                 </FormItem>
@@ -1017,29 +1019,12 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
                 {/* ─────────────── FAQ ─────────────── */}
                 <Card>
-                  {/* <div className="flex justify-between border-b items-center">
-                <CardHeader>
-                  <CardTitle>
-                    FAQ
-                  </CardTitle>
-                </CardHeader>
-                <Button
-                  type="button"
-                  className="m-3"
-                  onClick={() => {
-                    const arr = form.getValues("faqs") || [];
-                    form.setValue("faqs", [...arr, { question: "", answer: "" }], { shouldDirty: true, shouldValidate: true });
-                  }}
-                >
-                  Add FAQ
-                </Button>
-              </div> */}
                   <CardHeader>
                     <CardTitle>FAQ</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {form.watch("faqs")?.map((f, idx) => (
-                      <div key={idx} className="border border-gray-300 shadow-md p-5 rounded-md flex flex-col gap-4">
+                      <div key={idx} className="border border-gray-300 shadow-md p-5 rounded-md flex flex-col space-y-4">
                         <div className="flex justify-between items-center">
                           <h3 className="font-semibold">Question {idx + 1}</h3>
                           <Button
@@ -1073,7 +1058,7 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
                             <FormItem>
                               <FormLabel>Answer</FormLabel>
                               <FormControl>
-                                <TiptapEditorNoSSR value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`faqs.${idx}.answer`, v, { shouldDirty: true, shouldValidate: true }); }} />
+                                <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`faqs.${idx}.answer`, v, { shouldDirty: true, shouldValidate: true }); }} />
                               </FormControl>
                               <FormMessage className="text-red-600 text-sm mt-1" />
                             </FormItem>
@@ -1218,38 +1203,27 @@ export default function ServiceStepperForm({ initialData, onSubmit }: ServiceMan
 
             {/* ─────────────── SUBMIT ─────────────── */}
             <div className="flex justify-end gap-3 border-t pt-6 mt-8">
-              <Button type="button" onClick={() => router.back()}>
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
-              </Button>
+              {onCancel && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onCancel}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
+              )}
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Submitting..." : "Submit"}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {initialData ? "Updating..." : "Creating..."}
+                  </>
+                ) : (
+                  initialData ? "Update Service" : "Create Service"
+                )}
               </Button>
             </div>
-
-            {/* 
-            <div className="flex justify-end gap-3 border-t pt-6 mt-8">
-            {onCancel && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onCancel}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </Button>
-            )}
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {initialData ? "Updating..." : "Creating..."}
-                </>
-              ) : (
-                initialData ? "Update About Us" : "Create About Us"
-              )}
-            </Button>
-          </div> */}
 
           </form>
         </Form>

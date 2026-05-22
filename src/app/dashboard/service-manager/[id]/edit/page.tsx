@@ -100,7 +100,10 @@ export default function EditServicePage() {
                     />
             </div>
             
-            <ServiceStepperForm onSubmit={handleEdit} initialData={initialData} />
+            <ServiceStepperForm 
+                onSubmit={handleEdit} 
+                initialData={initialData}
+                onCancel={() => router.push("/dashboard/service-manager")}  />
         </>
     );
 }

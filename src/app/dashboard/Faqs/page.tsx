@@ -27,6 +27,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+export interface Category {
+  _id: string;
+  category: string;
+}
 
 function page() {
     const router = useRouter();
@@ -159,7 +163,10 @@ function page() {
                             : items.length > 0
                                 ? items.map((item, index) => (
                                     <TableRow key={item._id} >
-                                        <TableCell className="hidden xl:table-cell" >{item.categories}</TableCell>
+                                        {/* <TableCell className="hidden xl:table-cell" >{item.categories}</TableCell> */}
+                                        <TableCell className="hidden xl:table-cell">
+                                            {typeof item.categories === "object" ? item.categories.category : "-"}
+                                        </TableCell> 
                                         <TableCell className="max-w-30 xl:max-w-xs truncate">{stripHtml(item.title)}</TableCell>
                                         <TableCell className="max-w-30 xl:max-w-xs truncate" >{stripHtml(item.answer)}</TableCell>
                                         <TableCell className="text-right">

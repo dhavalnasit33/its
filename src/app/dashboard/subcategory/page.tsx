@@ -190,7 +190,7 @@ export default function SubCategoryPage() {
                 )}
             </div>
 
-            <div className="rounded-md shadow-sm">
+            <div className="rounded-md shadow-sm border">
                 <Table>
                     <TableHeader>
                         <TableRow className="hover:bg-gray-200">
@@ -227,7 +227,7 @@ export default function SubCategoryPage() {
                             items.map((item) => (
                                 <TableRow
                                     key={item._id}
-                                    className={`border hover:bg-gray-200 dark:border-gray-300 ${selectedIds.includes(item._id) ? 'bg-gray-300' : ''
+                                    className={`border hover:bg-gray-100  ${selectedIds.includes(item._id) ? 'bg-gray-300' : ''
                                         }`}
                                 >
                                     <TableCell>
@@ -289,32 +289,31 @@ export default function SubCategoryPage() {
                 </Table>
             </div>
 
-            <div className="flex justify-between items-center gap-2 mt-4">
-                <span className="text-sm">
-                    Page {pagination.current} of {pagination.pages}
-                    {selectedIds.length > 0 && (
-                        <span className="ml-3 text-blue-600 font-medium">
-                            {selectedIds.length} selected
-                        </span>
-                    )}
-                </span>
-                <div className="flex gap-3">
-                    <Button
-                        className="bg-blue-600 text-white"
+            {pagination.pages > 1 && (
+                <div className="flex items-center justify-between mt-6 px-2">
+                    <p className="text-sm text-muted-foreground">
+                        Showing page {pagination.current} of {pagination.pages}
+                    </p>
+                    <div className="flex gap-2">
+                        <Button
+                        variant="outline"
+                        size="sm"
                         disabled={pagination.current === 1}
                         onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
-                    >
+                        >
                         Previous
-                    </Button>
-                    <Button
-                        className="bg-blue-600 text-white"
+                        </Button>
+                        <Button
+                        variant="outline"
+                        size="sm"
                         disabled={pagination.current === pagination.pages}
                         onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
-                    >
+                        >
                         Next
-                    </Button>
+                        </Button>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {selectedItem && (
                 <DeleteSubcategoryDialog

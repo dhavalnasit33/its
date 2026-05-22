@@ -127,7 +127,7 @@ export default function ServiceTechnologyPage() {
                                 ? items.map((item, index) => (
                                     <TableRow
                                         key={item._id}
-                                        className={`border dark:border-gray-300 ${index % 2 !== 0 ? 'bg-gray-200' : ''}`}
+                                        className={`border hover:bg-gray-100 ${index % 2 !== 0 ? 'bg-gray-200' : ''}`}
                                     >
                                         <TableCell>
                                             <img src={item.image} alt={item.label} className="h-10 w-10 rounded object-cover" />

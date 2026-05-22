@@ -61,7 +61,7 @@ function NavItemWithChildren({
 					isMobile ? "text-base" : "text-sm"
 				)}
 			>
-				<span className="flex items-center gap-2">
+				<span className="flex items-center gap-2 text-left">
 					{Icon && <Icon className="h-5 w-5 mr-3" />}
 					{item.label}
 				</span>

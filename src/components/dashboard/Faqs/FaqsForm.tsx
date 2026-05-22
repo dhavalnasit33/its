@@ -11,6 +11,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from 'lucide-react';
 import CustomCKEditor from '@/components/shared/Ckeditor';
 import { Card, CardContent } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import apiService from '@/lib/apiService';
 
 // ---------------- Schema -----------------
 const FaqsSchema = z.object({
@@ -24,6 +26,11 @@ interface FaqsFormProps {
     onSubmit: (data: FaqsFormValues) => Promise<void>;
     onCancel?: () => void;
 }
+interface CategoryItem {
+  _id: string;
+  category: string;
+}
+
 
 export type FaqsFormValues = z.infer<typeof FaqsSchema>;
 
@@ -35,6 +42,10 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
     const [isSubmitting, setIsSubmitting] = useState(false);
     const imageInputRef = useRef<HTMLInputElement>(null);
     const coverImageInputRef = useRef<HTMLInputElement>(null);
+      const [categories, setCategories] = useState<CategoryItem[]>([]);
+    
+      const [loadingCategories, setLoadingCategories] = useState(false);
+    
 
 
     const form = useForm<FaqsFormValues>({
@@ -65,6 +76,39 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
     };
 
 
+    useEffect(() => {
+        fetchCategories();
+        // fetchAllSubCategories();
+      }, []);
+
+    const fetchCategories = async () => {
+        setLoadingCategories(true);
+        try {
+          const res = await apiService<{
+            success: boolean;
+            data: CategoryItem[];
+          }>("/category?limit=100&page=1", { method: "GET" });
+    
+          if (res.success) {
+            setCategories(res.data);
+          } else {
+            toast({
+              title: "Error",
+              description: "Failed to load categories",
+              variant: "destructive",
+            });
+          }
+        } catch (err) {
+          console.error("Category fetch error:", err);
+          toast({
+            title: "Error",
+            description: "Failed to load categories",
+            variant: "destructive",
+          });
+        } finally {
+          setLoadingCategories(false);
+        }
+      };
 
     return (
         <Card>
@@ -75,7 +119,39 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                         <FormField control={form.control} name="categories" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Category</FormLabel>
-                                <FormControl><Input placeholder="Enter category" {...field} /></FormControl>
+                                {/* <FormControl><Input placeholder="Enter category" {...field} /></FormControl> */}
+                                    <Select
+                                    onValueChange={(val) => {
+                                        field.onChange(val);
+                                    }}
+                                    value={field.value}
+                                    disabled={loadingCategories}
+                                    >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                        <SelectValue
+                                            placeholder={
+                                            loadingCategories
+                                                ? "Loading categories..."
+                                                : "Select a category"
+                                            }
+                                        />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {categories.length > 0 ? (
+                                        categories.map((cat) => (
+                                            <SelectItem key={cat._id} value={cat._id}>
+                                            {cat.category}
+                                            </SelectItem>
+                                        ))
+                                        ) : (
+                                        <SelectItem value="none" disabled>
+                                            No categories found
+                                        </SelectItem>
+                                        )}
+                                    </SelectContent>
+                                    </Select>
                                 <FormMessage />
                             </FormItem>
                         )} />

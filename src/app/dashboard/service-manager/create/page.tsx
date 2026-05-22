@@ -49,7 +49,10 @@ export default function CreateServiceManagerDialog({
                     description="Create a new Services "
                 />
             </div>
-            <ServiceStepperForm onSubmit={handleCreate} initialData={null} />
+            <ServiceStepperForm 
+                onSubmit={handleCreate} 
+                // initialData={null}
+                onCancel={() => router.push("/dashboard/service-manager")} />
 
         </>
 
