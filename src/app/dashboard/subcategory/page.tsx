@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Edit, MoreHorizontal, PlusCircle, Trash2, Search } from 'lucide-react';
+import { Edit, MoreHorizontal, PlusCircle, Trash2, Search, Sparkles, BookOpen, Briefcase } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PageHeader from '@/components/shared/PageHeader';
@@ -42,6 +42,39 @@ export default function SubCategoryPage() {
 
     const isAllSelected = items.length > 0 && selectedIds.length === items.length;
     const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
+
+    // Premium Module Type Badge Helper matching enquiries style for high contrast visibility
+    const getModuleBadge = (moduleType: string) => {
+        switch (moduleType) {
+            case "services":
+                return (
+                    <div className="flex items-center gap-1.5 text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full text-xs font-semibold w-fit capitalize">
+                        <Sparkles className="h-3.5 w-3.5" />
+                        services
+                    </div>
+                );
+            case "blogs":
+                return (
+                    <div className="flex items-center gap-1.5 text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full text-xs font-semibold w-fit capitalize">
+                        <BookOpen className="h-3.5 w-3.5" />
+                        blogs
+                    </div>
+                );
+            case "hire":
+                return (
+                    <div className="flex items-center gap-1.5 text-purple-700 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-full text-xs font-semibold w-fit capitalize">
+                        <Briefcase className="h-3.5 w-3.5" />
+                        hire
+                    </div>
+                );
+            default:
+                return (
+                    <div className="flex items-center gap-1.5 text-slate-700 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-full text-xs font-semibold w-fit capitalize">
+                        {moduleType || 'N/A'}
+                    </div>
+                );
+        }
+    };
 
     const fetchItems = async (page = 1, search = "", moduleType = "all") => {
         setIsLoading(true);
@@ -241,9 +274,7 @@ export default function SubCategoryPage() {
                                     <TableCell className="font-medium text-slate-800">{item.subcategory}</TableCell>
                                     <TableCell className="text-slate-600">{item.categoryName || 'N/A'}</TableCell>
                                     <TableCell>
-                                        <span className="capitalize px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
-                                            {item.moduleType || 'N/A'}
-                                        </span>
+                                        {getModuleBadge(item.moduleType)}
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <DropdownMenu

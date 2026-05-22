@@ -26,8 +26,12 @@ export function EditBlogDialog({
 
   // ✅ Transform Blog -> BlogFormValues
   const formData: BlogFormValues = {
-    categories: initialData.categories,      // matches Blog schema
-    subCategories: initialData.subCategories || "",
+    categories: typeof initialData.categories === 'object' && initialData.categories
+      ? (initialData.categories as any).category || ""
+      : (initialData.categories || ""),
+    subCategories: typeof initialData.subCategories === 'object' && initialData.subCategories
+      ? (initialData.subCategories as any).subcategory || ""
+      : (initialData.subCategories || ""),
      slug: initialData?.slug || "",
     image: initialData.image,
     details: {

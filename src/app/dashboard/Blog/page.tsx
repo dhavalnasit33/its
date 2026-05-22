@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { Blog } from "@/types";
 import DeleteBlogDialog from "@/components/dashboard/Blogs/DeleteBlogDialog";
-import { EditBlogDialog } from "@/components/dashboard/Blogs/EditBlogDialog";
+import BulkDeleteBlogsDialog from "@/components/dashboard/Blogs/BulkDeleteBlogsDialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface CategoryOption {
@@ -38,13 +38,8 @@ interface CategoryOption {
 export default function Blog() {
   const router = useRouter();
 
-  // const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  // const [searchQuery, setSearchQuery] = useState("");
-  // const [pagination, setPagination] = useState({
-  //   current: 1,
-  //   pages: 1,
-  //   total: 0,
-  // });
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
 
   const [items, setItems] = useState<Blog[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -126,6 +121,11 @@ export default function Blog() {
     fetchItems( pagination.current, searchValue, selectedCategory, selectedSubCategory);
   }, [ pagination.current, searchValue, selectedCategory, selectedSubCategory]);
 
+  // Clear selected IDs when search or filters change
+  useEffect(() => {
+    setSelectedIds([]);
+  }, [searchValue, selectedCategory, selectedSubCategory]);
+
   // Update available subcategories when category changes
   useEffect(() => {
     if (selectedCategory) {
@@ -157,8 +157,32 @@ export default function Blog() {
 
   const handleDeleteSuccess = () => {
     setDeleteDialogOpen(false);
+    setSelectedIds((prev) => prev.filter((id) => id !== selectedItem?._id));
     fetchItems(pagination.current, searchValue, selectedCategory, selectedSubCategory);
   };
+
+  const handleBulkDeleteSuccess = () => {
+    setSelectedIds([]);
+    setBulkDeleteDialogOpen(false);
+    fetchItems(pagination.current, searchValue, selectedCategory, selectedSubCategory);
+  };
+
+  const handleCheckboxChange = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedIds.length === items.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(items.map((item) => item._id));
+    }
+  };
+
+  const isAllSelected = items.length > 0 && selectedIds.length === items.length;
+  const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
 
     const resetFilters = () => {
     setSearchValue("");
@@ -172,12 +196,20 @@ export default function Blog() {
         title="Blogs"
         description="Manage all blog posts"
         actionButtons={
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {selectedIds.length > 0 && (
+              <Button
+                variant="destructive"
+                onClick={() => setBulkDeleteDialogOpen(true)}
+                className="flex items-center gap-2"
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete Selected ({selectedIds.length})
+              </Button>
+            )}
 
             <Link href="/dashboard/Blog/create">
-              <Button
-
-              >
+              <Button>
                 <PlusCircle className="mr-2 h-4 w-4" /> Add New Blog
               </Button>
             </Link>
@@ -308,6 +340,17 @@ export default function Blog() {
         <Table className="">
           <TableHeader>
             <TableRow>
+              <TableHead className="w-10">
+                <input
+                  type="checkbox"
+                  checked={isAllSelected}
+                  ref={(el) => {
+                    if (el) el.indeterminate = isIndeterminate;
+                  }}
+                  onChange={handleSelectAll}
+                  className="cursor-pointer w-4 h-4"
+                />
+              </TableHead>
               <TableHead>Image</TableHead>
               <TableHead>Title</TableHead>
               <TableHead className="hidden xl:table-cell">Author</TableHead>
@@ -322,6 +365,7 @@ export default function Blog() {
             {isLoading
               ? Array.from({ length: 5 }).map((_, i) => (
                 <TableRow key={i}>
+                  <TableCell><Skeleton className="h-5 w-5" /></TableCell>
                   <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-26 " /></TableCell>
                   <TableCell><Skeleton className="hidden xl:table-cell h-5 w-22" /></TableCell>
@@ -334,9 +378,15 @@ export default function Blog() {
 
               : items.length > 0
                 ? items.map((item, index) => (
-                  <TableRow key={item._id}
-
-                  >
+                  <TableRow key={item._id} className={selectedIds.includes(item._id) ? "bg-gray-50/80" : ""}>
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(item._id)}
+                        onChange={() => handleCheckboxChange(item._id)}
+                        className="cursor-pointer w-4 h-4"
+                      />
+                    </TableCell>
                     <TableCell>
                       {item.image && (
                         <img
@@ -348,8 +398,16 @@ export default function Blog() {
                     </TableCell>
                     <TableCell className="max-w-44 xl:max-w-xs truncate font-medium">{item.details.title.replace(/<[^>]*>?/gm, "")}</TableCell>
                     <TableCell className="hidden xl:table-cell">{item.details.author.replace(/<[^>]*>?/gm, "")}</TableCell>
-                    <TableCell className="hidden xl:table-cell">{item.categories}</TableCell>
-                    <TableCell className="hidden xl:table-cell">{item.subCategories}</TableCell>
+                    <TableCell className="hidden xl:table-cell">
+                      {typeof item.categories === "object" && item.categories
+                        ? (item.categories as any).category
+                        : item.categories}
+                    </TableCell>
+                    <TableCell className="hidden xl:table-cell">
+                      {typeof item.subCategories === "object" && item.subCategories
+                        ? (item.subCategories as any).subcategory
+                        : item.subCategories}
+                    </TableCell>
                     <TableCell className="hidden xl:table-cell">{item.seo_title ? (
                         <span className="  truncate max-w-xs block">{item.seo_title}</span>
                       ) : (
@@ -401,7 +459,7 @@ export default function Blog() {
                 ))
                 : (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center h-24">No entries found.</TableCell>
+                    <TableCell colSpan={8} className="text-center h-24">No entries found.</TableCell>
                   </TableRow >
 
                 )}
@@ -410,11 +468,16 @@ export default function Blog() {
       </div>
 
       {/* Pagination */}
-      {pagination.pages > 1 && (
-        <div className="flex items-center justify-between mt-6 px-2">
-          <p className="text-sm text-muted-foreground">
-            Showing page {pagination.current} of {pagination.pages}
-          </p>
+      <div className="flex items-center justify-between mt-6 px-2">
+        <p className="text-sm text-muted-foreground">
+          Showing page {pagination.current} of {pagination.pages}
+          {selectedIds.length > 0 && (
+            <span className="ml-3 text-blue-600 font-medium">
+              {selectedIds.length} selected
+            </span>
+          )}
+        </p>
+        {pagination.pages > 1 && (
           <div className="flex gap-2">
             <Button
               variant="outline"
@@ -433,8 +496,8 @@ export default function Blog() {
               Next
             </Button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Delete Dialog */}
       {selectedItem && (
@@ -446,7 +509,13 @@ export default function Blog() {
         />
       )}
 
-    
+      {/* Bulk Delete Dialog */}
+      <BulkDeleteBlogsDialog
+        isOpen={bulkDeleteDialogOpen}
+        onOpenChange={setBulkDeleteDialogOpen}
+        selectedIds={selectedIds}
+        onSuccess={handleBulkDeleteSuccess}
+      />
     </div>
 
   );

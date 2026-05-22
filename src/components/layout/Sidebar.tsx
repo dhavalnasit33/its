@@ -55,6 +55,7 @@ export const navItemsList: NavItem[] = [
     icon: SignpostBig,
     children: [
       { href: "/dashboard/hire-main-page", label: "Hire Main Page ", icon: ToolCase },
+      { href: "/dashboard/hire", label: "Hire", icon: Handshake },
     ],
   },
 

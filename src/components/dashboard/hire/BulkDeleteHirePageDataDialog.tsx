@@ -15,19 +15,19 @@ import apiService from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2 } from "lucide-react";
 
-interface BulkDeleteServiceManagerDialogProps {
+interface BulkDeleteHirePageDataDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
     selectedIds: string[];
     onSuccess: () => void;
 }
 
-export default function BulkDeleteServiceManagerDialog({
+export default function BulkDeleteHirePageDataDialog({
     isOpen,
     onOpenChange,
     selectedIds,
     onSuccess,
-}: BulkDeleteServiceManagerDialogProps) {
+}: BulkDeleteHirePageDataDialogProps) {
     const { toast } = useToast();
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -39,7 +39,7 @@ export default function BulkDeleteServiceManagerDialog({
                 success: boolean;
                 message: string;
                 deletedCount: number;
-            }>(`/service/bulk-delete`, {
+            }>(`/hire-page/bulk-delete`, {
                 method: "POST",
                 body: JSON.stringify({ ids: selectedIds }),
                 headers: { "Content-Type": "application/json" },
@@ -48,14 +48,14 @@ export default function BulkDeleteServiceManagerDialog({
             if (res.success) {
                 toast({
                     title: "Deleted",
-                    description: res.message || `${res.deletedCount} service(s) deleted successfully`,
+                    description: res.message || `${res.deletedCount} hire page(s) deleted successfully`,
                 });
                 onSuccess();
                 onOpenChange(false);
             } else {
                 toast({
                     title: "Error",
-                    description: res.message || "Failed to delete selected services",
+                    description: res.message || "Failed to delete selected hire pages",
                     variant: "destructive",
                 });
             }
@@ -76,13 +76,13 @@ export default function BulkDeleteServiceManagerDialog({
                 <AlertDialogHeader>
                     <AlertDialogTitle className="flex items-center gap-2 text-red-600">
                         <Trash2 className="h-5 w-5" />
-                        Delete Selected Services
+                        Delete Selected Hire Pages
                     </AlertDialogTitle>
 
                     <div className="space-y-3">
                         <AlertDialogDescription>
                             This action cannot be undone. This will permanently delete{" "}
-                            <strong>{selectedIds.length} selected service(s)</strong> and
+                            <strong>{selectedIds.length} selected hire page(s)</strong> and
                             remove them from our servers.
                         </AlertDialogDescription>
         
@@ -92,7 +92,7 @@ export default function BulkDeleteServiceManagerDialog({
                                 <span className="font-bold text-red-600">
                                     {selectedIds.length}
                                 </span>{" "}
-                                service.
+                                hire page(s).
                             </span>
                         </div>
                     </div>
@@ -113,7 +113,7 @@ export default function BulkDeleteServiceManagerDialog({
                         {isDeleting && (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         )}
-                        {isDeleting ? "Deleting..." : `Delete ${selectedIds.length} Service(s)`}
+                        {isDeleting ? "Deleting..." : `Delete ${selectedIds.length} Hire Page(s)`}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

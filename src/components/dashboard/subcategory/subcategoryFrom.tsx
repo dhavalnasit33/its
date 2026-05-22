@@ -25,6 +25,7 @@ export type SubcategoryFormValues = z.infer<typeof subcategorySchema>;
 interface Category {
   _id: string;
   category: string;
+  moduleType?: string;
 }
 
 interface SubcategoryFormProps {
@@ -55,7 +56,7 @@ export default function SubCategoryForm({ initialData, onSubmit, onCancel }: Sub
         const res = await apiService<{
           success: boolean;
           data: Category[];
-        }>("/category", { method: "GET" });
+        }>("/category?limit=999&page=1", { method: "GET" });
 
         if (res.success) {
           setCategories(res.data);
@@ -123,7 +124,7 @@ export default function SubCategoryForm({ initialData, onSubmit, onCancel }: Sub
                     {categories.length > 0 ? (
                       categories.map((cat) => (
                         <SelectItem key={cat._id} value={cat._id}>
-                          {cat.category}
+                          {cat.category} {cat.moduleType ? `(${cat.moduleType})` : ""}
                         </SelectItem>
                       ))
                     ) : (

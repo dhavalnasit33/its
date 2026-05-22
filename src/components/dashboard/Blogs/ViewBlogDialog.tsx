@@ -23,7 +23,26 @@ export default function ViewBlogDialog({
   if (!blog) return null;
 
   // Utility: strip HTML tags for plain fields
-  const stripHtml = (input: string) => input.replace(/<[^>]+>/g, "");
+  const stripHtml = (input: string) => {
+    if (typeof input !== "string") return "";
+    return input.replace(/<[^>]+>/g, "");
+  };
+
+  const getCategoryName = (cat: any) => {
+    if (!cat) return "";
+    if (typeof cat === "object") {
+      return cat.category || "";
+    }
+    return String(cat);
+  };
+
+  const getSubcategoryName = (sub: any) => {
+    if (!sub) return "";
+    if (typeof sub === "object") {
+      return sub.subcategory || "";
+    }
+    return String(sub);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -59,7 +78,7 @@ export default function ViewBlogDialog({
                 Category
               </p>
               <p className="font-medium text-gray-900">
-                {stripHtml(blog.categories)}
+                {stripHtml(getCategoryName(blog.categories))}
               </p>
             </div>
             <div className="p-3 rounded-lg border border-gray-300 bg-gray-50">
@@ -67,7 +86,7 @@ export default function ViewBlogDialog({
                 Sub Category
               </p>
               <p className="font-medium text-gray-900">
-                {stripHtml(blog.subCategories)}
+                {stripHtml(getSubcategoryName(blog.subCategories))}
               </p>
             </div>
           </div>

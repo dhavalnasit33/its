@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { UploadCloud, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import CustomCKEditor from "@/components/shared/Ckeditor";
-import CardHeader from "@mui/material/CardHeader";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import apiService from "@/lib/apiService";
+import { APP_URL } from "@/config";
 
 
 // ---------- Slug generation function ----------
@@ -29,7 +31,7 @@ const generateSlug = (text: string): string => {
 };
 
 // ---------- App URL config ----------
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+// const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 // const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 
@@ -63,34 +65,127 @@ interface BlogFormProps {
 const CLOUDINARY_CLOUD_NAME = "dctvxbvuz";
 const CLOUDINARY_UPLOAD_PRESET = "ITS_ADMIN";
 
+interface CategoryItem {
+  _id: string;
+  category: string;
+}
+
+interface SubCategoryItem {
+  _id: string;
+  category: string; // parent category ID
+  subcategory: string;
+}
+
 export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogFormProps) {
   const { toast } = useToast();
-  const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const imageInputRef = useRef<HTMLInputElement>(null);
-  const coverImageInputRef = useRef<HTMLInputElement>(null);
+
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategoryItem[]>([]);
+  const [filteredSubCategories, setFilteredSubCategories] = useState<SubCategoryItem[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+  const [loadingSubCategories, setLoadingSubCategories] = useState(false);
 
   const form = useForm<BlogFormValues>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
-      categories: "",
-      subCategories: "",
-      image: "",
-      slug: "",
+      categories: typeof initialData?.categories === 'object' && initialData.categories
+        ? (initialData.categories as any)._id || ""
+        : (initialData?.categories || ""),
+      subCategories: typeof initialData?.subCategories === 'object' && initialData.subCategories
+        ? (initialData.subCategories as any)._id || ""
+        : (initialData?.subCategories || ""),
+      image: initialData?.image || "",
+      slug: initialData?.slug || "",
       details: {
-        title: "",
-        description: "",
-        author: "",
-        answerOrDetails: "",
+        title: initialData?.details?.title || "",
+        description: initialData?.details?.description || "",
+        author: initialData?.details?.author || "",
+        answerOrDetails: initialData?.details?.answerOrDetails || "",
       },
-      seo_title: "",
-      meta_description: "",
-      seo_keyphrase: "",
-      cover_image: "",
+      seo_title: initialData?.seo_title || "",
+      meta_description: initialData?.meta_description || "",
+      seo_keyphrase: initialData?.seo_keyphrase || "",
+      cover_image: initialData?.cover_image || "",
     },
   });
+
   const subCategoryValue = form.watch("details.title");
-  const slugValue = form.watch("slug");
+  const selectedCategoryId = form.watch("categories");
+
+  useEffect(() => {
+    fetchCategories();
+    fetchAllSubCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    setLoadingCategories(true);
+    try {
+      const res = await apiService<{
+        success: boolean;
+        data: CategoryItem[];
+      }>("/category?moduleType=blogs&limit=100&page=1", { method: "GET" });
+
+      if (res.success) {
+        setCategories(res.data);
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to load categories",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.error("Category fetch error:", err);
+      toast({
+        title: "Error",
+        description: "Failed to load categories",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingCategories(false);
+    }
+  };
+
+  const fetchAllSubCategories = async () => {
+    setLoadingSubCategories(true);
+    try {
+      const res = await apiService<{
+        success: boolean;
+        data: SubCategoryItem[];
+      }>("/subcategory?moduleType=blogs&limit=100&page=1", { method: "GET" });
+
+      if (res.success) {
+        setSubCategories(res.data);
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to load subcategories",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.error("SubCategory fetch error:", err);
+      toast({
+        title: "Error",
+        description: "Failed to load subcategories",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingSubCategories(false);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedCategoryId && subCategories.length > 0) {
+      const filtered = subCategories.filter(
+        (s) => s.category === selectedCategoryId
+      );
+      setFilteredSubCategories(filtered);
+    } else {
+      setFilteredSubCategories([]);
+    }
+  }, [selectedCategoryId, subCategories]);
 
   useEffect(() => {
     if (subCategoryValue && !initialData?.slug) {
@@ -102,63 +197,18 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
   // ✅ Reset form whenever initialData changes (for Edit dialog)
   useEffect(() => {
     if (initialData) {
-      form.reset(initialData);
+      const formattedData = {
+        ...initialData,
+        categories: typeof initialData.categories === 'object' && initialData.categories
+          ? (initialData.categories as any)._id || ""
+          : (initialData.categories || ""),
+        subCategories: typeof initialData.subCategories === 'object' && initialData.subCategories
+          ? (initialData.subCategories as any)._id || ""
+          : (initialData.subCategories || ""),
+      };
+      form.reset(formattedData);
     }
   }, [initialData, form]);
-
-  // Upload Image
-  // const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-    const handleImageUpload = async (file: File) => {
-    if (!file) return;
-
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-
-    try {
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-        { method: "POST", body: formData }
-      );
-      const data = await response.json();
-      if (data.secure_url) {
-        form.setValue("image", data.secure_url, { shouldValidate: true });
-        toast({ title: "Image Uploaded", description: "Image uploaded successfully." });
-      } else throw new Error(data.error?.message || "Upload failed");
-    } catch (error: any) {
-      toast({ title: "Upload Failed", description: error.message, variant: "destructive" });
-    } finally {
-      setIsUploading(false);
-      if (imageInputRef.current) imageInputRef.current.value = "";
-    }
-  };
-
-  // const handleCoverImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  const handleCoverImageUpload = async (file: File) => {
-    if (!file) return;
-
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-
-    try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, { method: "POST", body: formData });
-      const data = await response.json();
-      if (data.secure_url) {
-        form.setValue("cover_image", data.secure_url, { shouldValidate: true });
-        toast({ title: "Cover Image Uploaded" });
-      } else throw new Error(data.error?.message || "Upload failed");
-    } catch (error: any) {
-      toast({ title: "Upload Failed", description: error.message, variant: "destructive" });
-    } finally {
-      setIsUploading(false);
-      if (coverImageInputRef.current) coverImageInputRef.current.value = "";
-    }
-  };
 
   // Submit handler
   const handleSubmit: SubmitHandler<BlogFormValues> = async (data) => {
@@ -183,13 +233,44 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
                 <Card className="shadow-none">
                   <CardContent className="p-6 space-y-6">
             {/* Category */}
-            <FormField control={form.control as any} name="categories" render={({ field }) => (
+            <FormField control={form.control} name="categories" render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter category" {...field} />
-                </FormControl>
-                <FormMessage />
+                <Select
+                  onValueChange={(val) => {
+                    field.onChange(val);
+                    // Reset subcategory if category changes
+                    form.setValue("subCategories", "");
+                  }}
+                  value={field.value}
+                  disabled={loadingCategories}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={
+                          loadingCategories
+                            ? "Loading categories..."
+                            : "Select a category"
+                        }
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <SelectItem key={cat._id} value={cat._id}>
+                          {cat.category}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="none" disabled>
+                        No categories found
+                      </SelectItem>
+                    )}
+                  </SelectContent>
+                </Select>
+                <FormMessage className="text-red-600 text-sm mt-1" />
               </FormItem>
             )} />
 
@@ -197,10 +278,43 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
             <FormField control={form.control} name="subCategories" render={({ field }) => (
               <FormItem>
                 <FormLabel>Sub Category</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter sub category" {...field} />
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  disabled={loadingSubCategories || !selectedCategoryId}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={
+                          !selectedCategoryId
+                            ? "First select a category"
+                            : loadingSubCategories
+                              ? "Loading subcategories..."
+                              : filteredSubCategories.length === 0
+                                ? "No subcategories found"
+                                : "Select a subcategory"
+                        }
+                      />
+                    </SelectTrigger>
                   </FormControl>
-                <FormMessage />
+                  <SelectContent>
+                    {filteredSubCategories.length > 0 ? (
+                      filteredSubCategories.map((sub) => (
+                        <SelectItem key={sub._id} value={sub._id}>
+                          {sub.subcategory}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="none" disabled>
+                        {!selectedCategoryId
+                          ? "Select category first"
+                          : "No subcategories for this category"}
+                      </SelectItem>
+                    )}
+                  </SelectContent>
+                </Select>
+                <FormMessage className="text-red-600 text-sm mt-1" />
               </FormItem>
             )} />
 
@@ -209,21 +323,10 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <FormControl>
-                  {/* <Input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    ref={imageInputRef}
-                    onChange={handleImageUpload}
-                    disabled={isUploading || isSubmitting}
-                  /> */}
                   <ImageUpload
-                    type="file"
-                    accept="image/*"
                     value={field.value || ""}
-                    ref={imageInputRef}
-                    onChange={handleImageUpload}
-                    disabled={isUploading || isSubmitting}
+                    onChange={field.onChange}
+                    disabled={isSubmitting}
                     className="w-68 h-48"
                   />
                 </FormControl>
@@ -254,7 +357,7 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
               name="slug"
               render={() => {
                 const slugValue = form.watch("slug");
-                const permalink = `${APP_URL}/services/${slugValue}`;
+                const permalink = `${APP_URL}/blog/${slugValue}`;
 
                 return (
                   <FormItem>
@@ -393,11 +496,9 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
                           <FormLabel>Cover Image (for Social Media)</FormLabel>
                           <FormControl>
                             <ImageUpload
-                            type="file" accept="image/*"
                               value={field.value || ""}
-                              ref={coverImageInputRef} 
-                              onChange={handleCoverImageUpload}
-                              disabled={isUploading}
+                              onChange={field.onChange}
+                              disabled={isSubmitting}
                               className="w-full h-48"
                             />
                           </FormControl>
@@ -423,7 +524,7 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
                 </Button>
               )}
 
-              <Button type="submit" disabled={isSubmitting || isUploading }>
+              <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

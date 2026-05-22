@@ -450,6 +450,12 @@ export const HirePageDataSchema = z.object({
   unloackPower: UnlockPowerSchema,
   hireingProcess: HiringProcessSchema,
   faq: z.array(FAQSchema),
+  seo: z.object({
+    title: z.string(),
+    keyphrase: z.string(),
+    seoDescription: z.string(),
+    featureImage: z.string().nullable().optional().or(z.literal("")),
+  }),
   createdAt: z.string().optional(),
   updatedAt: z.string().optional(),
 });
@@ -538,6 +544,12 @@ export interface HirePageData {
   unloackPower: UnlockPower; // matches schema spelling
   hireingProcess: HiringProcess;
   faq: HireFAQ[];
+  seo?: {
+    title: string;
+    keyphrase: string;
+    seoDescription: string;
+    featureImage?: string;
+  };
   createdAt?: string;
   updatedAt?: string;
 }
