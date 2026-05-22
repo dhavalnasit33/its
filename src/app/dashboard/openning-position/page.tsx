@@ -137,9 +137,9 @@ export default function OpenningPositionPage() {
         }
       />
 
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-3 w-full max-w-2xl">
-          <div className="relative flex-1">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4">
+        <div className="flex flex-1 items-center gap-3 justify-between w-full sm:w-auto">
+          <div className="relative w-full max-w-sm">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search by position name..."

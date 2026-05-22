@@ -208,11 +208,8 @@ export default function HirePageDataPage() {
                 Delete Selected ({selectedIds.length})
               </Button>
             )}
-            <Button
-              onClick={() => router.push("/dashboard/hire/create")}
-              className="bg-blue-600 text-white hover:bg-blue-700"
-            >
-              <PlusCircle className="mr-2 h-4 w-4" /> Add New
+            <Button onClick={() => router.push("/dashboard/hire/create")}>
+                <PlusCircle className="mr-2 h-4 w-4" /> Add New
             </Button>
           </div>
         }
@@ -332,7 +329,7 @@ export default function HirePageDataPage() {
       <div className="rounded-md border shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="hover:bg-gray-100">
               <TableHead className="w-10">
                 <input
                   type="checkbox"
@@ -379,7 +376,7 @@ export default function HirePageDataPage() {
               items.map((item, index) => (
                 <TableRow
                   key={item._id}
-                  className={`border dark:border-gray-300 ${index % 2 !== 0 ? "bg-gray-200" : ""} `}
+                  className={` border hover:bg-gray-100  ${selectedIds.includes(item._id!) ? "bg-gray-200" : ""} `}
                 >
                   <TableCell>
                     <input
@@ -389,7 +386,7 @@ export default function HirePageDataPage() {
                       className="cursor-pointer w-4 h-4"
                     />
                   </TableCell>
-                  <TableCell className="font-medium">
+                  <TableCell >
                     {typeof item.category === "object" && item.category
                       ? (item.category as any).category
                       : item.category}
@@ -400,7 +397,7 @@ export default function HirePageDataPage() {
                       : item.subCategory}
                   </TableCell>
                   <TableCell>{item.title}</TableCell>
-                  <TableCell className="text-gray-600">{item.slug}</TableCell>
+                  <TableCell >{item.slug}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu
                       open={dropdownOpen === item._id}
@@ -448,37 +445,31 @@ export default function HirePageDataPage() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-between items-center gap-2 mt-4">
-        <div>
-          <span className="text-sm text-gray-600">
-            Total Items: {pagination.total}
-            {selectedIds.length > 0 && (
-              <span className="ml-3 text-blue-600 font-medium">
-                {selectedIds.length} selected
-              </span>
+       {pagination.pages > 1 && (
+          <div className="flex items-center justify-between mt-6 px-2">
+              <p className="text-sm text-muted-foreground">
+                  Showing page {pagination.current} of {pagination.pages}
+              </p>
+              <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current === 1}
+                    onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
+                  >
+                  Previous
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current === pagination.pages}
+                    onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
+                  >
+                  Next
+                  </Button>
+              </div>
+          </div>
             )}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            disabled={pagination.current <= 1}
-            onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
-          >
-            Previous
-          </Button>
-          <span className="text-sm font-medium">
-            Page {pagination.current} of {pagination.pages}
-          </span>
-          <Button
-            variant="outline"
-            disabled={pagination.current >= pagination.pages}
-            onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
 
       {/* Dialogs */}
       {selectedItem && (
