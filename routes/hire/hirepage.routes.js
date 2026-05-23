@@ -317,54 +317,77 @@ router.post("/", protect, async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const { page = 1, limit = 10, category, subCategory, search = "" } = req.query;
-        const query = {};
+        const conditions = [];
+        let resolvedCategoryId = null;
+
         if (category) {
             if (mongoose.Types.ObjectId.isValid(category)) {
-                query.category = category;
+                resolvedCategoryId = category;
+                const catObjId = new mongoose.Types.ObjectId(category);
+                conditions.push({
+                    $or: [
+                        { category: category },
+                        { category: catObjId }
+                    ]
+                });
             } else {
                 const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "hire" });
                 if (catDoc) {
-                    query.$or = [
-                        { category: category },
-                        { category: catDoc._id }
-                    ];
+                    resolvedCategoryId = catDoc._id;
+                    conditions.push({
+                        $or: [
+                            { category: category },
+                            { category: catDoc._id },
+                            { category: catDoc._id.toString() }
+                        ]
+                    });
                 } else {
-                    query.category = category;
+                    conditions.push({ category: category });
                 }
             }
         }
         if (subCategory) {
             if (mongoose.Types.ObjectId.isValid(subCategory)) {
-                query.subCategory = subCategory;
-            } else {
-                const subDoc = await SubcategoryModel.findOne({ subcategory: subCategory.trim(), moduleType: "hire" });
-                if (subDoc) {
-                    query.$or = [
+                const subObjId = new mongoose.Types.ObjectId(subCategory);
+                conditions.push({
+                    $or: [
                         { subCategory: subCategory },
-                        { subCategory: subDoc._id }
-                    ];
+                        { subCategory: subObjId }
+                    ]
+                });
+            } else {
+                const subQuery = { subcategory: subCategory.trim(), moduleType: "hire" };
+                if (resolvedCategoryId) {
+                    subQuery.category = resolvedCategoryId;
+                }
+                let subDoc = await SubcategoryModel.findOne(subQuery);
+                if (!subDoc && resolvedCategoryId) {
+                    subDoc = await SubcategoryModel.findOne({ subcategory: subCategory.trim(), moduleType: "hire" });
+                }
+                if (subDoc) {
+                    conditions.push({
+                        $or: [
+                            { subCategory: subCategory },
+                            { subCategory: subDoc._id },
+                            { subCategory: subDoc._id.toString() }
+                        ]
+                    });
                 } else {
-                    query.subCategory = subCategory;
+                    conditions.push({ subCategory: subCategory });
                 }
             }
         }
 
         if (search) {
-            const searchFilter = [
-                { title: { $regex: search, $options: "i" } },
-                { description: { $regex: search, $options: "i" } },
-            ];
-            if (query.$or) {
-                const originalOr = query.$or;
-                delete query.$or;
-                query.$and = [
-                    { $or: originalOr },
-                    { $or: searchFilter }
-                ];
-            } else {
-                query.$or = searchFilter;
-            }
+            conditions.push({
+                $or: [
+                    { title: { $regex: search, $options: "i" } },
+                    { description: { $regex: search, $options: "i" } },
+                ]
+            });
         }
+
+        const query = conditions.length > 0 ? { $and: conditions } : {};
 
         const skip = (page - 1) * limit;
         const [rawData, total] = await Promise.all([

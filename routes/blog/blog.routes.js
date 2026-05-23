@@ -206,17 +206,27 @@ router.get("/admin", async (req, res) => {
     } = req.query;
 
     const conditions = [];
+    let resolvedCategoryId = null;
 
     if (category) {
       if (mongoose.Types.ObjectId.isValid(category)) {
-        conditions.push({ categories: category });
+        resolvedCategoryId = category;
+        const catObjId = new mongoose.Types.ObjectId(category);
+        conditions.push({
+          $or: [
+            { categories: category },
+            { categories: catObjId }
+          ]
+        });
       } else {
         const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "blogs" });
         if (catDoc) {
+          resolvedCategoryId = catDoc._id;
           conditions.push({
             $or: [
               { categories: category },
-              { categories: catDoc._id }
+              { categories: catDoc._id },
+              { categories: catDoc._id.toString() }
             ]
           });
         } else {
@@ -227,14 +237,28 @@ router.get("/admin", async (req, res) => {
 
     if (subCategories) {
       if (mongoose.Types.ObjectId.isValid(subCategories)) {
-        conditions.push({ subCategories: subCategories });
+        const subObjId = new mongoose.Types.ObjectId(subCategories);
+        conditions.push({
+          $or: [
+            { subCategories: subCategories },
+            { subCategories: subObjId }
+          ]
+        });
       } else {
-        const subDoc = await SubcategoryModel.findOne({ subcategory: subCategories.trim(), moduleType: "blogs" });
+        const subQuery = { subcategory: subCategories.trim(), moduleType: "blogs" };
+        if (resolvedCategoryId) {
+          subQuery.category = resolvedCategoryId;
+        }
+        let subDoc = await SubcategoryModel.findOne(subQuery);
+        if (!subDoc && resolvedCategoryId) {
+          subDoc = await SubcategoryModel.findOne({ subcategory: subCategories.trim(), moduleType: "blogs" });
+        }
         if (subDoc) {
           conditions.push({
             $or: [
               { subCategories: subCategories },
-              { subCategories: subDoc._id }
+              { subCategories: subDoc._id },
+              { subCategories: subDoc._id.toString() }
             ]
           });
         } else {
@@ -377,13 +401,18 @@ router.get("/", async (req, res) => {
     let query = {};
     if (category) {
       if (mongoose.Types.ObjectId.isValid(category)) {
-        query.categories = category;
+        const catObjId = new mongoose.Types.ObjectId(category);
+        query.$or = [
+          { categories: category },
+          { categories: catObjId }
+        ];
       } else {
         const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "blogs" });
         if (catDoc) {
           query.$or = [
             { categories: category },
-            { categories: catDoc._id }
+            { categories: catDoc._id },
+            { categories: catDoc._id.toString() }
           ];
         } else {
           query.categories = category;

@@ -274,6 +274,8 @@ router.get('/me', protect, async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 plan: user.plan,
                 roles: user.roles,
                 profile_picture: user.profile_picture,
@@ -286,6 +288,95 @@ router.get('/me', protect, async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Server Error",
+        });
+    }
+});
+
+/**
+ * @swagger
+ * /api/auth-user/update:
+ *   put:
+ *     summary: Update logged-in user profile
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               profile_picture:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User profile updated successfully
+ *       400:
+ *         description: Invalid input or email already exists
+ *       401:
+ *         description: Unauthorized
+ */
+router.put('/update', protect, async (req, res) => {
+    try {
+        const { firstName, lastName, email, password, profile_picture } = req.body;
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        if (email && email !== user.email) {
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({ success: false, message: "Email already in use" });
+            }
+            user.email = email;
+        }
+
+        if (firstName) user.firstName = firstName;
+        if (lastName) user.lastName = lastName;
+        if (firstName || lastName) {
+            user.name = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+        }
+
+        if (password) {
+            user.password = password; // pre-save hook will hash it
+        }
+
+        if (profile_picture !== undefined) {
+            user.profile_picture = profile_picture;
+        }
+
+        await user.save();
+
+        res.json({
+            success: true,
+            message: "Profile updated successfully",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                roles: user.roles,
+                profile_picture: user.profile_picture,
+                lastLogin: user.lastLogin,
+                createdAt: user.createdAt,
+            }
+        });
+    } catch (error) {
+        console.error("Update user error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error during profile update"
         });
     }
 });
