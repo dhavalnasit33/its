@@ -184,10 +184,11 @@ export default function Blog() {
   const isAllSelected = items.length > 0 && selectedIds.length === items.length;
   const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
 
-    const resetFilters = () => {
+  const resetFilters = () => {
     setSearchValue("");
     setSelectedCategory(null);
     setSelectedSubCategory(null);
+    setPagination((prev) => ({ ...prev, current: 1 }));
   };
 
   return (
@@ -250,6 +251,7 @@ export default function Blog() {
                 onClick={() => {
                   setSelectedCategory(null);
                   setIsCategoryPopoverOpen(false);
+                  setPagination((prev) => ({ ...prev, current: 1 }));
                 }}
                 className={`w-full text-left px-2 py-1.5 rounded text-sm flex items-center gap-2 ${!selectedCategory ? "bg-blue-500 text-white" : "hover:bg-gray-100"
                   }`}
@@ -264,6 +266,7 @@ export default function Blog() {
                   onClick={() => {
                     setSelectedCategory(opt.category);
                     setIsCategoryPopoverOpen(false);
+                    setPagination((prev) => ({ ...prev, current: 1 }));
                   }}
                   className={`w-full text-left px-2 py-1.5 rounded text-sm flex items-center gap-2 ${selectedCategory === opt.category ? "bg-blue-500 text-white" : "hover:bg-gray-100"
                     }`}
@@ -289,6 +292,7 @@ export default function Blog() {
                 onClick={() => {
                   setSelectedSubCategory(null);
                   setIsSubCategoryPopoverOpen(false);
+                  setPagination((prev) => ({ ...prev, current: 1 }));
                 }}
                 className={`w-full text-left px-2 py-1.5 rounded text-sm flex items-center gap-2 ${!selectedSubCategory ? "bg-blue-500 text-white" : "hover:bg-gray-100"
                   }`}
@@ -303,6 +307,7 @@ export default function Blog() {
                   onClick={() => {
                     setSelectedSubCategory(subCat);
                     setIsSubCategoryPopoverOpen(false);
+                    setPagination((prev) => ({ ...prev, current: 1 }));
                   }}
                   className={`w-full text-left px-2 py-1.5 rounded text-sm flex items-center gap-2 ${selectedSubCategory === subCat ? "bg-blue-500 text-white" : "hover:bg-gray-100"
                     }`}
