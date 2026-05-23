@@ -74,9 +74,13 @@ export default function EditBlogPage() {
         </div>
       ) : item ? (
         <FaqsForm
-          initialData={item}
+          initialData={{
+            categories: typeof item.categories === "object" && item.categories ? item.categories._id : (item.categories as string),
+            title: item.title,
+            answer: item.answer,
+          }}
           onSubmit={handleSubmit}
-          onCancel={() => router.push("/dashboard/Blog")}
+          onCancel={() => router.push("/dashboard/Faqs")}
         />
 
       ) : (

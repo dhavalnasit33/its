@@ -27,7 +27,7 @@ export default function EditFaqsDialog({
 }: EditFaqsDialogProps) {
     const { toast } = useToast();
     const formData: FaqsFormValues = {
-        categories: initialData.categories,
+        categories: typeof initialData.categories === "object" && initialData.categories ? initialData.categories._id : (initialData.categories as string),
         title: initialData.title,
         answer: initialData.answer,
     }

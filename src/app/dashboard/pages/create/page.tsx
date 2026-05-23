@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import apiService from '@/lib/apiService';
-import Card from '@mui/material/Card';
+
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 

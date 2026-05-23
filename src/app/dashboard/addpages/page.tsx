@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState, useRef } from "react";
@@ -10,13 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-
+import apiService from "@/lib/apiService";
 
 const pageSchema = z.object({
     title: z.string().optional(),
@@ -31,25 +27,16 @@ const pageSchema = z.object({
 
 export type PageFormValues = z.infer<typeof pageSchema>;
 
-interface PageFormProps {
-    initialData?: PageFormValues | null;
-    onSubmit: (data: PageFormValues) => Promise<void>;
-}
-
-
 const CLOUDINARY_CLOUD_NAME = "dctvxbvuz";
 const CLOUDINARY_UPLOAD_PRESET = "ITS_ADMIN";
 
-export default function BlogForm({ initialData, onSubmit }: PageFormProps) {
+export default function AddPagesPage() {
     const { toast } = useToast();
-
-
     const router = useRouter();
 
     const [isUploading, setIsUploading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const imageInputRef = useRef<HTMLInputElement>(null);
-    const coverImageInputRef = useRef<HTMLInputElement>(null);
 
     const form = useForm<PageFormValues>({
         resolver: zodResolver(pageSchema),
@@ -64,13 +51,6 @@ export default function BlogForm({ initialData, onSubmit }: PageFormProps) {
             cover_image: "",
         },
     });
-
-    useEffect(() => {
-        if (initialData) {
-            form.reset(initialData);
-        }
-    }, [initialData, form]);
-
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -99,12 +79,24 @@ export default function BlogForm({ initialData, onSubmit }: PageFormProps) {
         }
     };
 
-
-    const handleSubmit: SubmitHandler<PageFormValues> = async (data) => {
+    const onSubmit = async (data: PageFormValues) => {
         setIsSubmitting(true);
         try {
-            await onSubmit(data);
-            form.reset();
+            const res = await apiService<{ success: boolean; message: string }>(
+                "/page",
+                {
+                    method:  "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body:    JSON.stringify(data),
+                }
+            );
+
+            if (res.success) {
+                toast({ title: "Success", description: res.message || "Page created successfully." });
+                router.push("/dashboard/pages");
+            } else {
+                throw new Error(res.message || "Failed to create page");
+            }
         } catch (error: any) {
             toast({ title: "Error", description: error.message || "Something went wrong", variant: "destructive" });
         } finally {
@@ -112,20 +104,15 @@ export default function BlogForm({ initialData, onSubmit }: PageFormProps) {
         }
     };
 
-
-
-
     return (
         <>
             <Card>
                 <CardHeader>
-                    Home  page
+                    Home page
                 </CardHeader>
                 <CardContent>
-
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <FormField control={form.control} name="title" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>page Title</FormLabel>
@@ -171,6 +158,15 @@ export default function BlogForm({ initialData, onSubmit }: PageFormProps) {
                                     <FormMessage />
                                 </FormItem>
                             )} />
+
+                            <FormField control={form.control} name="slug" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Slug</FormLabel>
+                                    <FormControl><Input placeholder="Enter the URL slug" {...field} /></FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+
                             <FormField control={form.control} name="seo_title" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>SEO Title</FormLabel>
@@ -196,6 +192,7 @@ export default function BlogForm({ initialData, onSubmit }: PageFormProps) {
                             )} />
                             <div className="flex gap-3 justify-end">
                                 <Button
+                                    type="button"
                                     variant="secondary"
                                     onClick={() => router.push("/dashboard/pages")}
                                 >Cancel</Button>
@@ -205,12 +202,10 @@ export default function BlogForm({ initialData, onSubmit }: PageFormProps) {
                                     {isSubmitting ? "Saving..." : "Save"}
                                 </Button>
                             </div>
-
                         </form>
                     </Form>
                 </CardContent>
             </Card>
         </>
-    )
+    );
 }
-

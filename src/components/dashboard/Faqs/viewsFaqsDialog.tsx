@@ -45,7 +45,7 @@ export default function viewsFaqsDialog({
               Category
             </p>
             <p className="font-medium text-gray-900">
-              {stripHtml(Faqs.categories)}
+              {stripHtml(typeof Faqs.categories === "object" && Faqs.categories ? Faqs.categories.category : (Faqs.categories as string))}
             </p>
           </div>
           <div className="p-3 rounded-lg border border-gray-300 bg-gray-50">

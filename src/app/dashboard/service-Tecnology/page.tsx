@@ -17,15 +17,104 @@ import apiService from "@/lib/apiService";
 import { useRouter } from "next/navigation";
 
 import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
+
+import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { ServiceTecnology } from "@/types/index";
-import CreateServiceTechnologyDialog from "@/components/dashboard/service-technology/CreateServiceTechnologyDialog";
-import EditServiceTechnologyDialog from "@/components/dashboard/service-technology/EditServiceTechnologyDialog";
-import DeleteServiceTechnologyDialog from "@/components/dashboard/service-technology/DeleteServiceTechnologyDialog";
+
+interface DeleteServiceTechnologyDialogProps {
+    isOpen: boolean;
+    onOpenChange: (isOpen: boolean) => void;
+    serviceTech: ServiceTecnology;
+    onSuccess: () => void;
+}
+
+function DeleteServiceTechnologyDialog({
+    isOpen,
+    onOpenChange,
+    serviceTech,
+    onSuccess,
+}: DeleteServiceTechnologyDialogProps) {
+    const { toast } = useToast();
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
+        try {
+            const res = await apiService<{ success: boolean; message: string }>(`/service-technology/${serviceTech._id}`, {
+                method: "DELETE",
+            });
+
+            if (res.success) {
+                toast({
+                    title: "Deleted",
+                    description: "Service technology has been deleted successfully."
+                });
+                onSuccess();
+                onOpenChange(false);
+            } else {
+                toast({
+                    title: "Error",
+                    description: res.message || "Failed to delete service technology",
+                    variant: "destructive"
+                });
+            }
+        } catch (error: any) {
+            toast({
+                title: "Error",
+                description: error.message || "Something went wrong",
+                variant: "destructive"
+            });
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    return (
+        <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Delete Service Technology</AlertDialogTitle>
+                    <div className="space-y-3">
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete the service technology
+                            &quot;<strong>{serviceTech.label}</strong>&quot; and remove it from our servers.
+                        </AlertDialogDescription>
+					</div>
+                </AlertDialogHeader>
+
+                <AlertDialogFooter>
+                    <AlertDialogCancel disabled={isDeleting} onClick={() => onOpenChange(false)}>
+                        Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    >
+                        {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {isDeleting ? "Deleting..." : "Delete"}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
+}
 
 export default function ServiceTechnologyPage() {
     const [items, setItems] = useState<ServiceTecnology[]>([]);
@@ -69,7 +158,9 @@ export default function ServiceTechnologyPage() {
         }
     };
     useEffect(() => { fetchItems(1); }, [searchValue]);
-    const handleEditDialogOpen = (item: ServiceTecnology) => { setSelectedItem(item); setEditDialogOpen(true); };
+    const handleEditDialogOpen = (item: ServiceTecnology) => {
+        router.push(`/dashboard/service-Tecnology/${item._id}/edit`);
+    };
     const handleEditDialogChange = (open: boolean) => { if (!open) setSelectedItem(null); setEditDialogOpen(open); };
     const handleEditSuccess = () => { fetchItems(pagination.current); };
     const handleDeleteDialogOpen = (item: ServiceTecnology) => { setSelectedItem(item); setDeleteDialogOpen(true); };
@@ -190,24 +281,6 @@ export default function ServiceTechnologyPage() {
                 </Button>
             </div>
 
-            <CreateServiceTechnologyDialog
-                isOpen={dialogOpen}
-                onOpenChange={setDialogOpen}
-                onSuccess={() => fetchItems(pagination.current)}
-            />
-            {selectedItem && (
-                <EditServiceTechnologyDialog
-                    isOpen={editDialogOpen}
-                    onOpenChange={handleEditDialogChange}
-                    initialData={{
-                        id: selectedItem._id,
-                        image: selectedItem.image,
-                        label: selectedItem.label,
-                        serviceId: selectedItem.serviceId._id,
-                    }}
-                    onSuccess={handleEditSuccess}
-                />
-            )}
             {selectedItem && (
                 <DeleteServiceTechnologyDialog
                     isOpen={deleteDialogOpen}
@@ -215,8 +288,7 @@ export default function ServiceTechnologyPage() {
                     serviceTech={selectedItem}
                     onSuccess={handleDeleteSuccess}
                 />
-            )
-            }
+            )}
         </div>
     );
 }
