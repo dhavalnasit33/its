@@ -1,5 +1,6 @@
 const express = require("express");
-const SeoManager = require("../../models/seo/seo-manager");
+// const SeoManager = require("../../models/seo/seo-manager");
+const SeoManager = require("../../models/seo/manage-seo");
 const { protect } = require("../../middlewares/auth");
 const {
   updateLinkedEntity,

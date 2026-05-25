@@ -4,6 +4,7 @@ const { protect } = require("../../middlewares/auth");
 const HomePageData = require('../../models/home/homeContent');
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 const router = express.Router();
 
 /**
@@ -229,7 +230,7 @@ const router = express.Router();
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
+        const { pagename, slug, heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
 
         // Check if homepage data already exists
         const existingData = await HomePageData.findOne();
@@ -241,6 +242,8 @@ router.post("/", protect, async (req, res) => {
         }
 
         const newHomePageData = new HomePageData({
+            pagename,
+            slug,
             heroSecton,
             reasonsToChoose,
             aisection,
@@ -250,6 +253,12 @@ router.post("/", protect, async (req, res) => {
         });
 
         await newHomePageData.save();
+
+        try {
+            await syncSeoData(newHomePageData.pagename, newHomePageData.slug, newHomePageData.pagename, "independent", newHomePageData._id, newHomePageData.seo);
+        } catch (seoError) {
+            console.warn("SEO sync warning during home create:", seoError.message);
+        }
 
         res.status(201).json({
             success: true,
@@ -424,7 +433,7 @@ router.get("/admin", protect, async (req, res) => {
  */
 router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async (req, res) => {
     try {
-        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
+        const { pagename, slug, heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(400).json({
@@ -436,6 +445,8 @@ router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async
         const updatedHomePageData = await HomePageData.findByIdAndUpdate(
             req.params.id,
             {
+                pagename,
+                slug,
                 heroSecton,
                 reasonsToChoose,
                 aisection,
@@ -451,6 +462,12 @@ router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async
                 success: false,
                 message: "Homepage data not found",
             });
+        }
+
+        try {
+            await syncSeoData(updatedHomePageData.pagename, updatedHomePageData.slug, updatedHomePageData.pagename, "independent", updatedHomePageData._id, updatedHomePageData.seo);
+        } catch (seoError) {
+            console.warn("SEO sync warning during home update:", seoError.message);
         }
 
         res.status(200).json({
@@ -496,7 +513,7 @@ router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async
  */
 router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async (req, res) => {
     try {
-        const { heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
+        const { pagename, slug, heroSecton, reasonsToChoose, aisection, aboutOurCompany, overseasWebAgencies, seo } = req.body;
 
         const existingData = await HomePageData.findOne();
 
@@ -505,6 +522,8 @@ router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async 
             const updatedData = await HomePageData.findOneAndUpdate(
                 {},
                 {
+                    pagename,
+                    slug,
                     heroSecton,
                     reasonsToChoose,
                     aisection,
@@ -515,6 +534,12 @@ router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async 
                 { new: true, runValidators: true }
             );
 
+            try {
+                await syncSeoData(updatedData.pagename, updatedData.slug, updatedData.pagename, "independent", updatedData._id, updatedData.seo);
+            } catch (seoError) {
+                console.warn("SEO sync warning during home patch update:", seoError.message);
+            }
+
             return res.status(200).json({
                 success: true,
                 message: "Homepage data updated successfully",
@@ -523,6 +548,8 @@ router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async 
         } else {
             // Create new
             const newHomePageData = new HomePageData({
+                pagename,
+                slug,
                 heroSecton,
                 reasonsToChoose,
                 aisection,
@@ -532,6 +559,12 @@ router.patch("/", protect, cleanupOldImages(HomePageData,"HomePageData"), async 
             });
 
             await newHomePageData.save();
+
+            try {
+                await syncSeoData(newHomePageData.pagename, newHomePageData.slug, newHomePageData.pagename, "independent", newHomePageData._id, newHomePageData.seo);
+            } catch (seoError) {
+                console.warn("SEO sync warning during home patch create:", seoError.message);
+            }
 
             return res.status(201).json({
                 success: true,
@@ -604,6 +637,12 @@ router.delete("/:id", protect, cleanupImages(HomePageData),async (req, res) => {
                 success: false,
                 message: "Homepage data not found"
             });
+        }
+
+        try {
+            await forceDeleteSeoData(deleted.slug);
+        } catch (seoError) {
+            console.warn("SEO delete warning during home delete:", seoError.message);
         }
 
         res.status(200).json({

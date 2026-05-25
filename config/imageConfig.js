@@ -14,6 +14,7 @@ module.exports = {
 
   // ✅ seo-manager 
   SeoManager: ["cover_image"],
+  ManageSeo: ["cover_image"],
 
   // ✅ CreativeWork
   CreativeWork: ["image"],

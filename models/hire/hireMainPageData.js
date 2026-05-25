@@ -114,6 +114,18 @@ const SEOSchema = new mongoose.Schema(
 );
 
 const HireMainPageDataSchema = mongoose.Schema({
+    pagename: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        default: ""
+    },
     mainTitle: {
         type: String,
         required: true

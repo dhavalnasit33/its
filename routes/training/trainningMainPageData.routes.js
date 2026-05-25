@@ -3,6 +3,7 @@ const TrainingMainPageData = require("../../models/training/tranningMainPage");
 const { protect } = require("../../middlewares/auth");
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 
 const router = express.Router();
 
@@ -155,6 +156,8 @@ const router = express.Router();
 router.post("/", protect, async (req, res) => {
   try {
     const {
+      pagename,
+      slug,
       heroSection,
       aboutusSection,
       itsInstituteFacilitiesSection,
@@ -175,6 +178,8 @@ router.post("/", protect, async (req, res) => {
     }
 
     const trainingContent = new TrainingMainPageData({
+      pagename,
+      slug,
       heroSection,
       aboutusSection,
       itsInstituteFacilitiesSection,
@@ -182,6 +187,12 @@ router.post("/", protect, async (req, res) => {
       seo,
     });
     await trainingContent.save();
+
+    try {
+      await syncSeoData(trainingContent.pagename, trainingContent.slug, trainingContent.pagename, "independent", trainingContent._id, trainingContent.seo);
+    } catch (seoError) {
+      console.warn("SEO sync warning during trainingContent create:", seoError.message);
+    }
 
     res.status(201).json({
       success: true,
@@ -267,6 +278,8 @@ router.put("/:id", protect,cleanupOldImages(TrainingMainPageData,"TrainingMainPa
     }
 
     const {
+      pagename,
+      slug,
       heroSection,
       aboutusSection,
       itsInstituteFacilitiesSection,
@@ -277,6 +290,8 @@ router.put("/:id", protect,cleanupOldImages(TrainingMainPageData,"TrainingMainPa
     const updatedContent = await TrainingMainPageData.findByIdAndUpdate(
       req.params.id,
       {
+        pagename,
+        slug,
         heroSection,
         aboutusSection,
         itsInstituteFacilitiesSection,
@@ -285,6 +300,14 @@ router.put("/:id", protect,cleanupOldImages(TrainingMainPageData,"TrainingMainPa
       },
       { new: true, runValidators: true }
     );
+
+    if (updatedContent) {
+      try {
+        await syncSeoData(updatedContent.pagename, updatedContent.slug, updatedContent.pagename, "independent", updatedContent._id, updatedContent.seo);
+      } catch (seoError) {
+        console.warn("SEO sync warning during trainingContent update:", seoError.message);
+      }
+    }
 
     res.status(200).json({
       success: true,
@@ -332,6 +355,12 @@ router.delete("/:id", protect, cleanupImages(TrainingMainPageData) ,async (req, 
     }
 
     await TrainingMainPageData.findByIdAndDelete(req.params.id);
+
+    try {
+      await forceDeleteSeoData(content.slug);
+    } catch (seoError) {
+      console.warn("SEO delete warning during training delete:", seoError.message);
+    }
 
     res.status(200).json({
       success: true,

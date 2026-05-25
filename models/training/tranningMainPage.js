@@ -127,6 +127,18 @@ const SEOSchema = new mongoose.Schema(
 );
 
 const TranningMainPageSchema = new mongoose.Schema({
+    pagename: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        default: ""
+    },
     heroSection: HeroSectionSchema,
     aboutusSection: AboutusSectionSchema,
     itsInstituteFacilitiesSection: ITSInstituteFacilitiesSectionSchema,

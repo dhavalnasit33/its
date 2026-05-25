@@ -3,6 +3,7 @@ const PortfolioContent = require("../../models/portfolio/portfolioContent");
 const { protect } = require("../../middlewares/auth");
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 const router = express.Router();
 
 /**
@@ -96,7 +97,7 @@ const router = express.Router();
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { heroSection, seo } = req.body;
+        const { pagename, slug, heroSection, seo } = req.body;
         if (
             !heroSection ||
             !heroSection.title ||
@@ -108,8 +109,14 @@ router.post("/", protect, async (req, res) => {
                 .json({ success: false, message: "Hero section fields are required" });
         }
 
-        const portfolioContent = new PortfolioContent({ heroSection, seo });
+        const portfolioContent = new PortfolioContent({ pagename, slug, heroSection, seo });
         await portfolioContent.save();
+
+        try {
+            await syncSeoData(portfolioContent.pagename, portfolioContent.slug, portfolioContent.pagename, "independent", portfolioContent._id, portfolioContent.seo);
+        } catch (seoError) {
+            console.warn("SEO sync warning during portfolio create:", seoError.message);
+        }
 
         res
             .status(201)
@@ -191,15 +198,23 @@ router.put("/:id", protect,cleanupOldImages(PortfolioContent,"PortfolioContent")
                 .json({ success: false, message: "Portfolio content not found" });
         }
 
-        const { heroSection, seo } = req.body;
+        const { pagename, slug, heroSection, seo } = req.body;
         const updatedContent = await PortfolioContent.findByIdAndUpdate(
             req.params.id,
-            { heroSection, seo },
+            { pagename, slug, heroSection, seo },
             {
                 new: true,
                 runValidators: true,
             }
         );
+
+        if (updatedContent) {
+            try {
+                await syncSeoData(updatedContent.pagename, updatedContent.slug, updatedContent.pagename, "independent", updatedContent._id, updatedContent.seo);
+            } catch (seoError) {
+                console.warn("SEO sync warning during portfolio update:", seoError.message);
+            }
+        }
 
         res
             .status(200)
@@ -247,6 +262,13 @@ router.delete("/:id", protect, cleanupImages(PortfolioContent), async (req, res)
         }
 
         await PortfolioContent.findByIdAndDelete(req.params.id);
+
+        try {
+            await forceDeleteSeoData(content.slug);
+        } catch (seoError) {
+            console.warn("SEO delete warning during portfolio delete:", seoError.message);
+        }
+
         res
             .status(200)
             .json({

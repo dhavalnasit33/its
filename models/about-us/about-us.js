@@ -92,6 +92,18 @@ const SEOSchema = new mongoose.Schema(
 );
 
 const AboutUsSchema = new mongoose.Schema({
+    pagename: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        default: ""
+    },
     heroSection: HeroSectionSchema,
     whoWeAre: WhoWeAreSchema,
     goals: GoalsSchema,

@@ -856,7 +856,7 @@ router.post("/", protect, async (req, res) => {
     const result = await newService.save();
 
     try {
-      await syncSeoData(subCategory, slug, mainTitle, "service", result._id);
+      await syncSeoData(subCategory, slug, mainTitle, "service", result._id, result.seo);
     } catch (seoError) {
       console.warn("SEO sync warning:", seoError.message);
     }
@@ -1151,21 +1151,17 @@ router.put(
         });
       }
 
-      if (
-        currentService.slug !== updatedService.slug ||
-        currentService.subCategory !== updatedService.subCategory
-      ) {
-        try {
-          await syncSeoData(
-            updatedService.subCategory,
-            updatedService.slug,
-            updatedService.mainTitle,
-            "service",
-            updatedService._id
-          );
-        } catch (seoError) {
-          console.warn("SEO sync warning during update:", seoError.message);
-        }
+      try {
+        await syncSeoData(
+          updatedService.subCategory,
+          updatedService.slug,
+          updatedService.mainTitle,
+          "service",
+          updatedService._id,
+          updatedService.seo
+        );
+      } catch (seoError) {
+        console.warn("SEO sync warning during update:", seoError.message);
       }
 
       res.status(200).json({

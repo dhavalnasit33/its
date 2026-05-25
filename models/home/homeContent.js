@@ -153,13 +153,25 @@ const SEOSchema = new mongoose.Schema(
 );
 
 const HomePageDataSchema = new mongoose.Schema({
+    pagename: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        default: ""
+    },
     heroSecton: HeroSectonSchema,
     reasonsToChoose: ReasonsToChooseSchema,
     aisection: aiSectionSchema,
     aboutOurCompany: AboutOurCompanySchema,
     overseasWebAgencies: OverseasWebAgenciesSchema,
     seo: SEOSchema
-}, { timestamps: true })
+}, { timestamps: true });
 
+module.exports = mongoose.model('HomePageData', HomePageDataSchema);
 
-module.exports = mongoose.model('HomePageData', HomePageDataSchema)

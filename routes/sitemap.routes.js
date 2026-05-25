@@ -1,7 +1,6 @@
-
 const express = require("express");
 const router = express.Router();
-const SeoManager = require("../models/seo/seo-manager");
+const SeoManager = require("../models/seo/manage-seo");
 const Blog = require("../models/blog/blog.model");
 
 // Helper function to format dates to YYYY-MM-DD

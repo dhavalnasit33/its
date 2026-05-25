@@ -3,6 +3,7 @@ const AboutUs = require('../../models/about-us/about-us');
 const { protect } = require('../../middlewares/auth');
 const cleanupOldImages = require('../../middlewares/cleanupOldImages');
 const cleanupImages = require('../../middlewares/cleanupImages');
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 const router = express.Router();
 
 /**
@@ -161,7 +162,7 @@ const router = express.Router();
  */
 router.post('/', protect, async (req, res) => {
     try {
-        const { heroSection, whoWeAre, goals, seo } = req.body;
+        const { pagename, slug, heroSection, whoWeAre, goals, seo } = req.body;
 
         // Validate required fields based on your schema requirements
         if (!heroSection || !whoWeAre || !goals) {
@@ -197,8 +198,14 @@ router.post('/', protect, async (req, res) => {
             }
         }
 
-        const aboutUs = new AboutUs({ heroSection, whoWeAre, goals, seo });
+        const aboutUs = new AboutUs({ pagename, slug, heroSection, whoWeAre, goals, seo });
         await aboutUs.save();
+
+        try {
+            await syncSeoData(aboutUs.pagename, aboutUs.slug, aboutUs.pagename, "independent", aboutUs._id, aboutUs.seo);
+        } catch (seoError) {
+            console.warn("SEO sync warning during about-us create:", seoError.message);
+        }
 
         res.status(201).json({
             success: true,
@@ -280,16 +287,22 @@ router.get('/', async (req, res) => {
  */
 router.put('/:id', protect, cleanupOldImages(AboutUs, "AboutUs"), async (req, res) => {
     try {
-        const { heroSection, whoWeAre, goals, seo } = req.body;
+        const { pagename, slug, heroSection, whoWeAre, goals, seo } = req.body;
 
         const updatedAboutUs = await AboutUs.findByIdAndUpdate(
             req.params.id,
-            { heroSection, whoWeAre, goals, seo },
+            { pagename, slug, heroSection, whoWeAre, goals, seo },
             { new: true, runValidators: true }
         );
 
         if (!updatedAboutUs) {
             return res.status(404).json({ success: false, message: "About Us not found" });
+        }
+
+        try {
+            await syncSeoData(updatedAboutUs.pagename, updatedAboutUs.slug, updatedAboutUs.pagename, "independent", updatedAboutUs._id, updatedAboutUs.seo);
+        } catch (seoError) {
+            console.warn("SEO sync warning during about-us update:", seoError.message);
         }
 
         res.status(200).json({
@@ -325,6 +338,13 @@ router.delete('/:id', protect, cleanupImages(AboutUs),async (req, res) => {
         }
 
         await AboutUs.findByIdAndDelete(req.params.id);
+        
+        try {
+            await forceDeleteSeoData(aboutUs.slug);
+        } catch (seoError) {
+            console.warn("SEO delete warning during about-us delete:", seoError.message);
+        }
+
         res.status(200).json({ success: true, message: "About Us deleted successfully" });
 
     } catch (error) {

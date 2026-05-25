@@ -259,7 +259,7 @@ router.post("/", protect, async (req, res) => {
 
         // adding seo data 
         try {
-            await syncSeoData(subCategory, slug, title, 'hire', saved._id);
+            await syncSeoData(subCategory, slug, title, 'hire', saved._id, saved.seo);
         } catch (seoError) {
             console.warn('SEO sync warning:', seoError.message);
         }
@@ -758,12 +758,10 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
             { new: true, runValidators: true }
         );
 
-        if (data.slug !== updated.slug || data.subCategory !== updated.subCategory) {
-            try {
-                await syncSeoData(updated.subCategory, updated.slug, updated.title, 'hire', updated._id);
-            } catch (seoError) {
-                console.warn('SEO sync warning during update:', seoError.message);
-            }
+        try {
+            await syncSeoData(updated.subCategory, updated.slug, updated.title, 'hire', updated._id, updated.seo);
+        } catch (seoError) {
+            console.warn('SEO sync warning during update:', seoError.message);
         }
 
 

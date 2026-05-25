@@ -37,6 +37,11 @@ const seoManagerSchema = new mongoose.Schema({
         ref: 'HirePageData',
         default: null
     },
+    linkedPage: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'pages',
+        default: null
+    },
     linkedType: {
         type: String,
         enum: ['service', 'hire', 'independent'],
@@ -55,6 +60,7 @@ const seoManagerSchema = new mongoose.Schema({
 seoManagerSchema.index({ slug: 1 });
 seoManagerSchema.index({ title: 1 });
 seoManagerSchema.index({ linkedType: 1 });
+seoManagerSchema.index({ linkedPage: 1 });
 seoManagerSchema.index({ isAutoManaged: 1 });
 
 module.exports = mongoose.model("SeoManager", seoManagerSchema);

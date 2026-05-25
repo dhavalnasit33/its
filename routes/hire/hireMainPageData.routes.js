@@ -4,6 +4,7 @@ const HireMainPageData = require("../../models/hire/hireMainPageData");
 const { protect } = require("../../middlewares/auth"); 
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 
 const router = express.Router();
 
@@ -226,6 +227,8 @@ const populateOptions = [
 router.post("/", protect, async (req, res) => {
     try {
         const {
+            pagename,
+            slug,
             mainTitle,
             description,
             developmentTeamSection,
@@ -290,12 +293,30 @@ router.post("/", protect, async (req, res) => {
             });
         }
 
-        const hireMainPageData = new HireMainPageData(req.body);
+        const hireMainPageData = new HireMainPageData({
+            pagename,
+            slug,
+            mainTitle,
+            description,
+            developmentTeamSection,
+            dedicatedDeveloperSection,
+            whyHireDeveloperforYourProject,
+            whyChooseItsForDedicatedResources,
+            hireDedicatedResourcesAndTalents,
+            pricePathAndFAQ,
+            seo,
+        });
         const saved = await hireMainPageData.save();
 
         const populatedData = await HireMainPageData.findById(saved._id).populate(
             populateOptions
         );
+
+        try {
+            await syncSeoData(populatedData.pagename, populatedData.slug, populatedData.pagename, "independent", populatedData._id, populatedData.seo); //Hire Developers
+        } catch (seoError) {
+            console.warn("SEO sync warning during hireMainPage create:", seoError.message);
+        }
 
         res.status(201).json({
             success: true,
@@ -488,7 +509,7 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", protect,cleanupOldImages(HireMainPageData,"HireMainPageData"), async (req, res) => {
     try {
         const { id } = req.params;
-        const { dedicatedDeveloperSection } = req.body;
+        const { pagename, slug, dedicatedDeveloperSection } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res
@@ -535,6 +556,12 @@ router.put("/:id", protect,cleanupOldImages(HireMainPageData,"HireMainPageData")
             return res
                 .status(404)
                 .json({ success: false, message: "Hire Main Page Data not found" });
+        }
+
+        try {
+            await syncSeoData(updated.pagename, updated.slug, updated.pagename, "independent", updated._id, updated.seo);  // Hire Developers
+        } catch (seoError) {
+            console.warn("SEO sync warning during hireMainPage update:", seoError.message);
         }
 
         res.status(200).json({
@@ -594,6 +621,12 @@ router.delete(
                 return res
                     .status(404)
                     .json({ success: false, message: "Hire Main Page Data not found" });
+            }
+
+            try {
+                await forceDeleteSeoData(data.slug);
+            } catch (seoError) {
+                console.warn("SEO delete warning during hire delete:", seoError.message);
             }
 
             res.status(200).json({

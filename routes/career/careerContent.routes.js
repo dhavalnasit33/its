@@ -4,6 +4,7 @@ const CareerContent = require("../../models/career/careerContent");
 const { protect } = require("../../middlewares/auth");
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 
 /**
  * @swagger
@@ -113,7 +114,7 @@ const cleanupOldImages = require("../../middlewares/cleanupOldImages");
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { heroSection, careerAtIts, whyJoinIts, seo } = req.body;
+        const { pagename, slug, heroSection, careerAtIts, whyJoinIts, seo } = req.body;
 
         if (!heroSection || !careerAtIts || !whyJoinIts) {
             return res.status(400).json({
@@ -132,12 +133,20 @@ router.post("/", protect, async (req, res) => {
         }
 
         const newCareerContent = new CareerContent({
+            pagename,
+            slug,
             heroSection,
             careerAtIts,
             whyJoinIts,
             seo,
         });
         await newCareerContent.save();
+
+        try {
+            await syncSeoData(newCareerContent.pagename, newCareerContent.slug, newCareerContent.pagename, "independent", newCareerContent._id, newCareerContent.seo);
+        } catch (seoError) {
+            console.warn("SEO sync warning during career create:", seoError.message);
+        }
 
         res.status(201).json({
             success: true,
@@ -214,7 +223,7 @@ router.get("/", async (req, res) => {
 router.put("/:id", protect, cleanupOldImages(CareerContent,"CareerContent"), async (req, res) => {
     try {
         const id = req.params.id;
-        const { heroSection, careerAtIts, whyJoinIts, seo } = req.body;
+        const { pagename, slug, heroSection, careerAtIts, whyJoinIts, seo } = req.body;
 
         const careerContent = await CareerContent.findById(id);
         if (!careerContent) {
@@ -224,12 +233,21 @@ router.put("/:id", protect, cleanupOldImages(CareerContent,"CareerContent"), asy
             });  
         }
 
+        if (pagename) careerContent.pagename = pagename;
+        if (slug) careerContent.slug = slug;
         if (heroSection) careerContent.heroSection = heroSection;
         if (careerAtIts) careerContent.careerAtIts = careerAtIts;
         if (whyJoinIts) careerContent.whyJoinIts = whyJoinIts;
         if (seo) careerContent.seo = seo;
 
         await careerContent.save();
+
+        try {
+            await syncSeoData(careerContent.pagename, careerContent.slug, careerContent.pagename, "independent", careerContent._id, careerContent.seo);
+        } catch (seoError) {
+            console.warn("SEO sync warning during career update:", seoError.message);
+        }
+
         res.status(200).json({
             success: true,
             message: "Career content updated successfully",
@@ -273,6 +291,13 @@ router.delete("/:id", protect, cleanupImages(CareerContent),async (req, res) => 
                 message: "Career content not found",
             });
         }
+
+        try {
+            await forceDeleteSeoData(careerContent.slug);
+        } catch (seoError) {
+            console.warn("SEO delete warning during career delete:", seoError.message);
+        }
+
         res.status(200).json({
             success: true,
             message: "Career content deleted successfully",

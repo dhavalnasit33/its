@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Page = require("../../models/page/page.model");
 const { protect } = require("../../middlewares/auth");
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 
 const router = express.Router();
 
@@ -136,6 +137,14 @@ router.post("/", protect, async (req, res) => {
         .json({ success: false, message: "Slug is required" });
     }
 
+    // const staticSlugs = ["homepage", "home", "about-us", "career", "our-services", "our-portfolio", "training", "hire"];
+    // if (staticSlugs.includes(rawSlug.toLowerCase())) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Slug "${rawSlug}" is reserved for static pages and cannot be used here.`
+    //   });
+    // }
+
     const existing = await Page.findOne({ slug: rawSlug });
     if (existing) {
       return res.status(409).json({
@@ -156,6 +165,12 @@ router.post("/", protect, async (req, res) => {
         featureImage: seo?.featureImage || "",
       },
     });
+
+    try {
+      await syncSeoData(newPage.page_title, newPage.slug, newPage.page_title, "independent", newPage._id, newPage.seo);
+    } catch (seoError) {
+      console.warn("SEO sync warning during page create:", seoError.message);
+    }
 
     return res.status(201).json({
       success: true,
@@ -193,14 +208,23 @@ router.put("/:id", protect, async (req, res) => {
     }
 
     if (slug && slug.trim() !== page.slug) {
+      const cleanSlug = slug.trim();
+      // const staticSlugs = ["homepage", "home", "about-us", "career", "our-services", "our-portfolio", "training", "hire"];
+      // if (staticSlugs.includes(cleanSlug.toLowerCase())) {
+      //   return res.status(400).json({
+      //     success: false,
+      //     message: `Slug "${cleanSlug}" is reserved for static pages and cannot be used here.`
+      //   });
+      // }
+
       const existing = await Page.findOne({
-        slug: slug.trim(),
+        slug: cleanSlug,
         _id: { $ne: id },
       });
       if (existing) {
         return res.status(409).json({
           success: false,
-          message: `Slug "${slug.trim()}" already exists`,
+          message: `Slug "${cleanSlug}" already exists`,
         });
       }
     }
@@ -221,6 +245,12 @@ router.put("/:id", protect, async (req, res) => {
       },
       { new: true, runValidators: true },
     );
+
+    try {
+      await syncSeoData(updatedPage.page_title, updatedPage.slug, updatedPage.page_title, "independent", updatedPage._id, updatedPage.seo);
+    } catch (seoError) {
+      console.warn("SEO sync warning during page update:", seoError.message);
+    }
 
     return res.status(200).json({
       success: true,
@@ -257,6 +287,12 @@ router.delete("/:id", protect, async (req, res) => {
       return res
         .status(404)
         .json({ success: false, message: "Page not found" });
+    }
+
+    try {
+      await forceDeleteSeoData(page.slug);
+    } catch (seoError) {
+      console.warn("SEO delete warning during page delete:", seoError.message);
     }
 
     return res.status(200).json({

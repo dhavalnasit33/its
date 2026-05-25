@@ -43,6 +43,18 @@ const SEOSchema = new mongoose.Schema(
 
 const OurServicesSchema = new mongoose.Schema(
     {
+        pagename: {
+            type: String,
+            required: true,
+            default: ""
+        },
+        slug: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+            default: ""
+        },
         mainTitle: { type: String, required: true },
         description: { type: String, required: true },
         heroSections: [HeroSectionSchema],

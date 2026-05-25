@@ -4,6 +4,7 @@ const { protect } = require("../../middlewares/auth");
 const OurServicesMain = require("../../models/ourServices/ourServiesMain");
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const { syncSeoData, forceDeleteSeoData } = require("../../utils/seoSync");
 
 const router = express.Router();
 
@@ -164,7 +165,7 @@ const router = express.Router();
  */
 router.post("/", protect, async (req, res) => {
   try {
-    const { mainTitle, description, heroSections, technologyDetails } = req.body;
+    const { pagename, slug, mainTitle, description, heroSections, technologyDetails } = req.body;
 
     if (!mainTitle || !description || !heroSections || !technologyDetails) {
       return res.status(400).json({
@@ -174,6 +175,8 @@ router.post("/", protect, async (req, res) => {
     }
 
     const newService = new OurServicesMain({
+      pagename,
+      slug,
       mainTitle,
       description,
       heroSections,
@@ -182,6 +185,12 @@ router.post("/", protect, async (req, res) => {
     });
 
     await newService.save();
+
+    try {
+      await syncSeoData(newService.pagename, newService.slug, newService.pagename, "independent", newService._id, newService.seo);
+    } catch (seoError) {
+      console.warn("SEO sync warning during serviceMain create:", seoError.message);
+    }
 
     res.status(201).json({
       success: true,
@@ -416,7 +425,7 @@ router.get("/:id", async (req, res) => {
  */
 router.put("/:id", protect,cleanupOldImages(OurServicesMain,"OurServicesMain"), async (req, res) => {
   try {
-    const { mainTitle, description, heroSections, technologyDetails } = req.body;
+    const { pagename, slug, mainTitle, description, heroSections, technologyDetails } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(req.params.id))
       return res.status(400).json({ success: false, message: "Invalid ID" });
@@ -431,6 +440,8 @@ router.put("/:id", protect,cleanupOldImages(OurServicesMain,"OurServicesMain"), 
     const updatedService = await OurServicesMain.findByIdAndUpdate(
       req.params.id,
       { 
+        pagename,
+        slug,
         mainTitle, 
         description, 
         heroSections, 
@@ -453,6 +464,12 @@ router.put("/:id", protect,cleanupOldImages(OurServicesMain,"OurServicesMain"), 
 
     if (!updatedService)
       return res.status(404).json({ success: false, message: "Service not found" });
+
+    try {
+      await syncSeoData(updatedService.pagename, updatedService.slug, updatedService.pagename, "independent", updatedService._id, updatedService.seo);
+    } catch (seoError) {
+      console.warn("SEO sync warning during serviceMain update:", seoError.message);
+    }
 
     res.status(200).json({
       success: true,
@@ -513,6 +530,12 @@ router.delete("/:id", protect, cleanupImages(OurServicesMain),async (req, res) =
     const deleted = await OurServicesMain.findByIdAndDelete(req.params.id);
     if (!deleted)
       return res.status(404).json({ success: false, message: "Service not found" });
+
+    try {
+      await forceDeleteSeoData(deleted.slug);
+    } catch (seoError) {
+      console.warn("SEO delete warning during serviceMain delete:", seoError.message);
+    }
 
     res.status(200).json({ success: true, message: "Service deleted successfully" });
   } catch (error) {

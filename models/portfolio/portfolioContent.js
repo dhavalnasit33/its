@@ -11,6 +11,18 @@ const SEOSchema = new mongoose.Schema(
 );
 
 const portfolioContentSchema = new mongoose.Schema({
+    pagename: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        default: ""
+    },
     heroSection: {
         title: {
             type: String,
