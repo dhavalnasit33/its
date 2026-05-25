@@ -201,7 +201,7 @@ export default function OpenningPositionPage() {
                   <TableCell><Skeleton className="h-5 w-16 mx-auto" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell className="hidden lg:table-cell"><Skeleton className="h-5 w-32" /></TableCell>
-                  <TableCell></TableCell>
+                  <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto"></Skeleton></TableCell>
                 </TableRow>
               ))
             ) : items.length > 0 ? (

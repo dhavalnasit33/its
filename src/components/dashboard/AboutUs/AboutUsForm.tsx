@@ -19,6 +19,7 @@ import { Loader2, Trash2, Plus } from "lucide-react";
 import { AboutUsContentFormValues, AboutUsContentSchema } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 
 interface AboutUsFormProps {
   initialData?: AboutUsContentFormValues | null;
@@ -132,7 +133,13 @@ export default function AboutUsForm({
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Enter hero description" rows={4} {...field} />
+                        {/* <Textarea placeholder="Enter hero description" rows={4} {...field} /> */}
+                        <CustomCKEditor
+                          value={field.value || ""}
+                          onChange={(data: string) => {
+                              field.onChange(data);
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -232,7 +239,13 @@ export default function AboutUsForm({
                           render={({ field }) => (
                             <FormItem className="flex-1">
                               <FormControl>
-                                <Textarea placeholder={`Paragraph ${index + 1}`} rows={3} {...field} />
+                                {/* <Textarea placeholder={`Paragraph ${index + 1}`} rows={3} {...field} /> */}
+                                <CustomCKEditor
+                                    value={field.value || ""}
+                                    onChange={(data: string) => {
+                                        field.onChange(data);
+                                    }}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -286,7 +299,13 @@ export default function AboutUsForm({
                           <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                              <Textarea placeholder="Mission details..." rows={4} {...field} />
+                              {/* <Textarea placeholder="Mission details..." rows={4} {...field} /> */}
+                              <CustomCKEditor
+                                value={field.value || ""}
+                                onChange={(data: string) => {
+                                    field.onChange(data);
+                                }}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -338,7 +357,13 @@ export default function AboutUsForm({
                           <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                              <Textarea placeholder="Vision details..." rows={4} {...field} />
+                              {/* <Textarea placeholder="Vision details..." rows={4} {...field} /> */}
+                              <CustomCKEditor
+                                  value={field.value || ""}
+                                  onChange={(data: string) => {
+                                      field.onChange(data);
+                                  }}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -390,7 +415,13 @@ export default function AboutUsForm({
                           <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                              <Textarea placeholder="Values details..." rows={4} {...field} />
+                              {/* <Textarea placeholder="Values details..." rows={4} {...field} /> */}
+                              <CustomCKEditor
+                                  value={field.value || ""}
+                                  onChange={(data: string) => {
+                                      field.onChange(data);
+                                  }}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -459,7 +490,13 @@ export default function AboutUsForm({
                     <FormItem>
                       <FormLabel>Meta Description</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Brief summary for search results" rows={4} {...field} />
+                        {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
+                        <CustomCKEditor
+                            value={field.value || ""}
+                            onChange={(data: string) => {
+                                field.onChange(data);
+                            }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

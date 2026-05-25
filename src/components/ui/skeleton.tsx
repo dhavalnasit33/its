@@ -1,7 +1,7 @@
 import React from "react";
 
 function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={className} {...props} />;
+  return <div className={`animate-pulse rounded-md bg-gray-300/30 ${className}`} {...props} />;
 }
 
 export { Skeleton };

@@ -368,7 +368,7 @@ export default function Blog() {
           </TableHeader>
           <TableBody>
             {isLoading
-              ? Array.from({ length: 5 }).map((_, i) => (
+              ? Array.from({ length: limit }).map((_, i) => (
                 <TableRow key={i}>
                   <TableCell><Skeleton className="h-5 w-5" /></TableCell>
                   <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
@@ -430,15 +430,6 @@ export default function Blog() {
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent align="end">
-                          {/* <DropdownMenuItem
-                            onClick={() => {
-                              setSelectedItem(item);
-                              setViewDialogOpen(true);
-                              setDropdownOpen(null);
-                            }}
-                          >
-                            <Eye className="mr-2 h-4 w-4" /> View
-                          </DropdownMenuItem> */}
                           <DropdownMenuItem
                             onClick={() => {
                               handleEditDialogOpen(item);
@@ -473,37 +464,31 @@ export default function Blog() {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between mt-6 px-2">
-        <p className="text-sm text-muted-foreground">
-          Showing page {pagination.current} of {pagination.pages}
-          {selectedIds.length > 0 && (
-            <span className="ml-3 text-blue-600 font-medium">
-              {selectedIds.length} selected
-            </span>
-          )}
-        </p>
         {pagination.pages > 1 && (
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={pagination.current === 1}
-              onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={pagination.current === pagination.pages}
-              onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
-            >
-              Next
-            </Button>
+          <div className="flex items-center justify-between mt-6 px-2">
+              <p className="text-sm text-muted-foreground">
+                  Showing page {pagination.current} of {pagination.pages}
+              </p>
+              <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current === 1}
+                    onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
+                  >
+                  Previous
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current === pagination.pages}
+                    onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
+                  >
+                  Next
+                  </Button>
+              </div>
           </div>
-        )}
-      </div>
-
+            )}
       {/* Delete Dialog */}
       {selectedItem && (
         <DeleteBlogDialog

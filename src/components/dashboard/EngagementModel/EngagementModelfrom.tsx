@@ -18,6 +18,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { UploadCloud, Loader2, PlusCircle, Trash } from "lucide-react";
 import ImageUpload from "@/components/ui/imagupload";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 
 
 
@@ -101,7 +102,13 @@ export default function EngagementModelForm({
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="Enter description" {...field} />
+                {/* <Textarea placeholder="Enter description" {...field} /> */}
+                <CustomCKEditor
+                  value={field.value || ""}
+                  onChange={(data: string) => {
+                      field.onChange(data);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

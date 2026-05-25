@@ -7,6 +7,7 @@ import PageHeader from "@/components/shared/PageHeader";
 import { ServiceTechnologyForm, ServiceTechnologyFormValues } from "@/components/dashboard/service-Tecnology/ServiceTechnologyForm";
 import { Loader2 } from "lucide-react";
 import type { ServiceTecnology } from "@/types/index";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface EditPageProps {
     params: Promise<{ id: string }>;
@@ -60,23 +61,26 @@ export default function EditServiceTechnologyPage({ params }: EditPageProps) {
         }
     };
 
-    if (isLoading) {
-        return (
-            <div className="flex h-[400px] items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-        );
-    }
-
     return (
         <div className="space-y-6">
             <PageHeader
                 title="Edit Service Technology"
                 description="Update the service technology component"
             />
-            {initialData && (
-                <ServiceTechnologyForm initialData={initialData} onSubmit={handleUpdate} />
-            )}
+            {isLoading ? (
+        <div className="space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-10 w-32" />
+        </div>
+      ) : initialData ? (
+                <ServiceTechnologyForm 
+                    initialData={initialData} 
+                    onSubmit={handleUpdate} 
+                    onCancel={() => router.push("/dashboard/service-Tecnology")}/>
+            ) : (
+        <p>Entry not found.</p>
+      )}
         </div>
     );
 }

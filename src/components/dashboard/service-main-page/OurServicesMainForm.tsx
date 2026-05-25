@@ -128,8 +128,8 @@ export default function OurServicesMainForm({
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleFormSubmit as any)} className="space-y-8">
-                <div className="flex flex-col lg:flex-row gap-8">
-                    <div className="flex-1 space-y-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2 space-y-8">
                         {/* Basic Info Section */}
                         <Card>
                             <CardHeader><CardTitle>Basic Information</CardTitle></CardHeader>
@@ -374,16 +374,24 @@ export default function OurServicesMainForm({
                                     control={form.control as any}
                                     name="seo.seoDescription"
                                     render={({ field }) => (
-                                        <FormItem><FormLabel>Meta Description</FormLabel><FormControl><Textarea placeholder="Brief summary for search results" rows={4} {...field} /></FormControl><FormMessage /></FormItem>
+                                        <FormItem><FormLabel>Meta Description</FormLabel><FormControl>
+                                            {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
+                                            <CustomCKEditor
+                                                value={field.value || ""}
+                                                onChange={(data: string) => {
+                                                    field.onChange(data);
+                                                }}
+                                            />
+                                        </FormControl><FormMessage /></FormItem>
                                     )}
                                 />
                             </CardContent>
                         </Card>
                     </div>
 
-                    <div className="w-full lg:w-[350px] space-y-6 mt-8 lg:mt-0">
+                    <div className="w-full lg:col-span-1 space-y-6 mt-8 lg:mt-0">
                         {/* Right Column: SEO Feature Image Only */}
-                        <Card className="sticky top-24">
+                        <Card >
                             <CardHeader><CardTitle>Page Media</CardTitle></CardHeader>
                             <CardContent className="space-y-6">
                                 <FormField

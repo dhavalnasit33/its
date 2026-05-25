@@ -187,11 +187,17 @@ export default function YoastSEOForm({
                         </span>
                       </div>
                       <FormControl>
-                        <Textarea
+                        {/* <Textarea
                           placeholder="Provide a compelling meta description to increase click-through rate (ideal: 120-160 characters)"
                           rows={3}
                           maxLength={300}
                           {...field}
+                        /> */}
+                        <CustomCKEditor
+                          value={field.value || ""}
+                          onChange={(data: string) => {
+                              field.onChange(data);
+                          }}
                         />
                       </FormControl>
                       <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">

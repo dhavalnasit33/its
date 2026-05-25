@@ -11,6 +11,8 @@ import { Loader2, UploadCloud } from "lucide-react";
 import apiService from "@/lib/apiService";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import ImageUpload from "@/components/ui/imagupload";
+import { Select, SelectContent, SelectItem , SelectTrigger, SelectValue,} from "@/components/ui/select";
 
 const CLOUDINARY_CLOUD_NAME = "dctvxbvuz";
 const CLOUDINARY_UPLOAD_PRESET = "ITS_ADMIN";
@@ -26,6 +28,7 @@ export type ServiceTechnologyFormValues = z.infer<typeof serviceTechnologySchema
 interface ServiceTechnologyFormProps {
     initialData?: ServiceTechnologyFormValues | null;
     onSubmit: (data: ServiceTechnologyFormValues) => Promise<void>;
+    onCancel?: () => void;
 }
 
 interface ServiceOption {
@@ -35,7 +38,7 @@ interface ServiceOption {
     subCategory: string;
 }
 
-export function ServiceTechnologyForm({ initialData, onSubmit }: ServiceTechnologyFormProps) {
+export function ServiceTechnologyForm({ initialData, onSubmit, onCancel }: ServiceTechnologyFormProps) {
     const { toast } = useToast();
     const router = useRouter();
 
@@ -120,14 +123,22 @@ export function ServiceTechnologyForm({ initialData, onSubmit }: ServiceTechnolo
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Image</FormLabel>
-                                    <div className="flex items-center gap-4">
+                                    {/* <div className="flex items-center gap-4">
                                         <Input type="file" className="hidden" id="imageUpload" onChange={handleImageUpload} />
                                         <Button type="button" onClick={() => document.getElementById("imageUpload")?.click()}>
                                             {isUploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <UploadCloud className="h-4 w-4 mr-2" />}
                                             Upload Image
                                         </Button>
                                         {field.value && <img src={field.value} alt="Preview" className="h-16 w-16 object-cover rounded-md border" />}
-                                    </div>
+                                    </div> */}
+                                    <FormControl>
+                                        <ImageUpload
+                                            value={field.value || ""}
+                                            onChange={field.onChange}
+                                            disabled={isSubmitting}
+                                            className="w-68 h-48"
+                                        />
+                                    </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -151,7 +162,7 @@ export function ServiceTechnologyForm({ initialData, onSubmit }: ServiceTechnolo
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Service</FormLabel>
-                                    <FormControl>
+                                    {/* <FormControl>
                                         <select {...field} className="w-full border rounded-md p-2">
                                             <option value="">Select a service</option>
                                             {services.map((s) => (
@@ -160,21 +171,61 @@ export function ServiceTechnologyForm({ initialData, onSubmit }: ServiceTechnolo
                                                 </option>
                                             ))}
                                         </select>
-                                    </FormControl>
-                                    <FormMessage />
+                                    </FormControl> */}
+                                           <Select
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                disabled={isSubmitting}
+                                            >
+                                             <FormControl>
+                                                <SelectTrigger >
+                                                    <SelectValue  placeholder={
+                                                        isSubmitting
+                                                            ? "Loading services..."
+                                                            : "Select a Services"
+                                                        } 
+                                                    />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {services.length > 0 ? (
+                                                services.map((s) => (
+                                                    <SelectItem key={s._id} value={s._id}>
+                                                    {s.mainTitle}
+                                                    </SelectItem>
+                                                ))
+                                                ) : (
+                                                <SelectItem value="none" disabled>
+                                                    No services found
+                                                </SelectItem>
+                                                )}
+                                            </SelectContent>
+                                        </Select>
+                                    <FormMessage/>
                                 </FormItem>
                             )}
-                        />
-                        <div className="flex gap-3 justify-end">
+                        /> 
+                        <div className="flex justify-end gap-3 border-t pt-6 mt-8">
                             <Button
                                 type="button"
-                                variant="secondary"
-                                onClick={() => router.push("/dashboard/service-Tecnology")}
+                                variant="outline"
+                                onClick={onCancel}
+                                disabled={isSubmitting}
                             >
                                 Cancel
                             </Button>
-                            <Button type="submit" className="px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700" disabled={isSubmitting || isUploading}>
+                            {/* <Button type="submit" className="px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700" disabled={isSubmitting || isUploading}>
                                 {isSubmitting ? "Submitting..." : "Submit"}
+                            </Button> */}
+                            <Button type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    {initialData ? "Updating..." : "Creating..."}
+                                </>
+                                ) : (
+                                initialData ? "Update Technology" : "Create Technology"
+                                )}
                             </Button>
                         </div>
                     </form>

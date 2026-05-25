@@ -8,6 +8,7 @@ import CategoryFrom, { categorycreateFormValues } from "@/components/dashboard/c
 import PageHeader from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EditCategoryPage() {
   const params = useParams();
@@ -73,24 +74,24 @@ export default function EditCategoryPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="p-6 flex items-center justify-center min-h-[400px]">
-        <p className="text-gray-500">Loading category data...</p>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="p-6 flex items-center justify-center min-h-[400px]">
+  //       <p className="text-gray-500">Loading category data...</p>
+  //     </div>
+  //   );
+  // }
 
-  if (!initialData) {
-    return (
-      <div className="p-6 text-center">
-        <p className="text-muted-foreground">Category not found.</p>
-        <Button onClick={() => router.push("/dashboard/category")} className="mt-4">
-          Back to List
-        </Button>
-      </div>
-    );
-  }
+  // if (!initialData) {
+  //   return (
+  //     <div className="p-6 text-center">
+  //       <p className="text-muted-foreground">Category not found.</p>
+  //       <Button onClick={() => router.push("/dashboard/category")} className="mt-4">
+  //         Back to List
+  //       </Button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="space-y-6">
@@ -98,6 +99,13 @@ export default function EditCategoryPage() {
         title="Edit Category"
         description="Update category details"
       />
+       {loading ? (
+        <div className="space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-10 w-32" />
+        </div>
+      ) : initialData ? (
       <Card className="border border-slate-100 shadow-sm bg-white">
         <CardContent className="pt-6">
           <CategoryFrom 
@@ -107,6 +115,9 @@ export default function EditCategoryPage() {
           />
         </CardContent>
       </Card>
+      ) : (
+        <p>Entry not found.</p>
+      )}
     </div>
   );
 }

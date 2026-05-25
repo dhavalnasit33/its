@@ -9,6 +9,7 @@ import PageHeader from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/button";
 import { HirePageDataFormValues } from "@/types";
 import { Loader2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EditHirePage() {
   const params = useParams();
@@ -108,21 +109,24 @@ export default function EditHirePage() {
     }
   };
 
-  if (loading) return (
-    <div className="p-6 flex items-center justify-center min-h-[400px]">
-      <Loader2 className="h-8 w-8 animate-spin text-primary mr-2" />
-      <p className="text-gray-500">Loading hire page data...</p>
-    </div>
-  );
+  // if (loading) {
+  //   return (
+  //     <div className="space-y-4 p-4">
+  //     <Skeleton className="h-10 w-full" />
+  //         <Skeleton className="h-32 w-full" />
+  //         <Skeleton className="h-10 w-32" />
+  //     </div>
+  //   );
+  // }
 
-  if (!initialData) return (
-    <div className="p-6 text-center">
-      <p>Hire page data not found.</p>
-      <Button onClick={() => router.push("/dashboard/hire")} className="mt-4">
-        Back to List
-      </Button>
-    </div>
-  );
+  // if (!initialData) return (
+  //   <div className="p-6 text-center">
+  //     <p>Hire page data not found.</p>
+  //     <Button onClick={() => router.push("/dashboard/hire")} className="mt-4">
+  //       Back to List
+  //     </Button>
+  //   </div>
+  // );
 
   return (
     <>
@@ -132,8 +136,17 @@ export default function EditHirePage() {
           description="Update Hire Page content modules and settings."
         />
       </div>
-      
-      <HirePageForm onSubmit={handleEdit} initialData={initialData} />
+      {loading ? (
+        <div className="space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-10 w-32" />
+        </div>
+      ) : initialData ? (
+        <HirePageForm onSubmit={handleEdit} initialData={initialData} />
+       ) : (
+        <p>Entry not found.</p>
+      )}
     </>
   );
 }

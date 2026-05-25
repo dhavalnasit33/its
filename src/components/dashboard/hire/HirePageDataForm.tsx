@@ -455,9 +455,9 @@ export default function HirePageForm({
                           >
                             <Button type="button" variant="ghost" size="icon" 
                               className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
-                                  onClick={() => removeKeyPoint(idx)}
-                                    disabled={keyPointsFields.length === 1}>
-                                  <Trash2 className="h-4 w-4" />
+                                onClick={() => removeKeyPoint(idx)}
+                                >
+                                <Trash2 className="h-4 w-4" />
                               </Button>
 
                             <div className="flex flex-col items-center  gap-2 pt-4">
@@ -634,7 +634,6 @@ export default function HirePageForm({
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  {planDetailsFields.length > 1 && (
                                     <Button
                                       type="button"
                                       variant="ghost"
@@ -648,7 +647,6 @@ export default function HirePageForm({
                                     >
                                       <Trash2 className="h-4 w-4 " />
                                     </Button>
-                                  )}
                                   {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                                 </div>
                               </div>
@@ -747,8 +745,7 @@ export default function HirePageForm({
                           <Button type="button" variant="ghost" size="icon" 
                             className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
                                 onClick={() => removeExpertise(idx)}
-                                  
-                                disabled={expertiseFields.length === 1}>
+                                >
                                 <Trash2 className="h-4 w-4" />
                             </Button>
                             <div className="flex flex-col items-center  gap-2 pt-4">
@@ -819,7 +816,7 @@ export default function HirePageForm({
                           </Button>
                         </div>
 
-                      <Droppable droppableId="techStackDetails" type="techDetail">
+                      <Droppable droppableId="techStackDetails" type="techDetails">
                         {(provided) => (
                           <div ref={provided.innerRef} {...provided.droppableProps} className="space-y-4">
                             {techStackFields.map((field, idx) => {
@@ -832,6 +829,7 @@ export default function HirePageForm({
                                     <Card
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
                                       className="relative border-dashed overflow-hidden  bg-muted/5" 
                                     >
                                       <div className="flex items-center justify-between p-4 bg-muted/20  hover:bg-muted/30 transition-colors">
@@ -844,7 +842,6 @@ export default function HirePageForm({
                                           </span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                          {techStackFields.length > 1 && (
                                             <Button
                                               type="button"
                                               variant="ghost"
@@ -854,7 +851,6 @@ export default function HirePageForm({
                                             >
                                               <Trash2 className="h-4 w-4 " />
                                             </Button>
-                                          )}
                                           <div
                                             className="cursor-pointer p-1"
                                             onClick={() => setExpandedTechIndex(isExpanded ? null : idx)}
@@ -953,7 +949,7 @@ export default function HirePageForm({
                             setExpandedValueIndex(whyHireUsFields.length);
                           }}
                         >
-                          <Plus className="h-4 w-4 mr-2" /> Add Value Points
+                          <Plus className="h-4 w-4 mr-2" /> Add Value Point
                         </Button>
                       </div>
 
@@ -978,7 +974,6 @@ export default function HirePageForm({
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  {whyHireUsFields.length > 1 && (
                                     <Button
                                       type="button"
                                       variant="ghost"
@@ -992,7 +987,6 @@ export default function HirePageForm({
                                     >
                                       <Trash2 className="h-4 w-4 " />
                                     </Button>
-                                  )}
                                   {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                                 </div>
                               </div>
@@ -1259,7 +1253,13 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Meta Description</FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Write a summary..." rows={4} {...field} />
+                            {/* <Textarea placeholder="Write a summary..." rows={4} {...field} /> */}
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={(data: string) => {
+                                  field.onChange(data);
+                              }}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -1424,7 +1424,7 @@ const TechStackKeyPoints = ({ control, detailIndex }: { control: any; detailInde
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                      className="text-destructive hover:text- destructive/90 hover:bg-destructive/10"
                         onClick={() => remove(pointIdx)}
                     >
                       <Trash2 className="h-4 w-4" />

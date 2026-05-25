@@ -82,6 +82,7 @@ export default function EnquiriesPage() {
     contacted: 0,
     closed: 0,
   });
+  const [limit] = useState(10);
 
   // Fetch Items
   const fetchItems = useCallback(async (page: number = 1, search: string = "", type: string = "all", status: string = "all") => {
@@ -89,7 +90,7 @@ export default function EnquiriesPage() {
     try {
       const params: Record<string, string> = {
         page: page.toString(),
-        limit: "10",
+         limit: limit.toString(),
       };
       if (search) params.search = search;
       if (type && type !== "all") params.type = type;
@@ -402,7 +403,7 @@ export default function EnquiriesPage() {
               </TableHeader>
               <TableBody>
                 {isLoading ? (
-                  Array.from({ length: 5 }).map((_, i) => (
+                  Array.from({ length: limit }).map((_, i) => (
                     <TableRow key={i}>
                       <TableCell><Skeleton className="h-4 w-4" /></TableCell>
                       <TableCell><Skeleton className="h-6 w-24" /></TableCell>
@@ -506,32 +507,30 @@ export default function EnquiriesPage() {
 
       {/* Pagination Controls */}
       {pagination.pages > 1 && (
-        <div className="flex items-center justify-between px-2 mt-4">
-          <p className="text-xs text-muted-foreground">
-            Showing Page <span className="font-semibold">{pagination.current}</span> of <span className="font-semibold">{pagination.pages}</span> ({pagination.total} total enquiries)
-          </p>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-xs h-8"
-              disabled={pagination.current === 1}
-              onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-xs h-8"
-              disabled={pagination.current === pagination.pages}
-              onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
-            >
-              Next
-            </Button>
+          <div className="flex items-center justify-between mt-6 px-2">
+              <p className="text-sm text-muted-foreground">
+                  Showing page {pagination.current} of {pagination.pages} ({pagination.total} total enquiries)
+              </p>
+              <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current === 1}
+                    onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
+                  >
+                  Previous
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pagination.current === pagination.pages}
+                    onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
+                  >
+                  Next
+                  </Button>
+              </div>
           </div>
-        </div>
-      )}
+            )}
 
       {/* Details / Action Dialog */}
       {selectedEnquiry && (

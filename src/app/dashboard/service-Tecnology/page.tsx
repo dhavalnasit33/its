@@ -11,7 +11,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { PlusCircle, MoreHorizontal, Edit, Trash2, Eye } from "lucide-react";
+import { PlusCircle, MoreHorizontal, Edit, Trash2, Eye, Search } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import apiService from "@/lib/apiService";
 import { useRouter } from "next/navigation";
@@ -36,6 +36,8 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { ServiceTecnology } from "@/types/index";
+import Link from "next/link";
+import { Input } from "@/components/ui/input";
 
 interface DeleteServiceTechnologyDialogProps {
     isOpen: boolean;
@@ -129,24 +131,26 @@ export default function ServiceTechnologyPage() {
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<ServiceTecnology | null>(null);
-    const fetchItems = async (page = 1, value = searchValue) => {
+    const fetchItems = async (page: number = 1, value = searchValue) => {
         setIsLoading(true);
         try {
             const query = new URLSearchParams({
-                page: String(page),
-                limit: String(limit),
+                // page: String(page),
+                // limit: String(limit),
+                page: page.toString(),
+                limit: limit.toString(),
                 ...(value ? { value } : {}),
             });
 
             const res = await apiService<{
                 success: boolean;
                 data: ServiceTecnology[];
-                pagination: { current: number; pages: number; total: number }
+                pagination?: { current: number; pages: number; total: number }
             }>(`/service-technology?${query.toString()}`, { method: "GET" });
 
             if (res.success) {
                 setItems(res.data);
-                setPagination(res.pagination);
+                if (res.pagination)  setPagination(res.pagination);
             } else {
                 setItems([]);
             }
@@ -157,7 +161,10 @@ export default function ServiceTechnologyPage() {
             setIsLoading(false);
         }
     };
-    useEffect(() => { fetchItems(1); }, [searchValue]);
+    useEffect(() => { 
+        fetchItems(pagination.current, searchValue); 
+    }, [pagination.current,searchValue]);
+
     const handleEditDialogOpen = (item: ServiceTecnology) => {
         router.push(`/dashboard/service-Tecnology/${item._id}/edit`);
     };
@@ -172,28 +179,28 @@ export default function ServiceTechnologyPage() {
                 title="Service Technology"
                 description="Manage your service technologies"
                 actionButtons={
-                    <Button
-                        onClick={() => router.push("/dashboard/service-Tecnology/create")}
-                        className="px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
-                    >
-                        <PlusCircle className="mr-2 h-4 w-4" /> Add New
+                <Link href="/dashboard/service-Tecnology/create">
+                    <Button>
+                    <PlusCircle className="mr-2 h-4 w-4" /> Add New
                     </Button>
+                </Link>
                 }
             />
 
-            <div className="flex items-center justify-end mb-4">
-                <input
-                    type="text"
-                    placeholder="Search by label..."
-                    value={searchValue}
-                    onChange={(e) => {
-                        setSearchValue(e.target.value);
-                        setPagination((prev) => ({ ...prev, current: 1 }));
-                    }}
-                    className="border border-gray-300 rounded px-3 py-2 w-64"
-                />
+            <div className="flex items-center justify-between gap-3  mb-4">
+                <div className="relative w-full max-w-sm">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search by label..."
+                        className="pl-9 h-10 rounded-lg border-gray-300 focus:ring-blue-500"
+                        value={searchValue}
+                            onChange={(e) => {
+                                setSearchValue(e.target.value);
+                                setPagination((prev) => ({ ...prev, current: 1 }));
+                            }}
+                        />
+                </div>
             </div>
-
             <div className="rounded-md border shadow-sm">
                 <Table>
                     <TableHeader>
@@ -211,14 +218,15 @@ export default function ServiceTechnologyPage() {
                                     <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto" /></TableCell>
                                 </TableRow>
                             ))
                             : items.length > 0
                                 ? items.map((item, index) => (
                                     <TableRow
                                         key={item._id}
-                                        className={`border hover:bg-gray-100 ${index % 2 !== 0 ? 'bg-gray-200' : ''}`}
+                                        // className={` hover:bg-gray-100 ${index % 2 !== 0 ? 'bg-gray-200' : ''}`}
+                                        className="hover:bg-gray-100"
                                     >
                                         <TableCell>
                                             <img src={item.image} alt={item.label} className="h-10 w-10 rounded object-cover" />
@@ -242,7 +250,7 @@ export default function ServiceTechnologyPage() {
                                                     >
                                                         <Edit className="mr-2 h-4 w-4" /> Edit
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem className="text-destructive"
+                                                    <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10"
                                                         onClick={() => { handleDeleteDialogOpen(item); setDropdownOpen(null); }}
                                                     >
                                                         <Trash2 className="mr-2 h-4 w-4" /> Delete
@@ -261,25 +269,31 @@ export default function ServiceTechnologyPage() {
                 </Table>
             </div>
 
-            <div className="flex justify-between items-center gap-2 mt-4">
-                <Button
-                    className="bg-blue-600 text-white"
-                    disabled={pagination.current === 1}
-                    onClick={() => fetchItems(pagination.current - 1)}
-                >
-                    Previous
-                </Button>
-                <span className="text-sm">
-                    Page {pagination.current} of {pagination.pages}
-                </span>
-                <Button
-                    className="bg-blue-600 text-white"
-                    disabled={pagination.current === pagination.pages}
-                    onClick={() => fetchItems(pagination.current + 1)}
-                >
-                    Next
-                </Button>
-            </div>
+            {pagination.pages > 1 && (
+                <div className="flex items-center justify-between mt-6 px-2">
+                    <p className="text-sm text-muted-foreground">
+                        Showing page {pagination.current} of {pagination.pages}
+                    </p>
+                    <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={pagination.current === 1}
+                            onClick={() => setPagination(prev => ({ ...prev, current: prev.current - 1 }))}
+                        >
+                        Previous
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={pagination.current === pagination.pages}
+                            onClick={() => setPagination(prev => ({ ...prev, current: prev.current + 1 }))}
+                        >
+                        Next
+                        </Button>
+                    </div>
+                </div>
+            )}
 
             {selectedItem && (
                 <DeleteServiceTechnologyDialog

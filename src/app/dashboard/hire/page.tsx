@@ -131,7 +131,7 @@ export default function HirePageDataPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchItems(pagination.current, filters, searchValue);
-    }, 300);
+    }, 100);
     return () => clearTimeout(timer);
   }, [pagination.current, filters, searchValue]);
 
@@ -376,7 +376,7 @@ export default function HirePageDataPage() {
               items.map((item, index) => (
                 <TableRow
                   key={item._id}
-                  className={` border hover:bg-gray-100  ${selectedIds.includes(item._id!) ? "bg-gray-200" : ""} `}
+                  className={`  hover:bg-gray-100  ${selectedIds.includes(item._id!) ? "bg-gray-200" : ""} `}
                 >
                   <TableCell>
                     <input

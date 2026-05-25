@@ -482,7 +482,13 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Enter description" {...field} />
+                            {/* <Textarea placeholder="Enter description" {...field} /> */}
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={(data: string) => {
+                                  field.onChange(data);
+                              }}
+                            />
                           </FormControl>
                           <FormMessage className="text-red-600 text-sm mt-1" />
                         </FormItem>
@@ -516,7 +522,15 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Sub Main Title Description</FormLabel>
-                          <FormControl><Textarea placeholder="Enter sub main title description" {...field} /></FormControl>
+                          <FormControl>
+                            {/* <Textarea placeholder="Enter sub main title description" {...field} /> */}
+                            <CustomCKEditor
+                                value={field.value || ""}
+                                onChange={(data: string) => {
+                                    field.onChange(data);
+                                }}
+                            />
+                          </FormControl>
                           <FormMessage className="text-red-600 text-sm mt-1" />
                         </FormItem>
                       )}
@@ -563,7 +577,13 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                                     <FormLabel>{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}</FormLabel>
                                     <FormControl>
                                       {fieldName === "description"
-                                        ? <Textarea placeholder="Enter description" {...field} />
+                                        ? <CustomCKEditor
+                                            value={field.value || ""}
+                                            onChange={(data: string) => {
+                                                field.onChange(data);
+                                            }}
+                                          />
+                                        // <Textarea placeholder="Enter description" {...field} />
                                         : <Input placeholder={`Enter ${fieldName}`} {...field} />
                                       }
                                     </FormControl>
@@ -626,7 +646,15 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Description</FormLabel>
-                              <FormControl><Textarea placeholder="Enter description" {...field} value={field.value ?? ""} /></FormControl>
+                              <FormControl>
+                                {/* <Textarea placeholder="Enter description" {...field} value={field.value ?? ""} /> */}
+                                <CustomCKEditor
+                                      value={field.value || ""}
+                                      onChange={(data: string) => {
+                                          field.onChange(data);
+                                      }}
+                                  />
+                                </FormControl>
                               <FormMessage className="text-red-600 text-sm mt-1" />
                             </FormItem>
                           )}
@@ -681,7 +709,13 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                                     <FormLabel>{f}</FormLabel>
                                     <FormControl>
                                       {f === "description"
-                                        ? <Textarea placeholder="Enter description" {...field} value={field.value ?? ""} />
+                                        ? <CustomCKEditor
+                                              value={field.value || ""}
+                                              onChange={(data: string) => {
+                                                  field.onChange(data);
+                                              }}
+                                          />
+                                        // <Textarea placeholder="Enter description" {...field} value={field.value ?? ""} />
                                         : <Input placeholder={`Enter ${f}`} {...field} value={field.value ?? ""} />
                                       }
                                     </FormControl>
@@ -1116,7 +1150,13 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                             <FormItem>
                               <FormLabel>SEO Description</FormLabel>
                               <FormControl>
-                                <Textarea placeholder="Enter SEO description" {...field} />
+                                {/* <Textarea placeholder="Enter SEO description" {...field} /> */}
+                                <CustomCKEditor
+                                    value={field.value || ""}
+                                    onChange={(data: string) => {
+                                        field.onChange(data);
+                                    }}
+                                />
                               </FormControl>
                               <FormMessage className="text-red-600 text-sm mt-1" />
                             </FormItem>

@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, UploadCloud } from "lucide-react";
 import ImageUpload from "@/components/ui/imagupload";
 import { Textarea } from "@/components/ui/textarea";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 
 
 const industrySchema = z.object({
@@ -99,11 +100,17 @@ export default function ExpertiesIndustryForm({ initialData, onSubmit, onCancel 
             <FormItem>
               <FormLabel>description</FormLabel>
               <FormControl>
-                <Textarea
+                {/* <Textarea
                   placeholder="Enter industry description"
                   rows={3}
                   maxLength={300}
                   {...field}
+                /> */}
+                <CustomCKEditor
+                  value={field.value || ""}
+                  onChange={(data: string) => {
+                      field.onChange(data);
+                  }}
                 />
               </FormControl>
               <div className="text-right text-sm text-muted-foreground mt-1">

@@ -28,6 +28,7 @@ export default function WebsiteSettingsPage() {
 
         setInitialData({
           favicon: record.favicon || "",
+          logo_img: record.logo_img || "",
           address: record.address?.map((addr) => ({ value: addr })) || [{ value: "" }],
           emails: record.emails?.map((e) => ({
             email: e.email || "",
@@ -37,7 +38,8 @@ export default function WebsiteSettingsPage() {
           social_media: record.social_media?.map((sm) => ({
             socialMediaName: sm.socialMediaName,
             link: sm.link,
-          })) || [{ socialMediaName: "", link: "" }],
+            image: sm.image,
+          })) || [{ socialMediaName: "", link: "", image: "", }],
         });
       } else {
         setContentId(null);
@@ -55,16 +57,18 @@ export default function WebsiteSettingsPage() {
   }, []);
 
   const handleSubmit = async (values: WebsiteSettingsFormValues) => {
+    
     try {
       // Map form arrays to pure string arrays for backend submission
       const payload = {
         favicon: values.favicon,
+        logo_img: values.logo_img,
         address: values.address.map((a) => a.value).filter(Boolean),
         emails: values.emails.filter((e) => e.email),
         phone: values.phone.map((p) => p.value).filter(Boolean),
-        social_media: values.social_media.filter((s) => s.socialMediaName || s.link),
+        social_media: values.social_media.filter((s) => s.socialMediaName || s.link || s.image),
       };
-
+        console.log("PAYLOAD =>", payload);
       let res;
       if (contentId) {
         // Update existing record (PUT route on backend handles this at root path)

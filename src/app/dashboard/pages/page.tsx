@@ -168,16 +168,21 @@ export default function PagesListPage() {
                         {isLoading
                             ? Array.from({ length: 5 }).map((_, i) => (
                                 <TableRow key={i}>
-                                    {Array.from({ length: 8 }).map((__, j) => (
-                                        <TableCell key={j}><Skeleton className="h-5 w-24" /></TableCell>
-                                    ))}
+                                    <TableCell><Skeleton className="h-5 w-5" /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-32 " /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-32 " /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>   
+                                    <TableCell><Skeleton className="h-5 w-20" /></TableCell>    
+                                    <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto"></Skeleton></TableCell>
                                 </TableRow>
                             ))
                             : items.length > 0
                                 ? items.map((item) => (
                                     <TableRow
                                         key={item._id}
-                                        className={`border hover:bg-gray-100 ${selectedIds.includes(item._id) ? "bg-gray-200" : ""}`}
+                                        className={` hover:bg-gray-100 ${selectedIds.includes(item._id) ? "bg-gray-200" : ""}`}
                                     >
                                         <TableCell>
                                             <input
@@ -191,7 +196,7 @@ export default function PagesListPage() {
                                         <TableCell className="font-medium">{item.page_title}</TableCell>
                                         <TableCell >{item.slug}</TableCell>
                                         <TableCell>{truncate(item.seo?.title)}</TableCell>
-                                        <TableCell>{truncate(item.seo?.seoDescription)}</TableCell>
+                                        <TableCell>{truncate( item.seo?.seoDescription?.replace(/<[^>]*>/g, "") || "")}</TableCell>
                                         <TableCell>{item.seo?.keyphrase || "—"}</TableCell>
                                         <TableCell>{formatDate(item.createdAt)}</TableCell>
 

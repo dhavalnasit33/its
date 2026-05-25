@@ -26,6 +26,7 @@ import { Loader2 } from "lucide-react";
 import { OpenningPositionFormValues, OpenningPositionSchema } from "@/types";
 import ImageUpload from "@/components/ui/imagupload";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent } from "@/components/ui/card";
 
 const qualificationOptions = [
   "B.E. / B.Tech",
@@ -84,8 +85,10 @@ export default function OpenningPositionForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleFormSubmit as any)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-6">
+            <Card>
+              <CardContent className="space-y-6 pt-6">
             <FormField
               control={form.control as any}
               name="name"
@@ -174,30 +177,36 @@ export default function OpenningPositionForm({
                 </FormItem>
               )}
             />
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="space-y-6">
-            <FormField
-              control={form.control as any}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Position Image</FormLabel>
-                  <FormControl>
-                    <ImageUpload 
-                      value={field.value} 
-                      onChange={field.onChange} 
-                      className="w-full h-64" 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <div className="space-y-6 lg:col-span-1">
+            <Card>
+              <CardContent className="pt-6 ">
+                <FormField
+                  control={form.control as any}
+                  name="image"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Position Image</FormLabel>
+                      <FormControl>
+                        <ImageUpload 
+                          value={field.value} 
+                          onChange={field.onChange} 
+                          className="w-full h-64" 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4">
+        <div className="flex justify-end gap-3 border-t pt-6 mt-8">
           {onCancel && (
             <Button
               type="button"

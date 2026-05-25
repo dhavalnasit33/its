@@ -53,6 +53,7 @@ export default function CreativeWorkPage() {
     pages: 1,
     total: 0,
   });
+  const [limit] = useState(10);
 
   const fetchCategories = async () => {
     try {
@@ -81,7 +82,7 @@ export default function CreativeWorkPage() {
     try {
       const params = new URLSearchParams({
         page: page.toString(),
-        limit: "10",
+        limit: limit.toString(),
         ...(search ? { value: search } : {}),
         ...(category && category !== "all" ? { category } : {}),
       });
@@ -224,13 +225,13 @@ export default function CreativeWorkPage() {
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              Array.from({ length: 5 }).map((_, i) => (
+              Array.from({ length: limit }).map((_, i) => (
                 <TableRow key={i}>
                   <TableCell><Skeleton className="h-4 w-4" /></TableCell>
                   <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-48" /></TableCell>
-                  <TableCell></TableCell>
+                  <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto"></Skeleton></TableCell>
                 </TableRow>
               ))
             ) : items.length > 0 ? (

@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { UploadCloud, Loader2 } from "lucide-react";
 import ImageUpload from "@/components/ui/imagupload";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 
 
 export type HomeChooseItsFormValues = z.infer<typeof homeChooseItsSchema>;
@@ -76,7 +77,15 @@ export default function HomeChooseItsForm({ initialData, onSubmit, onCancel }: H
         <FormField control={form.control} name="description" render={({ field }) => (
           <FormItem>
             <FormLabel>Description</FormLabel>
-            <FormControl><Textarea placeholder="Enter description" {...field} /></FormControl>
+            <FormControl>
+              {/* <Textarea placeholder="Enter description" {...field} /> */}
+              <CustomCKEditor
+                value={field.value || ""}
+                onChange={(data: string) => {
+                    field.onChange(data);
+                }}
+              />
+            </FormControl>
             <FormMessage className="text-red-600 text-sm mt-1" />
           </FormItem>
         )} />

@@ -152,9 +152,9 @@ function page() {
                     </TableHeader>
                     <TableBody>
                         {isLoading
-                            ? Array.from({ length: 5 }).map((_, i) => (
+                            ? Array.from({ length: limit }).map((_, i) => (
                                 <TableRow key={i}>
-                                    <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-32 rounded" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-48" /></TableCell>
                                     <TableCell><Skeleton className="hidden xl:table-cell h-5 w-32" /></TableCell>
                                     <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto" /></TableCell>

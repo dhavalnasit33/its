@@ -269,20 +269,20 @@ export default function CategoryPage() {
 
                     <TableBody>
                         {isLoading
-                             ? Array.from({ length: 5 }).map((_, i) => (
+                             ? Array.from({ length: limit }).map((_, i) => (
                                 <TableRow key={i}>
                                     <TableCell><Skeleton className="h-5 w-5" /></TableCell>
                                     <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell><Skeleton className="h-5 w-24" /></TableCell>    
+                                    <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto"></Skeleton></TableCell>
                                 </TableRow>
                             ))
                             : items.length > 0
                                 ? items.map((item) => (
                                     <TableRow
                                         key={item._id}
-                                        className={`border hover:bg-gray-100 ${selectedIds.includes(item._id) ? "bg-gray-200" : ""}`}
+                                        className={` hover:bg-gray-100 ${selectedIds.includes(item._id) ? "bg-gray-200" : ""}`}
                                     >
                                         <TableCell>
                                             <input

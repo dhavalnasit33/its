@@ -239,7 +239,7 @@ export default function ServiceManagerPage() {
 
         <div>
           <div className="flex items-center gap-2">
-            <label className="font-medium whitespace-nowrap">Category:</label>
+            {/* <label className="font-medium whitespace-nowrap">Category:</label> */}
             <Select
               value={categoryFilter || "all"}
               onValueChange={(v) => {
@@ -298,9 +298,8 @@ export default function ServiceManagerPage() {
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                  {/* <TableCell><Skeleton className="h-5 w-32" /></TableCell> */}
                   <TableCell><Skeleton className="h-5 w-48" /></TableCell>
-                  <TableCell></TableCell>
+                  <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto"></Skeleton></TableCell>
                 </TableRow>
               ))
               : items.length > 0

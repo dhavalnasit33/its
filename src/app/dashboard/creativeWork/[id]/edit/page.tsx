@@ -75,19 +75,19 @@ export default function EditCreativeWorkPage() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="p-6 space-y-6">
-        <Skeleton className="h-10 w-48" />
-        <Card>
-          <CardContent className="pt-6 space-y-4">
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-64 w-full" />
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="p-6 space-y-6">
+  //       <Skeleton className="h-10 w-48" />
+  //       <Card>
+  //         <CardContent className="pt-6 space-y-4">
+  //           <Skeleton className="h-10 w-full" />
+  //           <Skeleton className="h-64 w-full" />
+  //         </CardContent>
+  //       </Card>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="p-6 space-y-6">
@@ -95,7 +95,13 @@ export default function EditCreativeWorkPage() {
         title="Edit Creative Work"
         description="Update portfolio creative work entry"
       />
-
+    {isLoading ? (
+        <div className="space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-10 w-32" />
+        </div>
+      ) : initialData ? (
       <Card>
         <CardContent className="pt-6">
           <CreativeWorkForm
@@ -105,6 +111,9 @@ export default function EditCreativeWorkPage() {
           />
         </CardContent>
       </Card>
+      ) : (
+        <p>Entry not found.</p>
+      )}
     </div>
   );
 }

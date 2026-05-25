@@ -22,6 +22,7 @@ import {
     CareerContentSchema,
 } from "@/types";
 import ImageUpload from "@/components/ui/imagupload";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 
 interface CareerFormProps {
     initialData?: CareerContentFormValues | null;
@@ -113,7 +114,15 @@ export default function CareerContentForm({
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Description</FormLabel>
-                                            <FormControl><Textarea placeholder="Hero description" rows={3} {...field} /></FormControl>
+                                            <FormControl>
+                                                {/* <Textarea placeholder="Hero description" rows={3} {...field} /> */}
+                                                <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data);
+                                                    }}
+                                                />
+                                            </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -245,7 +254,15 @@ export default function CareerContentForm({
                                                         control={form.control as any}
                                                         name={`whyJoinIts.points.${index}.description`}
                                                         render={({ field }) => (
-                                                            <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="Benefit description" rows={2} {...field} /></FormControl><FormMessage /></FormItem>
+                                                            <FormItem><FormLabel>Description</FormLabel><FormControl>
+                                                                {/* <Textarea placeholder="Benefit description" rows={2} {...field} /> */}
+                                                                <CustomCKEditor
+                                                                    value={field.value || ""}
+                                                                    onChange={(data: string) => {
+                                                                        field.onChange(data);
+                                                                    }}
+                                                                />
+                                                            </FormControl><FormMessage /></FormItem>
                                                         )}
                                                     />
                                                     <FormField
@@ -285,7 +302,15 @@ export default function CareerContentForm({
                                     control={form.control as any}
                                     name="seo.seoDescription"
                                     render={({ field }) => (
-                                        <FormItem><FormLabel>Meta Description</FormLabel><FormControl><Textarea placeholder="Brief summary for search results" rows={4} {...field} /></FormControl><FormMessage /></FormItem>
+                                        <FormItem><FormLabel>Meta Description</FormLabel><FormControl>
+                                            {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
+                                            <CustomCKEditor
+                                                value={field.value || ""}
+                                                onChange={(data: string) => {
+                                                    field.onChange(data);
+                                                }}
+                                            />
+                                        </FormControl><FormMessage /></FormItem>
                                     )}
                                 />
                             </CardContent>

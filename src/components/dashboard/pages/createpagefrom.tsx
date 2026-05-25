@@ -19,6 +19,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
+import { APP_URL } from "@/config";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 
 const seoSchema = z.object({
     title: z.string().optional(),
@@ -149,16 +151,53 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                                         <FormItem>
                                             <FormLabel>Page Description</FormLabel>
                                             <FormControl>
-                                                <Textarea
+                                                {/* <Textarea
                                                     placeholder="Enter the page description"
                                                     rows={4}
                                                     {...field}
+                                                /> */}
+                                                <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data);
+                                                    }}
                                                 />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
+
+                                {/* <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={() => {
+                                    const slugValue = form.watch("slug");
+                                    const permalink = `${APP_URL}/${slugValue}`;
+                                    return (
+                                        <FormItem>
+                                        <FormLabel>Permalink</FormLabel>
+                                        <FormControl>
+                                            <div>
+                                            {slugValue && (
+                                                <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                                <strong>URL:</strong>{" "}
+                                                <a
+                                                    href={permalink}
+                                                    className="text-blue-600 hover:underline break-all"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {permalink}
+                                                </a>
+                                                </div>
+                                            )}
+                                            </div>
+                                        </FormControl>
+                                        </FormItem>
+                                    );
+                                    }}
+                                /> */}
                             </CardContent>
                         </Card>
                 
@@ -207,10 +246,16 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                                                 <FormItem>
                                                     <FormLabel>SEO Description</FormLabel>
                                                     <FormControl>
-                                                        <Textarea
+                                                        {/* <Textarea
                                                             placeholder="Enter SEO description (max 500 chars)"
                                                             rows={3}
                                                             {...field}
+                                                        /> */}
+                                                        <CustomCKEditor
+                                                            value={field.value || ""}
+                                                            onChange={(data: string) => {
+                                                                field.onChange(data);
+                                                            }}
                                                         />
                                                     </FormControl>
                                                     <div className="flex justify-between items-center mt-1">

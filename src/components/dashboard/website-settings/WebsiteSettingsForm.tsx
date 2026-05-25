@@ -35,10 +35,11 @@ export default function WebsiteSettingsForm({
   const form = useForm<WebsiteSettingsFormValues>({
     defaultValues: {
       favicon: "",
+      logo_img: "",
       address: [{ value: "" }],
       emails: [{ email: "", emailType: "contact" }],
       phone: [{ value: "" }],
-      social_media: [{ socialMediaName: "", link: "" }],
+      social_media: [{ socialMediaName: "", link: "", image: "" }],
     },
   });
 
@@ -84,26 +85,29 @@ export default function WebsiteSettingsForm({
     if (initialData) {
       form.reset({
         favicon: initialData.favicon || "",
+        logo_img: initialData.logo_img || "",
         address: initialData.address?.length ? initialData.address : [{ value: "" }],
         emails: initialData.emails?.length ? initialData.emails : [{ email: "", emailType: "contact" }],
         phone: initialData.phone?.length ? initialData.phone : [{ value: "" }],
         social_media: initialData.social_media?.length
           ? initialData.social_media
-          : [{ socialMediaName: "", link: "" }],
+          : [{ socialMediaName: "", link: "", image: "", }],
       });
     } else {
       form.reset({
         favicon: "",
+        logo_img: "",
         address: [{ value: "" }],
         emails: [{ email: "", emailType: "contact" }],
         phone: [{ value: "" }],
-        social_media: [{ socialMediaName: "", link: "" }],
+        social_media: [{ socialMediaName: "", link: "", image: "", }],
       });
     }
   }, [initialData, form]);
 
   const handleFormSubmit: SubmitHandler<WebsiteSettingsFormValues> = async (data) => {
     setInternalIsSubmitting(true);
+     console.log("VALUES FROM FORM =>", data);
     try {
       await onSubmit(data);
     } catch (error: any) {
@@ -317,7 +321,7 @@ export default function WebsiteSettingsForm({
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() => appendSocial({ socialMediaName: "", link: "" })}
+                  onClick={() => appendSocial({ socialMediaName: "", link: "", image: "" })}
                 >
                   <Plus className="h-4 w-4 mr-2" /> Add Social Profile
                 </Button>
@@ -325,7 +329,7 @@ export default function WebsiteSettingsForm({
               <CardContent className="p-6 space-y-4">
                 {socialFields.map((field, index) => (
                   <div key={field.id} className="flex flex-col sm:flex-row gap-3 p-4 border border-dashed rounded-lg bg-slate-50/20 relative pt-8 sm:pt-4">
-                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
                       <FormField
                         control={form.control}
                         name={`social_media.${index}.socialMediaName`}
@@ -353,6 +357,19 @@ export default function WebsiteSettingsForm({
                           </FormItem>
                         )}
                       />
+                      <FormField
+                        control={form.control}
+                        name={`social_media.${index}.image`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-xs ">Channel Image</FormLabel>
+                            <FormControl>
+                              <ImageUpload value={field.value || ""} onChange={field.onChange} className="w-full h-10" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
                     <Button
                       type="button"
@@ -374,26 +391,45 @@ export default function WebsiteSettingsForm({
           {/* Right Column: Favicon Logo Control (Col span 4) */}
           <div className="lg:col-span-4 space-y-6">
             <Card>
-              <CardContent className="p-6  space-y-6">
-                <CardTitle >
-                  Favicon Icon Logo
-                </CardTitle>
+              <CardHeader>
+                <CardTitle>Website Images</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
                 <FormField
                   control={form.control}
                   name="favicon"
                   render={({ field }) => (
-                    <FormControl>
-                      <ImageUpload
-                        value={field.value}
-                        onChange={field.onChange}
-                        className="h-48 w-full "
-                      />
-                    </FormControl>
+                    <FormItem>
+                      <FormLabel>Favicon Icon Logo</FormLabel>
+                      <FormControl>
+                        <ImageUpload
+                          value={field.value}
+                          onChange={field.onChange}
+                          className="h-48 w-full "
+                        />
+                      </FormControl>
+                    </FormItem>
                   )}
                 />
                 <span className="text-[10px] text-muted-foreground block leading-tight">
                   The favicon will show up inside browser tabs and bookmark bars. Recommended size: 32x32 pixels (.png or .ico format).
                 </span>
+                <FormField
+                  control={form.control}
+                  name="logo_img"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Website Logo</FormLabel>
+                      <FormControl>
+                        <ImageUpload
+                          value={field.value}
+                          onChange={field.onChange}
+                          className="h-48 w-full "
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </CardContent>
             </Card>
 

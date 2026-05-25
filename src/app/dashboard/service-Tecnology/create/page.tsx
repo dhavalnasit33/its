@@ -31,7 +31,10 @@ export default function CreateServiceTechnologyPage() {
                 title="Create Service Technology"
                 description="Add a new service technology component"
             />
-            <ServiceTechnologyForm onSubmit={handleCreate} />
+            <ServiceTechnologyForm 
+                onSubmit={handleCreate} 
+                onCancel={() => router.push("/dashboard/service-Tecnology")}
+            />
         </div>
     );
 }

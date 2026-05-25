@@ -10,6 +10,7 @@ import ServiceStepperForm, { ServiceStepperFormValues } from "@/components/dashb
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/shared/PageHeader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EditServicePage() {
     const params = useParams();
@@ -76,20 +77,20 @@ export default function EditServicePage() {
         }
     };
 
-    if (loading) return (
-        <div className="p-6 flex items-center justify-center min-h-[400px]">
-            <p className="text-gray-500">Loading service data...</p>
-        </div>
-    );
+    // if (loading) return (
+    //     <div className="p-6 flex items-center justify-center min-h-[400px]">
+    //         <p className="text-gray-500">Loading service data...</p>
+    //     </div>
+    // );
 
-    if (!initialData) return (
-        <div className="p-6 text-center">
-            <p>Service not found.</p>
-            <Button onClick={() => router.push("/dashboard/service-manager")} className="mt-4">
-                Back to List
-            </Button>
-        </div>
-    );
+    // if (!initialData) return (
+    //     <div className="p-6 text-center">
+    //         <p>Service not found.</p>
+    //         <Button onClick={() => router.push("/dashboard/service-manager")} className="mt-4">
+    //             Back to List
+    //         </Button>
+    //     </div>
+    // );
 
     return (
         <>
@@ -99,11 +100,20 @@ export default function EditServicePage() {
                     description="Update Services "
                     />
             </div>
-            
-            <ServiceStepperForm 
-                onSubmit={handleEdit} 
-                initialData={initialData}
-                onCancel={() => router.push("/dashboard/service-manager")}  />
+            {loading ? (
+                <div className="space-y-4">
+                <Skeleton className="h-10 w-full" />
+                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-10 w-32" />
+                </div>
+            ) : initialData ? (
+                    <ServiceStepperForm 
+                        onSubmit={handleEdit} 
+                        initialData={initialData}
+                        onCancel={() => router.push("/dashboard/service-manager")}  />
+                        ) : (
+                <p>Entry not found.</p>
+            )}
         </>
     );
 }

@@ -1531,6 +1531,7 @@ export interface SocialMedia {
   _id?: string;
   socialMediaName: string;
   link: string;
+  image: string;
 }
 
 export interface WebsiteSettingsEmail {
@@ -1542,6 +1543,7 @@ export interface WebsiteSettingsEmail {
 export interface WebsiteSettings {
   _id: string;
   favicon: string;
+  logo_img: string;
   address: string[];
   emails: WebsiteSettingsEmail[];
   phone: string[];
@@ -1552,8 +1554,9 @@ export interface WebsiteSettings {
 
 export interface WebsiteSettingsFormValues {
   favicon: string;
+  logo_img: string;
   address: { value: string }[];
   emails: { email: string; emailType: "hr" | "sales" | "contact" }[];
   phone: { value: string }[];
-  social_media: { socialMediaName: string; link: string }[];
+  social_media: { socialMediaName: string; link: string; image: string; }[];
 }

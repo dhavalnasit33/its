@@ -86,15 +86,15 @@ export default function EditPagePage() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="space-y-4 p-4">
-        <Skeleton className="h-8 w-48" />
-        <Skeleton className="h-64 w-full" />
-        <Skeleton className="h-64 w-full" />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="space-y-4 p-4">
+  //       <Skeleton className="h-10 w-full" />
+  //         <Skeleton className="h-32 w-full" />
+  //         <Skeleton className="h-10 w-32" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -104,7 +104,17 @@ export default function EditPagePage() {
           description="Update a Page"
         />
       </div>
+      {isLoading ? (
+        <div className="space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-10 w-32" />
+        </div>
+      ) : initialData ? (
       <PageCreate initialData={initialData} onSubmit={handleSubmit} />
+      ) : (
+        <p>Entry not found.</p>
+      )}
     </>
   );
 }

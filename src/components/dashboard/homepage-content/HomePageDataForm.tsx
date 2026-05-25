@@ -311,7 +311,13 @@ export default function HomePageDataForm({
                                         <FormItem>
                                             <FormLabel>Description</FormLabel>
                                             <FormControl>
-                                                <Textarea rows={4} {...field} />
+                                                {/* <Textarea rows={4} {...field} /> */}
+                                                <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data);
+                                                    }}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -376,7 +382,13 @@ export default function HomePageDataForm({
                                                         <FormItem>
                                                             <FormLabel>Description</FormLabel>
                                                             <FormControl>
-                                                                <Textarea rows={4} {...field} />
+                                                                {/* <Textarea rows={4} {...field} /> */}
+                                                                <CustomCKEditor
+                                                                    value={field.value || ""}
+                                                                    onChange={(data: string) => {
+                                                                        field.onChange(data);
+                                                                    }}
+                                                                />
                                                             </FormControl>
                                                             <FormMessage />
                                                         </FormItem>
@@ -429,7 +441,13 @@ export default function HomePageDataForm({
                                             <FormItem>
                                                 <FormLabel>Description</FormLabel>
                                                 <FormControl>
-                                                    <Textarea rows={4} {...field} />
+                                                    {/* <Textarea rows={4} {...field} /> */}
+                                                    <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data);
+                                                    }}
+                                                />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -605,7 +623,13 @@ export default function HomePageDataForm({
                                         <FormItem>
                                             <FormLabel>Description</FormLabel>
                                             <FormControl>
-                                                <Textarea rows={4} {...field} />
+                                                {/* <Textarea rows={4} {...field} /> */}
+                                                <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data);
+                                                    }}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -690,7 +714,15 @@ export default function HomePageDataForm({
                                     control={form.control as any}
                                     name="seo.seoDescription"
                                     render={({ field }) => (
-                                        <FormItem><FormLabel>Seo Description</FormLabel><FormControl><Textarea placeholder="Brief summary for search results" rows={4} {...field} /></FormControl><FormMessage /></FormItem>
+                                        <FormItem><FormLabel>Seo Description</FormLabel><FormControl>
+                                            {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
+                                            <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data);
+                                                    }}
+                                                />
+                                        </FormControl><FormMessage /></FormItem>
                                     )}
                                 />
                             </CardContent>

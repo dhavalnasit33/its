@@ -444,7 +444,15 @@ export default function HireMainPageForm({
                           control={form.control as any}
                           name={`whyChooseItsForDedicatedResources.detailBox.${index}.description`}
                           render={({ field }) => (
-                            <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
+                            <FormItem><FormLabel>Description</FormLabel><FormControl>
+                              {/* <Textarea {...field} /> */}
+                              <CustomCKEditor
+                                value={field.value || ""}
+                                onChange={(data: string) => {
+                                    field.onChange(data);
+                                }}
+                              />
+                            </FormControl><FormMessage /></FormItem>
                           )}
                         />
                         <FormField
@@ -539,7 +547,15 @@ export default function HireMainPageForm({
                   control={form.control as any}
                   name="seo.seoDescription"
                   render={({ field }) => (
-                    <FormItem><FormLabel>Meta Description</FormLabel><FormControl><Textarea placeholder="Brief summary for search results" rows={4} {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Meta Description</FormLabel><FormControl>
+                      {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
+                      <CustomCKEditor
+                        value={field.value || ""}
+                        onChange={(data: string) => {
+                            field.onChange(data);
+                        }}
+                      />
+                    </FormControl><FormMessage /></FormItem>
                   )}
                 />
               </CardContent>

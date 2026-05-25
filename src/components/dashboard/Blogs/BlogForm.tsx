@@ -468,7 +468,15 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
                       <FormField control={form.control} name="seo_keyphrase" render={({ field }) => (
                         <FormItem>
                           <FormLabel>SEO Keyphrases</FormLabel>
-                          <FormControl><Textarea rows={2} placeholder="Enter keywords separated by commas" {...field} /></FormControl>
+                          <FormControl>
+                            {/* <Textarea rows={2} placeholder="Enter keywords separated by commas" {...field} /> */}
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={(data: string) => {
+                                  field.onChange(data);
+                              }}
+                            />
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )} />
@@ -477,7 +485,15 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
                       <FormField control={form.control} name="meta_description" render={({ field }) => (
                         <FormItem>
                           <FormLabel>Meta Description</FormLabel>
-                          <FormControl><Textarea rows={3} placeholder="Enter a brief summary for search results" {...field} /></FormControl>
+                          <FormControl>
+                            {/* <Textarea rows={3} placeholder="Enter a brief summary for search results" {...field} /> */}
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={(data: string) => {
+                                  field.onChange(data);
+                              }}
+                            />
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )} />

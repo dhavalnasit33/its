@@ -20,6 +20,7 @@ import { Loader2, Plus, Trash2 } from "lucide-react";
 import ImageUpload from "@/components/ui/imagupload";
 import { PortfolioContentFormValues } from "@/types";
 import * as z from "zod";
+import CustomCKEditor from "@/components/shared/Ckeditor";
 
 const portfolioSchema = z.object({
   heroSection: z.object({
@@ -127,7 +128,13 @@ export default function PortfolioContentForm({
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Enter hero description" rows={4} {...field} />
+                        {/* <Textarea placeholder="Enter hero description" rows={4} {...field} /> */}
+                      <CustomCKEditor
+                        value={field.value || ""}
+                        onChange={(data: string) => {
+                            field.onChange(data);
+                        }}
+                      />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -255,7 +262,13 @@ export default function PortfolioContentForm({
                     <FormItem>
                       <FormLabel>Meta Description</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Brief summary for search results" rows={4} {...field} />
+                        {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
+                        <CustomCKEditor
+                          value={field.value || ""}
+                          onChange={(data: string) => {
+                              field.onChange(data);
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
