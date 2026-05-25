@@ -57,6 +57,11 @@ exports.validateWebsiteSettings = [
       .trim()
       .isString()
       .withMessage('Favicon must be a valid URL string'),
+    body('logo_img')
+      .optional({ checkFalsy: true })
+      .trim()
+      .isString()
+      .withMessage('Logo image must be a valid URL string'),
     body('address')
       .optional()
       .isArray()
@@ -98,4 +103,9 @@ exports.validateWebsiteSettings = [
       .trim()
       .isString()
       .withMessage('Social media link must be a string'),
+    body('social_media.*.image')
+      .optional({ checkFalsy: true })
+      .trim()
+      .isString()
+      .withMessage('Social media image must be a string'),
 ];

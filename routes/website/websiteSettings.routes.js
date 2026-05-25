@@ -11,6 +11,7 @@ async function getOrCreateSettings() {
   if (!settings) {
     settings = await WebsiteSettings.create({
       favicon: "",
+      logo_img: "",
       address: [],
       emails: [],
       phone: [],
@@ -37,14 +38,16 @@ router.get("/", async (req, res) => {
 // @route   PUT /api/website-settings
 // @access  Private (Admin only)
 router.put("/", protect, validateWebsiteSettings, handleValidationErrors, async (req, res) => {
+   console.log("REQ BODY =>", req.body);
   try {
-    const { favicon, address, emails, phone, social_media } = req.body;
+    const { favicon, logo_img, address, emails, phone, social_media } = req.body;
     let settings = await WebsiteSettings.findOne();
 
     if (!settings) {
-      settings = new WebsiteSettings({ favicon, address, emails, phone, social_media });
+      settings = new WebsiteSettings({ favicon, logo_img, address, emails, phone, social_media });
     } else {
       if (favicon !== undefined) settings.favicon = favicon;
+      if (logo_img !== undefined) settings.logo_img = logo_img;
       if (address !== undefined) settings.address = address;
       if (emails !== undefined) settings.emails = emails;
       if (phone !== undefined) settings.phone = phone;
@@ -71,6 +74,17 @@ router.get("/favicon", async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
+
+router.get("/logo_img", async (req, res) => {
+  try {
+    const settings = await getOrCreateSettings();
+    res.json({ success: true, logo_img: settings.logo_img });
+  } catch (error) {
+    console.error("Get logo img error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 
 // @desc    Get only addresses
 // @route   GET /api/website-settings/address

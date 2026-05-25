@@ -6,6 +6,10 @@ const WebsiteSettingsSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    logo_img: {
+      type: String,
+      default: "",
+    },
     address: {
       type: [String],
       default: [],
@@ -39,6 +43,10 @@ const WebsiteSettingsSchema = new mongoose.Schema(
           type: String,
           default: "",
         },
+        image: {
+          type: String,
+          default: "",
+        }
       },
     ],
   },
