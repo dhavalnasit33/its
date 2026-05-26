@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const FaqModel = require("../../models/faqs/faqs.model");
-const CategoryModel = require("../../models/category/category.model");
+const FaqCategory = require("../../models/category/faqCategory.model");
 const { populateMixed } = require("../../utils/mixedPopulate");
 const { protect } = require("../../middlewares/auth");
 
@@ -64,7 +64,7 @@ router.get("/categories", async (req, res) => {
     const catObjectIds = rawCategoryIds.filter(c => mongoose.Types.ObjectId.isValid(c));
     const catStrings = rawCategoryIds.filter(c => !mongoose.Types.ObjectId.isValid(c));
 
-    const dbCategories = await CategoryModel.find({
+    const dbCategories = await FaqCategory.find({
       _id: { $in: catObjectIds },
     }).select("_id category image").lean();
 
@@ -96,7 +96,7 @@ router.get("/admin", async (req, res) => {
       if (mongoose.Types.ObjectId.isValid(category)) {
         query.categories = category;
       } else {
-        const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "faqs" });
+        const catDoc = await FaqCategory.findOne({ category: category.trim() });
         if (catDoc) {
           query.$or = [
             { categories: category },
@@ -118,7 +118,7 @@ router.get("/admin", async (req, res) => {
       FaqModel.countDocuments(query),
     ]);
 
-    const faqData = await populateMixed(rawFaqData, { categories: "category" });
+    const faqData = await populateMixed(rawFaqData, { categories: { type: "category", model: FaqCategory } });
 
     res.status(200).json({
       success: true,
@@ -163,7 +163,7 @@ router.get("/", async (req, res) => {
       if (mongoose.Types.ObjectId.isValid(category)) {
         query.categories = category;
       } else {
-        const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "faqs" });
+        const catDoc = await FaqCategory.findOne({ category: category.trim() });
         if (catDoc) {
           query.$or = [
             { categories: category },
@@ -186,7 +186,7 @@ router.get("/", async (req, res) => {
       FaqModel.countDocuments(query),
     ]);
 
-    const faqData = await populateMixed(rawFaqData, { categories: "category" });
+    const faqData = await populateMixed(rawFaqData, { categories: { type: "category", model: FaqCategory } });
 
     res.status(200).json({
       success: true,

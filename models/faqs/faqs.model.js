@@ -4,7 +4,7 @@ const FaqsSchema = new mongoose.Schema(
   {
     categories: {
       type: mongoose.Schema.Types.Mixed,
-      ref: "CategoryModel",
+      ref: "FaqCategory",
       required: true,
     },
     title: {

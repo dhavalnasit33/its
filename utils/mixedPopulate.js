@@ -10,60 +10,93 @@ function isValidObjectId(val) {
 /**
  * Dynamically populates Mixed category/subcategory fields.
  * If the value is a valid ObjectId, fetches the populated document from DB.
- * If the value is a plain text string, returns a consistent object shape: { category: string } or { subcategory: string }.
+ * If the value is a plain text string, returns a consistent object shape.
+ *
+ * fieldsConfig can be:
+ * {
+ *   categories: "category" | { type: "category", model: BlogCategory },
+ *   subCategories: "subcategory" | { type: "subcategory", model: BlogSubcategory }
+ * }
  */
 async function populateMixed(docs, fieldsConfig) {
   if (!docs) return docs;
   const isArray = Array.isArray(docs);
   const docList = isArray ? docs : [docs];
 
-  // Collect all unique ObjectIds to fetch in batch
-  const categoryIds = new Set();
-  const subcategoryIds = new Set();
+  // Resolve target configurations
+  const fields = {};
+  Object.keys(fieldsConfig).forEach(field => {
+    const config = fieldsConfig[field];
+    if (typeof config === "string") {
+      fields[field] = {
+        type: config, // 'category' or 'subcategory'
+        model: config === "category" ? CategoryModel : SubcategoryModel
+      };
+    } else {
+      fields[field] = {
+        type: config.type,
+        model: config.model
+      };
+    }
+  });
+
+  // Unique IDs grouped by model to batch-fetch efficiently
+  const queries = {};
 
   docList.forEach(d => {
     const doc = d.toObject ? d.toObject() : d;
 
-    Object.keys(fieldsConfig).forEach(field => {
-      const type = fieldsConfig[field]; // 'category' or 'subcategory'
+    Object.keys(fields).forEach(field => {
+      const { type, model } = fields[field];
+      if (!model) return;
       const val = doc[field];
       if (val && isValidObjectId(val)) {
-        if (type === "category") categoryIds.add(val.toString());
-        if (type === "subcategory") subcategoryIds.add(val.toString());
+        const valStr = val.toString();
+        const collectionName = model.modelName;
+        if (!queries[collectionName]) {
+          queries[collectionName] = { model, ids: new Set() };
+        }
+        queries[collectionName].ids.add(valStr);
       }
     });
   });
 
-  // Fetch Category and Subcategory documents in batch
-  const [categories, subcategories] = await Promise.all([
-    CategoryModel.find({ _id: { $in: Array.from(categoryIds) } }).lean(),
-    SubcategoryModel.find({ _id: { $in: Array.from(subcategoryIds) } }).lean()
-  ]);
-
-  const categoryMap = {};
-  categories.forEach(cat => {
-    categoryMap[cat._id.toString()] = cat;
+  // Execute all batch queries in parallel
+  const collectionNames = Object.keys(queries);
+  const fetchPromises = collectionNames.map(name => {
+    const q = queries[name];
+    return q.model.find({ _id: { $in: Array.from(q.ids) } }).lean();
   });
 
-  const subcategoryMap = {};
-  subcategories.forEach(sub => {
-    subcategoryMap[sub._id.toString()] = sub;
+  const fetchResults = await Promise.all(fetchPromises);
+
+  // Map collectionName -> { docId -> doc }
+  const docMaps = {};
+  collectionNames.forEach((name, idx) => {
+    const docsArray = fetchResults[idx];
+    const map = {};
+    docsArray.forEach(item => {
+      map[item._id.toString()] = item;
+    });
+    docMaps[name] = map;
   });
 
   const result = docList.map(d => {
     const doc = d.toObject ? d.toObject() : { ...d };
 
-    Object.keys(fieldsConfig).forEach(field => {
-      const type = fieldsConfig[field];
+    Object.keys(fields).forEach(field => {
+      const { type, model } = fields[field];
+      if (!model) return;
       const val = doc[field];
 
       if (val) {
         const valStr = val.toString().trim();
         if (isValidObjectId(valStr)) {
+          const map = docMaps[model.modelName] || {};
           if (type === "category") {
-            doc[field] = categoryMap[valStr] || { _id: val, category: "N/A" };
+            doc[field] = map[valStr] || { _id: val, category: "N/A" };
           } else if (type === "subcategory") {
-            doc[field] = subcategoryMap[valStr] || { _id: val, subcategory: "N/A" };
+            doc[field] = map[valStr] || { _id: val, subcategory: "N/A" };
           }
         } else {
           // If already a plain text string, return in a consistent structure

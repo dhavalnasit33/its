@@ -50,6 +50,14 @@ const deleteImageRoute = require("./routes/deleteImage.routes");
 const categoryRoute = require("./routes/category/category.routes");
 const subcategoryRoute = require("./routes/subcategory/subcategory.routes");
 const pageRoute = require("./routes/page/page.routes");
+
+// Split category and subcategory routers
+const serviceCategoryRoute = require("./routes/category/serviceCategory.routes");
+const blogCategoryRoute = require("./routes/category/blogCategory.routes");
+const blogSubcategoryRoute = require("./routes/subcategory/blogSubcategory.routes");
+const portfolioCategoryRoute = require("./routes/category/portfolioCategory.routes");
+const faqCategoryRoute = require("./routes/category/faqCategory.routes");
+const hireCategoryRoute = require("./routes/category/hireCategory.routes");
 const EnquiriesRouter = require("./routes/enquiry/enquiry.routes");
 const websiteSettingsRouter = require("./routes/website/websiteSettings.routes");
 
@@ -107,6 +115,14 @@ app.use("/api/category", categoryRoute);
 app.use("/api/subcategory", subcategoryRoute);
 // page route
 app.use("/api/page", pageRoute);
+
+// Split categories and subcategories
+app.use("/api/service-category", serviceCategoryRoute);
+app.use("/api/blog-category", blogCategoryRoute);
+app.use("/api/blog-subcategory", blogSubcategoryRoute);
+app.use("/api/portfolio-category", portfolioCategoryRoute);
+app.use("/api/faq-category", faqCategoryRoute);
+app.use("/api/hire-category", hireCategoryRoute);
 
 //  homepage & Global componet api
 app.use("/api/homepage", HomePageDataRouter);

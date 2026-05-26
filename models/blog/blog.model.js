@@ -23,12 +23,12 @@ const BlogSchema = new mongoose.Schema(
     {
         categories: {
             type: mongoose.Schema.Types.Mixed,
-            ref: "CategoryModel",
+            ref: "BlogCategory",
             required: true
         },
         subCategories: {
             type: mongoose.Schema.Types.Mixed,
-            ref: "Subcategory",
+            ref: "BlogSubcategory",
             required: true
         },
         image: {

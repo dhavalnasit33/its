@@ -157,13 +157,13 @@ const SEOSchema = new mongoose.Schema(
 const HirePageDataSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.Mixed,
-        ref: "CategoryModel",
+        ref: "HireCategory",
         required: true
     },
     subCategory: {
         type: mongoose.Schema.Types.Mixed,
         ref: "Subcategory",
-        required: true
+        required: false
     },
     title: {
         type: String,

@@ -4,7 +4,7 @@ const creativeWorkSchema = new mongoose.Schema(
     {
         category: {
             type: mongoose.Schema.Types.Mixed,
-            ref: "CategoryModel",
+            ref: "PortfolioCategory",
             required: true
         },
         title: {

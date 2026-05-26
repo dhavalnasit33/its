@@ -136,13 +136,13 @@ const ServiceSchema = new mongoose.Schema(
   {
     category: {
       type: mongoose.Schema.Types.Mixed,
-      ref: "CategoryModel",
+      ref: "ServiceCategory",
       required: true,
     },
     subCategory: {
       type: mongoose.Schema.Types.Mixed,
       ref: "Subcategory",
-      required: true,
+      required: false,
     },
     name: {
       type: String,

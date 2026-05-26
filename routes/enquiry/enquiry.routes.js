@@ -201,6 +201,96 @@ router.get("/", protect, async (req, res) => {
     }
 });
 
+// GET /api/enquiries/stats/group - Admin Stats Grouped by Time Periods (Current vs past ranges)
+router.get("/stats/group", protect, async (req, res) => {
+    try {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+
+        const formattedTodayDate = `${yyyy}-${mm}-${dd}`;
+        const formattedMonth = `${yyyy}-${mm}`;
+        const formattedYear = `${yyyy}`;
+
+        // Helper to get ISO week string
+        function getISOWeek(date) {
+            const tempDate = new Date(date.valueOf());
+            tempDate.setDate(tempDate.getDate() + 4 - (tempDate.getDay() || 7));
+            const yearStart = new Date(tempDate.getFullYear(), 0, 1);
+            const weekNo = Math.ceil((((tempDate - yearStart) / 86400000) + 1) / 7);
+            return `${tempDate.getFullYear()}-W${String(weekNo).padStart(2, "0")}`;
+        }
+        const formattedWeek = getISOWeek(today);
+
+        // Daily (Today) range
+        const startOfToday = new Date(today);
+        startOfToday.setHours(0, 0, 0, 0);
+        const endOfToday = new Date(today);
+        endOfToday.setHours(23, 59, 59, 999);
+
+        // Weekly (This Week) range - starting Sunday
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay());
+        startOfWeek.setHours(0, 0, 0, 0);
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        endOfWeek.setHours(23, 59, 59, 999);
+
+        // Monthly (This Month) range
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        startOfMonth.setHours(0, 0, 0, 0);
+        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        endOfMonth.setHours(23, 59, 59, 999);
+
+        // Yearly (This Year) range
+        const startOfYear = new Date(today.getFullYear(), 0, 1);
+        startOfYear.setHours(0, 0, 0, 0);
+        const endOfYear = new Date(today.getFullYear(), 11, 31);
+        endOfYear.setHours(23, 59, 59, 999);
+
+        const [dailyCount, weeklyCount, monthlyCount, yearlyCount] = await Promise.all([
+            Enquiry.countDocuments({ createdAt: { $gte: startOfToday, $lte: endOfToday } }),
+            Enquiry.countDocuments({ createdAt: { $gte: startOfWeek, $lte: endOfWeek } }),
+            Enquiry.countDocuments({ createdAt: { $gte: startOfMonth, $lte: endOfMonth } }),
+            Enquiry.countDocuments({ createdAt: { $gte: startOfYear, $lte: endOfYear } })
+        ]);
+
+        res.json({
+            success: true,
+            data: {
+                daily: [
+                    {
+                        count: dailyCount,
+                        date: formattedTodayDate
+                    }
+                ],
+                weekly: [
+                    {
+                        count: weeklyCount,
+                        week: formattedWeek
+                    }
+                ],
+                monthly: [
+                    {
+                        count: monthlyCount,
+                        month: formattedMonth
+                    }
+                ],
+                yearly: [
+                    {
+                        count: yearlyCount,
+                        year: formattedYear
+                    }
+                ]
+            }
+        });
+    } catch (error) {
+        console.error("❌ Error fetching enquiry stats:", error);
+        res.status(500).json({ success: false, message: "Server Error", error: error.message });
+    }
+});
+
 // GET /api/enquiries/:id - Admin Detail
 router.get("/:id", protect, async (req, res) => {
     try {

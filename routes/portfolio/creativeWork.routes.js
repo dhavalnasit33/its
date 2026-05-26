@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const CreativeWork = require('../../models/portfolio/creativeWork');
-const CategoryModel = require('../../models/category/category.model');
+const PortfolioCategory = require('../../models/category/portfolioCategory.model');
 const { populateMixed } = require('../../utils/mixedPopulate');
 const { protect } = require('../../middlewares/auth');
 const cleanupImages = require('../../middlewares/cleanupImages');
@@ -177,7 +177,7 @@ router.get('/', async (req, res) => {
             if (mongoose.Types.ObjectId.isValid(category)) {
                 query.category = category;
             } else {
-                const catDoc = await CategoryModel.findOne({ category: category.trim(), moduleType: "portfolio" });
+                const catDoc = await PortfolioCategory.findOne({ category: category.trim() });
                 if (catDoc) {
                     query.$or = [
                         { category: category },
@@ -201,7 +201,7 @@ router.get('/', async (req, res) => {
             CreativeWork.countDocuments(query),
         ]);
 
-        const creativeWorks = await populateMixed(rawCreativeWorks, { category: "category" });
+        const creativeWorks = await populateMixed(rawCreativeWorks, { category: { type: "category", model: PortfolioCategory } });
 
         res.status(200).json({
             success: true,
@@ -254,7 +254,7 @@ router.get("/:id", async (req, res) => {
                 message: "Data not found",
             });
         }
-        const data = await populateMixed(rawData, { category: "category" });
+        const data = await populateMixed(rawData, { category: { type: "category", model: PortfolioCategory } });
         res.status(200).json({
             success: true,
             message: "Data Fetched Successfully",
