@@ -27,12 +27,13 @@ const portfolioSchema = z.object({
     title: z.string().min(2, "Title must be at least 2 characters"),
     description: z.string().min(5, "Description must be at least 5 characters"),
     image: z.string().url("Image required"),
-    points: z.array(
+    points: 
+    // z.array(
       z.object({
         label: z.string().min(2, "Label must be at least 2 characters"),
         image: z.string().url("Image required"),
       }),
-    ),
+    // ),
   }),
   seo: z.object({
     title: z.string(),
@@ -63,7 +64,8 @@ export default function PortfolioContentForm({
         title: "",
         description: "",
         image: "",
-        points: [],
+        // points: [],
+        points: { label: "", image: "" },
       },
       seo: {
         title: "",
@@ -74,10 +76,10 @@ export default function PortfolioContentForm({
     },
   });
 
-  const { fields: heroPoints, append: appendHeroPoint, remove: removeHeroPoint } = useFieldArray({
-    control: form.control as any,
-    name: "heroSection.points",
-  });
+  // const { fields: heroPoints, append: appendHeroPoint, remove: removeHeroPoint } = useFieldArray({
+  //   control: form.control as any,
+  //   name: "heroSection.points",
+  // });
 
   const handleFormSubmit: SubmitHandler<PortfolioContentFormValues> = async (data) => {
     setInternalIsSubmitting(true);
@@ -160,7 +162,7 @@ export default function PortfolioContentForm({
                 />
 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                  {/* <div className="flex items-center justify-between">
                     <FormLabel>Portfolio Points</FormLabel>
                     <Button
                       type="button"
@@ -171,9 +173,9 @@ export default function PortfolioContentForm({
                       <Plus className="h-4 w-4 mr-2" />
                       Add Point
                     </Button>
-                  </div>
+                  </div> */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {heroPoints.map((field, index) => (
+                    {/* {heroPoints.map((field, index) => (
                       <Card key={field.id} className="relative p-4 border-dashed">
                         <Button
                           type="button"
@@ -198,6 +200,46 @@ export default function PortfolioContentForm({
                               </FormItem>
                             )}
                           />
+                          <FormField
+                            control={form.control as any}
+                            name={`heroSection.points.${index}.image`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Icon/Image</FormLabel>
+                                <FormControl>
+                                  <ImageUpload
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    className="w-full h-32"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </Card>
+                    ))} */}
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <Card
+                        key={index}
+                        className="relative p-4 border border-dashed rounded-xl"
+                      >
+                        <div className="space-y-4">
+                          <FormField
+                            control={form.control as any}
+                            name={`heroSection.points.${index}.label`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Label</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="e.g. Innovation" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
                           <FormField
                             control={form.control as any}
                             name={`heroSection.points.${index}.image`}
@@ -262,13 +304,7 @@ export default function PortfolioContentForm({
                     <FormItem>
                       <FormLabel>Meta Description</FormLabel>
                       <FormControl>
-                        {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
-                        <CustomCKEditor
-                          value={field.value || ""}
-                          onChange={(data: string) => {
-                              field.onChange(data);
-                          }}
-                        />
+                        <Textarea placeholder="Brief summary for search results" rows={4} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

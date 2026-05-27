@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -23,12 +23,22 @@ import {
 } from "@/types";
 import ImageUpload from "@/components/ui/imagupload";
 import CustomCKEditor from "@/components/shared/Ckeditor";
+import { APP_URL } from "@/config";
 
 interface CareerFormProps {
     initialData?: CareerContentFormValues | null;
     onSubmit: (data: CareerContentFormValues) => Promise<void>;
     onCancel?: () => void;
 }
+
+const generateSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}; 
 
 export default function CareerContentForm({
     initialData,
@@ -37,12 +47,17 @@ export default function CareerContentForm({
 }: CareerFormProps) {
     const { toast } = useToast();
     const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
+     const isFirstRender = useRef(true);
 
     const form = useForm<CareerContentFormValues>({
         resolver: zodResolver(CareerContentSchema),
         defaultValues: initialData || {
+            pagename: "",
+            slug: "",
             heroSection: { title: "", description: "", image: "" },
-            careerAtIts: { title: "", image: "", points: [""] },
+            careerAtIts: { title: "", image: "", points: ""
+                    // points: [""] 
+            },
             whyJoinIts: { title: "", points: [{ title: "", description: "", image: "" }] },
             seo: {
                 title: "",
@@ -52,15 +67,27 @@ export default function CareerContentForm({
             },
         },
     });
+ const titleValue = form.watch("pagename");
+   useEffect(() => {
+       if (isFirstRender.current) {
+         isFirstRender.current = false;
+         return;
+       }
+       if (titleValue) {
+         form.setValue("slug", generateSlug(titleValue), {
+           shouldValidate: true,
+         });
+       }
+     }, [titleValue, form]);
 
-    const {
-        fields: careerPoints,
-        append: appendCareerPoint,
-        remove: removeCareerPoint,
-    } = useFieldArray({
-        control: form.control as any,
-        name: "careerAtIts.points",
-    });
+    // const {
+    //     fields: careerPoints,
+    //     append: appendCareerPoint,
+    //     remove: removeCareerPoint,
+    // } = useFieldArray({
+    //     control: form.control as any,
+    //     name: "careerAtIts.points",
+    // });
 
     const {
         fields: whyJoinPoints,
@@ -93,6 +120,63 @@ export default function CareerContentForm({
             <form onSubmit={form.handleSubmit(handleFormSubmit as any)} className="space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-8">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Page Settings</CardTitle>
+                            </CardHeader>
+
+                            <CardContent className="space-y-4">
+
+                                <FormField
+                                control={form.control}
+                                name="pagename"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Page Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Career Page" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={() => {
+                                    const slugValue = form.watch("slug");
+                                    const permalink = `${APP_URL}/${slugValue}`;
+                                    return (
+                                        <FormItem className="mb-0">
+                                        <FormLabel>Permalink</FormLabel>
+                                        <FormControl>
+                                            <div>
+                                            {slugValue && (
+                                                <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                                <strong>URL:</strong>{" "}
+                                                <a
+                                                    href={permalink}
+                                                    className="text-blue-600 hover:underline break-all"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {permalink}
+                                                </a>
+                                                </div>
+                                            )}
+                                            </div>
+                                        </FormControl>
+                                        </FormItem>
+                                    );
+                                    }}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={({ field }) => <input type="hidden" {...field} />}
+                                />
+                            </CardContent>
+                        </Card>
                         {/* Hero Section */}
                         <Card>
                             <CardHeader><CardTitle>Hero Section</CardTitle></CardHeader>
@@ -171,7 +255,37 @@ export default function CareerContentForm({
                                         </FormItem>
                                     )}
                                 />
-                                <div className="space-y-4">
+                                <FormField
+                                    control={form.control as any}
+                                    name="careerAtIts.points"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Description</FormLabel>
+
+                                            <FormControl>
+                                                <CustomCKEditor
+                                                    value={
+                                                        typeof field.value === "string"
+                                                            ? field.value
+                                                            : ""
+                                                    }
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data || "");
+                                                    }}
+                                                />
+                                                {/* <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => {
+                                                        field.onChange(data);
+                                                    }}
+                                                /> */}
+                                            </FormControl>
+
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                {/* <div className="space-y-4">
                                     <div className="flex justify-between items-center">
                                         <FormLabel>Key Points</FormLabel>
                                         <Button type="button" variant="outline" size="sm" onClick={() => appendCareerPoint("")}>
@@ -204,7 +318,8 @@ export default function CareerContentForm({
                                             </div>
                                         ))}
                                     </div>
-                                </div>
+                                </div> */}
+                                
                             </CardContent>
                         </Card>
 
@@ -303,13 +418,7 @@ export default function CareerContentForm({
                                     name="seo.seoDescription"
                                     render={({ field }) => (
                                         <FormItem><FormLabel>Meta Description</FormLabel><FormControl>
-                                            {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
-                                            <CustomCKEditor
-                                                value={field.value || ""}
-                                                onChange={(data: string) => {
-                                                    field.onChange(data);
-                                                }}
-                                            />
+                                            <Textarea placeholder="Brief summary for search results" rows={4} {...field} />
                                         </FormControl><FormMessage /></FormItem>
                                     )}
                                 />

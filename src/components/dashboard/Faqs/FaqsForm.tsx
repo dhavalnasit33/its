@@ -13,6 +13,7 @@ import CustomCKEditor from '@/components/shared/Ckeditor';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import apiService from '@/lib/apiService';
+import { Textarea } from '@/components/ui/textarea';
 
 // ---------------- Schema -----------------
 const FaqsSchema = z.object({
@@ -162,7 +163,12 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                                 <FormLabel>Question</FormLabel>
                                 <FormControl>
                                     <div className="border-gray-300 shadow-md rounded-md">
-                                        <CustomCKEditor
+                                        <Textarea
+                                            placeholder="Enter a Faq Questions..."
+                                            rows={3}
+                                            {...field}
+                                        />
+                                        {/* <CustomCKEditor
                                             value={field.value || ""}
                                             onChange={(value) => {
                                                 field.onChange(value);
@@ -172,7 +178,7 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                                                     shouldValidate: true,
                                                 });
                                             }}
-                                        />
+                                        /> */}
                                     </div>
                                 </FormControl>
                                 <FormMessage />
@@ -185,7 +191,6 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                             <FormItem>
                                 <FormLabel>Answer / Details</FormLabel>
                                 <FormControl>
-                                    <div className="border border-gray-300 shadow-md rounded-md max-h-72 overflow-y-auto">
                                         <CustomCKEditor
                                             value={field.value || ""}
                                             onChange={(value) => {
@@ -197,7 +202,6 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                                                 });
                                             }}
                                         />
-                                    </div>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

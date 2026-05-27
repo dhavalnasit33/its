@@ -84,13 +84,7 @@ export default function TestimonialForm({ initialData, onSubmit, onCancel }: Tes
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              {/* <Textarea placeholder="Enter description" {...field} /> */}
-              <CustomCKEditor
-                value={field.value || ""}
-                onChange={(data: string) => {
-                    field.onChange(data);
-                }}
-              />
+              <Textarea placeholder="Enter description" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

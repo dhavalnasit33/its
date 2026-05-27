@@ -45,9 +45,9 @@ export default function AboutUsForm({
         title: "",
         description: "",
         image: "",
-        points: [{ label: "", image: "" }],
+        points: { label: "", image: "" },
       },
-      whoWeAre: { description: [""], image: "" },
+      whoWeAre: { description: "", image: "" },
       goals: {
         missionTitle: "",
         missionDescription: "",
@@ -75,10 +75,10 @@ export default function AboutUsForm({
     }
   }, [initialData, form]);
 
-  const { fields: heroPoints, append: appendHeroPoint, remove: removeHeroPoint } = useFieldArray<any>({
-    control: form.control as any,
-    name: "heroSection.points",
-  });
+  // const { fields: heroPoints, append: appendHeroPoint, remove: removeHeroPoint } = useFieldArray<any>({
+  //   control: form.control as any,
+  //   name: "heroSection.points",
+  // });
 
   const { fields: whoWeArePoints, append: appendWhoWeArePoint, remove: removeWhoWeArePoint } = useFieldArray<any>({
     control: form.control as any,
@@ -147,7 +147,7 @@ export default function AboutUsForm({
                 />
 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                  {/* <div className="flex items-center justify-between">
                     <FormLabel>Feature Points</FormLabel>
                     <Button
                       type="button"
@@ -158,8 +158,8 @@ export default function AboutUsForm({
                       <Plus className="h-4 w-4 mr-2" />
                       Add Point
                     </Button>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  </div> */}
+                  {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {heroPoints.map((field, index) => (
                       <Card key={field.id} className="relative p-4 border-dashed">
                         <Button
@@ -186,6 +186,48 @@ export default function AboutUsForm({
                               </FormItem>
                             )}
                           />
+                          <FormField
+                            control={form.control as any}
+                            name={`heroSection.points.${index}.image`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Icon/Image</FormLabel>
+                                <FormControl>
+                                  <ImageUpload
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    className="w-full h-32"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </Card>
+                    ))}
+                  </div> */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <Card
+                        key={index}
+                        className="relative p-4 border border-dashed rounded-xl"
+                      >
+                        <div className="space-y-4">
+                          <FormField
+                            control={form.control as any}
+                            name={`heroSection.points.${index}.label`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Label</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="e.g. Innovation" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
                           <FormField
                             control={form.control as any}
                             name={`heroSection.points.${index}.image`}
@@ -453,10 +495,9 @@ export default function AboutUsForm({
             {/* SEO Text Content */}
             <Card  >
               <CardHeader  >
-
                 <CardTitle className="text-primary">SEO Settings</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6 pt-6">
+              <CardContent className="space-y-6 ">
                 <FormField
                   control={form.control as any}
                   name="seo.title"
@@ -490,13 +531,7 @@ export default function AboutUsForm({
                     <FormItem>
                       <FormLabel>Meta Description</FormLabel>
                       <FormControl>
-                        {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
-                        <CustomCKEditor
-                            value={field.value || ""}
-                            onChange={(data: string) => {
-                                field.onChange(data);
-                            }}
-                        />
+                        <Textarea placeholder="Brief summary for search results" rows={4} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

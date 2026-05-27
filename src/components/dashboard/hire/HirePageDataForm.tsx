@@ -1253,13 +1253,7 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Meta Description</FormLabel>
                           <FormControl>
-                            {/* <Textarea placeholder="Write a summary..." rows={4} {...field} /> */}
-                            <CustomCKEditor
-                              value={field.value || ""}
-                              onChange={(data: string) => {
-                                  field.onChange(data);
-                              }}
-                            />
+                            <Textarea placeholder="Write a summary..." rows={4} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

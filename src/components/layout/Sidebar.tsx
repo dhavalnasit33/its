@@ -10,7 +10,8 @@ import {
   Handshake, LineChart, DoorOpen, Inbox, BookPlus, BookOpenText, BookType,
   SearchCheck, Presentation, Milestone, ToolCase, Server, House,
   SignpostBig, Navigation, FileText, X,
-  Building2, Mail, Settings, FolderTree, Tag, Tags
+  Building2, Mail, Settings, FolderTree, Tag, Tags,
+  CircleHelp
 } from "lucide-react";
 import NavItems from "./NavItems";
 import { NavItem } from "@/types";
@@ -78,10 +79,13 @@ export const navItemsList: NavItem[] = [
       { href: "/dashboard/creativeWork", label: "Creative Work", icon: Pickaxe },
     ]
   },
-  { 
-    href: "/dashboard/Faqs", 
-    label: "Faqs", 
-    icon: Info 
+  {
+    label: "Faq",
+    icon: CircleHelp,
+    children: [
+      { href: "/dashboard/faq-category", label: "Faq Category", icon: Tag },
+      { href: "/dashboard/Faqs", label: "Faqs", icon: Info },
+    ]
   },
   {
     label: "Training",
@@ -104,6 +108,7 @@ export const navItemsList: NavItem[] = [
   { href: "/dashboard/enquiries", label: "Contact List (Enquiry)", icon: Mail },
   { label: "Yoast SEO", isTitle: true },
   { href: "/dashboard/yoast-seo", label: "Yoast SEO Manager", icon: SearchCheck },
+  // { href: "/dashboard/seo-manager", label: "SEO Manager", icon: SearchCheck },
   { href: "/dashboard/website-settings", label: "Website Settings", icon: Settings },
 
 

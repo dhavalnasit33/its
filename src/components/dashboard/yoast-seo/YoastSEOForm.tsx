@@ -137,12 +137,12 @@ export default function YoastSEOForm({
                       <FormControl>
                         <Input
                           placeholder="e.g. inspire techno solution, best web developers"
-                          maxLength={200}
+                          maxLength={50}
                           {...field}
                         />
                       </FormControl>
                       <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
-                        {watchedKeyphrase?.length || 0} / 200
+                        {watchedKeyphrase?.length || 0} / 50
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -156,19 +156,19 @@ export default function YoastSEOForm({
                     <FormItem>
                       <div className="flex justify-between items-center">
                         <FormLabel>SEO Title</FormLabel>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${getScoreColor(watchedTitle, 40, 60)}`}>
+                        {/* <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${getScoreColor(watchedTitle, 40, 60)}`}>
                           Title Length: {watchedTitle?.length || 0} chars ({getScoreStatus(watchedTitle, 40, 60)})
-                        </span>
+                        </span> */}
                       </div>
                       <FormControl>
                         <Input
                           placeholder="e.g. Inspire Techno Solution | Leading Software Development Company"
-                          maxLength={200}
+                          maxLength={100}
                           {...field}
                         />
                       </FormControl>
                       <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
-                        {watchedTitle?.length || 0} / 200
+                        {watchedTitle?.length || 0} / 100
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -182,26 +182,20 @@ export default function YoastSEOForm({
                     <FormItem>
                       <div className="flex justify-between items-center">
                         <FormLabel>Meta Description</FormLabel>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${getScoreColor(watchedMetaDesc, 120, 160)}`}>
+                        {/* <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${getScoreColor(watchedMetaDesc, 120, 160)}`}>
                           Desc Length: {watchedMetaDesc?.length || 0} chars ({getScoreStatus(watchedMetaDesc, 120, 160)})
-                        </span>
+                        </span> */}
                       </div>
                       <FormControl>
-                        {/* <Textarea
+                        <Textarea
                           placeholder="Provide a compelling meta description to increase click-through rate (ideal: 120-160 characters)"
                           rows={3}
-                          maxLength={300}
+                          maxLength={160}
                           {...field}
-                        /> */}
-                        <CustomCKEditor
-                          value={field.value || ""}
-                          onChange={(data: string) => {
-                              field.onChange(data);
-                          }}
                         />
                       </FormControl>
                       <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
-                        {watchedMetaDesc?.length || 0} / 300
+                        {watchedMetaDesc?.length || 0} / 160
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -210,26 +204,6 @@ export default function YoastSEOForm({
               </CardContent>
             </Card>
 
-            <Card >
-              <CardHeader >
-                <CardTitle>Page Content</CardTitle>
-              </CardHeader>
-              <CardContent className="p-6 pt-0">
-                <FormField
-                  control={form.control}
-                  name="page_description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Page Content / Description</FormLabel>
-                      <FormControl>
-                        <CustomCKEditor value={field.value} onChange={field.onChange} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </Card>
           </div>
 
           {/* Right Column: Google Search Snippet & Social OG Image (Col span 4) */}

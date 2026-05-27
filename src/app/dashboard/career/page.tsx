@@ -26,6 +26,9 @@ export default function CareerContentPage() {
                 setContentId(record._id || null);
 
                 setInitialData({
+                    pagename: record.pagename || "",
+                    slug: record.slug || "",
+
                     heroSection: record.heroSection,
                     careerAtIts: record.careerAtIts,
                     whyJoinIts: record.whyJoinIts,

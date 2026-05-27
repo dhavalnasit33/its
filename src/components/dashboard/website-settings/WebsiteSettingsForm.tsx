@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Plus, Trash2, Mail, Phone, MapPin, Share2, HelpCircle } from "lucide-react";
 import type { WebsiteSettingsFormValues } from "@/types";
 import ImageUpload from "@/components/ui/imagupload";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface SettingsFormProps {
   initialData?: WebsiteSettingsFormValues | null;
@@ -225,14 +226,27 @@ export default function WebsiteSettingsForm({
                         render={({ field }) => (
                           <FormItem className="space-y-0">
                             <FormControl>
-                              <select
+                              {/* <select
                                 {...field}
                                 className="w-full h-10 px-3 border rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent border-slate-200 text-slate-800"
                               >
                                 <option value="contact">Contact / General</option>
                                 <option value="hr">HR / Careers</option>
                                 <option value="sales">Sales / Business</option>
-                              </select>
+                              </select> */}
+                              <Select
+                                onValueChange={field.onChange}
+                                value={field.value}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue placeholder="All Modules" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="contact">Contact / General</SelectItem>
+                                  <SelectItem value="hr">HR / Careers</SelectItem>
+                                  <SelectItem value="sales">Sales / Business</SelectItem>
+                                </SelectContent>
+                              </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

@@ -1150,13 +1150,7 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                             <FormItem>
                               <FormLabel>SEO Description</FormLabel>
                               <FormControl>
-                                {/* <Textarea placeholder="Enter SEO description" {...field} /> */}
-                                <CustomCKEditor
-                                    value={field.value || ""}
-                                    onChange={(data: string) => {
-                                        field.onChange(data);
-                                    }}
-                                />
+                                <Textarea placeholder="Enter SEO description" {...field} />
                               </FormControl>
                               <FormMessage className="text-red-600 text-sm mt-1" />
                             </FormItem>

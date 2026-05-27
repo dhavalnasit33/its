@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import CustomCKEditor from "@/components/shared/Ckeditor";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import apiService from "@/lib/apiService";
@@ -452,8 +452,12 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
             </Card>
 
             <Card>
-              <CardContent className="p-6 ">
-               <CardTitle className="text-primary">SEO Settings</CardTitle>
+              <CardHeader>
+                <CardTitle className="text-primary">
+                    SEO Settings
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
                     <div className=" space-y-6  ">
                       {/* SEO Title */}
                       <FormField control={form.control} name="seo_title" render={({ field }) => (
@@ -469,13 +473,7 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
                         <FormItem>
                           <FormLabel>SEO Keyphrases</FormLabel>
                           <FormControl>
-                            {/* <Textarea rows={2} placeholder="Enter keywords separated by commas" {...field} /> */}
-                            <CustomCKEditor
-                              value={field.value || ""}
-                              onChange={(data: string) => {
-                                  field.onChange(data);
-                              }}
-                            />
+                            <Input placeholder="Enter keywords separated by commas" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -486,13 +484,7 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
                         <FormItem>
                           <FormLabel>Meta Description</FormLabel>
                           <FormControl>
-                            {/* <Textarea rows={3} placeholder="Enter a brief summary for search results" {...field} /> */}
-                            <CustomCKEditor
-                              value={field.value || ""}
-                              onChange={(data: string) => {
-                                  field.onChange(data);
-                              }}
-                            />
+                            <Textarea rows={3} placeholder="Enter a brief summary for search results" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

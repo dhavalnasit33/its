@@ -246,16 +246,10 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                                                 <FormItem>
                                                     <FormLabel>SEO Description</FormLabel>
                                                     <FormControl>
-                                                        {/* <Textarea
+                                                        <Textarea
                                                             placeholder="Enter SEO description (max 500 chars)"
                                                             rows={3}
                                                             {...field}
-                                                        /> */}
-                                                        <CustomCKEditor
-                                                            value={field.value || ""}
-                                                            onChange={(data: string) => {
-                                                                field.onChange(data);
-                                                            }}
                                                         />
                                                     </FormControl>
                                                     <div className="flex justify-between items-center mt-1">
@@ -310,6 +304,7 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? "Saving..." : initialData ? "Update" : "Save"}
+                            
                         </Button>
                     </div>
                 </form>

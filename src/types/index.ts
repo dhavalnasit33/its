@@ -297,12 +297,13 @@ export const PortfolioContentFormValues = z.object({
     title: z.string().min(2, "Title must be at least 2 characters"),
     description: z.string().min(5, "Description must be at least 5 characters"),
     image: z.string().url("Image required"),
-    points: z.array(
+    points: 
+    // z.array(
       z.object({
         label: z.string().min(2, "Label must be at least 2 characters"),
         image: z.string().url("Image required"),
       }),
-    ),
+    // ),
   }),
   seo: z.object({
     title: z.string(),
@@ -325,7 +326,7 @@ export interface PortfolioContent {
     points: {
       label: string;
       image: string;
-    }[];
+    };
   };
   seo: {
     title: string;
@@ -578,7 +579,9 @@ export type CareerHeroSection = z.infer<typeof CareerHeroSectionSchema>;
 export const CareerAtItsSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
   image: z.string().url("Image is required"),
-  points: z.array(z.string().min(2, "Point is required")),
+  points: z.string().min(2, "Point is required"),
+    // description: z.string().min(1, "Description is required"),
+
 });
 export type CareerAtIts = z.infer<typeof CareerAtItsSchema>;
 
@@ -598,6 +601,8 @@ export const WhyJoinItsSchema = z.object({
 export type WhyJoinIts = z.infer<typeof WhyJoinItsSchema>;
 
 export const CareerContentSchema = z.object({
+   pagename: z.string(),
+  slug: z.string(),
   heroSection: CareerHeroSectionSchema,
   careerAtIts: CareerAtItsSchema,
   whyJoinIts: WhyJoinItsSchema,
@@ -615,6 +620,8 @@ export type CareerContentFormValues = z.infer<typeof CareerContentSchema>;
 /* Interfaces (for fetched data) */
 export interface CareerContent {
   _id?: string;
+  pagename: string;
+  slug: string;
   heroSection: CareerHeroSection;
   careerAtIts: CareerAtIts;
   whyJoinIts: WhyJoinIts;
@@ -855,21 +862,28 @@ export const HeroSectionAboutUsSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
   description: z.string().min(5, "Description must be at least 5 characters"),
   image: z.string().url("A valid image URL is required"),
-  points: z
-    .array(
+  points:
+  //  z
+  //   .array(
       z.object({
         label: z.string().min(2, "Label must be at least 2 characters"),
         image: z.string().url("Image URL is required"),
       }),
-    )
-    .min(1, "At least one point is required"),
+    // )
+    // .min(1, "At least one point is required"),
 });
 
+// export const WhoWeAreSchema = z.object({
+//   // description: z.string().min(5, "Description must be at least 5 characters"),
+//   description: z.string().min(5),
+//     // .array(z.string().min(5, "Description must be at least 5 characters"))
+//     // .min(1, "At least one description point is required"),
+//   image: z.string().url("A valid image URL is required"),
+// });
+
 export const WhoWeAreSchema = z.object({
-  description: z
-    .array(z.string().min(5, "Description must be at least 5 characters"))
-    .min(1, "At least one description point is required"),
-  image: z.string().url("A valid image URL is required"),
+  description: z.string().min(5),
+  image: z.string().url()
 });
 
 export const GoalsSchema = z.object({
@@ -914,10 +928,10 @@ export interface AboutUsContent {
     points: {
       label: string;
       image: string;
-    }[];
+    };
   };
   whoWeAre: {
-    description: string[];
+    description: string;
     image: string;
   };
   goals: {

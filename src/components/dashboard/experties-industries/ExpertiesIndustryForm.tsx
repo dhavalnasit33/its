@@ -103,20 +103,16 @@ export default function ExpertiesIndustryForm({ initialData, onSubmit, onCancel 
                 {/* <Textarea
                   placeholder="Enter industry description"
                   rows={3}
-                  maxLength={300}
+                  // maxLength={300}
                   {...field}
                 /> */}
-                <CustomCKEditor
-                  value={field.value || ""}
-                  onChange={(data: string) => {
-                      field.onChange(data);
-                  }}
-                />
+                 <CustomCKEditor
+                    value={field.value || ""}
+                    onChange={(data: string) => {
+                        field.onChange(data);
+                    }}
+                  />
               </FormControl>
-              <div className="text-right text-sm text-muted-foreground mt-1">
-                {field.value?.length || 0} / {300}
-              </div>
-
               <FormMessage />
             </FormItem>
           )}

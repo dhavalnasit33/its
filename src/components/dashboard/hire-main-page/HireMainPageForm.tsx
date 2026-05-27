@@ -548,13 +548,7 @@ export default function HireMainPageForm({
                   name="seo.seoDescription"
                   render={({ field }) => (
                     <FormItem><FormLabel>Meta Description</FormLabel><FormControl>
-                      {/* <Textarea placeholder="Brief summary for search results" rows={4} {...field} /> */}
-                      <CustomCKEditor
-                        value={field.value || ""}
-                        onChange={(data: string) => {
-                            field.onChange(data);
-                        }}
-                      />
+                      <Textarea placeholder="Brief summary for search results" rows={4} {...field} />
                     </FormControl><FormMessage /></FormItem>
                   )}
                 />
