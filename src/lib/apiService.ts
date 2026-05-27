@@ -42,6 +42,13 @@ async function apiService<T>(endpoint: string, options: ApiOptions = {}): Promis
   });
 
   if (!response.ok) {
+    // if (response.status === 401) {
+    //   if (typeof window !== 'undefined') {
+    //     localStorage.removeItem('authToken');
+    //     localStorage.removeItem('authUser');
+    //     window.location.href = '/login';
+    //   }
+    // }
     let errorData;
     try {
       errorData = await response.json();
