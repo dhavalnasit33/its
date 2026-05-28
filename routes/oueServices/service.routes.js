@@ -855,7 +855,8 @@ router.post("/", protect, async (req, res) => {
     const result = await newService.save();
 
     try {
-      await syncSeoData(req.body.subCategory || category, slug, mainTitle, "service", result._id, result.seo);
+      // FUTURE USE: req.body.subCategory || category
+      await syncSeoData(req.body.name || category, slug, mainTitle, "service", result._id, result.seo);
     } catch (seoError) {
       console.warn("SEO sync warning:", seoError.message);
     }
@@ -878,7 +879,7 @@ router.post("/", protect, async (req, res) => {
 // ─── GET — All Services (paginated) ───
 router.get("/", async (req, res) => {
   try {
-    const { page = 1, limit = 10, category, subCategory, search = "" } = req.query;
+    const { page = 1, limit = 10, category, /* subCategory, */ search = "" } = req.query;
     let filter = {};
 
     if (category) {
@@ -897,9 +898,9 @@ router.get("/", async (req, res) => {
       }
     }
 
-    if (subCategory) {
-      filter.subCategory = subCategory;
-    }
+    // if (subCategory) {
+    //   filter.subCategory = subCategory;
+    // }
 
     if (search) {
       filter.$or = [
@@ -941,7 +942,8 @@ router.get("/", async (req, res) => {
 // ─── GET — Categories list ───
 router.get("/categories", async (req, res) => {
   try {
-    const rawServices = await Service.find().select("category subCategory -_id").lean();
+    // FUTURE USE: category subCategory -_id
+    const rawServices = await Service.find().select("category -_id").lean();
     const services = await populateMixed(rawServices, { category: { type: "category", model: ServiceCategory } });
     res.status(200).json({
       success: true,
@@ -959,7 +961,8 @@ router.get("/categories", async (req, res) => {
 // ─── GET — Admin list (id, category, subCategory, mainTitle) ───
 router.get("/admin-id", protect, async (req, res) => {
   try {
-    const rawServices = await Service.find().select("_id category subCategory mainTitle").lean();
+    // FUTURE USE: _id category subCategory mainTitle
+    const rawServices = await Service.find().select("_id category mainTitle").lean();
     const service = await populateMixed(rawServices, { category: { type: "category", model: ServiceCategory } });
     res.status(200).json({
       success: true,
@@ -1033,31 +1036,31 @@ router.get("/id/:id", async (req, res) => {
   }
 });
 
-// ─── GET — By subCategory ───
-router.get("/:subCategory", async (req, res) => {
-  try {
-    let subCategoryFilter = { subCategory: req.params.subCategory };
-
-    const rawService = await Service.findOne(subCategoryFilter).lean();
-    if (!rawService) {
-      return res.status(404).json({
-        success: false,
-        message: "Service not found",
-      });
-    }
-    const service = await populateMixed(rawService, { category: { type: "category", model: ServiceCategory } });
-    res.status(200).json({
-      success: true,
-      message: "Service fetched successfully",
-      data: service,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error fetching service",
-    });
-  }
-});
+// ─── GET — By subCategory (COMMENTED OUT FOR FUTURE USE) ───
+// router.get("/:subCategory", async (req, res) => {
+//   try {
+//     let subCategoryFilter = { subCategory: req.params.subCategory };
+// 
+//     const rawService = await Service.findOne(subCategoryFilter).lean();
+//     if (!rawService) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Service not found",
+//       });
+//     }
+//     const service = await populateMixed(rawService, { category: { type: "category", model: ServiceCategory } });
+//     res.status(200).json({
+//       success: true,
+//       message: "Service fetched successfully",
+//       data: service,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Error fetching service",
+//     });
+//   }
+// });
 
 
 // ─── PUT — Update by ID ───
@@ -1126,7 +1129,8 @@ router.put(
 
       try {
         await syncSeoData(
-          updatedService.subCategory || updatedService.category,
+          // FUTURE USE: updatedService.subCategory || 
+          updatedService.name || updatedService.category,
           updatedService.slug,
           updatedService.mainTitle,
           "service",

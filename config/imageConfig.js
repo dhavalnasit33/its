@@ -118,5 +118,23 @@ module.exports = {
     "aboutOurCompany.buttonContent.image",
     "overseasWebAgencies.image",
     "seo.featureImage"
-  ]
+  ],
+
+  // ✅ FaqCategory
+  FaqCategory: ["image"],
+
+  // ✅ HireCategory
+  HireCategory: ["image"],
+
+  // ✅ PortfolioCategory
+  PortfolioCategory: ["image"],
+
+  // ✅ ServiceCategory
+  ServiceCategory: ["image"],
+
+  // ✅ BlogCategory
+  BlogCategory: ["image"],
+
+  // ✅ WebsiteSettings
+  WebsiteSettings: ["favicon", "logo_img", "social_media[].image"]
 };

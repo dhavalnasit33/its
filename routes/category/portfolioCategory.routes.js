@@ -3,6 +3,8 @@ const PortfolioCategory = require("../../models/category/portfolioCategory.model
 const CreativeWork = require("../../models/portfolio/creativeWork");
 const { protect } = require("../../middlewares/auth");
 const mongoose = require("mongoose");
+const cleanupImages = require("../../middlewares/cleanupImages");
+const cleanupOldImages = require("../../middlewares/cleanupOldImages");
 
 const router = express.Router();
 
@@ -134,7 +136,7 @@ router.get("/:id", protect, async (req, res) => {
 // @desc    Update category
 // @route   PUT /api/portfolio-category/:id
 // @access  Private (Admin only)
-router.put("/:id", protect, async (req, res) => {
+router.put("/:id", protect, cleanupOldImages(PortfolioCategory, "PortfolioCategory"), async (req, res) => {
   try {
     const { category, image } = req.body;
 
@@ -195,7 +197,7 @@ router.put("/:id", protect, async (req, res) => {
 // @desc    Delete category by ID (Restricted if in use)
 // @route   DELETE /api/portfolio-category/:id
 // @access  Private (Admin only)
-router.delete("/:id", protect, async (req, res) => {
+router.delete("/:id", protect, cleanupImages(PortfolioCategory), async (req, res) => {
   try {
     const categoryDoc = await PortfolioCategory.findById(req.params.id);
     if (!categoryDoc) {
@@ -238,7 +240,7 @@ router.delete("/:id", protect, async (req, res) => {
 // @desc    Bulk Delete categories (Restricted if in use)
 // @route   POST /api/portfolio-category/bulk/delete
 // @access  Private (Admin only)
-router.post("/bulk/delete", protect, async (req, res) => {
+router.post("/bulk/delete", protect, cleanupImages.cleanupBulkImages(PortfolioCategory), async (req, res) => {
   try {
     const { ids } = req.body;
 
