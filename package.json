@@ -25,6 +25,7 @@
     "node-cache": "^5.1.2",
     "nodemailer": "^7.0.5",
     "path": "^0.12.7",
+    "slugify": "^1.6.9",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0"

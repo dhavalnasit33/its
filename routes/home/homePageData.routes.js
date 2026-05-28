@@ -241,6 +241,19 @@ router.post("/", protect, async (req, res) => {
             });
         }
 
+           let generatedSlug = null;
+
+    if (
+      pagename.toLowerCase().trim() !== "home" &&
+      pagename.toLowerCase().trim() !== "homepage"
+    ) {
+      generatedSlug = slugify(pagename, {
+        lower: true,
+        strict: true,
+        trim: true,
+      });
+    }
+
         const newHomePageData = new HomePageData({
             pagename,
             slug,
@@ -441,7 +454,19 @@ router.put("/:id", protect,cleanupOldImages(HomePageData, "HomePageData"), async
                 message: "Invalid ID"
             });
         }
+      let generatedSlug = null;
 
+      if (
+        pagename.toLowerCase().trim() !== "home" &&
+        pagename.toLowerCase().trim() !== "homepage"
+      ) {
+        generatedSlug = slugify(pagename, {
+          lower: true,
+          strict: true,
+          trim: true,
+        });
+      }
+      
         const updatedHomePageData = await HomePageData.findByIdAndUpdate(
             req.params.id,
             {

@@ -173,30 +173,30 @@ router.post('/', protect, async (req, res) => {
         }
 
         // Validate heroSection required fields
-        if (!heroSection.title || !heroSection.description || !heroSection.image || !heroSection.points) {
+        if (!heroSection.title || !heroSection.description || !heroSection.image ) {
             return res.status(400).json({
                 success: false,
                 message: "heroSection title, description, image, and points are required"
             });
         }
 
-        // Validate points array
-        if (!Array.isArray(heroSection.points) || heroSection.points.length === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "heroSection points must be a non-empty array"
-            });
-        }
+        // // Validate points array
+        // if (!Array.isArray(heroSection.points) || heroSection.points.length === 0) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "heroSection points must be a non-empty array"
+        //     });
+        // }
 
-        // Validate each point
-        for (let point of heroSection.points) {
-            if (!point.label || !point.image) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Each point must have label and image"
-                });
-            }
-        }
+        // // Validate each point
+        // for (let point of heroSection.points) {
+        //     if (!point.label || !point.image) {
+        //         return res.status(400).json({
+        //             success: false,
+        //             message: "Each point must have label and image"
+        //         });
+        //     }
+        // }
 
         const aboutUs = new AboutUs({ pagename, slug, heroSection, whoWeAre, goals, seo });
         await aboutUs.save();
@@ -288,7 +288,6 @@ router.get('/', async (req, res) => {
 router.put('/:id', protect, cleanupOldImages(AboutUs, "AboutUs"), async (req, res) => {
     try {
         const { pagename, slug, heroSection, whoWeAre, goals, seo } = req.body;
-
         const updatedAboutUs = await AboutUs.findByIdAndUpdate(
             req.params.id,
             { pagename, slug, heroSection, whoWeAre, goals, seo },

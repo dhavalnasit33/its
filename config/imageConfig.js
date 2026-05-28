@@ -68,7 +68,7 @@ module.exports = {
   // ✅ AboutUs
   AboutUs: [
     "heroSection.image",
-    "heroSection.points[].image",
+    "heroSection.points.image",
     "whoWeAre.image",
     "goals.missionImage",
     "goals.visionImage",
@@ -94,7 +94,7 @@ module.exports = {
   // ✅ PortfolioContent
   PortfolioContent: [
     "heroSection.image",
-    "heroSection.points[].image",
+    "heroSection.points.image",
     "seo.featureImage"
   ],
 

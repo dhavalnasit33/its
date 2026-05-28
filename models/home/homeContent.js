@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require("slugify");
 
 const HeroSectonSchema = new mongoose.Schema({
     title: {
@@ -163,7 +164,9 @@ const HomePageDataSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        default: ""
+        // default: ""
+        default: null,
+        sparse: true,
     },
     heroSecton: HeroSectonSchema,
     reasonsToChoose: ReasonsToChooseSchema,
@@ -172,6 +175,23 @@ const HomePageDataSchema = new mongoose.Schema({
     overseasWebAgencies: OverseasWebAgenciesSchema,
     seo: SEOSchema
 }, { timestamps: true });
+
+HomePageDataSchema.pre("save", function (next) {
+  if (
+    this.pagename.toLowerCase().trim() === "home" ||
+    this.pagename.toLowerCase().trim() === "homepage"
+  ) {
+    this.slug = null;
+  } else {
+    this.slug = slugify(this.pagename, {
+      lower: true,
+      strict: true,
+      trim: true,
+    });
+  }
+
+  next();
+});
 
 module.exports = mongoose.model('HomePageData', HomePageDataSchema);
 

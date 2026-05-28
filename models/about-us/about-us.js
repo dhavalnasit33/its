@@ -1,4 +1,14 @@
 const mongoose = require('mongoose');
+const HeroPointSchema = new mongoose.Schema({
+    label: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    }
+}, { _id: false });
 
 const HeroSectionSchema = new mongoose.Schema({
     title: {
@@ -13,25 +23,29 @@ const HeroSectionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    points: [{
-        label: {
-            type: String,
-            required: true
-        },
-        image: {
-            type: String,
-            required: true
-        }
-    }]
+    // points: {
+    //     label: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     image: {
+    //         type: String,
+    //         required: true
+    //     }
+    // }
+
+    points: {
+        type: [HeroPointSchema],
+        required: true,
+        validate: [arr => arr.length === 4, 'Exactly 4 points required']
+    }
 }, { _id: false });
 
 const WhoWeAreSchema = new mongoose.Schema({
-    description: [
-        {
+    description:{
             type: String,
             required: true
-        }
-    ],
+        },
     image: {
         type: String,
         required: true,

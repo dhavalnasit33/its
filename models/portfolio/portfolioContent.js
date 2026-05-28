@@ -9,6 +9,16 @@ const SEOSchema = new mongoose.Schema(
   },
   { _id: false },
 );
+const PortfolioHeroPointSchema = new mongoose.Schema({
+    label: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    }
+}, { _id: false });
 
 const portfolioContentSchema = new mongoose.Schema({
     pagename: {
@@ -36,16 +46,21 @@ const portfolioContentSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        points: [{
-            label: {
-                type: String,
-                required: true
-            },
-            image: {
-                type: String,
-                required: true
-            }
-        }]
+        // points: {
+        //     label: {
+        //         type: String,
+        //         required: true
+        //     },
+        //     image: {
+        //         type: String,
+        //         required: true
+        //     }
+        // }
+        points: {
+            type: [PortfolioHeroPointSchema],
+            required: true,
+            validate: [arr => arr.length === 4, 'Exactly 4 points required']
+        }
     },
     seo: SEOSchema,
 }, { timestamps: true })
