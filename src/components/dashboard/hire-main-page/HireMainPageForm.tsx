@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray, SubmitHandler, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,7 @@ import apiService from "@/lib/apiService";
 import { HireMainPageDataFormValues, HireMainPageDataSchema } from "@/types";
 import ImageUpload from "@/components/ui/imagupload";
 import CustomCKEditor from "@/components/shared/Ckeditor";
+import { APP_URL } from "@/config";
 
 interface HirePageOption {
   _id: string;
@@ -42,6 +43,14 @@ interface HireMainFormProps {
   onCancel?: () => void;
 }
 
+const generateSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}; 
 export default function HireMainPageForm({
   initialData,
   onSubmit,
@@ -51,10 +60,13 @@ export default function HireMainPageForm({
   const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
   const [hirePageOptions, setHirePageOptions] = useState<HirePageOption[]>([]);
   const [expandedDedicatedIndex, setExpandedDedicatedIndex] = useState<number | null>(0);
+   const isFirstRender = useRef(true);
 
   const form = useForm<HireMainPageDataFormValues>({
     resolver: zodResolver(HireMainPageDataSchema),
     defaultValues: initialData || {
+      pagename: "",
+      slug: "",
       mainTitle: "",
       description: "",
       pricePathAndFAQ: "",
@@ -71,6 +83,19 @@ export default function HireMainPageForm({
       },
     },
   });
+   const titleValue = form.watch("pagename");
+     useEffect(() => {
+         if (isFirstRender.current) {
+           isFirstRender.current = false;
+           return;
+         }
+         if (titleValue) {
+           form.setValue("slug", generateSlug(titleValue), {
+             shouldValidate: true,
+           });
+         }
+       }, [titleValue, form]);
+  
 
   useEffect(() => {
     const fetchHirePages = async () => {
@@ -152,6 +177,54 @@ export default function HireMainPageForm({
             <Card>
               <CardHeader><CardTitle>Hero & Basic Information</CardTitle></CardHeader>
               <CardContent className="space-y-6">
+                <FormField
+                    control={form.control}
+                    name="pagename"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Page Name</FormLabel>
+                        <FormControl>
+                            <Input placeholder="Enter a Page Name..." {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="slug"
+                        render={() => {
+                        const slugValue = form.watch("slug");
+                        const permalink = `${APP_URL}/${slugValue}`;
+                        return (
+                            <FormItem>
+                            <FormLabel>Permalink</FormLabel>
+                            <FormControl>
+                                <div>
+                                {slugValue && (
+                                    <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                    <strong>URL:</strong>{" "}
+                                    <a
+                                        href={permalink}
+                                        className="text-blue-600 hover:underline break-all"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {permalink}
+                                    </a>
+                                    </div>
+                                )}
+                                </div>
+                            </FormControl>
+                            </FormItem>
+                        );
+                        }}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="slug"
+                        render={({ field }) => <input type="hidden" {...field} />}
+                    />
                 <FormField
                   control={form.control as any}
                   name="mainTitle"

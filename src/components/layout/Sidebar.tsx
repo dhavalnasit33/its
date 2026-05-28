@@ -61,7 +61,15 @@ export const navItemsList: NavItem[] = [
     ],
   },
 
-  { href: "/dashboard/Blog", label: "Blog", icon: FileText },
+  { 
+    label: "Blog", 
+    icon: FileText ,
+    children: [
+      { href: "/dashboard/Blog-category", label: "Blog Category", icon: Tag },
+      { href: "/dashboard/blog-subcategory", label: "Blog Subcategory", icon: Tags },
+      { href: "/dashboard/Blog", label: "Blogs", icon: ToolCase },
+    ],
+  },
 
   { href: "/dashboard/About", label: "About Us", icon: Building2 },
   {

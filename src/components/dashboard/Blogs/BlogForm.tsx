@@ -124,7 +124,7 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
       const res = await apiService<{
         success: boolean;
         data: CategoryItem[];
-      }>("/category?moduleType=blogs&limit=100&page=1", { method: "GET" });
+      }>("/Blog-category?moduleType=blogs&limit=100&page=1", { method: "GET" });
 
       if (res.success) {
         setCategories(res.data);
@@ -153,7 +153,7 @@ export default function BlogForm({ initialData, onSubmit,  onCancel, }: BlogForm
       const res = await apiService<{
         success: boolean;
         data: SubCategoryItem[];
-      }>("/subcategory?moduleType=blogs&limit=100&page=1", { method: "GET" });
+      }>("/blog-subcategory?moduleType=blogs&limit=100&page=1", { method: "GET" });
 
       if (res.success) {
         setSubCategories(res.data);

@@ -26,7 +26,7 @@ export default function EditCategoryPage() {
         const res = await apiService<{
           success: boolean;
           data: CategoryFormValues;
-        }>(`/category/${id}`, { method: "GET" });
+        }>(`/Blog-category/${id}`, { method: "GET" });
 
         if (res.success) {
           setInitialData(res.data);
@@ -36,7 +36,7 @@ export default function EditCategoryPage() {
             description: "Failed to retrieve category details",
             variant: "destructive",
           });
-          router.push("/dashboard/category");
+          router.push("/dashboard/Blog-category");
         }
       } catch (error) {
         toast({
@@ -53,7 +53,7 @@ export default function EditCategoryPage() {
 
   const handleEdit = async (data: CategoryFormValues) => {
     try {
-      const res = await apiService<{ success: boolean; message: string }>(`/category/${id}`, {
+      const res = await apiService<{ success: boolean; message: string }>(`/Blog-category/${id}`, {
         method: "PUT",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
@@ -61,7 +61,7 @@ export default function EditCategoryPage() {
 
       if (res.success) {
         toast({ title: "Success", description: res.message });
-        router.push("/dashboard/category");
+        router.push("/dashboard/Blog-category");
       } else {
         toast({ title: "Error", description: res.message, variant: "destructive" });
       }
@@ -74,11 +74,12 @@ export default function EditCategoryPage() {
     }
   };
 
+
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Edit Category"
-        description="Update category details"
+        title="Edit Blog Category"
+        description="Update Blog category details"
       />
        {loading ? (
         <div className="space-y-4">
@@ -92,8 +93,8 @@ export default function EditCategoryPage() {
           <CategoryFrom 
             onSubmit={handleEdit} 
             initialData={initialData} 
-            onCancel={() => router.push("/dashboard/category")}
-            showModuleType={true}
+            onCancel={() => router.push("/dashboard/Blog-category")}
+            showModuleType={false}
           />
         </CardContent>
       </Card>

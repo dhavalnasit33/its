@@ -25,6 +25,8 @@ export default function PortfolioContentPage() {
         setContentId(record._id);
 
         setInitialData({
+          pagename: record.pagename || "",
+          slug: record.slug || "",
           heroSection: record.heroSection,
           seo: record.seo || {
             title: "",

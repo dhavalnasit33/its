@@ -26,6 +26,8 @@ export default function HomepageContentPage() {
         setContentId(record._id);
 
         setInitialData({
+          pagename: record.pagename || "",
+          slug: record.slug || "",
           heroSecton: record.heroSecton,
           reasonsToChoose: record.reasonsToChoose,
           aisection: record.aisection,

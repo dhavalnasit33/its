@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -21,20 +21,22 @@ import ImageUpload from "@/components/ui/imagupload";
 import { PortfolioContentFormValues } from "@/types";
 import * as z from "zod";
 import CustomCKEditor from "@/components/shared/Ckeditor";
+import { APP_URL } from "@/config";
 
 const portfolioSchema = z.object({
+  pagename: z.string(),
+    slug: z.string(),
   heroSection: z.object({
     title: z.string().min(2, "Title must be at least 2 characters"),
     description: z.string().min(5, "Description must be at least 5 characters"),
     image: z.string().url("Image required"),
-    points: 
-    // z.array(
+    points: z.array(
       z.object({
-        label: z.string().min(2, "Label must be at least 2 characters"),
-        image: z.string().url("Image required"),
-      }),
-    // ),
-  }),
+        label: z.string().min(2),
+        image: z.string().url(),
+      })
+    ).length(4),
+    }),
   seo: z.object({
     title: z.string(),
     keyphrase: z.string(),
@@ -49,6 +51,15 @@ interface PortfolioContentFormProps {
   onCancel?: () => void;
 }
 
+const generateSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}; 
+
 export default function PortfolioContentForm({
   initialData,
   onSubmit,
@@ -56,16 +67,23 @@ export default function PortfolioContentForm({
 }: PortfolioContentFormProps) {
   const { toast } = useToast();
   const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
+    const isFirstRender = useRef(true);
 
   const form = useForm<PortfolioContentFormValues>({
-    resolver: zodResolver(portfolioSchema),
+    resolver: zodResolver(portfolioSchema) as any,
     defaultValues: initialData || {
+      pagename: "",
+      slug: "",
       heroSection: {
         title: "",
         description: "",
         image: "",
-        // points: [],
-        points: { label: "", image: "" },
+        points: [
+          { label: "", image: "" },
+          // { label: "", image: "" },
+          // { label: "", image: "" },
+          // { label: "", image: "" },
+        ],
       },
       seo: {
         title: "",
@@ -75,6 +93,19 @@ export default function PortfolioContentForm({
       },
     },
   });
+  const titleValue = form.watch("pagename");
+     useEffect(() => {
+         if (isFirstRender.current) {
+           isFirstRender.current = false;
+           return;
+         }
+         if (titleValue) {
+           form.setValue("slug", generateSlug(titleValue), {
+             shouldValidate: true,
+           });
+         }
+       }, [titleValue, form]);
+       
 
   // const { fields: heroPoints, append: appendHeroPoint, remove: removeHeroPoint } = useFieldArray({
   //   control: form.control as any,
@@ -103,6 +134,63 @@ export default function PortfolioContentForm({
       <form onSubmit={form.handleSubmit(handleFormSubmit as any)} className="space-y-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
+             <Card>
+                  <CardHeader>
+                      <CardTitle>Page Settings</CardTitle>
+                  </CardHeader>
+  
+                  <CardContent className="space-y-4">
+  
+                      <FormField
+                      control={form.control}
+                      name="pagename"
+                      render={({ field }) => (
+                          <FormItem>
+                          <FormLabel>Page Name</FormLabel>
+                          <FormControl>
+                              <Input placeholder="Enter a Page Name..." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                          </FormItem>
+                      )}
+                      />
+                      <FormField
+                          control={form.control}
+                          name="slug"
+                          render={() => {
+                          const slugValue = form.watch("slug");
+                          const permalink = `${APP_URL}/${slugValue}`;
+                          return (
+                              <FormItem className="mb-0">
+                              <FormLabel>Permalink</FormLabel>
+                              <FormControl>
+                                  <div>
+                                  {slugValue && (
+                                      <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                      <strong>URL:</strong>{" "}
+                                      <a
+                                          href={permalink}
+                                          className="text-blue-600 hover:underline break-all"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                      >
+                                          {permalink}
+                                      </a>
+                                      </div>
+                                  )}
+                                  </div>
+                              </FormControl>
+                              </FormItem>
+                          );
+                          }}
+                      />
+                      <FormField
+                          control={form.control}
+                          name="slug"
+                          render={({ field }) => <input type="hidden" {...field} />}
+                      />
+                  </CardContent>
+              </Card>
             {/* Hero Section */}
             <Card>
               <CardHeader>
@@ -220,7 +308,7 @@ export default function PortfolioContentForm({
                         </div>
                       </Card>
                     ))} */}
-                    {Array.from({ length: 4 }).map((_, index) => (
+                    {/* {Array.from({ length: 4 }).map((_, index) => (
                       <Card
                         key={index}
                         className="relative p-4 border border-dashed rounded-xl"
@@ -259,9 +347,56 @@ export default function PortfolioContentForm({
                           />
                         </div>
                       </Card>
-                    ))}
-                  </div>
+                    ))} */}
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <Card
+                      key={index}
+                      className="relative p-4 border border-dashed rounded-xl"
+                    >
+                      <div className="space-y-4">
+
+                        <FormField
+                          control={form.control}
+                          name={`heroSection.points.${index}.label`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Label</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="e.g. Innovation"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name={`heroSection.points.${index}.image`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Icon/Image</FormLabel>
+
+                              <FormControl>
+                                <ImageUpload
+                                  value={field.value || ""}
+                                  onChange={field.onChange}
+                                  className="w-full h-32"
+                                />
+                              </FormControl>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                      </div>
+                    </Card>
+                  ))}
                 </div>
+                  </div>
               </CardContent>
             </Card>
 

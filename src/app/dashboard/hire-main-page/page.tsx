@@ -25,6 +25,8 @@ export default function HireMainPage() {
                 setContentId(record._id);
 
                 setInitialData({
+                    pagename: record.pagename || "",
+                    slug: record.slug || "",
                     mainTitle: record.mainTitle,
                     description: record.description,
                     developmentTeamSection: record.developmentTeamSection,

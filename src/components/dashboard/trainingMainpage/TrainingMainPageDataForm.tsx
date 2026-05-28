@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -23,12 +23,22 @@ import {
 } from "@/types";
 import ImageUpload from "@/components/ui/imagupload";
 import CustomCKEditor from "@/components/shared/Ckeditor";
+import { APP_URL } from "@/config";
 
 interface TrainingFormProps {
     initialData?: TrainingMainPageDataFormValues | null;
     onSubmit: (data: TrainingMainPageDataFormValues) => Promise<void>;
     onCancel?: () => void;
 }
+
+const generateSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}; 
 
 export default function TrainingMainPageDataForm({
     initialData,
@@ -37,10 +47,14 @@ export default function TrainingMainPageDataForm({
 }: TrainingFormProps) {
     const { toast } = useToast();
     const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
+    const isFirstRender = useRef(true);
+    
 
     const form = useForm<TrainingMainPageDataFormValues>({
         resolver: zodResolver(TrainingMainPageDataSchema),
         defaultValues: initialData || {
+            pagename: "",
+            slug: "",
             heroSection: { subTitle: "", mainTitle: "", description: "", image: "" },
             aboutusSection: {
                 image: "",
@@ -69,6 +83,19 @@ export default function TrainingMainPageDataForm({
             },
         },
     });
+
+    const titleValue = form.watch("pagename");
+        useEffect(() => {
+            if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+            }
+            if (titleValue) {
+            form.setValue("slug", generateSlug(titleValue), {
+                shouldValidate: true,
+            });
+            }
+        }, [titleValue, form]);
 
     const {
         fields: aboutDetails,
@@ -128,6 +155,63 @@ export default function TrainingMainPageDataForm({
             <form onSubmit={form.handleSubmit(handleFormSubmit as any)} className="space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-8">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Page Settings</CardTitle>
+                            </CardHeader>
+            
+                            <CardContent className="space-y-4">
+            
+                                <FormField
+                                control={form.control}
+                                name="pagename"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Page Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter a Page Name..." {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={() => {
+                                    const slugValue = form.watch("slug");
+                                    const permalink = `${APP_URL}/${slugValue}`;
+                                    return (
+                                        <FormItem className="mb-0">
+                                        <FormLabel>Permalink</FormLabel>
+                                        <FormControl>
+                                            <div>
+                                            {slugValue && (
+                                                <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                                <strong>URL:</strong>{" "}
+                                                <a
+                                                    href={permalink}
+                                                    className="text-blue-600 hover:underline break-all"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {permalink}
+                                                </a>
+                                                </div>
+                                            )}
+                                            </div>
+                                        </FormControl>
+                                        </FormItem>
+                                    );
+                                    }}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={({ field }) => <input type="hidden" {...field} />}
+                                />
+                            </CardContent>
+                        </Card>
                         {/* Hero Section */}
                         <Card>
                             <CardHeader><CardTitle>Hero Section</CardTitle></CardHeader>

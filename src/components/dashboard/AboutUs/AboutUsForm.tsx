@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import { AboutUsContentFormValues, AboutUsContentSchema } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
 import CustomCKEditor from "@/components/shared/Ckeditor";
+import { APP_URL } from "@/config";
 
 interface AboutUsFormProps {
   initialData?: AboutUsContentFormValues | null;
@@ -28,6 +29,14 @@ interface AboutUsFormProps {
   isSubmitting?: boolean;
 }
 
+const generateSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}; 
 export default function AboutUsForm({
   initialData,
   onSubmit,
@@ -37,15 +46,23 @@ export default function AboutUsForm({
   const { toast } = useToast();
   const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
   const isSubmitting = externalIsSubmitting || internalIsSubmitting;
+  const isFirstRender = useRef(true);
 
   const form = useForm<AboutUsContentFormValues>({
     resolver: zodResolver(AboutUsContentSchema) as any,
     defaultValues: initialData || {
+      pagename: "",
+      slug: "",
       heroSection: {
         title: "",
         description: "",
         image: "",
-        points: { label: "", image: "" },
+        points: [
+          { label: "", image: "" },
+          // { label: "", image: "" },
+          // { label: "", image: "" },
+          // { label: "", image: "" },
+        ],
       },
       whoWeAre: { description: "", image: "" },
       goals: {
@@ -67,23 +84,48 @@ export default function AboutUsForm({
       },
     },
   });
-
+const titleValue = form.watch("pagename");
+   useEffect(() => {
+       if (isFirstRender.current) {
+         isFirstRender.current = false;
+         return;
+       }
+       if (titleValue) {
+         form.setValue("slug", generateSlug(titleValue), {
+           shouldValidate: true,
+         });
+       }
+     }, [titleValue, form]);
   // Sync initialData when it changes
   useEffect(() => {
     if (initialData) {
-      form.reset(initialData);
+       const fixedPoints = [...initialData.heroSection.points];
+
+    while (fixedPoints.length < 4) {
+      fixedPoints.push({
+        label: "",
+        image: "",
+      });
+    }
+      form.reset({...initialData,
+         heroSection: {
+          ...initialData.heroSection,
+          points: initialData.heroSection.points.slice(0, 4),
+        },
+    });
     }
   }, [initialData, form]);
 
+   
   // const { fields: heroPoints, append: appendHeroPoint, remove: removeHeroPoint } = useFieldArray<any>({
   //   control: form.control as any,
   //   name: "heroSection.points",
   // });
 
-  const { fields: whoWeArePoints, append: appendWhoWeArePoint, remove: removeWhoWeArePoint } = useFieldArray<any>({
-    control: form.control as any,
-    name: "whoWeAre.description",
-  });
+  // const { fields: whoWeArePoints, append: appendWhoWeArePoint, remove: removeWhoWeArePoint } = useFieldArray<any>({
+  //   control: form.control as any,
+  //   name: "whoWeAre.description",
+  // });
 
   const handleFormSubmit: SubmitHandler<AboutUsContentFormValues> = async (data) => {
     setInternalIsSubmitting(true);
@@ -106,6 +148,63 @@ export default function AboutUsForm({
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Page Settings</CardTitle>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+
+                    <FormField
+                    control={form.control}
+                    name="pagename"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Page Name</FormLabel>
+                        <FormControl>
+                            <Input placeholder="Enter a Page Name..." {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="slug"
+                        render={() => {
+                        const slugValue = form.watch("slug");
+                        const permalink = `${APP_URL}/${slugValue}`;
+                        return (
+                            <FormItem className="mb-0">
+                            <FormLabel>Permalink</FormLabel>
+                            <FormControl>
+                                <div>
+                                {slugValue && (
+                                    <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                    <strong>URL:</strong>{" "}
+                                    <a
+                                        href={permalink}
+                                        className="text-blue-600 hover:underline break-all"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {permalink}
+                                    </a>
+                                    </div>
+                                )}
+                                </div>
+                            </FormControl>
+                            </FormItem>
+                        );
+                        }}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="slug"
+                        render={({ field }) => <input type="hidden" {...field} />}
+                    />
+                </CardContent>
+            </Card>
             {/* Hero Section */}
             <Card>
               <CardHeader>
@@ -259,7 +358,7 @@ export default function AboutUsForm({
                 <CardTitle>Who We Are</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-4">
+                {/* <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <FormLabel>Description Paragraphs</FormLabel>
                     <Button
@@ -281,7 +380,7 @@ export default function AboutUsForm({
                           render={({ field }) => (
                             <FormItem className="flex-1">
                               <FormControl>
-                                {/* <Textarea placeholder={`Paragraph ${index + 1}`} rows={3} {...field} /> */}
+                                // {/* <Textarea placeholder={`Paragraph ${index + 1}`} rows={3} {...field} /> *
                                 <CustomCKEditor
                                     value={field.value || ""}
                                     onChange={(data: string) => {
@@ -306,7 +405,30 @@ export default function AboutUsForm({
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
+                <FormField
+                    control={form.control as any}
+                    name="whoWeAre.description"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <CustomCKEditor
+                                    value={
+                                        typeof field.value === "string"
+                                            ? field.value
+                                            : ""
+                                    }
+                                    onChange={(data: string) => {
+                                        field.onChange(data || "");
+                                    }}
+                                />
+                            </FormControl>
+
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
               </CardContent>
             </Card>
 

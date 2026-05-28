@@ -97,6 +97,8 @@ export default function OurServicesMainPage() {
 
     // Map internal data to form values
     const formInitialData: OurServicesMainFormValues | null = data ? {
+        pagename: data.pagename || "",
+        slug: data.slug || "",
         mainTitle: data.mainTitle,
         description: data.description,
         heroSections: data.heroSections.map(hs => ({

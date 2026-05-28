@@ -26,6 +26,8 @@ export default function TrainingContentPage() {
         setContentId(record._id);
 
         setInitialData({
+          pagename: record.pagename || "",
+          slug: record.slug || "",
           heroSection: record.heroSection,
           aboutusSection: record.aboutusSection,
           itsInstituteFacilitiesSection: record.itsInstituteFacilitiesSection,

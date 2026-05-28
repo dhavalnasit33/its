@@ -28,6 +28,8 @@ export default function AboutUsPage() {
 
           // Map API data to form values
           setInitialData({
+            pagename: record.pagename || "",
+            slug: record.slug || "",
             heroSection: record.heroSection,
             whoWeAre: record.whoWeAre,
             goals: record.goals,

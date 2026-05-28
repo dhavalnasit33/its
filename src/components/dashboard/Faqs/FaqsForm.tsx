@@ -88,7 +88,7 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
           const res = await apiService<{
             success: boolean;
             data: CategoryItem[];
-          }>("/category?limit=100&page=1", { method: "GET" });
+          }>("/faq-category?limit=100&page=1", { method: "GET" });
     
           if (res.success) {
             setCategories(res.data);
@@ -162,12 +162,7 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                             <FormItem>
                                 <FormLabel>Question</FormLabel>
                                 <FormControl>
-                                    <div className="border-gray-300 shadow-md rounded-md">
-                                        <Textarea
-                                            placeholder="Enter a Faq Questions..."
-                                            rows={3}
-                                            {...field}
-                                        />
+                                        <Input placeholder="Enter a Faq Questions..." {...field} />
                                         {/* <CustomCKEditor
                                             value={field.value || ""}
                                             onChange={(value) => {
@@ -179,7 +174,6 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                                                 });
                                             }}
                                         /> */}
-                                    </div>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

@@ -293,17 +293,24 @@ export const OpenningPositionSchema = z.object({
 });
 
 export const PortfolioContentFormValues = z.object({
+  pagename: z.string(),
+  slug: z.string(),
   heroSection: z.object({
     title: z.string().min(2, "Title must be at least 2 characters"),
     description: z.string().min(5, "Description must be at least 5 characters"),
     image: z.string().url("Image required"),
-    points: 
-    // z.array(
+    // points: z.array(
+    //   z.object({
+    //     label: z.string().min(2, "Label must be at least 2 characters"),
+    //     image: z.string().url("Image required"),
+    //   }),
+    // // ),
+    points: z.array(
       z.object({
-        label: z.string().min(2, "Label must be at least 2 characters"),
-        image: z.string().url("Image required"),
-      }),
-    // ),
+        label: z.string().min(2),
+        image: z.string().url(),
+      })
+    ).length(4),
   }),
   seo: z.object({
     title: z.string(),
@@ -319,6 +326,8 @@ export type PortfolioContentFormValues = z.infer<
 
 export interface PortfolioContent {
   _id: string;
+  pagename: string,
+  slug: string,
   heroSection: {
     title: string;
     description: string;
@@ -326,7 +335,7 @@ export interface PortfolioContent {
     points: {
       label: string;
       image: string;
-    };
+    }[];
   };
   seo: {
     title: string;
@@ -862,19 +871,24 @@ export const HeroSectionAboutUsSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
   description: z.string().min(5, "Description must be at least 5 characters"),
   image: z.string().url("A valid image URL is required"),
-  points:
-  //  z
-  //   .array(
-      z.object({
-        label: z.string().min(2, "Label must be at least 2 characters"),
-        image: z.string().url("Image URL is required"),
-      }),
-    // )
-    // .min(1, "At least one point is required"),
-});
+//   points:
+//    z.array(
+//       z.object({
+//         label: z.string().min(2, "Label must be at least 2 characters"),
+//         image: z.string().url("Image URL is required"),
+//       }),
+//     )
+//     // .min(1, "At least one point is required"),
+// });
+points: z.array(
+  z.object({
+    label: z.string().min(2),
+    image: z.string().url(),
+  })
+).length(4),
+})
 
 // export const WhoWeAreSchema = z.object({
-//   // description: z.string().min(5, "Description must be at least 5 characters"),
 //   description: z.string().min(5),
 //     // .array(z.string().min(5, "Description must be at least 5 characters"))
 //     // .min(1, "At least one description point is required"),
@@ -882,8 +896,8 @@ export const HeroSectionAboutUsSchema = z.object({
 // });
 
 export const WhoWeAreSchema = z.object({
-  description: z.string().min(5),
-  image: z.string().url()
+  description: z.string().min(5, "Description must be at least 5 characters"),
+   image: z.string().url("A valid image URL is required"),
 });
 
 export const GoalsSchema = z.object({
@@ -908,6 +922,8 @@ export const AboutUsSEOSchema = z.object({
 
 
 export const AboutUsContentSchema = z.object({
+  pagename: z.string(),
+  slug: z.string(),
   heroSection: HeroSectionAboutUsSchema,
   whoWeAre: WhoWeAreSchema,
   goals: GoalsSchema,
@@ -921,6 +937,8 @@ export type AboutUsContentFormValues = z.infer<typeof AboutUsContentSchema>;
 // This interface is for data coming from the API (includes _id, timestamps etc.)
 export interface AboutUsContent {
   _id: string;
+  pagename: string;
+  slug: string;
   heroSection: {
     title: string;
     description: string;
@@ -928,7 +946,7 @@ export interface AboutUsContent {
     points: {
       label: string;
       image: string;
-    };
+    }[];
   };
   whoWeAre: {
     description: string;
@@ -958,6 +976,8 @@ export interface AboutUsContent {
 
 /* -------------------- Training Main Page Content -------------------- */
 export const TrainingMainPageDataSchema = z.object({
+  pagename: z.string(),
+  slug: z.string(),
   heroSection: z.object({
     subTitle: z.string().min(2, "Subtitle is required"),
     mainTitle: z.string().min(2, "Main title is required"),
@@ -1030,6 +1050,8 @@ export type TrainingMainPageDataFormValues = z.infer<
 // Interface for data coming from API (includes _id, etc.)
 export interface TrainingMainPageData {
   _id: string;
+  pagename: string;
+  slug: string;
   heroSection: {
     subTitle: string;
     mainTitle: string;
@@ -1123,6 +1145,8 @@ export const OurServiceTechnologyDetailSchema = z.object({
 });
 
 export const OurServicesMainSchema = z.object({
+  pagename: z.string(),
+  slug: z.string(),
   mainTitle: z.string().min(5, "Main title is required"),
   description: z.string().min(10, "Description is required"),
   heroSections: z
@@ -1144,6 +1168,8 @@ export type OurServicesMainFormValues = z.infer<typeof OurServicesMainSchema>;
 // Interface for data coming from API
 export interface OurServicesMain {
   _id: string;
+  pagename: string;
+  slug: string;
   mainTitle: string;
   description: string;
   heroSections: {
@@ -1258,6 +1284,8 @@ const SEOSchema= z.object({
 
 // Main Schema for the form
 export const HomePageDataSchema = z.object({
+  pagename: z.string(),
+  slug: z.string(),
   heroSecton: HeroSectionSchema,
   reasonsToChoose: ReasonsToChooseSchema,
   aisection: aiSectionSchema,
@@ -1271,6 +1299,8 @@ export type HomePageDataFormValues = z.infer<typeof HomePageDataSchema>;
 // Interface for data coming from the API
 export interface HomePageData {
   _id: string;
+  pagename: string;
+  slug: string;
   heroSecton: {
     // Matches your Mongoose schema key
     title: string;
@@ -1399,6 +1429,8 @@ const HireMainDedicatedResourcesAndTalentsSchema = z.object({
 });
 
 export const HireMainPageDataSchema = z.object({
+  pagename: z.string(),
+  slug: z.string(),
   mainTitle: z.string().min(5, "Main title is required"),
   description: z.string().min(10, "Description is required"),
   developmentTeamSection: HireMainDevelopmentTeamSectionSchema,
@@ -1433,6 +1465,8 @@ interface HirePageLink {
 
 export interface HireMainPageData {
   _id: string;
+  pagename: string;
+  slug: string;
   mainTitle: string;
   description: string;
   developmentTeamSection: {

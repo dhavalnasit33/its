@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function EditCategoryPage() {
+export default function EditFaqCategoryPage() {
   const params = useParams();
   const id = params?.id as string;
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function EditCategoryPage() {
         const res = await apiService<{
           success: boolean;
           data: CategoryFormValues;
-        }>(`/category/${id}`, { method: "GET" });
+        }>(`/faq-category/${id}`, { method: "GET" });
 
         if (res.success) {
           setInitialData(res.data);
@@ -36,7 +36,7 @@ export default function EditCategoryPage() {
             description: "Failed to retrieve category details",
             variant: "destructive",
           });
-          router.push("/dashboard/category");
+          router.push("/dashboard/faq-category");
         }
       } catch (error) {
         toast({
@@ -53,7 +53,7 @@ export default function EditCategoryPage() {
 
   const handleEdit = async (data: CategoryFormValues) => {
     try {
-      const res = await apiService<{ success: boolean; message: string }>(`/category/${id}`, {
+      const res = await apiService<{ success: boolean; message: string }>(`/faq-category/${id}`, {
         method: "PUT",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
@@ -61,7 +61,7 @@ export default function EditCategoryPage() {
 
       if (res.success) {
         toast({ title: "Success", description: res.message });
-        router.push("/dashboard/category");
+        router.push("/dashboard/faq-category");
       } else {
         toast({ title: "Error", description: res.message, variant: "destructive" });
       }
@@ -74,11 +74,12 @@ export default function EditCategoryPage() {
     }
   };
 
+
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Edit Category"
-        description="Update category details"
+        title="Edit FAQ Category"
+        description="Update FAQ category details"
       />
        {loading ? (
         <div className="space-y-4">
@@ -92,8 +93,8 @@ export default function EditCategoryPage() {
           <CategoryFrom 
             onSubmit={handleEdit} 
             initialData={initialData} 
-            onCancel={() => router.push("/dashboard/category")}
-            showModuleType={true}
+            onCancel={() => router.push("/dashboard/faq-category")}
+            showModuleType={false}
           />
         </CardContent>
       </Card>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -23,12 +23,24 @@ import {
 } from "@/types";
 import ImageUpload from "@/components/ui/imagupload";
 import CustomCKEditor from "@/components/shared/Ckeditor";
+import { APP_URL } from "@/config";
 
 interface HomePageFormProps {
     initialData?: HomePageDataFormValues | null;
     onSubmit: (data: HomePageDataFormValues) => Promise<void>;
     onCancel?: () => void;
 }
+
+const generateSlug = (text: string): string => {
+      if (!text) return "";
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}; 
+
 
 export default function HomePageDataForm({
     initialData,
@@ -37,10 +49,14 @@ export default function HomePageDataForm({
 }: HomePageFormProps) {
     const { toast } = useToast();
     const [internalIsSubmitting, setInternalIsSubmitting] = useState(false);
+    // const isFirstRender = useRef(true);
+    
 
     const form = useForm<HomePageDataFormValues>({
         resolver: zodResolver(HomePageDataSchema),
         defaultValues: initialData || {
+            pagename: "",
+            slug: "",
             heroSecton: { title: "", description: "",  technologySection: [] },
             reasonsToChoose: {  deatailBox: [] },
             aisection: { subtitle:"", mainTitle:"", description:"" ,deatailBox: []},
@@ -66,7 +82,17 @@ export default function HomePageDataForm({
             },
     }
 });
-    
+
+const titleValue = form.watch("pagename");
+
+useEffect(() => {
+  const slug = generateSlug(titleValue || "");
+
+  form.setValue("slug", slug, {
+    shouldValidate: true,
+    shouldDirty: true,
+  });
+}, [titleValue, form]);
 
     const {
         fields: techFields,
@@ -123,6 +149,65 @@ export default function HomePageDataForm({
             <form onSubmit={form.handleSubmit(handleFormSubmit as any)} className="space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-8">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Page Settings</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <FormField
+                                control={form.control}
+                                name="pagename"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Page name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter a Page Name..." {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                                />
+                                <FormField
+                                control={form.control}
+                                name="slug"
+                                render={() => {
+                                    const slugValue = form.watch("slug");
+
+                                    const permalink =
+                                    slugValue === "home" || slugValue === ""
+                                        ? `${APP_URL}/`
+                                        : `${APP_URL}/${slugValue}`;
+
+                                    return (
+                                    <FormItem className="mb-0">
+                                        <FormLabel>Permalink</FormLabel>
+
+                                        <FormControl>
+                                        <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                            <strong>URL:</strong>{" "}
+                                            <a
+                                                href={permalink}
+                                                className="text-blue-600 hover:underline break-all"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                            {permalink}
+                                            </a>
+                                        </div>
+                                        </FormControl>
+
+                                        <FormMessage />
+                                    </FormItem>
+                                    );
+                                }}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={({ field }) => <input type="hidden" {...field} />}
+                                />
+                            </CardContent>
+                        </Card>
                         {/* Hero Section */}
                         <Card>
                             <CardHeader><CardTitle>Hero Section</CardTitle></CardHeader>
@@ -203,10 +288,6 @@ export default function HomePageDataForm({
                                 </div>
                             </CardContent>
                         </Card>
-
-
-
-
 
                         {/*reasons to choose Section */}
                         <Card>

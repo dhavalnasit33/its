@@ -82,21 +82,21 @@ export default function YoastSEOForm({
   };
 
   // Length helper styling
-  const getScoreColor = (value: string, idealMin: number, idealMax: number) => {
-    const len = value?.length || 0;
-    if (len === 0) return "bg-slate-200 text-slate-600";
-    if (len >= idealMin && len <= idealMax) return "bg-emerald-100 text-emerald-800 border-emerald-300";
-    if (len > 0 && len < idealMin) return "bg-amber-100 text-amber-800 border-amber-300";
-    return "bg-rose-100 text-rose-800 border-rose-300";
-  };
+  // const getScoreColor = (value: string, idealMin: number, idealMax: number) => {
+  //   const len = value?.length || 0;
+  //   if (len === 0) return "bg-slate-200 text-slate-600";
+  //   if (len >= idealMin && len <= idealMax) return "bg-emerald-100 text-emerald-800 border-emerald-300";
+  //   if (len > 0 && len < idealMin) return "bg-amber-100 text-amber-800 border-amber-300";
+  //   return "bg-rose-100 text-rose-800 border-rose-300";
+  // };
 
-  const getScoreStatus = (value: string, idealMin: number, idealMax: number) => {
-    const len = value?.length || 0;
-    if (len === 0) return "Empty";
-    if (len >= idealMin && len <= idealMax) return "Good";
-    if (len > 0 && len < idealMin) return "Too Short";
-    return "Too Long";
-  };
+  // const getScoreStatus = (value: string, idealMin: number, idealMax: number) => {
+  //   const len = value?.length || 0;
+  //   if (len === 0) return "Empty";
+  //   if (len >= idealMin && len <= idealMax) return "Good";
+  //   if (len > 0 && len < idealMin) return "Too Short";
+  //   return "Too Long";
+  // };
 
   // Google Search snippet previews
   const previewTitle = watchedTitle || "Please enter an SEO title...";

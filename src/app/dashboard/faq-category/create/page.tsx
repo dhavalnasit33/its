@@ -7,14 +7,14 @@ import apiService from '@/lib/apiService';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function CreateCategoryPage() {
+export default function CreateFaqCategoryPage() {
   const { toast } = useToast();
   const router = useRouter();
 
   const handleCreate = async (data: CategoryFormValues) => {
     try {
       console.log("Submitting data:", data);
-      const res = await apiService<{ success: boolean; message: string }>("/category", {
+      const res = await apiService<{ success: boolean; message: string }>("/faq-category", {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
@@ -24,7 +24,7 @@ export default function CreateCategoryPage() {
 
       if (res.success) {
         toast({ title: "Success", description: res.message });
-        router.push("/dashboard/category");
+        router.push("/dashboard/faq-category");
       } else {
         toast({ title: "Error", description: res.message, variant: "destructive" });
       }
@@ -36,16 +36,16 @@ export default function CreateCategoryPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Create Category"
-        description="Create a new system assignment category"
+        title="Create Faq Category"
+        description="Create a new system assignment faq category"
       />
       <Card className="border border-slate-100 shadow-sm bg-white">
         <CardContent className="pt-6">
           <CategoryFrom 
             onSubmit={handleCreate} 
             initialData={null} 
-            onCancel={() => router.push("/dashboard/category")}
-            showModuleType={true}
+            onCancel={() => router.push("/dashboard/faq-category")}
+            showModuleType={false}
           />
         </CardContent>
       </Card>
