@@ -94,7 +94,7 @@ export default function ServiceManagerPage() {
       const res = await apiService<{
         success: boolean;
         data: { _id: string; category: string }[];
-      }>("/category?moduleType=services&limit=1000", { method: "GET" });
+      }>("/service-category?limit=1000", { method: "GET" });
       if (res.success) {
         const parsedCategories = res.data.map((cat) => ({
           id: cat._id,
@@ -283,7 +283,6 @@ export default function ServiceManagerPage() {
               </TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Sub Category</TableHead>
               {/* <TableHead>Main Title</TableHead> */}
               <TableHead>Slug</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -295,7 +294,6 @@ export default function ServiceManagerPage() {
               ? Array.from({ length: 5 }).map((_, i) => (
                 <TableRow key={i}>
                   <TableCell><Skeleton className="h-5 w-5" /></TableCell>
-                  <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                   <TableCell><Skeleton className="h-5 w-48" /></TableCell>
@@ -317,7 +315,6 @@ export default function ServiceManagerPage() {
                     </TableCell>
                     <TableCell >{(item as any).name || 'N/A'}</TableCell>
                     <TableCell>{typeof item.category === 'object' && item.category ? (item.category as any).category : item.category}</TableCell>
-                    <TableCell>{typeof item.subCategory === 'object' && item.subCategory ? (item.subCategory as any).subcategory : item.subCategory}</TableCell>
                     {/* <TableCell>{item.mainTitle}</TableCell> */}
                     <TableCell>{item.slug}</TableCell>
                     <TableCell className="text-right">
@@ -359,7 +356,7 @@ export default function ServiceManagerPage() {
                 ))
                 : (
                   <TableRow className="hover:bg-gray-200">
-                    <TableCell colSpan={7} className="text-center py-4">
+                    <TableCell colSpan={6} className="text-center py-4">
                       No services found.
                     </TableCell>
                   </TableRow>

@@ -186,7 +186,7 @@ export interface ServiceManager {
   // image: any;
   _id: string;
   category: string;
-  subCategory: string;
+  subCategory?: string;
   slug: string;
   mainTitle: string;
   description: string;
@@ -1574,3 +1574,16 @@ export interface WebsiteSettingsFormValues {
   phone: { value: string }[];
   social_media: { socialMediaName: string; link: string; image: string; }[];
 }
+
+/* -------------------- Service Category -------------------- */
+export interface ServiceCategory {
+  _id: string;
+  category: string;
+  image?: string;
+  createdAt: string;
+}
+
+export type ServiceCategoryFormValues = {
+  category: string;
+  image?: string;
+};

@@ -308,7 +308,7 @@ export default function ProfilePage() {
             <div className="flex border-b border-gray-100 bg-gray-50/50 p-2">
               <button
                 onClick={() => setActiveTab('info')}
-                className={`flex-1 sm:flex-initial py-2.5 px-6 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200 ${
+                className={`flex-1 sm:flex-initial py-2.5 px-6 cursor-pointer rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200 ${
                   activeTab === 'info'
                     ? "bg-white text-blue-600 shadow-sm border border-gray-100"
                     : "text-gray-500 hover:text-gray-900 hover:bg-gray-100/50"
@@ -319,7 +319,7 @@ export default function ProfilePage() {
               </button>
               <button
                 onClick={() => setActiveTab('security')}
-                className={`flex-1 sm:flex-initial py-2.5 px-6 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200 ${
+                className={`flex-1 sm:flex-initial py-2.5 px-6 cursor-pointer rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200 ${
                   activeTab === 'security'
                     ? "bg-white text-blue-600 shadow-sm border border-gray-100"
                     : "text-gray-500 hover:text-gray-900 hover:bg-gray-100/50"

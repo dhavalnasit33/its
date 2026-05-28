@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp, Loader2, Plus, Trash2 } from "lucide-react";
 import { TiptapEditorNoSSR } from "@/components/shared/TiptapEditor";
 import {
   DragDropContext,
@@ -47,7 +47,6 @@ const generateSlug = (text: string): string =>
 // ---------- Schema ----------
 const servicestepperSchema = z.object({
   category: z.string().min(1, "Category is required"),
-  subCategory: z.string().min(1, "Sub Category is required"),
   name: z.string().min(1, "Name is required"),
   mainTitle: z.string().min(1, "Main Title is required"),
   description: z.string(),
@@ -128,12 +127,11 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const isFirstRender = useRef(true);
+  const [expandedFaqIndex, setExpandedFaqIndex] = useState<number | null>(0);
+  const [expandedWorkPointIndex, setExpandedWorkPointIndex] = useState<number | null>(0);
 
   const [categories, setCategories] = useState<CategoryItem[]>([]);
-  const [subCategories, setSubCategories] = useState<SubCategoryItem[]>([]);
-  const [filteredSubCategories, setFilteredSubCategories] = useState<SubCategoryItem[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
-  const [loadingSubCategories, setLoadingSubCategories] = useState(false);
 
   const form = useForm<ServiceStepperFormValues>({
     resolver: zodResolver(servicestepperSchema),
@@ -141,9 +139,6 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
       category: typeof initialData?.category === 'object' && initialData.category
         ? (initialData.category as any)._id
         : (initialData?.category || ""),
-      subCategory: typeof initialData?.subCategory === 'object' && initialData.subCategory
-        ? (initialData.subCategory as any)._id
-        : (initialData?.subCategory || ""),
       name: (initialData as any)?.name || "",
       slug: initialData?.slug || "",
       mainTitle: initialData?.mainTitle || "",
@@ -182,7 +177,6 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
 
 
   const nameValue = form.watch("name");
-  const subCategoryValue = form.watch("subCategory");
   const selectedCategoryId = form.watch("category");
 
 
@@ -195,7 +189,6 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
 
   useEffect(() => {
     fetchCategories();
-    fetchAllSubCategories();
   }, []);
 
   const fetchCategories = async () => {
@@ -204,7 +197,7 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
       const res = await apiService<{
         success: boolean;
         data: CategoryItem[];
-      }>("/category?limit=100&page=1", { method: "GET" });
+      }>("/service-category?limit=100&page=1", { method: "GET" });
 
       if (res.success) {
         setCategories(res.data);
@@ -226,47 +219,6 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
       setLoadingCategories(false);
     }
   };
-
-  // ─── SubCategories fetch ───
-  const fetchAllSubCategories = async () => {
-    setLoadingSubCategories(true);
-    try {
-      const res = await apiService<{
-        success: boolean;
-        data: SubCategoryItem[];
-      }>("/subcategory?limit=100&page=1", { method: "GET" });
-
-      if (res.success) {
-        setSubCategories(res.data);
-      } else {
-        toast({
-          title: "Error",
-          description: "Failed to load subcategories",
-          variant: "destructive",
-        });
-      }
-    } catch (err) {
-      console.error("SubCategory fetch error:", err);
-      toast({
-        title: "Error",
-        description: "Failed to load subcategories",
-        variant: "destructive",
-      });
-    } finally {
-      setLoadingSubCategories(false);
-    }
-  };
-
-  useEffect(() => {
-    if (selectedCategoryId && subCategories.length > 0) {
-      const filtered = subCategories.filter(
-        (s) => s.category === selectedCategoryId
-      );
-      setFilteredSubCategories(filtered);
-    } else {
-      setFilteredSubCategories([]);
-    }
-  }, [selectedCategoryId, subCategories]);
 
 
   const onDragEnd = (result: DropResult) => {
@@ -357,53 +309,6 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                     />
 
                     <FormField
-                      control={form.control}
-                      name="subCategory"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Sub Category</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            value={field.value}
-                            disabled={loadingSubCategories || !selectedCategoryId}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue
-                                  placeholder={
-                                    !selectedCategoryId
-                                      ? "First select a category"
-                                      : loadingSubCategories
-                                        ? "Loading subcategories..."
-                                        : filteredSubCategories.length === 0
-                                          ? "No subcategories found"
-                                          : "Select a subcategory"
-                                  }
-                                />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {filteredSubCategories.length > 0 ? (
-                                filteredSubCategories.map((sub) => (
-                                  <SelectItem key={sub._id} value={sub._id}>
-                                    {sub.subcategory}
-                                  </SelectItem>
-                                ))
-                              ) : (
-                                <SelectItem value="none" disabled>
-                                  {!selectedCategoryId
-                                    ? "Select category first"
-                                    : "No subcategories for this category"}
-                                </SelectItem>
-                              )}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
                       name="name"
                       control={form.control}
                       render={({ field }) => (
@@ -412,24 +317,6 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                           <FormControl>
                             <Input
                               placeholder="Enter service name (e.g. ReactJS Development)"
-                              {...field}
-                              onBlur={(e) => field.onChange(e.target.value.trim())}
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      name="mainTitle"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Main Title</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter main title"
                               {...field}
                               onBlur={(e) => field.onChange(e.target.value.trim())}
                             />
@@ -474,6 +361,26 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                       name="slug"
                       render={({ field }) => <input type="hidden" {...field} />}
                     />
+
+                    <FormField
+                      name="mainTitle"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Main Title</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter main title"
+                              {...field}
+                              onBlur={(e) => field.onChange(e.target.value.trim())}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-600 text-sm mt-1" />
+                        </FormItem>
+                      )}
+                    />
+
+                   
 
                     <FormField
                       control={form.control}
@@ -669,7 +576,9 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                         size="sm"
                         onClick={() => {
                           const arr = form.getValues("WhyWorkWithThis").content || [];
+                          const newIndex = arr.length;
                           form.setValue("WhyWorkWithThis.content", [...arr, { title: "", description: "" }], { shouldDirty: true, shouldValidate: true });
+                          setExpandedWorkPointIndex(newIndex);
                         }}
                       >
                         <Plus className="h-4 w-4 mr-2" />
@@ -677,59 +586,82 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
                       </Button>
                     </div>
 
+                    <div className="space-y-3">
+                      {form.watch("WhyWorkWithThis")?.content?.map((_, idx) => {
+                        const titleValue = form.watch(`WhyWorkWithThis.content.${idx}.title` as any);
+                        const isExpanded = expandedWorkPointIndex === idx;
 
+                        return (
+                          <Card key={idx} className="relative border-dashed bg-muted/5 overflow-hidden">
+                            {/* ── Accordion Header ── */}
+                            <div
+                              className="flex items-center justify-between p-4 bg-muted/20 cursor-pointer hover:bg-muted/30 transition-colors"
+                              onClick={() => setExpandedWorkPointIndex(isExpanded ? null : idx)}
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                                  {idx + 1}
+                                </div>
+                                <span className="font-semibold text-sm truncate max-w-[400px]">
+                                  {titleValue || `Work Point ${idx + 1}`}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    const arr = form.getValues("WhyWorkWithThis.content") || [];
+                                    form.setValue("WhyWorkWithThis.content", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                                    if (expandedWorkPointIndex === idx) setExpandedWorkPointIndex(null);
+                                    else if (expandedWorkPointIndex !== null && expandedWorkPointIndex > idx) setExpandedWorkPointIndex(expandedWorkPointIndex - 1);
+                                  }}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                                {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                              </div>
+                            </div>
 
-
-                    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                      {form.watch("WhyWorkWithThis")?.content?.map((_, idx) => (
-                        <Card key={idx} className="relative p-4 border-dashed">
-                          {/* <h5 className="font-semibold">Content {idx + 1}</h5> */}
-
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                            onClick={() => {
-                              const arr = form.getValues("WhyWorkWithThis.content") || [];
-                              form.setValue("WhyWorkWithThis.content", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
-                            }}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-
-                          <div className="space-y-4 pt-4">
-                            {["title", "description"].map((f) => (
-                              <FormField
-                                key={f}
-                                control={form.control}
-                                name={`WhyWorkWithThis.content.${idx}.${f}` as any}
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel>{f}</FormLabel>
-                                    <FormControl>
-                                      {f === "description"
-                                        ? <CustomCKEditor
-                                              value={field.value || ""}
-                                              onChange={(data: string) => {
+                            {/* ── Accordion Body ── */}
+                            {isExpanded && (
+                              <CardContent className="space-y-4 pt-4 border-t border-dashed">
+                                {["title", "description"].map((f) => (
+                                  <FormField
+                                    key={f}
+                                    control={form.control}
+                                    name={`WhyWorkWithThis.content.${idx}.${f}` as any}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>{f.charAt(0).toUpperCase() + f.slice(1)}</FormLabel>
+                                        <FormControl>
+                                          {f === "description"
+                                            ? <CustomCKEditor
+                                                value={field.value || ""}
+                                                onChange={(data: string) => {
                                                   field.onChange(data);
-                                              }}
-                                          />
-                                        // <Textarea placeholder="Enter description" {...field} value={field.value ?? ""} />
-                                        : <Input placeholder={`Enter ${f}`} {...field} value={field.value ?? ""} />
-                                      }
-                                    </FormControl>
-                                    <FormMessage className="text-red-600 text-sm mt-1" />
-                                  </FormItem>
-                                )}
-                              />
-                            ))}
-                          </div>
-                        </Card>
-                      ))}
+                                                }}
+                                              />
+                                            : <Input placeholder={`Enter ${f}`} {...field} value={field.value ?? ""} />
+                                          }
+                                        </FormControl>
+                                        <FormMessage className="text-red-600 text-sm mt-1" />
+                                      </FormItem>
+                                    )}
+                                  />
+                                ))}
+                              </CardContent>
+                            )}
+                          </Card>
+                        );
+                      })}
                     </div>
                   </CardContent>
                 </Card>
+
 
                 {/* ─────────────── TOOLS & TECHNOLOGY ─────────────── */}
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -1053,53 +985,97 @@ export default function ServiceStepperForm({ initialData, onSubmit, onCancel }: 
 
                 {/* ─────────────── FAQ ─────────────── */}
                 <Card>
-                  <CardHeader>
+                  <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>FAQ</CardTitle>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const arr = form.getValues("faqs") || [];
+                        const newIndex = arr.length;
+                        form.setValue("faqs", [...arr, { question: "", answer: "" }], { shouldDirty: true, shouldValidate: true });
+                        setExpandedFaqIndex(newIndex);
+                      }}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add FAQ
+                    </Button>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    {form.watch("faqs")?.map((f, idx) => (
-                      <div key={idx} className="border border-gray-300 shadow-md p-5 rounded-md flex flex-col space-y-4">
-                        <div className="flex justify-between items-center">
-                          <h3 className="font-semibold">Question {idx + 1}</h3>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            className=" text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                            onClick={() => {
-                              const arr = form.getValues("faqs") || [];
-                              if (arr.length > 1) form.setValue("faqs", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
-                            }}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                  <CardContent className="space-y-3">
+                    {form.watch("faqs")?.map((f, idx) => {
+                      const questionValue = form.watch(`faqs.${idx}.question`);
+                      const isExpanded = expandedFaqIndex === idx;
 
-                        </div>
-                        <FormField
-                          control={form.control}
-                          name={`faqs.${idx}.question` as const}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl><Input placeholder="Enter Question" {...field} /></FormControl>
-                              <FormMessage className="text-red-600 text-sm mt-1" />
-                            </FormItem>
+                      return (
+                        <Card key={idx} className="relative border-dashed bg-muted/5 overflow-hidden">
+                          {/* ── Accordion Header ── */}
+                          <div
+                            className="flex items-center justify-between p-4 bg-muted/20 cursor-pointer hover:bg-muted/30 transition-colors"
+                            onClick={() => setExpandedFaqIndex(isExpanded ? null : idx)}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                                {idx + 1}
+                              </div>
+                              <span className="font-semibold text-sm truncate max-w-[400px]">
+                                {questionValue || `Question ${idx + 1}`}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const arr = form.getValues("faqs") || [];
+                                  if (arr.length > 1) {
+                                    form.setValue("faqs", arr.filter((_, i) => i !== idx), { shouldDirty: true, shouldValidate: true });
+                                    if (expandedFaqIndex === idx) setExpandedFaqIndex(null);
+                                    else if (expandedFaqIndex !== null && expandedFaqIndex > idx) setExpandedFaqIndex(expandedFaqIndex - 1);
+                                  }
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                              {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                            </div>
+                          </div>
+
+                          {/* ── Accordion Body ── */}
+                          {isExpanded && (
+                            <CardContent className="space-y-4 pt-4 border-t border-dashed">
+                              <FormField
+                                control={form.control}
+                                name={`faqs.${idx}.question` as const}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Question</FormLabel>
+                                    <FormControl><Input placeholder="Enter Question" {...field} /></FormControl>
+                                    <FormMessage className="text-red-600 text-sm mt-1" />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name={`faqs.${idx}.answer` as const}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Answer</FormLabel>
+                                    <FormControl>
+                                      <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`faqs.${idx}.answer`, v, { shouldDirty: true, shouldValidate: true }); }} />
+                                    </FormControl>
+                                    <FormMessage className="text-red-600 text-sm mt-1" />
+                                  </FormItem>
+                                )}
+                              />
+                            </CardContent>
                           )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name={`faqs.${idx}.answer` as const}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Answer</FormLabel>
-                              <FormControl>
-                                <CustomCKEditor value={field.value || ""} onChange={(v) => { field.onChange(v); form.setValue(`faqs.${idx}.answer`, v, { shouldDirty: true, shouldValidate: true }); }} />
-                              </FormControl>
-                              <FormMessage className="text-red-600 text-sm mt-1" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    ))}
+                        </Card>
+                      );
+                    })}
                   </CardContent>
                 </Card>
 
