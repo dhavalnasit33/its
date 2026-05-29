@@ -17,17 +17,20 @@ const slugify = (text) =>
 
 router.get("/", protect, async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const search = req.query.search || "";
-    const skip = (page - 1) * limit;
+    // const page = parseInt(req.query.page) || 1;
+    // const limit = parseInt(req.query.limit) || 10;
+    // const search = req.query.search || "";
+    // const skip = (page - 1) * limit;
+    const { page = 1, limit = 10, value = "" } = req.query;
 
-    const filter = search
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const filter = value
       ? {
           $or: [
-            { page_title: { $regex: search, $options: "i" } },
-            { slug: { $regex: search, $options: "i" } },
-            { "seo.title": { $regex: search, $options: "i" } },
+            { page_title: { $regex: value, $options: "i" } },
+            { slug: { $regex: value, $options: "i" } },
+            { "seo.title": { $regex: value, $options: "i" } },
           ],
         }
       : {};

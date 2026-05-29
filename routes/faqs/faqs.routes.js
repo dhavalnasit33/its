@@ -89,14 +89,17 @@ router.get("/categories", async (req, res) => {
 //admin gaet route
 router.get("/admin", async (req, res) => {
   try {
-    const { page = 1, limit = 10, category = "", search = "" } = req.query;
+    const { page = 1, limit = 10, category = "",   value = "", } = req.query;
 
     const query = {};
-    
-    if (search) {
-      query.title = { $regex: search, $options: "i" };
-    }
 
+    if (value) {
+      query.$or = [
+        { title: { $regex: value, $options: "i" } },
+        { answer: { $regex: value, $options: "i" } },
+        { categories: { $regex: value, $options: "i" } },
+      ];
+    }
     if (category) {
       if (mongoose.Types.ObjectId.isValid(category)) {
         query.categories = category;
@@ -161,9 +164,17 @@ router.get("/:id", async (req, res) => {
 //fronted get route
 router.get("/", async (req, res) => {
   try {
-    const { page = 1, limit = 10, category = "" } = req.query;
+    const { page = 1, limit = 10, category = "", value = "" } = req.query;
 
     const query = {};
+
+    if (value) {
+      query.$or = [
+        { title: { $regex: value, $options: "i" } },
+        { answer: { $regex: value, $options: "i" } },
+        { categories: { $regex: value, $options: "i" } },
+      ];
+    }
     if (category) {
       if (mongoose.Types.ObjectId.isValid(category)) {
         query.categories = category;
