@@ -12,6 +12,7 @@ import apiService from '@/lib/apiService';
 import { useToast } from '@/hooks/use-toast';
 import BulkDeletepageDialog from '@/components/dashboard/pages/BulkDeletePageDialog';
 import DeletePageDialog from '@/components/dashboard/pages/DeletePageDialog';
+import { Input } from '@/components/ui/input';
 
 interface PageItem {
     _id: string;
@@ -47,13 +48,16 @@ export default function PagesListPage() {
     const isAllSelected = items.length > 0 && selectedIds.length === items.length;
     const isIndeterminate = selectedIds.length > 0 && selectedIds.length < items.length;
 
-    const fetchItems = async (page = 1, search = searchQuery) => {
+    const fetchItems = async (page: number = 1, search = searchQuery) => {
         setIsLoading(true);
         try {
             const query = new URLSearchParams({
-                page: String(page),
-                limit: String(limit),
-                ...(search ? { search } : {}),
+                // page: String(page),
+                // limit: String(limit),
+                // ...(search ? { search } : {}),
+                 page: page.toString(),
+                limit: limit.toString(),
+                ...(search ? { value: search } : {}),
             });
 
             const res = await apiService<{
@@ -76,11 +80,7 @@ export default function PagesListPage() {
         }
     };
 
-    useEffect(() => { fetchItems(1); setSelectedIds([]); }, []);
-
-    const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") fetchItems(1, searchQuery);
-    };
+    useEffect(() => { fetchItems(1); setSelectedIds([]); }, [searchQuery,  pagination.current]);
 
     const handleCheckboxChange = (id: string) =>
         setSelectedIds((prev) => prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]);
@@ -129,16 +129,28 @@ export default function PagesListPage() {
                 }
             />
 
-            <div className="relative w-full max-w-sm mb-4">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <input
-                    className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 pl-9 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyDown={handleSearch}
-                    placeholder="Search pages… (press Enter)"
-                    type="search"
-                />
+             <div className="flex items-center justify-between gap-3 mb-4 mt-4">
+                <div className="relative w-full max-w-sm">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search by Page..."
+                        className="pl-8 w-full"
+                        value={searchQuery}
+                        onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setPagination((prev) => ({ ...prev, current: 1 }));
+                        }}
+                    />
+                </div>
+                {selectedIds.length > 0 && (
+                    <Button
+                        variant="destructive"
+                        onClick={() => setBulkDeleteDialogOpen(true)}
+                    >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete Selected ({selectedIds.length})
+                    </Button>
+                )}
             </div>
 
             <div className="rounded-md border shadow-sm">

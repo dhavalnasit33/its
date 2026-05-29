@@ -44,8 +44,6 @@ function page() {
     // Search and filter state
     const [searchValue, setSearchValue] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(null);
-
 
     //Dialog states
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -276,7 +274,7 @@ function page() {
                                 : (
                                     <TableRow>
                                         <TableCell colSpan={5} className="text-center h-24">
-                                            No Faqs found. {searchValue || selectedCategory ? "Try adjusting your filters." : ""}
+                                            No Faqs found.
                                         </TableCell>
                                     </TableRow>
                                 )}

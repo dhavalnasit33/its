@@ -275,7 +275,7 @@ export default function HirePageDataPage() {
                 />
               </TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Name</TableHead>
+              {/* <TableHead>Name</TableHead> */}
               <TableHead>Title</TableHead>
               <TableHead>Slug</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -291,9 +291,9 @@ export default function HirePageDataPage() {
                   <TableCell>
                     <Skeleton className="h-6 w-24" />
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Skeleton className="h-6 w-32" />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Skeleton className="h-6 w-48" />
                   </TableCell>
@@ -324,7 +324,7 @@ export default function HirePageDataPage() {
                       ? (item.category as any).category
                       : item.category}
                   </TableCell>
-                  <TableCell>{item.name}</TableCell>
+                  {/* <TableCell>{item.name}</TableCell> */}
                   <TableCell>{item.title}</TableCell>
                   <TableCell >{item.slug}</TableCell>
                   <TableCell className="text-right">

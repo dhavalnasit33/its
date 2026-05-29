@@ -15,7 +15,6 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { TiptapEditorNoSSR } from "@/components/shared/TiptapEditor";
 import { useToast } from "@/hooks/use-toast";
 import {
   Loader2,
@@ -366,7 +365,7 @@ export default function HirePageForm({
                         const slugValue = form.watch("slug");
                         const permalink = `${APP_URL}/hire/${slugValue}`;
                         return (
-                          <FormItem className="mb-0">
+                          <FormItem >
                             <FormLabel>Permalink</FormLabel>
                             <FormControl>
                               <div>

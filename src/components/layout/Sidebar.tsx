@@ -11,7 +11,8 @@ import {
   SearchCheck, Presentation, Milestone, ToolCase, Server, House,
   SignpostBig, Navigation, FileText, X,
   Building2, Mail, Settings, FolderTree, Tag, Tags,
-  CircleHelp
+  CircleHelp,
+  CircleEllipsis
 } from "lucide-react";
 import NavItems from "./NavItems";
 import { NavItem } from "@/types";
@@ -95,7 +96,7 @@ export const navItemsList: NavItem[] = [
     icon: CircleHelp,
     children: [
       { href: "/dashboard/faq-category", label: "Faq Category", icon: Tag },
-      { href: "/dashboard/Faqs", label: "Faqs", icon: Info },
+      { href: "/dashboard/Faqs", label: "Faqs", icon: CircleEllipsis },
     ]
   },
   {
