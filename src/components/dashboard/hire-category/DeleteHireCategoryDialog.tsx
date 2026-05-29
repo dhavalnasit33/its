@@ -9,25 +9,25 @@ import apiService from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2 } from "lucide-react";
 
-interface ServiceCategory {
+interface HireCategory {
   _id: string;
   category: string;
   image?: string;
 }
 
-interface DeleteServicecategoryManageDialogProps {
+interface DeleteHirecategoryManageDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  item: ServiceCategory;
+  item: HireCategory;
   onSuccess: () => void;
 }
 
-export default function DeleteServiceCategoryDialog({
+export default function DeleteHireCategoryDialog({
   isOpen,
   onOpenChange,
   item,
   onSuccess
-}: DeleteServicecategoryManageDialogProps) {
+}: DeleteHirecategoryManageDialogProps) {
   const { toast } = useToast();
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -35,7 +35,7 @@ export default function DeleteServiceCategoryDialog({
     setIsDeleting(true);
     try {
       const res = await apiService<{ success: boolean; message: string }>(
-        `/service-category/${item._id}`,
+        `/hire-category/${item._id}`,
         { method: "DELETE" }
       );
 
@@ -59,10 +59,10 @@ export default function DeleteServiceCategoryDialog({
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2 text-red-600">
             <Trash2 className="h-5 w-5" />
-            Delete service Category
+            Delete hire Category
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the service category{" "}
+            This action cannot be undone. This will permanently delete the hire category{" "}
             <strong>&quot;{item.category}&quot;</strong>.
           </AlertDialogDescription>
         </AlertDialogHeader>

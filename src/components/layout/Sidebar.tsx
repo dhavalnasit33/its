@@ -48,8 +48,8 @@ export const navItemsList: NavItem[] = [
     children: [
       // { href: "/dashboard/service-Tecnology", label: "Service Technology", icon: LayoutList },
       { href: "/dashboard/service-main-page", label: "Service Main Page", icon: ToolCase },
+      {href : "/dashboard/service-category" ,label:"Service Category", icon: LayoutList },
       { href: "/dashboard/service-manager", label: "Service Manager", icon: Boxes },
-      {href :"/dashboard/service-category-page" ,label:"Service Category", icon: LayoutList }
     ],
   },
   {
@@ -57,6 +57,7 @@ export const navItemsList: NavItem[] = [
     icon: SignpostBig,
     children: [
       { href: "/dashboard/hire-main-page", label: "Hire Main Page ", icon: ToolCase },
+      { href: "/dashboard/hire-category", label: "Hire Category", icon: Tag },
       { href: "/dashboard/hire", label: "Hire", icon: Handshake },
     ],
   },
@@ -85,6 +86,7 @@ export const navItemsList: NavItem[] = [
     icon: Layers2,
     children: [
       { href: "/dashboard/portfolio", label: "Portfolio Main page", icon: Layers2 },
+      { href: "/dashboard/portfolio-category", label: "Portfolio Category", icon: Tag },
       { href: "/dashboard/creativeWork", label: "Creative Work", icon: Pickaxe },
     ]
   },

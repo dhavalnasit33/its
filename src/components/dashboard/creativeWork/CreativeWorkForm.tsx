@@ -49,7 +49,7 @@ export default function CreativeWorkForm({ initialData, onSubmit, onCancel }: Cr
         const res = await apiService<{
           success: boolean;
           data: { _id: string; category: string }[];
-        }>("/category?moduleType=portfolio&limit=1000", { method: "GET" });
+        }>("/portfolio-category?moduleType=portfolio&limit=1000", { method: "GET" });
         if (res.success) {
           const parsed = res.data.map((cat) => ({
             id: cat._id,

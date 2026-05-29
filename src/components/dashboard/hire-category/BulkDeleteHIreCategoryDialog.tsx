@@ -10,19 +10,19 @@ import apiService from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Trash2 } from "lucide-react";
 
-interface BulkDeleteServiceCategoryDialogProps {
+interface BulkDeleteHireCategoryDialogProps {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
     selectedIds: string[];
     onSuccess: () => void;
 }
 
-export default function BulkDeleteServiceCategoryDialog({
+export default function BulkDeleteHireCategoryDialog({
     isOpen,
     onOpenChange,
     selectedIds,
     onSuccess,
-}: BulkDeleteServiceCategoryDialogProps) {
+}: BulkDeleteHireCategoryDialogProps) {
     const { toast } = useToast();
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -34,7 +34,7 @@ export default function BulkDeleteServiceCategoryDialog({
                 success: boolean;
                 message: string;
                 deletedCount: number;
-            }>(`/service-category/bulk/delete`, {
+            }>(`/hire-category/bulk/delete`, {
                 method: "POST",
                 body: JSON.stringify({ ids: selectedIds }),
                 headers: { "Content-Type": "application/json" },
@@ -67,12 +67,12 @@ export default function BulkDeleteServiceCategoryDialog({
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                         This will permanently delete{" "}
-                        <strong>{selectedIds.length} service category(s)</strong>. This action cannot be undone.
+                        <strong>{selectedIds.length} hire category(s)</strong>. This action cannot be undone.
                     </AlertDialogDescription>
                     <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-md">
                         <span className="text-red-700 text-sm">
                             You are about to delete{" "}
-                            <span className="font-bold text-red-600">{selectedIds.length}</span> service category(s).
+                            <span className="font-bold text-red-600">{selectedIds.length}</span> hire category(s).
                         </span>
                     </div>
                 </AlertDialogHeader>

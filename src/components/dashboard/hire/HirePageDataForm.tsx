@@ -118,7 +118,7 @@ export default function HirePageForm({
       setLoadingCategories(true);
       try {
         const res = await apiService<{ success: boolean; data: CategoryItem[] }>(
-          "/category?moduleType=hire&limit=100&page=1"
+          "/hire-category?moduleType=hire&limit=100&page=1"
         );
         if (res.success) setCategories(res.data);
       } catch (err) {

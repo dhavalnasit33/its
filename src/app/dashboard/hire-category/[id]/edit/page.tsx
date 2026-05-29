@@ -4,19 +4,18 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import apiService from "@/lib/apiService";
-import ServiceCategoryForm from "@/components/dashboard/service-category/ServiceCategoryForm";
-import { ServiceCategoryFormValues } from "@/types";
+import CategoryFrom, {  CategoryFormValues } from "@/components/dashboard/category/categoryform";
 import PageHeader from "@/components/shared/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function EditServiceCategoryPage() {
+export default function EditHireCategoryPage() {
   const params = useParams();
   const id = params?.id as string;
   const router = useRouter();
   const { toast } = useToast();
 
-  const [initialData, setInitialData] = useState<ServiceCategoryFormValues | null>(null);
+  const [initialData, setInitialData] = useState<CategoryFormValues | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,18 +24,18 @@ export default function EditServiceCategoryPage() {
       try {
         const res = await apiService<{
           success: boolean;
-          data: ServiceCategoryFormValues;
-        }>(`/service-category/${id}`, { method: "GET" });
+          data: CategoryFormValues;
+        }>(`/hire-category/${id}`, { method: "GET" });
 
         if (res.success) {
           setInitialData(res.data);
         } else {
           toast({
             title: "Error",
-            description: "Failed to retrieve service category details",
+            description: "Failed to retrieve category details",
             variant: "destructive",
           });
-          router.push("/dashboard/service-category-page");
+          router.push("/dashboard/hire-category");
         }
       } catch (error) {
         toast({
@@ -51,20 +50,17 @@ export default function EditServiceCategoryPage() {
     fetchData();
   }, [id]);
 
-  const handleEdit = async (data: ServiceCategoryFormValues) => {
+  const handleEdit = async (data: CategoryFormValues) => {
     try {
-      const res = await apiService<{ success: boolean; message: string }>(
-        `/service-category/${id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(data),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const res = await apiService<{ success: boolean; message: string }>(`/hire-category/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
 
       if (res.success) {
         toast({ title: "Success", description: res.message });
-        router.push("/dashboard/service-category-page");
+        router.push("/dashboard/hire-category");
       } else {
         toast({ title: "Error", description: res.message, variant: "destructive" });
       }
@@ -77,30 +73,32 @@ export default function EditServiceCategoryPage() {
     }
   };
 
+
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Edit Service Category"
-        description="Update the service category details"
+        title="Edit Hire Category"
+        description="Update Hire category details"
       />
-      {loading ? (
+       {loading ? (
         <div className="space-y-4">
           <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-32 w-full" />
           <Skeleton className="h-10 w-32" />
         </div>
       ) : initialData ? (
-        <Card className="border border-slate-100 shadow-sm bg-white">
-          <CardContent className="pt-6">
-            <ServiceCategoryForm
-              onSubmit={handleEdit}
-              initialData={initialData}
-              onCancel={() => router.push("/dashboard/service-category-page")}
-            />
-          </CardContent>
-        </Card>
+      <Card className="border border-slate-100 shadow-sm bg-white">
+        <CardContent className="pt-6">
+          <CategoryFrom 
+            onSubmit={handleEdit} 
+            initialData={initialData} 
+            onCancel={() => router.push("/dashboard/hire-category")}
+            showModuleType={false}
+          />
+        </CardContent>
+      </Card>
       ) : (
-        <p>Service category not found.</p>
+        <p>Entry not found.</p>
       )}
     </div>
   );
