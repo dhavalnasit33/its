@@ -89,9 +89,14 @@ router.get("/categories", async (req, res) => {
 //admin gaet route
 router.get("/admin", async (req, res) => {
   try {
-    const { page = 1, limit = 10, category = "" } = req.query;
+    const { page = 1, limit = 10, category = "", search = "" } = req.query;
 
     const query = {};
+    
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+
     if (category) {
       if (mongoose.Types.ObjectId.isValid(category)) {
         query.categories = category;
@@ -283,5 +288,58 @@ router.delete("/:id", protect, async (req, res) => {
     });
   }
 });
+
+
+// @desc    Bulk Delete Faq 
+// @route   POST /api/faqs/bulk/delete
+// @access  Private (admin only)
+
+
+router.post("/bulk/delete", protect, async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "IDs are required for bulk delete"
+      })
+    }
+
+    const invalidIds = ids.filter(id => !mongoose.Types.ObjectId.isValid(id));
+    if (invalidIds.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid FAQ IDs: ${invalidIds.join(", ")}`
+      })
+    }
+
+    const deleteResult = await FaqModel.deleteMany({
+      _id: { $in: ids }
+    })
+
+    if (deleteResult.deletedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No FAQs found matching the provided IDs"
+      });
+    }
+
+    res.json({
+      success: true,
+      message: `${deleteResult.deletedCount} FAQs deleted successfully`,
+      deletedCount: deleteResult.deletedCount
+    });
+
+  } catch (error) {
+    console.error("❌ Bulk Delete Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+})
+
 
 module.exports = router;

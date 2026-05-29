@@ -160,10 +160,14 @@ const HirePageDataSchema = new mongoose.Schema({
         ref: "HireCategory",
         required: true
     },
-    subCategory: {
-        type: mongoose.Schema.Types.Mixed,
-        ref: "Subcategory",
-        required: false
+    // subCategory: {
+    //     type: mongoose.Schema.Types.Mixed,
+    //     ref: "Subcategory",
+    //     required: false
+    // },
+    name: {
+        type: String,
+        required: true,
     },
     title: {
         type: String,

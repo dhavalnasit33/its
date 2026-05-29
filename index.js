@@ -92,6 +92,13 @@ app.use((req, res, next) => {
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,
+  // Skip rate limiting for admin requests (assuming admins send a Bearer token)
+  skip: (req, res) => {
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+      return true; // Bypass rate limiter for authenticated users (admins)
+    }
+    return false; // Apply rate limit for regular visitors
+  }
 });
 
 app.use(limiter);

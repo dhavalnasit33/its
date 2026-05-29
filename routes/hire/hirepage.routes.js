@@ -37,7 +37,7 @@ const router = express.Router();
  *       type: object
  *       required:
  *         - category
- *         - subCategory
+ *         - name
  *         - title
  *         - slug
  *         - description
@@ -58,9 +58,9 @@ const router = express.Router();
  *         category:
  *           type: string
  *           example: Development
- *         subCategory:
+ *         name:
  *           type: string
- *           example: Hire React Developer
+ *           example: React Developer
  *         title:
  *           type: string
  *           example: Hire Expert React Developers
@@ -209,9 +209,9 @@ const router = express.Router();
  */
 router.post("/", protect, async (req, res) => {
     try {
-        const { category, subCategory, title, slug, description, keyPoints, successSpeacks, hireDadiated, hireDevelopersAsYourNeeds, ourExpertise, techStack, whyHireUs, unloackPower, hireingProcess, faq, seo, } = req.body;
+        const { category, name, title, slug, description, keyPoints, successSpeacks, hireDadiated, hireDevelopersAsYourNeeds, ourExpertise, techStack, whyHireUs, unloackPower, hireingProcess, faq, seo, } = req.body;
 
-        if (!category || !title || !slug || !description || !keyPoints?.length || !successSpeacks || !hireDadiated || !ourExpertise || !techStack || !whyHireUs || !unloackPower || !hireingProcess || !faq?.length || !hireDevelopersAsYourNeeds
+        if (!category || !name || !title || !slug || !description || !keyPoints?.length || !successSpeacks || !hireDadiated || !ourExpertise || !techStack || !whyHireUs || !unloackPower || !hireingProcess || !faq?.length || !hireDevelopersAsYourNeeds
         ) {
             return res
                 .status(400)
@@ -236,7 +236,8 @@ router.post("/", protect, async (req, res) => {
 
         const hirePageData = new HirePageData({
             category,
-            subCategory: subCategory || "",
+            // subCategory: subCategory || "",
+            name,
             title,
             slug,
             description,
@@ -257,7 +258,7 @@ router.post("/", protect, async (req, res) => {
 
         // adding seo data 
         try {
-            await syncSeoData(category, slug, title, 'hire', saved._id, saved.seo);
+            await syncSeoData(saved.name || category, slug, title, 'hire', saved._id, saved.seo);
         } catch (seoError) {
             console.warn('SEO sync warning:', seoError.message);
         }
@@ -314,7 +315,7 @@ router.post("/", protect, async (req, res) => {
  */
 router.get("/", async (req, res) => {
     try {
-        const { page = 1, limit = 10, category, subCategory, search = "" } = req.query;
+        const { page = 1, limit = 10, category, search = "" } = req.query;
         const conditions = [];
         let resolvedCategoryId = null;
 
@@ -344,9 +345,9 @@ router.get("/", async (req, res) => {
                 }
             }
         }
-        if (subCategory) {
-            conditions.push({ subCategory: subCategory });
-        }
+        // if (subCategory) {
+        //     conditions.push({ subCategory: subCategory });
+        // }
 
         if (search) {
             conditions.push({
@@ -388,49 +389,49 @@ router.get("/", async (req, res) => {
     }
 });
 
-/**
- * @swagger
- * /api/hire-page/subcategory/{subCategory}:
- *   get:
- *     summary: Get Hire Page Data by SubCategory
- *     tags: [HirePageData]
- *     parameters:
- *       - in: path
- *         name: subCategory
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Hire Page Data retrieved successfully
- *       404:
- *         description: No Hire Page Data found for this subCategory
- *       500:
- *         description: Server error
- */
-router.get("/subcategory/:subCategory", async (req, res) => {
-    try {
-        const { subCategory } = req.params;
-        const subCategoryFilter = { subCategory };
-
-        const rawData = await HirePageData.find(subCategoryFilter).lean();
-        if (!rawData?.length)
-            return res
-                .status(404)
-                .json({
-                    success: false,
-                    message: "No Hire Page Data found for this subCategory",
-                });
-
-        const data = await populateMixed(rawData, { category: { type: "category", model: HireCategory } });
-        res.status(200).json({ success: true, data });
-    } catch (error) {
-        console.error("Error getting Hire Page Data by subCategory:", error);
-        res
-            .status(500)
-            .json({ success: false, message: "Server error", error: error.message });
-    }
-});
+// /**
+//  * @swagger
+//  * /api/hire-page/subcategory/{subCategory}:
+//  *   get:
+//  *     summary: Get Hire Page Data by SubCategory
+//  *     tags: [HirePageData]
+//  *     parameters:
+//  *       - in: path
+//  *         name: subCategory
+//  *         required: true
+//  *         schema:
+//  *           type: string
+//  *     responses:
+//  *       200:
+//  *         description: Hire Page Data retrieved successfully
+//  *       404:
+//  *         description: No Hire Page Data found for this subCategory
+//  *       500:
+//  *         description: Server error
+//  */
+// router.get("/subcategory/:subCategory", async (req, res) => {
+//     try {
+//         const { subCategory } = req.params;
+//         const subCategoryFilter = { subCategory };
+// 
+//         const rawData = await HirePageData.find(subCategoryFilter).lean();
+//         if (!rawData?.length)
+//             return res
+//                 .status(404)
+//                 .json({
+//                     success: false,
+//                     message: "No Hire Page Data found for this subCategory",
+//                 });
+// 
+//         const data = await populateMixed(rawData, { category: { type: "category", model: HireCategory } });
+//         res.status(200).json({ success: true, data });
+//     } catch (error) {
+//         console.error("Error getting Hire Page Data by subCategory:", error);
+//         res
+//             .status(500)
+//             .json({ success: false, message: "Server error", error: error.message });
+//     }
+// });
 
 /**
  * @swagger
@@ -476,7 +477,7 @@ router.get("/slug/:slug", async (req, res) => {
 router.get('/admin-id', protect, async (req, res) => {
     try {
         const rawHirePage = await HirePageData.find()
-            .select('_id category subCategory title')
+            .select('_id category name title')
             .lean();
         const hirePage = await populateMixed(rawHirePage, { category: { type: "category", model: HireCategory } });
         res.status(200).json({
@@ -621,7 +622,7 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
         const { id } = req.params;
         const {
             category,
-            subCategory,
+            name,
             title,
             slug,
             description,
@@ -640,6 +641,7 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
 
         if (
             !category ||
+            !name ||
             !title ||
             !slug ||
             !description ||
@@ -675,7 +677,8 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
             id,
             {
                 category,
-                subCategory: subCategory || "",
+                // subCategory: subCategory || "",
+                name,
                 title,
                 slug,
                 description,
@@ -695,7 +698,7 @@ router.put("/:id", protect, cleanupOldImages(HirePageData, "HirePageData"), asyn
         );
 
         try {
-            await syncSeoData(updated.category, updated.slug, updated.title, 'hire', updated._id, updated.seo);
+            await syncSeoData(updated.name || updated.category, updated.slug, updated.title, 'hire', updated._id, updated.seo);
         } catch (seoError) {
             console.warn('SEO sync warning during update:', seoError.message);
         }
