@@ -14,10 +14,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 
 import type {  Faqs } from "@/types";
-import { PlusCircle, MoreHorizontal, Edit, Trash2, Eye,  } from "lucide-react";
+import { PlusCircle, MoreHorizontal, Edit, Trash2, Eye, Search } from "lucide-react";
 import apiService from "@/lib/apiService";
 import CreateFaqsDialog from "@/components/dashboard/Faqs/CreateFaqsDialog";
 import DeleteFaqsDialog from "@/components/dashboard/Faqs/DeleteFaqsDilog";
+import BulkDeleteFAQDialog from "@/components/dashboard/Faqs/BulkDeleteFAQDialog";
+import { Input } from "@/components/ui/input";
 
 import {
     DropdownMenu,
@@ -46,8 +48,10 @@ function page() {
 
 
     //Dialog states
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Faqs | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
 
@@ -104,11 +108,15 @@ function page() {
 
     // --- 2. useEffect to trigger fetch on load ---
     useEffect(() => {
-        // fetchItems(1);
-        fetchItems(pagination.current,
-        searchValue,
-        selectedCategory);
-    }, [ pagination.current,searchValue, selectedCategory]);
+        const timer = setTimeout(() => {
+            fetchItems(pagination.current, searchValue, selectedCategory);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [pagination.current, searchValue, selectedCategory]);
+
+    useEffect(() => {
+        setSelectedIds([]);
+    }, [searchValue]);
 
 
     const handleDeleteDialogOpen = (item: Faqs) => {
@@ -116,7 +124,27 @@ function page() {
         setDeleteDialogOpen(true);
     };
 
-    const stripHtml = (input: string) => input.replace(/<[^>]+>/g, "");
+
+    const handleBulkDeleteSuccess = () => {
+        setSelectedIds([]);
+        setBulkDeleteDialogOpen(false);
+        fetchItems(pagination.current, searchValue, selectedCategory);
+    };
+    
+    const toggleSelectAll = () => {
+        if (selectedIds.length === items.length && items.length > 0) {
+          setSelectedIds([]);
+        } else {
+          setSelectedIds(items.map((item) => item._id).filter((id): id is string => !!id));
+        }
+      };
+    
+      const toggleSelectItem = (id: string) => {
+        setSelectedIds((prev) =>
+          prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+        );
+      };
+      const stripHtml = (input: string) => input.replace(/<[^>]+>/g, "");
 
 
     return (
@@ -139,12 +167,44 @@ function page() {
                     />
             </div>
 
+            <div className="flex items-center justify-between gap-3 mb-4 mt-4">
+                <div className="relative w-full max-w-sm">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search by question..."
+                        className="pl-8 w-full"
+                        value={searchValue}
+                        onChange={(e) => {
+                            setSearchValue(e.target.value);
+                            setPagination((prev) => ({ ...prev, current: 1 }));
+                        }}
+                    />
+                </div>
+                {selectedIds.length > 0 && (
+                    <Button
+                        variant="destructive"
+                        onClick={() => setBulkDeleteDialogOpen(true)}
+                    >
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete Selected ({selectedIds.length})
+                    </Button>
+                )}
+            </div>
+
             <div className="rounded-md  border shadow-sm">
                 <Table>
                     <TableHeader>
                         <TableRow>
+                            <TableHead className="w-12">
+                                <input
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300"
+                                    checked={selectedIds.length === items.length && items.length > 0}
+                                    onChange={toggleSelectAll}
+                                />
+                            </TableHead>
                             <TableHead className="hidden xl:table-cell">Category</TableHead>
-                            <TableHead>Quetion</TableHead>
+                            <TableHead>Question</TableHead>
 
                             <TableHead className="hidden xl:table-cell">Answer</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
@@ -154,6 +214,7 @@ function page() {
                         {isLoading
                             ? Array.from({ length: limit }).map((_, i) => (
                                 <TableRow key={i}>
+                                    <TableCell><Skeleton className="h-4 w-4" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-32 rounded" /></TableCell>
                                     <TableCell><Skeleton className="h-5 w-48" /></TableCell>
                                     <TableCell><Skeleton className="hidden xl:table-cell h-5 w-32" /></TableCell>
@@ -163,6 +224,14 @@ function page() {
                             : items.length > 0
                                 ? items.map((item, index) => (
                                     <TableRow key={item._id} >
+                                        <TableCell>
+                                            <input
+                                                type="checkbox"
+                                                className="h-4 w-4 rounded border-gray-300"
+                                                checked={item._id ? selectedIds.includes(item._id) : false}
+                                                onChange={() => item._id && toggleSelectItem(item._id)}
+                                            />
+                                        </TableCell>
                                         {/* <TableCell className="hidden xl:table-cell" >{item.categories}</TableCell> */}
                                         <TableCell className="hidden xl:table-cell">
                                             {typeof item.categories === "object" ? item.categories.category : "-"}
@@ -206,7 +275,7 @@ function page() {
                                 ))
                                 : (
                                     <TableRow>
-                                        <TableCell colSpan={7} className="text-center h-24">
+                                        <TableCell colSpan={5} className="text-center h-24">
                                             No Faqs found. {searchValue || selectedCategory ? "Try adjusting your filters." : ""}
                                         </TableCell>
                                     </TableRow>
@@ -258,6 +327,14 @@ function page() {
                     />
                 )
             }
+
+            {/* Bulk Delete Dialog */}
+            <BulkDeleteFAQDialog
+                isOpen={bulkDeleteDialogOpen}
+                onOpenChange={setBulkDeleteDialogOpen}
+                selectedIds={selectedIds}
+                onSuccess={handleBulkDeleteSuccess}
+            />
         </>
     )
 }

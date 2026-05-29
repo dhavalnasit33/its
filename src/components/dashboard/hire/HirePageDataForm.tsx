@@ -17,12 +17,30 @@ import {
 } from "@/components/ui/form";
 import { TiptapEditorNoSSR } from "@/components/shared/TiptapEditor";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, GripVertical, Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Loader2,
+  GripVertical,
+  Plus,
+  Trash2,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { HirePageDataFormValues, HirePageDataSchema } from "@/types";
-import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "@hello-pangea/dnd";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import apiService from "@/lib/apiService";
 import { APP_URL } from "@/config";
 import CustomCKEditor from "@/components/shared/Ckeditor";
@@ -34,17 +52,11 @@ const generateSlug = (text: string): string => {
     .replace(/[^\w\s-]/g, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
-}; 
+};
 
 interface CategoryItem {
   _id: string;
   category: string;
-}
-
-interface SubCategoryItem {
-  _id: string;
-  category: string;
-  subcategory: string;
 }
 
 interface HirePageFormProps {
@@ -62,22 +74,21 @@ export default function HirePageForm({
   const isFirstRender = useRef(true);
 
   const [categories, setCategories] = useState<CategoryItem[]>([]);
-  const [subCategories, setSubCategories] = useState<SubCategoryItem[]>([]);
-  const [filteredSubCategories, setFilteredSubCategories] = useState<SubCategoryItem[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
-  const [loadingSubCategories, setLoadingSubCategories] = useState(false);
 
   // Accordion/Collapse states for tech stack & pricing details
   const [expandedTechIndex, setExpandedTechIndex] = useState<number | null>(0);
   const [expandedPlanIndex, setExpandedPlanIndex] = useState<number | null>(0);
-    const [expandedValueIndex, setExpandedValueIndex] = useState<number | null>(0);
+  const [expandedValueIndex, setExpandedValueIndex] = useState<number | null>(
+    0,
+  );
   const [expandedFAQIndex, setExpandedFAQIndex] = useState<number | null>(0);
 
   const form = useForm<HirePageDataFormValues>({
     resolver: zodResolver(HirePageDataSchema),
     defaultValues: initialData || {
       category: "",
-      subCategory: "",
+      name: "",
       title: "",
       slug: "",
       description: "",
@@ -109,10 +120,9 @@ export default function HirePageForm({
   });
 
   const selectedCategoryId = form.watch("category");
-  const subCategoryValue = form.watch("subCategory");
-  const titleValue = form.watch("title");
+  const nameValue = form.watch("name");
 
-  // Fetch categories & subcategories
+  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       setLoadingCategories(true);
@@ -128,48 +138,21 @@ export default function HirePageForm({
       }
     };
 
-    const fetchAllSubCategories = async () => {
-      setLoadingSubCategories(true);
-      try {
-        const res = await apiService<{ success: boolean; data: SubCategoryItem[] }>(
-          "/subcategory?moduleType=hire&limit=100&page=1"
-        );
-        if (res.success) setSubCategories(res.data);
-      } catch (err) {
-        console.error("SubCategory fetch error:", err);
-      } finally {
-        setLoadingSubCategories(false);
-      }
-    };
-
     fetchCategories();
-    fetchAllSubCategories();
   }, []);
 
-  // Filter subcategories locally based on selected category ID
-  useEffect(() => {
-    if (selectedCategoryId && subCategories.length > 0) {
-      const filtered = subCategories.filter(
-        (s) => s.category === selectedCategoryId
-      );
-      setFilteredSubCategories(filtered);
-    } else {
-      setFilteredSubCategories([]);
-    }
-  }, [selectedCategoryId, subCategories]);
-
-  // Handle Slug Autogeneration based on Title
+  // Handle Slug Autogeneration based on Name
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    if (titleValue) {
-      form.setValue("slug", generateSlug(titleValue), {
+    if (nameValue) {
+      form.setValue("slug", generateSlug(nameValue), {
         shouldValidate: true,
       });
     }
-  }, [titleValue, form]);
+  }, [nameValue, form]);
 
   // Drag and Drop tech stack details & keyPoints handlers
   const onDragEnd = (result: DropResult) => {
@@ -193,7 +176,9 @@ export default function HirePageForm({
     }
   };
 
-  const handleFormSubmit: SubmitHandler<HirePageDataFormValues> = async (data) => {
+  const handleFormSubmit: SubmitHandler<HirePageDataFormValues> = async (
+    data,
+  ) => {
     setIsSubmitting(true);
     try {
       await onSubmit(data);
@@ -209,37 +194,65 @@ export default function HirePageForm({
   };
 
   // Field Arrays for scrolling content
-  const { fields: keyPointsFields, append: appendKeyPoint, remove: removeKeyPoint } = useFieldArray({
+  const {
+    fields: keyPointsFields,
+    append: appendKeyPoint,
+    remove: removeKeyPoint,
+  } = useFieldArray({
     control: form.control,
     name: "keyPoints" as any,
   });
 
-  const { fields: planDetailsFields, append: appendPlanDetail, remove: removePlanDetail } = useFieldArray({
+  const {
+    fields: planDetailsFields,
+    append: appendPlanDetail,
+    remove: removePlanDetail,
+  } = useFieldArray({
     control: form.control,
     name: "hireDevelopersAsYourNeeds.planDetails",
   });
 
-  const { fields: benefitsFields, append: appendBenefit, remove: removeBenefit } = useFieldArray({
+  const {
+    fields: benefitsFields,
+    append: appendBenefit,
+    remove: removeBenefit,
+  } = useFieldArray({
     control: form.control,
     name: "hireDevelopersAsYourNeeds.benefits" as any,
   });
 
-  const { fields: expertiseFields, append: appendExpertise, remove: removeExpertise } = useFieldArray({
+  const {
+    fields: expertiseFields,
+    append: appendExpertise,
+    remove: removeExpertise,
+  } = useFieldArray({
     control: form.control,
     name: "ourExpertise.keyPoints" as any,
   });
 
-  const { fields: techStackFields, append: appendTechStack, remove: removeTechStack } = useFieldArray({
+  const {
+    fields: techStackFields,
+    append: appendTechStack,
+    remove: removeTechStack,
+  } = useFieldArray({
     control: form.control,
     name: "techStack.details",
   });
 
-  const { fields: whyHireUsFields, append: appendWhyHireUs, remove: removeWhyHireUs } = useFieldArray({
+  const {
+    fields: whyHireUsFields,
+    append: appendWhyHireUs,
+    remove: removeWhyHireUs,
+  } = useFieldArray({
     control: form.control,
     name: "whyHireUs.details",
   });
 
-  const { fields: hiringStepsFields, append: appendHiringStep, remove: removeHiringStep } = useFieldArray({
+  const {
+    fields: hiringStepsFields,
+    append: appendHiringStep,
+    remove: removeHiringStep,
+  } = useFieldArray({
     control: form.control,
     name: "hireingProcess.steps" as any,
   });
@@ -262,16 +275,23 @@ export default function HirePageForm({
   //   }
   // }, [hiringStepsFields, appendHiringStep]);
 
-  const { fields: faqFields, append: appendFaq, remove: removeFaq } = useFieldArray({
+  const {
+    fields: faqFields,
+    append: appendFaq,
+    remove: removeFaq,
+  } = useFieldArray({
     control: form.control,
     name: "faq",
   });
 
   return (
     <Card>
-      <CardContent className='pt-6'>
+      <CardContent className="pt-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(handleFormSubmit)}
+            className="space-y-8"
+          >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Main Left Column Form Sections */}
               <div className="lg:col-span-2 space-y-8">
@@ -281,102 +301,64 @@ export default function HirePageForm({
                     <CardTitle>Page Classification</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                      <FormField
-                        control={form.control}
-                        name="category"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Category</FormLabel>
-                            <Select
-                              onValueChange={(val) => {
-                                field.onChange(val);
-                                form.setValue("subCategory", "");
-                              }}
-                              value={field.value}
-                              disabled={loadingCategories}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder={loadingCategories ? "Loading categories..." : "Select a category"} />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {categories.length > 0 ? (
-                                  categories.map((cat) => (
-                                    <SelectItem key={cat._id} value={cat._id}>
-                                      {cat.category}
-                                    </SelectItem>
-                                  ))
-                                ) : (
-                                  <SelectItem value="none" disabled>
-                                    No categories found
+                    <FormField
+                      control={form.control}
+                      name="category"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Category</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                            disabled={loadingCategories}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder={
+                                    loadingCategories
+                                      ? "Loading categories..."
+                                      : "Select a category"
+                                  }
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {categories.length > 0 ? (
+                                categories.map((cat) => (
+                                  <SelectItem key={cat._id} value={cat._id}>
+                                    {cat.category}
                                   </SelectItem>
-                                )}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="subCategory"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Sub Category</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              disabled={loadingSubCategories || !selectedCategoryId}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue
-                                    placeholder={
-                                      !selectedCategoryId
-                                        ? "First select a category"
-                                        : loadingSubCategories
-                                        ? "Loading subcategories..."
-                                        : filteredSubCategories.length === 0
-                                        ? "No subcategories found"
-                                        : "Select a subcategory"
-                                    }
-                                  />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {filteredSubCategories.length > 0 ? (
-                                  filteredSubCategories.map((sub) => (
-                                    <SelectItem key={sub._id} value={sub._id}>
-                                      {sub.subcategory}
-                                    </SelectItem>
-                                  ))
-                                ) : (
-                                  <SelectItem value="none" disabled>
-                                    {!selectedCategoryId ? "Select category first" : "No subcategories"}
-                                  </SelectItem>
-                                )}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                ))
+                              ) : (
+                                <SelectItem value="none" disabled>
+                                  No categories found
+                                </SelectItem>
+                              )}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
                     <FormField
                       control={form.control}
-                      name="title"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Title</FormLabel>
+                          <FormLabel>Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter title" {...field} />
+                            <Input
+                              placeholder="e.g. React Developer"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name="slug"
@@ -407,11 +389,25 @@ export default function HirePageForm({
                         );
                       }}
                     />
-                     <FormField
-                          control={form.control}
-                          name="slug"
-                          render={({ field }) => <input type="hidden" {...field} />}
-                        />
+                    <FormField
+                      control={form.control}
+                      name="slug"
+                      render={({ field }) => <input type="hidden" {...field} />}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Title</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter title" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </CardContent>
                 </Card>
 
@@ -428,7 +424,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Main Description</FormLabel>
                           <FormControl>
-                              <CustomCKEditor value={field.value || ""} onChange={field.onChange} />
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -438,10 +437,10 @@ export default function HirePageForm({
                     <div className="space-y-4">
                       <div className="flex justify-between items-center ">
                         <FormLabel>Bullet Key Points</FormLabel>
-                        <Button 
-                          type="button" 
-                          variant="outline" 
-                          size="sm" 
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
                           onClick={() => appendKeyPoint("")}
                         >
                           <Plus className="h-4 w-4 mr-2" /> Add Point
@@ -449,16 +448,19 @@ export default function HirePageForm({
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {keyPointsFields.map((field, idx) => (
-                          <Card 
-                            key={field.id} 
+                          <Card
+                            key={field.id}
                             className="p-4 relative border-dashed"
                           >
-                            <Button type="button" variant="ghost" size="icon" 
-                              className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
-                                onClick={() => removeKeyPoint(idx)}
-                                >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                              onClick={() => removeKeyPoint(idx)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
 
                             <div className="flex flex-col items-center  gap-2 pt-4">
                               <FormField
@@ -468,7 +470,10 @@ export default function HirePageForm({
                                   <FormItem className="w-full">
                                     <FormLabel>Key Point</FormLabel>
                                     <FormControl>
-                                      <Input placeholder="Enter Key Points" {...pointField} />
+                                      <Input
+                                        placeholder="Enter Key Points"
+                                        {...pointField}
+                                      />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -495,7 +500,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Title</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter section title" {...field} />
+                            <Input
+                              placeholder="Enter section title"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -508,7 +516,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                              <CustomCKEditor value={field.value || ""} onChange={field.onChange} />
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -521,7 +532,11 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Upload Image</FormLabel>
                           <FormControl>
-                            <ImageUpload value={field.value || ""} onChange={field.onChange} className="w-full h-48" />
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                              className="w-full h-48"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -543,7 +558,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Title</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter section title" {...field} />
+                            <Input
+                              placeholder="Enter section title"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -556,7 +574,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                            <CustomCKEditor value={field.value || ""} onChange={field.onChange} />
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -569,7 +590,11 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Upload Image</FormLabel>
                           <FormControl>
-                            <ImageUpload value={field.value || ""} onChange={field.onChange} className="w-full h-48" />
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                              className="w-full h-48"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -581,7 +606,9 @@ export default function HirePageForm({
                 {/* Pricing Plans & Benefits */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Hire Developers As Your Needs (Pricing & Benefits)</CardTitle>
+                    <CardTitle>
+                      Hire Developers As Your Needs (Pricing & Benefits)
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <FormField
@@ -591,7 +618,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Section Title</FormLabel>
                           <FormControl>
-                            <Input placeholder="Main section title" {...field} />
+                            <Input
+                              placeholder="Main section title"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -600,13 +630,19 @@ export default function HirePageForm({
 
                     <div className="space-y-6">
                       <div className="flex justify-between items-center">
-                        <FormLabel className="text-sm font-semibold">Pricing Plans</FormLabel>
+                        <FormLabel className="text-sm font-semibold">
+                          Pricing Plans
+                        </FormLabel>
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            appendPlanDetail({ timelLine: "", price: "", keyPoints: [""] });
+                            appendPlanDetail({
+                              timelLine: "",
+                              price: "",
+                              keyPoints: [""],
+                            });
                             setExpandedPlanIndex(planDetailsFields.length);
                           }}
                         >
@@ -617,14 +653,23 @@ export default function HirePageForm({
                       <div className="space-y-4">
                         {planDetailsFields.map((planField, planIdx) => {
                           const isExpanded = expandedPlanIndex === planIdx;
-                          const planTitle = form.watch(`hireDevelopersAsYourNeeds.planDetails.${planIdx}.timelLine`);
+                          const planTitle = form.watch(
+                            `hireDevelopersAsYourNeeds.planDetails.${planIdx}.timelLine`,
+                          );
 
                           return (
-                            <Card key={planField.id} className="relative border-dashed bg-muted/5 overflow-hidden">
+                            <Card
+                              key={planField.id}
+                              className="relative border-dashed bg-muted/5 overflow-hidden"
+                            >
                               <div
                                 className="flex items-center justify-between p-4 bg-muted/20 cursor-pointer hover:bg-muted/30 transition-colors"
-                                onClick={() => setExpandedPlanIndex(isExpanded ? null : planIdx)}
-                                >
+                                onClick={() =>
+                                  setExpandedPlanIndex(
+                                    isExpanded ? null : planIdx,
+                                  )
+                                }
+                              >
                                 <div className="flex items-center gap-3">
                                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
                                     {planIdx + 1}
@@ -634,20 +679,25 @@ export default function HirePageForm({
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Button
-                                      type="button"
-                                      variant="ghost"
-                                      size="icon"
-                                      className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        removePlanDetail(planIdx);
-                                        if (expandedPlanIndex === planIdx) setExpandedPlanIndex(null);
-                                      }}
-                                    >
-                                      <Trash2 className="h-4 w-4 " />
-                                    </Button>
-                                  {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      removePlanDetail(planIdx);
+                                      if (expandedPlanIndex === planIdx)
+                                        setExpandedPlanIndex(null);
+                                    }}
+                                  >
+                                    <Trash2 className="h-4 w-4 " />
+                                  </Button>
+                                  {isExpanded ? (
+                                    <ChevronUp className="h-4 w-4" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4" />
+                                  )}
                                 </div>
                               </div>
 
@@ -660,7 +710,10 @@ export default function HirePageForm({
                                       <FormItem>
                                         <FormLabel>Timeline</FormLabel>
                                         <FormControl>
-                                          <Input placeholder="e.g. Full-Time" {...field} />
+                                          <Input
+                                            placeholder="e.g. Full-Time"
+                                            {...field}
+                                          />
                                         </FormControl>
                                         <FormMessage />
                                       </FormItem>
@@ -673,13 +726,19 @@ export default function HirePageForm({
                                       <FormItem>
                                         <FormLabel>Price</FormLabel>
                                         <FormControl>
-                                          <Input placeholder="e.g. $2400/month" {...field} />
+                                          <Input
+                                            placeholder="e.g. $2400/month"
+                                            {...field}
+                                          />
                                         </FormControl>
                                         <FormMessage />
                                       </FormItem>
                                     )}
                                   />
-                                  <PlanKeyPoints control={form.control} planIndex={planIdx} />
+                                  <PlanKeyPoints
+                                    control={form.control}
+                                    planIndex={planIdx}
+                                  />
                                 </CardContent>
                               )}
                             </Card>
@@ -690,34 +749,51 @@ export default function HirePageForm({
 
                     <div className="space-y-4 ">
                       <div className="flex justify-between items-center">
-                        <FormLabel className="text-sm font-semibold">Benefits</FormLabel>
-                        <Button type="button" variant="outline" size="sm" onClick={() => appendBenefit("")}>
+                        <FormLabel className="text-sm font-semibold">
+                          Benefits
+                        </FormLabel>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => appendBenefit("")}
+                        >
                           <Plus className="h-4 w-4 mr-2" /> Add Benefit
                         </Button>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {benefitsFields.map((field, idx) => (
-                          <Card key={field.id} className="p-4 relative border-dashed">
-                            <Button type="button" variant="ghost" size="icon" 
-                              className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
-                                  onClick={() => removeBenefit(idx)}>
-                                  <Trash2 className="h-4 w-4" />
-                              </Button>
-                              <div className="flex flex-col items-center  gap-2 pt-4">
-                                <FormField
-                                  control={form.control}
-                                  name={`hireDevelopersAsYourNeeds.benefits.${idx}`}
-                                  render={({ field: benefitField }) => (
-                                    <FormItem className="w-full">
-                                      <FormLabel>Title</FormLabel>
-                                      <FormControl>
-                                        <Input placeholder={`Benefit ${idx + 1}`} {...benefitField} />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                              </div>
+                          <Card
+                            key={field.id}
+                            className="p-4 relative border-dashed"
+                          >
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                              onClick={() => removeBenefit(idx)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                            <div className="flex flex-col items-center  gap-2 pt-4">
+                              <FormField
+                                control={form.control}
+                                name={`hireDevelopersAsYourNeeds.benefits.${idx}`}
+                                render={({ field: benefitField }) => (
+                                  <FormItem className="w-full">
+                                    <FormLabel>Title</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        placeholder={`Benefit ${idx + 1}`}
+                                        {...benefitField}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
                           </Card>
                         ))}
                       </div>
@@ -732,37 +808,51 @@ export default function HirePageForm({
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex justify-between items-center ">
-                      <FormLabel className="text-sm font-semibold">Expertise Points</FormLabel>
-                      <Button type="button" variant="outline" size="sm"
-                       onClick={() => appendExpertise("")}
-                       >
+                      <FormLabel className="text-sm font-semibold">
+                        Expertise Points
+                      </FormLabel>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => appendExpertise("")}
+                      >
                         <Plus className="h-4 w-4 mr-2" /> Add Point
                       </Button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {expertiseFields.map((field, idx) => (
-                        <Card key={field.id} className="p-4 relative border-dashed">
-                          <Button type="button" variant="ghost" size="icon" 
-                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
-                                onClick={() => removeExpertise(idx)}
-                                >
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
-                            <div className="flex flex-col items-center  gap-2 pt-4">
-                              <FormField
-                                control={form.control as any}
-                                name={`ourExpertise.keyPoints.${idx}`}
-                                render={({ field }) => (
-                                  <FormItem className="w-full">
-                                    <FormLabel>Key Points</FormLabel>
-                                    <FormControl>
-                                      <Input placeholder={`Expertise Point ${idx + 1}`} {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                            </div>
+                        <Card
+                          key={field.id}
+                          className="p-4 relative border-dashed"
+                        >
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                            onClick={() => removeExpertise(idx)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                          <div className="flex flex-col items-center  gap-2 pt-4">
+                            <FormField
+                              control={form.control as any}
+                              name={`ourExpertise.keyPoints.${idx}`}
+                              render={({ field }) => (
+                                <FormItem className="w-full">
+                                  <FormLabel>Key Points</FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      placeholder={`Expertise Point ${idx + 1}`}
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
                         </Card>
                       ))}
                     </div>
@@ -795,7 +885,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                              <CustomCKEditor value={field.value || ""} onChange={field.onChange} />
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -810,109 +903,163 @@ export default function HirePageForm({
                             type="button"
                             variant="outline"
                             size="sm"
-                            onClick={() => appendTechStack({ title: "", section: 1, keyPoints: [""] })}
+                            onClick={() =>
+                              appendTechStack({
+                                title: "",
+                                section: 1,
+                                keyPoints: [""],
+                              })
+                            }
                           >
                             <Plus className="h-4 w-4 mr-2" /> Add Tech Section
                           </Button>
                         </div>
 
-                      <Droppable droppableId="techStackDetails" type="techDetails">
-                        {(provided) => (
-                          <div ref={provided.innerRef} {...provided.droppableProps} className="space-y-4">
-                            {techStackFields.map((field, idx) => {
-                              const isExpanded = expandedTechIndex === idx;
-                              const techTitle = form.watch(`techStack.details.${idx}.title`);
+                        <Droppable
+                          droppableId="techStackDetails"
+                          type="techDetails"
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.droppableProps}
+                              className="space-y-4"
+                            >
+                              {techStackFields.map((field, idx) => {
+                                const isExpanded = expandedTechIndex === idx;
+                                const techTitle = form.watch(
+                                  `techStack.details.${idx}.title`,
+                                );
 
-                              return (
-                                <Draggable key={field.id} draggableId={field.id} index={idx}>
-                                  {(provided) => (
-                                    <Card
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      className="relative border-dashed overflow-hidden  bg-muted/5" 
-                                    >
-                                      <div className="flex items-center justify-between p-4 bg-muted/20  hover:bg-muted/30 transition-colors">
-                                        <div className="flex items-center gap-3">
-                                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-                                            {idx + 1}
+                                return (
+                                  <Draggable
+                                    key={field.id}
+                                    draggableId={field.id}
+                                    index={idx}
+                                  >
+                                    {(provided) => (
+                                      <Card
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        className="relative border-dashed overflow-hidden  bg-muted/5"
+                                      >
+                                        <div className="flex items-center justify-between p-4 bg-muted/20  hover:bg-muted/30 transition-colors">
+                                          <div className="flex items-center gap-3">
+                                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                                              {idx + 1}
+                                            </div>
+                                            <span className="font-semibold text-sm">
+                                              {techTitle || `Plan ${idx + 1}`}
+                                            </span>
                                           </div>
-                                          <span className="font-semibold text-sm">
-                                            {techTitle || `Plan ${idx + 1}`}
-                                          </span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
+                                          <div className="flex items-center gap-2">
                                             <Button
                                               type="button"
                                               variant="ghost"
                                               size="icon"
                                               className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                                              onClick={() => removeTechStack(idx)}
+                                              onClick={() =>
+                                                removeTechStack(idx)
+                                              }
                                             >
                                               <Trash2 className="h-4 w-4 " />
                                             </Button>
-                                          <div
-                                            className="cursor-pointer p-1"
-                                            onClick={() => setExpandedTechIndex(isExpanded ? null : idx)}
-                                          >
-                                            {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                            <div
+                                              className="cursor-pointer p-1"
+                                              onClick={() =>
+                                                setExpandedTechIndex(
+                                                  isExpanded ? null : idx,
+                                                )
+                                              }
+                                            >
+                                              {isExpanded ? (
+                                                <ChevronUp className="h-4 w-4" />
+                                              ) : (
+                                                <ChevronDown className="h-4 w-4" />
+                                              )}
+                                            </div>
                                           </div>
                                         </div>
-                                      </div>
 
-                                      {isExpanded && (
-                                        <CardContent className="space-y-4 pt-4 border-t border-dashed ">
-                                          <FormField
-                                            control={form.control}
-                                            name={`techStack.details.${idx}.section`}
-                                            render={({ field }) => (
-                                              <FormItem className="border p-3 rounded-md flex items-center gap-4">
-                                                <FormLabel className="font-semibold flex-shrink-0 mb-0">Section Column</FormLabel>
-                                                <FormControl>
-                                                  <div className="flex gap-4">
-                                                    {[1, 2, 3, 4].map((num) => (
-                                                      <label key={num} className="flex items-center space-x-2 cursor-pointer">
-                                                        <input
-                                                          type="radio"
-                                                          value={num}
-                                                          checked={field.value === num}
-                                                          onChange={(e) => field.onChange(Number(e.target.value))}
-                                                          className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                        />
-                                                        <span>{num}</span>
-                                                      </label>
-                                                    ))}
-                                                  </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                              </FormItem>
-                                            )}
-                                          />
-                                          <FormField
-                                            control={form.control}
-                                            name={`techStack.details.${idx}.title`}
-                                            render={({ field }) => (
-                                              <FormItem>
-                                                <FormLabel>Section Title</FormLabel>
-                                                <FormControl>
-                                                  <Input placeholder="e.g. Backend" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                              </FormItem>
-                                            )}
-                                          />
-                                          <TechStackKeyPoints control={form.control} detailIndex={idx} />
-                                        </CardContent>
-                                      )}
-                                    </Card>
-                                  )}
-                                </Draggable>
-                              );
-                            })}
-                            {provided.placeholder}
-                          </div>
-                        )}
-                      </Droppable>
+                                        {isExpanded && (
+                                          <CardContent className="space-y-4 pt-4 border-t border-dashed ">
+                                            <FormField
+                                              control={form.control}
+                                              name={`techStack.details.${idx}.section`}
+                                              render={({ field }) => (
+                                                <FormItem className="border p-3 rounded-md flex items-center gap-4">
+                                                  <FormLabel className="font-semibold flex-shrink-0 mb-0">
+                                                    Section Column
+                                                  </FormLabel>
+                                                  <FormControl>
+                                                    <div className="flex gap-4">
+                                                      {[1, 2, 3, 4].map(
+                                                        (num) => (
+                                                          <label
+                                                            key={num}
+                                                            className="flex items-center space-x-2 cursor-pointer"
+                                                          >
+                                                            <input
+                                                              type="radio"
+                                                              value={num}
+                                                              checked={
+                                                                field.value ===
+                                                                num
+                                                              }
+                                                              onChange={(e) =>
+                                                                field.onChange(
+                                                                  Number(
+                                                                    e.target
+                                                                      .value,
+                                                                  ),
+                                                                )
+                                                              }
+                                                              className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                            />
+                                                            <span>{num}</span>
+                                                          </label>
+                                                        ),
+                                                      )}
+                                                    </div>
+                                                  </FormControl>
+                                                  <FormMessage />
+                                                </FormItem>
+                                              )}
+                                            />
+                                            <FormField
+                                              control={form.control}
+                                              name={`techStack.details.${idx}.title`}
+                                              render={({ field }) => (
+                                                <FormItem>
+                                                  <FormLabel>
+                                                    Section Title
+                                                  </FormLabel>
+                                                  <FormControl>
+                                                    <Input
+                                                      placeholder="e.g. Backend"
+                                                      {...field}
+                                                    />
+                                                  </FormControl>
+                                                  <FormMessage />
+                                                </FormItem>
+                                              )}
+                                            />
+                                            <TechStackKeyPoints
+                                              control={form.control}
+                                              detailIndex={idx}
+                                            />
+                                          </CardContent>
+                                        )}
+                                      </Card>
+                                    )}
+                                  </Draggable>
+                                );
+                              })}
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
                       </div>
                     </DragDropContext>
                   </CardContent>
@@ -937,9 +1084,11 @@ export default function HirePageForm({
                         </FormItem>
                       )}
                     />
-                     <div className="space-y-6">
+                    <div className="space-y-6">
                       <div className="flex justify-between items-center">
-                        <FormLabel className="text-sm font-semibold">Value Points</FormLabel>
+                        <FormLabel className="text-sm font-semibold">
+                          Value Points
+                        </FormLabel>
                         <Button
                           type="button"
                           variant="outline"
@@ -957,14 +1106,23 @@ export default function HirePageForm({
                         {whyHireUsFields.map((valueField, valueIdx) => {
                           const isExpanded = expandedValueIndex === valueIdx;
                           // const valueTitle = form.watch(`WhyHireUsDetail.${valueIdx}title`);
-                          const valueTitle = form.watch(`whyHireUs.details.${valueIdx}.title`);
+                          const valueTitle = form.watch(
+                            `whyHireUs.details.${valueIdx}.title`,
+                          );
 
                           return (
-                            <Card key={valueField.id} className="relative border-dashed bg-muted/5 overflow-hidden">
+                            <Card
+                              key={valueField.id}
+                              className="relative border-dashed bg-muted/5 overflow-hidden"
+                            >
                               <div
                                 className="flex items-center justify-between p-4 bg-muted/20 cursor-pointer hover:bg-muted/30 transition-colors"
-                                onClick={() => setExpandedValueIndex(isExpanded ? null : valueIdx)}
-                                >
+                                onClick={() =>
+                                  setExpandedValueIndex(
+                                    isExpanded ? null : valueIdx,
+                                  )
+                                }
+                              >
                                 <div className="flex items-center gap-3">
                                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
                                     {valueIdx + 1}
@@ -974,52 +1132,66 @@ export default function HirePageForm({
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Button
-                                      type="button"
-                                      variant="ghost"
-                                      size="icon"
-                                      className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        removeWhyHireUs(valueIdx);
-                                        if (expandedValueIndex === valueIdx) setExpandedValueIndex(null);
-                                      }}
-                                    >
-                                      <Trash2 className="h-4 w-4 " />
-                                    </Button>
-                                  {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      removeWhyHireUs(valueIdx);
+                                      if (expandedValueIndex === valueIdx)
+                                        setExpandedValueIndex(null);
+                                    }}
+                                  >
+                                    <Trash2 className="h-4 w-4 " />
+                                  </Button>
+                                  {isExpanded ? (
+                                    <ChevronUp className="h-4 w-4" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4" />
+                                  )}
                                 </div>
                               </div>
 
                               {isExpanded && (
                                 <CardContent className="space-y-4 pt-4 border-t border-dashed">
-                                   <FormField
-                                      control={form.control}
-                                      name={`whyHireUs.details.${valueIdx}.title`}
-                                      render={({ field: subField }) => (
-                                        <FormItem className="w-full">
-                                          <FormLabel>Title</FormLabel>
-                                          <FormControl>
-                                            <Input placeholder="e.g. High Integrity" {...subField} />
-                                          </FormControl>
-                                          <FormMessage />
-                                        </FormItem>
-                                      )}
-                                    />
-                                    <FormField
-                                      control={form.control}
-                                      name={`whyHireUs.details.${valueIdx}.description`}
-                                      render={({ field: subField }) => (
-                                        <FormItem>
-                                          <FormLabel>Description</FormLabel>
-                                          <FormControl>
-                                              <CustomCKEditor value={subField.value || ""} onChange={subField.onChange} />
-                                          </FormControl>
-                                          <FormMessage />
-                                        </FormItem>
-                                      )}
-                                    />
-                                  <ValueKeyPoints control={form.control} valueIndex={valueIdx} />
+                                  <FormField
+                                    control={form.control}
+                                    name={`whyHireUs.details.${valueIdx}.title`}
+                                    render={({ field: subField }) => (
+                                      <FormItem className="w-full">
+                                        <FormLabel>Title</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            placeholder="e.g. High Integrity"
+                                            {...subField}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={form.control}
+                                    name={`whyHireUs.details.${valueIdx}.description`}
+                                    render={({ field: subField }) => (
+                                      <FormItem>
+                                        <FormLabel>Description</FormLabel>
+                                        <FormControl>
+                                          <CustomCKEditor
+                                            value={subField.value || ""}
+                                            onChange={subField.onChange}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <ValueKeyPoints
+                                    control={form.control}
+                                    valueIndex={valueIdx}
+                                  />
                                 </CardContent>
                               )}
                             </Card>
@@ -1043,7 +1215,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Title</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter section title" {...field} />
+                            <Input
+                              placeholder="Enter section title"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -1056,7 +1231,10 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
-                              <CustomCKEditor value={field.value || ""} onChange={field.onChange} />
+                            <CustomCKEditor
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -1069,7 +1247,11 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Upload Image</FormLabel>
                           <FormControl>
-                            <ImageUpload value={field.value || ""} onChange={field.onChange} className="w-full h-48" />
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                              className="w-full h-48"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -1085,33 +1267,50 @@ export default function HirePageForm({
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex justify-between items-center ">
-                      <FormLabel className="text-sm font-semibold">Workflow Steps</FormLabel>
-                      <Button type="button" variant="outline" size="sm" onClick={() => appendHiringStep("")}>
+                      <FormLabel className="text-sm font-semibold">
+                        Workflow Steps
+                      </FormLabel>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => appendHiringStep("")}
+                      >
                         <Plus className="h-4 w-4 mr-2" /> Add Step
                       </Button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {hiringStepsFields.map((field, idx) => (
-                        <Card key={field.id} className="p-4 relative border-dashed">
-                          <Button type="button" variant="ghost" size="icon" 
-                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
-                                onClick={() => removeHiringStep(idx)}>
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
+                        <Card
+                          key={field.id}
+                          className="p-4 relative border-dashed"
+                        >
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+                            onClick={() => removeHiringStep(idx)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                           <div className="flex flex-col items-center  gap-2 pt-4">
-                          <FormField
-                            control={form.control}
-                            name={`hireingProcess.steps.${idx}`}
-                            render={({ field: stepField }) => (
-                              <FormItem className="w-full">
-                                <FormLabel>Step</FormLabel>
-                                <FormControl>
-                                  <Input placeholder={`Step ${idx + 1}`} {...stepField} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                            <FormField
+                              control={form.control}
+                              name={`hireingProcess.steps.${idx}`}
+                              render={({ field: stepField }) => (
+                                <FormItem className="w-full">
+                                  <FormLabel>Step</FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      placeholder={`Step ${idx + 1}`}
+                                      {...stepField}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
                           </div>
                         </Card>
                       ))}
@@ -1126,7 +1325,9 @@ export default function HirePageForm({
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex justify-between items-center ">
-                      <FormLabel className="text-sm font-semibold">FAQ Items</FormLabel>
+                      <FormLabel className="text-sm font-semibold">
+                        FAQ Items
+                      </FormLabel>
                       <Button
                         type="button"
                         variant="outline"
@@ -1146,10 +1347,15 @@ export default function HirePageForm({
                         const faqTitle = form.watch(`faq.${idx}.question`);
 
                         return (
-                          <Card key={field.id} className="relative border-dashed bg-muted/5 overflow-hidden">
+                          <Card
+                            key={field.id}
+                            className="relative border-dashed bg-muted/5 overflow-hidden"
+                          >
                             <div
                               className="flex items-center justify-between p-4 bg-muted/20 cursor-pointer hover:bg-muted/30 transition-colors"
-                              onClick={() => setExpandedFAQIndex(isExpanded ? null : idx)}
+                              onClick={() =>
+                                setExpandedFAQIndex(isExpanded ? null : idx)
+                              }
                             >
                               <div className="flex items-center gap-3">
                                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
@@ -1168,12 +1374,17 @@ export default function HirePageForm({
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     removeFaq(idx);
-                                    if (expandedFAQIndex === idx) setExpandedFAQIndex(null);
+                                    if (expandedFAQIndex === idx)
+                                      setExpandedFAQIndex(null);
                                   }}
                                 >
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
-                                {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                {isExpanded ? (
+                                  <ChevronUp className="h-4 w-4" />
+                                ) : (
+                                  <ChevronDown className="h-4 w-4" />
+                                )}
                               </div>
                             </div>
 
@@ -1186,7 +1397,10 @@ export default function HirePageForm({
                                     <FormItem>
                                       <FormLabel>Question</FormLabel>
                                       <FormControl>
-                                        <Input placeholder="Enter Question" {...subField} />
+                                        <Input
+                                          placeholder="Enter Question"
+                                          {...subField}
+                                        />
                                       </FormControl>
                                       <FormMessage />
                                     </FormItem>
@@ -1199,7 +1413,10 @@ export default function HirePageForm({
                                     <FormItem>
                                       <FormLabel>Answer</FormLabel>
                                       <FormControl>
-                                          <CustomCKEditor value={subField.value || ""} onChange={subField.onChange} />
+                                        <CustomCKEditor
+                                          value={subField.value || ""}
+                                          onChange={subField.onChange}
+                                        />
                                       </FormControl>
                                       <FormMessage />
                                     </FormItem>
@@ -1253,7 +1470,11 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>Meta Description</FormLabel>
                           <FormControl>
-                            <Textarea placeholder="Write a summary..." rows={4} {...field} />
+                            <Textarea
+                              placeholder="Write a summary..."
+                              rows={4}
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -1277,7 +1498,11 @@ export default function HirePageForm({
                         <FormItem>
                           <FormLabel>SEO Social Feature Image</FormLabel>
                           <FormControl>
-                            <ImageUpload value={field.value || ""} onChange={field.onChange} className="w-full h-48" />
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                              className="w-full h-48"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -1290,14 +1515,24 @@ export default function HirePageForm({
 
             {/* Form Footer Action Buttons */}
             <div className="flex justify-end gap-3 border-t pt-6 mt-8">
-              <Button type="button" variant="outline" onClick={() => router.push("/dashboard/hire")} disabled={isSubmitting}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push("/dashboard/hire")}
+                disabled={isSubmitting}
+              >
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
-                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving...</>
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : initialData ? (
+                  "Update Hire Page Data"
                 ) : (
-                  initialData ? "Update Hire Page Data" : "Create Hire Page Data"
+                  "Create Hire Page Data"
                 )}
               </Button>
             </div>
@@ -1308,7 +1543,13 @@ export default function HirePageForm({
   );
 }
 
-const ValueKeyPoints = ({ control, valueIndex }: { control: any; valueIndex: number }) => {
+const ValueKeyPoints = ({
+  control,
+  valueIndex,
+}: {
+  control: any;
+  valueIndex: number;
+}) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: ` whyHireUs.details.${valueIndex}.title`,
@@ -1320,13 +1561,16 @@ const ValueKeyPoints = ({ control, valueIndex }: { control: any; valueIndex: num
     }
   }, [fields, append]);
 
-  return (
-    <></>
-  );
+  return <></>;
 };
 
-
-const PlanKeyPoints = ({ control, planIndex }: { control: any; planIndex: number }) => {
+const PlanKeyPoints = ({
+  control,
+  planIndex,
+}: {
+  control: any;
+  planIndex: number;
+}) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: `hireDevelopersAsYourNeeds.planDetails.${planIndex}.keyPoints`,
@@ -1341,38 +1585,48 @@ const PlanKeyPoints = ({ control, planIndex }: { control: any; planIndex: number
   return (
     <div className="space-y-2  mt-3">
       <div className="flex justify-between items-center">
-        <FormLabel className="text-xs font-semibold">Plan Benefits / Items</FormLabel>
-        <Button type="button" size="sm" variant="outline" onClick={() => append("")}>
+        <FormLabel className="text-xs font-semibold">
+          Plan Benefits / Items
+        </FormLabel>
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          onClick={() => append("")}
+        >
           <Plus className="h-3 w-3 mr-1" /> Add Point
         </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {fields.map((field, pointIdx) => (
           <Card key={field.id} className="p-4 relative border-dashed">
-             <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-
-                onClick={() => remove(pointIdx)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-              <div className="space-y-4 pt-4">
-                <FormField
-                  control={control}
-                  name={`hireDevelopersAsYourNeeds.planDetails.${planIndex}.keyPoints.${pointIdx}`}
-                  render={({ field: pointField }) => (
-                    <FormItem className="flex-grow">
-                      <FormLabel>keyPoints</FormLabel>
-                      <FormControl>
-                        <Input placeholder={`Point ${pointIdx + 1}`} {...pointField} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
+              onClick={() => remove(pointIdx)}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+            <div className="space-y-4 pt-4">
+              <FormField
+                control={control}
+                name={`hireDevelopersAsYourNeeds.planDetails.${planIndex}.keyPoints.${pointIdx}`}
+                render={({ field: pointField }) => (
+                  <FormItem className="flex-grow">
+                    <FormLabel>keyPoints</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={`Point ${pointIdx + 1}`}
+                        {...pointField}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </Card>
         ))}
       </div>
@@ -1380,7 +1634,13 @@ const PlanKeyPoints = ({ control, planIndex }: { control: any; planIndex: number
   );
 };
 
-const TechStackKeyPoints = ({ control, detailIndex }: { control: any; detailIndex: number }) => {
+const TechStackKeyPoints = ({
+  control,
+  detailIndex,
+}: {
+  control: any;
+  detailIndex: number;
+}) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: `techStack.details.${detailIndex}.keyPoints`,
@@ -1388,51 +1648,75 @@ const TechStackKeyPoints = ({ control, detailIndex }: { control: any; detailInde
 
   useEffect(() => {
     if (fields.length === 0) {
-      append('');
+      append("");
     }
   }, [fields, append]);
 
   return (
-    <Droppable droppableId={`techKeyPoint-${detailIndex}`} type={`techKeyPoint-${detailIndex}`}>
+    <Droppable
+      droppableId={`techKeyPoint-${detailIndex}`}
+      type={`techKeyPoint-${detailIndex}`}
+    >
       {(provided) => (
-        <div ref={provided.innerRef} {...provided.droppableProps} className="space-y-3  ">
-         
-            {fields.map((field, pointIdx) => ( 
-              <Draggable key={field.id} draggableId={field.id} index={pointIdx}>
-                {(provided) => (
-                  <div ref={provided.innerRef} {...provided.draggableProps} className="flex items-center gap-2 ">
-                    <div {...provided.dragHandleProps} className="cursor-move p-2 bg-gray-100 rounded">☰</div>
-                    <FormField
-                      control={control}
-                      name={`techStack.details.${detailIndex}.keyPoints.${pointIdx}`}
-                      render={({ field: pointField }) => (
-                        <FormItem className="flex-1">
-                          <FormControl>
-                            <Input className="w-full h-10" placeholder={`Tool ${pointIdx + 1}`} {...pointField} />
-                          </FormControl>
-                          <FormMessage className="text-red-600 text-sm mt-1" />
-                        </FormItem>
-                      )}
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      className="text-destructive hover:text- destructive/90 hover:bg-destructive/10"
-                        onClick={() => remove(pointIdx)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          className="space-y-3  "
+        >
+          {fields.map((field, pointIdx) => (
+            <Draggable key={field.id} draggableId={field.id} index={pointIdx}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  className="flex items-center gap-2 "
+                >
+                  <div
+                    {...provided.dragHandleProps}
+                    className="cursor-move p-2 bg-gray-100 rounded"
+                  >
+                    ☰
                   </div>
-                )}
-              </Draggable>
-            ))}
-            <div className="flex justify-between items-center">
-              <Button type="button" size="sm" variant="outline" onClick={() => append("")}>
-                <Plus className="h-3 w-3 mr-1" /> Add Tool
-              </Button>
-            </div>
-            {provided.placeholder}
+                  <FormField
+                    control={control}
+                    name={`techStack.details.${detailIndex}.keyPoints.${pointIdx}`}
+                    render={({ field: pointField }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Input
+                            className="w-full h-10"
+                            placeholder={`Tool ${pointIdx + 1}`}
+                            {...pointField}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-red-600 text-sm mt-1" />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="text-destructive hover:text- destructive/90 hover:bg-destructive/10"
+                    onClick={() => remove(pointIdx)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+            </Draggable>
+          ))}
+          <div className="flex justify-between items-center">
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              onClick={() => append("")}
+            >
+              <Plus className="h-3 w-3 mr-1" /> Add Tool
+            </Button>
+          </div>
+          {provided.placeholder}
         </div>
       )}
     </Droppable>

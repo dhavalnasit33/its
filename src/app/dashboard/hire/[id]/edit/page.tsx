@@ -34,7 +34,7 @@ export default function EditHirePage() {
           // Transform category and subCategory populated objects to ID strings
           const transformed: HirePageDataFormValues = {
             category: typeof item.category === "object" && item.category ? item.category._id : (item.category || ""),
-            subCategory: typeof item.subCategory === "object" && item.subCategory ? item.subCategory._id : (item.subCategory || ""),
+            name: item.name || "",
             title: item.title || "",
             slug: item.slug || "",
             description: item.description || "",

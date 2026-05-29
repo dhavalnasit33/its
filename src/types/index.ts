@@ -446,7 +446,7 @@ export type HireDevelopersAsYourNeedsFormValues = z.infer<
 /* Hire Page Main Schema */
 export const HirePageDataSchema = z.object({
   category: z.string().min(2, "Category required"),
-  subCategory: z.string().min(2, "Subcategory required"),
+  name: z.string().min(2, "Name required"),
   title: z.string().min(2, "Title required"),
   slug: z.string().min(2, "Slug required"),
   description: z.string().min(5, "Description required"),
@@ -540,7 +540,7 @@ export interface HireDevelopersAsYourNeeds {
 export interface HirePageData {
   _id?: string;
   category: string;
-  subCategory: string;
+  name: string;
   title: string;
   slug: string;
   description: string;

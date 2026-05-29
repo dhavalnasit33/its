@@ -60,14 +60,9 @@ export default function HirePageDataPage() {
   const [searchValue, setSearchValue] = useState("");
 
   // Filter state
-  const [filters, setFilters] = useState({ category: "", subCategory: "" });
+  const [filters, setFilters] = useState({ category: "" });
   const [filterOptions, setFilterOptions] = useState<CategoryOption[]>([]);
-  const [availableSubCategories, setAvailableSubCategories] = useState<
-    string[]
-  >([]);
   const [isCategoryPopoverOpen, setIsCategoryPopoverOpen] = useState(false);
-  const [isSubCategoryPopoverOpen, setIsSubCategoryPopoverOpen] =
-    useState(false);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
@@ -87,8 +82,6 @@ export default function HirePageDataPage() {
       });
       if (currentFilters.category)
         query.append("category", currentFilters.category);
-      if (currentFilters.subCategory)
-        query.append("subCategory", currentFilters.subCategory);
       if (search)
         query.append("search", search);
 
@@ -134,18 +127,6 @@ export default function HirePageDataPage() {
     }, 100);
     return () => clearTimeout(timer);
   }, [pagination.current, filters, searchValue]);
-
-  // Update available subcategories when the main category filter changes
-  useEffect(() => {
-    if (filters.category) {
-      const selected = filterOptions.find(
-        (opt) => opt.category === filters.category,
-      );
-      setAvailableSubCategories(selected ? selected.subCategories : []);
-    } else {
-      setAvailableSubCategories([]);
-    }
-  }, [filters.category, filterOptions]);
 
   // Reset selectedIds when filters, page, or search changes
   useEffect(() => {
@@ -246,7 +227,7 @@ export default function HirePageDataPage() {
               {/* Reset Button */}
               <button
                 onClick={() => {
-                  setFilters({ category: "", subCategory: "" });
+                  setFilters({ category: "" });
                   setIsCategoryPopoverOpen(false);
                   setPagination((prev) => ({ ...prev, current: 1 }));
                 }}
@@ -260,7 +241,7 @@ export default function HirePageDataPage() {
                 <button
                   key={opt.category}
                   onClick={() => {
-                    setFilters({ category: opt.category, subCategory: "" });
+                    setFilters({ category: opt.category });
                     setIsCategoryPopoverOpen(false);
                     setPagination((prev) => ({ ...prev, current: 1 }));
                   }}
@@ -270,54 +251,6 @@ export default function HirePageDataPage() {
                     <Check className="h-4 w-4" />
                   )}{" "}
                   {opt.category}
-                </button>
-              ))}
-            </PopoverContent>
-          </Popover>
-
-          {/* Subcategory Filter */}
-          <Popover
-            open={isSubCategoryPopoverOpen}
-            onOpenChange={setIsSubCategoryPopoverOpen}
-          >
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full sm:w-auto"
-                disabled={!filters.category}
-              >
-                <Filter className="mr-2 h-4 w-4" />
-                {filters.subCategory || "Filter by Subcategory"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-60 p-2 max-h-72 overflow-y-auto">
-              {/* Reset Button */}
-              <button
-                onClick={() => {
-                  setFilters((prev) => ({ ...prev, subCategory: "" }));
-                  setIsSubCategoryPopoverOpen(false);
-                  setPagination((prev) => ({ ...prev, current: 1 }));
-                }}
-                className={`w-full text-left px-2 py-1.5 rounded text-sm flex items-center gap-2 ${!filters.subCategory ? "bg-blue-500 text-white" : "hover:bg-gray-100"}`}
-              >
-                {!filters.subCategory && <Check className="h-4 w-4" />} All
-                Subcategories
-              </button>
-              {/* Subcategory Options */}
-              {availableSubCategories.map((subCat) => (
-                <button
-                  key={subCat}
-                  onClick={() => {
-                    setFilters((prev) => ({ ...prev, subCategory: subCat }));
-                    setIsSubCategoryPopoverOpen(false);
-                    setPagination((prev) => ({ ...prev, current: 1 }));
-                  }}
-                  className={`w-full text-left px-2 py-1.5 rounded text-sm flex items-center gap-2 ${filters.subCategory === subCat ? "bg-blue-500 text-white" : "hover:bg-gray-100"}`}
-                >
-                  {filters.subCategory === subCat && (
-                    <Check className="h-4 w-4" />
-                  )}{" "}
-                  {subCat}
                 </button>
               ))}
             </PopoverContent>
@@ -342,7 +275,7 @@ export default function HirePageDataPage() {
                 />
               </TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Sub Category</TableHead>
+              <TableHead>Name</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Slug</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -391,11 +324,7 @@ export default function HirePageDataPage() {
                       ? (item.category as any).category
                       : item.category}
                   </TableCell>
-                  <TableCell>
-                    {typeof item.subCategory === "object" && item.subCategory
-                      ? (item.subCategory as any).subcategory
-                      : item.subCategory}
-                  </TableCell>
+                  <TableCell>{item.name}</TableCell>
                   <TableCell>{item.title}</TableCell>
                   <TableCell >{item.slug}</TableCell>
                   <TableCell className="text-right">
