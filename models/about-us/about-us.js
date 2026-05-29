@@ -50,7 +50,7 @@ const WhoWeAreSchema = new mongoose.Schema({
         type: String,
         required: true,
         // default: null
-    }
+    },
 }, { _id: false });
 
 const GoalsSchema = new mongoose.Schema({

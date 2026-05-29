@@ -176,7 +176,7 @@ router.post('/', protect, async (req, res) => {
         if (!heroSection.title || !heroSection.description || !heroSection.image ) {
             return res.status(400).json({
                 success: false,
-                message: "heroSection title, description, image, and points are required"
+                message: "heroSection title, description, image are required"
             });
         }
 
@@ -188,6 +188,15 @@ router.post('/', protect, async (req, res) => {
         //     });
         // }
 
+        // // Validate each point
+        // for (let point of heroSection.points) {
+        //     if (!point.label || !point.image) {
+        //         return res.status(400).json({
+        //             success: false,
+        //             message: "Each point must have label and image"
+        //         });
+        //     }
+        // }
         // // Validate each point
         // for (let point of heroSection.points) {
         //     if (!point.label || !point.image) {

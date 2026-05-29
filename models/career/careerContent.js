@@ -13,7 +13,11 @@ const CareerAtItsSchema = new mongoose.Schema(
     {
         title: { type: String, required: true },
         image: { type: String, required: true },
-        points: { type: String, required: true },
+        points: { type: String, required: true ,  default: ""},
+        //   description: {
+        //     type: String,
+        //     required: true,
+        // },
     },
     { _id: false }
 );
@@ -58,12 +62,12 @@ const CareerContentSchema = new mongoose.Schema(
     {
         pagename: {
             type: String,
-            required: true,
+            // required: true,
             default: ""
         },
         slug: {
             type: String,
-            required: true,
+            // required: true,
             unique: true,
             trim: true,
             default: ""
