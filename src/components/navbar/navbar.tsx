@@ -39,23 +39,29 @@ export default function Navbar({ navStructure }: NavbarProps) {
 
   // --- All navigation data is now built dynamically from props ---
 
-  const servicesData = (navStructure.servicesNav || []).map((group) => ({
-    title: group.category,
-    icon: group.icon || "", // USE THE ICON DIRECTLY FROM THE API
-    services: group.links.map((link) => ({
-      href: `/${link.slug}`,
-      label: link.title,
-    })),
-  }));
+  const servicesData = (navStructure.servicesNav || []).map((group) => {
+    const icon = typeof group.icon === "string" ? group.icon.trim() : "";
+    return {
+      title: group.category,
+      icon: icon, // Safe string
+      services: group.links.map((link) => ({
+        href: `/${link.slug}`,
+        label: link.title,
+      })),
+    };
+  });
 
-  const hireData = (navStructure.hireNav || []).map((group) => ({
-    title: group.category,
-    icon: group.icon || "", // USE THE ICON DIRECTLY FROM THE API
-    services: group.links.map((link) => ({
-      href: `/hire/${link.slug}`,
-      label: link.title,
-    })),
-  }));
+  const hireData = (navStructure.hireNav || []).map((group) => {
+    const icon = typeof group.icon === "string" ? group.icon.trim() : "";
+    return {
+      title: group.category,
+      icon: icon, // Safe string
+      services: group.links.map((link) => ({
+        href: `/hire/${link.slug}`,
+        label: link.title,
+      })),
+    };
+  });
 
   // Make the 'About Us' and 'Career' links dynamic
   const aboutLink = (navStructure.mainNav || []).find(
@@ -185,12 +191,14 @@ export default function Navbar({ navStructure }: NavbarProps) {
                             className="px-8 border-r relative about_menu_mails border-[#757575] last:border-r-0 flex flex-col"
                           >
                             <h4 className="font-bold flex relative items-center gap-6 text-black mb-4 text-lg">
-                              <Image
-                                src={serviceCategory.icon}
-                                alt={serviceCategory.title}
-                                width={25}
-                                height={25}
-                              />
+                              {serviceCategory.icon ? (
+                                <Image
+                                  src={serviceCategory.icon}
+                                  alt={serviceCategory.title}
+                                  width={25}
+                                  height={25}
+                                />
+                              ) : null}
                               {serviceCategory.title}
                             </h4>
                             <ul className="space-y-2 relative w-full text-base pt-2 text-gray-500 flex-1">
@@ -472,14 +480,16 @@ export default function Navbar({ navStructure }: NavbarProps) {
                             <div className="flex relative w-full flex-wrap ">
                               <div className="mb-2.5 pr-5 relative ">
                                 <div className="flex flex-row text-left items-center ">
-                                  <figure className=" mr-3.75 p-3.75 bg-[#f8f8f8] justify-center flex shrink-0 w-16 h-16 rounded-full">
-                                    <Image
-                                      src={category.icon}
-                                      alt={category.title}
-                                      width={45}
-                                      height={45}
-                                    />
-                                  </figure>
+                                  {category.icon ? (
+                                    <figure className=" mr-3.75 p-3.75 bg-[#f8f8f8] justify-center flex shrink-0 w-16 h-16 rounded-full">
+                                      <Image
+                                        src={category.icon}
+                                        alt={category.title}
+                                        width={45}
+                                        height={45}
+                                      />
+                                    </figure>
+                                  ) : null}
                                   <div className="w-full">
                                     <h3 className="text-[20px] text-black font-semibold my-2.5 wrap-break-word">
                                       {category.title}
@@ -695,13 +705,15 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                       }
                                     >
                                       <div className="flex items-center gap-2">
-                                        <Image
-                                          src={category.icon}
-                                          alt={category.title}
-                                          width={18}
-                                          height={18}
-                                          className="text-[#D68029]"
-                                        />
+                                        {category.icon ? (
+                                          <Image
+                                            src={category.icon}
+                                            alt={category.title}
+                                            width={18}
+                                            height={18}
+                                            className="text-[#D68029]"
+                                          />
+                                        ) : null}
                                         <span className="font-medium">
                                           {category.title}
                                         </span>
@@ -794,13 +806,15 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                       }
                                     >
                                       <div className="flex items-center gap-2">
-                                        <Image
-                                          src={category.icon}
-                                          alt={category.title}
-                                          width={18}
-                                          height={18}
-                                          className="text-[#D68029]"
-                                        />
+                                        {category.icon ? (
+                                          <Image
+                                            src={category.icon}
+                                            alt={category.title}
+                                            width={18}
+                                            height={18}
+                                            className="text-[#D68029]"
+                                          />
+                                        ) : null}
                                         <span className="font-medium">
                                           {category.title}
                                         </span>

@@ -597,3 +597,120 @@ html {
   shape-outside: polygon(0% 0%, 0% 82.5%, 1.69492% 84.3293%, 3.38983% 86.1385%, 5.08475% 87.9078%, 6.77966% 89.6179%, 8.47458% 91.25%, 10.1695% 92.7862%, 11.8644% 94.2098%, 13.5593% 95.505%, 15.2542% 96.6578%, 16.9492% 97.6555%, 18.6441% 98.487%, 20.339% 99.1435%, 22.0339% 99.6176%, 23.7288% 99.9041%, 25.4237% 100%, 27.1186% 99.9041%, 28.8136% 99.6176%, 30.5085% 99.1435%, 32.2034% 98.487%, 33.8983% 97.6555%, 35.5932% 96.6578%, 37.2881% 95.505%, 38.9831% 94.2098%, 40.678% 92.7862%, 42.3729% 91.25%, 44.0678% 89.6179%, 45.7627% 87.9078%, 47.4576% 86.1385%, 49.1525% 84.3293%, 50.8475% 82.5%, 52.5424% 80.6708%, 54.2373% 78.8616%, 55.9322% 77.0922%, 57.6271% 75.3821%, 59.322% 73.75%, 61.017% 72.2138%, 62.7119% 70.7902%, 64.4068% 69.495%, 66.1017% 68.3422%, 67.7966% 67.3446%, 69.4915% 66.513%, 71.1864% 65.8565%, 72.8814% 65.3824%, 74.5763% 65.0959%, 76.2712% 65%, 77.9661% 65.0959%, 79.661% 65.3824%, 81.3559% 65.8565%, 83.0509% 66.513%, 84.7458% 67.3446%, 86.4407% 68.3422%, 88.1356% 69.495%, 89.8305% 70.7902%, 91.5254% 72.2138%, 93.2203% 73.75%, 94.9153% 75.3821%, 96.6102% 77.0922%, 98.3051% 78.8616%, 100% 80.6708%, 100% 0%);
   transform: rotate(180deg);
 }
+
+
+
+/*  for ck edier   */
+/* className="editor-content" calss apply where tiptab edier conetnt is come  */
+.editor-content ul {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+.editor-content ol {
+  list-style-type: decimal;
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+.editor-content li {
+  margin-bottom: 4px;
+}
+
+.editor-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.editor-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.editor-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.editor-content blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 16px;
+  margin: 16px 0;
+  color: #666;
+}
+
+.editor-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.editor-content table td,
+.editor-content table th {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.ck-content,
+.content-render {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.content-render h1 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.content-render h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.content-render h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.content-render ul {
+  list-style: disc;
+  padding-left: 24px;
+}
+
+.content-render ol {
+  list-style: decimal;
+  padding-left: 24px;
+}
+
+.content-render blockquote {
+  border-left: 4px solid #d1d5db;
+  padding-left: 16px;
+  margin: 16px 0;
+}
+
+.content-render table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.content-render td,
+.content-render th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.content-render img {
+  max-width: 100%;
+  height: auto;
+}
+
+.content-render a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.content-render pre {
+  background: #f3f4f6;
+  padding: 16px;
+  overflow-x: auto;
+}
