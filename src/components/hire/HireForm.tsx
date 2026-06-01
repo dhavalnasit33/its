@@ -377,11 +377,19 @@ export default function HireForm() {
                 />
 
                 <div className="flex justify-start my-4">
-                    <ReCAPTCHA
+                    {/* <ReCAPTCHA
                         ref={recaptchaRef}
                         sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                         onChange={(token) => setCaptchaToken(token)}
-                    />
+                    /> */}
+                      <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={
+                                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                                "YOUR_SITE_KEY"
+                            }
+                            onChange={(token) => setCaptchaToken(token || "")}
+                        />
                 </div>
 
                 <Button

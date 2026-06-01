@@ -499,7 +499,7 @@ export default function BlogDetailPageClient({
             <div className="mb-8">
               <h1
                 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
-                dangerouslySetInnerHTML={{ __html: blog.details.title }}
+                dangerouslySetInnerHTML={{ __html: blog?.details?.title || "" }}
               />
 
               <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -510,13 +510,23 @@ export default function BlogDetailPageClient({
                 </div>
                 <div className="flex items-center">
                   <span className="text-sm font-medium text-gray-600">
-                    Category: {blog.categories}
+                    {/* Category: {blog.categories} */}
+                    Category: {
+                      typeof blog.categories === "string"
+                        ? blog.categories
+                        : blog.categories?.category
+                    }
                   </span>
                 </div>
                 {blog.subCategories && (
                   <div className="flex items-center">
                     <span className="text-sm font-medium text-gray-600">
-                      Subcategory: {blog.subCategories}
+                      {/* Subcategory: {blog.subCategories} */}
+                      Subcategory: {
+                        typeof blog.subCategories === "string"
+                          ? blog.subCategories
+                          : blog.subCategories?.subcategory
+                      }
                     </span>
                   </div>
                 )}
@@ -535,7 +545,7 @@ export default function BlogDetailPageClient({
             {/* Blog Introduction */}
             <div
               className="prose max-w-none mb-12 text-gray-700 [&_a]:no-underline [&_a]:text-gray-600 [&_a:hover]:text-[#d68029] [&_a:hover]:underline leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: blog.details.description }}
+              dangerouslySetInnerHTML={{ __html: blog?.details?.description || "" }}
             />
 
             {/* Blog Content with Motion */}
@@ -620,7 +630,14 @@ export default function BlogDetailPageClient({
       </section>
 
       {/* Related Blogs Section */}
-      <RelatedBlogs subCategory={blog.subCategories} />
+      {/* <RelatedBlogs subCategory={blog.subCategories} /> */}
+      <RelatedBlogs
+        subCategory={
+          typeof blog.subCategories === "string"
+            ? blog.subCategories
+            : blog.subCategories?.subcategory
+        }
+      />
     </>
   );
 }

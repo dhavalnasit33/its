@@ -86,7 +86,7 @@ export default function TrainingPageClient() {
                             className="text-[#D68029] font-medium uppercase tracking-wide"
                         >
                             {/* Learn New Things Daily */}
-                            {trainingMainPageData?.heroSection.subTitle}
+                            {trainingMainPageData?.heroSection?.subTitle || ""}
                         </motion.p>
 
                         {/* H1 - from top faster */}
@@ -99,7 +99,7 @@ export default function TrainingPageClient() {
                             {/* Education Is A <br />
                             Path To <span className="text-[#D68029]">Success</span> <br />
                             In Life */}
-                            {
+                            {/* {
                                 trainingMainPageData?.heroSection.mainTitle ? (
 
                                     <div
@@ -113,7 +113,11 @@ export default function TrainingPageClient() {
                                         In Life
                                     </span>
                                 )
-                            }
+                            } */}
+                            <div
+                                className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
+                                dangerouslySetInnerHTML={{ __html: trainingMainPageData?.heroSection?.mainTitle || "" }}
+                            />
                         </motion.h1>
 
                         {/* Second p - from bottom */}
@@ -284,7 +288,7 @@ export default function TrainingPageClient() {
                             {/* Knowledge is power.
                             <br />
                             Information is liberating. */}
-                            {
+                            {/* {
                                 trainingMainPageData?.aboutusSection.mainTitle ? (
                                     <div
                                         className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
@@ -297,7 +301,11 @@ export default function TrainingPageClient() {
                                         Information is liberating.
                                     </span>
                                 )
-                            }
+                            } */}
+                            <div
+                                className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
+                                dangerouslySetInnerHTML={{ __html: trainingMainPageData?.aboutusSection?.mainTitle || "" }}
+                            />
                         </motion.h2>
 
                         {/* Description */}

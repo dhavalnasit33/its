@@ -649,7 +649,11 @@ export default function ContactPageForm() {
                                     <div className="my-4 flex max-[480px]:justify-center">
                                         <ReCAPTCHA
                                             ref={recaptchaRef}
-                                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                                            // sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                                             sitekey={
+                                            process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                                            "YOUR_SITE_KEY"
+                                        }
                                             onChange={(token) => setCaptchaToken(token || "")}
                                         />
                                     </div>

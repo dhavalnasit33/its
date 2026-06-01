@@ -336,14 +336,14 @@ export default function HirepageTechnologClient() {
                               delay: 0.2,
                             }}
                           >
-                            {pageData.successSpeacks.description && (
+                            {/* {pageData.successSpeacks.description && ( */}
                               <div
                                 className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
                                 dangerouslySetInnerHTML={{
-                                  __html: pageData.successSpeacks.description,
+                                  __html: pageData?.successSpeacks?.description || "",
                                 }}
                               />
-                            )}
+                            {/* )} */}
                           </motion.div>
                         </div>
                       </div>
@@ -687,7 +687,7 @@ export default function HirepageTechnologClient() {
       </section>
       {/* section3 : benifits  */}
       <section
-        className="relative z-10 mt-[-9%] bg-[url('/hire/Rectangle-4181.png')] 
+        className="relative z-10 mt-[-6%] bg-[url('/hire/Rectangle-4181.png')] 
          bg-center bg-size[100%_auto] 
          px-0 pt-37.5 pb-12.5 
          transition-[background,border,border-radius,box-shadow] duration-300 

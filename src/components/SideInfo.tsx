@@ -30,7 +30,7 @@ export default function SideBlurb() {
           href={item.link}
           style={{ top: `${index * 50}px` }}
           className="absolute 
-                    right-[-10px] hover:right-0
+                    right-[-2px] hover:right-0
                     flex gap-2 items-center
                     w-[40px]
                     hover:w-[auto] h-[40px]

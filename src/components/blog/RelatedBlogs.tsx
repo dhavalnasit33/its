@@ -27,6 +27,7 @@ export default function RelatedBlogs({
         const relatedRes = await apiService<{ success: boolean; data: Blog[] }>(
           `/blogs?category=${subCategory}&limit=3`,
         );
+        console.log("Related Blogs:", relatedBlogs);
         setRelatedBlogs(relatedRes.data);
       } catch (error) {
         console.error("❌ Error fetching related blogs:", error);
@@ -107,15 +108,23 @@ export default function RelatedBlogs({
             alt={relatedBlog.details.title}
             className="w-full h-60 object-fill"
           /> */}
-              <div className="p-6">
+              <div className="p-6 w-full">
                 <div className="flex flex-col md:flex-row justify-start items-start md:items-center gap-2 mb-4">
                   {relatedBlog.subCategories && (
                     <span className="text-xs font-medium text-[#d68029] bg-[#fff4e9] px-3 py-1.5 rounded-full">
-                      {relatedBlog.subCategories}
+                      {/* {relatedBlog.subCategories} */}
+                      { typeof relatedBlog.subCategories === "string"
+                          ? relatedBlog.subCategories
+                          : relatedBlog.subCategories?.subcategory
+                      }
                     </span>
                   )}
                   <span className="text-xs font-medium text-gray-600 bg-gray-100 px-3 py-1.5 rounded-full">
-                    {relatedBlog.categories}
+                    {/* {relatedBlog.categories} */}
+                    { typeof relatedBlog.categories === "string"
+                        ? relatedBlog.categories
+                        : relatedBlog.categories?.category
+                    }
                   </span>
                 </div>
                 <h2

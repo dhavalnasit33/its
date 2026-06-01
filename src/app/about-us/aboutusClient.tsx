@@ -98,7 +98,6 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             className="mb-5 text-3xl sm:text-4xl md:text-[46px] leading-snug font-semibold"
           >
             {/* <h1 className="text-3xl sm:text-4xl md:text-[46px] leading-snug font-semibold"> */}
-              {/* Inspire Techno Solution */}
               {aboutUsData.heroSection.title}
             {/* </h1> */}
           </motion.h1>
@@ -109,14 +108,10 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
             className="mb-6 w-full"
           >
-            <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8">
-              {/* When we say that Inspire Techno Solution is a leading custom
-                            application development, web development, mobile app development
-                            solution provider in India, there’s a reason behind it – Our work.
-                            Check out our portfolio where you will come across some of the
-                            mind-blowing projects we have been a part of. */}
-              {aboutUsData.heroSection.description}
-            </p>
+            <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8"
+              // {aboutUsData.heroSection.description}
+              dangerouslySetInnerHTML={{ __html: aboutUsData?.heroSection?.description  || "", }}
+            />
           </motion.div>
           {/* Button (bottom → top) */}
           <motion.div
@@ -402,26 +397,29 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   Who We Are
                 </h2>
               </motion.div>
-              <motion.ul
+              <motion.div
                 initial={{ opacity: 0, y: 160 }} // Start lower & hidden
                 whileInView={{ opacity: 1, y: 0 }} // Move up into place
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
                 className="rhombus_icon_list  text-[#6f6f6f]   text-[18px]/[30px] font-medium leading-7 sm:leading-8  "
+                dangerouslySetInnerHTML={{
+                      __html: aboutUsData?.whoWeAre?.description || "",
+                    }}
               >
-                {aboutUsData?.whoWeAre?.description?.map((desc, idx) => (
+                {/* {aboutUsData?.whoWeAre?.description?.map((desc, idx) => (
                   <li key={idx}>
-                    {/* <Image
+                    <Image
                                     src="/square-list-icon.svg"
                                     alt="Bullet point icon"
                                     width={16}
                                     height={16}
                                     className="mr-3 mt-6"
-                                /> */}
+                                />
                     <p>{desc}</p>
                   </li>
-                ))}
-              </motion.ul>
+                ))} */}
+              </motion.div>
             </div>
           </div>
         </div>
@@ -468,9 +466,10 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                     <h3 className="text-[20px] font-semibold text-black mb-2">
                       {aboutUsData?.goals?.missionTitle}
                     </h3>
-                    <p className="text-[#6f6f6f] text-base sm:text-lg">
-                      {aboutUsData?.goals?.missionDescription}
-                    </p>
+                    <p className="text-[#6f6f6f] text-base sm:text-lg"
+                      //  {aboutUsData?.goals?.missionDescription} 
+                      dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.missionDescription  || "" }}
+                    />
                   </div>
                 </div>
               </motion.div>

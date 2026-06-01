@@ -56,7 +56,9 @@ export default function AiServices({ title, heading, description, glowColor }: A
           }}>
           {heading}
         </h3>
-        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed group-hover:opacity-50 transition-opacity font-inter duration-500">{description}</p>
+        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed group-hover:opacity-50 transition-opacity font-inter duration-500"
+          dangerouslySetInnerHTML={{ __html: description || "", }}/>
+          {/* {description}</p> */}
         <span className="pt-4 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-emerald-300 underline underline-offset-4 decoration-slate-500 flex-1"
           style={{
             color: isHover ? textColor : "#e2e8f0",

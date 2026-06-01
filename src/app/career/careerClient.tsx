@@ -135,9 +135,10 @@ export default function CareerClient() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
               className="mb-6 w-full"
             >
-              <p className="text-black text-base sm:text-lg md:text-[18px]/[30px] tracking-wide font-medium ">
-                {careerData?.heroSection.description}
-              </p>
+              <p className="text-black text-base sm:text-lg md:text-[18px]/[30px] tracking-wide font-medium "
+                // {careerData?.heroSection.description}
+                dangerouslySetInnerHTML={{ __html: careerData?.heroSection?.description  || "" }}
+              />
             </motion.div>
             {/* Button (bottom → top) */}
             <motion.div
@@ -348,20 +349,23 @@ export default function CareerClient() {
                 {careerData?.careerAtIts?.title}
               </h2>
             </motion.div>
-            <motion.ul
+            <motion.div
               initial={{ opacity: 0, y: 160 }} // Start lower & hidden
               whileInView={{ opacity: 1, y: 0 }} // Move up into place
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
               className="rhombus_icon_list  text-[#6f6f6f]   text-[18px]/[30px] font-medium leading-7 sm:leading-8  "
+               dangerouslySetInnerHTML={{
+                      __html: careerData?.careerAtIts?.points || "",
+                    }}
             >
-              {careerData?.careerAtIts.points?.map((desc, idx) => (
+              {/* {careerData?.careerAtIts.points?.map((desc, idx) => (
                 <li key={idx} className="mb-[4%] relative   ">
 
                   <p>{desc}</p>
                 </li>
-              ))}
-            </motion.ul>
+              ))} */}
+            </motion.div>
           </div>
         </div>
       </section>
@@ -437,12 +441,16 @@ export default function CareerClient() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <h3 className="text-black text-[30px] break-all font-semibold my-1.25">
-                          {point.title}
-                        </h3>
-                        <p className="text-[#6f6f6f] text-[18px]/[32px] break-all font-normal">
-                          {point.description}
-                        </p>
+                        <h3 className="text-black text-[30px] break-all font-semibold my-1.25"
+                          //  {point.title} 
+                           dangerouslySetInnerHTML={{ __html: point?.title || "" }}/>
+                        {/* </h3> */}
+                        {/* <div className="text-[#6f6f6f] text-[18px]/[32px] break-all font-normal"
+                          // {point.description}
+                        /> */}
+                        <div className="text-[#6f6f6f] text-[18px]/[32px] break-all font-normal"
+                          dangerouslySetInnerHTML={{ __html: point?.description  || "", }}
+                        />
                       </div>
                     </div>
                   </div>

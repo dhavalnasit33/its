@@ -215,10 +215,23 @@ export interface CreativeWork {
   updatedAt: string;
 }
 
+interface BlogCategory {
+  _id: string;
+  category: string;
+}
+
+interface BlogSubCategory {
+  _id: string;
+  subcategory: string;
+}
+
 export interface Blog {
   slug: string;
-  subCategories: string;
-  categories: string;
+  // subCategories: string;
+  // categories: string;
+  categories: string | BlogCategory;
+
+  subCategories: string | BlogSubCategory;
   _id: string;
   category: string;
   subCategory?: string;

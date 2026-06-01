@@ -1433,9 +1433,9 @@ export default function HireDevelopersPageClient() {
 
 
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex  ">
-                    <div className="w-full flex flex-wrap p-2.5 content-start relative ">
+                    <div className="flex flex-col lg:flex-row content-start w-full gap-10 mx-auto relative ">
                         <div className="w-full max-w-[90%] lg:max-w-[60%] flex relative min-h-px">
-                            <div className="flex items-center content-center p-2.5 flex-wrap relative w-full ">
+                            <div className="flex items-center content-center  flex-wrap relative w-full ">
                                 <motion.div
                                     className="mb-2.5 w-full relative"
                                     initial={{ opacity: 0, y: -30 }}
@@ -1450,7 +1450,7 @@ export default function HireDevelopersPageClient() {
                                         <h1 className="font-semibold  text-3xl sm:text-4xl md:text-[42px] xl:text-[46px] leading-[130%] tracking-[1.2px] relative  text-black ">
                                             {hireMainPageData.mainTitle ? (
                                                 <div
-                                                    className="text-white rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                                    className="font-bold text-3xl sm:text-4xl md:text-[42px] xl:text-[46px] leading-[130%] tracking-[1.2px] relative  text-white font-bricolage"
                                                     dangerouslySetInnerHTML={{
                                                         __html: hireMainPageData.mainTitle,
                                                     }}
@@ -1475,9 +1475,9 @@ export default function HireDevelopersPageClient() {
                                         <div className="mt-6 text-gray-600 leading-relaxed">
                                             {hireMainPageData.description ? (
                                                 <div
-                                                    className="font-medium text-slate-300 rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                                    className="font-medium text-slate-300 rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer text-base  md:text-lg leading-8 tracking-wide"
                                                     dangerouslySetInnerHTML={{
-                                                        __html: hireMainPageData.description,
+                                                        __html: hireMainPageData?.description || "",
                                                     }}
                                                 />
                                             ) : (
@@ -1543,20 +1543,27 @@ export default function HireDevelopersPageClient() {
                                         viewport={{ once: true, amount: 0.3 }}
                                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                     >
-                                        <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                                        <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
                                             {/* Hire Dedicated Web and Mobile  App Development Team */}
-                                            {hireMainPageData.developmentTeamSection.heading ? (
+                                            {/* {hireMainPageData.developmentTeamSection.heading ? (
                                                 <div
                                                     className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                                     dangerouslySetInnerHTML={{
                                                         __html:
-                                                            hireMainPageData.developmentTeamSection.heading,
+                                                            hireMainPageData?.developmentTeamSection?.heading || "",
                                                     }}
                                                 />
                                             ) : (
-                                                hireMainPageData.developmentTeamSection.heading
-                                            )}
-                                        </h2>
+                                                hireMainPageData?.developmentTeamSection?.heading || ""
+                                            )} */}
+                                            <div
+                                                className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                                dangerouslySetInnerHTML={{
+                                                    __html:
+                                                        hireMainPageData?.developmentTeamSection?.heading || "",
+                                                }}
+                                            />
+                                        </div>
                                         <Motion />
                                     </motion.div>
                                 </div>
@@ -1582,18 +1589,24 @@ export default function HireDevelopersPageClient() {
                                                 <p>
                                                     You may avoid the stress of recruiting and managing these developers by hiring dedicated developers and teams from us, allowing you to focus on your core business in peace. Hiring a dedicated developer also allows you to scale up and down your resources cost-effectively.
                                                 </p> */}
-                                                {hireMainPageData.developmentTeamSection.description ? (
+                                                {/* {hireMainPageData.developmentTeamSection.description ? (
                                                     <div
                                                         className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                                         dangerouslySetInnerHTML={{
                                                             __html:
-                                                                hireMainPageData.developmentTeamSection
-                                                                    .description,
+                                                                hireMainPageData?.developmentTeamSection?.description || "",
                                                         }}
                                                     />
                                                 ) : (
-                                                    hireMainPageData.developmentTeamSection.description
-                                                )}
+                                                    hireMainPageData?.developmentTeamSection?.description || ""
+                                                )} */}
+                                                <div
+                                                    className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                                    dangerouslySetInnerHTML={{
+                                                        __html:
+                                                            hireMainPageData?.developmentTeamSection?.description || "",
+                                                    }}
+                                                />
                                             </div>
                                         </motion.div>
                                     </div>
@@ -1640,9 +1653,9 @@ export default function HireDevelopersPageClient() {
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                             >
-                                <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                                <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
                                     {/* Hire Dedicated Web and Mobile App Developers */}
-                                    {hireMainPageData.dedicatedDeveloperSection.maintitle ? (
+                                    {/* {hireMainPageData.dedicatedDeveloperSection.maintitle ? (
                                         <div
                                             className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                             dangerouslySetInnerHTML={{
@@ -1652,8 +1665,15 @@ export default function HireDevelopersPageClient() {
                                         />
                                     ) : (
                                         hireMainPageData.dedicatedDeveloperSection.maintitle
-                                    )}
-                                </h2>
+                                    )} */}
+                                    <div
+                                        className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                        dangerouslySetInnerHTML={{
+                                            __html:
+                                                hireMainPageData?.dedicatedDeveloperSection?.maintitle || "",
+                                        }}
+                                    />
+                                </div>
                                 <Motion />
                             </motion.div>
                         </div>
@@ -1678,9 +1698,9 @@ export default function HireDevelopersPageClient() {
                                         viewport={{ once: true, amount: 0.3 }}
                                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                     >
-                                        <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                                        <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
                                             {/* Why Hire Developers For Your Project? */}
-                                            {hireMainPageData.whyHireDeveloperforYourProject
+                                            {/* {hireMainPageData.whyHireDeveloperforYourProject
                                                 .mainTitle ? (
                                                 <div
                                                     className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
@@ -1693,8 +1713,15 @@ export default function HireDevelopersPageClient() {
                                             ) : (
                                                 hireMainPageData.whyHireDeveloperforYourProject
                                                     .mainTitle
-                                            )}
-                                        </h2>
+                                            )} */}
+                                            <div
+                                                className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                                dangerouslySetInnerHTML={{
+                                                    __html:
+                                                        hireMainPageData?.whyHireDeveloperforYourProject?.mainTitle || "",
+                                                }}
+                                            />
+                                        </div>
                                         <Motion />
                                     </motion.div>
                                 </div>
@@ -1743,9 +1770,9 @@ export default function HireDevelopersPageClient() {
                                     viewport={{ once: true, amount: 0.3 }}
                                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                 >
-                                    <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]">
+                                    <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]">
                                         {/* Why choose ITS for dedicated resources? */}
-                                        {hireMainPageData.whyChooseItsForDedicatedResources
+                                        {/* {hireMainPageData.whyChooseItsForDedicatedResources
                                             .mainTitle ? (
                                             <div
                                                 className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
@@ -1758,8 +1785,15 @@ export default function HireDevelopersPageClient() {
                                         ) : (
                                             hireMainPageData.whyChooseItsForDedicatedResources
                                                 .mainTitle
-                                        )}
-                                    </h2>
+                                        )} */}
+                                        <div
+                                            className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                            dangerouslySetInnerHTML={{
+                                                __html:
+                                                    hireMainPageData?.whyChooseItsForDedicatedResources?.mainTitle || "",
+                                            }}
+                                        />
+                                    </div>
                                     <Motion />
                                 </motion.div>
                             </div>
@@ -1791,9 +1825,13 @@ export default function HireDevelopersPageClient() {
                                                     </h3>
                                                 </div>
                                                 <div className="p-5 grow">
-                                                    <p className="text-gray-600 text-base leading-relaxed">
-                                                        {item.description}
-                                                    </p>
+                                                    <p className="text-gray-600 text-base leading-relaxed"
+                                                    dangerouslySetInnerHTML={{
+                                                __html:
+                                                    item?.description || "",
+                                            }} />
+                                                        {/* {item.description}
+                                                    </p> */}
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -1953,8 +1991,8 @@ export default function HireDevelopersPageClient() {
                                 },
                             }}
                         >
-                            <h3 className="text-xl font-semibold text-[#12203d]  ">
-                                {hireMainPageData.hireDedicatedResourcesAndTalents[0]
+                            <div className="text-xl font-semibold text-[#12203d]  ">
+                                {/* {hireMainPageData.hireDedicatedResourcesAndTalents[0]
                                     .subTitle ? (
                                     <div
                                         className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
@@ -1966,11 +2004,18 @@ export default function HireDevelopersPageClient() {
                                     />
                                 ) : (
                                     hireMainPageData.hireDedicatedResourcesAndTalents[0].subTitle
-                                )}
-                            </h3>
-                            <h2 className="text-3xl md:text-4xl font-bold text-[#12203d]  my-4">
+                                )} */}
+                                <div
+                                    className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                    dangerouslySetInnerHTML={{
+                                        __html:
+                                            hireMainPageData?.hireDedicatedResourcesAndTalents[0]?.subTitle || "",
+                                    }}
+                                />
+                            </div>
+                            <div className="text-3xl md:text-4xl font-bold text-[#12203d]  my-4">
 
-                                {hireMainPageData.hireDedicatedResourcesAndTalents[0]
+                                {/* {hireMainPageData.hireDedicatedResourcesAndTalents[0]
                                     .mainTitle ? (
                                     <div
                                         className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
@@ -1982,8 +2027,15 @@ export default function HireDevelopersPageClient() {
                                     />
                                 ) : (
                                     hireMainPageData.hireDedicatedResourcesAndTalents[0].mainTitle
-                                )}
-                            </h2>
+                                )} */}
+                                <h2
+                                        className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                        dangerouslySetInnerHTML={{
+                                            __html:
+                                                hireMainPageData?.hireDedicatedResourcesAndTalents[0]?.mainTitle || "",
+                                        }}
+                                    />
+                            </div>
                             <p className="text-white/90 flex flex-row text-sm md:text-base mb-8">
                                 {hireMainPageData.hireDedicatedResourcesAndTalents[0].keyPoints
                                     .length > 0 &&
@@ -2028,8 +2080,8 @@ export default function HireDevelopersPageClient() {
                                 },
                             }}
                         >
-                            <h3 className="text-xl font-semibold text-[#d68029] ">
-                                {hireMainPageData.hireDedicatedResourcesAndTalents[1]
+                            {/* <div className="text-xl font-semibold text-[#d68029] "> */}
+                                {/* {hireMainPageData.hireDedicatedResourcesAndTalents[1]
                                     .subTitle ? (
                                     <div
                                         className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
@@ -2041,13 +2093,20 @@ export default function HireDevelopersPageClient() {
                                     />
                                 ) : (
                                     hireMainPageData.hireDedicatedResourcesAndTalents[1].subTitle
-                                )}
-                            </h3>
-                            <h2 className="text-3xl md:text-4xl font-bold text-white my-4">
+                                )} */}
+                                <h3
+                                    className=" text-xl font-semibold text-[#d68029] rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                    dangerouslySetInnerHTML={{
+                                        __html:
+                                            hireMainPageData?.hireDedicatedResourcesAndTalents[1]?.subTitle || "",
+                                    }}
+                                />
+                            {/* </div> */}
+                            {/* <h2 className="text-3xl md:text-4xl font-bold text-white my-4">
                                 {hireMainPageData.hireDedicatedResourcesAndTalents[1]
                                     .mainTitle ? (
                                     <div
-                                        className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                        className="rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                         dangerouslySetInnerHTML={{
                                             __html:
                                                 hireMainPageData.hireDedicatedResourcesAndTalents[1]
@@ -2057,7 +2116,14 @@ export default function HireDevelopersPageClient() {
                                 ) : (
                                     hireMainPageData.hireDedicatedResourcesAndTalents[1].mainTitle
                                 )}
-                            </h2>
+                            </h2> */}
+                            <h2
+                                className="  text-3xl md:text-4xl font-bold text-white my-4 rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                dangerouslySetInnerHTML={{
+                                    __html:
+                                        hireMainPageData?.hireDedicatedResourcesAndTalents[1]?.mainTitle || "",
+                                }}
+                            />
                             <p className="text-white/90 flex flex-row  text-sm md:text-base mb-8">
                                 {hireMainPageData.hireDedicatedResourcesAndTalents[1].keyPoints
                                     .length > 0 &&

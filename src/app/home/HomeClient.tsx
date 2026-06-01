@@ -223,7 +223,7 @@ export default function HomeClient() {
 						<div className="mb-5 md:mb-7 ">
 							<div
 								className="rose text-[clamp(26px,5vw,64px)] text-white  font-normal tracking-[-0.03em] leading-[1.08] opacity-[0.92]  "
-								dangerouslySetInnerHTML={{ __html: homePageData.heroSecton.title }}
+								dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.title || ""}}
 							/>
 							<AutoTextSlider data={homePageData.heroSecton.technologySection} />
 						</div>
@@ -455,16 +455,16 @@ export default function HomeClient() {
 							</svg>
 							{homePageData.aboutOurCompany.subtitle}
 						</p>
-						<h2 className="text-3xl md:text-4xl font-bold mb-4 leading-snug">
-							<div
-								className="rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
-								dangerouslySetInnerHTML={{ __html: homePageData.aboutOurCompany.mainTitle }}
+						{/* <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-snug"> */}
+							<h2
+								className="text-3xl md:text-4xl font-bold mb-4 leading-snug rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+								dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.mainTitle || "" }}
 							/>
-						</h2>
-						<p className="text-gray-600 mb-6">
+						{/* </h2> */}
+						<p className="text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.description || "" }}/>
 
-							{homePageData.aboutOurCompany.description}
-						</p>
+							{/* {homePageData.aboutOurCompany.description}
+						</p> */}
 
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
 							{
@@ -529,15 +529,17 @@ export default function HomeClient() {
 						<h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
 							<div
 								className=" rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
-								dangerouslySetInnerHTML={{ __html: homePageData.overseasWebAgencies.mainTitle }}
+								dangerouslySetInnerHTML={{ __html: homePageData?.overseasWebAgencies?.mainTitle || "" }}
 							/>
 						</h2>
 
 						<Motion />
 
-						<p className="text-black font-bold max-w-xl text-sm sm:text-base md:text-lg leading-relaxed mt-4">
-							{homePageData.overseasWebAgencies.desctiption}
-						</p>
+						<p className="text-black font-bold max-w-xl text-sm sm:text-base md:text-lg leading-relaxed mt-4"
+							dangerouslySetInnerHTML={{ __html: homePageData?.overseasWebAgencies?.desctiption || "" }}
+						/>
+							{/* {homePageData.overseasWebAgencies.desctiption}
+						</p> */}
 					</div>
 					<div className="flex flex-col lg:flex-row items-center lg:items-center justify-center-safe w-full  gap-10">
 						<div className="w-full lg:w-2/4">

@@ -186,7 +186,15 @@ export default function TrainingContactForm() {
                 )} />
 
                 <Box className="flex justify-center md:justify-start my-4">
-                    <ReCAPTCHA ref={recaptchaRef} sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} onChange={(token) => setCaptchaToken(token)} />
+                    {/* <ReCAPTCHA ref={recaptchaRef} sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} onChange={(token) => setCaptchaToken(token)} /> */}
+                     <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey={
+                            process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                            "YOUR_SITE_KEY"
+                        }
+                        onChange={(token) => setCaptchaToken(token || "")}
+                    />
                 </Box>
 
                 <Box className="text-center md:text-left">
