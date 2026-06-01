@@ -20,10 +20,9 @@ router.get("/", protect, async (req, res) => {
     // const page = parseInt(req.query.page) || 1;
     // const limit = parseInt(req.query.limit) || 10;
     // const search = req.query.search || "";
-    // const skip = (page - 1) * limit;
     const { page = 1, limit = 10, value = "" } = req.query;
 
-    const skip = (Number(page) - 1) * Number(limit);
+    const skip = (page - 1) * limit;
 
     const filter = value
       ? {
@@ -36,15 +35,21 @@ router.get("/", protect, async (req, res) => {
       : {};
 
     const [pages, total] = await Promise.all([
-      Page.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
-      Page.countDocuments(filter),
+      // Page.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      // Page.countDocuments(filter),
+      Page.find(filter)
+              .sort({ createdAt: -1 })
+              .skip(skip)
+              .limit(Number(limit))
+              .lean(),
+            Page.countDocuments(filter),
     ]);
 
     return res.status(200).json({
       success: true,
       data: pages,
       pagination: {
-        current: page,
+        current: Number(page),
         pages: Math.ceil(total / limit),
         total,
       },
