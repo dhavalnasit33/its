@@ -102,7 +102,7 @@ export default function HomeChooseItsForm({ initialData, onSubmit, onCancel }: H
                   value={field.value}
                   onChange={field.onChange}
                   disabled={isSubmitting}
-                  className="space-y-3 gap-2"
+                  className="space-y-3 gap-2 w-70 h-48"
                 />
               </FormControl>
               <FormMessage className="text-red-600 text-sm mt-1" />
@@ -111,7 +111,7 @@ export default function HomeChooseItsForm({ initialData, onSubmit, onCancel }: H
         />
 
 
-        <div className="flex justify-end space-x-3 pt-4">
+        <div className="flex justify-end gap-3 border-t pt-6 mt-8">
           {onCancel && (
             <Button
               type="button"

@@ -80,7 +80,11 @@ export default function PagesListPage() {
         }
     };
 
-    useEffect(() => { fetchItems(1); setSelectedIds([]); }, [searchQuery,  pagination.current]);
+    // useEffect(() => { fetchItems(1); setSelectedIds([]); }, [searchQuery,  pagination.current]);
+    useEffect(() => {
+        fetchItems(pagination.current, searchQuery);
+        setSelectedIds([]);
+    }, [pagination.current, searchQuery]);
 
     const handleCheckboxChange = (id: string) =>
         setSelectedIds((prev) => prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]);

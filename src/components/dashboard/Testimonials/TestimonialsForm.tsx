@@ -120,7 +120,7 @@ export default function TestimonialForm({ initialData, onSubmit, onCancel }: Tes
 
 
         {/* Submit */}
-        <div className="flex justify-end space-x-3 pt-4">
+        <div className="flex justify-end gap-3 border-t pt-6 mt-8">
           {onCancel && (
             <Button
               type="button"
@@ -136,7 +136,7 @@ export default function TestimonialForm({ initialData, onSubmit, onCancel }: Tes
             disabled={isSubmitting}
 
           >
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? "Saving..." : "Save Testomonial"}
           </Button>
         </div>
 

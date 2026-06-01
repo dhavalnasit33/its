@@ -118,7 +118,7 @@ export default function ExpertiesIndustryForm({ initialData, onSubmit, onCancel 
           )}
         />
 
-        <div className="flex justify-end gap-3 pt-4">
+        <div className="flex justify-end gap-3 border-t pt-6 mt-8">
           {onCancel && (
             <Button
               type="button"

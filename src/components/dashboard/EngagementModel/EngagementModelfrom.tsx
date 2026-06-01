@@ -223,7 +223,7 @@ export default function EngagementModelForm({
         />
 
         {/* Submit Button */}
-        <div className="flex justify-end gap-3 pt-4">
+        <div className="flex justify-end gap-3 border-t pt-6 mt-8">
           {onCancel && (
             <Button
               type="button"
@@ -239,7 +239,7 @@ export default function EngagementModelForm({
             disabled={isSubmitting}
           // className="px-4 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
           >
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? "Saving..." : "Save Model"}
           </Button>
         </div>
 

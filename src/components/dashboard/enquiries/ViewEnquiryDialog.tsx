@@ -332,7 +332,7 @@ export default function ViewEnquiryDialog({
                   variant="outline"
                   size="sm"
                   onClick={() => window.open(getFileDownloadUrl(selectedEnquiry.fileUrl || ""))}
-                  className="inline-flex items-center justify-center h-9 px-4 rounded-md text-xs font-semibold text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm"
+                  // className="inline-flex items-center justify-center h-9 px-4 rounded-md text-xs font-semibold text-indigo-700 border border-indigo-200 hover:bg-indigo-50 shadow-sm"
                 >
                   <Eye className="h-3.5 w-3.5 mr-1.5" />
                   View File
@@ -340,7 +340,7 @@ export default function ViewEnquiryDialog({
                 <Button
                   type="button"
                   onClick={() => handleDownloadFile(selectedEnquiry.fileUrl || "")}
-                  className="inline-flex items-center justify-center h-9 px-4 rounded-md text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow transition-colors"
+                  // className="inline-flex items-center justify-center h-9 px-4 rounded-md text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow transition-colors"
                 >
                   <Download className="h-3.5 w-3.5 mr-1.5" />
                   Download File
@@ -391,7 +391,6 @@ export default function ViewEnquiryDialog({
             type="button"
             onClick={handleSaveDetails}
             disabled={isSaving}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white shadow"
           >
             {isSaving ? "Saving Updates..." : "Save Response Details"}
           </Button>

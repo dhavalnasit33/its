@@ -392,7 +392,7 @@ export default function EnquiriesPage() {
                       onChange={toggleSelectAll}
                     />
                   </TableHead>
-                  <TableHead className="w-32">Type</TableHead>
+                  <TableHead className="w-38">Type</TableHead>
                   <TableHead>Sender Information</TableHead>
                   <TableHead>Phone</TableHead>
                   <TableHead>Subject / Request Topic</TableHead>
@@ -475,7 +475,7 @@ export default function EnquiriesPage() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-40 bg-white border shadow-md">
                             <DropdownMenuItem onClick={() => openDetails(item)} className="cursor-pointer">
-                              <Eye className="mr-2 h-4 w-4 text-blue-600" /> View details
+                              <Eye className="mr-2 h-4 w-4" /> View details
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => {
