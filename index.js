@@ -50,7 +50,7 @@ const deleteImageRoute = require("./routes/deleteImage.routes");
 const categoryRoute = require("./routes/category/category.routes");
 const subcategoryRoute = require("./routes/subcategory/subcategory.routes");
 const pageRoute = require("./routes/page/page.routes");
-
+const ReadOurReviewRouter = require("./routes/readOurReview.routes");
 // Split category and subcategory routers
 const serviceCategoryRoute = require("./routes/category/serviceCategory.routes");
 const blogCategoryRoute = require("./routes/category/blogCategory.routes");
@@ -92,6 +92,7 @@ app.use((req, res, next) => {
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,
+
   // Skip rate limiting for admin requests (assuming admins send a Bearer token)
   skip: (req, res) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
@@ -118,8 +119,10 @@ app.use("/api/delete-image", deleteImageRoute);
 
 // category
 app.use("/api/category", categoryRoute);
+
 // sub category
 app.use("/api/subcategory", subcategoryRoute);
+
 // page route
 app.use("/api/page", pageRoute);
 
@@ -180,6 +183,9 @@ app.use("/api/training-main-page", TranningMainPageRouter);
 //  seo manager api
 app.use("/api/seo-manager", seoManagerRouter);
 app.use("/api/yoast-seo", yoastSEORouter);
+
+// read our review
+app.use("/api/read-our-review", ReadOurReviewRouter);
 
 // navbar
 app.use("/api/navbar-group-tab-image-manage", NavbarGroupTabImageManageRoutes);

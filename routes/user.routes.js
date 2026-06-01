@@ -459,7 +459,7 @@ router.post('/forgot-password', async (req, res) => {
         await user.save();
 
         // Construct password reset link (pointing to frontend application)
-        const frontendUrl = process.env.FRONTEND_URL ||  'http://localhost:3001'; //process.env.Loc_url ||
+        const frontendUrl = process.env.FRONTEND_ADMIN_URL ||  'http://localhost:3001'; //process.env.Loc_url ||
         const resetUrl = `${frontendUrl}/reset-password/${resetToken}`;
 
         // Premium HTML email template (White / Light Slate Base Theme)
