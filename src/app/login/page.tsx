@@ -67,7 +67,10 @@ export default function LoginPage() {
     try {
       const res = await apiService<{ success: boolean; message: string }>('/auth-user/forgot-password', {
         method: 'POST',
-        body: data as any,
+        body: JSON.stringify(data),
+         headers: {
+          'Content-Type': 'application/json',
+        },
       });
       if (res.success) {
         setForgotSuccess(true);

@@ -154,6 +154,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [fetchCurrentUser]);
 
+  // Dynamic Favicon Manager
+  useEffect(() => {
+    const loadFavicon = async () => {
+      try {
+        const res = await apiService<{ success: boolean; favicon?: string }>('/website-settings/favicon', { method: 'GET' });
+        if (res.success && res.favicon) {
+          const faviconUrl = res.favicon;
+          let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+          if (!link) {
+            link = document.createElement("link");
+            link.rel = "shortcut icon";
+            document.getElementsByTagName("head")[0].appendChild(link);
+          }
+          link.href = faviconUrl;
+        }
+      } catch (err) {
+        console.error('Failed to load favicon from website settings:', err);
+      }
+    };
+
+    loadFavicon();
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{

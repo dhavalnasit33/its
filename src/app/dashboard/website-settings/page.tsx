@@ -103,6 +103,19 @@ export default function WebsiteSettingsPage() {
             ? "Website settings updated successfully."
             : "Website settings created successfully.",
         });
+
+        // Update browser tab favicon dynamically in real-time
+        if (res.data && res.data.favicon) {
+          const faviconUrl = res.data.favicon;
+          let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+          if (!link) {
+            link = document.createElement("link");
+            link.rel = "shortcut icon";
+            document.getElementsByTagName("head")[0].appendChild(link);
+          }
+          link.href = faviconUrl;
+        }
+
         if (!contentId && res.data) {
           setContentId(res.data._id);
         }

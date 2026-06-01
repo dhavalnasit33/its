@@ -53,7 +53,7 @@ function NavItemWithChildren({
 				type="button"
 				onClick={() => setOpen((prev) => !prev)}
 				className={cn(
-					"flex items-center rounded-md px-3 py-2.5 justify-between w-full transition-colors duration-150",
+					"flex items-center cursor-pointer rounded-md px-3 py-2.5 justify-between w-full transition-colors duration-150",
 					"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar-background",
 					isChildActive
 						? "text-sidebar-primary bg-sidebar-primary/10 font-medium"

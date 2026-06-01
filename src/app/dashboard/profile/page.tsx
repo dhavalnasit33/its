@@ -91,12 +91,15 @@ export default function ProfilePage() {
         user: any;
       }>('/auth-user/update', {
         method: 'PUT',
-        body: {
+        body: JSON.stringify({
           firstName,
           lastName,
           email,
           profile_picture: profilePicture,
-        } as any,
+        }),
+         headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
       if (res.success) {

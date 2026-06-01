@@ -35,14 +35,14 @@ export const navItemsList: NavItem[] = [
 
   
 
-  {
-    label: "Category & Subcategory",
-    icon: FolderTree,
-    children: [
-      { href: "/dashboard/category", label: "Category", icon: Tag },
-      { href: "/dashboard/subcategory", label: "Subcategory", icon: Tags },
-    ]
-  },
+  // {
+  //   label: "Category & Subcategory",
+  //   icon: FolderTree,
+  //   children: [
+  //     { href: "/dashboard/category", label: "Category", icon: Tag },
+  //     { href: "/dashboard/subcategory", label: "Subcategory", icon: Tags },
+  //   ]
+  // },
   {
     label: "Our Services",
     icon: Briefcase,

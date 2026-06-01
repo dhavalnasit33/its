@@ -58,7 +58,10 @@ export default function ResetPasswordPage() {
     try {
       const res = await apiService<{ success: boolean; message: string }>(`/auth-user/reset-password/${token}`, {
         method: 'POST',
-        body: { password: data.password } as any,
+        body: JSON.stringify({ password: data.password }),
+         headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
       if (res.success) {
