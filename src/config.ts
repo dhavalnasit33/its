@@ -8,3 +8,8 @@
 // export const API_BASE_URL = "https://api.onechatai.ai/api";
 // export const APP_URL = "https://onechatai.ai";
 
+
+//v3 category 
+// export const GOOGLE_CAPTACH_CLIENT_KEY =  '6LcBNQctAAAAAMgwS4s68smcZ_YTJ01ugebOoAqp';
+// v2 category 
+export const GOOGLE_CAPTACH_CLIENT_KEY =   '6LcF6qorAAAAAKFgoIuldo_LXsOpONeCbxcFfkxS';

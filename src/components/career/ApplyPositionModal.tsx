@@ -512,6 +512,7 @@ import {
     ApplyPositionFormValues,
     SingleResponse,
 } from "@/types";
+import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
 
 // ─────────────────────────────────────────────
 // ✅ File Security Constants (same as GeneralContactForm)
@@ -710,6 +711,9 @@ export default function ApplyPositionModal({
             }
         });
 
+        formData.append("type", "Career");
+        formData.append("source", "career_page");
+
         if (selectedFile) {
             formData.append("file", selectedFile);
         }
@@ -718,7 +722,7 @@ export default function ApplyPositionModal({
 
         try {
             const response = await apiService<SingleResponse<ApplyPositionFormValues>>(
-                "/applyPosition",
+                "/enquiries",
                 { method: "POST", body: formData }
             );
 
@@ -966,7 +970,7 @@ export default function ApplyPositionModal({
                     <div className="my-4 flex justify-start">
                         <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                            sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
                             onChange={(token) => setCaptchaToken(token)}
                         />
                     </div>

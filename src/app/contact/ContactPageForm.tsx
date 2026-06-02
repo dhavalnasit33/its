@@ -241,6 +241,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import apiService from "@/lib/apiService";
 import { useToast } from "@/components/ui/snackbar-provider";
+import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
 
 
 
@@ -393,12 +394,13 @@ export default function ContactPageForm() {
             formData.append("subject", selectedSubjects[0]);
             formData.append("budget", selectedBudget);
             formData.append("source", "contact_page");
+            formData.append("type", "Contact");
 
             formData.append("captchaToken", captchaToken);
             if (file) formData.append("file", file);
 
             const response = await apiService<{ success: boolean; message?: string }>(
-                "/contact",
+                "/enquiries",
                 { method: "POST", body: formData }
             );
 
@@ -650,10 +652,7 @@ export default function ContactPageForm() {
                                         <ReCAPTCHA
                                             ref={recaptchaRef}
                                             // sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                                             sitekey={
-                                            process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                                            "YOUR_SITE_KEY"
-                                        }
+                                             sitekey={GOOGLE_CAPTACH_CLIENT_KEY }
                                             onChange={(token) => setCaptchaToken(token || "")}
                                         />
                                     </div>

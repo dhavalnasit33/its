@@ -12,6 +12,7 @@ import { MdEmail, MdPhone } from "react-icons/md";
 import apiService from "@/lib/apiService";
 import { useToast } from "@/components/ui/snackbar-provider";
 import { BiCalendar } from "react-icons/bi";
+import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
 
 const contactItems = [
     {
@@ -238,12 +239,13 @@ export default function GeneralContactForm() {
             formData.append("subject", selectedSubjects.join(", "));
             formData.append("budget", selectedBudget);
             formData.append("source", "footer_form");
+            formData.append("type", "FooterForm");
             formData.append("captchaToken", captchaToken);
             if (file) formData.append("file", file);
 
             console.log("🚀 ~ onSubmit ~ formData:", formData)
 
-            const response = await apiService<{ success: boolean; message?: string }>("/contact", { method: "POST", body: formData });
+            const response = await apiService<{ success: boolean; message?: string }>("/enquiries", { method: "POST", body: formData });
             console.log("🚀 ~ onSubmit ~ response:", response)
 
             if (response.success) {
@@ -581,10 +583,11 @@ export default function GeneralContactForm() {
                     <div className="my-4 flex justify-center md:justify-start">
                         <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey={
-                                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                                "YOUR_SITE_KEY"
-                            }
+                            // sitekey={
+                            //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                            //     "YOUR_SITE_KEY"
+                            // }
+                            sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
                             onChange={(token) => setCaptchaToken(token || "")}
                         />
                     </div>

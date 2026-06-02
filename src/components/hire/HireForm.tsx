@@ -30,6 +30,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useToast } from "@/components/ui/snackbar-provider";
 import apiService from "@/lib/apiService";
 import { SingleResponse, HireForm as HireFormType } from "@/types";
+import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
 
 // --- Form Validation Schema (Updated phone validation) ---
 const hireSchema = z.object({
@@ -106,15 +107,16 @@ export default function HireForm() {
         }
         setIsSubmitting(true);
 
-        // The phone number from MuiTelInput already includes the country code.
         const payload = {
             ...data,
+            type: "Hire",
+            source: "hire_page",
             captchaToken: captchaToken,
         };
 
         try {
             const response = await apiService<SingleResponse<HireFormType>>(
-                "/hire-form",
+                "/enquiries",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -384,10 +386,11 @@ export default function HireForm() {
                     /> */}
                       <ReCAPTCHA
                             ref={recaptchaRef}
-                            sitekey={
-                                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                                "YOUR_SITE_KEY"
-                            }
+                            // sitekey={
+                            //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                            //     "YOUR_SITE_KEY"
+                            // }
+                            sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
                             onChange={(token) => setCaptchaToken(token || "")}
                         />
                 </div>
