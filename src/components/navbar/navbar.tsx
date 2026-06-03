@@ -38,6 +38,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
   const hireUsDropdownRef = useRef<HTMLDivElement>(null);
 
   // --- All navigation data is now built dynamically from props ---
+console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
 
   const servicesData = (navStructure.servicesNav || []).map((group) => {
     const icon = typeof group.icon === "string" ? group.icon.trim() : "";
@@ -65,10 +66,21 @@ export default function Navbar({ navStructure }: NavbarProps) {
 
   // Make the 'About Us' and 'Career' links dynamic
   const aboutLink = (navStructure.mainNav || []).find(
-    (link) => link.title === "About Us"
+    (link) => link.systemIdentifier === "about-us"
   );
   const careerLink = (navStructure.mainNav || []).find(
-    (link) => link.title === "Career"
+    (link) => link.systemIdentifier === "career"
+  );
+
+  //also take hire and ourservie  and portfolio page link daynbamic 
+  const hireLink = (navStructure.mainNav || []).find(
+    (link) => link.systemIdentifier === "hire"
+  );
+  const ourServiesLink = (navStructure.mainNav || []).find(
+    (link) => link.systemIdentifier === "services"
+  );
+  const portfolioLink = (navStructure.mainNav || []).find(
+    (link) => link.systemIdentifier === "portfolio"
   );
 
   const aboutData = [
@@ -96,10 +108,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
 
   const navItems = [
     baseNavItems.find((item) => item?.label === "Home"),
-    { href: "/our-services", label: "Our Services" },
-    baseNavItems.find((item) => item?.label === "Our Portfolio"),
+    { href: ourServiesLink ? `/${ourServiesLink.slug}` : "/our-services", label: "Our Services" },
+    { href: portfolioLink ? `/${portfolioLink.slug}` : "/our-portfolio", label: "Our Portfolio" },
     { href: aboutLink ? `/${aboutLink.slug}` : "/about-us", label: "About Us" },
-    { href: "/hire", label: "Hire Us" },
+    { href: hireLink ? `/${hireLink.slug}` : "/hire", label: "Hire Us" },
     // baseNavItems.find((item) => item?.label === "Training"),
     // baseNavItems.find((item) => item?.label === "Blog"),
     // baseNavItems.find((item) => item?.label === "Faqs"),

@@ -9,6 +9,9 @@ export interface SeoData {
   seo_title?: string;
   meta_description?: string;
   cover_image?: string;
+  systemIdentifier?: string | null;
+  linkedType?: string;
+  linkedPage?: string | null;
 }
 
 export async function getSeoData(slug: string): Promise<SeoData | null> {

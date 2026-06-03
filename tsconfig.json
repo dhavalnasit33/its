@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/our-services/page.tsx",
+    "src/app/our-services/page-old.tsx",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

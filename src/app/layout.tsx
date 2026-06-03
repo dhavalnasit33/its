@@ -29,6 +29,7 @@ const bricolage = Bricolage_Grotesque({
 type NavLink = {
   title: string;
   slug: string;
+  systemIdentifier: string;
 };
 
 type NavCategoryGroup = {
