@@ -12,7 +12,8 @@ const manageSeoSchema = new mongoose.Schema({
     linkedHirePage: { type: mongoose.Schema.Types.ObjectId, ref: 'HirePageData', default: null },
     linkedPage: { type: mongoose.Schema.Types.ObjectId, ref: 'pages', default: null },
     linkedType: { type: String, enum: ['service', 'hire', 'independent'], default: 'independent' },
-    isAutoManaged: { type: Boolean, default: false }
+    isAutoManaged: { type: Boolean, default: false },
+    systemIdentifier: { type: String, default: null }
 }, { timestamps: true });
 
 manageSeoSchema.index({ slug: 1 });
@@ -20,5 +21,6 @@ manageSeoSchema.index({ title: 1 });
 manageSeoSchema.index({ linkedType: 1 });
 manageSeoSchema.index({ linkedPage: 1 });
 manageSeoSchema.index({ isAutoManaged: 1 });
+manageSeoSchema.index({ systemIdentifier: 1 });
 
 module.exports = mongoose.model("ManageSeo", manageSeoSchema, "manage-seo");

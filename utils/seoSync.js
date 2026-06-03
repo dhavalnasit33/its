@@ -1,7 +1,10 @@
 const SeoManager = require('../models/seo/manage-seo');
 const Service = require('../models/ourServices/ourServies');
 const HirePageData = require('../models/hire/hirePageData');
-const Page = require('../models/page/page.model');
+const Page = require('../models/page/page.model'); 
+// const NodeCache = require("node-cache");
+// const navCache = new NodeCache({ stdTTL: 600 }); // 10 minutes cache
+
 
 /**
  * Sync SEO data when service/hire/independent pages are created or updated
@@ -52,6 +55,7 @@ const syncSeoData = async (subCategory, slug, title = null, type = 'service', li
             existingSeo.isAutoManaged = type !== 'independent';
 
             await existingSeo.save();
+            // navCache.del("navigation_structure");
             return existingSeo;
 
         } else {
@@ -69,6 +73,7 @@ const syncSeoData = async (subCategory, slug, title = null, type = 'service', li
                 isAutoManaged: type !== 'independent'
             });
             await newSeo.save();
+            // navCache.del("navigation_structure");
             return newSeo;
         }
     } catch (error) {

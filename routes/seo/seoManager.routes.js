@@ -11,6 +11,8 @@ const router = express.Router();
 const NavbarGroupTabImageManage = require("../../models/navbarGroupTabImage");
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const ServiceCategory = require("../../models/category/serviceCategory.model");
+const HireCategory = require("../../models/category/hireCategory.model");
 
 const NodeCache = require("node-cache");
 const navCache = new NodeCache({ stdTTL: 600 }); // 10 minutes cache
@@ -373,14 +375,22 @@ router.get("/navigation-structure", async (req, res) => {
 
     console.log("🔍 Fetching navigation from DATABASE");
 
+    // const allLinks = await SeoManager.find({})
+    //   .select("title slug linkedType linkedService linkedHirePage")
+    //   .populate({ path: "linkedService", select: "category" })
+    //   .populate({ path: "linkedHirePage", select: "category" })
+    //   .lean();
+
     const allLinks = await SeoManager.find({})
-      .select("title slug linkedType linkedService linkedHirePage")
+      .select("title slug linkedType linkedService linkedHirePage systemIdentifier")
       .populate({ path: "linkedService", select: "category" })
       .populate({ path: "linkedHirePage", select: "category" })
       .lean();
 
+
     const navbarImages = await NavbarGroupTabImageManage.find({}).lean();
 
+    // ─── Build icon lookup maps ───────────────────────────────────────────────
     const serviceIdToIconMap = new Map();
     const hireIdToIconMap = new Map();
 
@@ -391,18 +401,84 @@ router.get("/navigation-structure", async (req, res) => {
         hireIdToIconMap.set(item.linkedHirePage.toString(), item.image);
     });
 
-    const independentLinks = allLinks.filter(
-      (link) => link.linkedType === "independent",
-    );
+    // ─── Resolve category IDs → category name strings ─────────────────────────
+    // The `category` field on Service / HirePageData is Mixed — it can be
+    // stored as an ObjectId BSON object OR as a plain hex string like
+    // "6a02b7dc03d03384a7c9f508". We detect both using a 24-char hex regex
+    // so we never accidentally treat a real category name as an ID.
+    const OBJECT_ID_RE = /^[a-f\d]{24}$/i;
+    const looksLikeId = (val) => val != null && OBJECT_ID_RE.test(val.toString());
 
+    const serviceCategoryIds = new Set();
+    const hireCategoryIds = new Set();
+
+    allLinks.forEach((link) => {
+      if (link.linkedType === "service" && link.linkedService) {
+        const cat = link.linkedService.category;
+        if (looksLikeId(cat)) serviceCategoryIds.add(cat.toString());
+      }
+      if (link.linkedType === "hire" && link.linkedHirePage) {
+        const cat = link.linkedHirePage.category;
+        if (looksLikeId(cat)) hireCategoryIds.add(cat.toString());
+      }
+    });
+
+    // Fetch category documents only when there are IDs to resolve
+    const serviceCategoryMap = new Map();
+    const hireCategoryMap = new Map();
+
+    if (serviceCategoryIds.size > 0) {
+      const docs = await ServiceCategory.find({
+        _id: { $in: [...serviceCategoryIds] },
+      }).select("_id category").lean();
+      docs.forEach((d) => serviceCategoryMap.set(d._id.toString(), d.category));
+    }
+
+    if (hireCategoryIds.size > 0) {
+      const docs = await HireCategory.find({
+        _id: { $in: [...hireCategoryIds] },
+      }).select("_id category").lean();
+      docs.forEach((d) => hireCategoryMap.set(d._id.toString(), d.category));
+    }
+
+    // Helper: resolve a possibly-ObjectId category value to a readable name string
+    const resolveCategoryName = (cat, type) => {
+      if (!cat) return null;
+      const strVal = cat.toString();
+      if (looksLikeId(strVal)) {
+        // It's an ObjectId (BSON object or hex string) — look up the real name
+        const map = type === "service" ? serviceCategoryMap : hireCategoryMap;
+        return map.get(strVal) || null;
+      }
+      // Already a plain human-readable string name
+      return strVal;
+    };
+
+    // const independentLinks = allLinks.filter(
+    //   (link) => link.linkedType === "independent",
+    // );
+
+    // In groupByCategory / independentLinks section:
+const independentLinks = allLinks
+  .filter(link => link.linkedType === 'independent')
+  .map(link => ({
+    title: link.title,
+    slug: link.slug,
+    systemIdentifier: link.systemIdentifier,  // ← add this
+  }));
+
+    // ─── Group service / hire links by category name ───────────────────────────
     const groupByCategory = (links, type) => {
       const grouped = links
         .filter((link) => link.linkedType === type)
         .reduce((acc, link) => {
-          const pageData = link.linkedService || link.linkedHirePage;
-          if (!pageData || !pageData.category) return acc;
+          const pageData =
+            type === "service" ? link.linkedService : link.linkedHirePage;
+          if (!pageData) return acc;
 
-          const categoryName = pageData.category;
+          // Resolve category → always get a readable string
+          const categoryName = resolveCategoryName(pageData.category, type);
+          if (!categoryName) return acc;
 
           if (!acc[categoryName]) {
             acc[categoryName] = { icon: "", links: [] };
@@ -416,7 +492,6 @@ router.get("/navigation-structure", async (req, res) => {
           if (!acc[categoryName].icon) {
             const iconMap =
               type === "service" ? serviceIdToIconMap : hireIdToIconMap;
-
             if (pageData._id && iconMap.has(pageData._id.toString())) {
               acc[categoryName].icon = iconMap.get(pageData._id.toString());
             }
@@ -440,6 +515,8 @@ router.get("/navigation-structure", async (req, res) => {
       servicesNav: serviceNav,
       hireNav: hireNav,
     };
+
+    // console.log("navigationData :", navigationData)
 
     // 🔥 STEP 2: Save in cache
     navCache.set("navigation_structure", navigationData);

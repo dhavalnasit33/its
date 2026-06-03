@@ -15,6 +15,35 @@ const slugify = (text) =>
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
 
+// @desc    Get page by slug (Public)
+// @route   GET /api/page/public/slug/:slug
+// @access  Public
+router.get("/public/slug/:slug", async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const page = await Page.findOne({ slug });
+    if (!page) {
+      return res.status(404).json({ success: false, message: "Page not found" });
+    }
+    return res.status(200).json({
+      success: true,
+      data: {
+        _id: page._id,
+        title: page.page_title,
+        description: page.page_description,
+        slug: page.slug,
+        image: page.image,
+        seo: page.seo,
+        createdAt: page.createdAt,
+        updatedAt: page.updatedAt,
+      },
+    });
+  } catch (error) {
+    console.error("GET /page/public/slug/:slug error:", error);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 router.get("/", protect, async (req, res) => {
   try {
     // const page = parseInt(req.query.page) || 1;
