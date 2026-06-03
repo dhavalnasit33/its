@@ -27,6 +27,7 @@ import ParticlesBg from "@/components/home/Particles";
 import AutoTextSlider from "@/components/home/AutoTextSlider";
 import AiServices from "@/components/home/AiServices";
 import ParallaxShape from "@/components/home/ParallaxShape";
+import CurveDivider from "@/components/home/CurveDivider";
 
 const NextArrow = (props: any) => {
 	const { onClick } = props;
@@ -401,11 +402,10 @@ export default function HomeClient() {
 									// icon={item.image}
 								/>
 							</div>
-						))}
 				</motion.div>
 			</section> */}
-
 			<section className="w-full relative lg:pb-0 py-20 bg-white z-10 ">
+				<CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
 				<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-6 md:px-8 lg:px-10  grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<div className="relative w-full flex justify-center lg:justify-end items-center">
 						<Image
@@ -515,10 +515,9 @@ export default function HomeClient() {
 						</motion.div>
 
 					</div>
+					<CurveDivider type="bottom" fillColor="#ffffff" className="absolute bottom-0 left-0 w-full transform translate-y-[99%] z-10" />
 				</div>
 			</section>
-
-			<ParallaxShape type="bottom" />
 
 			<TechnologySection />
 

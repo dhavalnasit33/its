@@ -7,6 +7,7 @@ import Motion from "../motionbar";
 import { EngagementModel } from "@/types";
 import Link from "next/link";
 import apiService from "@/lib/apiService";
+import TechBackground from "./TechBackground";
 
 const themes = [
   {
@@ -68,17 +69,18 @@ export default function EngagementModels() {
 
   return (
     <section className="py-16 md:py-25 w-full relative overflow-hidden">
-      <video
+      {/* <video
         autoPlay
         loop
         muted
         src="/home/wave.mp4"
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
-      ></video>
-      <div className="absolute inset-0 bg-[#0a1a33]/90" />
+      ></video> */}
+      <TechBackground />
+      {/* <div className="absolute inset-0 bg-[#0a1a33]/90" /> */}
 
-      <div className="w-full max-w-7xl mx-auto relative flex flex-wrap p-2.5  z-10 ">
+      <div className="w-full max-w-7xl mx-auto relative flex flex-wrap p-2.5 z-10 ">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -184,11 +186,11 @@ export default function EngagementModels() {
 
 
                   <p className="text-sm text-white opacity-70 leading-relaxed mb-4"
-                     dangerouslySetInnerHTML={{
-                    __html: model?.modelDescription || "",
-                  }}
+                    dangerouslySetInnerHTML={{
+                      __html: model?.modelDescription || "",
+                    }}
                   />
-                    {/* {model.modelDescription}
+                  {/* {model.modelDescription}
                   </p> */}
 
 

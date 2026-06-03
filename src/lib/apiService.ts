@@ -10,6 +10,7 @@ const CACHED_ENDPOINTS: string[] = [
   "/engagement-model",
   "/expertise-industries",
   "/creative-work",
+  "/read-our-review",
 ];
 
 function shouldCache(endpoint: string): boolean {

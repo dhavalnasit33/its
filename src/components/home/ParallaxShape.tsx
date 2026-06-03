@@ -2,19 +2,17 @@
 
 export default function ParallaxShape({
   type = "top",
-  bg = "bg-white",  
+  bg = "bg-white",
   className = "",
 }) {
   return (
-    <section
-      className={`bg-[rgba(255,255,255,0.08)] relative z-10 ${className}`}
-    >
+    <section className={`relative z-10 ${className}`}>
       <span
         className={`
           ${type === "top" ? "clipped-top -mb-1" : "clipped-bottom -mt-1"}
           ${bg} h-[150px] w-full hidden lg:block 
           
-        `}// rounded-tl-[100px] rounded-tr-[100px]
+        `} // rounded-tl-[100px] rounded-tr-[100px]
       />
     </section>
   );
@@ -34,4 +32,3 @@ export default function ParallaxShape({
 //     </section>
 //   );
 // };
-

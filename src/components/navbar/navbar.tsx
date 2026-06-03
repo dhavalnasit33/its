@@ -17,10 +17,14 @@ interface NavbarProps {
 export default function Navbar({ navStructure }: NavbarProps) {
   // State for mobile menu toggles
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [activeMobileCategory, setActiveMobileCategory] = useState<number | null>(null);
+  const [activeMobileCategory, setActiveMobileCategory] = useState<
+    number | null
+  >(null);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileHireUsOpen, setMobileHireUsOpen] = useState(false);
-  const [activeMobileHireCategory, setActiveMobileHireCategory] = useState<number | null>(null);
+  const [activeMobileHireCategory, setActiveMobileHireCategory] = useState<
+    number | null
+  >(null);
 
   // State for desktop dropdowns
   const [menuOpen, setMenuOpen] = useState(false);
@@ -97,9 +101,45 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
     { href: "tel:+919327220484", label: "+91 93272 20484 (HR)" },
   ];
 
-  const hireBottomBar = [{ src: "/navbar/image-112-Traced.png", label: "On-Time Delivery", alt: "On-Time Delivery", }, { src: "/navbar/transparency.png", label: "100% Transparency", alt: "100% Transparency", }, { src: "/navbar/messaging.png", label: "One-to-one Communication", alt: "One-to-one Communication", }, { src: "/navbar/handshake-1.png", label: "Engagement Models", alt: "Engagement Models", },];
-  const awards = [{ src: "/navbar/appfutura.png", alt: "AppFutura" }, { src: "/navbar/businessofapps.png", alt: "Business of Apps" }, { src: "/navbar/clutch.png", alt: "Clutch" }, { src: "/navbar/softwareworld.png", alt: "Software World" }, { src: "/navbar/GoodFirms.png", alt: "GoodFirms" }, { src: "/navbar/Upwork.png", alt: "Upwork" },];
-  const stats = [{ icon: "/navbar/handshake.svg", value: "750+", label: "Completed Projects", }, { icon: "/navbar/medal.svg", value: "20+", label: "Professionals" }, { icon: "/navbar/star.svg", value: "12+", label: "Years of Experience" },];
+  const hireBottomBar = [
+    {
+      src: "/navbar/image-112-Traced.png",
+      label: "On-Time Delivery",
+      alt: "On-Time Delivery",
+    },
+    {
+      src: "/navbar/transparency.png",
+      label: "100% Transparency",
+      alt: "100% Transparency",
+    },
+    {
+      src: "/navbar/messaging.png",
+      label: "One-to-one Communication",
+      alt: "One-to-one Communication",
+    },
+    {
+      src: "/navbar/handshake-1.png",
+      label: "Engagement Models",
+      alt: "Engagement Models",
+    },
+  ];
+  const awards = [
+    { src: "/navbar/appfutura.png", alt: "AppFutura" },
+    { src: "/navbar/businessofapps.png", alt: "Business of Apps" },
+    { src: "/navbar/clutch.png", alt: "Clutch" },
+    { src: "/navbar/softwareworld.png", alt: "Software World" },
+    { src: "/navbar/GoodFirms.png", alt: "GoodFirms" },
+    { src: "/navbar/Upwork.png", alt: "Upwork" },
+  ];
+  const stats = [
+    {
+      icon: "/navbar/handshake.svg",
+      value: "750+",
+      label: "Completed Projects",
+    },
+    { icon: "/navbar/medal.svg", value: "20+", label: "Professionals" },
+    { icon: "/navbar/star.svg", value: "12+", label: "Years of Experience" },
+  ];
 
   const baseNavItems = (navStructure.mainNav || []).map((link) => {
     const href = link.slug === "home" ? "/" : `/${link.slug}`;
@@ -125,9 +165,27 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target as Node) && servicesRef.current && !servicesRef.current.contains(event.target as Node)) setServicesOpen(false);
-      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target as Node) && aboutRef.current && !aboutRef.current.contains(event.target as Node)) setAboutOpen(false);
-      if (hireUsDropdownRef.current && !hireUsDropdownRef.current.contains(event.target as Node) && hireUsRef.current && !hireUsRef.current.contains(event.target as Node)) setHireUsOpen(false);
+      if (
+        servicesDropdownRef.current &&
+        !servicesDropdownRef.current.contains(event.target as Node) &&
+        servicesRef.current &&
+        !servicesRef.current.contains(event.target as Node)
+      )
+        setServicesOpen(false);
+      if (
+        aboutDropdownRef.current &&
+        !aboutDropdownRef.current.contains(event.target as Node) &&
+        aboutRef.current &&
+        !aboutRef.current.contains(event.target as Node)
+      )
+        setAboutOpen(false);
+      if (
+        hireUsDropdownRef.current &&
+        !hireUsDropdownRef.current.contains(event.target as Node) &&
+        hireUsRef.current &&
+        !hireUsRef.current.contains(event.target as Node)
+      )
+        setHireUsOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -137,7 +195,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
 
   return (
     <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
-      <div className="w-full max-w-[90%] lg:max-w-[83.5%] mx-auto px-4 h-20 flex justify-between items-center">
+      <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto px-4 h-20 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
@@ -153,7 +211,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
           {navItems.map((item) => {
             if (item.label === "Our Services") {
               const allServiceHrefs = servicesData.flatMap((g) =>
-                g.services.map((s) => s.href)
+                g.services.map((s) => s.href),
               );
               const active =
                 pathname === "/our-services" ||
@@ -163,8 +221,9 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                 <li
                   key={item.href}
                   ref={servicesRef}
-                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
-                    } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${
+                    active ? "text-[#D68029]" : ""
+                  } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setServicesOpen(true);
                     setAboutOpen(false);
@@ -195,7 +254,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                       ref={servicesDropdownRef}
                       onMouseEnter={() => setServicesOpen(true)}
                       onMouseLeave={() => setServicesOpen(false)}
-                     >
+                    >
                       <div className="grid grid-cols-2 relative md:grid-cols-5 max-w-full mx-auto text-sm font-medium">
                         {servicesData.map((serviceCategory, index) => (
                           <div
@@ -229,7 +288,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                                       {service.label}
                                     </Link>
                                   </li>
-                                )
+                                ),
                               )}
                             </ul>
                           </div>
@@ -291,8 +350,9 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                 <li
                   key={item.href}
                   ref={aboutRef}
-                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
-                    } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${
+                    active ? "text-[#D68029]" : ""
+                  } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setAboutOpen(true);
                     setServicesOpen(false);
@@ -450,8 +510,9 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                 <li
                   key={item.href}
                   ref={hireUsRef}
-                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
-                    } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${
+                    active ? "text-[#D68029]" : ""
+                  } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setHireUsOpen(true);
                     setServicesOpen(false);
@@ -525,7 +586,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                                           {service.label}
                                         </Link>
                                       </li>
-                                    )
+                                    ),
                                   )}
                                 </ul>
                               </div>
@@ -599,8 +660,9 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
             return (
               <li
                 key={item.href}
-                className={`cursor-pointer ${isActive(item.href) ? "text-[#D68029]" : ""
-                  } hover:text-[#D68029]`}
+                className={`cursor-pointer ${
+                  isActive(item.href) ? "text-[#D68029]" : ""
+                } hover:text-[#D68029]`}
               >
                 <Link href={item.href} className="transition-colors block">
                   {item.label}
@@ -659,9 +721,9 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
               className="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 xl:hidden overflow-y-auto"
-             style={{
+              style={{
                 zIndex: 3000,
-             }}
+              }}
             >
               <div>
                 <div className="flex justify-end w-full items-center mb-3 mt-2">
@@ -712,7 +774,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                                         setActiveMobileCategory(
                                           activeMobileCategory === index
                                             ? null
-                                            : index
+                                            : index,
                                         )
                                       }
                                     >
@@ -763,7 +825,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                                                 {service.label}
                                               </Link>
                                             </li>
-                                          )
+                                          ),
                                         )}
                                       </motion.ul>
                                     )}
@@ -813,7 +875,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                                         setActiveMobileHireCategory(
                                           activeMobileHireCategory === index
                                             ? null
-                                            : index
+                                            : index,
                                         )
                                       }
                                     >
@@ -864,7 +926,7 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                                                 {service.label}
                                               </Link>
                                             </li>
-                                          )
+                                          ),
                                         )}
                                       </motion.ul>
                                     )}
@@ -930,10 +992,11 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                         <Link
                           href={item.href}
                           onClick={() => setMenuOpen(false)}
-                          className={`flex py-3 px-4 cursor-pointer border-b border-b-[#d68029] border-dashed font-medium ${isActive(item.href)
-                            ? "text-[#D68029]"
-                            : "text-gray-800 hover:text-[#D68029]"
-                            }`}
+                          className={`flex py-3 px-4 cursor-pointer border-b border-b-[#d68029] border-dashed font-medium ${
+                            isActive(item.href)
+                              ? "text-[#D68029]"
+                              : "text-gray-800 hover:text-[#D68029]"
+                          }`}
                         >
                           {item.label}
                         </Link>

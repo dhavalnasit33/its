@@ -1,7 +1,4 @@
-
 "use client";
-
-
 
 import { IoLogoBehance } from "react-icons/io5";
 import { FaR, FaSquareInstagram, FaW, FaAndroid } from "react-icons/fa6";
@@ -13,7 +10,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import TrainingContactForm from "./TrainingContactForm";
 import GeneralContactForm from "./GeneralContactForm";
-import { FaFacebookF, FaTwitter, FaYoutube, FaSkype, FaWordpress, FaPhp, FaReact, FaNodeJs } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaYoutube,
+  FaSkype,
+  FaWordpress,
+  FaPhp,
+  FaReact,
+  FaNodeJs,
+} from "react-icons/fa";
 import { MdEmail, MdPhone, MdWork } from "react-icons/md";
 import { BiHelpCircle } from "react-icons/bi";
 import { FaLaptopCode, FaMobileAlt, FaPaintBrush } from "react-icons/fa";
@@ -21,15 +27,14 @@ import { FaLaptopCode, FaMobileAlt, FaPaintBrush } from "react-icons/fa";
 // -------------------- Main Page --------------------
 export default function ContactFooterPage() {
   const pathname = usePathname();
-  const isTrainingPage = pathname === '/training';
+  const isTrainingPage = pathname === "/training";
 
   const isContactPage = pathname === "/contact";
 
   return (
     <footer id="contact-form-section" className=" relative pt-16 bg-white">
       {/* ---------------- Contact Form Floating Card ---------------- */}
-      <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 ">
-
+      <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 px-4">
         {/* <div className="  w-full mx-auto md:-mb-90 relative z-10">
           <div className="bg-white md:shadow-[0_0_12.2px_0_rgba(0,0,0,0.25)] rounded-2xl p-2 md:p-10">
             {isTrainingPage ? (
@@ -43,22 +48,21 @@ export default function ContactFooterPage() {
         {!isContactPage && (
           <div className="w-full mx-auto  relative z-10 ">
             <div className="bg-white ">
-
               {isTrainingPage ? (
                 <TrainingContactForm />
               ) : (
                 <GeneralContactForm />
               )}
-
             </div>
           </div>
         )}
-
       </div>
 
       {/* ---------------- Footer Content ---------------- */}
       {/* <div className="bg-[url('/footer-bg.png')] bg-cover bg-center md:pt-112.5 py-16 px-6"> */}
-      <div className={`bg-[url('/footer-bg.png')] bg-cover bg-center px-6 py-16`}>
+      <div
+        className={`bg-[url('/footer-bg.png')] bg-cover bg-center px-6 py-16`}
+      >
         <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]">
           {/* HR Inquiry + Sales Inquiry */}
           <div className=" w-full  mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-14 text-gray-800">
@@ -197,7 +201,6 @@ export default function ContactFooterPage() {
                 <li>
                   <Link
                     href="/faqs"
-                  
                     className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] transition-colors"
                   >
                     <BiHelpCircle size={20} />
@@ -454,15 +457,15 @@ export default function ContactFooterPage() {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Bottom Bar */}
       <div className="bg-[#0f1b2d] text-gray-300 text-sm py-4">
         <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]  ">
-
           <div className=" w-full mx-auto flex flex-col md:flex-row items-center justify-between px-6">
-            <p className="text-center">© 2024 Inspire Techno Solution. All Rights Reserved.</p>
+            <p className="text-center">
+              © 2024 Inspire Techno Solution. All Rights Reserved.
+            </p>
             <div className="flex gap-6 mt-2 md:mt-0">
               <a href="#" className="hover:text-[#d68029] transition-colors">
                 Privacy Policy

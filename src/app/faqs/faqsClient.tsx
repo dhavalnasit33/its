@@ -130,7 +130,7 @@ function faqs() {
           </div>
         </div>
       </section>
-      <section ref={categoryRef} className="w-full max-w-[90%] lg:max-w-[83.5%] mx-auto scroll-mt-24 px-5">
+      <section ref={categoryRef} className="w-full max-w-[90%] lg:max-w-[80%] mx-auto scroll-mt-24 px-5">
         <div className="">
           <div className="flex flex-wrap justify-between items-center gap-3 mt-10">
             {/* {categories.map((category, index) => (
@@ -170,7 +170,7 @@ function faqs() {
           </div>
         </div>
       </section>
-      <section className='w-full max-w-[90%] lg:max-w-[83.5%] mx-auto mt-12'>
+      <section className='w-full max-w-[90%] lg:max-w-[80%] mx-auto mt-12'>
         <div className="">
           <div className="flex p-2.5 w-full content-start relative flex-wrap">
             <div className="w-full text-start box-border relative">
