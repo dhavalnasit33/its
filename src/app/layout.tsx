@@ -1,4 +1,3 @@
-
 import { Bricolage_Grotesque, Exo_2, Inter } from "next/font/google";
 import Navbar from "@/components/navbar/navbar";
 import { SnackbarProvider } from "@/components/ui/snackbar-provider";
@@ -15,7 +14,7 @@ const exo2 = Exo_2({
 
 const inter = Inter({
   subsets: ["latin"],
-   weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-inter",
 });
 
@@ -24,7 +23,6 @@ const bricolage = Bricolage_Grotesque({
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-bricolage",
 });
-
 
 type NavLink = {
   title: string;
@@ -44,12 +42,14 @@ export type NavigationStructure = {
   hireNav: NavCategoryGroup[];
 };
 
-
 async function getNavigationStructure(): Promise<NavigationStructure> {
   try {
-    const response = await apiService<any>("/seo-manager/navigation-structure", {
-      next: { revalidate: 3600 },  // 60 minit data changed  
-    });
+    const response = await apiService<any>(
+      "/seo-manager/navigation-structure",
+      {
+        next: { revalidate: 3600 }, // 60 minit data changed
+      },
+    );
     console.count("SEO API Call Counter");
 
     if (response && response.success) {
@@ -58,9 +58,11 @@ async function getNavigationStructure(): Promise<NavigationStructure> {
 
     console.error("⚠️ Navigation data structure mismatch:", response);
     return { mainNav: [], servicesNav: [], hireNav: [] };
-
   } catch (error: any) {
-    console.error("❌ Error in getNavigationStructure:", error.message || error);
+    console.error(
+      "❌ Error in getNavigationStructure:",
+      error.message || error,
+    );
     return { mainNav: [], servicesNav: [], hireNav: [] };
   }
 }
@@ -72,14 +74,15 @@ export default async function RootLayout({
 
   return (
     // <html lang="en" className={exo2.className}>
-    <html lang="en"  className={`${exo2.variable} ${inter.variable} ${bricolage.variable}`}>
+    <html
+      lang="en"
+      className={`${exo2.variable} ${inter.variable} ${bricolage.variable}`}
+    >
       <body>
         <SnackbarProvider>
           <Navbar navStructure={navStructure} />
-          <ClientContentWrapper>
-            {children}
-          </ClientContentWrapper>
-          <SideBlurb/>
+          <ClientContentWrapper>{children}</ClientContentWrapper>
+          <SideBlurb />
         </SnackbarProvider>
       </body>
     </html>

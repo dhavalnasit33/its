@@ -206,8 +206,10 @@ export default function HirepageTechnologClient() {
   return (
     <main className="w-full">
       {/* section 1 : hero section */}
-      <section id="hero1"
-        className="relative py-12.5 hire_hero_section common_background_gradient w-full z-10 bg-white">
+      <section
+        id="hero1"
+        className="relative py-12.5 hire_hero_section common_background_gradient w-full z-10 bg-white"
+      >
         <video
           autoPlay
           loop
@@ -215,11 +217,10 @@ export default function HirepageTechnologClient() {
           src="/hire/hire_bg.mp4"
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-        >
-        </video>
+        ></video>
 
         <div className="absolute inset-0 bg-[#0a1a33]/90"></div>
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex justify-center mb-10" >
+        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex justify-center mb-10">
           <h1 className="inline-flex gap-1 items-center rounded-full border border-white bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-slate-200">
             {pageData.title.toLowerCase().startsWith("hire") ? (
               <>
@@ -229,7 +230,8 @@ export default function HirepageTechnologClient() {
                 <span className="text-[#d68029] uppercase inline-flex items-center gap-1">
                   HIRE
                   <span className="w-1 h-1 bg-[#d68029] rounded-full inline-block"></span>
-                </span> {pageData.title.replace(/^hire\s*/i, "")}
+                </span>{" "}
+                {pageData.title.replace(/^hire\s*/i, "")}
               </>
             ) : (
               pageData.title
@@ -337,12 +339,13 @@ export default function HirepageTechnologClient() {
                             }}
                           >
                             {/* {pageData.successSpeacks.description && ( */}
-                              <div
-                                className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
-                                dangerouslySetInnerHTML={{
-                                  __html: pageData?.successSpeacks?.description || "",
-                                }}
-                              />
+                            <div
+                              className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  pageData?.successSpeacks?.description || "",
+                              }}
+                            />
                             {/* )} */}
                           </motion.div>
                         </div>
@@ -730,8 +733,10 @@ export default function HirepageTechnologClient() {
                   className="bg-[#12203d] relative -top-6 inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
                 >
                   <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
-                  <a href="#contact-form-section"
-                    className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+                  <a
+                    href="#contact-form-section"
+                    className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                  >
                     <span className="flex flex-row gap-3  items-center justify-center">
                       Schedule a Developer Interview
                       <Image
@@ -748,7 +753,6 @@ export default function HirepageTechnologClient() {
           </div>
         </div>
       </section>
-
 
       {/* section 4 : hire daticated */}
       <section className="relative w-full py-12.5 z-10 bg-white">
@@ -774,13 +778,13 @@ export default function HirepageTechnologClient() {
                 className="w-full relative"
               >
                 {/* {pageData.hireDadiated.description && ( */}
-                  <div
-                    className="prose max-w-none text-base font-normal text-[#6f6f6f] leading-8 tracking-wide
+                <div
+                  className="prose max-w-none text-base font-normal text-[#6f6f6f] leading-8 tracking-wide
                                                 [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
-                    dangerouslySetInnerHTML={{
-                      __html: pageData?.hireDadiated?.description || "",
-                    }}
-                  />
+                  dangerouslySetInnerHTML={{
+                    __html: pageData?.hireDadiated?.description || "",
+                  }}
+                />
                 {/* )} */}
               </motion.div>
             </div>
@@ -873,8 +877,10 @@ export default function HirepageTechnologClient() {
                   className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
                 >
                   <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
-                  <a href="#contact-form-section"
-                    className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+                  <a
+                    href="#contact-form-section"
+                    className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                  >
                     <span className="flex flex-row gap-3 justify-center">
                       Talk to our{" "}
                       {pageData.title
@@ -918,13 +924,13 @@ export default function HirepageTechnologClient() {
               </motion.div>
               <div className="w-full relative">
                 {/* {pageData.techStack.description && ( */}
-                  <div
-                    className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
+                <div
+                  className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
                                             [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
-                    dangerouslySetInnerHTML={{
-                      __html: pageData?.techStack?.description || "", 
-                    }}
-                  />
+                  dangerouslySetInnerHTML={{
+                    __html: pageData?.techStack?.description || "",
+                  }}
+                />
                 {/* )} */}
               </div>
             </div>
@@ -1025,18 +1031,21 @@ export default function HirepageTechnologClient() {
                     }
                     return (
                       <motion.div
-                        className={`w-full  h-fit lg:h-max  rounded-[20px] p-3.75   lg:p-7.5 shadow-[0_0_10.3px_0_#00000040] ${bgColorClass} ${bgColorClass == "bg-[#ffebeb]" ? "min-h-0 lg:min-h-67.75" : "min-h-0 z-10 lg:min-h-79"} ${index == 2 && "lg:-mt-[3%]"}  ${index == 3 && "mt-[10%]"}} `}
+                        className={`w-full h-full rounded-[20px] p-3.75 lg:p-7.5
+    shadow-[0_0_10.3px_0_#00000040]
+    ${bgColorClass}`}
                         key={index}
                         whileHover={{ scale: 0.9 }}
                         transition={{ duration: 0.6 }}
                       >
-                        <div className="w-full p-2.5 content-start relative flex flex-wrap">
-                          <div className="w-full mb-5 relative">
-                            <h3 className="text-[25px] text-[#12203d] wrap-break-words font-medium ">
+                        <div className="flex flex-col h-full">
+                          <div className="mb-5">
+                            <h3 className="text-[25px] text-[#12203d] font-medium break-words">
                               {item.title}
                             </h3>
                           </div>
-                          <div className="w-full relative">
+
+                          <div className="flex-1">
                             <div
                               className="md:text-lg prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                               dangerouslySetInnerHTML={{
@@ -1104,13 +1113,13 @@ export default function HirepageTechnologClient() {
                 className="w-full relative"
               >
                 {/* {pageData.unloackPower.description && ( */}
-                  <div
-                    className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
+                <div
+                  className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
                                                 [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
-                    dangerouslySetInnerHTML={{
-                      __html: pageData?.unloackPower?.description || "",
-                    }}
-                  />
+                  dangerouslySetInnerHTML={{
+                    __html: pageData?.unloackPower?.description || "",
+                  }}
+                />
                 {/* )} */}
               </motion.div>
             </div>
@@ -1227,17 +1236,22 @@ export default function HirepageTechnologClient() {
                       </h3>
                     </div>
                     <div className="w-full text-center flex justify-start ">
-
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, amount: 0.2 }}
-                        transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                        transition={{
+                          duration: 0.5,
+                          ease: "easeOut",
+                          delay: 0.1,
+                        }}
                         className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
                       >
                         <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
-                        <a href="/faqs"
-                          className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+                        <a
+                          href="/faqs"
+                          className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                        >
                           <span className="flex flex-row gap-3  items-center justify-center">
                             Explore More
                             <Image
@@ -1249,7 +1263,6 @@ export default function HirepageTechnologClient() {
                           </span>
                         </a>
                       </motion.div>
-
                     </div>
                   </div>
                 </div>

@@ -42,7 +42,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
   const hireUsDropdownRef = useRef<HTMLDivElement>(null);
 
   // --- All navigation data is now built dynamically from props ---
-console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
+  console.log("🚀 ~ Navbar ~ navStructure:", navStructure);
 
   const servicesData = (navStructure.servicesNav || []).map((group) => {
     const icon = typeof group.icon === "string" ? group.icon.trim() : "";
@@ -67,24 +67,25 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
       })),
     };
   });
+  console.log("hireData", hireData);
 
   // Make the 'About Us' and 'Career' links dynamic
   const aboutLink = (navStructure.mainNav || []).find(
-    (link) => link.systemIdentifier === "about-us"
+    (link) => link.systemIdentifier === "about-us",
   );
   const careerLink = (navStructure.mainNav || []).find(
-    (link) => link.systemIdentifier === "career"
+    (link) => link.systemIdentifier === "career",
   );
 
-  //also take hire and ourservie  and portfolio page link daynbamic 
+  //also take hire and ourservie  and portfolio page link daynbamic
   const hireLink = (navStructure.mainNav || []).find(
-    (link) => link.systemIdentifier === "hire"
+    (link) => link.systemIdentifier === "hire",
   );
   const ourServiesLink = (navStructure.mainNav || []).find(
-    (link) => link.systemIdentifier === "services"
+    (link) => link.systemIdentifier === "services",
   );
   const portfolioLink = (navStructure.mainNav || []).find(
-    (link) => link.systemIdentifier === "portfolio"
+    (link) => link.systemIdentifier === "portfolio",
   );
 
   const aboutData = [
@@ -148,8 +149,14 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
 
   const navItems = [
     baseNavItems.find((item) => item?.label === "Home"),
-    { href: ourServiesLink ? `/${ourServiesLink.slug}` : "/our-services", label: "Our Services" },
-    { href: portfolioLink ? `/${portfolioLink.slug}` : "/our-portfolio", label: "Our Portfolio" },
+    {
+      href: ourServiesLink ? `/${ourServiesLink.slug}` : "/our-services",
+      label: "Our Services",
+    },
+    {
+      href: portfolioLink ? `/${portfolioLink.slug}` : "/our-portfolio",
+      label: "Our Portfolio",
+    },
     { href: aboutLink ? `/${aboutLink.slug}` : "/about-us", label: "About Us" },
     { href: hireLink ? `/${hireLink.slug}` : "/hire", label: "Hire Us" },
     // baseNavItems.find((item) => item?.label === "Training"),
@@ -544,56 +551,60 @@ console.log("🚀 ~ Navbar ~ navStructure:", navStructure)
                       onMouseEnter={() => setHireUsOpen(true)}
                       onMouseLeave={() => setHireUsOpen(false)}
                     >
-                      <div className="flex flex-row items-stretch mx-auto relative gap-x-7.5 px-10 py-12.5 ">
-                        {hireData.map((category, index) => (
-                          <div
-                            key={index}
-                            className="flex flex-col relative w-full max-w-[25%] border-r border-r-[#dee2e6] "
-                          >
-                            <div className="flex relative w-full flex-wrap ">
-                              <div className="mb-2.5 pr-5 relative ">
-                                <div className="flex flex-row text-left items-center ">
-                                  {category.icon ? (
-                                    <figure className=" mr-3.75 p-3.75 bg-[#f8f8f8] justify-center flex shrink-0 w-16 h-16 rounded-full">
-                                      <Image
-                                        src={category.icon}
-                                        alt={category.title}
-                                        width={45}
-                                        height={45}
-                                      />
-                                    </figure>
-                                  ) : null}
-                                  <div className="w-full">
-                                    <h3 className="text-[20px] text-black font-semibold my-2.5 wrap-break-word">
-                                      {category.title}
-                                    </h3>
+                      <div className="flex flex-row items-stretch mx-auto relative gap-x-7.5 px-10 py-12.5 w-full">
+                        {/* Left Side: Categories Grid (Max 4 columns per row) */}
+                        <div className="grid grid-cols-4 gap-x-7.5 gap-y-10 flex-1">
+                          {hireData.map((category, index) => (
+                            <div
+                              key={index}
+                              className="flex flex-col relative w-full border-r border-r-[#dee2e6] pr-4"
+                            >
+                              <div className="flex relative w-full flex-wrap ">
+                                <div className="mb-2.5 pr-5 relative ">
+                                  <div className="flex flex-row text-left items-center ">
+                                    {category.icon ? (
+                                      <figure className=" mr-3.75 p-3.75 bg-[#f8f8f8] justify-center flex shrink-0 w-16 h-16 rounded-full">
+                                        <Image
+                                          src={category.icon}
+                                          alt={category.title}
+                                          width={45}
+                                          height={45}
+                                        />
+                                      </figure>
+                                    ) : null}
+                                    <div className="w-full">
+                                      <h3 className="text-[20px] text-black font-semibold my-2.5 wrap-break-word">
+                                        {category.title}
+                                      </h3>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="w-full about_menu_mails flex justify-center relative pr-7.5 px-1.5 ">
-                                <ul className=" relative w-full text-gray-600">
-                                  {category.services.map(
-                                    (service, serviceIndex) => (
-                                      <li
-                                        key={serviceIndex}
-                                        className=" pl-5 mt-2.5 pb-1.75 items-center relative border-b border-dashed border-b-[#d68029]"
-                                      >
-                                        <Link
-                                          href={service.href}
-                                          onClick={() => setHireUsOpen(false)}
-                                          className="flex items-center text-start text-[18px] font-medium text-[#717375] px-3.75 hover:text-[#D68029] transition-colors"
+                                <div className="w-full about_menu_mails flex justify-center relative pr-7.5 px-1.5 ">
+                                  <ul className=" relative w-full text-gray-600">
+                                    {category.services.map(
+                                      (service, serviceIndex) => (
+                                        <li
+                                          key={serviceIndex}
+                                          className=" pl-5 mt-2.5 pb-1.75 items-center relative border-b border-dashed border-b-[#d68029]"
                                         >
-                                          {service.label}
-                                        </Link>
-                                      </li>
-                                    ),
-                                  )}
-                                </ul>
+                                          <Link
+                                            href={service.href}
+                                            onClick={() => setHireUsOpen(false)}
+                                            className="flex items-center text-start text-[18px] font-medium text-[#717375] px-3.75 hover:text-[#D68029] transition-colors"
+                                          >
+                                            {service.label}
+                                          </Link>
+                                        </li>
+                                      ),
+                                    )}
+                                  </ul>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                        <div className="flex items-center w-full max-w-[25%] justify-center">
+                          ))}
+                        </div>
+                        {/* Right Side: Fixed Illustration Column */}
+                        <div className="flex items-center w-full max-w-[22%] justify-center pl-4">
                           <Image
                             src="/navbar/hire-us.svg"
                             alt="Hire Developers Illustration"
