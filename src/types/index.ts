@@ -204,6 +204,11 @@ export interface PortfolioContent {
   createdAt: string;
   updatedAt: string;
 }
+export interface PortfolioCategory {
+  _id: string;
+  category: string;
+  image: string;
+}
 
 export interface CreativeWork {
   _id: string;
@@ -463,6 +468,12 @@ export interface TrainingMainPageData {
   updatedAt?: string;
 }
 
+interface ServiceCategory {
+  _id: string;
+  category: string;
+  slug: string;
+  icon?: string;
+}
 export interface OurServicesMain {
   _id: string;
   mainTitle: string;

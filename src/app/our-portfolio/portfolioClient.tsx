@@ -7,6 +7,7 @@ import Motion from "@/components/motionbar";
 import {
     CreativeWork,
     PaginatedResponse,
+    PortfolioCategory,
     PortfolioContent,
     SingleResponse,
 } from "@/types";
@@ -14,12 +15,12 @@ import Link from "next/link";
 import Reviews from "@/components/home/Reviews";
 import Testimonials from "@/components/home/Testimonials";
 import NotFoundPage from "@/components/NotFoundPage";
-const categories = [
-    { label: "Show All", value: "All" },
-    { label: "Mobile App", value: "mobile-app" },
-    { label: "UI/UX", value: "ui-ux" },
-    { label: "Web Development", value: "web-development" },
-];
+// const categories = [
+//     { label: "Show All", value: "All" },
+//     { label: "Mobile App", value: "mobile-app" },
+//     { label: "UI/UX", value: "ui-ux" },
+//     { label: "Web Development", value: "web-development" },
+// ];
 export default function PortfolioClient() {
     const floatAnimation = {
         initial: { x: 0 },
@@ -35,6 +36,7 @@ export default function PortfolioClient() {
     const [portfolioContentData, setPortfolioContentData] =
         useState<PortfolioContent | null>(null);
     const [creativeWorkData, setCreativeWorkData] = useState<CreativeWork[]>([]);
+    const [categories, setCategories] = useState<PortfolioCategory[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>("All");
     const [page, setPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
@@ -56,6 +58,21 @@ export default function PortfolioClient() {
             setGettingProtfolioConetentData(false);
         }
     }, []);
+
+    const fetchCategories = async () => {
+            try {
+                const res = await apiService<SingleResponse<PortfolioCategory[]>>("/portfolio-category");
+
+                if (res.success) {
+                setCategories(res.data || null );
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        useEffect(() => {
+        fetchCategories();
+        }, []);
     useEffect(() => {
         fetchPortfolioContent();
     }, [fetchPortfolioContent]);
@@ -249,7 +266,7 @@ export default function PortfolioClient() {
                             className="w-full"
                         >
                             <div className="flex flex-wrap justify-center gap-3 mb-12">
-                                {categories.map((cat) => (
+                                {/* {categories.map((cat) => (
                                     <div
                                         key={cat.value}
                                         onClick={() => handleCategoryClick(cat.value)}
@@ -261,6 +278,32 @@ export default function PortfolioClient() {
                                             }`}
                                     >
                                         {cat.label}
+                                    </div>
+                                ))} */}
+                                <button
+                                    onClick={() => setSelectedCategory("All")}
+                                    className={`cursor-pointer px-3.5 text-[14px] md:text-[20px] py-2.5 font-semibold text-gray-900  
+                                                hover:border-b-4 hover:rounded-b hover:border-b-[#d68029] hover:text-[#d68029] transition-all duration-200
+                                    ${selectedCategory === "All"
+                                        ? "border-b-4 border-b-[#d68029] rounded-b text-[#d68029]"
+                                        : "border-b-4 border-transparent"
+                                    }`}
+                                >
+                                    All
+                                </button>
+                                {categories.map((cat) => (
+                                    <div
+                                    key={cat._id}
+                                    onClick={() => handleCategoryClick(cat._id)}
+                                    className={`cursor-pointer px-3.5 text-[14px] md:text-[20px] py-2.5 font-semibold text-gray-900  
+                                        hover:border-b-4 hover:rounded-b hover:border-b-[#d68029] hover:text-[#d68029] transition-all duration-200
+                                        ${
+                                        selectedCategory === cat._id
+                                            ? "border-b-4 border-b-[#d68029] rounded-b text-[#d68029]"
+                                            : "border-b-4 border-transparent"
+                                        }`}
+                                    >
+                                    {cat.category}
                                     </div>
                                 ))}
                             </div>

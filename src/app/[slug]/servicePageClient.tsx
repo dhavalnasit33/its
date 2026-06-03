@@ -184,9 +184,11 @@ export default function ServicePageClient() {
                   delay: noAnim ? 0 : 0.2,
                 }}
               >
-                <p className="text-gray-700 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed">
-                  {data.description}
-                </p>
+                <p className="text-gray-700 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: data?.description || "" }}
+                />
+                  {/* {data.description}
+                </p> */}
                 <div className="mt-6">
                   <Image
                     src="/iphone-app/stylish-underline.svg"
@@ -281,9 +283,10 @@ export default function ServicePageClient() {
                     ease: "easeOut",
                     delay: noAnim ? 0 : 0.2,
                   }}
-                >
-                  {data.subMainTitleDescription}
-                </motion.p>
+                  dangerouslySetInnerHTML={{ __html: data?.subMainTitleDescription || "" }}
+                />
+                  {/* {data.subMainTitleDescription} */}
+                {/* </motion.p> */}
               </div>
             </div>
           )}
@@ -328,9 +331,11 @@ export default function ServicePageClient() {
                       />
                     )}
                     <h3 className="font-semibold text-lg">{service.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {service.description}
-                    </p>
+                    <p className="text-gray-600 text-sm leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: service?.description || "" }}
+                    />
+                      {/* {service.description}
+                    </p> */}
                   </motion.div>
                 ))}
 
@@ -401,7 +406,7 @@ export default function ServicePageClient() {
                 >
                   <h2
                     className="text-3xl md:text-4xl font-bold leading-snug"
-                    dangerouslySetInnerHTML={{ __html: data.WhyWorkWithThis.title }}
+                    dangerouslySetInnerHTML={{ __html: data?.WhyWorkWithThis?.title || "" }}
                   />
                   <div className="flex justify-center mt-4">
                     <Motion />
@@ -418,9 +423,10 @@ export default function ServicePageClient() {
                       ease: "easeOut",
                       delay: noAnim ? 0 : 0.2,
                     }}
-                  >
-                    {data.WhyWorkWithThis.description}
-                  </motion.p>
+                    dangerouslySetInnerHTML={{ __html: data?.WhyWorkWithThis?.description || "" }}
+                  />
+                  //   {data.WhyWorkWithThis.description}
+                  // </motion.p>
                 )}
               </div>
 
@@ -429,9 +435,11 @@ export default function ServicePageClient() {
                   {data.WhyWorkWithThis.content?.map((item, idx) => (
                     <div key={idx}>
                       <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {item.description}
-                      </p>
+                      <p className="text-gray-600 text-sm leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: item?.description || "" }}
+                      />
+                        {/* {item.description}
+                      </p> */}
                     </div>
                   ))}
                 </div>
@@ -484,7 +492,7 @@ export default function ServicePageClient() {
                 <h2
                   className="text-3xl md:text-4xl font-bold leading-snug py-2 relative"
                   dangerouslySetInnerHTML={{
-                    __html: data.toolsAndTechnology.title,
+                    __html: data?.toolsAndTechnology?.title || "",
                   }}
                 />
               </motion.div>
@@ -495,9 +503,11 @@ export default function ServicePageClient() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
               >
-                <p className="mt-6 text-gray-600 max-w-3xl leading-relaxed">
-                  {data.toolsAndTechnology.description}
-                </p>
+                <p className="mt-6 text-gray-600 max-w-3xl leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: data?.toolsAndTechnology?.description || "", }}
+                />
+                  {/* {data.toolsAndTechnology.description}
+                </p> */}
               </motion.div>
             </div>
 
@@ -587,7 +597,7 @@ export default function ServicePageClient() {
                   <h2
                     className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug mb-4"
                     dangerouslySetInnerHTML={{
-                      __html: data.whyCompanyPerfersThis.title,
+                      __html: data?.whyCompanyPerfersThis?.title || "",
                     }}
                   />
                   <div className="relative w-20 sm:w-24 h-1 bg-[#d68029] mb-4">
@@ -598,7 +608,7 @@ export default function ServicePageClient() {
                 <motion.p
                   className="text-gray-700 text-sm sm:text-base md:text-lg mb-6"
                   dangerouslySetInnerHTML={{
-                    __html: data.whyCompanyPerfersThis.description,
+                    __html: data?.whyCompanyPerfersThis?.description || "",
                   }}
                   initial={{ y: noAnim ? 0 : 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
@@ -666,7 +676,7 @@ export default function ServicePageClient() {
                       )}
                       <h3
                         className="text-base sm:text-lg text-gray-800 font-medium"
-                        dangerouslySetInnerHTML={{ __html: item.name }}
+                        dangerouslySetInnerHTML={{ __html: item?.name || "" }}
                       />
                     </motion.div>
                   )
@@ -781,7 +791,7 @@ export default function ServicePageClient() {
                                     <div
                                       className="prose max-w-none font-normal text-[#6f6f6f] [&_a]:text-[#d68029] [&_a]:no-underline"
                                       dangerouslySetInnerHTML={{
-                                        __html: item.answer,
+                                        __html: item?.answer || "",
                                       }}
                                     />
                                   </div>

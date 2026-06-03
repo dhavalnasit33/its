@@ -69,9 +69,13 @@ export default function WhyChooseITS() {
                       className="h-12 w-12 mb-4"
                     />
                     <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {item.description}
-                    </p>
+                    <p className="text-gray-600 text-sm leading-relaxed"
+                      dangerouslySetInnerHTML={{
+                        __html: item?.description || "",
+                      }}
+                    />
+                      {/* {item.description}
+                    </p> */}
                   </div>
                 ))}
 

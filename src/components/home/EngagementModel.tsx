@@ -183,9 +183,13 @@ export default function EngagementModels() {
                   </div>
 
 
-                  <p className="text-sm text-white opacity-70 leading-relaxed mb-4">
-                    {model.modelDescription}
-                  </p>
+                  <p className="text-sm text-white opacity-70 leading-relaxed mb-4"
+                     dangerouslySetInnerHTML={{
+                    __html: model?.modelDescription || "",
+                  }}
+                  />
+                    {/* {model.modelDescription}
+                  </p> */}
 
 
 

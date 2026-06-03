@@ -23,7 +23,7 @@ export default function SideBlurb() {
   ];
 
   return (
-    <div className="fixed right-0 top-[270px] flex flex-col gap-1 z-[999]">
+    <div className="fixed right-0 top-[270px] flex flex-col gap-1 z-[9999]">
       {items.map((item, index) => (
         <a
           key={index}

@@ -279,9 +279,12 @@ export default function Industries() {
                                                         style={{
                                                             transition: "color 0.3s",
                                                         }}
-                                                    >
-                                                        {industry.description}
-                                                    </p>
+                                                         dangerouslySetInnerHTML={{
+                                                            __html: industry?.description || "",
+                                                        }}
+                                                        />
+                                                        {/* {industry.description}
+                                                    </p> */}
                                                 </div>
 
                                                 <div className="mt-auto pt-1">

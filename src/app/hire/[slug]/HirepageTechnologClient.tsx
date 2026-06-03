@@ -281,7 +281,7 @@ export default function HirepageTechnologClient() {
                       <div
                         className="font-medium text-slate-300 rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer text-base  md:text-lg leading-8 tracking-wide"
                         dangerouslySetInnerHTML={{
-                          __html: pageData.description,
+                          __html: pageData?.description || "",
                         }}
                       />
                       {/* </div> */}
@@ -773,15 +773,15 @@ export default function HirepageTechnologClient() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-full relative"
               >
-                {pageData.hireDadiated.description && (
+                {/* {pageData.hireDadiated.description && ( */}
                   <div
                     className="prose max-w-none text-base font-normal text-[#6f6f6f] leading-8 tracking-wide
                                                 [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                     dangerouslySetInnerHTML={{
-                      __html: pageData.hireDadiated.description,
+                      __html: pageData?.hireDadiated?.description || "",
                     }}
                   />
-                )}
+                {/* )} */}
               </motion.div>
             </div>
           </div>
@@ -917,15 +917,15 @@ export default function HirepageTechnologClient() {
                 </h2>
               </motion.div>
               <div className="w-full relative">
-                {pageData.techStack.description && (
+                {/* {pageData.techStack.description && ( */}
                   <div
                     className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
                                             [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                     dangerouslySetInnerHTML={{
-                      __html: pageData.techStack.description,
+                      __html: pageData?.techStack?.description || "", 
                     }}
                   />
-                )}
+                {/* )} */}
               </div>
             </div>
           </div>
@@ -1040,7 +1040,7 @@ export default function HirepageTechnologClient() {
                             <div
                               className="md:text-lg prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                               dangerouslySetInnerHTML={{
-                                __html: item.description,
+                                __html: item?.description || "",
                               }}
                             />
                           </div>
@@ -1103,15 +1103,15 @@ export default function HirepageTechnologClient() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-full relative"
               >
-                {pageData.unloackPower.description && (
+                {/* {pageData.unloackPower.description && ( */}
                   <div
                     className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
                                                 [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                     dangerouslySetInnerHTML={{
-                      __html: pageData.unloackPower.description,
+                      __html: pageData?.unloackPower?.description || "",
                     }}
                   />
-                )}
+                {/* )} */}
               </motion.div>
             </div>
           </div>
@@ -1292,7 +1292,7 @@ export default function HirepageTechnologClient() {
                                       <div
                                         className="prose max-w-none font-normal text-[#6f6f6f] [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                                         dangerouslySetInnerHTML={{
-                                          __html: item.answer,
+                                          __html: item?.answer || "",
                                         }}
                                       />
                                     </div>

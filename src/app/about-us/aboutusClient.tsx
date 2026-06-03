@@ -690,7 +690,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 			</section> */}
       <ParallaxShape type="bottom" />
       <TechnologyTabs />
-      <ParallaxShape type="top" />
+      <ParallaxShape type="top"  bg="bg-[#060610]"/>
 
       {/* <section className="bg-[rgba(255,255,255,0.08)] relative -mb-1 ">
 				<span className="clipped-top bg-white h-[150px] w-full none lg:block rounded-tl-[100px] rounded-tr-[100px]" />

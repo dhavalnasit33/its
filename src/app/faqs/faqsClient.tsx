@@ -12,6 +12,13 @@ interface Faqs {
   answer: string;
 }
 
+
+interface Category {
+  _id: string;
+  category: string;
+  image: string;
+}
+
 interface FaqResponse {
   success: boolean;
   data: Faqs[];
@@ -20,7 +27,7 @@ interface FaqResponse {
 function faqs() {
   const [faqs, setfaqs] = useState<Faqs[]>([]);
   const categoryRef = useRef<HTMLDivElement | null>(null);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const [pageData, setPageData] = useState<HirePageData | null>(null);
@@ -29,10 +36,11 @@ function faqs() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await apiService<{ success: boolean; data: string[] }>(
-          "/faqs/categories"
+        const res = await apiService<{ success: boolean; data: Category[] }>(
+          "/faq-category"
         );
-        setCategories(["All", ...res.data]);
+        // setCategories(["All", ...res.data]);
+        setCategories(res.data);
       } catch (error) {
         console.error("❌ Error fetching categories:", error);
       }
@@ -125,7 +133,7 @@ function faqs() {
       <section ref={categoryRef} className="w-full max-w-[90%] lg:max-w-[83.5%] mx-auto scroll-mt-24 px-5">
         <div className="">
           <div className="flex flex-wrap justify-between items-center gap-3 mt-10">
-            {categories.map((category, index) => (
+            {/* {categories.map((category, index) => (
               <button
                 key={index}
                 onClick={() => handleCategoryClick(category)}
@@ -135,6 +143,28 @@ function faqs() {
                   }`}
               >
                 {category}
+              </button>
+            ))} */}
+            <button
+              onClick={() => setSelectedCategory("All")}
+              className={`px-[40px] py-[10px] rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200
+              ${selectedCategory === "All"
+                ? "bg-[#d68029] text-white border-[#d68029]"
+                : "bg-[#ffd4a8] text-black border-[#ffd4a8]"
+              }`}
+            >
+              All
+            </button>
+            {categories.map((category, index) => (
+              <button
+                key={category._id ?? category.category ?? index}
+                onClick={() => handleCategoryClick(category.category)}
+                className={`px-[40px] cursor-pointer py-[10px] rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200 ${selectedCategory === category.category
+                              ? "bg-[#d68029] text-white border-[#d68029]"
+                              : "bg-[#ffd4a8] text-black border-[#ffd4a8] hover:bg-[#d68029] hover:text-white hover:border-[#d68029]"
+                              }`}
+              >
+                {category.category}
               </button>
             ))}
           </div>
@@ -182,7 +212,7 @@ function faqs() {
                               <div
                                 className="prose max-w-none font-normal text-[#6f6f6f] [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                                 dangerouslySetInnerHTML={{
-                                  __html: item.answer,
+                                  __html: item?.answer || "",
                                 }}
                               />
                             </div>

@@ -25,6 +25,7 @@ import { IoIosCheckmarkCircle, IoIosRadioButtonOff } from "react-icons/io";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useToast } from "@/components/ui/snackbar-provider";
 import apiService from "@/lib/apiService";
+import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
 
 // 1. Validation Schema based on your API and Mongoose model
 const trainingSchema = z.object({
@@ -195,10 +196,11 @@ export default function TrainingContactForm() {
                     {/* <ReCAPTCHA ref={recaptchaRef} sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} onChange={(token) => setCaptchaToken(token)} /> */}
                      <ReCAPTCHA
                         ref={recaptchaRef}
-                        sitekey={
-                            process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                            "YOUR_SITE_KEY"
-                        }
+                        // sitekey={
+                        //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                        //     "YOUR_SITE_KEY"
+                        // }
+                        sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
                         onChange={(token) => setCaptchaToken(token || "")}
                     />
                 </Box>

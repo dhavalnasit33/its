@@ -170,7 +170,6 @@ export default function HomeClient() {
 	);
 
 
-
 	return (
 		<main className="relative isolate w-full bg-white text-gray-900">
 			<style dangerouslySetInnerHTML={{ __html: sliderStyles }} />
@@ -308,7 +307,12 @@ export default function HomeClient() {
 						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4 font-bricolage"
 							dangerouslySetInnerHTML={{ __html: formattedTitle }}
 						/>
-						<p className="text-sm sm:text-base text-slate-300 leading-relaxed sm:mb-6 mb-3">{homePageData?.aisection?.description}</p>
+						<p className="text-sm sm:text-base text-slate-300 leading-relaxed sm:mb-6 mb-3"
+							dangerouslySetInnerHTML={{
+								__html: homePageData?.aisection?.description || "",
+							}}
+						/>
+							{/* {homePageData?.aisection?.description}</p> */}
 						<motion.div
 							initial={{ opacity: 0, scale: 0.8 }}
 							whileInView={{ opacity: 1, scale: 1 }}
@@ -405,7 +409,7 @@ export default function HomeClient() {
 				<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-6 md:px-8 lg:px-10  grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<div className="relative w-full flex justify-center lg:justify-end items-center">
 						<Image
-							src={homePageData.aboutOurCompany.image}
+							src={homePageData?.aboutOurCompany?.image}
 							alt="Global Network"
 							width={500}
 							height={500}
@@ -421,7 +425,7 @@ export default function HomeClient() {
 							<div className="flex items-center gap-3">
 								<div className="bg-yellow-500 p-2 rounded">
 									<Image
-										src={homePageData.aboutOurCompany.buttonContent.image}
+										src={homePageData?.aboutOurCompany?.buttonContent?.image}
 										alt="Award Icon"
 										width={60}
 										height={60}
@@ -429,9 +433,9 @@ export default function HomeClient() {
 									/>
 								</div>
 								<div>
-									<p className=" text-xl md:text-3xl font-bold">{homePageData.aboutOurCompany.buttonContent.total}</p>
+									<p className=" text-xl md:text-3xl font-bold">{homePageData?.aboutOurCompany?.buttonContent?.total}</p>
 									<p className="text-xs tracking-wide uppercase">
-										{homePageData.aboutOurCompany.buttonContent.label}
+										{homePageData?.aboutOurCompany?.buttonContent?.label}
 									</p>
 								</div>
 							</div>
@@ -453,7 +457,7 @@ export default function HomeClient() {
 									d="M3 5h18M3 12h18M3 19h18"
 								/>
 							</svg>
-							{homePageData.aboutOurCompany.subtitle}
+							{homePageData?.aboutOurCompany?.subtitle}
 						</p>
 						{/* <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-snug"> */}
 							<h2
@@ -468,8 +472,8 @@ export default function HomeClient() {
 
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
 							{
-								homePageData.aboutOurCompany.deatailBox.length > 0 &&
-								homePageData.aboutOurCompany.deatailBox.map((data, index) => (
+								homePageData?.aboutOurCompany?.deatailBox.length > 0 &&
+								homePageData?.aboutOurCompany?.deatailBox.map((data, index) => (
 
 									<div className="flex items-center gap-3" key={index}>
 										<Image
@@ -544,7 +548,7 @@ export default function HomeClient() {
 					<div className="flex flex-col lg:flex-row items-center lg:items-center justify-center-safe w-full  gap-10">
 						<div className="w-full lg:w-2/4">
 							<Image
-								src={homePageData.overseasWebAgencies.image}
+								src={homePageData?.overseasWebAgencies?.image}
 								alt="World Map"
 								width={1200}
 								height={600}
@@ -555,9 +559,9 @@ export default function HomeClient() {
 
 						<div className="w-full lg:w-1/4">
 							<div className="mb-6 text-center lg:text-left">
-								<p className="text-gray-500 text-lg mb-2">{homePageData.overseasWebAgencies.detail.subtitle}</p>
+								<p className="text-gray-500 text-lg mb-2">{homePageData?.overseasWebAgencies?.detail?.subtitle}</p>
 								<h3 className="text-3xl font-bold text-gray-900">
-									{homePageData.overseasWebAgencies.detail.title}
+									{homePageData?.overseasWebAgencies?.detail?.title}
 								</h3>
 							</div>
 						</div>

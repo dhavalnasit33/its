@@ -8,10 +8,21 @@ import Link from "next/link";
 import Image from "next/image";
 import NotFoundPage from "@/components/NotFoundPage";
 
+interface BlogCategory {
+  _id: string;
+  category: string;
+}
+
+interface BlogSubCategory {
+  _id: string;
+  subcategory: string;
+}
 interface Blog {
     _id: string;
-    categories: string;
-    subCategories?: string;
+    // categories: string;
+    // subCategories?: string;
+    categories: string | BlogCategory;
+    subCategories: string | BlogSubCategory;
     slug: string;
     image: string;
     details: {
@@ -138,13 +149,26 @@ export default function BlogPageClient() {
     }, []);
 
     // ✅ Fetch Categories
+    // useEffect(() => {
+    //     const fetchCategories = async () => {
+    //         try {
+    //             const res = await apiService<{ success: boolean; data: string[] }>(
+    //                 "/blogs/categories"
+    //             );
+    //             setCategories(["All", ...res.data]);
+    //         } catch (error) {
+    //             console.error("❌ Error fetching categories:", error);
+    //         }
+    //     };
+    //     fetchCategories();
+    // }, []);
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await apiService<{ success: boolean; data: string[] }>(
-                    "/blogs/categories"
+                const res = await apiService<{ success: boolean; data: BlogCategory[] }>(
+                    "/blog-category"
                 );
-                setCategories(["All", ...res.data]);
+                setCategories(["All", ...res.data.map((item) => item.category),]);
             } catch (error) {
                 console.error("❌ Error fetching categories:", error);
             }
@@ -165,7 +189,6 @@ export default function BlogPageClient() {
                 const res = await apiService<PaginatedResponse<Blog>>("/blogs", {
                     params,
                 });
-
                 // ❌ Old behavior: window.scrollTo({ top: 0, behavior: "smooth" });
                 // ✅ New behavior: scroll to categories section
                 setTimeout(() => {
@@ -361,15 +384,22 @@ export default function BlogPageClient() {
 
                                         )
                                     }
-                                    <div className="p-6">
+                                    <div className="p-6 w-full flex flex-col flex-1">
+                                        <div>
                                         <div className="flex flex-col md:flex-row justify-start items-start md:items-center gap-2 mb-4">
-                                            {blog.subCategories && (
+                                            {/* {blog.subCategories && (
                                                 <span className="text-xs font-medium text-[#d68029] bg-[#fff4e9] px-3 py-1.5 rounded-full">
-                                                    {blog.subCategories}
+                                                    {/* {blog.subCategories} /}
+                                                    {typeof blog.subCategories === "string"
+                                                        ? blog.subCategories
+                                                        : blog.subCategories?.subcategory}
                                                 </span>
-                                            )}
+                                            )} */}
                                             <span className="text-xs font-medium text-gray-600 bg-gray-100 px-3 py-1.5 rounded-full">
-                                                {blog.categories}
+                                                {/* {blog.categories} */}
+                                                {typeof blog.categories === "string"
+                                                ? blog.categories
+                                                : blog.categories?.category}
                                             </span>
                                         </div>
                                         <h2
@@ -384,7 +414,8 @@ export default function BlogPageClient() {
                                                 __html: blog.details.description,
                                             }}
                                         />
-                                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                                        </div>
+                                        <div className=" mt-auto flex items-center justify-between pt-4 border-t border-gray-100">
                                             <Link
                                                 href={`/blog/${encodeURIComponent(blog.slug)}`}
                                                 onClick={handleBlogClick}

@@ -541,10 +541,6 @@ export default function ContactPageForm() {
                                     </div>
                                 </div>
 
-
-
-
-
                                 <div>
 
                                     <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 font-inter">
@@ -579,24 +575,12 @@ export default function ContactPageForm() {
                                                 <span className="h-4 w-4 flex items-center justify-center rounded-full border border-gray-400 peer-checked:bg-orange-500 peer-checked:border-orange-500 text-white text-xs">
                                                     ✓
                                                 </span>
-                                                <span className="text-gray-700 text-xs sm:text-sm">{subject}</span>
+                                                <span className="text-white opacity-60 text-xs sm:text-sm">{subject}</span>
                                             </label>
                                         ))}
                                     </div>
 
-
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
 
                                 <div>
                                     <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Message</label>
@@ -625,9 +609,6 @@ export default function ContactPageForm() {
                                             Attach File
                                         </label>
                                     </div>
-
-
-
 
                                     <div className="col-span-12 sm:py-10 py-6">
                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 font-inter">
