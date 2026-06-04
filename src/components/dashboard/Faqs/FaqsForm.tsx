@@ -51,7 +51,7 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
 
     const form = useForm<FaqsFormValues>({
         resolver: zodResolver(FaqsSchema),
-        defaultValues: {
+        defaultValues: initialData ||{
             categories: "",
             title: "",
             answer: "",
@@ -122,9 +122,12 @@ export default function FaqsForm({ initialData, onSubmit, onCancel }: FaqsFormPr
                                 <FormLabel>Category</FormLabel>
                                 {/* <FormControl><Input placeholder="Enter category" {...field} /></FormControl> */}
                                     <Select
-                                    onValueChange={(val) => {
-                                        field.onChange(val);
-                                    }}
+                                    // onValueChange={(val) => {
+                                    //     field.onChange(val);
+                                    // }}
+                                    // value={field.value}
+                                    // disabled={loadingCategories}
+                                    onValueChange={field.onChange}
                                     value={field.value}
                                     disabled={loadingCategories}
                                     >

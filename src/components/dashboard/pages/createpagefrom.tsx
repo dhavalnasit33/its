@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -21,6 +21,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ImageUpload from "@/components/ui/imagupload";
 import { APP_URL } from "@/config";
 import CustomCKEditor from "@/components/shared/Ckeditor";
+
+
+// const generateSlug = (text: string): string => {
+//   return text
+//     .toLowerCase()
+//     .trim()
+//     .replace(/[^\w\s-]/g, "")
+//     .replace(/[\s_-]+/g, "-")
+//     .replace(/^-+|-+$/g, "");
+// }; 
+
 
 const seoSchema = z.object({
     title: z.string().optional(),
@@ -74,11 +85,25 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
     const { toast } = useToast();
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const isFirstRender = useRef(true);
 
     const form = useForm<PageFormValues>({
         resolver: zodResolver(pageSchema),
         defaultValues,
     });
+
+    const titleValue = form.watch("title");
+       useEffect(() => {
+           if (isFirstRender.current) {
+             isFirstRender.current = false;
+             return;
+           }
+           if (titleValue) {
+             form.setValue("slug", generateSlug(titleValue), {
+               shouldValidate: true,
+             });
+           }
+         }, [titleValue, form]);
 
     useEffect(() => {
         if (initialData) {
@@ -178,6 +203,41 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                                             <FormMessage />
                                         </FormItem>
                                     )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={() => {
+                                    const slugValue = form.watch("slug");
+                                    const permalink = `${APP_URL}/${slugValue}`;
+                                    return (
+                                        <FormItem>
+                                        <FormLabel>Permalink</FormLabel>
+                                        <FormControl>
+                                            <div>
+                                            {slugValue && (
+                                                <div className="text-sm text-muted-foreground p-2 bg-gray-50 rounded-md border">
+                                                <strong>URL:</strong>{" "}
+                                                <a
+                                                    href={permalink}
+                                                    className="text-blue-600 hover:underline break-all"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {permalink}
+                                                </a>
+                                                </div>
+                                            )}
+                                            </div>
+                                        </FormControl>
+                                        </FormItem>
+                                    );
+                                    }}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="slug"
+                                    render={({ field }) => <input type="hidden" {...field} />}
                                 />
 
                                 <FormField
