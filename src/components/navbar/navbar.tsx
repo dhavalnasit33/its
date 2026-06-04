@@ -9,12 +9,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LuMenu } from "react-icons/lu";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { NavigationStructure } from "@/lib/navigationService";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 interface NavbarProps {
   navStructure: NavigationStructure;
 }
 
 export default function Navbar({ navStructure }: NavbarProps) {
+  const { hrEmail, contactEmail, phonePrimary, phonePrimaryClean } = useWebsiteSettings();
+
   // State for mobile menu toggles
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [activeMobileCategory, setActiveMobileCategory] = useState<
@@ -88,14 +91,14 @@ export default function Navbar({ navStructure }: NavbarProps) {
     { href: aboutLink ? `/${aboutLink.slug}` : "/about-us", label: "About Us" },
     { href: careerLink ? `/${careerLink.slug}` : "/career", label: "Career" },
     {
-      href: "mailto:hr@inspiretechnosolution.com",
-      label: "hr@inspiretechnosolution.com",
+      href: `mailto:${hrEmail}`,
+      label: hrEmail,
     },
     {
-      href: "mailto:contact@inspiretechnosolution.com",
-      label: "contact@inspiretechnosolution.com",
+      href: `mailto:${contactEmail}`,
+      label: contactEmail,
     },
-    { href: "tel:+919327220484", label: "+91 93272 20484 (HR)" },
+    { href: `tel:${phonePrimaryClean}`, label: `${phonePrimary} (HR)` },
   ];
 
   const hireBottomBar = [
@@ -224,9 +227,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
                 <li
                   key={item.href}
                   ref={servicesRef}
-                  className={`relative group cursor-pointer ${
-                    active ? "text-[#D68029]" : ""
-                  } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
+                    } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setServicesOpen(true);
                     setAboutOpen(false);
@@ -353,9 +355,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
                 <li
                   key={item.href}
                   ref={aboutRef}
-                  className={`relative group cursor-pointer ${
-                    active ? "text-[#D68029]" : ""
-                  } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
+                    } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setAboutOpen(true);
                     setServicesOpen(false);
@@ -514,9 +515,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
                 <li
                   key={item.href}
                   ref={hireUsRef}
-                  className={`relative group cursor-pointer ${
-                    active ? "text-[#D68029]" : ""
-                  } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
+                    } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setHireUsOpen(true);
                     setServicesOpen(false);
@@ -668,9 +668,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
             return (
               <li
                 key={item.href}
-                className={`cursor-pointer ${
-                  isActive(item.href) ? "text-[#D68029]" : ""
-                } hover:text-[#D68029]`}
+                className={`cursor-pointer ${isActive(item.href) ? "text-[#D68029]" : ""
+                  } hover:text-[#D68029]`}
               >
                 <Link href={item.href} className="transition-colors block">
                   {item.label}
@@ -1000,11 +999,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
                         <Link
                           href={item.href}
                           onClick={() => setMenuOpen(false)}
-                          className={`flex py-3 px-4 cursor-pointer border-b border-b-[#d68029] border-dashed font-medium ${
-                            isActive(item.href)
+                          className={`flex py-3 px-4 cursor-pointer border-b border-b-[#d68029] border-dashed font-medium ${isActive(item.href)
                               ? "text-[#D68029]"
                               : "text-gray-800 hover:text-[#D68029]"
-                          }`}
+                            }`}
                         >
                           {item.label}
                         </Link>

@@ -5,6 +5,7 @@ import "./globals.css";
 import apiService from "@/lib/apiService";
 import ClientContentWrapper from "./ClientContentWrapper";
 import SideBlurb from "@/components/SideInfo";
+import { WebsiteSettingsProvider } from "@/context/WebsiteSettingsContext";
 
 const exo2 = Exo_2({
   subsets: ["latin"],
@@ -26,10 +27,29 @@ const bricolage = Bricolage_Grotesque({
 
 import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
 
+async function getWebsiteSettings(): Promise<any> {
+  try {
+    const response = await apiService<any>(
+      "/website-settings",
+      {
+        next: { revalidate: 3600 }, // Cache for 60 min
+      }
+    );
+    if (response && response.success) {
+      return response.data;
+    }
+    return null;
+  } catch (error: any) {
+    console.error("❌ Error in getWebsiteSettings:", error.message || error);
+    return null;
+  }
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const navStructure = await getNavigationStructure();
+  const websiteSettings = await getWebsiteSettings();
 
   return (
     // <html lang="en" className={exo2.className}>
@@ -39,9 +59,11 @@ export default async function RootLayout({
     >
       <body>
         <SnackbarProvider>
-          <Navbar navStructure={navStructure} />
-          <ClientContentWrapper>{children}</ClientContentWrapper>
-          <SideBlurb />
+          <WebsiteSettingsProvider initialSettings={websiteSettings}>
+            <Navbar navStructure={navStructure} />
+            <ClientContentWrapper>{children}</ClientContentWrapper>
+            <SideBlurb />
+          </WebsiteSettingsProvider>
         </SnackbarProvider>
       </body>
     </html>

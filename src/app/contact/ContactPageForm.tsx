@@ -242,31 +242,8 @@ import * as z from "zod";
 import apiService from "@/lib/apiService";
 import { useToast } from "@/components/ui/snackbar-provider";
 import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
-
-
-
-
-const contactData = [
-    {
-        title: "Have a project to discuss?",
-        company: "Inspire Techno Solutions",
-        role: "Web Development Team",
-        email: "contact@inspiretechnosolution.com",
-    },
-    {
-        title: "Have a partnership in mind?",
-        company: "Inspire Techno Solutions",
-        role: "Partnerships & Growth",
-        email: "hr@inspiretechnosolution.com",
-    },
-    {
-        title: "Visit our location",
-        company: `215-Dhara Arcade, Digital Valley (Mota Varachha), Surat-394101, Gujarat, India`,
-        role: "Head Office",
-        // email: "hr@inspiretechnosolution.com",
-    },
-];
 
 const budgetOptions = [
     "UP TO $10K",
@@ -327,6 +304,7 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 
 export default function ContactPageForm() {
+    const { contactEmail, hrEmail, addressPrimary } = useWebsiteSettings();
     const { toast } = useToast();
     // const [captchaToken, setCaptchaToken] = useState("");
     // const recaptchaRef = useRef<ReCAPTCHA | null>(null);
@@ -340,6 +318,26 @@ export default function ContactPageForm() {
     const [file, setFile] = useState<File | null>(null);
     const [fileError, setFileError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const contactData = [
+        {
+            title: "Have a project to discuss?",
+            company: "Inspire Techno Solutions",
+            role: "Web Development Team",
+            email: contactEmail,
+        },
+        {
+            title: "Have a partnership in mind?",
+            company: "Inspire Techno Solutions",
+            role: "Partnerships & Growth",
+            email: hrEmail,
+        },
+        {
+            title: "Visit our location",
+            company: addressPrimary,
+            role: "Head Office",
+        },
+    ];
 
     const {
         register,

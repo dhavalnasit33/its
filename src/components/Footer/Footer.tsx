@@ -1,6 +1,6 @@
+"use client";
 
-
-import { FaFacebookF, FaTwitter, FaYoutube, FaSkype, FaWordpress, FaPhp, FaReact, FaNodeJs } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaYoutube, FaMicrosoft, FaWordpress, FaPhp, FaReact, FaNodeJs } from "react-icons/fa";
 import { IoLogoBehance } from "react-icons/io5";
 import { FaSquareInstagram } from "react-icons/fa6";
 import { AiOutlineLinkedin } from "react-icons/ai";
@@ -8,9 +8,22 @@ import { MdEmail, MdPhone, MdWork } from "react-icons/md";
 import { RiTeamFill, RiFacebookCircleLine } from "react-icons/ri";
 import { BiHelpCircle } from "react-icons/bi";
 import { FaLaptopCode, FaMobileAlt, FaPaintBrush } from "react-icons/fa";
-// import { SiAdobeindesign } from "react-icons/si";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 export default function Footer() {
+  const {
+    hrEmail,
+    salesEmail,
+    phonePrimary,
+    phonePrimaryClean,
+    microsoftHandle,
+    linkedinLink,
+    facebookLink,
+    instagramLink,
+    youtubeLink,
+    behanceLink,
+  } = useWebsiteSettings();
+
   return (
     <footer className="font-sans ">
       {/* Top Section */}
@@ -22,10 +35,10 @@ export default function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">HR Inquiry</h3>
               <p className="flex items-center gap-4 text-gray-700 mb-2">
-                <MdEmail className="text-xl font-bold" /> hr@inspiretechnosolution.com
+                <MdEmail className="text-xl font-bold" /> {hrEmail}
               </p>
               <p className="flex items-center gap-4 text-gray-700">
-                <MdPhone className="text-xl font-bold" /> +91 93272 20484
+                <MdPhone className="text-xl font-bold" /> {phonePrimary}
               </p>
             </div>
 
@@ -33,19 +46,19 @@ export default function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Sales Inquiry</h3>
               <p className="flex items-center gap-4 text-gray-700 mb-2">
-                <MdEmail className="text-xl font-bold" /> sales@inspiretechnosolution.com
+                <MdEmail className="text-xl font-bold" /> {salesEmail}
               </p>
               <p className="flex items-center gap-4 text-gray-700">
-                <FaSkype className="text-xl font-bold" /> dhaval.nasiri1
+                <FaMicrosoft className="text-xl font-bold" /> {microsoftHandle}
               </p>
 
               {/* Social Icons */}
               <div className="flex gap-4 mt-4 text-white ">
-                <a href="#" className="bg-gray-700 p-1 text-2xl rounded-2xl"><AiOutlineLinkedin className="text-xl hover:text-orange-600 transition-colors" /></a>
-                <a href="#" className="bg-gray-700 p-1 text-2xl rounded-2xl"><IoLogoBehance className="text-xl hover:text-orange-600 transition-colors" /></a>
-                <a href="#" className="bg-gray-700 p-1 text-2xl rounded-2xl"><RiFacebookCircleLine className="text-xl hover:text-orange-600 transition-colors" /></a>
-                <a href="#" className="bg-gray-700 p-1 text-2xl rounded-2xl"><FaSquareInstagram className="text-xl hover:text-orange-600 transition-colors" /></a>
-                <a href="#" className="bg-gray-700 p-1 text-2xl rounded-2xl"><FaYoutube className="text-xl hover:text-orange-600 transition-colors" /></a>
+                <a href={linkedinLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl"><AiOutlineLinkedin className="text-xl hover:text-orange-600 transition-colors" /></a>
+                <a href={behanceLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl"><IoLogoBehance className="text-xl hover:text-orange-600 transition-colors" /></a>
+                <a href={facebookLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl"><RiFacebookCircleLine className="text-xl hover:text-orange-600 transition-colors" /></a>
+                <a href={instagramLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl"><FaSquareInstagram className="text-xl hover:text-orange-600 transition-colors" /></a>
+                <a href={youtubeLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl"><FaYoutube className="text-xl hover:text-orange-600 transition-colors" /></a>
               </div>
             </div>
           </div>

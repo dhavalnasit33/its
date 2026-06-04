@@ -18,10 +18,11 @@ import {
   useReducedMotion,
   easeOut,
 } from "framer-motion";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import { FaPlus, FaMinus, FaMicrosoft } from "react-icons/fa";
 import Loader from "@/components/PageLoader";
 import Link from "next/link";
 import NotFoundPage from "@/components/NotFoundPage";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 // ✅ FIX 1: Lazy load ALL below-fold heavy components
 const EngagementModels = dynamic(
@@ -59,6 +60,7 @@ const useIsMobile = () => {
 };
 
 export default function ServicePageClient() {
+  const { phonePrimary, phonePrimaryClean, supportEmail, microsoftHandle } = useWebsiteSettings();
   const { slug } = useParams<{ slug: string }>();
   const [data, setData] = useState<ITSService | null>(null);
   const [notFound, setNotFound] = useState(false);
@@ -217,7 +219,7 @@ export default function ServicePageClient() {
                 <p className="text-gray-700 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: data?.description || "" }}
                 />
-                  {/* {data.description}
+                {/* {data.description}
                 </p> */}
                 <div className="mt-6">
                   <Image
@@ -246,10 +248,10 @@ export default function ServicePageClient() {
                     loading="lazy"
                   />
                   <a
-                    href="tel:+919327220484"
+                    href={`tel:${phonePrimaryClean}`}
                     className="break-all px-3.75 text-center font-medium text-[18px]"
                   >
-                    +91 93272 20484
+                    {phonePrimary}
                   </a>
                 </div>
                 <div className="flex items-center gap-2">
@@ -261,22 +263,21 @@ export default function ServicePageClient() {
                     loading="lazy"
                   />
                   <a
-                    href="mailto:Support@inspiretechnosolution.com"
+                    href={`mailto:${supportEmail}`}
                     className="break-all px-3.75 text-center font-medium text-[18px]"
                   >
-                    Support@inspiretechnosolution.com
+                    {supportEmail}
                   </a>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Image
-                    src="/iphone-app/Support-Skype.svg"
-                    alt="skype"
-                    width={20}
-                    height={14}
-                    loading="lazy"
-                  />
-                  <a href="skype:dhaval.nasit1?chat">
-                    <span>dhaval.nasit1</span>
+                  <FaMicrosoft size={20} className="shrink-0 text-white" />
+                  <a
+                    href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-all px-3.75 text-center font-medium text-[18px]"
+                  >
+                    {microsoftHandle}
                   </a>
                 </div>
               </div>
@@ -315,7 +316,7 @@ export default function ServicePageClient() {
                   }}
                   dangerouslySetInnerHTML={{ __html: data?.subMainTitleDescription || "" }}
                 />
-                  {/* {data.subMainTitleDescription} */}
+                {/* {data.subMainTitleDescription} */}
                 {/* </motion.p> */}
               </div>
             </div>
@@ -364,7 +365,7 @@ export default function ServicePageClient() {
                     <p className="text-gray-600 text-sm leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: service?.description || "" }}
                     />
-                      {/* {service.description}
+                    {/* {service.description}
                     </p> */}
                   </motion.div>
                 ))}
@@ -468,7 +469,7 @@ export default function ServicePageClient() {
                       <p className="text-gray-600 text-sm leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: item?.description || "" }}
                       />
-                        {/* {item.description}
+                      {/* {item.description}
                       </p> */}
                     </div>
                   ))}
@@ -536,7 +537,7 @@ export default function ServicePageClient() {
                 <p className="mt-6 text-gray-600 max-w-3xl leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: data?.toolsAndTechnology?.description || "", }}
                 />
-                  {/* {data.toolsAndTechnology.description}
+                {/* {data.toolsAndTechnology.description}
                 </p> */}
               </motion.div>
             </div>

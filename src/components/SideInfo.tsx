@@ -1,24 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 export default function SideBlurb() {
+  const { hrEmail, phonePrimary, phonePrimaryClean, microsoftHandle } = useWebsiteSettings();
+
   const items = [
     {
       icon: "/icon/Mail.png",
-
-      text: "hr@inspiretechnosolution.com",
-      link: "mailto:hr@inspiretechnosolution.com",
+      text: hrEmail,
+      link: `mailto:${hrEmail}`,
     },
     {
       icon: "/icon/Ringer Volume.png",
-      text: "+91 93272 20484",
-      link: "tel:+919327220484",
+      text: phonePrimary,
+      link: `tel:${phonePrimaryClean}`,
     },
     {
-      icon: "/icon/Skype.png",
-      text: "Skype",
-      link: "/",
+      icon: "/icon/Microsoft Teams 2019.png",
+      text: "Microsoft",
+      link: microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`,
     },
   ];
 

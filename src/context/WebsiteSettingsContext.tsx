@@ -1,0 +1,152 @@
+"use client";
+
+import React, { createContext, useContext, useState } from "react";
+
+export interface WebsiteSettings {
+  favicon: string;
+  logo_img: string;
+  address: string[];
+  emails: {
+    email: string;
+    emailType: "hr" | "sales" | "contact";
+    _id?: string;
+  }[];
+  phone: string[];
+  social_media: {
+    socialMediaName: string;
+    link: string;
+    image: string;
+    _id?: string;
+  }[];
+}
+
+const defaultSettings: WebsiteSettings = {
+  favicon: "",
+  logo_img: "",
+  address: ["215-Dhara Arcade, Digital Valley (Mota Varachha), Surat-394101, Gujarat, India"],
+  emails: [
+    { email: "hr@inspiretechnosolution.com", emailType: "hr" },
+    { email: "sales@inspiretechnosolution.com", emailType: "sales" },
+    { email: "contact@inspiretechnosolution.com", emailType: "contact" }
+  ],
+  phone: ["+91 93272 20484"],
+  social_media: []
+};
+
+interface WebsiteSettingsContextProps {
+  settings: WebsiteSettings;
+  hrEmail: string;
+  salesEmail: string;
+  contactEmail: string;
+  supportEmail: string;
+  phonePrimary: string;
+  phonePrimaryClean: string;
+  addressPrimary: string;
+  skypeHandle: string;
+  microsoftHandle: string;
+  linkedinLink: string;
+  facebookLink: string;
+  instagramLink: string;
+  youtubeLink: string;
+  behanceLink: string;
+}
+
+const WebsiteSettingsContext = createContext<WebsiteSettingsContextProps>({
+  settings: defaultSettings,
+  hrEmail: "hr@inspiretechnosolution.com",
+  salesEmail: "sales@inspiretechnosolution.com",
+  contactEmail: "contact@inspiretechnosolution.com",
+  supportEmail: "Support@inspiretechnosolution.com",
+  phonePrimary: "+91 93272 20484",
+  phonePrimaryClean: "+919327220484",
+  addressPrimary: "215-Dhara Arcade, Digital Valley (Mota Varachha), Surat-394101, Gujarat, India",
+  skypeHandle: "dhaval.nasit1",
+  microsoftHandle: "dhaval.nasit1",
+  linkedinLink: "https://www.linkedin.com/posts/inspiretechnosolution_urgent-urgentopening-developer-activity-7143130049964134400-6P2I",
+  facebookLink: "https://www.facebook.com/inspiretechnosolution/about/",
+  instagramLink: "https://www.instagram.com/inspiretechnosolution/",
+  youtubeLink: "#",
+  behanceLink: "#",
+});
+
+function cleanPhoneNumber(numStr: string): string {
+  // Remove all spaces and non-numeric characters except +
+  return numStr.replace(/[^\d+]/g, "");
+}
+
+export function WebsiteSettingsProvider({
+  children,
+  initialSettings,
+}: {
+  children: React.ReactNode;
+  initialSettings: WebsiteSettings | null;
+}) {
+  const [settings] = useState<WebsiteSettings>(() => {
+    if (!initialSettings) return defaultSettings;
+    return {
+      favicon: initialSettings.favicon || defaultSettings.favicon,
+      logo_img: initialSettings.logo_img || defaultSettings.logo_img,
+      address: initialSettings.address?.length ? initialSettings.address : defaultSettings.address,
+      emails: initialSettings.emails?.length ? initialSettings.emails : defaultSettings.emails,
+      phone: initialSettings.phone?.length ? initialSettings.phone : defaultSettings.phone,
+      social_media: initialSettings.social_media || defaultSettings.social_media,
+    };
+  });
+
+  const hrEmail = settings.emails.find(e => e.emailType === "hr")?.email || "hr@inspiretechnosolution.com";
+  const salesEmail = settings.emails.find(e => e.emailType === "sales")?.email || "sales@inspiretechnosolution.com";
+  const contactEmail = settings.emails.find(e => e.emailType === "contact")?.email || "contact@inspiretechnosolution.com";
+  // Fallback support email using contact email or default Support@inspiretechnosolution.com
+  const supportEmail = settings.emails.find(e => e.emailType === "contact")?.email || "Support@inspiretechnosolution.com";
+
+  const phonePrimary = settings.phone[0] || "+91 93272 20484";
+  const phonePrimaryClean = cleanPhoneNumber(phonePrimary);
+
+  const addressPrimary = settings.address[0] || "215-Dhara Arcade, Digital Valley (Mota Varachha), Surat-394101, Gujarat, India";
+
+  // Look for skype/microsoft handle in social media (either "skype" or "microsoft")
+  const skypeMedia = settings.social_media.find(
+    s => s.socialMediaName.toLowerCase() === "skype" || s.socialMediaName.toLowerCase() === "microsoft"
+  );
+  const microsoftHandle = skypeMedia && skypeMedia.link ? skypeMedia.link : "dhaval.nasit1";
+  const skypeHandle = microsoftHandle;
+
+  // Social media links
+  const linkedinLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "linkedin")?.link || "https://www.linkedin.com/posts/inspiretechnosolution_urgent-urgentopening-developer-activity-7143130049964134400-6P2I";
+  const facebookLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "facebook")?.link || "https://www.facebook.com/inspiretechnosolution/about/";
+  const instagramLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "instagram")?.link || "https://www.instagram.com/inspiretechnosolution/";
+  const youtubeLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "youtube")?.link || "#";
+  const behanceLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "behance")?.link || "#";
+
+  return (
+    <WebsiteSettingsContext.Provider
+      value={{
+        settings,
+        hrEmail,
+        salesEmail,
+        contactEmail,
+        supportEmail,
+        phonePrimary,
+        phonePrimaryClean,
+        addressPrimary,
+        skypeHandle,
+        microsoftHandle,
+        linkedinLink,
+        facebookLink,
+        instagramLink,
+        youtubeLink,
+        behanceLink,
+      }}
+    >
+      {children}
+    </WebsiteSettingsContext.Provider>
+  );
+}
+
+export function useWebsiteSettings() {
+  const context = useContext(WebsiteSettingsContext);
+  if (!context) {
+    throw new Error("useWebsiteSettings must be used within a WebsiteSettingsProvider");
+  }
+  return context;
+}

@@ -10,11 +10,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import TrainingContactForm from "./TrainingContactForm";
 import GeneralContactForm from "./GeneralContactForm";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import {
   FaFacebookF,
   FaTwitter,
   FaYoutube,
-  FaSkype,
+  FaMicrosoft,
   FaWordpress,
   FaPhp,
   FaReact,
@@ -28,8 +29,20 @@ import { FaLaptopCode, FaMobileAlt, FaPaintBrush } from "react-icons/fa";
 export default function ContactFooterPage() {
   const pathname = usePathname();
   const isTrainingPage = pathname === "/training";
-
   const isContactPage = pathname === "/contact";
+
+  const {
+    hrEmail,
+    salesEmail,
+    phonePrimary,
+    phonePrimaryClean,
+    microsoftHandle,
+    linkedinLink,
+    facebookLink,
+    instagramLink,
+    youtubeLink,
+    behanceLink,
+  } = useWebsiteSettings();
 
   return (
     <footer id="contact-form-section" className=" relative pt-16 bg-white">
@@ -71,7 +84,7 @@ export default function ContactFooterPage() {
               <div>
                 <h3 className="font-bold text-lg mb-4">HR Inquiry</h3>
                 <Link
-                  href="mailto:hr@inspiretechnosolution.com"
+                  href={`mailto:${hrEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
                 >
                   {/* <Image
@@ -82,10 +95,10 @@ export default function ContactFooterPage() {
                     className="object-contain"
                   />{" "} */}
                   <MdEmail size={20} />
-                  hr@inspiretechnosolution.com
+                  {hrEmail}
                 </Link>
                 <Link
-                  href="tel:+919327220484"
+                  href={`tel:${phonePrimaryClean}`}
                   className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] "
                 >
                   <MdPhone size={20} />
@@ -96,7 +109,7 @@ export default function ContactFooterPage() {
                     height={24}
                     className="object-contain"
                   />{" "} */}
-                  +91 93272 20484
+                  {phonePrimary}
                 </Link>
               </div>
 
@@ -104,7 +117,7 @@ export default function ContactFooterPage() {
               <div>
                 <h3 className="font-bold text-lg mb-4">Sales Inquiry</h3>
                 <Link
-                  href="mailto:sales@inspiretechnosolution.com"
+                  href={`mailto:${salesEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
                 >
                   <MdEmail size={20} />
@@ -115,47 +128,48 @@ export default function ContactFooterPage() {
                     height={24}
                     className="object-contain"
                   />{" "} */}
-                  sales@inspiretechnosolution.com
+                  {salesEmail}
                 </Link>
-                <Link
-                  href="mailto:dhaval.nasiri1"
+                 <Link
+                  href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-4 text-gray-70 hover:text-[#d68029] "
                 >
-                  <FaSkype size={20} />
-                  {/* <Image
-                    src="/icon/Skype.png"
-                    alt="Skype"
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  /> */}
-                  dhaval.nasiri1
+                  <FaMicrosoft size={20} />
+                  {microsoftHandle}
                 </Link>
 
                 {/* Social Icons */}
                 <div className="flex gap-4 mt-4 text-white">
                   <a
-                    href="https://www.linkedin.com/posts/inspiretechnosolution_urgent-urgentopening-developer-activity-7143130049964134400-6P2I"
+                    href={linkedinLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-gray-700 p-1 text-2xl rounded-2xl"
                   >
                     <AiOutlineLinkedin className="text-xl hover:text-[#d68029] transition-colors" />
                   </a>
-                  <a href="#" className="bg-gray-700 p-1 text-2xl rounded-2xl">
+                  <a href={behanceLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl">
                     <IoLogoBehance className="text-xl hover:text-[#d68029] transition-colors" />
                   </a>
                   <a
-                    href="https://www.facebook.com/inspiretechnosolution/about/"
+                    href={facebookLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-gray-700 p-1 text-2xl rounded-2xl"
                   >
                     <RiFacebookCircleLine className="text-xl hover:text-[#d68029] transition-colors" />
                   </a>
                   <a
-                    href="https://www.instagram.com/inspiretechnosolution/"
+                    href={instagramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-gray-700 p-1 text-2xl rounded-2xl"
                   >
                     <FaSquareInstagram className="text-xl hover:text-[#d68029] transition-colors" />
                   </a>
-                  <a href="#" className="bg-gray-700 p-1 text-2xl rounded-2xl">
+                  <a href={youtubeLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl">
                     <FaYoutube className="text-xl hover:text-[#d68029] transition-colors" />
                   </a>
                 </div>

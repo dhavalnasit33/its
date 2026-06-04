@@ -7,36 +7,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Image from "next/image";
-import { FaSkype } from "react-icons/fa";
+import { FaMicrosoft } from "react-icons/fa";
 import { MdEmail, MdPhone } from "react-icons/md";
 import apiService from "@/lib/apiService";
 import { useToast } from "@/components/ui/snackbar-provider";
 import { BiCalendar } from "react-icons/bi";
 import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
-
-const contactItems = [
-    {
-        icon: <FaSkype className="text-[22px] font-bold shrink-0" />,
-        label: "Skype",
-        value: "dhaval.nasit1",
-    },
-    {
-        icon: <MdPhone className="text-[22px] font-bold shrink-0" />,
-        label: "Call",
-        value: "+91 93272 20484",
-    },
-    {
-        icon: <MdEmail className="text-[22px] font-bold shrink-0" />,
-        label: "Email",
-        value: "contact@inspiretechnosolution.com",
-        isEmail: true,
-    },
-    {
-        icon: <MdPhone className="text-[22px] font-bold shrink-0" />,
-        label: "Address",
-        value: "302- Dhara Arcade Motavarachha Surat-394101",
-    },
-];
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 // -------------------- Constants --------------------
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -132,6 +109,7 @@ const budgetOptions = [
 ];
 
 export default function GeneralContactForm() {
+    const { contactEmail, phonePrimary, addressPrimary, microsoftHandle } = useWebsiteSettings();
     const { toast } = useToast();
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
     const [captchaToken, setCaptchaToken] = useState<string>("");
@@ -142,6 +120,30 @@ export default function GeneralContactForm() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const recaptchaRef = useRef<ReCAPTCHA | null>(null);
     const [selectedBudget, setSelectedBudget] = useState<string>("");
+
+    const contactItems = [
+        {
+            icon: <FaMicrosoft className="text-[22px] font-bold shrink-0" />,
+            label: "Microsoft",
+            value: microsoftHandle,
+        },
+        {
+            icon: <MdPhone className="text-[22px] font-bold shrink-0" />,
+            label: "Call",
+            value: phonePrimary,
+        },
+        {
+            icon: <MdEmail className="text-[22px] font-bold shrink-0" />,
+            label: "Email",
+            value: contactEmail,
+            isEmail: true,
+        },
+        {
+            icon: <MdPhone className="text-[22px] font-bold shrink-0" />,
+            label: "Address",
+            value: addressPrimary,
+        },
+    ];
 
 
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<ContactFormValues>({
