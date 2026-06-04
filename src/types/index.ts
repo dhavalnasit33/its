@@ -468,12 +468,6 @@ export interface TrainingMainPageData {
   updatedAt?: string;
 }
 
-interface ServiceCategory {
-  _id: string;
-  category: string;
-  slug: string;
-  icon?: string;
-}
 export interface OurServicesMain {
   _id: string;
   mainTitle: string;
