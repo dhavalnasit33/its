@@ -13,6 +13,7 @@ const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
 const ServiceCategory = require("../../models/category/serviceCategory.model");
 const HireCategory = require("../../models/category/hireCategory.model");
+const YoastSEO = require("../../models/seo/YoastSEO");
 
 const NodeCache = require("node-cache");
 const navCache = new NodeCache({ stdTTL: 600 }); // 10 minutes cache
@@ -565,6 +566,9 @@ router.get("/slug/:slug", async (req, res) => {
     // The slug will now be "home" for the homepage, so no special logic is needed.
     let seoData = await SeoManager.findOne({ slug }).lean();
 
+    // Fetch the default YoastSEO document to use as fallback
+    const defaultYoast = await YoastSEO.findOne({}).lean();
+
     // Keep the fallback just in case a different slug is not found
     if (!seoData) {
       const isFileOrSystemPath =
@@ -572,10 +576,28 @@ router.get("/slug/:slug", async (req, res) => {
 
       if (!isFileOrSystemPath) {
         console.warn(
-          `SEO data for slug "${slug}" not found. Falling back to homepage.`,
+          `SEO data for slug "${slug}" not found. Falling back to homepage or Yoast.`,
         );
       }
       seoData = await SeoManager.findOne({ slug: "home" }).lean();
+    }
+
+    if (!seoData && defaultYoast) {
+      // If even home SEO is not found, construct a default object using YoastSEO
+      seoData = {
+        title: "Default",
+        slug: slug,
+        seo_keyphrase: defaultYoast.seo_keyphrase || "",
+        seo_title: defaultYoast.seo_title || "",
+        meta_description: defaultYoast.meta_description || "",
+        cover_image: defaultYoast.cover_image || "",
+      };
+    } else if (seoData && defaultYoast) {
+      // If we found seoData (either specific or home), merge empty fields with YoastSEO
+      if (!seoData.seo_title) seoData.seo_title = defaultYoast.seo_title || "";
+      if (!seoData.seo_keyphrase) seoData.seo_keyphrase = defaultYoast.seo_keyphrase || "";
+      if (!seoData.meta_description) seoData.meta_description = defaultYoast.meta_description || "";
+      if (!seoData.cover_image) seoData.cover_image = defaultYoast.cover_image || "";
     }
 
     if (!seoData) {
