@@ -431,28 +431,26 @@ router.get("/navigation-structure", async (req, res) => {
     if (serviceCategoryIds.size > 0) {
       const docs = await ServiceCategory.find({
         _id: { $in: [...serviceCategoryIds] },
-      }).select("_id category").lean();
-      docs.forEach((d) => serviceCategoryMap.set(d._id.toString(), d.category));
+      }).select("_id category image").lean();
+      docs.forEach((d) => serviceCategoryMap.set(d._id.toString(), { category: d.category, image: d.image }));
     }
 
     if (hireCategoryIds.size > 0) {
       const docs = await HireCategory.find({
         _id: { $in: [...hireCategoryIds] },
-      }).select("_id category").lean();
-      docs.forEach((d) => hireCategoryMap.set(d._id.toString(), d.category));
+      }).select("_id category image").lean();
+      docs.forEach((d) => hireCategoryMap.set(d._id.toString(), { category: d.category, image: d.image }));
     }
 
-    // Helper: resolve a possibly-ObjectId category value to a readable name string
-    const resolveCategoryName = (cat, type) => {
+    // Helper: resolve category doc to get name and image
+    const resolveCategoryDoc = (cat, type) => {
       if (!cat) return null;
       const strVal = cat.toString();
       if (looksLikeId(strVal)) {
-        // It's an ObjectId (BSON object or hex string) — look up the real name
         const map = type === "service" ? serviceCategoryMap : hireCategoryMap;
         return map.get(strVal) || null;
       }
-      // Already a plain human-readable string name
-      return strVal;
+      return { category: strVal, image: "" };
     };
 
     // const independentLinks = allLinks.filter(
@@ -478,11 +476,12 @@ const independentLinks = allLinks
           if (!pageData) return acc;
 
           // Resolve category → always get a readable string
-          const categoryName = resolveCategoryName(pageData.category, type);
-          if (!categoryName) return acc;
+          const categoryDoc = resolveCategoryDoc(pageData.category, type);
+          if (!categoryDoc || !categoryDoc.category) return acc;
+          const categoryName = categoryDoc.category;
 
           if (!acc[categoryName]) {
-            acc[categoryName] = { icon: "", links: [] };
+            acc[categoryName] = { icon: categoryDoc.image || "", links: [] };
           }
 
           acc[categoryName].links.push({
@@ -490,12 +489,11 @@ const independentLinks = allLinks
             slug: link.slug,
           });
 
-          if (!acc[categoryName].icon) {
-            const iconMap =
-              type === "service" ? serviceIdToIconMap : hireIdToIconMap;
-            if (pageData._id && iconMap.has(pageData._id.toString())) {
-              acc[categoryName].icon = iconMap.get(pageData._id.toString());
-            }
+          // Specific tab-image override check (if set, overrides the category default)
+          const iconMap =
+            type === "service" ? serviceIdToIconMap : hireIdToIconMap;
+          if (pageData._id && iconMap.has(pageData._id.toString())) {
+            acc[categoryName].icon = iconMap.get(pageData._id.toString());
           }
 
           return acc;
