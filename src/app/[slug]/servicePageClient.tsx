@@ -63,6 +63,36 @@ export default function ServicePageClient() {
   const [data, setData] = useState<ITSService | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [blogSlug, setBlogSlug] = useState("blog");
+  const [portfolioSlug, setPortfolioSlug] = useState("our-portfolio");
+  const [hireSlug, setHireSlug] = useState("hire");
+
+  useEffect(() => {
+    const fetchSlugs = async () => {
+      try {
+        const res = await apiService<{ success: boolean; data: any }>(
+          "/seo-manager/navigation-structure"
+        );
+        if (res && res.success && res.data?.mainNav) {
+          const blogLink = res.data.mainNav.find(
+            (link: any) => link.systemIdentifier === "blog"
+          );
+          const portfolioLink = res.data.mainNav.find(
+            (link: any) => link.systemIdentifier === "portfolio"
+          );
+          const hireLink = res.data.mainNav.find(
+            (link: any) => link.systemIdentifier === "hire"
+          );
+          if (blogLink) setBlogSlug(blogLink.slug);
+          if (portfolioLink) setPortfolioSlug(portfolioLink.slug);
+          if (hireLink) setHireSlug(hireLink.slug);
+        }
+      } catch (err) {
+        console.error("Error fetching slugs in ServicePageClient:", err);
+      }
+    };
+    fetchSlugs();
+  }, []);
 
   // ✅ FIX 2: Use mobile detection + reduced motion
   const isMobile = useIsMobile();
@@ -251,9 +281,9 @@ export default function ServicePageClient() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm font-medium">
-                <Link href="/our-portfolio" className="hover:underline">PORTFOLIO</Link>
-                <Link href="/blog" className="hover:underline">BLOG</Link>
-                <Link href="/hire" className="hover:underline">GET IN TOUCH</Link>
+                <Link href={`/${portfolioSlug}`} className="hover:underline">PORTFOLIO</Link>
+                <Link href={`/${blogSlug}`} className="hover:underline">BLOG</Link>
+                <Link href={`/${hireSlug}`} className="hover:underline">GET IN TOUCH</Link>
               </div>
             </div>
           </div>

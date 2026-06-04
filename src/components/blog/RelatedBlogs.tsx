@@ -17,6 +17,7 @@ export default function RelatedBlogs({
 }) {
   const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [blogSlug, setBlogSlug] = useState<string>("blog");
 
   useEffect(() => {
     const fetchRelatedBlogs = async () => {
@@ -36,7 +37,26 @@ export default function RelatedBlogs({
       }
     };
 
+    const fetchBlogSlug = async () => {
+      try {
+        const res = await apiService<{ success: boolean; data: any }>(
+          "/seo-manager/navigation-structure"
+        );
+        if (res && res.success && res.data?.mainNav) {
+          const blogLink = res.data.mainNav.find(
+            (link: any) => link.systemIdentifier === "blog"
+          );
+          if (blogLink) {
+            setBlogSlug(blogLink.slug);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching blog slug in RelatedBlogs:", err);
+      }
+    };
+
     fetchRelatedBlogs();
+    fetchBlogSlug();
   }, [subCategory]);
 
   if (loading) {
@@ -70,7 +90,7 @@ export default function RelatedBlogs({
         {/* 👇 FINAL BUTTON - Matches your images exactly 👇 */}
         <div className="w-full mb-8 flex justify-end">
           <Link
-            href="/blog"
+            href={`/${blogSlug}`}
             className="group relative p-5 inline-flex items-center justify-center font-semibold text-xl text-[#12203d]"
           >
             {/* Background circle that expands to a pill shape */}
@@ -141,7 +161,7 @@ export default function RelatedBlogs({
                 />
                 <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                   <Link
-                    href={`/blog/${encodeURIComponent(relatedBlog.slug)}`}
+                    href={`/${blogSlug}/${encodeURIComponent(relatedBlog.slug)}`}
                     className="text-[#d68029] font-semibold text-sm flex items-center hover:underline"
                   >
                     Read More →

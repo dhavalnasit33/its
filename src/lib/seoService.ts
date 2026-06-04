@@ -21,7 +21,7 @@ export async function getSeoData(slug: string): Promise<SeoData | null> {
     const response = await apiService<SingleResponse<SeoData>>(
       `/seo-manager/slug/${slug}`,
       {
-        cache: "force-cache", // 🔥 IMPORTANT
+        next: { revalidate: 60 },
       }
     );
 

@@ -149,7 +149,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             />
           </motion.div>
           {/* Floating Bubbles */}
-          {aboutUsData?.heroSection?.points?.map((point, index) => {
+          {Array.isArray(aboutUsData?.heroSection?.points) && aboutUsData.heroSection.points.map((point, index) => {
             const labelParts = point.label.split(" ");
             const mainText = labelParts[0];
             const subText = labelParts.slice(1).join(" ");

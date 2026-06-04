@@ -2,7 +2,8 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import apiService from '@/lib/apiService';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,6 +18,28 @@ export default function HireTabs({ hireData }: HireTabsProps) {
     // All the state and logic is now contained in this client component
     const [activeTab, setActiveTab] = useState(hireData[0].title);
     const activeData = hireData.find(tab => tab.title === activeTab);
+    const [hireSlug, setHireSlug] = useState("hire");
+
+    useEffect(() => {
+        const fetchHireSlug = async () => {
+            try {
+                const res = await apiService<{ success: boolean; data: any }>(
+                    "/seo-manager/navigation-structure"
+                );
+                if (res && res.success && res.data?.mainNav) {
+                    const hireLink = res.data.mainNav.find(
+                        (link: any) => link.systemIdentifier === "hire"
+                    );
+                    if (hireLink) {
+                        setHireSlug(hireLink.slug);
+                    }
+                }
+            } catch (err) {
+                console.error("Error fetching hire slug in tabs:", err);
+            }
+        };
+        fetchHireSlug();
+    }, []);
 
     return (
         <div className="w-full flex flex-col items-center">
@@ -51,7 +74,7 @@ export default function HireTabs({ hireData }: HireTabsProps) {
                         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
                     >
                         {activeData?.serviceItemBox.map((service) => (
-                            <Link href={`/hire/${service.hirepageId.slug}`} key={service.hirepageId.title}>
+                            <Link href={`/${hireSlug}/${service.hirepageId.slug}`} key={service.hirepageId.title}>
                                 <div className="flex items-center gap-4 p-4 px-6 border border-gray-200 rounded shadow-sm hover:border-[#d68029] hover:shadow-md transition-all duration-300 cursor-pointer h-full">
                                     <Image
                                         src={service.image}

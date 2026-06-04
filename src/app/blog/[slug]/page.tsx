@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import apiService from "@/lib/apiService";
 import { Blog, SingleResponse } from "@/types";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import BlogDetailPageClient from "./blogDetailPageClient";
 
 // ✅ Notice the change: params is Promise
@@ -12,7 +12,7 @@ type Props = {
 // Pre-generate static params
 export async function generateStaticParams() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://itsbackend-production.up.railway.app";
+    const apiUrl = API_BASE_URL || "https://itsbackend-production.up.railway.app";
     const res = await fetch(`${apiUrl}/api/blogs/slugs`);
     const response = await res.json();
 
@@ -75,9 +75,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+import { getNavigationStructure } from "@/lib/navigationService";
+import { API_BASE_URL } from "@/config";
+
 // ✅ Fix BlogPage too
 export default async function BlogPage({ params }: Props) {
   const { slug } = await params;
+  const nav = await getNavigationStructure();
+  const blogLink = nav.mainNav.find((link) => link.systemIdentifier === "blog");
+  const currentBlogSlug = blogLink?.slug || "blog";
+
+  // If the current slug for the main Blog page is not "blog", redirect to the new route
+  if (currentBlogSlug !== "blog") {
+    redirect(`/${currentBlogSlug}/${slug}`);
+  }
+
   try {
     const res = await apiService<SingleResponse<Blog>>(
       `/blogs/slug/${encodeURIComponent(slug)}`

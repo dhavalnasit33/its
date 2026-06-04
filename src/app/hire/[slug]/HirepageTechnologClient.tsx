@@ -26,8 +26,9 @@ function transpose<T>(matrix: T[][]): T[][] {
   );
 }
 
-export default function HirepageTechnologClient() {
-  const { slug } = useParams();
+export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?: string }) {
+  const params = useParams();
+  const slug = subPageSlug || (Array.isArray(params.slug) ? params.slug[0] : params.slug);
   const [pageData, setPageData] = useState<HirePageData | null>(null);
   const [Loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>([]);

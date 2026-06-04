@@ -30,8 +30,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
+import { notFound, redirect } from "next/navigation";
+import { getNavigationStructure } from "@/lib/navigationService";
+
 // This is your new page component
-export default async function HirepageTechnolog({ params }: { params: { slug: string } }) {
-    // Here params is still sync ✅
+export default async function HirepageTechnolog({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const nav = await getNavigationStructure();
+    const hireLink = nav.mainNav.find((link) => link.systemIdentifier === "hire");
+    const currentHireSlug = hireLink?.slug || "hire";
+
+    // If the current slug for the main Hire page is not "hire", redirect to the new route
+    if (currentHireSlug !== "hire") {
+        redirect(`/${currentHireSlug}/${slug}`);
+    }
+
     return <HirepageTechnologClient />;
 }

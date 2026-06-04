@@ -8,7 +8,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuMenu } from "react-icons/lu";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { NavigationStructure } from "@/app/layout";
+import { NavigationStructure } from "@/lib/navigationService";
 
 interface NavbarProps {
   navStructure: NavigationStructure;
@@ -41,34 +41,6 @@ export default function Navbar({ navStructure }: NavbarProps) {
   const hireUsRef = useRef<HTMLLIElement>(null);
   const hireUsDropdownRef = useRef<HTMLDivElement>(null);
 
-  // --- All navigation data is now built dynamically from props ---
-  console.log("🚀 ~ Navbar ~ navStructure:", navStructure);
-
-  const servicesData = (navStructure.servicesNav || []).map((group) => {
-    const icon = typeof group.icon === "string" ? group.icon.trim() : "";
-    return {
-      title: group.category,
-      icon: icon, // Safe string
-      services: group.links.map((link) => ({
-        href: `/${link.slug}`,
-        label: link.title,
-      })),
-    };
-  });
-
-  const hireData = (navStructure.hireNav || []).map((group) => {
-    const icon = typeof group.icon === "string" ? group.icon.trim() : "";
-    return {
-      title: group.category,
-      icon: icon, // Safe string
-      services: group.links.map((link) => ({
-        href: `/hire/${link.slug}`,
-        label: link.title,
-      })),
-    };
-  });
-  console.log("hireData", hireData);
-
   // Make the 'About Us' and 'Career' links dynamic
   const aboutLink = (navStructure.mainNav || []).find(
     (link) => link.systemIdentifier === "about-us",
@@ -88,6 +60,30 @@ export default function Navbar({ navStructure }: NavbarProps) {
     (link) => link.systemIdentifier === "portfolio",
   );
 
+  const servicesData = (navStructure.servicesNav || []).map((group) => {
+    const icon = typeof group.icon === "string" ? group.icon.trim() : "";
+    return {
+      title: group.category,
+      icon: icon, // Safe string
+      services: group.links.map((link) => ({
+        href: `/${link.slug}`,
+        label: link.title,
+      })),
+    };
+  });
+
+  const hireSlugPrefix = hireLink ? hireLink.slug : "hire";
+  const hireData = (navStructure.hireNav || []).map((group) => {
+    const icon = typeof group.icon === "string" ? group.icon.trim() : "";
+    return {
+      title: group.category,
+      icon: icon, // Safe string
+      services: group.links.map((link) => ({
+        href: `/${hireSlugPrefix}/${link.slug}`,
+        label: link.title,
+      })),
+    };
+  }); 
   const aboutData = [
     { href: aboutLink ? `/${aboutLink.slug}` : "/about-us", label: "About Us" },
     { href: careerLink ? `/${careerLink.slug}` : "/career", label: "Career" },
@@ -512,7 +508,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
               );
             }
             if (item.label === "Hire Us") {
-              const active = pathname.startsWith("/hire") || hireUsOpen;
+              const hireActivePrefix = hireLink ? `/${hireLink.slug}` : "/hire";
+              const active = pathname.startsWith(hireActivePrefix) || hireUsOpen;
               return (
                 <li
                   key={item.href}
@@ -652,14 +649,14 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                 Developers
                               </span>
                             </div>
-                            <div className="w-full">
-                              <Link
-                                href="/hire"
-                                className="inline-block cursor-pointer rounded-[10px] bg-[#d68029] px-7.5 py-3.75 text-center text-[18px] font-medium text-white transition-colors hover:bg-white hover:text-[#d68029] duration-300 "
-                              >
-                                Hire Us
-                              </Link>
-                            </div>
+                             <div className="w-full">
+                               <Link
+                                 href={hireLink ? `/${hireLink.slug}` : "/hire"}
+                                 className="inline-block cursor-pointer rounded-[10px] bg-[#d68029] px-7.5 py-3.75 text-center text-[18px] font-medium text-white transition-colors hover:bg-white hover:text-[#d68029] duration-300 "
+                               >
+                                 Hire Us
+                               </Link>
+                             </div>
                           </div>
                         </div>
                       </div>
