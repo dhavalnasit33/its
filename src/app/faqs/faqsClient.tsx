@@ -158,7 +158,8 @@ function faqs() {
             {categories.map((category, index) => (
               <button
                 key={category._id ?? category.category ?? index}
-                onClick={() => handleCategoryClick(category.category)}
+                // onClick={() => handleCategoryClick(category.category)}
+                onClick={() => handleCategoryClick(category._id)}
                 className={`px-[40px] cursor-pointer py-[10px] rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200 ${selectedCategory === category.category
                               ? "bg-[#d68029] text-white border-[#d68029]"
                               : "bg-[#ffd4a8] text-black border-[#ffd4a8] hover:bg-[#d68029] hover:text-white hover:border-[#d68029]"

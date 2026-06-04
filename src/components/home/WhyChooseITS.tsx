@@ -6,6 +6,7 @@ import { SingleResponse, WhyChooseItem } from "@/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import apiService from "@/lib/apiService";
+import CurveDivider from "./CurveDivider";
 
 export default function WhyChooseITS() {
   const [whyChooseData, setWhyChooseData] = useState<WhyChooseItem[]>([]);
@@ -33,7 +34,8 @@ export default function WhyChooseITS() {
   }, []);
 
   return (
-    <div className="w-full relative mx-auto  bg-white py-20 lg:pt-3 z-10">
+    <div className="w-full relative mx-auto  bg-white py-20  z-10">
+      <CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
       <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto flex flex-wrap">
 
         <div className="text-center pb-10 mb-2.5 w-full">

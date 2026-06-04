@@ -521,7 +521,7 @@ export default function HomeClient() {
 
 			<TechnologySection />
 
-			<ParallaxShape type="top" />
+			{/* <ParallaxShape type="top" /> */}
 
 			<WhyChooseITS />
 			{/* <WebProcess /> */}
