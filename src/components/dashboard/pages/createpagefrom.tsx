@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -43,28 +43,37 @@ const pageSchema = z.object({
 
 export type PageFormValues = z.infer<typeof pageSchema>;
 
+const defaultValues: PageFormValues = {
+    title: "",
+    description: "",
+    slug: "",
+    image: "",
+    seo: {
+        title: "",
+        keyphrase: "",
+        seoDescription: "",
+        featureImage: "",
+    },
+};
+
 interface PageFormProps {
     initialData?: PageFormValues | null;
     onSubmit: (data: PageFormValues) => Promise<void>;
 }
 
+const generateSlug = (value: string) =>
+    value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
 export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
     const { toast } = useToast();
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const defaultValues: PageFormValues = {
-        title: "",
-        description: "",
-        slug: "",
-        image: "",
-        seo: {
-            title: "",
-            keyphrase: "",
-            seoDescription: "",
-            featureImage: "",
-        },
-    };
 
     const form = useForm<PageFormValues>({
         resolver: zodResolver(pageSchema),
@@ -82,30 +91,33 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                 },
             });
         }
-    }, [initialData]);
+    }, [initialData, form]);
 
-    const watchTitle = form.watch("title");
+    const watchTitle = useWatch({ control: form.control, name: "title" }) ?? "";
+    const isTitleDirty = !!form.formState.dirtyFields.title;
+    const generatedSlug = generateSlug(watchTitle);
+    const permalink = generatedSlug ? `${APP_URL}/${generatedSlug}` : APP_URL;
+
     useEffect(() => {
-        if (!initialData) {
-            const slug = watchTitle
-                .toLowerCase()
-                .trim()
-                .replace(/[^a-z0-9\s-]/g, "")
-                .replace(/\s+/g, "-")
-                .replace(/-+/g, "-");
-            form.setValue("slug", slug, { shouldValidate: false });
+        if (form.getValues("slug") !== generatedSlug) {
+            form.setValue("slug", generatedSlug, {
+                shouldDirty: isTitleDirty,
+                shouldValidate: false,
+            });
         }
-    }, [watchTitle, initialData]);
+    }, [generatedSlug, isTitleDirty, form]);
 
     const handleSubmit: SubmitHandler<PageFormValues> = async (data) => {
         setIsSubmitting(true);
         try {
             await onSubmit(data);
             if (!initialData) form.reset(defaultValues);
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : "Something went wrong";
+
             toast({
                 title: "Error",
-                description: error.message || "Something went wrong",
+                description: message,
                 variant: "destructive",
             });
         } finally {
@@ -139,6 +151,30 @@ export default function PageCreate({ initialData, onSubmit }: PageFormProps) {
                                             <FormControl>
                                                 <Input placeholder="Enter the page title" {...field} />
                                             </FormControl>
+                                            <div className="rounded-md border bg-gray-50 p-3 text-sm">
+                                                {/* <div className="text-muted-foreground">
+                                                    Base URL:{" "}
+                                                    <a
+                                                        href={APP_URL}
+                                                        className="font-medium text-blue-600 hover:underline break-all"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        {APP_URL}
+                                                    </a>
+                                                </div> */}
+                                                <div className="mt-1 text-muted-foreground">
+                                                    Generated link:{" "}
+                                                    <a
+                                                        href={permalink}
+                                                        className="font-medium text-blue-600 hover:underline break-all"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        {permalink}
+                                                    </a>
+                                                </div>
+                                            </div>
                                             <FormMessage />
                                         </FormItem>
                                     )}
