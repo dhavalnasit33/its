@@ -405,23 +405,37 @@ router.get("/", async (req, res) => {
     const skip = (page - 1) * limit;
 
     let query = {};
+    
     if (category) {
-      if (mongoose.Types.ObjectId.isValid(category)) {
-        const catObjId = new mongoose.Types.ObjectId(category);
+      const searchTerm = category.trim();
+
+      if (mongoose.Types.ObjectId.isValid(searchTerm)) {
+        const objId = new mongoose.Types.ObjectId(searchTerm);
+        // Search both categories and subCategories for the ObjectId
         query.$or = [
-          { categories: category },
-          { categories: catObjId }
+          { categories: searchTerm },
+          { categories: objId },
+          { subCategories: searchTerm },
+          { subCategories: objId }
         ];
       } else {
-        const catDoc = await BlogCategory.findOne({ category: category.trim() });
+        // Check both collections to see if the string belongs to either
+        const catDoc = await BlogCategory.findOne({ category: searchTerm });
+        const subDoc = await BlogSubcategory.findOne({ subcategory: searchTerm });
+
+        query.$or = [
+          { categories: searchTerm },       // String fallback for categories
+          { subCategories: searchTerm }     // String fallback for subCategories
+        ];
+
         if (catDoc) {
-          query.$or = [
-            { categories: category },
-            { categories: catDoc._id },
-            { categories: catDoc._id.toString() }
-          ];
-        } else {
-          query.categories = category;
+          query.$or.push({ categories: catDoc._id });
+          query.$or.push({ categories: catDoc._id.toString() });
+        }
+        
+        if (subDoc) {
+          query.$or.push({ subCategories: subDoc._id });
+          query.$or.push({ subCategories: subDoc._id.toString() });
         }
       }
     }
