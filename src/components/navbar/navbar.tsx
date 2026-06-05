@@ -16,7 +16,8 @@ interface NavbarProps {
 }
 
 export default function Navbar({ navStructure }: NavbarProps) {
-  const { hrEmail, contactEmail, phonePrimary, phonePrimaryClean } = useWebsiteSettings();
+  const { hrEmail, contactEmail, phonePrimary, phonePrimaryClean } =
+    useWebsiteSettings();
 
   // State for mobile menu toggles
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -86,7 +87,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
         label: link.title,
       })),
     };
-  }); 
+  });
   const aboutData = [
     { href: aboutLink ? `/${aboutLink.slug}` : "/about-us", label: "About Us" },
     { href: careerLink ? `/${careerLink.slug}` : "/career", label: "Career" },
@@ -227,8 +228,9 @@ export default function Navbar({ navStructure }: NavbarProps) {
                 <li
                   key={item.href}
                   ref={servicesRef}
-                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
-                    } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${
+                    active ? "text-[#D68029]" : ""
+                  } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setServicesOpen(true);
                     setAboutOpen(false);
@@ -260,7 +262,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
                       onMouseEnter={() => setServicesOpen(true)}
                       onMouseLeave={() => setServicesOpen(false)}
                     >
-                      <div className="grid grid-cols-2 relative md:grid-cols-5 max-w-full mx-auto text-sm font-medium">
+                      {/* ADD gap-y-10 to this div to create space between rows */}
+                      <div className="grid grid-cols-2 relative md:grid-cols-5 gap-y-10 max-w-full mx-auto text-sm font-medium">
                         {servicesData.map((serviceCategory, index) => (
                           <div
                             key={index}
@@ -355,8 +358,9 @@ export default function Navbar({ navStructure }: NavbarProps) {
                 <li
                   key={item.href}
                   ref={aboutRef}
-                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
-                    } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${
+                    active ? "text-[#D68029]" : ""
+                  } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setAboutOpen(true);
                     setServicesOpen(false);
@@ -510,13 +514,15 @@ export default function Navbar({ navStructure }: NavbarProps) {
             }
             if (item.label === "Hire Us") {
               const hireActivePrefix = hireLink ? `/${hireLink.slug}` : "/hire";
-              const active = pathname.startsWith(hireActivePrefix) || hireUsOpen;
+              const active =
+                pathname.startsWith(hireActivePrefix) || hireUsOpen;
               return (
                 <li
                   key={item.href}
                   ref={hireUsRef}
-                  className={`relative group cursor-pointer ${active ? "text-[#D68029]" : ""
-                    } hover:text-[#D68029]`}
+                  className={`relative group cursor-pointer ${
+                    active ? "text-[#D68029]" : ""
+                  } hover:text-[#D68029]`}
                   onMouseEnter={() => {
                     setHireUsOpen(true);
                     setServicesOpen(false);
@@ -649,14 +655,14 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                 Developers
                               </span>
                             </div>
-                             <div className="w-full">
-                               <Link
-                                 href={hireLink ? `/${hireLink.slug}` : "/hire"}
-                                 className="inline-block cursor-pointer rounded-[10px] bg-[#d68029] px-7.5 py-3.75 text-center text-[18px] font-medium text-white transition-colors hover:bg-white hover:text-[#d68029] duration-300 "
-                               >
-                                 Hire Us
-                               </Link>
-                             </div>
+                            <div className="w-full">
+                              <Link
+                                href={hireLink ? `/${hireLink.slug}` : "/hire"}
+                                className="inline-block cursor-pointer rounded-[10px] bg-[#d68029] px-7.5 py-3.75 text-center text-[18px] font-medium text-white transition-colors hover:bg-white hover:text-[#d68029] duration-300 "
+                              >
+                                Hire Us
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -668,8 +674,9 @@ export default function Navbar({ navStructure }: NavbarProps) {
             return (
               <li
                 key={item.href}
-                className={`cursor-pointer ${isActive(item.href) ? "text-[#D68029]" : ""
-                  } hover:text-[#D68029]`}
+                className={`cursor-pointer ${
+                  isActive(item.href) ? "text-[#D68029]" : ""
+                } hover:text-[#D68029]`}
               >
                 <Link href={item.href} className="transition-colors block">
                   {item.label}
@@ -999,10 +1006,11 @@ export default function Navbar({ navStructure }: NavbarProps) {
                         <Link
                           href={item.href}
                           onClick={() => setMenuOpen(false)}
-                          className={`flex py-3 px-4 cursor-pointer border-b border-b-[#d68029] border-dashed font-medium ${isActive(item.href)
+                          className={`flex py-3 px-4 cursor-pointer border-b border-b-[#d68029] border-dashed font-medium ${
+                            isActive(item.href)
                               ? "text-[#D68029]"
                               : "text-gray-800 hover:text-[#D68029]"
-                            }`}
+                          }`}
                         >
                           {item.label}
                         </Link>
