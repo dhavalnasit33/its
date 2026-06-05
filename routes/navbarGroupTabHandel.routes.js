@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const NavbarGroupTabImageManage = require('../models/navbarGroupTabImage');
 const { protect } = require('../middlewares/auth'); 
+const navigationCache = require('../services/navigationCache'); 
 const cleanupImages = require('../middlewares/cleanupImages');
 const cleanupOldImages = require('../middlewares/cleanupOldImages');
 
@@ -93,6 +94,7 @@ router.post('/', protect, async (req, res) => {
 
         const newImage = new NavbarGroupTabImageManage(dataToSave);
         await newImage.save();
+        navigationCache.clear();
 
         res.status(201).json({
             success: true,
@@ -281,6 +283,8 @@ router.put('/:id', protect,cleanupOldImages(NavbarGroupTabImageManage,"NavbarGro
             });
         }
 
+        navigationCache.clear();
+
         res.status(200).json({
             success: true,
             message: 'Navbar group tab image updated successfully',
@@ -332,6 +336,8 @@ router.delete('/:id', protect, cleanupImages(NavbarGroupTabImageManage), async (
                 message: 'Navbar group tab image not found',
             });
         }
+
+        navigationCache.clear();
 
         res.status(200).json({
             success: true,

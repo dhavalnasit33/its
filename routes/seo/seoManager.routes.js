@@ -15,8 +15,7 @@ const ServiceCategory = require("../../models/category/serviceCategory.model");
 const HireCategory = require("../../models/category/hireCategory.model");
 const YoastSEO = require("../../models/seo/YoastSEO");
 
-const NodeCache = require("node-cache");
-const navCache = new NodeCache({ stdTTL: 600 }); // 10 minutes cache
+const navigationCache = require("../../services/navigationCache");
 
 /**
  * @swagger
@@ -116,6 +115,7 @@ router.post("/", async (req, res) => {
       cover_image,
     });
     await seoManager.save();
+    navigationCache.clear();
 
     res.status(201).json({
       success: true,
@@ -364,7 +364,7 @@ router.get("/", async (req, res) => {
 router.get("/navigation-structure", async (req, res) => {
   try {
     // 🔥 STEP 1: Check cache first
-    const cachedData = navCache.get("navigation_structure");
+    const cachedData = navigationCache.get("navigation_structure");
 
     if (cachedData) {
       console.log("⚡ Navigation served from CACHE");
@@ -458,13 +458,13 @@ router.get("/navigation-structure", async (req, res) => {
     // );
 
     // In groupByCategory / independentLinks section:
-const independentLinks = allLinks
-  .filter(link => link.linkedType === 'independent')
-  .map(link => ({
-    title: link.title,
-    slug: link.slug,
-    systemIdentifier: link.systemIdentifier,  // ← add this
-  }));
+    const independentLinks = allLinks
+      .filter(link => link.linkedType === 'independent')
+      .map(link => ({
+        title: link.title,
+        slug: link.slug,
+        systemIdentifier: link.systemIdentifier,  // ← add this
+      }));
 
     // ─── Group service / hire links by category name ───────────────────────────
     const groupByCategory = (links, type) => {
@@ -518,7 +518,7 @@ const independentLinks = allLinks
     // console.log("navigationData :", navigationData)
 
     // 🔥 STEP 2: Save in cache
-    navCache.set("navigation_structure", navigationData);
+    navigationCache.set("navigation_structure", navigationData);
 
     console.log("✅ Navigation saved to CACHE");
 
@@ -653,7 +653,7 @@ router.put(
   protect,
   cleanupOldImages(SeoManager, "SeoManager"),
   async (req, res) => {
-    navCache.del("navigation_structure");
+    navigationCache.clear();
 
     try {
       const { id } = req.params;
@@ -776,6 +776,8 @@ router.delete("/:id", protect, cleanupImages(SeoManager), async (req, res) => {
         message: `Cannot delete auto-managed SEO entry. This entry is linked to a ${seoData.linkedType} page. Delete the linked page instead.`,
       });
     }
+
+    navigationCache.clear();
 
     res.status(200).json({
       success: true,

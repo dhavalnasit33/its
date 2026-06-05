@@ -1,9 +1,8 @@
 const SeoManager = require('../models/seo/manage-seo');
 const Service = require('../models/ourServices/ourServies');
 const HirePageData = require('../models/hire/hirePageData');
-const Page = require('../models/page/page.model'); 
-// const NodeCache = require("node-cache");
-// const navCache = new NodeCache({ stdTTL: 600 }); // 10 minutes cache
+const Page = require('../models/page/page.model');
+const navigationCache = require('../services/navigationCache');
 
 
 /**
@@ -55,7 +54,7 @@ const syncSeoData = async (subCategory, slug, title = null, type = 'service', li
             existingSeo.isAutoManaged = type !== 'independent';
 
             await existingSeo.save();
-            // navCache.del("navigation_structure");
+            navigationCache.clear();
             return existingSeo;
 
         } else {
@@ -73,7 +72,7 @@ const syncSeoData = async (subCategory, slug, title = null, type = 'service', li
                 isAutoManaged: type !== 'independent'
             });
             await newSeo.save();
-            // navCache.del("navigation_structure");
+            navigationCache.clear();
             return newSeo;
         }
     } catch (error) {
@@ -159,6 +158,7 @@ const safeDeleteSeoData = async (slug) => {
 const forceDeleteSeoData = async (slug) => {
     try {
         await SeoManager.findOneAndDelete({ slug });
+        navigationCache.clear();
         return true;
     } catch (error) {
         console.error('Error force deleting SEO data:', error);

@@ -5,6 +5,7 @@ const { protect } = require("../../middlewares/auth");
 const mongoose = require("mongoose");
 const cleanupImages = require("../../middlewares/cleanupImages");
 const cleanupOldImages = require("../../middlewares/cleanupOldImages");
+const navigationCache = require("../../services/navigationCache");
 
 const router = express.Router();
 
@@ -40,6 +41,7 @@ router.post("/", protect, async (req, res) => {
 
     const newCategory = new HireCategory({ category, image });
     await newCategory.save();
+    navigationCache.clear();
 
     res.status(201).json({
       success: true,
@@ -173,6 +175,7 @@ router.put("/:id", protect, cleanupOldImages(HireCategory, "HireCategory"), asyn
     if (image !== undefined) categoryDoc.image = image;
 
     await categoryDoc.save();
+    navigationCache.clear();
 
     res.status(200).json({
       success: true,
@@ -216,6 +219,7 @@ router.delete("/:id", protect, cleanupImages(HireCategory), async (req, res) => 
     }
 
     await categoryDoc.deleteOne();
+    navigationCache.clear();
 
     res.status(200).json({
       success: true,
@@ -269,6 +273,7 @@ router.post("/bulk/delete", protect, cleanupImages.cleanupBulkImages(HireCategor
     }
 
     const result = await HireCategory.deleteMany({ _id: { $in: ids } });
+    navigationCache.clear();
 
     res.status(200).json({
       success: true,
