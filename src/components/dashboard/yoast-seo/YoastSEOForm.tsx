@@ -42,6 +42,7 @@ export default function YoastSEOForm({
       meta_description: "",
       cover_image: "",
       page_description: "",
+      googletags: "",
     },
   });
 
@@ -50,6 +51,7 @@ export default function YoastSEOForm({
   const watchedMetaDesc = form.watch("meta_description");
   const watchedKeyphrase = form.watch("seo_keyphrase");
   const watchedPageDesc = form.watch("page_description");
+  const watchedGoogleTags = form.watch("googletags");
 
   // Populate values when initialData changes
   useEffect(() => {
@@ -62,6 +64,7 @@ export default function YoastSEOForm({
         meta_description: "",
         cover_image: "",
         page_description: "",
+        googletags: "",
       });
     }
   }, [initialData, form]);
@@ -197,6 +200,50 @@ export default function YoastSEOForm({
                       <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
                         {watchedMetaDesc?.length || 0} / 160
                       </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+
+            <Card className="mt-6">
+              <CardHeader>
+                <CardTitle>Google Analytics & Tags</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6 p-6 pt-0">
+                {/* <FormField
+                  control={form.control}
+                  name="page_description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Page Description</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Enter page-specific detail description"
+                          rows={4}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                /> */}
+
+                <FormField
+                  control={form.control}
+                  name="googletags"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Google Analytics and Custom Tags</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Paste your Google Tag Manager, Google Analytics, or other custom script tags here"
+                          rows={6}
+                          className="font-mono text-sm"
+                          {...field}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}

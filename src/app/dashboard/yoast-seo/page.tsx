@@ -34,6 +34,7 @@ export default function YoastSEOManagerPage() {
           meta_description: record.meta_description || "",
           cover_image: record.cover_image || "",
           page_description: record.page_description || "",
+          googletags: record.googletags || "",
         });
       } else {
         setContentId(null);

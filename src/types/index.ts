@@ -1562,6 +1562,7 @@ export interface YoastSEO {
   meta_description: string;
   cover_image: string;
   page_description: string;
+  googletags: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -1572,6 +1573,7 @@ export interface YoastSEOFormValues {
   meta_description: string;
   cover_image: string;
   page_description: string;
+  googletags: string;
 }
 
 /* -------------------- Website Settings -------------------- */
