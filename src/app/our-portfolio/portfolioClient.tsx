@@ -101,6 +101,23 @@ export default function PortfolioClient() {
                     );
                     setTotalPages(response.pagination.pages);
                     setTotalItems(response.pagination.total);
+
+                    // Background revalidation (Stale-While-Revalidate)
+                    if (reset) {
+                        apiService<PaginatedResponse<CreativeWork>>(
+                            "/creative-work",
+                            { params, bypassCacheRead: true }
+                        ).then((freshResponse) => {
+                            if (freshResponse.success) {
+                                setCreativeWorkData((prev) => {
+                                    const hasChanged = JSON.stringify(freshResponse.data) !== JSON.stringify(prev);
+                                    return hasChanged ? freshResponse.data : prev;
+                                });
+                                setTotalPages(freshResponse.pagination.pages);
+                                setTotalItems(freshResponse.pagination.total);
+                            }
+                        }).catch((err) => console.error("Background refresh error:", err));
+                    }
                 }
             } catch (err) {
                 console.error("Error fetching creative works:", err);
@@ -130,7 +147,7 @@ export default function PortfolioClient() {
     };
     const CreativeWorkSkeleton = () => (
         <div className="relative rounded-lg overflow-hidden shadow-md border border-gray-200">
-            <div className="w-full h-64 bg-gray-200 animate-pulse"></div>
+            <div className="w-full aspect-[640/450] bg-gray-200 animate-pulse"></div>
             <div className="absolute bottom-0 left-0 right-0 h-12 bg-black/20 animate-pulse"></div>
         </div>
     );
@@ -341,10 +358,10 @@ export default function PortfolioClient() {
                                                             alt={work.title}
                                                             width={640}
                                                             height={450}
-                                                            className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+                                                            className="w-full aspect-[640/450] object-cover transition-transform duration-500 group-hover:scale-110"
                                                         />
                                                     ) : (
-                                                        <div className="w-full h-64 bg-gray-200"></div>
+                                                        <div className="w-full aspect-[640/450] bg-gray-200"></div>
                                                     )}
                                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                                         <h3 className="text-white text-lg font-semibold text-center px-4">

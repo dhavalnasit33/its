@@ -618,7 +618,7 @@ export default function ContactPageForm() {
                                                     key={index}
                                                     onClick={() => setSelectedBudget(budget)}
                                                     type="button"
-                                                    className="rounded-lg sm:px-6 sm:py-4 px-4 py-2 text-sm font-medium sm:text-base uppercase tracking-wide transition-colors bg-[#ffffff08] text-white hover:bg-[#ffffff1a]"
+                                                    className="rounded-lg hover:cursor-pointer    hover:text-white sm:px-6 sm:py-4 px-4 py-2 text-sm font-medium sm:text-base uppercase tracking-wide transition-colors bg-[#ffffff08] text-white hover:bg-[#ffffff1a]"
                                                 >
                                                     {budget}
                                                 </button>

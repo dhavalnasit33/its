@@ -488,8 +488,10 @@ export default function GeneralContactForm() {
                                     }}
                                     type="button"
                                     className={`
+                                        hover:cursor-pointer
         rounded-lg sm:px-6 sm:py-4 px-4 py-2 text-sm font-medium
         sm:text-base uppercase tracking-wide transition-colors
+        hover:bg-[#D68029] hover:text-white
         ${selectedBudget === budget
                                             ? "bg-[#D68029] text-white"
                                             : "bg-[#13213d] text-white "

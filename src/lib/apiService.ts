@@ -3,6 +3,7 @@ import { cacheKey, cacheRead, cacheWrite } from "@/lib/localStorageCache";
 
 interface ApiOptions extends RequestInit {
   params?: Record<string, string | number | boolean | undefined>;
+  bypassCacheRead?: boolean;
 }
 
 const CACHED_ENDPOINTS: string[] = [
@@ -51,7 +52,7 @@ async function apiService<T>(
   const method = (fetchOptions.method || "GET").toUpperCase();
   const isGet = method === "GET";
 
-  if (isGet && shouldCache(endpoint)) {
+  if (isGet && shouldCache(endpoint) && !options.bypassCacheRead) {
     const key = cacheKey(
       endpoint,
       params as Record<string, string | number | boolean | undefined>,
