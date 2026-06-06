@@ -199,7 +199,7 @@ export default function ServicePageClient() {
             {/* Content */}
             <div className="relative z-10 px-4">
               <motion.h1
-                className="text-[3rem] md:text-[5rem] font-semibold mb-6 text-black"
+                className="text-[2.8rem] md:text-[5rem] font-semibold mb-6 text-black break-words"
                 initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
@@ -291,10 +291,10 @@ export default function ServicePageClient() {
 
           {/* INTRO */}
           {data.subMainTitle && (
-            <div className="relative w-full z-30 mx-auto px-4 flex-wrap">
-              <div className="text-center py-12">
+            <div className="relative w-full z-30 mx-auto flex-wrap">
+              <div className="text-center py-12 w-full max-w-[90%] lg:max-w-[80%] mx-auto relative ">
                 <motion.h2
-                  className="text-3xl md:text-4xl font-bold leading-snug"
+                  className="text-3xl md:text-4xl font-bold leading-snug "
                   initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
@@ -330,7 +330,7 @@ export default function ServicePageClient() {
 
           {/* SERVICES GRID */}
           <motion.div
-            className="pb-16 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3"
+            className="pb-16 grid grid-cols-1 sm:grid-cols-1  md:grid-cols-3"
             variants={containerVariants}
             initial="hidden"
             whileInView="show"
@@ -341,11 +341,11 @@ export default function ServicePageClient() {
                 {data.contentBlocks.map((service, idx) => (
                   <motion.div
                     key={idx}
-                    className={`flex flex-col gap-4 p-6 lg:border-gray-400
-                      ${idx % 3 < 2 ? "lg:border-r" : ""}
+                    className={`flex flex-col gap-4 px-0 py-6 md:p-6  md:border-gray-400    
+                      ${idx % 3 < 2 ? "md:border-r" : ""}
                       ${Math.floor(idx / 3) <
                         Math.ceil(data.contentBlocks.length / 3) - 1
-                        ? "lg:border-b"
+                        ? "md:border-b"
                         : ""
                       }`}
                     variants={itemVariants}

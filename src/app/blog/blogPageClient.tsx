@@ -287,11 +287,13 @@ export default function BlogPageClient() {
       {/* Hero Section */}
       <section
         data-cursor
-        className="px-12.5 common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative"
-      >
-        <div className="flex w-full z-20">
+        // className="px-12.5 common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative"
+              className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative"
+
+>
+        <div className="flex w-full z-20  max-w-[90%] lg:max-w-[80%] relative mx-auto ">
           <div className="flex mt-12.5 w-full">
-            <div className="flex p-2.5 flex-wrap w-full mx-auto justify-center items-center">
+            <div className="flex flex-wrap w-full mx-auto justify-center items-center">
               <motion.div
                 initial={{ opacity: 0, y: -50 }}
                 whileInView={{ opacity: 1, y: 0 }}

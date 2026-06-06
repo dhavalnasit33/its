@@ -47,7 +47,7 @@ export default function ContactFooterPage() {
   return (
     <footer id="contact-form-section" className=" relative pt-16 bg-white">
       {/* ---------------- Contact Form Floating Card ---------------- */}
-      <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 px-4">
+      <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 ">
         {/* <div className="  w-full mx-auto md:-mb-90 relative z-10">
           <div className="bg-white md:shadow-[0_0_12.2px_0_rgba(0,0,0,0.25)] rounded-2xl p-2 md:p-10">
             {isTrainingPage ? (
@@ -141,7 +141,7 @@ export default function ContactFooterPage() {
                 </Link>
 
                 {/* Social Icons */}
-                <div className="flex gap-4 mt-4 text-white">
+                <div className="flex flex-wrap gap-4 mt-4 text-white">
                   <a
                     href={linkedinLink}
                     target="_blank"

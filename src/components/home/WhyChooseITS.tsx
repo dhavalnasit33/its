@@ -35,7 +35,7 @@ export default function WhyChooseITS() {
 
   return (
     <div className="w-full relative mx-auto  bg-white py-20  z-10">
-      <CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
+      {/* <CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" /> */}
       <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto flex flex-wrap">
 
         <div className="text-center pb-10 mb-2.5 w-full">
@@ -61,7 +61,7 @@ export default function WhyChooseITS() {
                 {whyChooseData.map((item, index) => (
                   <div
                     key={item.id ?? `whychoose-${index}`}
-                    className="p-8 bg-white"
+                    className="px-0 py-8 md:p-8 bg-white "
                   >
                     <Image
                       src={item.image}

@@ -1521,7 +1521,9 @@ export default function HireDevelopersPageClient() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
-                            className="w-full max-w-[90%] shadow-[0_0_80px_10px_#0000001a] lg:max-w-[40%] flex relative mx-auto p-2.5 xl:p-7.5 min-h-px h-full border border-white/10 bg-[#ffffff08] backdrop-blur-md rounded-xl"
+                            // className="w-full max-w-[90%] shadow-[0_0_80px_10px_#0000001a] lg:max-w-[40%] flex relative mx-auto p-2.5 xl:p-7.5 min-h-px h-full border border-white/10 bg-[#ffffff08] backdrop-blur-md rounded-xl"
+                          className=" w-full lg:max-w-[40%]  mx-auto  flex flex-col gap-4 p-4 xl:p-8 overflow-hidden rounded-xl
+                                    border border-white/10 bg-[#ffffff08] backdrop-blur-md shadow-[0_0_80px_10px_#0000001a] "
                         >
                             <HireFormSection />
                         </motion.div>
@@ -1534,7 +1536,7 @@ export default function HireDevelopersPageClient() {
             <section className="w-full relative py-12.5  not-first:  ">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
                     <div className="flex w-full relative min-h-px">
-                        <div className="w-full flex flex-wrap p-2.5 content-start relative ">
+                        <div className="w-full flex flex-wrap content-start relative ">
                             <div className="text-center pb-10 mb-2.5 w-full">
                                 <div className="text-center">
                                     <motion.div
@@ -1570,7 +1572,7 @@ export default function HireDevelopersPageClient() {
                             </div>
                             <div className="w-full  mx-auto flex gap-8 flex-col-reverse relative lg:flex-row">
                                 <div className="flex w-full relative min-h-px max-w-full lg:max-w-[50%]">
-                                    <div className="flex flex-col p-2.5 content-center justify-center  items-center relative w-full">
+                                    <div className="flex flex-col  content-center justify-center  items-center relative w-full">
                                         <motion.div
                                             initial={{ opacity: 0, y: 80 }}
                                             whileInView={{ opacity: 1, y: 0 }}
@@ -1612,7 +1614,7 @@ export default function HireDevelopersPageClient() {
                                     </div>
                                 </div>
                                 <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
-                                    <div className="flex flex-col p-2.5 content-center items-center relative w-full">
+                                    <div className="flex flex-col  content-center items-center relative w-full">
                                         <motion.div
                                             initial={{ opacity: 0 }}
                                             whileInView={{ opacity: 1 }}
@@ -1645,7 +1647,7 @@ export default function HireDevelopersPageClient() {
             {/* section 3 Hire Dedicated Web and Mobile App Developers */}
             <section className="w-full relative py-12.5 not-first:">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
-                    <div className="w-full flex flex-wrap p-2.5 content-start relative">
+                    <div className="w-full flex flex-wrap content-start relative">
                         <div className="text-center pb-10 mb-2.5 w-full">
                             <motion.div
                                 initial={{ opacity: 0, y: -70 }}
@@ -1689,7 +1691,7 @@ export default function HireDevelopersPageClient() {
             <section className="w-full relative py-12.5     ">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
                     <div className="flex w-full relative min-h-px">
-                        <div className="w-full flex flex-wrap p-2.5 content-start relative ">
+                        <div className="w-full flex flex-wrap  content-start relative ">
                             <div className="text-center pb-10 mb-2.5 w-full">
                                 <div className="text-center">
                                     <motion.div
@@ -1762,7 +1764,7 @@ export default function HireDevelopersPageClient() {
             <section className="w-full relative py-12.5 overflow-x-hidden">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
                     <div className="flex w-full relative min-h-px">
-                        <div className="w-full flex flex-wrap p-2.5 content-start relative ">
+                        <div className="w-full flex flex-wrap  content-start relative ">
                             <div className="text-center pb-10 mb-2.5 w-full">
                                 <motion.div
                                     initial={{ opacity: 0, y: -70 }}
@@ -2158,7 +2160,7 @@ export default function HireDevelopersPageClient() {
             <section className="relative py-12.5 w-full z-20">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex">
                     <div className="flex relative min-h-px w-full">
-                        <div className="flex p-2.5 content-start relative w-full flex-wrap">
+                        <div className="flex  content-start relative w-full flex-wrap">
                             <div className="text-center pb-2.5  mb-2.5 w-full">
                                 <div className="text-center">
                                     <motion.div
@@ -2403,7 +2405,7 @@ export default function HireDevelopersPageClient() {
             >
                 <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[80%]">
                     <div className="flex w-full relative min-h-px">
-                        <div className="flex flex-wrap p-2.5 content-start w-full  relative">
+                        <div className="flex flex-wrap content-start w-full  relative">
                             <div className="mb-5 w-full text-center relative hiring_model_benefits">
                                 <h4 className="text-center relative text-black pb-6.25 text-[20px] font-semibold">
                                     Benefits
@@ -2460,7 +2462,7 @@ export default function HireDevelopersPageClient() {
             {/* section 9: faq question */}
             <section ref={faqRef} className="relative w-full py-12.5 pt-20">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
-                    <div className="flex flex-wrap  w-full relative p-2.5 content-start">
+                    <div className="flex flex-wrap  w-full relative content-start">
                         <div className="text-center pb-10 mb-2.5 w-full">
                             <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
                                 Frequently Asked Questions (FAQ)
@@ -2470,7 +2472,7 @@ export default function HireDevelopersPageClient() {
                         <section className="w-full mt-7.5 relative  ">
                             <div className="w-full gap-8 box-border relative flex flex-col lg:flex-row mx-auto">
                                 <div className="w-full max-w-full lg:max-w-[29.99%] flex  relative min-h-px">
-                                    <div className="flex items-start content-start p-2.5 w-full flex-wrap top-[13%] z-10 h-fit sticky ">
+                                    <div className="flex items-start content-start  w-full flex-wrap top-[13%] z-10 h-fit sticky ">
                                         <div className="mb-5">
                                             <div className="text-xl text-[#d68029] font-semibold">
                                                 Do you have more questions?
@@ -2508,7 +2510,7 @@ export default function HireDevelopersPageClient() {
                                     </div>
                                 </div>
                                 <div className="w-full max-w-full lg:max-w-[70%] flex relative min-h-px">
-                                    <div className="flex p-2.5 w-full content-start relative flex-wrap">
+                                    <div className="flex  w-full content-start relative flex-wrap">
                                         <div className="w-full text-start box-border relative">
                                             {hireMainPageData.pricePathAndFAQ.faq.length > 0 &&
                                                 hireMainPageData.pricePathAndFAQ.faq.map((item, index) => {

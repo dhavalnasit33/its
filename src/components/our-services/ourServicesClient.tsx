@@ -241,7 +241,7 @@ export default function OurServicesClient() {
 						<div
 							key={index}
 							className={`w-full relative mx-auto flex flex-col md:flex-row ${index % 2 === 1 ? "md:flex-row-reverse" : ""
-								} items-center justify-between gap-10 px-6 md:px-12 py-16`}
+								} items-center justify-between gap-10  xl:px-12 py-16`}
 						>
 							{/* Image */}
 							<motion.div

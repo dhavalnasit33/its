@@ -379,20 +379,17 @@ export default function HireForm() {
                 />
 
                 <div className="flex justify-start my-4">
-                    {/* <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                        onChange={(token) => setCaptchaToken(token)}
-                    /> */}
-                      <ReCAPTCHA
-                            ref={recaptchaRef}
-                            // sitekey={
-                            //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                            //     "YOUR_SITE_KEY"
-                            // }
-                            sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
-                            onChange={(token) => setCaptchaToken(token || "")}
-                        />
+                      <div className="scale-75 sm:scale-100 origin-left">
+                        <ReCAPTCHA
+                                ref={recaptchaRef}
+                                // sitekey={
+                                //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                                //     "YOUR_SITE_KEY"
+                                // }
+                                sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
+                                onChange={(token) => setCaptchaToken(token || "")}
+                            />
+                        </div>
                 </div>
 
                 <Button

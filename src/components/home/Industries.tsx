@@ -113,14 +113,15 @@ export default function Industries() {
         >
             <div
                 ref={titleRef}
-                className="text-center w-full lg:pt-16 sticky"
+                className="text-center w-full pt-8 lg:pt-16 sticky   "
                 style={{
                     top: `${NAVBAR_HEIGHT}px`,
                     zIndex: 2000,
                     background: "#060610",
                     paddingBottom: "24px",
                 }}
-            >
+            >   
+                <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto ">
                 <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-slate-300 mb-5">
                     Industries We Serve
                 </span>
@@ -133,6 +134,7 @@ export default function Industries() {
                     From early-stage startups to global enterprises - tailored digital
                     products across every major vertical.
                 </p>
+                </div>
             </div>
 
             <div className="relative" >
@@ -167,7 +169,7 @@ export default function Industries() {
                                 className="container max-w-7xl mx-auto"
                                 style={{ paddingBottom: isLast ? "80px" : "24px" }}
                             >
-                                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                     {row.map((item, colIndex) => {
                                         const globalIndex = rowIndex * 4 + colIndex;
                                         const gradients = ROW_GRADIENTS[globalIndex % ROW_GRADIENTS.length];

@@ -298,7 +298,9 @@ export default function HomeClient() {
 				</video>
 				<div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-950/80 to-slate-900/75 pointer-events-none"></div>
 
-				<div className="relative z-10 container mx-auto max-w-7xl px-4 flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch">
+				{/* <div className="relative z-10 container mx-auto max-w-7xl px-4 flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch"> */}
+				<div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch  pb-10 md:pb-20
+				w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl">
 					<div className="lg:w-2/5 flex flex-col">
 						<div className="flex">
 							<span className="inline-flex items-center rounded-full border border-white bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-200 mb-4">
@@ -406,7 +408,7 @@ export default function HomeClient() {
 			</section> */}
 			<section className="w-full relative lg:pb-0 py-20 bg-white z-10 ">
 				<CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
-				<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-6 md:px-8 lg:px-10  grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+				<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<div className="relative w-full flex justify-center lg:justify-end items-center">
 						<Image
 							src={homePageData?.aboutOurCompany?.image}
@@ -416,7 +418,8 @@ export default function HomeClient() {
 							className="w-full  lg:max-w-125 h-auto object-contain"
 						/>
 						<motion.div
-							className="absolute -bottom-8 md:-bottom-4 xl:bottom-1 left-auto lg:left-auto max-[400px]:-right-1/3 max-[500px]:-right-1/4 -right-1/5 sm:-right-1/5 lg:right-5 transform -translate-x-1/2 lg:translate-x-0 bg-black text-white px-2 md:px-6 py-2 md:py-4 rounded-lg shadow-lg"
+							className="absolute -bottom-7 md:-bottom-4 xl:bottom-1 left-auto lg:left-auto max-[400px]:-right-1/6 max-[500px]:-right-1/5 -right-1/6 sm:-right-1/7 
+							lg:right-5 transform -translate-x-1/2 lg:translate-x-0 bg-black text-white px-2 md:px-6 py-2 md:py-4 rounded-lg shadow-lg"
 							initial={{ opacity: 0, scale: 0.7 }}
 							whileInView={{ opacity: 1, scale: 1 }}
 							transition={{ duration: 0.7, ease: "easeOut" }}
@@ -521,14 +524,15 @@ export default function HomeClient() {
 
 			<TechnologySection />
 
-			{/* <ParallaxShape type="top" /> */}
+			<ParallaxShape type="top" />
 
 			<WhyChooseITS />
 			{/* <WebProcess /> */}
 			<Industries />
 			<section className="w-full py-12 bg-white z-10 relative">
 				<div className="w-full mx-auto flex flex-col gap-12">
-					<div className="mb-8 mx-auto flex flex-col items-center text-center px-4">
+					{/* <div className="mb-8 mx-auto flex flex-col items-center text-center px-4"> */}
+					<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto text-center flex flex-col items-center">
 						<h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
 							<div
 								className=" rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
@@ -544,8 +548,9 @@ export default function HomeClient() {
 							{/* {homePageData.overseasWebAgencies.desctiption}
 						</p> */}
 					</div>
-					<div className="flex flex-col lg:flex-row items-center lg:items-center justify-center-safe w-full  gap-10">
-						<div className="w-full lg:w-2/4">
+					{/* <div className="flex flex-col lg:flex-row items-center lg:items-center justify-center-safe w-full  gap-10"> */}
+					<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto flex flex-col lg:flex-row items-center lg:items-center justify-center-safe gap-10">
+						<div className="w-full lg:w-4/6">
 							<Image
 								src={homePageData?.overseasWebAgencies?.image}
 								alt="World Map"
@@ -556,7 +561,7 @@ export default function HomeClient() {
 							/>
 						</div>
 
-						<div className="w-full lg:w-1/4">
+						<div className="w-full lg:w-2/6">
 							<div className="mb-6 text-center lg:text-left">
 								<p className="text-gray-500 text-lg mb-2">{homePageData?.overseasWebAgencies?.detail?.subtitle}</p>
 								<h3 className="text-3xl font-bold text-gray-900">
@@ -566,7 +571,7 @@ export default function HomeClient() {
 						</div>
 					</div>
 					{/* Button */}
-					<div className="flex justify-center">
+					<div className="flex justify-center w-full max-w-[90%] lg:max-w-[80%] relative mx-auto ">
 						<Link href="/our-portfolio">
 							<button className="group cursor-pointer relative inline-flex items-center justify-center gap-2 px-6 py-2 rounded-full font-semibold text-[#0A1128] text-sm sm:text-base overflow-hidden">
 								<span className="absolute inset-0 flex">
