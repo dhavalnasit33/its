@@ -339,9 +339,9 @@ export default function BlogPageClient() {
       {/* Blogs + Categories */}
       <section
         ref={categoryRef}
-        className="px-4 md:px-8 lg:px-12 py-16 scroll-mt-24"
+        className=" py-16 scroll-mt-24 w-full relative "
       >
-        <div className="w-full max-w-full lg:max-w-[80%] mx-auto">
+        <div className="w-full  max-w-[90%] lg:max-w-[80%] mx-auto">
           {/* Categories */}
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map((category, index) => (
@@ -373,7 +373,7 @@ export default function BlogPageClient() {
               </p>
             </div>
           ) : (
-            <div className="grid max-[534px]:grid-cols-1 grid-cols-2 xl:grid-cols-3  max-[534px]:gap-4 gap-8">
+            <div className="grid max-[640px]:grid-cols-1 grid-cols-2 xl:grid-cols-3  max-[640px]:gap-4 gap-8">
               {blogs.map((blog) => (
                 <div
                   key={blog._id}

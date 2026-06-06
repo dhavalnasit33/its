@@ -584,16 +584,18 @@ export default function GeneralContactForm() {
                         )}
                     </div>
 
-                    <div className="my-4 flex justify-center md:justify-start">
-                        <ReCAPTCHA
-                            ref={recaptchaRef}
-                            // sitekey={
-                            //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                            //     "YOUR_SITE_KEY"
-                            // }
-                            sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
-                            onChange={(token) => setCaptchaToken(token || "")}
-                        />
+                    <div className="my-4 flex justify-start"> 
+                        <div className="scale-75 sm:scale-100 origin-left">
+                            <ReCAPTCHA
+                                ref={recaptchaRef}
+                                // sitekey={
+                                //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                                //     "YOUR_SITE_KEY"
+                                // }
+                                sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
+                                onChange={(token) => setCaptchaToken(token || "")}
+                            />
+                        </div>
                     </div>
 
                     <button

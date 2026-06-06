@@ -152,7 +152,8 @@ export default function Industries() {
                         <div
                             key={rowIndex}
                             ref={(el) => { rowRefs.current[rowIndex] = el; }}
-                            className="sticky px-4"
+                            // className="sticky px-4"
+                            className="sticky"
                             style={{
                                 top: `${topValue}px`,
                                 zIndex,
@@ -166,7 +167,8 @@ export default function Industries() {
                             }}
                         >
                             <div
-                                className="container max-w-7xl mx-auto"
+                                // className="container max-w-7xl mx-auto"
+                                className="container w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl mx-auto relative"
                                 style={{ paddingBottom: isLast ? "80px" : "24px" }}
                             >
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

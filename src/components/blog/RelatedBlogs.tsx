@@ -72,8 +72,8 @@ export default function RelatedBlogs({
   }
 
   return (
-    <section className="px-4 md:px-8 lg:px-12 py-16 relative bg-white z-10">
-      <div className="w-full max-w-full lg:max-w-[85%] mx-auto">
+    <section className=" py-16 relative bg-white z-10">
+      <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
         <div className="text-center  mb-2.5 w-full">
           <motion.div
             initial={{ opacity: 0, y: -50 }}

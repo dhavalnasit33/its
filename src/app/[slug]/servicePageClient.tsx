@@ -341,7 +341,7 @@ export default function ServicePageClient() {
                 {data.contentBlocks.map((service, idx) => (
                   <motion.div
                     key={idx}
-                    className={`flex flex-col gap-4 px-0 py-6 md:p-6  md:border-gray-400    
+                    className={`flex flex-col gap-4 px-0 py-6 md:p-6  md:border-gray-400 border-gray-400  max-[768px]:border-b
                       ${idx % 3 < 2 ? "md:border-r" : ""}
                       ${Math.floor(idx / 3) <
                         Math.ceil(data.contentBlocks.length / 3) - 1

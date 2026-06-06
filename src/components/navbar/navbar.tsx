@@ -201,7 +201,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
+    // <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
+    <nav className="w-full bg-white shadow-sm sticky top-0 z-[9999]">
       <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto h-20 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image

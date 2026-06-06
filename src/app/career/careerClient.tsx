@@ -113,10 +113,10 @@ export default function CareerClient() {
     <>
       {/* HERO */}
       {/* SECTION 1: Career HERO */}
-      <section className=" w-full flex   items-center justify-center mx-auto py-12.5 common_background_gradient">
-        <div className="w-full max-w-[90%] xl:max-w-[80%] gap-8  flex flex-col-reverse xl:flex-row items-center justify-center ">
+      <section className=" w-full mx-auto py-12.5 common_background_gradient">
+        <div className="w-full max-w-[90%] xl:max-w-[80%] mx-auto relative gap-8  flex flex-col-reverse lg:flex-row items-center justify-center ">
           {/* Left Content */}
-          <div className="w-full z-10 max-w-full xl:max-w-[65%] p-2.5 items-center content-center text-gray-800">
+          <div className="w-full z-10 max-w-full xl:max-w-[65%] items-center content-center text-gray-800">
             {/* Heading (top → bottom) */}
             <motion.div
               initial={{ opacity: 0, y: -40 }}
@@ -164,7 +164,7 @@ export default function CareerClient() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="relative z-10 w-full max-w-full  p-2.5 xl:max-w-[35%]   "
+            className="relative z-10 w-full max-w-full xl:max-w-[35%]   "
           >
             {/* Main Illustration */}
 
@@ -186,7 +186,7 @@ export default function CareerClient() {
       {/* section 2 : openning position */}
       <section className="w-full   relative py-16" id="openning-position">
         <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
-          <div className="flex flex-wrap relative p-2.5 mx-auto">
+          <div className="flex flex-wrap relative mx-auto">
             <motion.div
               className="flex flex-col items-center w-full justify-center text-center mb-10"
               initial={{ opacity: 0, y: -100 }}
@@ -314,7 +314,7 @@ export default function CareerClient() {
       </section>
       {/* section 3 : how career at its  */}
       <section className="w-full flex   py-12.5  bg-white">
-        <div className="w-full max-w-[90%] xl:max-w-[80%] flex flex-col xl:flex-row items-center justify-center relative mx-auto gap-7.5 ">
+        <div className="w-full max-w-[90%] lg:max-w-[80%] flex flex-col lg:flex-row items-center justify-center relative mx-auto gap-7.5 ">
           {/* Left Image (Animated Logo) */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -337,7 +337,7 @@ export default function CareerClient() {
             </div>
           </motion.div>
           {/* Right Content */}
-          <div className="w-full max-w-xl md:max-w-2xl text-gray-900">
+          <div className="w-full  lg:max-w-2xl text-gray-900">
             <motion.div
               initial={{ opacity: 0, y: -40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -372,7 +372,7 @@ export default function CareerClient() {
       {/* section 4 : why choose its  */}
       <section className="w-full py-16 overflow-x-hidden">
         <motion.div
-          className="flex flex-col items-center justify-center text-center mb-10"
+          className=" text-center mb-10 w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"
           initial={{ opacity: 0, y: -100 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}

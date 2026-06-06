@@ -424,7 +424,7 @@ export default function ContactPageForm() {
 
     return (
         <section className="relative bg-[#0d1b2a] w-full z-20">
-            <div className="max-w-[90%] lg:max-w-[80%] mx-auto px-4">
+            <div className="max-w-[90%] lg:max-w-[80%] mx-auto">
                 <div className="border-t border-[#ffffff14] py-10">
 
                     <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] items-start ">
@@ -627,13 +627,15 @@ export default function ContactPageForm() {
                                     </div>
 
 
-                                    <div className="my-4 flex max-[480px]:justify-center">
-                                        <ReCAPTCHA
-                                            ref={recaptchaRef}
-                                            // sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                                             sitekey={GOOGLE_CAPTACH_CLIENT_KEY }
-                                            onChange={(token) => setCaptchaToken(token || "")}
-                                        />
+                                    <div className="flex justify-start my-4     ">
+                                        <div className="scale-75 sm:scale-100 origin-left">
+                                            <ReCAPTCHA
+                                                ref={recaptchaRef}
+                                                // sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                                                sitekey={GOOGLE_CAPTACH_CLIENT_KEY }
+                                                onChange={(token) => setCaptchaToken(token || "")}
+                                            />
+                                        </div>
                                     </div>
                                     <button
                                         type="submit"

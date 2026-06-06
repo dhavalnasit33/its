@@ -72,9 +72,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
   return (
     <>
       {/* SECTION 1: ABOUT US HERO */}
-      <section className=" w-full flex flex-col-reverse xl:flex-row items-center justify-center px-4 sm:px-8 md:px-20 py-10 pb-20 gap-10 common_background_gradient bg-white z-10">
+      <section className=" w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20 py-10 pb-20 gap-10 common_background_gradient bg-white z-10">
         {/* Left Content */}
-        <div className="w-full z-10 max-w-xl md:max-w-2xl text-gray-800">
+        <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-2xl text-gray-800">
           {/* Subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -349,9 +349,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             </section> */}
 
       <section className="relative w-full py-12.5 bg-white z-10">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col-reverse relative lg:flex-row">
+        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col relative lg:flex-row">
           <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
-            <div className="flex flex-col p-2.5 content-center items-center relative w-full">
+            <div className="flex flex-col  content-center items-center relative w-full">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -385,7 +385,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             </div>
           </div>
           <div className="flex w-full relative min-h-px max-w-full lg:max-w-[50%]">
-            <div className="flex flex-col p-2.5 content-center justify-center  items-center relative w-full">
+            <div className="flex flex-col content-center justify-center  items-center relative w-full">
               <motion.div
                 initial={{ opacity: 0, y: -60 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -427,11 +427,11 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 
       {/* SECTION 3: JUST KNOW ABOUT OUR GOALS */}
       <section
-        className="w-full px-4 relative  py-16 z-10 bg-white
+        className="w-full relative  py-16 z-10 bg-white
             [background:linear-gradient(90deg,#ff9f3_0%,rgba(255,249,243,0)_55.69%)]"
       >
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
-          <div className="flex flex-col items-center justify-center text-center p-2.5 w-full relative">
+          <div className="flex flex-col items-center justify-center text-center w-full relative">
             <div className="flex flex-col items-center w-full justify-center text-center mb-10">
               <h2 className="text-3xl sm:text-4xl md:text-[46px] font-semibold text-gray-900 relative">
                 Just Know About Our Goals
@@ -550,7 +550,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
       {/* SECTION 4: UNIQUE FEATURES */}
       <section className="w-full  relative py-16 bg-white overflow-x-hidden z-10">
         <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
-          <div className="flex flex-col lg:flex-row items-center w-full p-2.5 justify-between gap-8">
+          <div className="flex flex-col lg:flex-row items-center w-full  justify-between gap-8">
             {/* Left Features - 3 items */}
             <motion.div
               initial={{ opacity: 0, x: -150 }}

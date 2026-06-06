@@ -240,7 +240,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
           </h1>
         </div>
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex  ">
-          <div className="w-full flex flex-wrap p-2.5 content-start relative ">
+          <div className="w-full flex flex-wrap  content-start relative ">
             <section className="w-full relative">
               <div className="flex flex-col lg:flex-row items-start w-full gap-10 mx-auto relative ">
                 <div className="w-full  lg:max-w-[50%] flex relative min-h-px ">
@@ -289,7 +289,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                       />
                       {/* </div> */}
                     </motion.div>
-                    <div className="mb-7 mt-2.5 relative w-full">
+                    <div className="mb-7  relative w-full">
                       <motion.div
                         className=" mt-2.5 relative "
                         initial={{ opacity: 0, y: 60 }}
@@ -454,7 +454,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       <section className="relative py-12.5 w-full z-20 bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex">
           <div className="flex relative min-h-px w-full">
-            <div className="flex p-2.5 content-start relative w-full flex-wrap">
+            <div className="flex  content-start relative w-full flex-wrap">
               <div className="text-center pb-2.5  mb-2.5 w-full">
                 <div className="text-center">
                   <motion.div
@@ -699,7 +699,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       >
         <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[80%]">
           <div className="flex w-full relative min-h-px">
-            <div className="flex flex-wrap p-2.5 content-start w-full  relative">
+            <div className="flex flex-wrap content-start w-full  relative">
               <div className="mb-5 w-full text-center relative hiring_model_benefits">
                 <h4 className="text-center relative text-black pb-6.25 text-[20px] font-semibold">
                   Benefits
@@ -759,7 +759,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       <section className="relative w-full py-12.5 z-10 bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col-reverse relative lg:flex-row">
           <div className="flex w-full relative min-h-px max-w-full lg:max-w-[50%]">
-            <div className="flex flex-col p-2.5 content-center justify-center items-center relative w-full">
+            <div className="flex flex-col  content-center justify-center items-center relative w-full">
               <motion.div
                 initial={{ opacity: 0, y: -60 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -791,7 +791,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
           <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
-            <div className="flex flex-col p-2.5 content-center items-center relative w-full">
+            <div className="flex flex-col content-center items-center relative w-full">
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -819,7 +819,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       <section className="w-full relative py-12.5 bg-[#fff9f2] overflow-x-hidden z-10">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
           <div className="flex w-full relative min-h-px">
-            <div className="w-full flex flex-wrap p-2.5 content-start relative ">
+            <div className="w-full flex flex-wrap content-start relative ">
               <div className="text-center pb-10 mb-2.5 w-full">
                 <div className="text-center">
                   <motion.div
@@ -911,7 +911,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
 
           {/* 🔼 Foreground content */}
           <div className=" flex w-full max-w-full md:max-w-[66.23%] relative min-h-px  ">
-            <div className="flex flex-col p-2.5 content-center items-center relative w-full">
+            <div className="flex flex-col content-center items-center relative w-full">
               <motion.div
                 initial={{ opacity: 0, y: -40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1005,7 +1005,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       <section className="w-full  relative py-12.5 z-10 bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
           <div className="flex w-full relative min-h-px">
-            <div className="w-full flex flex-wrap p-2.5 content-start relative ">
+            <div className="w-full flex flex-wrap content-start relative ">
               <div className="text-center pb-10 mb-2.5 w-full">
                 <div className="text-center">
                   <motion.div
@@ -1069,7 +1069,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       <section className="relative w-full py-12.5 z-10 bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative lg:flex-row">
           <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
-            <div className="flex flex-col p-2.5 content-center items-center relative w-full">
+            <div className="flex flex-col  content-center items-center relative w-full">
               <motion.div
                 animate={{ x: [0, 20, -20, 0] }} // toggle movement
                 transition={{
@@ -1094,7 +1094,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
           <div className="flex w-full relative min-h-px max-w-full lg:max-w-[50%]">
-            <div className="flex flex-col p-2.5 content-center items-center relative w-full">
+            <div className="flex flex-col content-center items-center relative w-full">
               <motion.div
                 initial={{ opacity: 0, y: -60 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -1215,7 +1215,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       {/* section 11: faq question */}
       <section className="relative w-full py-12.5 bg-white z-10">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
-          <div className="flex flex-wrap  w-full relative p-2.5 content-start">
+          <div className="flex flex-wrap  w-full relative content-start">
             <div className="text-center pb-10 mb-2.5 w-full">
               <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
                 Frequently Asked Questions (FAQ)
@@ -1225,7 +1225,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             <section className="w-full mt-7.5 relative  ">
               <div className="w-full gap-8 box-border relative flex flex-col lg:flex-row mx-auto">
                 <div className="w-full max-w-full lg:max-w-[29.99%] flex  relative min-h-px">
-                  <div className="flex items-start content-start p-2.5 w-full flex-wrap top-[13%] z-10 h-fit sticky ">
+                  <div className="flex items-start content-start w-full flex-wrap top-[13%] z-10 h-fit sticky ">
                     <div className="mb-5">
                       <div className="text-xl text-[#d68029] font-semibold">
                         Do you have more questions?
@@ -1268,7 +1268,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   </div>
                 </div>
                 <div className="w-full max-w-full lg:max-w-[70%] flex relative min-h-px">
-                  <div className="flex p-2.5 w-full content-start relative flex-wrap">
+                  <div className="flex w-full content-start relative flex-wrap">
                     <div className="w-full text-start box-border relative">
                       {pageData.faq.length > 0 &&
                         pageData.faq.map((item, index) => {

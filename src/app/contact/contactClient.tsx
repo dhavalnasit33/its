@@ -11,7 +11,7 @@ export default function ContactClient() {
     <section className="bg-white">
 
       <div className="bg-[#0d1b2a] py-16 max-[767px]:py-8 relative w-full z-10">
-        <div className=" text-left   max-w-[90%] lg:max-w-[80%] mx-auto  px-4 ">
+        <div className=" text-left   max-w-[90%] lg:max-w-[80%] mx-auto">
           <p className="text-white opacity-60  text-sm leading-[1.25] font-semibold uppercase tracking-[0.2em] max-[767px]:text-[12px] max-[767px]:tracking-[0.15em]">
             WE TURN BOLD IDEAS INTO SUCCESSFUL PRODUCTS
           </p>
@@ -21,7 +21,8 @@ export default function ContactClient() {
       </div>
       <ContactPageForm />
       <div className="w-full text-center relative z-20 bg-[#0d1b2a]  lg:pb-0 py-15 md:py-20   ">
-        <div className="max-w-3xl space-y-3 mx-auto  max-sm:px-4">
+        <div className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto">
+        <div className="max-w-3xl space-y-3 mx-auto ">
           <p className="text-sm uppercase tracking-[0.2em] text-white opacity-70">VISIT OUR OFFICE OR DROP A LINE</p>
           <h3 className="text-3xl md:text-4xl font-bricolage font-medium text-white">Based in Surat,
             <br className="max-lg:hidden"/> building products for the world.  
@@ -29,6 +30,7 @@ export default function ContactClient() {
           <p className="text-sm sm:text-base text-white opacity-70">
             Whether you prefer email, a quick call, or an in‑person meeting, our team is ready to explore your product idea and help you plan the next steps.
           </p>
+        </div>
         </div>
       </div>
 

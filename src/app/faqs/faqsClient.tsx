@@ -97,10 +97,10 @@ function faqs() {
 
 
       {/* Hero Section */}
-      <section data-cursor className="px-12.5 common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative">
-        <div className="flex w-full z-20">
+      <section data-cursor className=" common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative">
+        <div className="flex w-full z-20 max-w-[90%] lg:max-w-[80%] mx-auto relative">
           <div className="flex mt-12.5 w-full">
-            <div className="flex p-2.5 flex-wrap w-full mx-auto justify-center items-center">
+            <div className="flex py-2.5 flex-wrap w-full mx-auto justify-center items-center">
               <motion.div
                 initial={{ opacity: 0, y: -50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -120,7 +120,8 @@ function faqs() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-full text-center text-black font-medium text-[18px]/[30px] flex justify-center mt-4"
               >
-                <p className="text-[18px]/[32px] tracking-[0.02em] font-normal max-w-4/5">
+                {/* <p className="text-[18px]/[32px] tracking-[0.02em] font-normal max-w-4/5"> */}
+                  <p className="text-[18px]/[32px] tracking-[0.02em] font-normal ">
                   If you have questions about our services, experiences and approach, here are their answers. We are happy to answer any
                   other questions you may have.
 
@@ -130,10 +131,11 @@ function faqs() {
           </div>
         </div>
       </section>
-      <section ref={categoryRef} className="w-full max-w-[90%] lg:max-w-[80%] mx-auto scroll-mt-24 px-5">
+      <section ref={categoryRef} className="w-full max-w-[90%] lg:max-w-[80%] mx-auto scroll-mt-24 ">
         <div className="">
-          <div className="flex flex-wrap justify-between items-center gap-3 mt-10">
-            {/* {categories.map((category, index) => (
+          {/* <div className="flex flex-wrap justify-between items-center gap-3 mt-10"> */}
+            <div className="flex max-[480px]:flex-col flex-wrap justify-center items-center gap-3 mt-10">           
+              {/* {categories.map((category, index) => (
               <button
                 key={index}
                 onClick={() => handleCategoryClick(category)}
@@ -147,7 +149,7 @@ function faqs() {
             ))} */}
             <button
               onClick={() => setSelectedCategory("All")}
-              className={`px-[40px] py-[10px] rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200
+              className={`max-[480px]:w-full px-[40px] py-[10px] rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200
               ${selectedCategory === "All"
                 ? "bg-[#d68029] text-white border-[#d68029]"
                 : "bg-[#ffd4a8] text-black border-[#ffd4a8]"
@@ -156,14 +158,15 @@ function faqs() {
               All
             </button>
             {categories.map((category, index) => (
-              <button
+              <button 
                 key={category._id ?? category.category ?? index}
                 // onClick={() => handleCategoryClick(category.category)}
                 onClick={() => handleCategoryClick(category._id)}
-                className={`px-[40px] cursor-pointer py-[10px] rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200 ${selectedCategory === category.category
-                              ? "bg-[#d68029] text-white border-[#d68029]"
-                              : "bg-[#ffd4a8] text-black border-[#ffd4a8] hover:bg-[#d68029] hover:text-white hover:border-[#d68029]"
-                              }`}
+                className={`max-[480px]:w-full px-[40px] cursor-pointer py-[10px] rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200 
+                  ${selectedCategory === category._id
+                    ? "bg-[#d68029] text-white border-[#d68029]"
+                    : "bg-[#ffd4a8] text-black border-[#ffd4a8] hover:bg-[#d68029] hover:text-white hover:border-[#d68029]"
+                  }`}
               >
                 {category.category}
               </button>
@@ -173,7 +176,7 @@ function faqs() {
       </section>
       <section className='w-full max-w-[90%] lg:max-w-[80%] mx-auto mt-12'>
         <div className="">
-          <div className="flex p-2.5 w-full content-start relative flex-wrap">
+          <div className="flex pt-2.5 w-full content-start relative flex-wrap">
             <div className="w-full text-start box-border relative">
               {faqs.length > 0 &&
                 faqs.map((item, index) => {

@@ -170,8 +170,8 @@ export default function PortfolioClient() {
 
     return (
         <>
-            <section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-4 sm:px-8 md:px-20 py-10 pb-20 gap-10 common_background_gradient">
-                <div className="w-full z-10 max-w-xl md:max-w-2xl text-gray-800">
+            <section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20 py-10 pb-20 gap-10 common_background_gradient">
+                <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-2xl text-gray-800">
                     <motion.div
                         initial={{ opacity: 0, y: -40 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -262,7 +262,7 @@ export default function PortfolioClient() {
             </section>
             <section className="w-full relative py-16">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
-                    <div className="w-full flex flex-wrap p-2.5">
+                    <div className="w-full flex flex-wrap">
                         <motion.div
                             className="flex flex-col items-center w-full justify-center text-center mb-10"
                             initial={{ opacity: 0, y: -60 }}

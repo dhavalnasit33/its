@@ -61,7 +61,8 @@ export default function WhyChooseITS() {
                 {whyChooseData.map((item, index) => (
                   <div
                     key={item.id ?? `whychoose-${index}`}
-                    className="px-0 py-8 md:p-8 bg-white "
+                    // className="px-0 py-8 md:p-8 bg-white "
+                      className=" px-0 py-8 md:p-8  border-b border-gray-400  md:border-b-0 "
                   >
                     <Image
                       src={item.image}
@@ -107,11 +108,6 @@ export default function WhyChooseITS() {
                       </span>
                     </a>
                   </motion.div>
-
-
-
-
-
 
                 </div>
               </>
