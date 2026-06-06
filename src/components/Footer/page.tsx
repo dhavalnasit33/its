@@ -478,13 +478,13 @@ export default function ContactFooterPage() {
         <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]  ">
           <div className=" w-full mx-auto flex flex-col md:flex-row items-center justify-between px-6">
             <p className="text-center">
-              © 2024 Inspire Techno Solution. All Rights Reserved.
+              © 2026 Inspire Techno Solution. All Rights Reserved.
             </p>
             <div className="flex gap-6 mt-2 md:mt-0">
-              <a href="#" className="hover:text-[#d68029] transition-colors">
+              <a href="/" className="hover:text-[#d68029] transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="hover:text-[#d68029] transition-colors">
+              <a href="/" className="hover:text-[#d68029] transition-colors">
                 Terms & Condition
               </a>
             </div>

@@ -106,10 +106,10 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="bg-[#0f1b2d] text-gray-300 text-sm py-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6">
-          <p>© 2024 Inspire Techno Solution. All Rights Reserved.</p>
+          <p>© 2026 Inspire Techno Solution. All Rights Reserved.</p>
           <div className="flex gap-6 mt-2 md:mt-0">
-            <a href="#" className="hover:text-orange-500 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-orange-500 transition-colors">Terms & Condition</a>
+            <a href="/" className="hover:text-orange-500 transition-colors">Privacy Policy</a>
+            <a href="/" className="hover:text-orange-500 transition-colors">Terms & Condition</a>
           </div>
         </div>
       </div>

@@ -64,6 +64,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
     (link) => link.systemIdentifier === "portfolio",
   );
 
+  const ContactLink = (navStructure.mainNav || []).find(
+    (link) => link.systemIdentifier === "contact",
+  );    
+
   const servicesData = (navStructure.servicesNav || []).map((group) => {
     const icon = typeof group.icon === "string" ? group.icon.trim() : "";
     return {
@@ -690,7 +694,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
         <div className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a] px-5 py-3 text-sm font-semibold text-white transition-colors group">
           <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
           <Link
-            href="/contact"
+            href={ContactLink ? `/${ContactLink.slug}` : "/contact"}
             className="relative tracking-tight flex items-center justify-center gap-2 rounded-[10px] text-sm font-semibold text-white transition-colors "
           >
             <h1 className="flex flex-row gap-3 justify-center">
@@ -1020,7 +1024,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                   })}
                   <li className="mt-6 px-4">
                     <Link
-                      href="/contact"
+                      href={ContactLink ? `/${ContactLink.slug}` : "/contact"}
                       onClick={() => setMenuOpen(false)}
                       className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a] px-5 py-3 text-sm font-semibold text-white transition-colors group"
                     >
