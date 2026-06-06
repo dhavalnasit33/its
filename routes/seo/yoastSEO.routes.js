@@ -18,6 +18,7 @@ router.get("/", protect, async (req, res) => {
         { seo_keyphrase: { $regex: search, $options: "i" } },
         { seo_title: { $regex: search, $options: "i" } },
         { meta_description: { $regex: search, $options: "i" } },
+        { googletags: { $regex: search, $options: "i" } },
       ];
     }
 

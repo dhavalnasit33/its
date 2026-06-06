@@ -25,6 +25,10 @@ const yoastSEOSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    googletags: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

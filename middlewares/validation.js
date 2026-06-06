@@ -49,6 +49,9 @@ exports.validateYoastSEO = [
       .trim()
       .isLength({ max: 1000 })
       .withMessage('Page Description cannot exceed 1000 characters'),
+    body('googletags')
+      .optional({ checkFalsy: true })
+      .trim(),
 ];
 
 exports.validateWebsiteSettings = [
