@@ -60,41 +60,11 @@ const useIsMobile = () => {
 };
 
 export default function ServicePageClient() {
-  const { phonePrimary, phonePrimaryClean, supportEmail, microsoftHandle } = useWebsiteSettings();
+  const { phonePrimary, phonePrimaryClean, supportEmail, microsoftHandle, blogSlug, portfolioSlug, hireSlug } = useWebsiteSettings();
   const { slug } = useParams<{ slug: string }>();
   const [data, setData] = useState<ITSService | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
-  const [blogSlug, setBlogSlug] = useState("blog");
-  const [portfolioSlug, setPortfolioSlug] = useState("our-portfolio");
-  const [hireSlug, setHireSlug] = useState("hire");
-
-  useEffect(() => {
-    const fetchSlugs = async () => {
-      try {
-        const res = await apiService<{ success: boolean; data: any }>(
-          "/seo-manager/navigation-structure"
-        );
-        if (res && res.success && res.data?.mainNav) {
-          const blogLink = res.data.mainNav.find(
-            (link: any) => link.systemIdentifier === "blog"
-          );
-          const portfolioLink = res.data.mainNav.find(
-            (link: any) => link.systemIdentifier === "portfolio"
-          );
-          const hireLink = res.data.mainNav.find(
-            (link: any) => link.systemIdentifier === "hire"
-          );
-          if (blogLink) setBlogSlug(blogLink.slug);
-          if (portfolioLink) setPortfolioSlug(portfolioLink.slug);
-          if (hireLink) setHireSlug(hireLink.slug);
-        }
-      } catch (err) {
-        console.error("Error fetching slugs in ServicePageClient:", err);
-      }
-    };
-    fetchSlugs();
-  }, []);
 
   // ✅ FIX 2: Use mobile detection + reduced motion
   const isMobile = useIsMobile();

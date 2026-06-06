@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
+import { NavigationStructure } from "@/lib/navigationService";
 
 export interface WebsiteSettings {
   favicon: string;
@@ -35,6 +36,10 @@ const defaultSettings: WebsiteSettings = {
 
 interface WebsiteSettingsContextProps {
   settings: WebsiteSettings;
+  navStructure: NavigationStructure;
+  blogSlug: string;
+  portfolioSlug: string;
+  hireSlug: string;
   hrEmail: string;
   salesEmail: string;
   contactEmail: string;
@@ -51,8 +56,18 @@ interface WebsiteSettingsContextProps {
   behanceLink: string;
 }
 
+const defaultNavStructure: NavigationStructure = {
+  mainNav: [],
+  servicesNav: [],
+  hireNav: [],
+};
+
 const WebsiteSettingsContext = createContext<WebsiteSettingsContextProps>({
   settings: defaultSettings,
+  navStructure: defaultNavStructure,
+  blogSlug: "blog",
+  portfolioSlug: "our-portfolio",
+  hireSlug: "hire",
   hrEmail: "hr@inspiretechnosolution.com",
   salesEmail: "sales@inspiretechnosolution.com",
   contactEmail: "contact@inspiretechnosolution.com",
@@ -77,9 +92,11 @@ function cleanPhoneNumber(numStr: string): string {
 export function WebsiteSettingsProvider({
   children,
   initialSettings,
+  navStructure,
 }: {
   children: React.ReactNode;
   initialSettings: WebsiteSettings | null;
+  navStructure: NavigationStructure;
 }) {
   const [settings] = useState<WebsiteSettings>(() => {
     if (!initialSettings) return defaultSettings;
@@ -118,10 +135,28 @@ export function WebsiteSettingsProvider({
   const youtubeLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "youtube")?.link || "#";
   const behanceLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "behance")?.link || "#";
 
+  // Precompute dynamic navigation slugs
+  const blogLink = (navStructure?.mainNav || []).find(
+    (link) => link.systemIdentifier === "blog"
+  );
+  const portfolioLink = (navStructure?.mainNav || []).find(
+    (link) => link.systemIdentifier === "portfolio"
+  );
+  const hireLink = (navStructure?.mainNav || []).find(
+    (link) => link.systemIdentifier === "hire"
+  );
+  const blogSlug = blogLink?.slug || "blog";
+  const portfolioSlug = portfolioLink?.slug || "our-portfolio";
+  const hireSlug = hireLink?.slug || "hire";
+
   return (
     <WebsiteSettingsContext.Provider
       value={{
         settings,
+        navStructure,
+        blogSlug,
+        portfolioSlug,
+        hireSlug,
         hrEmail,
         salesEmail,
         contactEmail,

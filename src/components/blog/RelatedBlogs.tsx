@@ -8,6 +8,7 @@ import apiService from "@/lib/apiService";
 import { Blog } from "@/types";
 import Motion from "@/components/motionbar";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 // This is the full, self-contained RelatedBlogs component
 export default function RelatedBlogs({
@@ -17,7 +18,7 @@ export default function RelatedBlogs({
 }) {
   const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [blogSlug, setBlogSlug] = useState<string>("blog");
+  const { blogSlug } = useWebsiteSettings();
 
   useEffect(() => {
     const fetchRelatedBlogs = async () => {
@@ -37,26 +38,7 @@ export default function RelatedBlogs({
       }
     };
 
-    const fetchBlogSlug = async () => {
-      try {
-        const res = await apiService<{ success: boolean; data: any }>(
-          "/seo-manager/navigation-structure"
-        );
-        if (res && res.success && res.data?.mainNav) {
-          const blogLink = res.data.mainNav.find(
-            (link: any) => link.systemIdentifier === "blog"
-          );
-          if (blogLink) {
-            setBlogSlug(blogLink.slug);
-          }
-        }
-      } catch (err) {
-        console.error("Error fetching blog slug in RelatedBlogs:", err);
-      }
-    };
-
     fetchRelatedBlogs();
-    fetchBlogSlug();
   }, [subCategory]);
 
   if (loading) {
@@ -133,17 +115,17 @@ export default function RelatedBlogs({
                   {relatedBlog.subCategories && (
                     <span className="text-xs font-medium text-[#d68029] bg-[#fff4e9] px-3 py-1.5 rounded-full">
                       {/* {relatedBlog.subCategories} */}
-                      { typeof relatedBlog.subCategories === "string"
-                          ? relatedBlog.subCategories
-                          : relatedBlog.subCategories?.subcategory
+                      {typeof relatedBlog.subCategories === "string"
+                        ? relatedBlog.subCategories
+                        : relatedBlog.subCategories?.subcategory
                       }
                     </span>
                   )}
                   <span className="text-xs font-medium text-gray-600 bg-gray-100 px-3 py-1.5 rounded-full">
                     {/* {relatedBlog.categories} */}
-                    { typeof relatedBlog.categories === "string"
-                        ? relatedBlog.categories
-                        : relatedBlog.categories?.category
+                    {typeof relatedBlog.categories === "string"
+                      ? relatedBlog.categories
+                      : relatedBlog.categories?.category
                     }
                   </span>
                 </div>
