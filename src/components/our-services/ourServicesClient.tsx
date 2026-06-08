@@ -169,10 +169,10 @@ export default function OurServicesClient() {
 								{
 									ourServicePageData.heroSections.length > 0 &&
 									ourServicePageData.heroSections.map((data, index) => (
-										<div key={index} className={`${index % 2 == 0 ? ' md:-translate-y-4 ' : ' md:translate-y-6 lg:translate-y-16  '}  transition-transform duration-300`}>
+										<div key={index} className={`${index % 2 == 0 ? ' md:-translate-y-4 ' : ' md:translate-y-6 lg:translate-y-16  '}  max-[768px]:w-full transition-transform duration-300`}>
 											<div
-												className="p-2  m-2  rounded-xl border-2 border-dashed border-gray-800 bg-white shadow-md 
-                 								flex flex-col justify-center h-100 w-65 sm:w-70 md:w-75 transform transition-transform duration-300 hover:scale-95"
+												className="p-2  md:m-2  rounded-xl border-2 border-dashed border-gray-800 bg-white shadow-md 
+                 								flex flex-col justify-center h-100  max-w-full w-full  md:w-75 transform transition-transform duration-300 hover:scale-95"
 											>
 												<div className="relative flex items-center justify-center w-24 h-24 mx-auto mb-4">
 													{/* 1. Background Shape Image (positioned behind) */}

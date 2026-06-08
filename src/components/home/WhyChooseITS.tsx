@@ -100,7 +100,7 @@ export default function WhyChooseITS() {
                   >
                     <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-80 group-hover:h-80"></span>
                     <a
-                      href="/#contact-form-section"
+                      href="#contact-form-section"
                       className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
                       <span className="flex flex-row gap-3 uppercase justify-center">
                         Talk to Our Experts

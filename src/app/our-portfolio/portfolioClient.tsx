@@ -338,7 +338,9 @@ export default function PortfolioClient() {
                             ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                     <AnimatePresence>
-                                        {creativeWorkData.map((work, index) => (
+                                        {creativeWorkData.map((work, index) => {
+                                            const hasUrl = !!work.url?.trim();
+                                            return(
                                             <motion.div
                                                 key={`${work._id ?? index}-${selectedCategory}`}
                                                 layout
@@ -348,9 +350,17 @@ export default function PortfolioClient() {
                                                 transition={{ duration: 0.3, ease: "easeInOut" }}
                                             >
                                                 <Link
-                                                    href={work.url || "#"}
-                                                    target="_blank"
-                                                    className="relative block group overflow-hidden rounded-lg shadow-md border border-gray-200"
+                                                    // href={work.url || "#"}
+                                                    // target="_blank"
+                                                      href={hasUrl ? work.url : "#"}
+                                                        target={hasUrl ? "_blank" : undefined}
+                                                        onClick={(e) => {
+                                                        if (!hasUrl) e.preventDefault();
+                                                        }}
+                                                        className={`relative block group overflow-hidden rounded-lg shadow-md border border-gray-200 ${
+                                                        !hasUrl ? "cursor-pointer" : ""
+                                                        }`}
+                                                    // className="relative block group overflow-hidden rounded-lg shadow-md border border-gray-200"
                                                 >
                                                     {work.image ? (
                                                         <Image
@@ -370,7 +380,8 @@ export default function PortfolioClient() {
                                                     </div>
                                                 </Link>
                                             </motion.div>
-                                        ))}
+                                            );
+                                        })}
                                     </AnimatePresence>
                                 </div>
                             )}

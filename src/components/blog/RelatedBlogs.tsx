@@ -86,7 +86,7 @@ export default function RelatedBlogs({
             </span>
           </Link>
         </div>
-        <div className="grid max-[534px]:grid-cols-1 grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid max-[640px]:grid-cols-1 grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
           {relatedBlogs.map((relatedBlog) => (
             <div
               key={relatedBlog._id}

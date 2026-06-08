@@ -347,7 +347,7 @@ export default function GeneralContactForm() {
                     Let&apos;s Talk Business!
                 </h2>
 
-                <form className="space-y-2 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <div>
                             <input
@@ -419,10 +419,10 @@ export default function GeneralContactForm() {
                     </div>
 
                     <div>
-                        <label className="text-gray-700 mb-3 font-semibold">
+                        <label className="text-gray-700 font-semibold">
                             Select Subject?
                         </label>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 md:gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-3 pt-2">
                             {[
                                 "Hire Developer(s)",
                                 "Web Development",
@@ -473,7 +473,7 @@ export default function GeneralContactForm() {
 
 
 
-                    <div className="">
+                    <div>
                         <label className="text-gray-700 mb-3 font-semibold">
                             Your budget for this project?
                         </label>
@@ -601,7 +601,7 @@ export default function GeneralContactForm() {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`w-full max-w-50 mx-auto md:mx-0 block ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                        className={`w-full max-w-50 block ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                             }`}
                     >
                         <div className="bg-[#D68029] relative inline-flex items-center justify-center w-full max-w-50 overflow-hidden text-white rounded-xl group">

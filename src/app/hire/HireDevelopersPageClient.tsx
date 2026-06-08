@@ -1417,7 +1417,7 @@ export default function HireDevelopersPageClient() {
     return (
         <main className="w-full">
             <section id="hero"
-                className="relative py-12.5 hire_hero_section common_background_gradient w-full z-10 bg-white">
+                className="relative py-12.5 hire_hero_section common_background_gradient w-full z-10 bg-white scroll-mt-10">
 
                 <video
                     autoPlay
@@ -1434,7 +1434,7 @@ export default function HireDevelopersPageClient() {
 
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex  ">
                     <div className="flex flex-col lg:flex-row content-start w-full gap-10 mx-auto relative ">
-                        <div className="w-full max-w-[90%] lg:max-w-[60%] flex relative min-h-px">
+                        <div className="w-full max-w-full lg:max-w-[60%] flex relative min-h-px">
                             <div className="flex items-center content-center  flex-wrap relative w-full ">
                                 <motion.div
                                     className="mb-2.5 w-full relative"

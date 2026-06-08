@@ -137,7 +137,7 @@ export default function TrainingContactForm() {
     ];
 
     return (
-        <Box className="bg-white p-4 md:px-8  rounded-xl w-full mx-auto  ">
+        <Box className="bg-white  xl:px-8  rounded-xl w-full mx-auto  ">
             <Typography variant="h4" component="h2" align="center" fontWeight="bold" className="text-gray-800 mb-8" sx={{
                 marginBottom: "30px"
             }}>
@@ -192,20 +192,22 @@ export default function TrainingContactForm() {
                     <TextField {...field} label="Message" multiline rows={4} error={!!errors.message} helperText={errors.message?.message} fullWidth sx={inputStyles} />
                 )} />
 
-                <Box className="flex justify-center md:justify-start my-4">
+                <Box className="flex justify-start my-4">
                     {/* <ReCAPTCHA ref={recaptchaRef} sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} onChange={(token) => setCaptchaToken(token)} /> */}
-                     <ReCAPTCHA
-                        ref={recaptchaRef}
-                        // sitekey={
-                        //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                        //     "YOUR_SITE_KEY"
-                        // }
-                        sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
-                        onChange={(token) => setCaptchaToken(token || "")}
-                    />
+                    <div className="scale-75 sm:scale-100 origin-left">
+                        <ReCAPTCHA
+                            ref={recaptchaRef}
+                            // sitekey={
+                            //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                            //     "YOUR_SITE_KEY"
+                            // }
+                            sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
+                            onChange={(token) => setCaptchaToken(token || "")}
+                        />
+                    </div>
                 </Box>
 
-                <Box className="text-center md:text-left">
+                <Box className="text-left">
                     <Button type="submit" variant="contained" disabled={isSubmitting} sx={{ backgroundColor: "#D68029", "&:hover": { backgroundColor: "#B86E23" }, py: 1.5, px: 5, textTransform: "none", fontSize: "1rem" }}>
                         {isSubmitting ? <CircularProgress size={24} color="inherit" /> : "Send Message"}
                     </Button>

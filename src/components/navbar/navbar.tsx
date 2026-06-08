@@ -561,7 +561,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     >
                       <div className="flex flex-row items-stretch mx-auto relative gap-x-7.5 px-10 py-12.5 w-full">
                         {/* Left Side: Categories Grid (Max 4 columns per row) */}
-                        <div className="grid grid-cols-4 gap-x-7.5 gap-y-10 flex-1">
+                        <div className="grid grid-cols-3 gap-x-7.5 gap-y-10 flex-1">
                           {hireData.map((category, index) => (
                             <div
                               key={index}
@@ -807,7 +807,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                             className="text-[#D68029]"
                                           />
                                         ) : null}
-                                        <span className="font-medium">
+                                        <span className="font-medium hover:text-[#D68029] ">
                                           {category.title}
                                         </span>
                                       </div>
@@ -908,7 +908,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                             className="text-[#D68029]"
                                           />
                                         ) : null}
-                                        <span className="font-medium">
+                                        <span className="font-medium hover:text-[#D68029] ">
                                           {category.title}
                                         </span>
                                       </div>

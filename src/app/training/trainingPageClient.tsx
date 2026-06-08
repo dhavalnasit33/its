@@ -74,10 +74,12 @@ export default function TrainingPageClient() {
     return (
         <div className="min-h-screen overflow-hidden ">
             {/* HERO SECTION */}
-            <section className="relative  w-full  common_background_gradient">
-                <div className="relative max-w-384 mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* <section className="relative  w-full  common_background_gradient">
+                <div className="relative max-w-384 mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
+            <section className="relative w-full common_background_gradient max-w-[90%] lg:max-w-[80%] mx-auto">
+                <div className="xl:px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     {/* Content Left */}
-                    <div className="order-2 md:order-1">
+                    <div className="order-2 md:order-1 z-10">
                         {/* First p tag - from top slow */}
                         <motion.p
                             initial={{ opacity: 0, y: -50 }}
@@ -236,8 +238,10 @@ export default function TrainingPageClient() {
                 </motion.div>
             </section>
 
-            <section className="py-20">
-                <div className="max-w-384 mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* <section className="py-20">
+                <div className="max-w-384 mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
+                 <section className="relative w-full  max-w-[90%] lg:max-w-[80%] mx-auto py-20  ">
+                <div className="xl:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 ">
                     {/* Image */}
                     <motion.div
                         className="relative flex justify-center"
@@ -399,7 +403,7 @@ export default function TrainingPageClient() {
             </section>
 
             {/* NEW SECTION: ITS Institute Facilities */}
-            <section className="relative bg-white py-20 px-6">
+            <section className="relative bg-white py-20 ">
                 {/* Left Decorative Image */}
                 <Image
                     src="/training/image-124.png"
@@ -418,7 +422,7 @@ export default function TrainingPageClient() {
                     className="absolute right-24 hidden lg:flex  top-28 transform -translate-y-1/2"
                 />
 
-                <div className="max-w-384 mx-auto text-center relative z-10">
+                <div className=" text-center relative z-10 w-full max-w-[90%] lg:max-w-[80%] mx-auto">
                     {/* Heading + Motion (from top) */}
                     <motion.div
                         initial={{ opacity: 0, y: -50 }}
@@ -470,10 +474,10 @@ export default function TrainingPageClient() {
             </section>
 
             {/* PICK THE RIGHT COURSE SECTION */}
-            <section className="bg-white py-16 md:py-20 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-384 mx-auto">
+            <section className="bg-white py-16 md:py-20 ">
+                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
                     {/* Section Title + Motion */}
-                    <div className="text-center mb-10 md:mb-12 px-2 sm:px-6">
+                    <div className="text-center mb-10 md:mb-12">
                         <motion.h2
                             className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug"
                             initial={{ y: -60, opacity: 0 }}

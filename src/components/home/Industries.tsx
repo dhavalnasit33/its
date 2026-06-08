@@ -109,7 +109,9 @@ export default function Industries() {
     return (
         <section
             className="relative"
-            style={{ background: "#060610", overflow: "visible" }}
+            style={{ 
+                // background: "#060610",
+                background: "#0d1b2a", overflow: "visible" }}
         >
             <div
                 ref={titleRef}
@@ -117,7 +119,8 @@ export default function Industries() {
                 style={{
                     top: `${NAVBAR_HEIGHT}px`,
                     zIndex: 2000,
-                    background: "#060610",
+                    // background: "#060610",
+                    background: "#0d1b2a",
                     paddingBottom: "24px",
                 }}
             >   
@@ -157,12 +160,13 @@ export default function Industries() {
                             style={{
                                 top: `${topValue}px`,
                                 zIndex,
-                                background: "#060610",
+                                // background: "#060610",
+                                background: "#0d1b2a",
                                 boxShadow: isFirst
                                     ? "none"
-                                    : "0 -16px 40px 8px rgba(0,0,0,0.95)",
+                                    : "0 -16px 40px 8px rgba(0,0,0,0.3)",
                                 borderRadius: isFirst ? "0" : "24px 24px 0 0",
-                                paddingTop: isFirst ? "0" : "12px",
+                                paddingTop: isFirst ? "12px" : "12px",
                                 // overflow: "visible",
                             }}
                         >
@@ -201,45 +205,34 @@ export default function Industries() {
                                         return (
                                             <div
                                                 key={industry._id || colIndex}
-                                                className="group relative rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-sm p-5 flex flex-col gap-3 overflow-hidden cursor-pointer"
+                                                className="group relative rounded-2xl border border-white/[0.09] bg-white/[0.02] backdrop-blur-sm p-5 flex flex-col gap-3 overflow-hidden cursor-pointer"
 
                                                 onMouseEnter={(e) => {
                                                     const el = e.currentTarget;
 
                                                     el.style.borderColor = "rgba(227,134,48,0.15)";
                                                     el.style.background = "rgba(255,255,255,0.06)";
-
-
-
                                                     el.style.boxShadow = `
-        0 20px 60px rgba(0,0,0,0.65),
-        0 0 30px ${glowColor},
-        0 0 80px rgba(255,255,255,0.05),
-        inset 0 1px 0 rgba(255,255,255,0.06)
-    `;
+                                                        0 20px 60px rgba(0,0,0,0.65),
+                                                        0 0 22px ${glowColor},
+                                                        0 0 80px rgba(255,255,255,0.05),
+                                                        inset 0 1px 0 rgba(255,255,255,0.06)
+                                                    `;
 
                                                     const glow = el.querySelector<HTMLElement>(".glow-blob");
                                                     if (glow) glow.style.opacity = "1";
                                                 }}
 
-
-
-
-
                                                 onMouseLeave={(e) => {
                                                     const el = e.currentTarget;
-
                                                     el.style.borderColor = "rgba(255,255,255,0.07)";
                                                     el.style.background = "rgba(255,255,255,0.03)";
-
-
-
                                                     el.style.boxShadow = `
-        0 10px 30px rgba(0,0,0,0.45),
-        0 0 0 1px rgba(255,255,255,0.04),
-        0 0 40px rgba(255,255,255,0.03),
-        inset 0 1px 0 rgba(255,255,255,0.04)
-    `;
+                                                        0 10px 30px rgba(0,0,0,0.45),
+                                                        0 0 0 1px rgba(255,255,255,0.04),
+                                                        0 0 40px rgba(255,255,255,0.03),
+                                                        inset 0 1px 0 rgba(255,255,255,0.04)
+                                                    `;
 
                                                     const glow = el.querySelector<HTMLElement>(".glow-blob");
                                                     if (glow) glow.style.opacity = "0";
@@ -293,11 +286,8 @@ export default function Industries() {
 
                                                 <div className="mt-auto pt-1">
                                                     <a href="#">
-
-
                                                         <span
                                                             className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#475569] group-hover:text-[#e38630]"
-
                                                         >
                                                             Explore
                                                             <svg

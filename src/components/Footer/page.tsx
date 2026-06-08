@@ -45,7 +45,7 @@ export default function ContactFooterPage() {
   } = useWebsiteSettings();
 
   return (
-    <footer id="contact-form-section" className=" relative pt-16 bg-white">
+    <footer id="contact-form-section" className=" relative pt-16 bg-white scroll-mt-18">
       {/* ---------------- Contact Form Floating Card ---------------- */}
       <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 ">
         {/* <div className="  w-full mx-auto md:-mb-90 relative z-10">
@@ -74,7 +74,7 @@ export default function ContactFooterPage() {
       {/* ---------------- Footer Content ---------------- */}
       {/* <div className="bg-[url('/footer-bg.png')] bg-cover bg-center md:pt-112.5 py-16 px-6"> */}
       <div
-        className={`bg-[url('/footer-bg.png')] bg-cover bg-center px-6 py-16`}
+        className={`bg-[url('/footer-bg.png')] bg-cover bg-center  py-16`}
       >
         <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]">
           {/* HR Inquiry + Sales Inquiry */}
@@ -94,14 +94,14 @@ export default function ContactFooterPage() {
                     height={24}
                     className="object-contain"
                   />{" "} */}
-                  <MdEmail size={20} />
+                  <MdEmail size={20}  className="flex-shrink-0"/>
                   {hrEmail}
                 </Link>
                 <Link
                   href={`tel:${phonePrimaryClean}`}
                   className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] "
                 >
-                  <MdPhone size={20} />
+                  <MdPhone size={20}  className="flex-shrink-0"/>
                   {/* <Image
                     src="/icon/Ringer Volume.png"
                     alt="Volume"
@@ -120,7 +120,7 @@ export default function ContactFooterPage() {
                   href={`mailto:${salesEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
                 >
-                  <MdEmail size={20} />
+                  <MdEmail size={20}  className="flex-shrink-0"/>
                   {/* <Image
                     src="/icon/Mail.png"
                     alt="mail"
@@ -136,7 +136,7 @@ export default function ContactFooterPage() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-gray-70 hover:text-[#d68029] "
                 >
-                  <FaMicrosoft size={20} />
+                  <FaMicrosoft size={20}  className="flex-shrink-0" />
                   {microsoftHandle}
                 </Link>
 

@@ -206,8 +206,9 @@ export default function ServicePageClient() {
           </div>
 
           {/* CONTACT BAR */}
-          <div className="relative w-full z-20 bg-[#0b1833] text-white px-4 sm:px-6 md:px-12 lg:px-36 py-3 text-sm">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 text-center lg:text-left">
+          {/* <div className="relative w-full z-20 bg-[#0b1833] text-white px-4 sm:px-6 md:px-12 lg:px-36 py-3 text-sm"> */}
+          <div className="relative w-full z-20 bg-[#0b1833] text-white  py-3 text-sm">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 text-center lg:text-left w-full relative max-w-[90%] lg:max-w-[90%] mx-auto">
               <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6">
                 <div className="flex items-center gap-2">
                   <Image
@@ -354,7 +355,7 @@ export default function ServicePageClient() {
                     <h2 className="text-xl font-semibold text-[#d97b2f] mt-2">
                       Dedicated Developers
                     </h2>
-                    <motion.button
+                    {/* <motion.button
                       className="relative overflow-hidden mt-6 px-6 py-3 bg-[#0b1833] text-white font-medium rounded-md shadow-md"
                       initial="rest"
                       whileHover={noAnim ? undefined : "hover"}
@@ -374,7 +375,34 @@ export default function ServicePageClient() {
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                       />
                       <span className="relative z-10">Talk to Our Experts</span>
-                    </motion.button>
+                    </motion.button> */}
+                    <motion.a
+                      href="#contact-form-section"
+                      className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 mt-6 bg-[#0b1833] text-white text-sm sm:text-base font-medium rounded-lg shadow-md"
+                      whileHover="hover"
+                      initial="rest"
+                      animate="rest"
+                      variants={{
+                        rest: { scale: 1 },
+                        hover: { scale: 1.02 },
+                      }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    >
+                      {/* Background Animation Layer */}
+                      <motion.span
+                        className="absolute inset-0 rounded-lg bg-linear-to-r from-[#D68025] to-[#D68029]"
+                        variants={{
+                          rest: { scaleX: 0, originX: 0.5 }, // hidden at rest (from center)
+                          hover: { scaleX: 1, originX: 0.5 }, // expands outwards on hover
+                        }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        style={{ transformOrigin: "center" }}
+                      />
+
+                      {/* Button Text */}
+                      <span className="relative z-10">Talk to Our Experts</span>
+                    </motion.a>
+
                   </motion.div>
                 )}
               </>
@@ -709,7 +737,7 @@ export default function ServicePageClient() {
 
               {/* ✅ FIX 6: Sticky sidebar - no scroll-based animation (removed useScroll/useTransform) */}
               <div className="w-full lg:w-[30%] flex relative">
-                <div className="flex items-start content-start p-2.5 w-full flex-wrap top-[13%] z-10 h-fit lg:sticky">
+                <div className="flex items-start content-start  w-full flex-wrap top-[13%] z-10 h-fit lg:sticky">
                   <div className="mb-5">
                     <div className="text-xl text-[#d68029] font-semibold">
                       Do you have more questions?
@@ -755,7 +783,7 @@ export default function ServicePageClient() {
 
               {/* FAQ List */}
               <div className="w-full lg:w-[70%] flex relative">
-                <div className="flex p-2.5 w-full content-start flex-wrap">
+                <div className="flex  w-full content-start flex-wrap">
                   <div className="w-full text-start">
                     {data.faqs.length > 0 &&
                       data.faqs.map((item, index) => {

@@ -288,7 +288,7 @@ export default function BlogPageClient() {
       <section
         data-cursor
         // className="px-12.5 common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative"
-              className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative"
+              className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-10 lg:py-20 relative"
 
 >
         <div className="flex w-full z-20  max-w-[90%] lg:max-w-[80%] relative mx-auto ">
@@ -317,7 +317,7 @@ export default function BlogPageClient() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-full text-center text-black font-medium text-[18px]/[30px] flex justify-center mt-4"
               >
-                <p className="text-[18px]/[32px] tracking-[0.02em] font-normal max-w-4/5">
+                <p className="text-[18px]/[32px] tracking-[0.02em] font-normal max-w-full xl:max-w-4/5">
                   Empower yourself with the knowledge you need in the
                   ever-changing tech landscape. Explore our diverse categories,
                   engage with our content, and stay up-to-date by subscribing to
@@ -373,7 +373,7 @@ export default function BlogPageClient() {
               </p>
             </div>
           ) : (
-            <div className="grid max-[640px]:grid-cols-1 grid-cols-2 xl:grid-cols-3  max-[640px]:gap-4 gap-8">
+            <div className="grid max-[640px]:grid-cols-1 grid-cols-2 xl:grid-cols-3  gap-6 md:gap-8">
               {blogs.map((blog) => (
                 <div
                   key={blog._id}
@@ -455,6 +455,14 @@ export default function BlogPageClient() {
                 color="primary"
                 sx={{
                   "& .MuiPaginationItem-root": {
+                      minWidth: {
+                        xs: "26px",
+                        sm: "32px",
+                      },
+                      height: {
+                        xs: "26px",
+                        sm: "32px",
+                      },
                     color: "#4B5563",
                     "&.Mui-selected": {
                       backgroundColor: "#d68029",

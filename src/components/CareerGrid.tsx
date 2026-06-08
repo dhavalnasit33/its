@@ -151,10 +151,10 @@ const SubCluster = ({ category }: { category: DataItem }) => {
 
 export default function CareerGrid() {
     return (
-        <div className="relative min-h-screen w-full px-6 py-16 bg-white overflow-hidden text-gray-900">
+        <div className="relative min-h-screen w-full max-w-[90%] lg:max-w-[80%] mx-auto py-16 bg-white overflow-hidden text-gray-900">
             {/* floating pastel blobs */}
 
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
                 {careerData.map((mainCategory, index) => (
                     <motion.div
                         key={index}

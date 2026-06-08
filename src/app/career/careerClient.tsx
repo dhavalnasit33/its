@@ -184,7 +184,7 @@ export default function CareerClient() {
       </section>
 
       {/* section 2 : openning position */}
-      <section className="w-full   relative py-16" id="openning-position">
+      <section className="w-full   relative py-16 scroll-mt-14" id="openning-position">
         <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
           <div className="flex flex-wrap relative mx-auto">
             <motion.div

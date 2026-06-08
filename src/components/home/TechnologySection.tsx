@@ -62,7 +62,7 @@ export default function TechnologyTabs() {
           <div className="w-full relative max-w-[90%] lg:max-w-[80%]  mx-auto ">
             {/* px-4 sm:px-8 md:px-20 */}
             {/* Section Header */}
-            <div className="text-center w-full mb-12 lg:pt-16">
+            <div className="text-center w-full mb-12 lg:pt-20">
               <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%] font-bricolage">
                 <span className="text-[#D68029]">Technologies</span>{" "}
                 <span className="text-white">That We Work With</span>
@@ -75,7 +75,7 @@ export default function TechnologyTabs() {
             </div>
 
             {/* Tabs Navigation */}
-            <div className="flex justify-center w-full gap-6 mb-10 flex-wrap">
+            <div className="flex justify-center w-full gap-4 md:gap-6 mb-10 flex-wrap">
               {Object.keys(technologies).map((tab) => (
                 <button
                   key={tab}
@@ -91,12 +91,12 @@ export default function TechnologyTabs() {
             </div>
 
             {/* Technology Grid with flex-wrap & center */}
-            <div className="flex justify-center w-full flex-wrap gap-7 pt-10">
+            <div className="flex justify-center w-full flex-wrap gap-5 md:gap-7 pt-10">
               {technologies[activeTab].map((tech, index) => (
                 <div
                   key={index}
                   className="flex flex-col items-center text-center p-5 bg-white/[0.07] rounded-xl border border-white/20 shadow-sm hover:shadow-md transition-all duration-300 
-                    w-35 sm:w-40 md:w-45 "
+                    max-[360px]:w-full w-35 sm:w-40 md:w-45 "
                 >
                   <div className="w-17.5 h-17.5 flex items-center justify-center rounded-lg   mb-3">
                     <Image

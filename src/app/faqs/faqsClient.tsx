@@ -97,7 +97,7 @@ function faqs() {
 
 
       {/* Hero Section */}
-      <section data-cursor className=" common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative">
+      <section data-cursor className=" common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-10 lg:py-20 relative">
         <div className="flex w-full z-20 max-w-[90%] lg:max-w-[80%] mx-auto relative">
           <div className="flex mt-12.5 w-full">
             <div className="flex py-2.5 flex-wrap w-full mx-auto justify-center items-center">

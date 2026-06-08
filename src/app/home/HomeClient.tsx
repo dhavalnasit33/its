@@ -280,23 +280,18 @@ export default function HomeClient() {
 				<div className="absolute bottom-0 left-0 right-0 h-[150px] bg-[linear-gradient(0deg,#030b1a_0,transparent)] pointer-events-none z-[10]" />
 			</section>
 
-
-
-
-
-
-
 			<section className="w-full relative py-10 md:py-20 overflow-hidden text-white z-10">
 				<video
 					autoPlay
 					loop
 					muted
-					src="/home/bg_video.mp4"
+					src="/hire/hire_bg.mp4"
 					playsInline
 					className="absolute top-0 left-0 w-full h-full object-cover"
 				>
 				</video>
-				<div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-950/80 to-slate-900/75 pointer-events-none"></div>
+				{/* <div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-950/80 to-slate-900/75 pointer-events-none"></div> */}
+				<div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-900/60 to-slate-800/75 pointer-events-none"></div>
 
 				{/* <div className="relative z-10 container mx-auto max-w-7xl px-4 flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch"> */}
 				<div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch  pb-10 md:pb-20
@@ -329,7 +324,7 @@ export default function HomeClient() {
 						</motion.div>
 					</div>
 
-					<div className="lg:w-3/5 grid sm:grid-cols-2 gap-2 sm:gap-5">
+					<div className="lg:w-3/5 grid sm:grid-cols-2 gap-3 sm:gap-5">
 					
 						{homePageData?.aisection?.deatailBox?.map((item, idx) => (
 							<div key={idx}
@@ -518,9 +513,11 @@ export default function HomeClient() {
 						</motion.div>
 
 					</div>
-					<CurveDivider type="bottom" fillColor="#ffffff" className="absolute bottom-0 left-0 w-full transform translate-y-[99%] z-10" />
+					{/* <CurveDivider type="bottom" fillColor="#ffffff" className="absolute bottom-0 left-0 w-full transform translate-y-[99%] z-10" /> */}
 				</div>
 			</section>
+
+			<ParallaxShape type="bottom" />
 
 			<TechnologySection />
 
