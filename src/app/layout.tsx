@@ -4,6 +4,7 @@ import { SnackbarProvider } from "@/components/ui/snackbar-provider";
 import "./globals.css";
 import apiService from "@/lib/apiService";
 import ClientContentWrapper from "./ClientContentWrapper";
+import { GoogleTagManager } from "@next/third-parties/google";
 import SideBlurb from "@/components/SideInfo";
 import { WebsiteSettingsProvider } from "@/context/WebsiteSettingsContext";
 
@@ -25,16 +26,16 @@ const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
 });
 
-import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
+import {
+  getNavigationStructure,
+  NavigationStructure,
+} from "@/lib/navigationService";
 
 async function getWebsiteSettings(): Promise<any> {
   try {
-    const response = await apiService<any>(
-      "/website-settings",
-      {
-        next: { revalidate: 3600 }, // Cache for 60 min
-      }
-    );
+    const response = await apiService<any>("/website-settings", {
+      next: { revalidate: 3600 }, // Cache for 60 min
+    });
     if (response && response.success) {
       return response.data;
     }
@@ -57,9 +58,13 @@ export default async function RootLayout({
       lang="en"
       className={`${exo2.variable} ${inter.variable} ${bricolage.variable}`}
     >
+      <GoogleTagManager gtmId="GTM-5FSVQSMT" />
       <body>
         <SnackbarProvider>
-          <WebsiteSettingsProvider initialSettings={websiteSettings} navStructure={navStructure}>
+          <WebsiteSettingsProvider
+            initialSettings={websiteSettings}
+            navStructure={navStructure}
+          >
             <Navbar navStructure={navStructure} />
             <ClientContentWrapper>{children}</ClientContentWrapper>
             <SideBlurb />
