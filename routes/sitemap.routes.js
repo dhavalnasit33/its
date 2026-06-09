@@ -11,6 +11,11 @@ const formatDate = (date) => {
   return new Date(date).toISOString().split("T")[0];
 };
 
+router.head("/sitemap.xml", (req, res) => {
+  console.log("SITEMAP HEAD HIT");
+  res.status(200).end();
+});
+
 router.get("/sitemap.xml", async (req, res) => {
   // ⚠️ IMPORTANT: Change this URL to your final, live website domain
   const baseUrl = process.env.Loc_url;
@@ -177,4 +182,3 @@ module.exports = router;
 // });
 
 // module.exports = router;
-

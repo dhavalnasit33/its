@@ -6,4 +6,4 @@ Disallow: /admin
 Disallow: /login
 Disallow: /dashboard
 
-Sitemap: http://localhost:5000/sitemap.xml
+Sitemap: https://inspiretechnosolution.com/sitemap.xml

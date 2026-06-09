@@ -1,6 +1,10 @@
 // middlewares/botBlocker.js
 
 const botBlocker = (req, res, next) => {
+  if (req.path === "/sitemap.xml" || req.path === "/robots.txt") {
+    return next();
+  }
+
   const userAgent = (req.get("User-Agent") || "").toLowerCase();
 
   const blockedPatterns = [
@@ -13,12 +17,13 @@ const botBlocker = (req, res, next) => {
     "scrapy",
     "axios",
     "node-fetch",
-    'GPTBot', 'OAI-SearchBot', 'Opera/9.95', 'Firefox/3.8'
+    "GPTBot",
+    "OAI-SearchBot",
+    "Opera/9.95",
+    "Firefox/3.8",
   ];
 
-  const isBot = blockedPatterns.some(pattern =>
-    userAgent.includes(pattern)
-  );
+  const isBot = blockedPatterns.some((pattern) => userAgent.includes(pattern));
 
   if (isBot) {
     console.log(`[BLOCKED BOT]: ${userAgent}`);
