@@ -115,21 +115,21 @@ export default function Industries() {
         >
             <div
                 ref={titleRef}
-                className="text-center w-full pt-8 lg:pt-16 sticky   "
+                className="text-center w-full pt-12 lg:pt-16 sticky   "
                 style={{
                     top: `${NAVBAR_HEIGHT}px`,
                     zIndex: 2000,
                     // background: "#060610",
                     background: "#0d1b2a",
-                    paddingBottom: "24px",
+                    paddingBottom: "30px",
                 }}
             >   
                 <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto ">
                 <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-slate-300 mb-5">
                     Industries We Serve
                 </span>
-                <h2 className="text-center w-full font-bold tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%] font-bricolage">
-                    <span className="text-white">Our Smar</span>{" "}
+                <h2 className="common-h2 text-center w-full font-bricolage">
+                    <span className="text-white">Our Smart</span>{" "}
                     <span className="text-[#D68029]">Expertise Industries</span>
                 </h2>
                 <Motion />
@@ -268,9 +268,9 @@ export default function Industries() {
                                                 </div>
 
                                                 <div>
-                                                    <h5 className="text-sm sm:text-[15px] font-semibold text-white leading-snug mb-1">
+                                                    <h4 className="text-sm sm:text-[15px] font-semibold text-white leading-snug mb-1">
                                                         {industry.title}
-                                                    </h5>
+                                                    </h4>
                                                     <p
                                                         className="text-xs leading-relaxed text-[#cccccc]"
                                                         style={{

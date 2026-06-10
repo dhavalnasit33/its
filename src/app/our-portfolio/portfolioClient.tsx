@@ -178,7 +178,7 @@ export default function PortfolioClient() {
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                         className="mb-5"
                     >
-                        <h1 className="text-3xl sm:text-4xl md:text-[46px] leading-snug font-semibold">
+                        <h1 className="text-4xl md:text-[42px] lg:text-[46px]/[130%] leading-snug font-semibold">
                             {portfolioContentData?.heroSection.title}
                         </h1>
                     </motion.div>
@@ -270,7 +270,7 @@ export default function PortfolioClient() {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                         >
-                            <h2 className="text-3xl sm:text-4xl md:text-[46px] font-semibold text-gray-900 relative">
+                            <h2 className="common-h2  text-gray-900 relative">
                                 All Creative Work
                             </h2>
                             <Motion />
@@ -309,7 +309,7 @@ export default function PortfolioClient() {
                                     All
                                 </button>
                                 {categories.map((cat) => (
-                                    <div
+                                    <button
                                     key={cat._id}
                                     onClick={() => handleCategoryClick(cat._id)}
                                     className={`cursor-pointer px-3.5 text-[14px] md:text-[20px] py-2.5 font-semibold text-gray-900  
@@ -321,7 +321,7 @@ export default function PortfolioClient() {
                                         }`}
                                     >
                                     {cat.category}
-                                    </div>
+                                    </button>
                                 ))}
                             </div>
 

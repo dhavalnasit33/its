@@ -81,7 +81,7 @@ export default function TrainingPageClient() {
                     {/* Content Left */}
                     <div className="order-2 md:order-1 z-10">
                         {/* First p tag - from top slow */}
-                        <motion.p
+                        <motion.h6
                             initial={{ opacity: 0, y: -50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, ease: "easeOut" }}
@@ -89,14 +89,14 @@ export default function TrainingPageClient() {
                         >
                             {/* Learn New Things Daily */}
                             {trainingMainPageData?.heroSection?.subTitle || ""}
-                        </motion.p>
+                        </motion.h6>
 
                         {/* H1 - from top faster */}
                         <motion.h1
                             initial={{ opacity: 0, y: -60 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-                            className="text-4xl md:text-5xl font-bold leading-tight mt-3"
+                            className="text-4xl md:text-[42px] xl:text-5xl font-bold leading-tight mt-3"
                         >
                             {/* Education Is A <br />
                             Path To <span className="text-[#D68029]">Success</span> <br />
@@ -210,15 +210,17 @@ export default function TrainingPageClient() {
 
             {/* CAREER TREE SECTION */}
             <section className="max-w-full mx-auto pt-16 text-center">
-                <motion.h2
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-4xl md:text-5xl font-boldha text-black"
-                >
-                    Choose <span className="text-[#D68029]">Your Career</span>
-                    <Motion />
-                </motion.h2>
+                <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
+                    <motion.h2
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="common-h2 text-black"
+                    >
+                        Choose <span className="text-[#D68029]">Your Career</span>
+                        <Motion />
+                    </motion.h2>
+                </div>
                 <motion.div
                     initial={{ opacity: 0, scale: 1 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -236,12 +238,13 @@ export default function TrainingPageClient() {
                         // )
                     }
                 </motion.div>
+                
             </section>
 
             {/* <section className="py-20">
                 <div className="max-w-384 mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
                  <section className="relative w-full  max-w-[90%] lg:max-w-[80%] mx-auto py-20  ">
-                <div className="xl:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 ">
+                <div className="xl:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 items-center ">
                     {/* Image */}
                     <motion.div
                         className="relative flex justify-center"
@@ -282,8 +285,7 @@ export default function TrainingPageClient() {
                         </motion.p>
 
                         {/* Main heading */}
-                        <motion.h2
-                            className="text-[2.5rem] font-bold leading-tight"
+                        <motion.div
                             initial={{ opacity: 0, y: -40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
@@ -306,11 +308,11 @@ export default function TrainingPageClient() {
                                     </span>
                                 )
                             } */}
-                            <div
-                                className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
-                                dangerouslySetInnerHTML={{ __html: trainingMainPageData?.aboutusSection?.mainTitle || "" }}
+                            <h2
+                                className="common-h2 leading-tight text-black prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
+                                dangerouslySetInnerHTML={{ __html: trainingMainPageData?.aboutusSection?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
                             />
-                        </motion.h2>
+                        </motion.div>
 
                         {/* Description */}
                         <motion.p
@@ -342,7 +344,7 @@ export default function TrainingPageClient() {
 
                         {/* Stats */}
                         <motion.div
-                            className="flex justify-center items-center gap-12 mt-4"
+                            className="flex justify-center items-center gap-8 lg:gap-12 mt-4"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
@@ -352,7 +354,7 @@ export default function TrainingPageClient() {
                                 trainingMainPageData?.aboutusSection.detailbox.detailbox.map((data, index) => (
 
                                     <div className="text-left" key={index}>
-                                        <p className="text-2xl font-bold text-[#D68029]">{data.heading}</p>
+                                        <h4 className="text-2xl font-bold text-[#D68029]">{data.heading}</h4>
                                         <p className="text-gray-600 mt-1 text-sm">
                                             {/* 90% of students see their course through to completion. */}
                                             {data.description}
@@ -430,7 +432,7 @@ export default function TrainingPageClient() {
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.8 }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                        <h2 className="common-h2 mb-4">
                             {/* ITS Institute Facilities */}
                             {trainingMainPageData?.itsInstituteFacilitiesSection.title}
                         </h2>
@@ -466,7 +468,7 @@ export default function TrainingPageClient() {
                                         <div className="w-full h-16 bg-gray-200 rounded-lg animate-pulse"></div>
                                     )
                                 }
-                                <p className="font-semibold text-lg">{card.heading}</p>
+                                <h4 className="font-semibold text-lg">{card.heading}</h4>
                             </div>
                         ))}
                     </motion.div>
@@ -479,7 +481,7 @@ export default function TrainingPageClient() {
                     {/* Section Title + Motion */}
                     <div className="text-center mb-10 md:mb-12">
                         <motion.h2
-                            className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug"
+                            className="common-h2 leading-snug"
                             initial={{ y: -60, opacity: 0 }}
                             whileInView={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -549,16 +551,16 @@ export default function TrainingPageClient() {
                                                 )
                                             }
                                         </div>
-                                        <span className="mt-auto text-center sm:text-left">
+                                        <h4 className="mt-auto text-center sm:text-left">
                                             {card.heading}
-                                        </span>
+                                        </h4>
                                     </motion.div>
                                 ))}
                         </motion.div>
 
                         {/* RIGHT SIDE: TEXT CONTENT */}
                         <div className="space-y-6 md:space-y-8 lg:pl-6 order-1 lg:order-2">
-                            <motion.p
+                            <motion.h6
                                 className="uppercase text-[#D68029] font-semibold tracking-wider mt-16"
                                 initial={{ y: -50, opacity: 0 }}
                                 whileInView={{ y: 0, opacity: 1 }}
@@ -567,11 +569,11 @@ export default function TrainingPageClient() {
                             >
                                 {/* Why Choose Us */}
                                 {trainingMainPageData?.rightCoursePickSection.subTitle}
-                            </motion.p>
+                            </motion.h6>
 
                             {/* Heading from top */}
                             <motion.h2
-                                className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug mt-3"
+                                className="common-h2 leading-snug mt-3"
                                 initial={{ y: -60, opacity: 0 }}
                                 whileInView={{ y: 0, opacity: 1 }}
                                 transition={{ duration: 0.9, ease: "easeOut" }}
@@ -628,10 +630,10 @@ export default function TrainingPageClient() {
 
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-xl sm:text-2xl">
+                                            <h4 className="font-bold text-xl sm:text-2xl">
                                                 {/* Trusted By Thousands */}
                                                 {data.title}
-                                            </h3>
+                                            </h4>
                                             <p className="text-gray-600 text-sm sm:text-md mt-2 sm:mt-3 leading-relaxed">
                                                 {/* “Trusted by Thousands” Lorem Ipsum is simply dummy text of
                                                 the printing and typesetting industry. Lorem Ipsum has been

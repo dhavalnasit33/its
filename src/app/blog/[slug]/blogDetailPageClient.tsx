@@ -490,16 +490,17 @@ export default function BlogDetailPageClient({
       </nav>
 
       {/* Blog Content */}
-      <section className="px-2 overflow-x-hidden  sm:px-4 md:px-8 lg:px-12 py-4">
-        <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 w-full max-w-[95%] mx-auto">
+      <section className=" overflow-x-hidden  py-4">
+      {/* <section className="w-full max-w-[95%] lg:max-w-[80%]  mx-auto overflow-x-hidden py-4 "> */}
+        <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 w-full  max-w-[90%] lg:max-w-[80%] mx-auto">
           {/* Main Content */}
 
           <div className="w-full lg:max-w-5xl bg-white shadow-[0_0_16.9px_rgba(102,102,102,0.25)] p-8  ">
             {/* Blog Header */}
             <div className="mb-8">
-              <h1
+              <h2
                 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
-                dangerouslySetInnerHTML={{ __html: blog?.details?.title || "" }}
+                dangerouslySetInnerHTML={{ __html: blog?.details?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
               />
 
               <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -558,7 +559,7 @@ export default function BlogDetailPageClient({
 
           {/* Sidebar */}
           <motion.div
-            className="w-full max-w-full sm:w-[40%] lg:max-w-[25%]  overflow-x-hidden  flex flex-col gap-8"
+            className="w-full max-w-full  lg:max-w-[25%]  overflow-x-hidden  flex flex-col gap-8"
             initial={{ opacity: 0, transform: "translateX(50px) scale(0.95)" }}
             whileInView={{ opacity: 1, transform: "translateX(0) scale(1)" }}
             viewport={{ once: true, amount: 0.1 }}

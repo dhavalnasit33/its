@@ -256,7 +256,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                       }}
                     >
                       <div className="mb-2.5 w-full relative ">
-                        <h1 className="font-bold  text-3xl sm:text-4xl md:text-[42px] xl:text-[46px] leading-[130%] tracking-[1.2px] relative  text-white font-bricolage">
+                        <h1 className="font-bold text-4xl md:text-[42px] lg:text-[46px]/[130%] tracking-[1.2px] relative  text-white font-bricolage">
                           {pageData.title.toLowerCase().startsWith("hire") ? (
                             <>
                               <span className="text-[#d68029] uppercase">
@@ -324,7 +324,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           transition={{ duration: 0.6, ease: "easeOut" }}
                           className="mb-6 w-full flex content-start common_htags left_htags"
                         >
-                          <h2 className="text-3xl sm:text-4xl md:text-[40px] relative leading-[120%] text-white font-bold">
+                          <h2 className=" relative  text-white common-h2">
                             {pageData.successSpeacks.title}
                           </h2>
                         </motion.div>
@@ -463,7 +463,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                   >
-                    <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                    <h2 className="text-center w-full text-black common-h2">
                       {getHighlightedTitle()}
                     </h2>
                   </motion.div>
@@ -514,9 +514,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h3 className="text-black text-lg font-semibold">
+                          <h4 className="text-black text-lg font-semibold">
                             24*7 Availability
-                          </h3>
+                          </h4>
                         </div>
                       </motion.div>
                       {/* Box 2: 20+ Experts */}
@@ -539,9 +539,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h3 className="text-black text-lg font-semibold">
+                          <h4 className="text-black text-lg font-semibold">
                             20+ Experts
-                          </h3>
+                          </h4>
                         </div>
                       </motion.div>
                       {/* Box 3: Hourly Hiring */}
@@ -564,9 +564,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h3 className="text-black text-lg font-semibold">
+                          <h4 className="text-black text-lg font-semibold">
                             Hourly Hiring
-                          </h3>
+                          </h4>
                         </div>
                       </motion.div>
                       {/* Box 4: Full-Time hiring */}
@@ -589,9 +589,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h3 className="text-black text-lg font-semibold">
+                          <h4 className="text-black text-lg font-semibold">
                             Full-Time hiring
-                          </h3>
+                          </h4>
                         </div>
                       </motion.div>
                     </div>
@@ -695,7 +695,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
          bg-center bg-size[100%_auto] 
          px-0 pt-37.5 pb-12.5 
          transition-[background,border,border-radius,box-shadow] duration-300 
-         max-[1200px]:mt-10 max-[1200px]:py-5"
+         max-[1200px]:mt-0 max-[1200px]:py-10"
       >
         <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[80%]">
           <div className="flex w-full relative min-h-px">
@@ -725,7 +725,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   )}
                 </div>
               </section>
-              <div className="w-full text-center mt-10">
+              <div className="w-full text-center mt-14">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -767,7 +767,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-6 text-left w-full common_htags left_htags"
               >
-                <h2 className="text-3xl sm:text-4xl relative font-bold text-black">
+                <h2 className="common-h2-small relative text-black">
                   {pageData.hireDadiated.title}
                 </h2>
               </motion.div>
@@ -781,7 +781,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 {/* {pageData.hireDadiated.description && ( */}
                 <div
                   className="prose max-w-none text-base font-normal text-[#6f6f6f] leading-8 tracking-wide
-                                                [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
+                                                [&_p]:mb-4 [&_p:last-child]:mb-0  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                   dangerouslySetInnerHTML={{
                     __html: pageData?.hireDadiated?.description || "",
                   }}
@@ -828,7 +828,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                   >
-                    <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]  ">
+                    <h2 className="text-center w-full common-h2 text-black ">
                       Our Expertise
                     </h2>
                     <Motion />
@@ -855,9 +855,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             delay: (index % 2) * 0.1,
                           }}
                         >
-                          <h3 className="text-5xl font-bold text-transparent  font-poppins  [-webkit-text-stroke:2px_#FFB061] mb-4">
+                          <h4 className="text-5xl font-bold text-transparent  font-poppins  [-webkit-text-stroke:2px_#FFB061] mb-4">
                             {String(index + 1).padStart(2, "0")}
-                          </h3>
+                          </h4>
                           <p className="text-black text-xl font-semibold leading-snug">
                             {item}
                           </p>
@@ -919,7 +919,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-6 text-left w-full common_htags left_htags"
               >
-                <h2 className="text-3xl sm:text-4xl md:text-[40px] relative leading-[120%] font-bold text-black">
+                <h2 className=" relative common-h2 text-black">
                   {pageData.techStack.title}
                 </h2>
               </motion.div>
@@ -927,7 +927,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 {/* {pageData.techStack.description && ( */}
                 <div
                   className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
-                                            [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
+                                            [&_p]:mb-4   [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                   dangerouslySetInnerHTML={{
                     __html: pageData?.techStack?.description || "",
                   }}
@@ -968,9 +968,10 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             key={`${sectionNum}-${idx}`}
                             className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 h-auto"
                           >
-                            <h3 className="font-bold text-2xl mb-4">
+                            <h4 className="font-bold text-2xl mb-4">
                               {toolCategory.title}
-                            </h3>
+                            </h4>
+                            <div>
                             <ul className="space-y-2 text-gray-600 text-[1rem]">
                               {toolCategory.keyPoints?.map(
                                 (item: string, i: number) => (
@@ -990,6 +991,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                                 ),
                               )}
                             </ul>
+                            </div>
                           </div>
                         ),
                       )}
@@ -1014,7 +1016,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                   >
-                    <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                    <h2 className="text-center w-full  text-black common-h2 ">
                       {pageData.whyHireUs.title}
                     </h2>
                     <Motion />
@@ -1041,9 +1043,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                       >
                         <div className="flex flex-col h-full">
                           <div className="mb-5">
-                            <h3 className="text-[25px] text-[#12203d] font-medium break-words">
+                            <h4 className="text-[25px] text-[#12203d] font-medium break-words">
                               {item.title}
-                            </h3>
+                            </h4>
                           </div>
 
                           <div className="flex-1">
@@ -1102,7 +1104,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-6 text-left w-full common_htags left_htags"
               >
-                <h2 className="text-3xl sm:text-4xl md:text-[40px] relative leading-[120%] tracking-tight font-bold text-black">
+                <h2 className="common-h2 relative   text-black">
                   {pageData.unloackPower.title}
                 </h2>
               </motion.div>
@@ -1116,7 +1118,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 {/* {pageData.unloackPower.description && ( */}
                 <div
                   className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
-                                                [&_p]:mb-6  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
+                                                [&_p]:mb-4 [&_p:last-child]:mb-0 [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                   dangerouslySetInnerHTML={{
                     __html: pageData?.unloackPower?.description || "",
                   }}
@@ -1138,7 +1140,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
             >
-              <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
+              <h2 className="text-center w-full text-black common-h2">
                 {pageData.title.replace(/^Hire\s*/, "").trim()} 4 steps hiring
                 process
               </h2>
@@ -1217,7 +1219,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
           <div className="flex flex-wrap  w-full relative content-start">
             <div className="text-center pb-10 mb-2.5 w-full">
-              <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
+              <h2 className="text-center w-full text-black common-h2">
                 Frequently Asked Questions (FAQ)
               </h2>
               <Motion />
@@ -1227,14 +1229,14 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 <div className="w-full max-w-full lg:max-w-[29.99%] flex  relative min-h-px">
                   <div className="flex items-start content-start w-full flex-wrap top-[13%] z-10 h-fit sticky ">
                     <div className="mb-5">
-                      <div className="text-xl text-[#d68029] font-semibold">
+                      <h6 className="text-xl text-[#d68029] font-semibold">
                         Do you have more questions?
-                      </div>
+                      </h6>
                     </div>
                     <div className="w-full relative mb-5">
-                      <h3 className="font-semibold text-4xl xl:text-[45px] leading-10 xl:leading-12.5 ">
+                      <h2 className="font-semibold text-4xl xl:text-[45px] leading-10 xl:leading-12.5 ">
                         We are here to Answer you...
-                      </h3>
+                      </h2>
                     </div>
                     <div className="w-full text-center flex justify-start ">
                       <motion.div

@@ -45,7 +45,7 @@ export default function WhyChooseITS() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}>
-              <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+              <h2 className="common-h2 text-center w-full  text-black ">
                 Why Choose ITS
               </h2>
               <Motion />
@@ -71,7 +71,7 @@ export default function WhyChooseITS() {
                       height={60}
                       className="h-12 w-12 mb-4"
                     />
-                    <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+                    <h4 className="text-lg font-bold mb-2">{item.title}</h4>
                     <p className="text-gray-600 text-sm leading-relaxed"
                       dangerouslySetInnerHTML={{
                         __html: item?.description || "",

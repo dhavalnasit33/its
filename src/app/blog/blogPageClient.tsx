@@ -55,6 +55,8 @@ export default function BlogPageClient() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const categoryRef = useRef<HTMLDivElement | null>(null);
+  const blogGridRef = useRef<HTMLDivElement | null>(null);
+  const categoryClickedRef = useRef(false);
 
   // 👇 Add these right after your other refs
   const navTypeRef = useRef<"reload" | "back_forward" | "navigate" | "unknown">(
@@ -191,20 +193,33 @@ export default function BlogPageClient() {
         });
         // ❌ Old behavior: window.scrollTo({ top: 0, behavior: "smooth" });
         // ✅ New behavior: scroll to categories section
-        setTimeout(() => {
-          // Skip scroll when page was reloaded or restored from saved scroll
-          if (navTypeRef.current === "reload" || restoredRef.current) {
-            window.scrollTo({ top: 0, behavior: "instant" });
-          } else {
-            categoryRef.current?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        }, 100);
+        // setTimeout(() => {
+        //   // Skip scroll when page was reloaded or restored from saved scroll
+        //   if (navTypeRef.current === "reload" || restoredRef.current) {
+            // window.scrollTo({ top: 0, behavior: "instant" });
+        //   } else {
+        //     categoryRef.current?.scrollIntoView({
+        //       behavior: "smooth",
+        //       block: "start",
+        //     });
+        //   }
+        // }, 100);
 
         setBlogs(res.data);
         setTotalPages(res.pagination.pages);
+
+        if (categoryClickedRef.current) {
+          setTimeout(() => {
+             if (window.innerWidth < 767) {
+              blogGridRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+             }
+
+            categoryClickedRef.current = false;
+          }, 100);
+        }
       } catch (error) {
         console.error("❌ Error fetching blogs:", error);
       } finally {
@@ -247,6 +262,7 @@ export default function BlogPageClient() {
   // }, [page, selectedCategory]);
 
   const handleCategoryClick = (category: string) => {
+    categoryClickedRef.current = true;
     setSelectedCategory(category);
     setPage(1);
   };
@@ -301,7 +317,7 @@ export default function BlogPageClient() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-5 w-full text-center"
               >
-                <h1 className="text-center text-[46px]/[130%] text-black tracking-[1.2px] font-semibold">
+                <h1 className="text-center text-4xl md:text-[42px] lg:text-[46px]/[130%] text-black tracking-[1.2px] font-semibold">
                   Exploring the{" "}
                   <span className="text-[#d68029]">
                     Inspire Techno Solution
@@ -348,7 +364,8 @@ export default function BlogPageClient() {
               <button
                 key={index}
                 onClick={() => handleCategoryClick(category)}
-                className={`px-3.5 cursor-pointer py-2.5 rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200 ${
+                // className={`px-3.5 cursor-pointer py-2.5 rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200 ${
+                className={`max-[540px]:w-full cursor-pointer px-3.5 py-2.5 rounded-e-xl rounded-t-xl text-[14px] font-semibold border transition-all duration-200 ${
                   selectedCategory === category
                     ? "bg-[#d68029] text-white border-[#d68029]"
                     : "bg-[#ffd4a8] text-black border-[#ffd4a8] hover:bg-[#d68029] hover:text-white hover:border-[#d68029]"
@@ -361,7 +378,7 @@ export default function BlogPageClient() {
 
           {/* Blogs */}
           {loading ? (
-            <div className="grid max-[534px]:grid-cols-1 grid-cols-2 xl:grid-cols-3 max-[534px]:gap-4   gap-8">
+            <div className="grid max-[640px]:grid-cols-1 grid-cols-2 xl:grid-cols-3 max-[640px]:gap-4   gap-8">
               {Array.from({ length: 6 }).map((_, i) => (
                 <BlogSkeleton key={i} />
               ))}
@@ -373,7 +390,7 @@ export default function BlogPageClient() {
               </p>
             </div>
           ) : (
-            <div className="grid max-[640px]:grid-cols-1 grid-cols-2 xl:grid-cols-3  gap-6 md:gap-8">
+            <div  ref={blogGridRef} className="max-[767px]:scroll-mt-24 grid max-[640px]:grid-cols-1 grid-cols-2 xl:grid-cols-3  gap-6 md:gap-8">
               {blogs.map((blog) => (
                 <div
                   key={blog._id}
@@ -408,13 +425,13 @@ export default function BlogPageClient() {
                             : blog.categories?.category}
                         </span>
                       </div>
-                      <h2
+                      <div
                         className="text-xl font-bold mb-3 line-clamp-2 text-gray-800"
                         dangerouslySetInnerHTML={{
                           __html: blog.details.title,
                         }}
                       />
-                      <p
+                      <div
                         className="text-sm text-gray-600 line-clamp-3 [&_a]:no-underline [&_a]:text-gray-600 [&_a:hover]:text-[#d68029] [&_a:hover]:underline mb-4"
                         dangerouslySetInnerHTML={{
                           __html: blog.details.description,

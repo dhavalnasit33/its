@@ -89,7 +89,7 @@ export default function EngagementModels() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           className="flex flex-col justify-center mb-6 w-full relative "
         >
-          <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%] font-bricolage">
+          <h2 className="common-h2 text-center w-full  text-black font-bricolage">
 
             <span className="text-[#D68029]">Build Your Dream</span>{" "}
             <span className="text-white">Team With Our Engagement Model</span>
@@ -182,7 +182,7 @@ export default function EngagementModels() {
                         className="object-contain filter brightness-0 invert"
                       />
                     </div>
-                    <h3 className="text-xl font-bold font-bricolage">{model.modelTitle}</h3>
+                    <h4 className="text-xl font-bold font-bricolage">{model.modelTitle}</h4>
                   </div>
 
 

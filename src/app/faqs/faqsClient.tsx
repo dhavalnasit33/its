@@ -108,7 +108,7 @@ function faqs() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-5 w-full text-center"
               >
-                <h1 className="text-center text-[46px]/[130%] text-black tracking-[1.2px] font-semibold">
+                <h1 className="text-center text-4xl md:text-[42px] lg:text-[46px]/[130%] text-black tracking-[1.2px] font-semibold">
                   Exploring the{" "}
                   <span className="text-[#d68029]">Frequently Asked Questions</span>
                 </h1>
@@ -191,10 +191,10 @@ function faqs() {
                         className="cursor-pointer py-4 px-5 box-border w-full  flex items-center justify-between font-bold"
                         onClick={() => toggleAccordion(index)}
                       >
-                        <span className="font-medium w-full text-[20px] text-black">
+                        <h4 className="font-medium w-full text-[20px] text-black">
                           {/* {item.title} */}
                           <span dangerouslySetInnerHTML={{ __html: item.title }} />
-                        </span>
+                        </h4>
                         <span className="w-[1.5em] inline-block">
                           {isOpen ? <FaMinus /> : <FaPlus />}
                         </span>
@@ -212,7 +212,7 @@ function faqs() {
                             }}
                             className="overflow-hidden"
                           >
-                            <div className="block px-5 py-4 text-[#7a7a7a] text-md">
+                            <div className="block px-5 pb-4 text-[#7a7a7a] text-md">
                               <div
                                 className="prose max-w-none font-normal text-[#6f6f6f] [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                                 dangerouslySetInnerHTML={{

@@ -273,7 +273,7 @@ export default function GeneralContactForm() {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] font-inter ">
-            <div className="bg-[#13213d] p-4 md:p-8 text-white flex flex-col  rounded-2xl relative overflow-hidden h-fit lg:mr-10 ">
+            <div className="bg-[#13213d] p-7 md:p-8 text-white flex flex-col  rounded-2xl relative overflow-hidden h-fit lg:mr-10 ">
                 <div className="flex items-center justify-between sm:gap-3 gap-2">
                     <div>
                         <h3 className="text-sm uppercase tracking-[0.18em]">
@@ -300,16 +300,16 @@ export default function GeneralContactForm() {
                             </div>
 
                             <div className="flex flex-col">
-                                <span className="text-xs uppercase tracking-[0.16em]">
+                                <h4 className="text-xs uppercase tracking-[0.16em]">
                                     {item.label}
-                                </span>
+                                </h4>
 
-                                <span
+                                <p
                                     className={`text-[16px] ${item.isEmail ? "break-all" : "wrap-break-words"
                                         }`}
                                 >
                                     {item.value}
-                                </span>
+                                </p>
                             </div>
                         </div>
                     ))}
@@ -322,9 +322,9 @@ export default function GeneralContactForm() {
                     <div className=" p-3 bg-white/10 rounded-md">
                         <BiCalendar size={30} />
                     </div>
-                    <h5 className="text-[18px] text-white font-semibold leading-[22px] capitalize">
+                    <h4 className="text-[18px] text-white font-semibold leading-[22px] capitalize">
                         Book a meeting
-                    </h5>
+                    </h4>
                 </button>
                 <a
                     target="_blank"
@@ -343,9 +343,9 @@ export default function GeneralContactForm() {
             </div>
 
             <div className="mt-8 lg:mt-0">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800">
+                <h4 className="text-2xl font-bold mb-6 text-gray-800">
                     Let&apos;s Talk Business!
-                </h2>
+                </h4>
 
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">

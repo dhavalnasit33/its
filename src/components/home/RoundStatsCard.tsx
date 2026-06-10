@@ -41,10 +41,10 @@ export default function RoundStatsCard({ value, label } : RoundStatsCardProps) {
       transition={{ duration: 0.5 }}
     >
        <div className="w-20 h-20 aspect-square rounded-full flex items-center justify-center bg-[linear-gradient(90deg,#472424,rgba(216,230,255,0))]">
-          <h3 className="text-2xl font-bold text-white tracking-tight leading-6">
+          <h4 className="text-2xl font-bold text-white tracking-tight leading-6">
             {count}
             {value.replace(/[0-9]/g, "")}
-          </h3>
+          </h4>
         </div>
       <p className="text-white opacity-70 font-medium  text-sm w-[115px] ">{label}</p>
     </motion.div>

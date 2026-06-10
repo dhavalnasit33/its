@@ -1446,20 +1446,20 @@ export default function HireDevelopersPageClient() {
                                         delay: 0.2,
                                     }}
                                 >
-                                    <div className="mb-2.5 w-full relative ">
-                                        <h1 className="font-semibold  text-3xl sm:text-4xl md:text-[42px] xl:text-[46px] leading-[130%] tracking-[1.2px] relative  text-black ">
+                                    {/* <div className="mb-2.5 w-full relative "> */}
+                                        <div className="mb-2.5 w-full relative  relative  text-black ">
                                             {hireMainPageData.mainTitle ? (
-                                                <div
-                                                    className="font-bold text-3xl sm:text-4xl md:text-[42px] xl:text-[46px] leading-[130%] tracking-[1.2px] relative  text-white font-bricolage"
+                                                <h1
+                                                    className="font-bold text-4xl md:text-[42px] lg:text-[46px]/[130%] tracking-[1.2px] relative  text-white font-bricolage"
                                                     dangerouslySetInnerHTML={{
-                                                        __html: hireMainPageData.mainTitle,
+                                                        __html: hireMainPageData.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, ""),
                                                     }}
                                                 />
                                             ) : (
                                                 hireMainPageData.mainTitle
                                             )}
-                                        </h1>
-                                    </div>
+                                        </div>
+                                    {/* </div> */}
                                 </motion.div>
                                 <motion.div
                                     className="mb-5 relative w-full"
@@ -1545,7 +1545,7 @@ export default function HireDevelopersPageClient() {
                                         viewport={{ once: true, amount: 0.3 }}
                                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                     >
-                                        <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                                        {/* <div className="text-center w-full common-h2 text-black "> */}
                                             {/* Hire Dedicated Web and Mobile  App Development Team */}
                                             {/* {hireMainPageData.developmentTeamSection.heading ? (
                                                 <div
@@ -1558,14 +1558,14 @@ export default function HireDevelopersPageClient() {
                                             ) : (
                                                 hireMainPageData?.developmentTeamSection?.heading || ""
                                             )} */}
-                                            <div
-                                                className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                            <h2
+                                                className="text-center w-full common-h2 text-black   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                                 dangerouslySetInnerHTML={{
                                                     __html:
-                                                        hireMainPageData?.developmentTeamSection?.heading || "",
+                                                        hireMainPageData?.developmentTeamSection?.heading.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                                                 }}
                                             />
-                                        </div>
+                                        {/* </div> */}
                                         <Motion />
                                     </motion.div>
                                 </div>
@@ -1603,7 +1603,8 @@ export default function HireDevelopersPageClient() {
                                                     hireMainPageData?.developmentTeamSection?.description || ""
                                                 )} */}
                                                 <div
-                                                    className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                                    className="font-medium [&_p]:mb-4
+    										[&_p:last-child]:mb-0  rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                                     dangerouslySetInnerHTML={{
                                                         __html:
                                                             hireMainPageData?.developmentTeamSection?.description || "",
@@ -1625,7 +1626,7 @@ export default function HireDevelopersPageClient() {
                                             {hireMainPageData.developmentTeamSection.image ? (
                                                 <Image
                                                     src={hireMainPageData.developmentTeamSection.image}
-                                                    alt={"Web and Mobie App Development Team"}
+                                                    alt={"Web and Mobile App Development Team"}
                                                     width={343}
                                                     height={334}
                                                     className="w-full h-auto drop-shadow-lg inline-block align-middle"
@@ -1655,7 +1656,7 @@ export default function HireDevelopersPageClient() {
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                             >
-                                <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                                {/* <div className="text-center w-full  text-black common-h2"> */}
                                     {/* Hire Dedicated Web and Mobile App Developers */}
                                     {/* {hireMainPageData.dedicatedDeveloperSection.maintitle ? (
                                         <div
@@ -1668,14 +1669,14 @@ export default function HireDevelopersPageClient() {
                                     ) : (
                                         hireMainPageData.dedicatedDeveloperSection.maintitle
                                     )} */}
-                                    <div
-                                        className="font-medium   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                    <h2
+                                        className="text-center w-full  text-black common-h2  rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                         dangerouslySetInnerHTML={{
                                             __html:
-                                                hireMainPageData?.dedicatedDeveloperSection?.maintitle || "",
+                                                hireMainPageData?.dedicatedDeveloperSection?.maintitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                                         }}
                                     />
-                                </div>
+                                {/* </div> */}
                                 <Motion />
                             </motion.div>
                         </div>
@@ -1700,7 +1701,7 @@ export default function HireDevelopersPageClient() {
                                         viewport={{ once: true, amount: 0.3 }}
                                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                     >
-                                        <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                                        {/* <div className="text-center w-full  text-black common-h2"> */}
                                             {/* Why Hire Developers For Your Project? */}
                                             {/* {hireMainPageData.whyHireDeveloperforYourProject
                                                 .mainTitle ? (
@@ -1716,14 +1717,14 @@ export default function HireDevelopersPageClient() {
                                                 hireMainPageData.whyHireDeveloperforYourProject
                                                     .mainTitle
                                             )} */}
-                                            <div
-                                                className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                            <h2
+                                                className="  text-center w-full  text-black common-h2 rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                                 dangerouslySetInnerHTML={{
                                                     __html:
-                                                        hireMainPageData?.whyHireDeveloperforYourProject?.mainTitle || "",
+                                                        hireMainPageData?.whyHireDeveloperforYourProject?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                                                 }}
                                             />
-                                        </div>
+                                        {/* </div> */}
                                         <Motion />
                                     </motion.div>
                                 </div>
@@ -1749,9 +1750,9 @@ export default function HireDevelopersPageClient() {
                                                     className="object-contain"
                                                 />
                                             </div>
-                                            <h3 className="font-semibold text-xl text-gray-800">
+                                            <h4 className="font-semibold text-xl text-gray-800">
                                                 {item.label}
-                                            </h3>
+                                            </h4>
                                         </motion.div>
                                     )
                                 )}
@@ -1772,7 +1773,7 @@ export default function HireDevelopersPageClient() {
                                     viewport={{ once: true, amount: 0.3 }}
                                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                 >
-                                    <div className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]">
+                                    {/* <div className="text-center w-full  text-black common-h2"> */}
                                         {/* Why choose ITS for dedicated resources? */}
                                         {/* {hireMainPageData.whyChooseItsForDedicatedResources
                                             .mainTitle ? (
@@ -1788,14 +1789,15 @@ export default function HireDevelopersPageClient() {
                                             hireMainPageData.whyChooseItsForDedicatedResources
                                                 .mainTitle
                                         )} */}
-                                        <div
-                                            className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+                                        <h2
+                                            className=" text-center w-full  text-black common-h2  rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                             dangerouslySetInnerHTML={{
                                                 __html:
-                                                    hireMainPageData?.whyChooseItsForDedicatedResources?.mainTitle || "",
+                                                    hireMainPageData?.whyChooseItsForDedicatedResources?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "")
+ || "",
                                             }}
                                         />
-                                    </div>
+                                    {/* </div> */}
                                     <Motion />
                                 </motion.div>
                             </div>
@@ -1822,9 +1824,9 @@ export default function HireDevelopersPageClient() {
                                                         height={40}
                                                         className="object-contain shrink-0"
                                                     />
-                                                    <h3 className="font-bold text-lg text-[#12203D]">
+                                                    <h4 className="font-bold text-lg text-[#12203D]">
                                                         {item.label}
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                                 <div className="p-5 grow">
                                                     <p className="text-gray-600 text-base leading-relaxed"
@@ -2030,11 +2032,12 @@ export default function HireDevelopersPageClient() {
                                 ) : (
                                     hireMainPageData.hireDedicatedResourcesAndTalents[0].mainTitle
                                 )} */}
-                                <h2
+                                <h3
                                         className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                         dangerouslySetInnerHTML={{
                                             __html:
-                                                hireMainPageData?.hireDedicatedResourcesAndTalents[0]?.mainTitle || "",
+                                                hireMainPageData?.hireDedicatedResourcesAndTalents[0]?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "")
+ || "",
                                         }}
                                     />
                             </div>
@@ -2096,7 +2099,7 @@ export default function HireDevelopersPageClient() {
                                 ) : (
                                     hireMainPageData.hireDedicatedResourcesAndTalents[1].subTitle
                                 )} */}
-                                <h3
+                                <div
                                     className=" text-xl font-semibold text-[#d68029] rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                     dangerouslySetInnerHTML={{
                                         __html:
@@ -2119,11 +2122,11 @@ export default function HireDevelopersPageClient() {
                                     hireMainPageData.hireDedicatedResourcesAndTalents[1].mainTitle
                                 )}
                             </h2> */}
-                            <h2
+                            <h3
                                 className="  text-3xl md:text-4xl font-bold text-white my-4 rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                 dangerouslySetInnerHTML={{
                                     __html:
-                                        hireMainPageData?.hireDedicatedResourcesAndTalents[1]?.mainTitle || "",
+                                        hireMainPageData?.hireDedicatedResourcesAndTalents[1]?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                                 }}
                             />
                             <p className="text-white/90 flex flex-row  text-sm md:text-base mb-8">
@@ -2169,7 +2172,7 @@ export default function HireDevelopersPageClient() {
                                         viewport={{ once: true, amount: 0.3 }}
                                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                     >
-                                        <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl  md:text-3xl lg:text-[40px]/[120%]  ">
+                                        <h2 className="text-center w-full  text-black common-h2">
                                             {getHighlightedTitle()}
                                         </h2>
                                     </motion.div>
@@ -2220,9 +2223,9 @@ export default function HireDevelopersPageClient() {
                                                         height={50}
                                                         className="h-12.5 w-16.25 object-contain"
                                                     />
-                                                    <h3 className="text-black text-lg font-semibold">
+                                                    <h4 className="text-black text-lg font-semibold">
                                                         24*7 Availability
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                             </motion.div>
                                             {/* Box 2: 20+ Experts */}
@@ -2245,9 +2248,9 @@ export default function HireDevelopersPageClient() {
                                                         height={50}
                                                         className="h-12.5 w-16.25 object-contain"
                                                     />
-                                                    <h3 className="text-black text-lg font-semibold">
+                                                    <h4 className="text-black text-lg font-semibold">
                                                         20+ Experts
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                             </motion.div>
                                             {/* Box 3: Hourly Hiring */}
@@ -2270,9 +2273,9 @@ export default function HireDevelopersPageClient() {
                                                         height={50}
                                                         className="h-12.5 w-16.25 object-contain"
                                                     />
-                                                    <h3 className="text-black text-lg font-semibold">
+                                                    <h4 className="text-black text-lg font-semibold">
                                                         Hourly Hiring
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                             </motion.div>
                                             {/* Box 4: Full-Time hiring */}
@@ -2295,9 +2298,9 @@ export default function HireDevelopersPageClient() {
                                                         height={50}
                                                         className="h-12.5 w-16.25 object-contain"
                                                     />
-                                                    <h3 className="text-black text-lg font-semibold">
+                                                    <h4 className="text-black text-lg font-semibold">
                                                         Full-Time hiring
-                                                    </h3>
+                                                    </h4>
                                                 </div>
                                             </motion.div>
                                         </div>
@@ -2432,7 +2435,7 @@ export default function HireDevelopersPageClient() {
                                 </div>
                             </section>
 
-                            <div className="w-full text-center mt-10">
+                            <div className="w-full text-center mt-14">
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
@@ -2464,7 +2467,7 @@ export default function HireDevelopersPageClient() {
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
                     <div className="flex flex-wrap  w-full relative content-start">
                         <div className="text-center pb-10 mb-2.5 w-full">
-                            <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
+                            <h2 className="text-center w-full  text-black common-h2">
                                 Frequently Asked Questions (FAQ)
                             </h2>
                             <Motion />
@@ -2474,14 +2477,14 @@ export default function HireDevelopersPageClient() {
                                 <div className="w-full max-w-full lg:max-w-[29.99%] flex  relative min-h-px">
                                     <div className="flex items-start content-start  w-full flex-wrap top-[13%] z-10 h-fit sticky ">
                                         <div className="mb-5">
-                                            <div className="text-xl text-[#d68029] font-semibold">
+                                            <h6 className="text-xl text-[#d68029] font-semibold">
                                                 Do you have more questions?
-                                            </div>
+                                            </h6>
                                         </div>
                                         <div className="w-full relative mb-5">
-                                            <h3 className="font-semibold text-4xl xl:text-[45px] leading-10 xl:leading-12.5 ">
+                                            <h2 className="font-semibold text-4xl xl:text-[45px] leading-10 xl:leading-12.5 ">
                                                 We are here to Answer you...
-                                            </h3>
+                                            </h2>
                                         </div>
                                         <div className="w-full text-center flex justify-start ">
                                             <motion.div
@@ -2521,13 +2524,13 @@ export default function HireDevelopersPageClient() {
                                                             className="mb-5 w-full rounded-lg bg-white p-2.5 shadow-[0_0_9px_0px_rgba(0,0,0,0.25)] border border-[#d5d8dc] box-border  "
                                                         >
                                                             <div
-                                                                className="cursor-pointer w-full py-4 px-5 box-border  flex items-center justify-between font-bold"
+                                                                className="cursor-pointer w-full py-4 px-5 box-border  flex items-center justify-between font-bold gap-2"
                                                                 onClick={() => toggleAccordion(index)}
                                                             >
                                                                 <span className="font-medium   text-[20px] text-black">
                                                                     {item.question}
                                                                 </span>
-                                                                <span className="w-[1.5em] inline-block">
+                                                                <span className="w-[1em] inline-block">
                                                                     {isOpen ? <FaMinus /> : <FaPlus />}
                                                                 </span>
                                                             </div>
@@ -2544,7 +2547,7 @@ export default function HireDevelopersPageClient() {
                                                                         }}
                                                                         className="overflow-hidden"
                                                                     >
-                                                                        <div className="block w-full px-5 py-4 text-[#7a7a7a] text-md">
+                                                                        <div className="block w-full px-5 pb-4 text-[#7a7a7a] text-md">
                                                                             <div
                                                                                 className="prose max-w-none  font-normal text-[#6f6f6f]  
                                                                                     [&_a]:text-[#d68029] [&_a]:no-underline "
@@ -2590,7 +2593,7 @@ const Card = ({
                 height={40}
                 className="object-contain shrink-0"
             />
-            <h3 className="font-bold text-lg text-[#12203D]">{label}</h3>
+            <h4 className="font-bold text-lg text-[#12203D]">{label}</h4>
         </div>
         <div className="p-5 grow">
             <p className="text-gray-600 text-base leading-relaxed">{description}</p>

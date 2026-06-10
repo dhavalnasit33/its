@@ -151,9 +151,9 @@ export default function HireForm() {
 
     return (
         <div className=" w-full mx-auto">
-            <h2 className="text-2xl font-bold text-white">
+            <h3 className="text-2xl font-bold text-white">
                 SAVE <span className="text-[#d68029]">60%</span> OF PROJECT COST
-            </h2>
+            </h3>
             <p className="text-white/70 mt-2 mb-6">
                 With Pre-Vetted Developers, Programmers, Coders, Engineers, Architects & Consultants
             </p>

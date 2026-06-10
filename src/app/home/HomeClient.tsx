@@ -28,6 +28,8 @@ import AutoTextSlider from "@/components/home/AutoTextSlider";
 import AiServices from "@/components/home/AiServices";
 import ParallaxShape from "@/components/home/ParallaxShape";
 import CurveDivider from "@/components/home/CurveDivider";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
+import { useParams } from "next/navigation";
 
 const NextArrow = (props: any) => {
 	const { onClick } = props;
@@ -67,6 +69,40 @@ export default function HomeClient() {
 
 	const [gettingHomePageData, setGettingHomePageData] = useState(true);
 	const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
+	const { portfolioSlug } = useWebsiteSettings();
+	const { slug } = useParams<{ slug: string }>();
+	const [notFound, setNotFound] = useState(false);
+	const [data, setData] = useState<HomePageData | null>(null);
+	   
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const json = await apiService<{ data: HomePageData }>(
+					`/homepage/slug/${slug}`,
+					{ method: "GET" }
+				);
+				const result = json?.data || (json as unknown as HomePageData);
+				if (!result) {
+					setNotFound(true);
+				} else {
+					setData(result);
+				}
+			} catch (error) {
+				console.error("Error fetching service:", error);
+				setNotFound(true);
+			}
+		};
+		if (slug) fetchData();
+	}, [slug]);
+
+ 	if (notFound) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<NotFoundPage />
+			</div>
+		);
+	}
 
 	const fetchHomepageData = useCallback(async () => {
 		setGettingHomePageData(true);
@@ -219,12 +255,12 @@ export default function HomeClient() {
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.5, ease: "easeOut" }}
 					>
-
-						<div className="mb-5 md:mb-7 ">
-							<div
+						<h1
 								className="rose text-[clamp(26px,5vw,64px)] text-white  font-normal tracking-[-0.03em] leading-[1.08] opacity-[0.92]  "
-								dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.title || ""}}
+								dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.title.replace(/<[^>]*>?/gm, "" )}}
 							/>
+						<div className="mb-5 md:mb-7 ">
+							
 							<AutoTextSlider data={homePageData.heroSecton.technologySection} />
 						</div>
 
@@ -285,10 +321,12 @@ export default function HomeClient() {
 					autoPlay
 					loop
 					muted
-					src="/hire/hire_bg.mp4"
 					playsInline
+					preload="auto"
+					poster="/hire/hire_bg.mp4"
 					className="absolute top-0 left-0 w-full h-full object-cover"
 				>
+					<source src="/hire/hire_bg.mp4" type="video/mp4" />
 				</video>
 				{/* <div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-950/80 to-slate-900/75 pointer-events-none"></div> */}
 				<div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-900/60 to-slate-800/75 pointer-events-none"></div>
@@ -303,7 +341,7 @@ export default function HomeClient() {
 							</span>
 						</div>
 						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4 font-bricolage"
-							dangerouslySetInnerHTML={{ __html: formattedTitle }}
+							dangerouslySetInnerHTML={{ __html: formattedTitle?.replace(/<\/?h[1-6][^>]*>/gi, "") }}
 						/>
 						<p className="text-sm sm:text-base text-slate-300 leading-relaxed sm:mb-6 mb-3"
 							dangerouslySetInnerHTML={{
@@ -404,7 +442,7 @@ export default function HomeClient() {
 			<section className="w-full relative lg:pb-0 py-20 bg-white z-10 ">
 				<CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
 				<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-					<div className="relative w-full flex justify-center lg:justify-end items-center">
+					<div className="relative w-full flex justify-center lg:justify-center items-center">
 						<Image
 							src={homePageData?.aboutOurCompany?.image}
 							alt="Global Network"
@@ -431,7 +469,7 @@ export default function HomeClient() {
 									/>
 								</div>
 								<div>
-									<p className=" text-xl md:text-3xl font-bold">{homePageData?.aboutOurCompany?.buttonContent?.total}</p>
+									<h4 className=" text-xl md:text-3xl font-bold">{homePageData?.aboutOurCompany?.buttonContent?.total}</h4>
 									<p className="text-xs tracking-wide uppercase">
 										{homePageData?.aboutOurCompany?.buttonContent?.label}
 									</p>
@@ -441,7 +479,7 @@ export default function HomeClient() {
 					</div>
 
 					<div className="w-full relative z-20 ">
-						<p className="text-gray-500 uppercase text-sm font-semibold mb-2 flex items-center gap-2">
+						<h6 className="text-gray-500 uppercase text-sm font-semibold mb-2 flex items-center gap-2">
 							<svg
 								className="w-4 h-4"
 								fill="none"
@@ -456,11 +494,11 @@ export default function HomeClient() {
 								/>
 							</svg>
 							{homePageData?.aboutOurCompany?.subtitle}
-						</p>
+						</h6>
 						{/* <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-snug"> */}
 							<h2
-								className="text-3xl md:text-4xl font-bold mb-4 leading-snug rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
-								dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.mainTitle || "" }}
+								className="common-h2-small mb-4 leading-snug rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+								dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
 							/>
 						{/* </h2> */}
 						<p className="text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.description || "" }}/>
@@ -530,12 +568,12 @@ export default function HomeClient() {
 				<div className="w-full mx-auto flex flex-col gap-12">
 					{/* <div className="mb-8 mx-auto flex flex-col items-center text-center px-4"> */}
 					<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto text-center flex flex-col items-center">
-						<h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
-							<div
-								className=" rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
-								dangerouslySetInnerHTML={{ __html: homePageData?.overseasWebAgencies?.mainTitle || "" }}
+						{/* <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]"> */}
+							<h2
+								className="common-h2 text-center w-full  text-black rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+								dangerouslySetInnerHTML={{ __html: homePageData?.overseasWebAgencies?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
 							/>
-						</h2>
+						{/* </h2> */}
 
 						<Motion />
 
@@ -569,7 +607,7 @@ export default function HomeClient() {
 					</div>
 					{/* Button */}
 					<div className="flex justify-center w-full max-w-[90%] lg:max-w-[80%] relative mx-auto ">
-						<Link href="/our-portfolio">
+						<Link href={`/${portfolioSlug}`} >
 							<button className="group cursor-pointer relative inline-flex items-center justify-center gap-2 px-6 py-2 rounded-full font-semibold text-[#0A1128] text-sm sm:text-base overflow-hidden">
 								<span className="absolute inset-0 flex">
 									<span className="h-full w-10 rounded-full bg-[#F1F1F1] transition-all duration-300 group-hover:w-100"></span>
@@ -583,6 +621,8 @@ export default function HomeClient() {
 								</span>
 							</button>
 						</Link>
+
+						{/* <Link href={`/${blogSlug}`} className="hover:underline">BLOG</Link> */}
 					</div>
 				</div>
 			</section>

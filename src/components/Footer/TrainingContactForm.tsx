@@ -138,11 +138,14 @@ export default function TrainingContactForm() {
 
     return (
         <Box className="bg-white  xl:px-8  rounded-xl w-full mx-auto  ">
-            <Typography variant="h4" component="h2" align="center" fontWeight="bold" className="text-gray-800 mb-8" sx={{
+            {/* <Typography variant="h4" component="h2" align="center" fontWeight="bold" className="text-black mb-14" sx={{
                 marginBottom: "30px"
             }}>
                 Any Questions? Feel Free to Contact Us
-            </Typography>
+            </Typography> */}
+            <h2 className="relative common-h2 mb-14 w-full text-center">
+                Any Questions? Feel Free to Contact Us
+            </h2>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
                 <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3 }}>

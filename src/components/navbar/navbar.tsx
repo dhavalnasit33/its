@@ -697,10 +697,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
             href={ContactLink ? `/${ContactLink.slug}` : "/contact"}
             className="relative tracking-tight flex items-center justify-center gap-2 rounded-[10px] text-sm font-semibold text-white transition-colors "
           >
-            <h1 className="flex flex-row gap-3 justify-center">
+            <span className="flex flex-row gap-3 justify-center">
               {/* GET A QUOTE */}
               GET IN TOUCH
-            </h1>
+            </span>
             <Image
               src="/navbar/btn_icon.png"
               alt="Get a Quote Arrow"

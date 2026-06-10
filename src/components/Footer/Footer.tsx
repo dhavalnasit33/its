@@ -33,7 +33,7 @@ export default function Footer() {
           <div className="space-y-8">
             {/* HR Inquiry */}
             <div>
-              <h3 className="font-bold text-lg mb-4">HR Inquiry</h3>
+              <h4 className="font-bold text-lg mb-4">HR Inquiry</h4>
               <p className="flex items-center gap-4 text-gray-700 mb-2">
                 <MdEmail className="text-xl font-bold" /> {hrEmail}
               </p>
@@ -44,7 +44,7 @@ export default function Footer() {
 
             {/* Sales Inquiry */}
             <div>
-              <h3 className="font-bold text-lg mb-4">Sales Inquiry</h3>
+              <h4 className="font-bold text-lg mb-4">Sales Inquiry</h4>
               <p className="flex items-center gap-4 text-gray-700 mb-2">
                 <MdEmail className="text-xl font-bold" /> {salesEmail}
               </p>

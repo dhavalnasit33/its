@@ -515,9 +515,9 @@ const Testimonials: React.FC = () => {
         <section className="py-20 w-full relative bg-white z-10">
             <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-4 ">
                 <div className="text-center pb-5 mb-2.5 w-full">
-                    <h2 className="text-center w-full font-bold text-gray-800 tracking-tight text-3xl md:text-4xl">
+                    <h3 className="text-center w-full font-bold text-gray-800 tracking-tight text-3xl md:text-4xl">
                         Testimonials from our Clients
-                    </h2>
+                    </h3>
                     <Motion />
                 </div>
             </div>

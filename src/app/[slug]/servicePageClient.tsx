@@ -139,7 +139,7 @@ export default function ServicePageClient() {
         <div className="w-full max-w-full mx-auto relative flex flex-wrap">
 
           {/* HERO */}
-          <div className="relative w-full text-center py-20 md:py-40 lg:py-28 common_background_gradient">
+          <div className="relative w-full text-center py-18 md:py-22 lg:py-28 common_background_gradient">
             {!isMobile && (
               <>
                 <Image
@@ -167,9 +167,9 @@ export default function ServicePageClient() {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 px-4">
+            <div className="relative z-10  w-full max-w-[90%] lg:max-w-[80%] mx-auto">
               <motion.h1
-                className="text-[2.8rem] md:text-[5rem] font-semibold mb-6 text-black break-words"
+                className="text-[2.3rem] md:text-[4rem] xl:text-[5rem] font-semibold mb-6 text-black break-words"
                 initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
@@ -220,7 +220,7 @@ export default function ServicePageClient() {
                   />
                   <a
                     href={`tel:${phonePrimaryClean}`}
-                    className="break-all px-3.75 text-center font-medium text-[18px]"
+                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[18px]"
                   >
                     {phonePrimary}
                   </a>
@@ -235,7 +235,7 @@ export default function ServicePageClient() {
                   />
                   <a
                     href={`mailto:${supportEmail}`}
-                    className="break-all px-3.75 text-center font-medium text-[18px]"
+                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[18px]"
                   >
                     {supportEmail}
                   </a>
@@ -246,26 +246,26 @@ export default function ServicePageClient() {
                     href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="break-all px-3.75 text-center font-medium text-[18px]"
+                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[18px]"
                   >
                     {microsoftHandle}
                   </a>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm font-medium">
-                <Link href={`/${portfolioSlug}`} className="hover:underline">PORTFOLIO</Link>
-                <Link href={`/${blogSlug}`} className="hover:underline">BLOG</Link>
-                <Link href={`/${hireSlug}`} className="hover:underline">GET IN TOUCH</Link>
-              </div>
+              <ul className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm font-medium">
+                <li><Link href={`/${portfolioSlug}`} className="hover:underline">PORTFOLIO</Link></li>
+                <li><Link href={`/${blogSlug}`} className="hover:underline">BLOG</Link></li>
+                <li><Link href={`/${hireSlug}`} className="hover:underline">GET IN TOUCH</Link></li>
+              </ul>
             </div>
           </div>
 
           {/* INTRO */}
           {data.subMainTitle && (
-            <div className="relative w-full z-30 mx-auto flex-wrap">
-              <div className="text-center py-12 w-full max-w-[90%] lg:max-w-[80%] mx-auto relative ">
+            <div className="relative w-full z-30 mx-auto flex-wrap py-12">
+              <div className="text-center  w-full max-w-[90%] lg:max-w-[80%] mx-auto relative ">
                 <motion.h2
-                  className="text-3xl md:text-4xl font-bold leading-snug "
+                  className="common-h2 leading-snug "
                   initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
@@ -309,19 +309,49 @@ export default function ServicePageClient() {
           >
             {data.contentBlocks?.length > 0 ? (
               <>
-                {data.contentBlocks.map((service, idx) => (
+                {data.contentBlocks.map((service, idx) => {
+                  const showDedicatedCard = data.contentBlocks.length === 8;
+                  const isLastContentBlock = idx === data.contentBlocks.length - 1;
+                  const shouldShowMobileBorder = showDedicatedCard || !isLastContentBlock;
+
+                  return (
                   <motion.div
                     key={idx}
-                    className={`flex flex-col gap-4 px-0 py-6 md:p-6  md:border-gray-400 border-gray-400  max-[768px]:border-b
+                    // className={`flex flex-col gap-4 px-0 py-6 md:p-6  md:border-gray-400 border-gray-400  max-[768px]:border-b
+                    //   ${idx % 3 < 2 ? "md:border-r" : ""}
+                    //   ${Math.floor(idx / 3) <
+                    //     Math.ceil(data.contentBlocks.length / 3) - 1
+                    //     ? "md:border-b"
+                    //     : ""
+                    //   }`}
+                     className={` flex flex-col gap-4 px-0 py-6 md:p-6 border-gray-400
+                      ${shouldShowMobileBorder ? "max-[768px]:border-b" : ""}
                       ${idx % 3 < 2 ? "md:border-r" : ""}
-                      ${Math.floor(idx / 3) <
+                      ${
+                        Math.floor(idx / 3) <
                         Math.ceil(data.contentBlocks.length / 3) - 1
-                        ? "md:border-b"
-                        : ""
-                      }`}
+                          ? "md:border-b"
+                          : ""
+                      }
+                    `}
                     variants={itemVariants}
                     viewport={{ once: true, amount: 0.1 }}
                   >
+                  {/* <motion.div
+                    key={idx}
+                    className={`
+                      flex flex-col gap-4 px-0 py-6 md:p-6
+                      border-gray-400
+                      ${shouldShowMobileBorder ? "max-[768px]:border-b" : ""}
+                      ${idx % 3 < 2 ? "md:border-r" : ""}
+                      ${
+                        Math.floor(idx / 3) <
+                        Math.ceil(data.contentBlocks.length / 3) - 1
+                          ? "md:border-b"
+                          : ""
+                      }
+                    `}
+                  > */}
                     {service.image && (
                       <Image
                         src={service.image}
@@ -332,14 +362,15 @@ export default function ServicePageClient() {
                         quality={75}
                       />
                     )}
-                    <h3 className="font-semibold text-lg">{service.title}</h3>
+                    <h4 className="font-semibold text-lg">{service.title}</h4>
                     <p className="text-gray-600 text-sm leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: service?.description || "" }}
                     />
                     {/* {service.description}
                     </p> */}
                   </motion.div>
-                ))}
+      );
+                })}
 
                 {data.contentBlocks.length === 8 && (
                   <motion.div
@@ -406,7 +437,7 @@ export default function ServicePageClient() {
                   </motion.div>
                 )}
               </>
-            ) : (
+              ) : (
               <div className="col-span-full flex flex-col items-center justify-center text-center py-20">
                 <h2 className="text-2xl md:text-3xl font-semibold">
                   <span className="text-[#d97b2f]">Empower</span>{" "}
@@ -420,8 +451,8 @@ export default function ServicePageClient() {
                   Talk to Our Experts
                 </button>
               </div>
-            )}
-          </motion.div>
+              )}
+              </motion.div>
 
           {/* WHY CHOOSE US */}
           {data.WhyWorkWithThis && (
@@ -434,8 +465,8 @@ export default function ServicePageClient() {
                   transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
                 >
                   <h2
-                    className="text-3xl md:text-4xl font-bold leading-snug"
-                    dangerouslySetInnerHTML={{ __html: data?.WhyWorkWithThis?.title || "" }}
+                    className="common-h2 leading-snug"
+                    dangerouslySetInnerHTML={{ __html: data?.WhyWorkWithThis?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
                   />
                   <div className="flex justify-center mt-4">
                     <Motion />
@@ -443,7 +474,7 @@ export default function ServicePageClient() {
                 </motion.div>
                 {data.WhyWorkWithThis.description && (
                   <motion.p
-                    className="text-gray-600 mt-6 max-w-5xl mx-auto text-xl"
+                    className="text-gray-600 mt-6 max-w-5xl mx-auto text-md md:text-xl"
                     initial={{ y: noAnim ? 0 : 50, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
@@ -463,7 +494,7 @@ export default function ServicePageClient() {
                 <div className="space-y-8 order-2 lg:order-1">
                   {data.WhyWorkWithThis.content?.map((item, idx) => (
                     <div key={idx}>
-                      <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                      <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
                       <p className="text-gray-600 text-sm leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: item?.description || "" }}
                       />
@@ -510,7 +541,7 @@ export default function ServicePageClient() {
           <div className="absolute inset-0 z-0 common_background_gradient"></div>
 
           <div className="relative w-full z-10">
-            <div className="text-left py-12">
+            <div className="text-left max-lg:pt-0 py-12">
               <motion.div
                 initial={{ opacity: 0, y: noAnim ? 0 : -50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -519,9 +550,9 @@ export default function ServicePageClient() {
                 className="relative common_htags left_htags"
               >
                 <h2
-                  className="text-3xl md:text-4xl font-bold leading-snug py-2 relative"
+                  className="common-h2-small leading-snug py-2 relative"
                   dangerouslySetInnerHTML={{
-                    __html: data?.toolsAndTechnology?.title || "",
+                    __html: data?.toolsAndTechnology?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                   }}
                 />
               </motion.div>
@@ -574,9 +605,10 @@ export default function ServicePageClient() {
                               key={`${sectionNum}-${idx}`}
                               className="bg-white shadow-sm border border-gray-200 rounded-lg p-6"
                             >
-                              <h3 className="font-bold text-2xl mb-4">
+                              <h4 className="font-bold text-2xl mb-4">
                                 {toolCategory.title}
-                              </h3>
+                              </h4>
+                              <div>
                               <ul className="space-y-2 text-gray-600 text-[1rem]">
                                 {toolCategory.keyPoints?.map(
                                   (item: string, i: number) => (
@@ -597,6 +629,7 @@ export default function ServicePageClient() {
                                   )
                                 )}
                               </ul>
+                              </div>
                             </div>
                           )
                         )}
@@ -624,9 +657,9 @@ export default function ServicePageClient() {
                   transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
                 >
                   <h2
-                    className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug mb-4"
+                    className="common-h2-small leading-snug mb-4"
                     dangerouslySetInnerHTML={{
-                      __html: data?.whyCompanyPerfersThis?.title || "",
+                      __html: data?.whyCompanyPerfersThis?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                     }}
                   />
                   <div className="relative w-20 sm:w-24 h-1 bg-[#d68029] mb-4">
@@ -635,7 +668,8 @@ export default function ServicePageClient() {
                 </motion.div>
 
                 <motion.p
-                  className="text-gray-700 text-sm sm:text-base md:text-lg mb-6"
+                  className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 [&_p]:mb-4
+    										[&_p:last-child]:mb-0"
                   dangerouslySetInnerHTML={{
                     __html: data?.whyCompanyPerfersThis?.description || "",
                   }}
@@ -703,9 +737,9 @@ export default function ServicePageClient() {
                           quality={75}
                         />
                       )}
-                      <h3
+                      <h4
                         className="text-base sm:text-lg text-gray-800 font-medium"
-                        dangerouslySetInnerHTML={{ __html: item?.name || "" }}
+                        dangerouslySetInnerHTML={{ __html: item?.name.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
                       />
                     </motion.div>
                   )
@@ -739,14 +773,14 @@ export default function ServicePageClient() {
               <div className="w-full lg:w-[30%] flex relative">
                 <div className="flex items-start content-start  w-full flex-wrap top-[13%] z-10 h-fit lg:sticky">
                   <div className="mb-5">
-                    <div className="text-xl text-[#d68029] font-semibold">
+                    <h5 className="text-xl text-[#d68029] font-semibold">
                       Do you have more questions?
-                    </div>
+                    </h5>
                   </div>
                   <div className="w-full relative mb-5">
-                    <h3 className="font-semibold text-4xl xl:text-[45px] leading-10 xl:leading-12.5">
+                    <h2 className="font-semibold text-4xl xl:text-[45px] leading-10 xl:leading-12.5">
                       We are here to Answer you...
-                    </h3>
+                    </h2>
                   </div>
                   <div className="w-full flex justify-start">
                     <motion.div
@@ -816,7 +850,7 @@ export default function ServicePageClient() {
                                   }}
                                   className="overflow-hidden"
                                 >
-                                  <div className="block px-5 w-full py-4 text-[#7a7a7a]">
+                                  <div className="block px-5 w-full pb-4 text-[#7a7a7a]">
                                     <div
                                       className="prose max-w-none font-normal text-[#6f6f6f] [&_a]:text-[#d68029] [&_a]:no-underline"
                                       dangerouslySetInnerHTML={{

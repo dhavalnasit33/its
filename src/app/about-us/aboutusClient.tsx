@@ -75,7 +75,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
       <section className=" w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20 py-10 pb-20 gap-10 common_background_gradient bg-white z-10">
         {/* Left Content */}
         <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-2xl text-gray-800">
-          {/* Subtitle */}
+          {/* Subtitle */}  
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,7 +95,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="mb-5 text-3xl sm:text-4xl md:text-[46px] leading-snug font-semibold"
+            className="mb-5 text-4xl md:text-[42px] lg:text-[46px] leading-snug font-semibold"
           >
             {/* <h1 className="text-3xl sm:text-4xl md:text-[46px] leading-snug font-semibold"> */}
               {aboutUsData.heroSection.title}
@@ -393,7 +393,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="mb-6 text-left w-full common_htags left_htags"
               >
-                <h2 className="text-3xl sm:text-4xl   relative   font-bold text-black">
+                <h2 className="common-h2-small relative text-black">
                   Who We Are
                 </h2>
               </motion.div>
@@ -433,7 +433,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
           <div className="flex flex-col items-center justify-center text-center w-full relative">
             <div className="flex flex-col items-center w-full justify-center text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl md:text-[46px] font-semibold text-gray-900 relative">
+              <h2 className="common-h2 text-gray-900 relative">
                 Just Know About Our Goals
               </h2>
               <Motion />
@@ -463,9 +463,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                     )}
                   </div>
                   <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-[20px] font-semibold text-black mb-2">
+                    <h4 className="text-[20px] font-semibold text-black mb-2">
                       {aboutUsData?.goals?.missionTitle}
-                    </h3>
+                    </h4>
                     <p className="text-[#6f6f6f] text-base sm:text-lg"
                       //  {aboutUsData?.goals?.missionDescription} 
                       dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.missionDescription  || "" }}
@@ -498,9 +498,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                     )}
                   </div>
                   <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-[20px] font-semibold text-black mb-2">
+                    <h4 className="text-[20px] font-semibold text-black mb-2">
                       {aboutUsData?.goals?.visionTitle}
-                    </h3>
+                    </h4>
                     <p className="text-[#6f6f6f] text-base sm:text-lg">
                       {aboutUsData?.goals?.visionDescription}
                     </p>
@@ -532,9 +532,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                     )}
                   </div>
                   <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-[20px] font-semibold text-black mb-2">
+                    <h4 className="text-[20px] font-semibold text-black mb-2">
                       {aboutUsData?.goals?.valuesTitle}
-                    </h3>
+                    </h4>
                     <p className="text-[#6f6f6f] text-base sm:text-lg">
                       {aboutUsData?.goals?.valuesDescription}
                     </p>
@@ -569,9 +569,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   />
                 </div>
                 <div className="text-left">
-                  <h3 className="font-semibold text-[#12203d] text-lg">
+                  <h4 className="font-semibold text-[#12203d] text-lg">
                     Upwork <br /> Top Rated+
-                  </h3>
+                  </h4>
                 </div>
               </div>
 
@@ -585,9 +585,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   />
                 </div>
                 <div className="text-left">
-                  <h3 className="font-semibold text-[#12203d] text-lg">
+                  <h4 className="font-semibold text-[#12203d] text-lg">
                     Preferred <br /> Freelancer
-                  </h3>
+                  </h4>
                 </div>
               </div>
 
@@ -601,9 +601,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   />
                 </div>
                 <div className="text-left">
-                  <h3 className="font-semibold text-[#12203d] text-lg">
+                  <h4 className="font-semibold text-[#12203d] text-lg">
                     8+ Years of <br /> Industry
-                  </h3>
+                  </h4>
                 </div>
               </div>
             </motion.div>
@@ -643,9 +643,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   />
                 </div>
                 <div className="text-left">
-                  <h3 className="font-semibold text-[#12203d] text-lg">
+                  <h4 className="font-semibold text-[#12203d] text-lg">
                     2x Growth <br /> Rate
-                  </h3>
+                  </h4>
                 </div>
               </div>
 
@@ -659,9 +659,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   />
                 </div>
                 <div className="text-left">
-                  <h3 className="font-semibold text-[#12203d] text-lg">
+                  <h4 className="font-semibold text-[#12203d] text-lg">
                     300+ Experts <br /> Team
-                  </h3>
+                  </h4>
                 </div>
               </div>
 
@@ -675,9 +675,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   />
                 </div>
                 <div className="text-left">
-                  <h3 className="font-semibold text-[#12203d] text-lg">
+                  <h4 className="font-semibold text-[#12203d] text-lg">
                     720+ Projects <br /> Accomplished
-                  </h3>
+                  </h4>
                 </div>
               </div>
             </motion.div>

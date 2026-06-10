@@ -63,7 +63,7 @@ export default function RelatedBlogs({
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           >
-            <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
+            <h2 className="text-center w-full text-black common-h2">
               Related Blogs
             </h2>
             <Motion />
@@ -73,15 +73,15 @@ export default function RelatedBlogs({
         <div className="w-full mb-8 flex justify-end">
           <Link
             href={`/${blogSlug}`}
-            className="group relative p-5 inline-flex items-center justify-center font-semibold text-xl text-[#12203d]"
+            className="group relative p-4 md:p-5 inline-flex items-center justify-center font-semibold text-md md:text-xl text-[#12203d]"
           >
             {/* Background circle that expands to a pill shape */}
             <span
               // 👇 THIS LINE IS UPDATED: Circle now starts on the left
-              className="absolute top-1/2 left-3 -translate-y-1/2 -z-10 h-16 w-16 rounded-full bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"
+              className="absolute top-1/2 left-3 -translate-y-1/2 -z-10 h-12 w-12 md:h-16 md:w-16 rounded-full bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"
             ></span>
             {/* Text content with padding to define the button size */}
-            <span className="px-8 py-3">
+            <span className="px-6 md:px-8 py-3">
               View All Blogs <FaLongArrowAltRight className="inline-block" />
             </span>
           </Link>
@@ -110,7 +110,7 @@ export default function RelatedBlogs({
             alt={relatedBlog.details.title}
             className="w-full h-60 object-fill"
           /> */}
-              <div className="p-6 w-full">
+              <div className="p-4 md:p-6 w-full">
                 <div className="flex flex-col md:flex-row justify-start items-start md:items-center gap-2 mb-4">
                   {relatedBlog.subCategories && (
                     <span className="text-xs font-medium text-[#d68029] bg-[#fff4e9] px-3 py-1.5 rounded-full">
@@ -129,13 +129,13 @@ export default function RelatedBlogs({
                     }
                   </span>
                 </div>
-                <h2
+                <div
                   className="text-xl font-bold mb-3 line-clamp-2 text-gray-800"
                   dangerouslySetInnerHTML={{
                     __html: relatedBlog.details.title,
                   }}
                 />
-                <p
+                <div
                   className="text-sm text-gray-600 line-clamp-3 [&_a]:no-underline [&_a]:text-gray-600 [&_a:hover]:text-[#d68029] [&_a:hover]:underline mb-4"
                   dangerouslySetInnerHTML={{
                     __html: relatedBlog.details.description,

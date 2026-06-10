@@ -77,8 +77,11 @@ const WebsiteSettingsContext = createContext<WebsiteSettingsContextProps>({
   addressPrimary: "215-Dhara Arcade, Digital Valley (Mota Varachha), Surat-394101, Gujarat, India",
   skypeHandle: "dhaval.nasit1",
   microsoftHandle: "dhaval.nasit1",
-  linkedinLink: "https://www.linkedin.com/posts/inspiretechnosolution_urgent-urgentopening-developer-activity-7143130049964134400-6P2I",
-  facebookLink: "https://www.facebook.com/inspiretechnosolution/about/",
+  // linkedinLink: "https://www.linkedin.com/posts/inspiretechnosolution_urgent-urgentopening-developer-activity-7143130049964134400-6P2I",
+  linkedinLink: "https://www.linkedin.com/company/inspiretechnosolution/",
+  // facebookLink: "https://www.facebook.com/inspiretechnosolution/about/",
+  facebookLink: "https://www.facebook.com/inspiretechnosolution",
+  // instagramLink: "https://www.instagram.com/inspiretechnosolution/",
   instagramLink: "https://www.instagram.com/inspiretechnosolution/",
   youtubeLink: "#",
   behanceLink: "#",
@@ -129,8 +132,8 @@ export function WebsiteSettingsProvider({
   const skypeHandle = microsoftHandle;
 
   // Social media links
-  const linkedinLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "linkedin")?.link || "https://www.linkedin.com/posts/inspiretechnosolution_urgent-urgentopening-developer-activity-7143130049964134400-6P2I";
-  const facebookLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "facebook")?.link || "https://www.facebook.com/inspiretechnosolution/about/";
+  const linkedinLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "linkedin")?.link || "https://www.linkedin.com/company/inspiretechnosolution/";
+  const facebookLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "facebook")?.link || "https://www.facebook.com/inspiretechnosolution/";
   const instagramLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "instagram")?.link || "https://www.instagram.com/inspiretechnosolution/";
   const youtubeLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "youtube")?.link || "#";
   const behanceLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "behance")?.link || "#";

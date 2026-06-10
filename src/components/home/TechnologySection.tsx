@@ -106,7 +106,7 @@ export default function TechnologyTabs() {
                       height={60}
                     />
                   </div>
-                  <span className="text-base font-medium text-slate-200 font-inter">{tech.label}</span>
+                  <h4 className="text-base font-medium text-slate-200 font-inter">{tech.label}</h4>
                 </div>
               ))}
             </div>

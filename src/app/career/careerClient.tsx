@@ -124,7 +124,7 @@ export default function CareerClient() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
               className="mb-5"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-[46px]/[130%] tracking-[1.2px] font-semibold">
+              <h1 className="text-4xl md:text-[42px]  lg:text-[46px]/[130%] tracking-[1.2px] font-semibold">
                 {careerData?.heroSection.title}
               </h1>
             </motion.div>
@@ -194,7 +194,7 @@ export default function CareerClient() {
               viewport={{ once: true, amount: 0.08 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             >
-              <h2 className="text-3xl sm:text-4xl md:text-[46px] font-semibold text-gray-900 relative">
+              <h2 className="common-h2 text-gray-900 relative">
                 Current Open Positions At ITS
               </h2>
               <Motion />
@@ -263,9 +263,9 @@ export default function CareerClient() {
 
                     {/* Content */}
                     <div className="w-full flex-1 xl:ml-6">
-                      <h3 className="text-black text-2xl md:text-3xl font-semibold mb-3">
+                      <h4 className="text-black text-2xl md:text-3xl font-semibold mb-3">
                         {position.name}
-                      </h3>
+                      </h4>
                       <div className="flex flex-col sm:flex-row lg:flex-wrap gap-4">
                         <div className="flex items-center gap-2 md:px-7.5 md:pl-0 md:border-r md:border-r-[#b0b0b0] ">
                           <h6 className="text-black text-lg  font-medium">
@@ -345,7 +345,7 @@ export default function CareerClient() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="mb-6 common_htags left_htags"
             >
-              <h2 className="text-3xl sm:text-[40px]/[120%] relative   font-bold">
+              <h2 className="common-h2 relative   ">
                 {careerData?.careerAtIts?.title}
               </h2>
             </motion.div>
@@ -441,7 +441,7 @@ export default function CareerClient() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <h3 className="text-black text-[30px] break-all font-semibold my-1.25"
+                        <h4 className="text-black text-[30px] break-all font-semibold my-1.25"
                           //  {point.title} 
                            dangerouslySetInnerHTML={{ __html: point?.title || "" }}/>
                         {/* </h3> */}

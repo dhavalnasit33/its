@@ -45,9 +45,15 @@ export default function ContactFooterPage() {
   } = useWebsiteSettings();
 
   return (
-    <footer id="contact-form-section" className=" relative pt-16 bg-white scroll-mt-18">
+    <footer id="contact-form-section" className={` relative bg-white scroll-mt-18 ${
+      !isContactPage ? "pt-16" : ""
+    }`}>
       {/* ---------------- Contact Form Floating Card ---------------- */}
-      <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 ">
+      {/* <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 "> */}
+      <div className={`w-full relative mx-auto max-w-[90%] lg:max-w-[80%] ${
+          !isContactPage ? "pb-16" : ""
+        }`}
+      >
         {/* <div className="  w-full mx-auto md:-mb-90 relative z-10">
           <div className="bg-white md:shadow-[0_0_12.2px_0_rgba(0,0,0,0.25)] rounded-2xl p-2 md:p-10">
             {isTrainingPage ? (
@@ -82,7 +88,7 @@ export default function ContactFooterPage() {
             <div className="space-y-8">
               {/* HR Inquiry */}
               <div>
-                <h3 className="font-bold text-lg mb-4">HR Inquiry</h3>
+                <h4 className="font-bold text-lg mb-4">HR Inquiry</h4>
                 <Link
                   href={`mailto:${hrEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
@@ -95,7 +101,7 @@ export default function ContactFooterPage() {
                     className="object-contain"
                   />{" "} */}
                   <MdEmail size={20}  className="flex-shrink-0"/>
-                  {hrEmail}
+                  <h4>{hrEmail}</h4>
                 </Link>
                 <Link
                   href={`tel:${phonePrimaryClean}`}
@@ -109,13 +115,13 @@ export default function ContactFooterPage() {
                     height={24}
                     className="object-contain"
                   />{" "} */}
-                  {phonePrimary}
+                  <h4>{phonePrimary}</h4>
                 </Link>
               </div>
 
               {/* Sales Inquiry */}
               <div>
-                <h3 className="font-bold text-lg mb-4">Sales Inquiry</h3>
+                <h4 className="font-bold text-lg mb-4">Sales Inquiry</h4>
                 <Link
                   href={`mailto:${salesEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
@@ -128,7 +134,7 @@ export default function ContactFooterPage() {
                     height={24}
                     className="object-contain"
                   />{" "} */}
-                  {salesEmail}
+                  <h4>{salesEmail}</h4>
                 </Link>
                  <Link
                   href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
@@ -137,7 +143,7 @@ export default function ContactFooterPage() {
                   className="flex items-center gap-4 text-gray-70 hover:text-[#d68029] "
                 >
                   <FaMicrosoft size={20}  className="flex-shrink-0" />
-                  {microsoftHandle}
+                  <h4>{microsoftHandle}</h4>
                 </Link>
 
                 {/* Social Icons */}
@@ -178,7 +184,7 @@ export default function ContactFooterPage() {
 
             {/* Help & Advice */}
             <div>
-              <h3 className="font-bold text-lg mb-4">Help & Advice</h3>
+              <h4 className="font-bold text-lg mb-4">Help & Advice</h4>
               <ul className="space-y-2">
                 <li>
                   <Link
@@ -250,7 +256,7 @@ export default function ContactFooterPage() {
 
             {/* All Services */}
             <div>
-              <h3 className="font-bold text-lg mb-4">All Services</h3>
+              <h4 className="font-bold text-lg mb-4">All Services</h4>
               <ul className="space-y-2">
                 <li>
                   <Link
@@ -353,7 +359,7 @@ export default function ContactFooterPage() {
 
             {/* Hire Developers */}
             <div>
-              <h3 className="font-bold text-lg mb-4">Hire Us</h3>
+              <h4 className="font-bold text-lg mb-4">Hire Us</h4>
               <ul className="space-y-2">
                 <li>
                   <Link
@@ -476,7 +482,7 @@ export default function ContactFooterPage() {
       {/* Bottom Bar */}
       <div className="bg-[#0f1b2d] text-gray-300 text-sm py-4">
         <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]  ">
-          <div className=" w-full mx-auto flex flex-col md:flex-row items-center justify-between px-6">
+          <div className=" w-full mx-auto flex flex-col md:flex-row items-center justify-between md:px-6">
             <p className="text-center">
               © 2026 Inspire Techno Solution. All Rights Reserved.
             </p>

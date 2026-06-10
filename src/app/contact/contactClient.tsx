@@ -12,21 +12,23 @@ export default function ContactClient() {
 
       <div className="bg-[#0d1b2a] py-16 max-[767px]:py-8 relative w-full z-10">
         <div className=" text-left   max-w-[90%] lg:max-w-[80%] mx-auto">
-          <p className="text-white opacity-60  text-sm leading-[1.25] font-semibold uppercase tracking-[0.2em] max-[767px]:text-[12px] max-[767px]:tracking-[0.15em]">
+          <h6 className="text-white opacity-60  text-sm leading-[1.25] font-semibold uppercase tracking-[0.2em] max-[767px]:text-[12px] max-[767px]:tracking-[0.15em]">
             WE TURN BOLD IDEAS INTO SUCCESSFUL PRODUCTS
-          </p>
-          <h1 className="font-bricolage text-white font-medium text-[76px] leading-[1.1] mt-4 max-[767px]:text-[40px] max-[767px]:leading-[1.15] max-[767px]:mt-3">Got an idea?</h1>
-          <h2 className="font-bricolage text-white font-medium text-[76px] leading-[1.1] max-[767px]:text-[40px] max-[767px]:leading-[1.15] max-[767px]:mt-1">Let's talk!</h2>
+          </h6>
+          {/* <h1 className="font-bricolage text-white font-medium text-[76px] leading-[1.1] mt-4 max-[767px]:text-[40px] max-[767px]:leading-[1.15] max-[767px]:mt-3"> */}
+          <h1 className="font-bricolage text-white font-medium text-4xl md:text-[60px] lg:text-[76px]/[130%] leading-[1.1] mt-4  max-[767px]:leading-[1.15] max-[767px]:mt-3">
+            Got an idea?<br/>Let's talk!</h1>
+          {/* <h2 className="font-bricolage text-white font-medium text-[76px] leading-[1.1] max-[767px]:text-[40px] max-[767px]:leading-[1.15] max-[767px]:mt-1">Let's talk!</h2> */}
         </div>
       </div>
       <ContactPageForm />
       <div className="w-full text-center relative z-20 bg-[#0d1b2a]  lg:pb-0 py-15 md:py-20   ">
         <div className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto">
         <div className="max-w-3xl space-y-3 mx-auto ">
-          <p className="text-sm uppercase tracking-[0.2em] text-white opacity-70">VISIT OUR OFFICE OR DROP A LINE</p>
-          <h3 className="text-3xl md:text-4xl font-bricolage font-medium text-white">Based in Surat,
+          <h6 className="text-sm uppercase tracking-[0.2em] text-white opacity-70">VISIT OUR OFFICE OR DROP A LINE</h6>
+          <h2 className="text-3xl md:text-4xl font-bricolage font-medium text-white">Based in Surat,
             <br className="max-lg:hidden"/> building products for the world.  
-          </h3>
+          </h2>
           <p className="text-sm sm:text-base text-white opacity-70">
             Whether you prefer email, a quick call, or an in‑person meeting, our team is ready to explore your product idea and help you plan the next steps.
           </p>

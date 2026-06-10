@@ -340,6 +340,9 @@ export default function ContactPageForm() {
     ];
 
     const {
+        linkedinLink,
+    } = useWebsiteSettings();
+    const {
         register,
         setValue,
         handleSubmit,
@@ -447,16 +450,22 @@ export default function ContactPageForm() {
 
                                             <div className="flex justify-between gap-2 items-center">
                                                 <div>
-                                                    <p className="text-white text-[16px] md:text-xl font-bricolage">
+                                                    <h4 className="text-white text-[16px] md:text-xl font-bricolage">
                                                         {item.company}
-                                                    </p>
+                                                    </h4>
                                                     <p className="text-white opacity-60 text-sm mt-1">
                                                         {item.role}
                                                     </p>
                                                 </div>
 
                                                 <div className="inline-flex">
-                                                    <AiOutlineLinkedin className="text-[28px] text-white hover:text-[#d68029] transition-colors" />
+                                                     <a
+                                                        href={linkedinLink}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        <AiOutlineLinkedin className="text-[28px] text-white hover:text-[#d68029] transition-colors" />
+                                                    </a>
                                                 </div>
                                             </div>
 

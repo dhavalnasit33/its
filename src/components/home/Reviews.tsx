@@ -74,7 +74,7 @@ const Reviews: React.FC = () => {
       <style dangerouslySetInnerHTML={{ __html: marqueeStyles }} />
       <div className="w-full relative">
         <div className="text-center pb-10 mb-2.5 w-full">
-          <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
+          <h2 className="text-center w-full  text-black common-h2">
             Read Our Review on
           </h2>
           <Motion />

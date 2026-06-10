@@ -22,7 +22,7 @@ export default function HireTabs({ hireData }: HireTabsProps) {
 
     return (
         <div className="w-full flex flex-col items-center">
-            <div className="flex max-[480px]:flex-col w-full justify-center">
+            <div className="flex max-[540px]:flex-col w-full justify-center">
                 {hireData.map((tab, index) => (
                     <button
                         key={index}

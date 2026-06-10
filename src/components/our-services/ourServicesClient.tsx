@@ -103,15 +103,17 @@ export default function OurServicesClient() {
 								initial={{ opacity: 0, y: -50 }} // start above
 								animate={{ opacity: 1, y: 0 }} // drop into position
 								transition={{ duration: 0.8, ease: "easeOut" }} // smooth drop
-								className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-6 md:mb-10 leading-snug"
+								className="text-4xl md:text-[42px] xl:text-5xl font-extrabold mb-6 md:mb-10 leading-snug text-black rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer"
+								// dangerouslySetInnerHTML={{ __html: ourServicePageData.mainTitle.replace(/<[^>]*>?/gm, "") }}
 							>
-								<div
+								{ourServicePageData.mainTitle.replace(/<[^>]*>?/gm, "")}
+								{/* <div
 									className="  text-black rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
 									dangerouslySetInnerHTML={{ __html: ourServicePageData.mainTitle }}
-								/>
+								/> */}
 							</motion.h1>
 
-							<motion.h1
+							<motion.div
 								initial={{ opacity: 0, y: 50 }} // start hidden and shifted down
 								animate={{ opacity: 1, y: 0 }} // fade in and slide up
 								transition={{ duration: 0.8, ease: "easeOut" }} // smooth timing
@@ -128,7 +130,7 @@ export default function OurServicesClient() {
 									) : ourServicePageData.description}
 								</div>
 
-							</motion.h1>
+							</motion.div>
 
 							<motion.a
 								href="#contact-form-section"
@@ -199,9 +201,10 @@ export default function OurServicesClient() {
 														<div className="w-full h-15 bg-gray-200 rounded-lg animate-pulse"></div>
 													)}
 												</div>
-												<h3 className="text-lg sm:text-xl font-bold mb-4 text-center" >
+												<h4 className="text-lg sm:text-xl font-bold mb-4 text-center" >
 													{data.title}
-												</h3>
+												</h4>
+												<div>
 												<ul className="text-gray-600 space-y-1.5 lg:space-y-3 text-left text-sm sm:text-base">
 													{data.points.map((item, i) => (
 														<li
@@ -224,6 +227,7 @@ export default function OurServicesClient() {
 														</li>
 													))}
 												</ul>
+												</div>
 											</div>
 										</div>
 									))
@@ -273,7 +277,7 @@ export default function OurServicesClient() {
 							</motion.div>
 
 							{/* Content */}
-							<div className="flex-1">
+							<div className="flex-1 ">
 								<motion.div
 									initial={{ opacity: 0, y: -50 }}
 									whileInView={{ opacity: 1, y: 0 }}
@@ -281,7 +285,7 @@ export default function OurServicesClient() {
 									transition={{ duration: 0.8, ease: "easeOut" }}
 									className=" relative common_htags left_htags "
 								>
-									<h2 className="relative text-3xl md:text-4xl font-bold mb-4">
+									<h2 className="relative common-h2-small mb-6">
 										{service.title}
 									</h2>
 								</motion.div>
@@ -290,13 +294,14 @@ export default function OurServicesClient() {
 									initial={{ opacity: 0, y: 50 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
-									transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
-									className="text-gray-700 text-lg mb-3"
+									transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+									className="text-gray-700 text-lg mb-8"
 								>
 									{/* {service.subtitle} */}
 									{service.description ? (
 										<div
-											className="font-medium text-black rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+											className="font-medium text-black rose max-w-none  [&_p]:mb-2
+    										[&_p:last-child]:mb-0 [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
 											dangerouslySetInnerHTML={{ __html: service.description }}
 										/>
 
@@ -310,7 +315,7 @@ export default function OurServicesClient() {
 									initial={{ opacity: 0, y: 50 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
-									transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+									transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
 									className="flex items-center gap-6 mb-6 flex-wrap"
 								>
 									{service.technologyDetail.map((data, i) => (
@@ -329,8 +334,8 @@ export default function OurServicesClient() {
 									initial={{ opacity: 0, y: 30 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
-									transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
-									className="mb-6 text-gray-700 grid gap-3 grid-cols-1 md:grid-cols-2"
+									transition={{ duration: 0.9, ease: "easeOut", delay: 0.9 }}
+									className=" text-gray-700 grid gap-3 grid-cols-1 md:grid-cols-2"
 								>
 									{service.developmentDetail.map((data, i) => (
 										<li key={i} className="flex items-center gap-3">
@@ -345,7 +350,7 @@ export default function OurServicesClient() {
 								{/* Button with link */}
 								<Link href={service.developmentDetail[0].serviceId.slug}>
 									<motion.button
-										className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 
+										className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 mt-10 
 						 bg-[#0b1833] text-white text-sm sm:text-base font-medium 
 						 rounded-lg shadow-md cursor-pointer"
 										initial={{ opacity: 0, y: 40 }}

@@ -714,3 +714,11 @@ html {
   padding: 16px;
   overflow-x: auto;
 }
+
+.common-h2 {
+  @apply font-bold text-3xl md:text-4xl lg:text-[40px]  tracking-tight;
+  line-height: 120%;
+}
+.common-h2-small{
+  @apply text-3xl md:text-4xl font-bold;
+}
