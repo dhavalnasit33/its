@@ -19,28 +19,24 @@ export default function AutoTextSlider({ data }: AutoTextSliderProps) {
 
     return () => clearInterval(interval);
   }, [data]);
-
   return (
-    // <div className="relative  flex items-center justify-center overflow-hidden">
-
-<AnimatePresence mode="wait">
-  <motion.span
-    key={currentIndex}
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 10 }}
-
-    transition={{
-        duration: 0.4,
-        ease: "easeOut",
-        delay: 0.05     
-    }}
-
-    className=" font-bold slider_heading text-center"
-  >
-    {data[currentIndex]?.title}
-  </motion.span>
-</AnimatePresence>
-    // </div>
+    <div className="relative flex items-center justify-center overflow-hidden h-[clamp(48px,6.6vw,96px)] w-full">
+      <AnimatePresence>
+        <motion.span
+          key={currentIndex}
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          transition={{
+            duration: 1.2,
+            ease: [0.16, 1, 0.3, 1], // easeOutExpo for ultra smooth movement
+          }}
+          style={{ transition: "none", animation: "none" }}
+          className="absolute left-0 right-0 mx-auto font-bricolage font-bold slider_heading text-center w-full"
+        >
+          {data[currentIndex]?.title}
+        </motion.span>
+      </AnimatePresence>
+    </div>
   );
 }

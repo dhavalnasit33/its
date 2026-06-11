@@ -373,8 +373,6 @@ html {
   .hire_hero_section {
     position: relative;
     /* contain ::before inside */
-    overflow: hidden;
-    /* prevent background from causing scroll */
   }
 }
 

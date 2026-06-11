@@ -386,8 +386,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
-                  className="w-full  shadow-[0_0_80px_10px_#0000001a] rounded-xl lg:max-w-[50%] flex  mx-auto p-5 lg:p-6 min-h-px
-                   h-full border border-white/10 bg-[#ffffff08] backdrop-blur-md sticky top-28 "
+                  className="w-full shadow-[0_0_80px_10px_#0000001a] rounded-xl lg:max-w-[50%] flex lg:sticky top-[10%] z-10 h-fit mx-auto p-5 lg:p-6 min-h-px border border-white/10 bg-[#ffffff08] backdrop-blur-md"
                 >
                   <HireFormSection />
                 </motion.div>

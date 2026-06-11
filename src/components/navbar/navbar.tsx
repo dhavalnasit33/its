@@ -68,6 +68,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
     (link) => link.systemIdentifier === "contact",
   );    
 
+  const BlogLink = (navStructure.mainNav || []).find(
+    (link) => link.systemIdentifier === "blog",
+  );
+
   const servicesData = (navStructure.servicesNav || []).map((group) => {
     const icon = typeof group.icon === "string" ? group.icon.trim() : "";
     return {
@@ -95,6 +99,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
   const aboutData = [
     { href: aboutLink ? `/${aboutLink.slug}` : "/about-us", label: "About Us" },
     { href: careerLink ? `/${careerLink.slug}` : "/career", label: "Career" },
+    { href: BlogLink ? `/${BlogLink.slug}` : "/blog", label: "Blog" },
     {
       href: `mailto:${hrEmail}`,
       label: hrEmail,
@@ -419,7 +424,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                           <Link
                             href={aboutData[1].href}
                             onClick={() => setAboutOpen(false)}
-                            className="flex items-center gap-3 text-gray-800 hover:tex-[#D68029] transition-colors"
+                            className="flex mb-5 items-center gap-3 text-gray-800 hover:tex-[#D68029] transition-colors"
                           >
                             <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
                               <Image
@@ -431,6 +436,23 @@ export default function Navbar({ navStructure }: NavbarProps) {
                             </div>
                             <span className="font-medium text-lg">
                               {aboutData[1].label}
+                            </span>
+                          </Link>
+                          <Link
+                            href={aboutData[2].href}
+                            onClick={() => setAboutOpen(false)}
+                            className="flex mb-5 items-center gap-3 text-gray-800 hover:tex-[#D68029] transition-colors"
+                          >
+                            <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
+                              <Image
+                                src="/navbar/blogs.svg"
+                                width={32}
+                                height={32}
+                                alt="blogs icon"
+                              />
+                            </div>
+                            <span className="font-medium text-lg">
+                              {aboutData[2].label}
                             </span>
                           </Link>
                         </div>
@@ -449,18 +471,18 @@ export default function Navbar({ navStructure }: NavbarProps) {
                               <ul className=" relative text-gray-600">
                                 <li className="relative flex items-center gap-2 pl-3 pb-2.5 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
-                                    href={aboutData[2].href}
-                                    className="break-all px-3.75 text-left font-medium text-[18px] "
+                                    href={aboutData[3].href}
+                                    className="break-all px-3.75 text-center font-medium text-[18px] "
                                   >
-                                    {aboutData[2].label}
+                                    {aboutData[3].label}
                                   </a>
                                 </li>
                                 <li className="relative flex items-center gap-2 pl-3 pb-2.5 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
-                                    href={aboutData[3].href}
-                                    className="break-all px-3.75 text-left font-medium text-[18px] "
+                                    href={aboutData[4].href}
+                                    className="break-all px-3.75 text-center font-medium text-[18px] "
                                   >
-                                    {aboutData[3].label}
+                                    {aboutData[4].label}
                                   </a>
                                 </li>
                               </ul>
@@ -474,10 +496,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
                               <ul className="relative text-gray-600">
                                 <li className=" relative flex items-center gap-2 pl-3 mb-4 pb-2.5 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
-                                    href={aboutData[4].href}
-                                    className="break-all px-3.75 text-left font-medium text-[18px] "
+                                    href={aboutData[5].href}
+                                    className="break-all px-3.75 text-center font-medium text-[18px] "
                                   >
-                                    {aboutData[4].label}
+                                    {aboutData[5].label}
                                   </a>
                                 </li>
                               </ul>
