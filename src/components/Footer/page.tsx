@@ -52,7 +52,7 @@ export default function ContactFooterPage() {
       {/* ---------------- Contact Form Floating Card ---------------- */}
       {/* <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 "> */}
       <div className={`w-full relative mx-auto max-w-[90%] lg:max-w-[80%] ${
-          !isContactPage ? "pb-16" : ""
+          !isContactPage ? "pb-16 lg:pb-18 xl:pb-22" : ""
         }`}
       >
         {/* <div className="  w-full mx-auto md:-mb-90 relative z-10">

@@ -145,9 +145,14 @@ export default function TrainingPageClient() {
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
                             className="mt-6"
                         >
-                            <div className="bg-[#D68029] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group">
-                                <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56"></span>
-                                <a href="#contact-form-section" className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+                            <div 
+                            // className="bg-[#D68029] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group">
+                             className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]  text-sm font-semibold text-white transition-colors group"
+>
+                                {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56"></span> */}
+                                                    <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
+                                <a href="#contact-form-section" className="  relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-color">
+                                {/* //  className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"> */}
                                     <span className="relative z-10 flex items-center gap-2">
                                         Get Started Today
                                         <Image

@@ -362,7 +362,7 @@ export default function OurServicesClient() {
 								</motion.ul>
 
 								{/* Button with link */}
-								<Link href={service.developmentDetail[0].serviceId.slug}>
+								{/* <Link href={service.developmentDetail[0].serviceId.slug}>
 									<motion.button
 										className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 mt-10 
 						 bg-[#0b1833] text-white text-sm sm:text-base font-medium 
@@ -386,6 +386,28 @@ export default function OurServicesClient() {
 											style={{ transformOrigin: "center" }}
 										/>
 										<span className="relative z-10">Know More</span>
+									</motion.button>
+								</Link> */}
+								<Link href={service.developmentDetail[0].serviceId.slug}>
+									<motion.button
+										className="relative hidden xl:inline-flex items-center justify-center overflow-hidden rounded-xl bg-[#0d1b2a] group mt-10"
+										initial={{ opacity: 0, y: 40 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ duration: 0.9, ease: "easeOut", delay: 0.9 }}
+									>
+										{/* Hover Circle */}
+										<motion.span
+										className="absolute left-1/2 top-1/2 w-0 h-0
+													-translate-x-1/2 -translate-y-1/2
+													rounded bg-[#D68029]
+													transition-all duration-700 ease-in-out
+													group-hover:w-56 group-hover:h-56"
+													
+										/>
+										{/* Content */}
+										<div className="relative z-10 px-6 py-3 text-sm sm:text-base font-medium text-white">
+											Know More
+										</div>
 									</motion.button>
 								</Link>
 							</div>

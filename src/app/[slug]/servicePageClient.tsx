@@ -693,17 +693,22 @@ export default function ServicePageClient() {
                 />
 
                 <motion.button
-                  className="relative cursor-pointer overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 bg-[#0b1833] text-white text-sm sm:text-base font-medium rounded-lg shadow-md"
-                  whileHover={noAnim ? undefined : "hover"}
-                  initial="rest"
-                  animate="rest"
-                  variants={{
-                    rest: { scale: 1 },
-                    hover: { scale: 1.02 },
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  // className="relative cursor-pointer overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 bg-[#0b1833] text-white text-sm sm:text-base font-medium rounded-lg shadow-md"
+                  										className="relative hidden xl:inline-flex items-center justify-center overflow-hidden rounded-xl bg-[#0d1b2a] group "
+
+                  // whileHover={noAnim ? undefined : "hover"}
+                  // initial="rest"
+                  // animate="rest"
+                  // variants={{
+                  //   rest: { scale: 1 },
+                  //   hover: { scale: 1.02 },
+                  // }}
+                  // transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  initial={{ opacity: 0, y: 40 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ duration: 0.9, ease: "easeOut", delay: 0.9 }}
                 >
-                  <motion.span
+                  {/* <motion.span
                     className="absolute inset-0 bg-gradient-to-r from-[#D68025] to-[#D68029]"
                     variants={{
                       rest: { scaleX: 0, originX: 0.5 },
@@ -711,8 +716,16 @@ export default function ServicePageClient() {
                     }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                     style={{ transformOrigin: "center" }}
-                  />
-                  <a href="#contact-form-section">
+                  /> */}
+                  <motion.span
+										className="absolute left-1/2 top-1/2 w-0 h-0
+													-translate-x-1/2 -translate-y-1/2
+													rounded bg-[#D68029]
+													transition-all duration-700 ease-in-out
+													group-hover:w-full group-hover:h-56"
+													
+										/>
+                  <a href="#contact-form-section" className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
                     <span className="relative z-10">
                       Let&apos;s Discuss Your Project Idea
                     </span>
@@ -801,12 +814,15 @@ export default function ServicePageClient() {
                         ease: "easeOut",
                         delay: noAnim ? 0 : 0.1,
                       }}
-                      className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                      // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                      className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                     >
-                      <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
+                      {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
+                      <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
                       <a
                         href="/faqs"
-                        className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                        // className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                        className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors "
                       >
                         <span className="flex flex-row gap-3 items-center justify-center">
                           Explore More
