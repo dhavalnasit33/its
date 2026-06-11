@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import Image from "next/image";
 import NotFoundPage from "@/components/NotFoundPage";
+import Section from "@/components/Section";
 
 interface BlogCategory {
   _id: string;
@@ -301,10 +302,10 @@ export default function BlogPageClient() {
   return (
     <>
       {/* Hero Section */}
-      <section
+      <Section
         data-cursor
         // className="px-12.5 common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-20 relative"
-              className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 py-10 lg:py-20 relative"
+              className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 "
 
 >
         <div className="flex w-full z-20  max-w-[90%] lg:max-w-[80%] relative mx-auto ">
@@ -350,12 +351,11 @@ export default function BlogPageClient() {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Blogs + Categories */}
-      <section
+      <Section
         ref={categoryRef}
-        className=" py-16 scroll-mt-24 w-full relative "
       >
         <div className="w-full  max-w-[90%] lg:max-w-[80%] mx-auto">
           {/* Categories */}
@@ -497,7 +497,7 @@ export default function BlogPageClient() {
             </Stack>
           )}
         </div>
-      </section>
+      </Section>
     </>
   );
 }

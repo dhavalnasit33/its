@@ -167,7 +167,7 @@ export default function HireForm() {
                             control={control}
                             render={({ field }) => (
                                 <div>
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">
+                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2">
                                         Your Name
                                     </label>
                                     <TextField
@@ -191,7 +191,7 @@ export default function HireForm() {
                             control={control}
                             render={({ field }) => (
                                 <div>
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">
+                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2">
                                         Your Email
                                     </label>
                                     <TextField
@@ -220,7 +220,7 @@ export default function HireForm() {
                             control={control}
                             render={({ field, fieldState }) => (
                                 <div>
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">
+                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2">
                                         Phone
                                     </label>
                                     <MuiTelInput
@@ -247,7 +247,7 @@ export default function HireForm() {
                             sx={inputStyles}
                         >
                             {/* 🔥 CUSTOM LABEL (same as Phone field) */}
-                            <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">
+                            <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2">
                                 Select Recruitment
                             </label>
 
@@ -397,7 +397,7 @@ export default function HireForm() {
                     variant="contained"
                     disabled={isSubmitting}
                     fullWidth
-                    className="primary_button relative group overflow-hidden mt-10  font-inter uppercase font-bold"
+                    className="primary_button relative group overflow-hidden mt-10 uppercase font-bold"
                     sx={{
                         minWidth: "180px",
                         width: "fit-content",

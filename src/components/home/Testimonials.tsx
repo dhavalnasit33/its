@@ -264,6 +264,7 @@ import { useMediaQuery } from "@/hook/useMediaQuery";
 import apiService from "@/lib/apiService";
 import Motion from "../motionbar";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import Section from "../Section";
 type Testimonial = {
     _id: string;
     name: string;
@@ -512,7 +513,7 @@ const Testimonials: React.FC = () => {
     };
 
     return (
-        <section className="py-20 w-full relative bg-white z-10">
+        <Section className="bg-white">
             <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-4 ">
                 <div className="text-center pb-5 mb-2.5 w-full">
                     <h3 className="text-center w-full font-bold text-gray-800 tracking-tight text-3xl md:text-4xl">
@@ -640,7 +641,7 @@ const Testimonials: React.FC = () => {
 
                 </div>
             </div>
-        </section>
+        </Section>
     );
 };
 export default Testimonials;

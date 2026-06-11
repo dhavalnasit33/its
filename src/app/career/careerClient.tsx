@@ -8,6 +8,7 @@ import Motion from "@/components/motionbar";
 import NotFoundPage from "@/components/NotFoundPage";
 import { CareerContent, OpenningPosition, SingleResponse } from "@/types";
 import ApplyPositionModal from "@/components/career/ApplyPositionModal";
+import Section from "@/components/Section";
 
 export default function CareerClient() {
   const [careerData, setCareerData] = useState<CareerContent | null>(null);
@@ -113,7 +114,7 @@ export default function CareerClient() {
     <>
       {/* HERO */}
       {/* SECTION 1: Career HERO */}
-      <section className=" w-full mx-auto py-12.5 common_background_gradient">
+      <Section className=" common_background_gradient">
         <div className="w-full max-w-[90%] xl:max-w-[80%] mx-auto relative gap-8  flex flex-col-reverse lg:flex-row items-center justify-center ">
           {/* Left Content */}
           <div className="w-full z-10 max-w-full xl:max-w-[65%] items-center content-center text-gray-800">
@@ -141,7 +142,7 @@ export default function CareerClient() {
               />
             </motion.div>
             {/* Button (bottom → top) */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
@@ -157,7 +158,21 @@ export default function CareerClient() {
                   </span>
                 </a>
               </div>
-            </motion.div>
+            </motion.div> */}
+             <motion.div 
+             initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+              className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#D68029]   font-semibold text-white transition-colors group" >
+                <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-70 group-hover:h-70"></span>
+                <a
+                    href="#openning-position"
+                    className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
+                <span className="flex flex-row gap-3 justify-center">
+                    Check Current Openings
+                </span>
+                </a>
+              </motion.div>
           </div>
           {/* Right Image and Stats */}
           <motion.div
@@ -181,10 +196,10 @@ export default function CareerClient() {
             )}
           </motion.div>
         </div>
-      </section>
+      </Section>
 
       {/* section 2 : openning position */}
-      <section className="w-full   relative py-16 scroll-mt-14" id="openning-position">
+      <Section className="scroll-mt-14" id="openning-position">
         <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
           <div className="flex flex-wrap relative mx-auto">
             <motion.div
@@ -311,9 +326,9 @@ export default function CareerClient() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </Section>
       {/* section 3 : how career at its  */}
-      <section className="w-full flex   py-12.5  bg-white">
+      <Section className="  bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] flex flex-col lg:flex-row items-center justify-center relative mx-auto gap-7.5 ">
           {/* Left Image (Animated Logo) */}
           <motion.div
@@ -368,9 +383,9 @@ export default function CareerClient() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </Section>
       {/* section 4 : why choose its  */}
-      <section className="w-full py-16 overflow-x-hidden">
+      <Section className=" overflow-x-hidden">
         <motion.div
           className=" text-center mb-10 w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"
           initial={{ opacity: 0, y: -100 }}
@@ -459,7 +474,7 @@ export default function CareerClient() {
             </motion.div>
           )}
         </div>
-      </section>
+      </Section>
       <ApplyPositionModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}

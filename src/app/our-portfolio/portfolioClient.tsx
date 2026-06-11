@@ -15,6 +15,7 @@ import Link from "next/link";
 import Reviews from "@/components/home/Reviews";
 import Testimonials from "@/components/home/Testimonials";
 import NotFoundPage from "@/components/NotFoundPage";
+import Section from "@/components/Section";
 // const categories = [
 //     { label: "Show All", value: "All" },
 //     { label: "Mobile App", value: "mobile-app" },
@@ -170,7 +171,7 @@ export default function PortfolioClient() {
 
     return (
         <>
-            <section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20 py-10 pb-20 gap-10 common_background_gradient">
+            <Section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20  pb-20 gap-10 common_background_gradient">
                 <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-2xl text-gray-800">
                     <motion.div
                         initial={{ opacity: 0, y: -40 }}
@@ -192,7 +193,7 @@ export default function PortfolioClient() {
                             {portfolioContentData?.heroSection.description}
                         </p>
                     </motion.div>
-                    <motion.div
+                    {/* <motion.div
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
@@ -205,7 +206,21 @@ export default function PortfolioClient() {
                                 </span>
                             </Link>
                         </div>
-                    </motion.div>
+                    </motion.div> */}
+                     <motion.div 
+                       initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+                        className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]   font-semibold text-white transition-colors group" >
+                                <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
+                                <a
+                                    href="/contact"
+                                    className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
+                                <span className="flex flex-row gap-3 justify-center">
+                                    Let&apos;s Discuss
+                                </span>
+                                </a>
+                            </motion.div>
                 </div>
                 <div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-3xl">
                     <motion.div
@@ -259,8 +274,8 @@ export default function PortfolioClient() {
                         );
                     })}
                 </div>
-            </section>
-            <section className="w-full relative py-16">
+            </Section>
+            <Section >
                 <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
                     <div className="w-full flex flex-wrap">
                         <motion.div
@@ -388,19 +403,37 @@ export default function PortfolioClient() {
                             {!initialLoading && creativeWorkData.length > 0 && (
                                 <div className="flex flex-col items-center gap-4 mt-12">
                                     {hasMore && (
+                                        // <button
+                                        //     onClick={handleLoadMore}
+                                        //     disabled={loadingMore}
+                                        //     className="mt-2 inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-[#d68029] hover:bg-[#c07020] active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                                        // >
+                                        //     {loadingMore ? (
+                                        //         <>
+                                        //             <span className="inline-block w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                                        //             Loading...
+                                        //         </>
+                                        //     ) : (
+                                        //         "Load More"
+                                        //     )}
+                                        // </button>
                                         <button
                                             onClick={handleLoadMore}
                                             disabled={loadingMore}
-                                            className="mt-2 inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-[#d68029] hover:bg-[#c07020] active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                                            className=" relative hidden xl:inline-flex items-center justify-center overflow-hidden
+                                                gap-2 rounded-md font-semibold text-white bg-[#D68029] group disabled:opacity-60 disabled:cursor-not-allowed "
                                         >
+                                        <span className=" absolute w-0 h-0 rounded bg-[#0d1b2a] transition-all duration-750 delay-300 ease-in-out group-hover:w-56 group-hover:h-56 " />
+                                        <span className="relative tracking-tight rounded-md text-sm sm:text-base font-semibold px-8 py-3 text-white transition-colors ">
                                             {loadingMore ? (
-                                                <>
-                                                    <span className="inline-block w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                                                    Loading...
-                                                </>
+                                            <>
+                                                <span className="inline-block w-4 h-4 border-2 border-white/40 border-t-white rounded-md animate-spin" />
+                                                Loading...
+                                            </>
                                             ) : (
-                                                "Load More"
+                                            "Load More"
                                             )}
+                                        </span>
                                         </button>
                                     )}
                                 </div>
@@ -408,7 +441,7 @@ export default function PortfolioClient() {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </Section>
             <Reviews />
             <Testimonials />
         </>

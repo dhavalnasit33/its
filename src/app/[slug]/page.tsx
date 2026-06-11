@@ -63,8 +63,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         return <CareerClient />;
       case "contact":
         return <ContactClient />;
-      case "faqs":
-        return <FaqsClient />;
+      // case "faqs":
+      //   return <FaqsClient />;
       case "blog":
         return <BlogPageClient />;
       case "portfolio":

@@ -188,14 +188,14 @@ function faqs() {
                         }`}
                     >
                       <div
-                        className="cursor-pointer py-4 px-5 box-border w-full  flex items-center justify-between font-bold"
+                        className="cursor-pointer py-4 px-5 box-border w-full  flex items-center justify-between font-semibold gap-2"
                         onClick={() => toggleAccordion(index)}
                       >
-                        <h4 className="font-medium w-full text-[20px] text-black">
+                        <h4 className="font-semibold w-full text-[20px] text-black">
                           {/* {item.title} */}
                           <span dangerouslySetInnerHTML={{ __html: item.title }} />
                         </h4>
-                        <span className="w-[1.5em] inline-block">
+                        <span className="w-[1em] inline-block">
                           {isOpen ? <FaMinus /> : <FaPlus />}
                         </span>
                       </div>

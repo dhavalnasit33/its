@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 import { SingleResponse, TrainingMainPageData } from "@/types";
 import apiService from "@/lib/apiService";
 import NotFoundPage from "@/components/NotFoundPage";
+import Section from "@/components/Section";
 const CareerGrid = dynamic(() => import("@/components/CareerGrid"))
 
 const cards = [
@@ -76,8 +77,9 @@ export default function TrainingPageClient() {
             {/* HERO SECTION */}
             {/* <section className="relative  w-full  common_background_gradient">
                 <div className="relative max-w-384 mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
-            <section className="relative w-full common_background_gradient max-w-[90%] lg:max-w-[80%] mx-auto">
-                <div className="xl:px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <Section className=" common_background_gradient ">
+                <div className="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto">
+                <div className="xl:px-6  grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     {/* Content Left */}
                     <div className="order-2 md:order-1 z-10">
                         {/* First p tag - from top slow */}
@@ -206,10 +208,11 @@ export default function TrainingPageClient() {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+                </div>
+            </Section>
 
             {/* CAREER TREE SECTION */}
-            <section className="max-w-full mx-auto pt-16 text-center">
+            <Section className="max-w-full text-center">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
                     <motion.h2
                         initial={{ opacity: 0, y: -50 }}
@@ -238,12 +241,12 @@ export default function TrainingPageClient() {
                         // )
                     }
                 </motion.div>
-                
-            </section>
+            </Section>
 
             {/* <section className="py-20">
                 <div className="max-w-384 mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
-                 <section className="relative w-full  max-w-[90%] lg:max-w-[80%] mx-auto py-20  ">
+            <Section >
+                <div className="relative w-full  max-w-[90%] lg:max-w-[80%] mx-auto ">
                 <div className="xl:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 items-center ">
                     {/* Image */}
                     <motion.div
@@ -402,10 +405,11 @@ export default function TrainingPageClient() {
                         </motion.a>
                     </div>
                 </div>
-            </section>
+                </div>
+            </Section>
 
             {/* NEW SECTION: ITS Institute Facilities */}
-            <section className="relative bg-white py-20 ">
+            <Section className=" bg-white ">
                 {/* Left Decorative Image */}
                 <Image
                     src="/training/image-124.png"
@@ -473,10 +477,10 @@ export default function TrainingPageClient() {
                         ))}
                     </motion.div>
                 </div>
-            </section>
+            </Section>
 
             {/* PICK THE RIGHT COURSE SECTION */}
-            <section className="bg-white py-16 md:py-20 ">
+            <Section className="bg-white ">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
                     {/* Section Title + Motion */}
                     <div className="text-center mb-10 md:mb-12">
@@ -674,7 +678,7 @@ export default function TrainingPageClient() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Section>
         </div>
     );
 }

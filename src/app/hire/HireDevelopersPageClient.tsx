@@ -1202,13 +1202,13 @@
 //                                                             className="mb-5 w-full rounded-lg bg-white p-2.5 shadow-[0_0_9px_0px_rgba(0,0,0,0.25)] border border-[#d5d8dc] box-border  "
 //                                                         >
 //                                                             <div
-//                                                                 className="cursor-pointer w-full py-4 px-5 box-border  flex items-center justify-between font-bold"
+//                                                                 className="cursor-pointer w-full py-4 px-5 box-border  flex items-center justify-between font-semibold"
 //                                                                 onClick={() => toggleAccordion(index)}
 //                                                             >
 //                                                                 <span className="font-medium   text-[20px] text-black">
 //                                                                     {item.question}
 //                                                                 </span>
-//                                                                 <span className="w-[1.5em] inline-block">
+//                                                                 <span className="w-[1em] inline-block">
 //                                                                     {isOpen ? <FaMinus /> : <FaPlus />}
 //                                                                 </span>
 //                                                             </div>
@@ -1303,6 +1303,7 @@ import RelatedBlogs from "@/components/blog/RelatedBlogs";
 import { HireMainPageData, SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
 import NotFoundPage from "@/components/NotFoundPage";
+import Section from "@/components/Section";
 
 export default function HireDevelopersPageClient() {
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -1416,8 +1417,8 @@ export default function HireDevelopersPageClient() {
     // const activeData = hireData.find(tab => tab.title === activeTab);
     return (
         <main className="w-full">
-            <section id="hero"
-                className="relative py-12.5 hire_hero_section common_background_gradient w-full z-10 bg-white scroll-mt-10">
+            <Section id="hero"
+                className="hire_hero_section common_background_gradient  bg-white ">
 
                 <video
                     autoPlay
@@ -1450,7 +1451,7 @@ export default function HireDevelopersPageClient() {
                                         <div className="mb-2.5 w-full relative  relative  text-black ">
                                             {hireMainPageData.mainTitle ? (
                                                 <h1
-                                                    className="font-bold text-4xl md:text-[42px] lg:text-[46px]/[130%] tracking-[1.2px] relative  text-white font-bricolage"
+                                                    className="font-bold text-4xl md:text-[42px] lg:text-[46px]/[130%] tracking-[1.2px] relative  text-white "
                                                     dangerouslySetInnerHTML={{
                                                         __html: hireMainPageData.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, ""),
                                                     }}
@@ -1497,19 +1498,22 @@ export default function HireDevelopersPageClient() {
                                             ease: "easeOut",
                                             delay: 0.6,
                                         }}
-                                        className="bg-[#D68029] relative w-auto inline-flex items-center justify-center w-max overflow-hidden text-white  group"
+                                        className="bg-[#D68029] relative w-auto inline-flex items-center justify-center  overflow-hidden text-white hover:text-[#0d1b2a] transition-all duration-700 ease-in-out group"
                                     >
-                                        <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#12203d]  group-hover:w-full group-hover:h-full"></span>
+                                        <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#ffffff] rounded  group-hover:w-full group-hover:h-full"></span>
                                         <a href="#hero"
                                             className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-2 sm:px-8 sm:py-4 cursor-pointer font-semibold">
                                             <span className="flex flex-row gap-3 items-center justify-center">
                                                 Get Started Today!
+                                                <div className="group">
                                                 <Image
                                                     src="/hire/Frame-2-4.png"
                                                     alt="FRAME"
                                                     width={30}
                                                     height={30}
+                                                     className="transition-all duration-700 ease-in-out group-hover:brightness-0 group-hover:sepia"
                                                 />
+                                                </div>
                                             </span>
                                         </a>
                                     </motion.div>
@@ -1529,11 +1533,11 @@ export default function HireDevelopersPageClient() {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </Section>
 
 
             {/* Hire Dedicated Web and Mobile App Development Team */}
-            <section className="w-full relative py-12.5  not-first:  ">
+            <Section className=" not-first:  ">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
                     <div className="flex w-full relative min-h-px">
                         <div className="w-full flex flex-wrap content-start relative ">
@@ -1580,7 +1584,7 @@ export default function HireDevelopersPageClient() {
                                             transition={{ duration: 0.6, ease: "easeOut" }}
                                             className="w-full relative"
                                         >
-                                            <div className="w-full flex flex-col mb-6 wrap-break-words text-base font-normal text-[#6f6f6f] leading-8 tracking-wide">
+                                            <div className="w-full flex flex-col mb-6 wrap-break-words text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide">
                                                 {/* <p>
                                                     Hiring a dedicated developer also allows you to scale up and down your  resources cost-effectively.
                                                 </p>
@@ -1644,9 +1648,9 @@ export default function HireDevelopersPageClient() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Section>
             {/* section 3 Hire Dedicated Web and Mobile App Developers */}
-            <section className="w-full relative py-12.5 not-first:">
+            <Section className="not-first:">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
                     <div className="w-full flex flex-wrap content-start relative">
                         <div className="text-center pb-10 mb-2.5 w-full">
@@ -1687,9 +1691,9 @@ export default function HireDevelopersPageClient() {
                         />
                     </div>
                 </div>
-            </section>
+            </Section>
             {/* section 4 : why hire developer for your  fro project  */}
-            <section className="w-full relative py-12.5     ">
+            <Section >
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
                     <div className="flex w-full relative min-h-px">
                         <div className="w-full flex flex-wrap  content-start relative ">
@@ -1760,9 +1764,9 @@ export default function HireDevelopersPageClient() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Section>
             {/* section 5 :   Why choose ITS for dedicated resources  */}
-            <section className="w-full relative py-12.5 overflow-x-hidden">
+            <Section className=" overflow-x-hidden">
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
                     <div className="flex w-full relative min-h-px">
                         <div className="w-full flex flex-wrap  content-start relative ">
@@ -1964,10 +1968,10 @@ export default function HireDevelopersPageClient() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Section>
 
             {/* section 6 build my dream team & scale development team */}
-            <section className="w-full relative py-12.5">
+            <section className="w-full relative pt-12.5">
                 <div className="w-full max-w-full mx-auto">
                     <motion.div
                         className="grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden  shadow-lg"
@@ -2160,7 +2164,7 @@ export default function HireDevelopersPageClient() {
             </section>
 
             {/* hire top 1% wordpress devlopers */}
-            <section className="relative py-12.5 w-full z-20">
+            <Section >
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex">
                     <div className="flex relative min-h-px w-full">
                         <div className="flex  content-start relative w-full flex-wrap">
@@ -2198,7 +2202,7 @@ export default function HireDevelopersPageClient() {
                                     </p>
                                 </motion.div>
                             </div>
-                            <section className="w-full mt-8 relative">
+                            <div className="w-full mt-8 relative">
                                 <div className="flex flex-col lg:flex-row gap-8 w-full">
                                     {/* Left Column: Info Boxes */}
                                     <div className="w-full lg:w-1/3 xl:w-1/4">
@@ -2393,16 +2397,16 @@ export default function HireDevelopersPageClient() {
                                         </motion.div>
                                     </div>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </Section>
             {/* section 8 : benifits  */}
             <section
                 className="relative z-0 mt-[-9%] bg-[url('/hire/Rectangle-4181.png')] 
                    bg-center bg-size-[100%_auto] 
-                   px-0 pt-37.5 pb-12.5 
+                   px-0 pt-40.5 pb-16 
                    transition-[background,border,border-radius,box-shadow] duration-300 
                    max-[1200px]:mt-10 max-[1200px]:py-5"
             >
@@ -2414,7 +2418,7 @@ export default function HireDevelopersPageClient() {
                                     Benefits
                                 </h4>
                             </div>
-                            <section className="w-full  relative ">
+                            <div className="w-full  relative ">
                                 <div className="flex w-full xl:mx-auto max-w-full lg:max-w-[90%] xl:max-w-[80%]">
                                     {hireMainPageData.pricePathAndFAQ.hireDevelopersAsYourNeeds.benefits && (
                                         <ul className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 w-full max-w-full min-h-px list-none rhombus_icon_list relative p-0">
@@ -2433,7 +2437,7 @@ export default function HireDevelopersPageClient() {
                                         </ul>
                                     )}
                                 </div>
-                            </section>
+                            </div>
 
                             <div className="w-full text-center mt-14">
                                 <motion.div
@@ -2463,7 +2467,7 @@ export default function HireDevelopersPageClient() {
                 </div>
             </section>
             {/* section 9: faq question */}
-            <section ref={faqRef} className="relative w-full py-12.5 pt-20">
+            <Section ref={faqRef}>
                 <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
                     <div className="flex flex-wrap  w-full relative content-start">
                         <div className="text-center pb-10 mb-2.5 w-full">
@@ -2527,7 +2531,7 @@ export default function HireDevelopersPageClient() {
                                                                 className="cursor-pointer w-full py-4 px-5 box-border  flex items-center justify-between font-bold gap-2"
                                                                 onClick={() => toggleAccordion(index)}
                                                             >
-                                                                <span className="font-medium   text-[20px] text-black">
+                                                                <span className="font-semibold   text-[20px] text-black">
                                                                     {item.question}
                                                                 </span>
                                                                 <span className="w-[1em] inline-block">
@@ -2569,7 +2573,7 @@ export default function HireDevelopersPageClient() {
                         </section>
                     </div>
                 </div>
-            </section>
+            </Section>
             <RelatedBlogs subCategory="CMS Development" />
         </main>
     );

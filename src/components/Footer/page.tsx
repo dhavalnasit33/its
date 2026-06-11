@@ -24,6 +24,7 @@ import {
 import { MdEmail, MdPhone, MdWork } from "react-icons/md";
 import { BiHelpCircle } from "react-icons/bi";
 import { FaLaptopCode, FaMobileAlt, FaPaintBrush } from "react-icons/fa";
+import Section from "../Section";
 
 // -------------------- Main Page --------------------
 export default function ContactFooterPage() {
@@ -46,7 +47,7 @@ export default function ContactFooterPage() {
 
   return (
     <footer id="contact-form-section" className={` relative bg-white scroll-mt-18 ${
-      !isContactPage ? "pt-16" : ""
+      !isContactPage ? " pt-16 lg:pt-18 xl:pt-22" : ""
     }`}>
       {/* ---------------- Contact Form Floating Card ---------------- */}
       {/* <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 "> */}
@@ -79,8 +80,8 @@ export default function ContactFooterPage() {
 
       {/* ---------------- Footer Content ---------------- */}
       {/* <div className="bg-[url('/footer-bg.png')] bg-cover bg-center md:pt-112.5 py-16 px-6"> */}
-      <div
-        className={`bg-[url('/footer-bg.png')] bg-cover bg-center  py-16`}
+      <Section
+        className={`bg-[url('/footer-bg.png')] bg-cover bg-center `}
       >
         <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]">
           {/* HR Inquiry + Sales Inquiry */}
@@ -218,22 +219,22 @@ export default function ContactFooterPage() {
                     Careers
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     href="/faqs"
                     className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] transition-colors"
                   >
                     <BiHelpCircle size={20} />
-                    {/* <Image
+                    <Image
                       src="/icon/icons8-faqs-66 1.png"
                       alt="icons8-faqs-66 1"
                       width={24}
                       height={24}
                       className="object-contain"
-                    />{" "} */}
+                    />{" "}
                     FAQs
                   </Link>
-                </li>
+                </li> */}
 
                 <li>
                   <Link
@@ -477,7 +478,7 @@ export default function ContactFooterPage() {
             </div>
           </div>
         </div>
-      </div>
+      </Section>
 
       {/* Bottom Bar */}
       <div className="bg-[#0f1b2d] text-gray-300 text-sm py-4">

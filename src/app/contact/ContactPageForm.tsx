@@ -68,7 +68,7 @@
 
 //                                     <div className="flex justify-between gap-2 items-center">
 //                                         <div>
-//                                         <p className="text-white text-[16px] md:text-xl font-bricolage">
+//                                         <p className="text-white text-[16px] md:text-xl ">
 //                                             {item.company}
 //                                         </p>
 //                                         <p className="text-white opacity-60 text-sm mt-1">
@@ -110,7 +110,7 @@
 //                                 {/* Name Fields */}
 //                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 //                                     <div>
-//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Your Name</label>
+//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Your Name</label>
 //                                         <input
 //                                             type="text"
 //                                             placeholder="First Name"
@@ -120,7 +120,7 @@
 //                                         />
 //                                     </div>
 //                                     <div>
-//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Your Name</label>
+//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Your Name</label>
 //                                         <input
 //                                             type="text"
 //                                             placeholder="Last Name"
@@ -133,7 +133,7 @@
 
 //                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 //                                     <div>
-//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">E-mail</label>
+//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2">E-mail</label>
 //                                         <input
 //                                             type="email"
 //                                             placeholder="Email"
@@ -143,7 +143,7 @@
 //                                         />
 //                                     </div>
 //                                     <div>
-//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Phone</label>
+//                                         <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Phone</label>
 //                                         <input
 //                                             type="tel"
 //                                             placeholder="Phone Number"
@@ -156,7 +156,7 @@
 //                                     </div>
 //                                 </div>
 //                                 <div>
-//                                     <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Message</label>
+//                                     <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Message</label>
 //                                     <textarea
 //                                         rows={4}
 //                                         placeholder="Write your message.."
@@ -179,7 +179,7 @@
 //                                     </label>
 //                                 </div>
 //                                 <div className="col-span-12 sm:py-10 py-6">
-//                                     <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 font-inter">
+//                                     <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 ">
 //                                         Your budget for this project?
 //                                     </label>
 //                                     <div className="flex flex-wrap gap-2">
@@ -204,7 +204,7 @@
 //                                 <button
 //                                         type="submit"
 //                                         // disabled={isSubmitting}
-//                                         className="primary_button relative group overflow-hidden mt-3 min-w-[180px] font-inter uppercase"
+//                                         className="primary_button relative group overflow-hidden mt-3 min-w-[180px]  uppercase"
 //                                     >  
 //                                     <span className="absolute top-0 left-[-100%] w-[60%] h-full bg-[linear-gradient(90deg,transparent,hsla(0,0%,100%,0.2),transparent)] animate-shine"></span>
 //                                     <span className="relative z-10 flex items-center gap-2 justify-center">
@@ -428,7 +428,7 @@ export default function ContactPageForm() {
     return (
         <section className="relative bg-[#0d1b2a] w-full z-20">
             <div className="max-w-[90%] lg:max-w-[80%] mx-auto">
-                <div className="border-t border-[#ffffff14] py-10">
+                <div className="border-t border-[#ffffff14] pt-10">
 
                     <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] items-start ">
 
@@ -450,7 +450,7 @@ export default function ContactPageForm() {
 
                                             <div className="flex justify-between gap-2 items-center">
                                                 <div>
-                                                    <h4 className="text-white text-[16px] md:text-xl font-bricolage">
+                                                    <h4 className="text-white text-[16px] md:text-xl ">
                                                         {item.company}
                                                     </h4>
                                                     <p className="text-white opacity-60 text-sm mt-1">
@@ -495,7 +495,7 @@ export default function ContactPageForm() {
                             <form className="space-y-4 md:space-y-6 mb-5" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Your Name</label>
+                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2">Your Name</label>
                                         <input
                                             type="text"
                                             {...register("firstname")}
@@ -506,7 +506,7 @@ export default function ContactPageForm() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Your Name</label>
+                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Your Name</label>
                                         <input
                                             type="text"
                                             {...register("lastname")}
@@ -520,7 +520,7 @@ export default function ContactPageForm() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">E-mail</label>
+                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">E-mail</label>
                                         <input
                                             type="email"
                                             {...register("email")}
@@ -531,7 +531,7 @@ export default function ContactPageForm() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Phone</label>
+                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Phone</label>
                                         <input
                                             type="tel"
                                             placeholder="Phone Number"
@@ -550,7 +550,7 @@ export default function ContactPageForm() {
 
                                 <div>
 
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 font-inter">
+                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 ">
                                         Select Subject?
                                     </label>
 
@@ -590,7 +590,7 @@ export default function ContactPageForm() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 font-inter">Message</label>
+                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Message</label>
                                     <textarea
                                         rows={4}
                                         {...register("message")}
@@ -618,7 +618,7 @@ export default function ContactPageForm() {
                                     </div>
 
                                     <div className="col-span-12 sm:py-10 py-6">
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 font-inter">
+                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 ">
                                             Your budget for this project?
                                         </label>
                                         <div className="flex flex-wrap gap-2">
@@ -649,7 +649,7 @@ export default function ContactPageForm() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="primary_button relative group overflow-hidden mt-3 min-w-[180px] font-inter uppercase"
+                                        className="primary_button relative group overflow-hidden mt-3 min-w-[180px] uppercase"
                                     >
                                         <span className="absolute top-0 left-[-100%] w-[60%] h-full bg-[linear-gradient(90deg,transparent,hsla(0,0%,100%,0.2),transparent)] animate-shine"></span>
                                         <span className="relative z-10 flex items-center gap-2 justify-center">

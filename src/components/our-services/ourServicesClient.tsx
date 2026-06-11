@@ -11,6 +11,7 @@ import { OurServicesMain, SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
 import NotFoundPage from "../NotFoundPage";
 import Link from "next/link";
+import Section from "../Section";
 
 export default function OurServicesClient() {
 
@@ -56,7 +57,7 @@ export default function OurServicesClient() {
 
 	return (
 		<>
-			<section className="relative w-full common_background_gradient">
+			<Section className=" common_background_gradient">
 				{/*   px-4 md:px-6  */}
 				<div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex flex-col">
 					<div
@@ -98,7 +99,7 @@ export default function OurServicesClient() {
 						</motion.div>
 
 						{/* Hero content */}
-						<div className="relative z-10 py-12 md:py-16">
+						<div className="relative z-10 xl:pb-16">
 							<motion.h1
 								initial={{ opacity: 0, y: -50 }} // start above
 								animate={{ opacity: 1, y: 0 }} // drop into position
@@ -132,7 +133,7 @@ export default function OurServicesClient() {
 
 							</motion.div>
 
-							<motion.a
+							{/* <motion.a
 								href="#contact-form-section"
 								className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 
              bg-[#0b1833] text-white text-sm sm:text-base font-medium 
@@ -146,7 +147,6 @@ export default function OurServicesClient() {
 								}}
 								transition={{ type: "spring", stiffness: 300, damping: 20 }}
 							>
-								{/* Background Animation Layer */}
 								<motion.span
 									className="absolute inset-0 rounded-lg bg-linear-to-r from-[#D68025] to-[#D68029]"
 									variants={{
@@ -157,9 +157,23 @@ export default function OurServicesClient() {
 									style={{ transformOrigin: "center" }}
 								/>
 
-								{/* Button Text */}
 								<span className="relative z-10">Get Started</span>
-							</motion.a>
+							</motion.a> */}
+
+					<motion.div
+                     	className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-[10px] bg-[#0d1b2a]  px-5 py-3 text-sm font-semibold text-white transition-colors group"
+                  	>
+						<span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
+						<a
+							href="#contact-form-section"
+							className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold  text-white transition-colors ">
+						<span className="flex flex-row gap-3  justify-center">
+							Get Started
+						</span>
+						</a>
+                  	</motion.div>
+
+				
 
 							{/* Service Cards */}
 							<motion.div
@@ -238,7 +252,7 @@ export default function OurServicesClient() {
 					</div>
 				</div>
 
-			</section>
+			</Section>
 			<section className="w-full py-12.5 relative  ">
 				<div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex flex-wrap">
 					{ourServicePageData.technologyDetails.map((service, index) => (

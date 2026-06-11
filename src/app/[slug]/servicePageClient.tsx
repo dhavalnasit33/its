@@ -23,6 +23,7 @@ import Loader from "@/components/PageLoader";
 import Link from "next/link";
 import NotFoundPage from "@/components/NotFoundPage";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
+import Section from "@/components/Section";
 
 // ✅ FIX 1: Lazy load ALL below-fold heavy components
 const EngagementModels = dynamic(
@@ -135,11 +136,11 @@ export default function ServicePageClient() {
   return (
     <main className="w-full">
 
-      <section className="relative w-full">
-        <div className="w-full max-w-full mx-auto relative flex flex-wrap">
+      <Section className="common_background_gradient py-18 md:py-22 lg:py-28">
+        {/* <div className="w-full max-w-full mx-auto relative flex flex-wrap"> */}
 
           {/* HERO */}
-          <div className="relative w-full text-center py-18 md:py-22 lg:py-28 common_background_gradient">
+          {/* <div className="relative w-full text-center py-18 md:py-22 lg:py-28 common_background_gradient"> */}
             {!isMobile && (
               <>
                 <Image
@@ -167,7 +168,7 @@ export default function ServicePageClient() {
             </div>
 
             {/* Content */}
-            <div className="relative z-10  w-full max-w-[90%] lg:max-w-[80%] mx-auto">
+            <div className="relative z-10  w-full max-w-[90%] lg:max-w-[80%] mx-auto text-center">
               <motion.h1
                 className="text-[2.3rem] md:text-[4rem] xl:text-[5rem] font-semibold mb-6 text-black break-words"
                 initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
@@ -202,12 +203,15 @@ export default function ServicePageClient() {
                   />
                 </div>
               </motion.div>
-            </div>
+            {/* </div> */}
           </div>
 
           {/* CONTACT BAR */}
           {/* <div className="relative w-full z-20 bg-[#0b1833] text-white px-4 sm:px-6 md:px-12 lg:px-36 py-3 text-sm"> */}
-          <div className="relative w-full z-20 bg-[#0b1833] text-white  py-3 text-sm">
+          
+        {/* </div> */}
+      </Section>
+      <div className="relative w-full z-20 bg-[#0b1833] text-white  py-3 text-sm">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 text-center lg:text-left w-full relative max-w-[90%] lg:max-w-[90%] mx-auto">
               <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6">
                 <div className="flex items-center gap-2">
@@ -261,8 +265,8 @@ export default function ServicePageClient() {
           </div>
 
           {/* INTRO */}
+          <Section>
           {data.subMainTitle && (
-            <div className="relative w-full z-30 mx-auto flex-wrap py-12">
               <div className="text-center  w-full max-w-[90%] lg:max-w-[80%] mx-auto relative ">
                 <motion.h2
                   className="common-h2 leading-snug "
@@ -277,7 +281,7 @@ export default function ServicePageClient() {
                   <Motion />
                 </motion.h2>
                 <motion.p
-                  className="mt-6 text-gray-600 max-w-7xl mx-auto leading-relaxed"
+                  className="mt-6 text-gray-600 max-w-7xl mx-auto fonts_16"
                   initial={{ y: noAnim ? 0 : 50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{
@@ -289,11 +293,9 @@ export default function ServicePageClient() {
                 />
                 {/* {data.subMainTitleDescription} */}
                 {/* </motion.p> */}
-              </div>
             </div>
           )}
-        </div>
-      </section>
+          </Section>
 
       {/* =============== SECTION 2: SERVICES + WHY CHOOSE US =============== */}
       <section className="relative w-full">
@@ -363,7 +365,7 @@ export default function ServicePageClient() {
                       />
                     )}
                     <h4 className="font-semibold text-lg">{service.title}</h4>
-                    <p className="text-gray-600 text-sm leading-relaxed"
+                    <p className="text-gray-600 fonts_16"
                       dangerouslySetInnerHTML={{ __html: service?.description || "" }}
                     />
                     {/* {service.description}
@@ -413,10 +415,10 @@ export default function ServicePageClient() {
                       whileHover="hover"
                       initial="rest"
                       animate="rest"
-                      variants={{
-                        rest: { scale: 1 },
-                        hover: { scale: 1.02 },
-                      }}
+                      // variants={{
+                      //   rest: { scale: 1 },
+                      //   hover: { scale: 1.02 },
+                      // }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
                       {/* Background Animation Layer */}
@@ -454,9 +456,14 @@ export default function ServicePageClient() {
               )}
               </motion.div>
 
-          {/* WHY CHOOSE US */}
+         
+        </div>
+      </section>
+       {/* WHY CHOOSE US */}
+       <Section>
           {data.WhyWorkWithThis && (
-            <div className="py-20 w-full">
+            // <div className="py-20 w-full">
+            <>
               <div className="text-center mb-12">
                 <motion.div
                   initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
@@ -490,12 +497,13 @@ export default function ServicePageClient() {
                 )}
               </div>
 
+              <div className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-8 order-2 lg:order-1">
                   {data.WhyWorkWithThis.content?.map((item, idx) => (
                     <div key={idx}>
                       <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
-                      <p className="text-gray-600 text-sm leading-relaxed"
+                      <p className="text-gray-600 fonts_16"
                         dangerouslySetInnerHTML={{ __html: item?.description || "" }}
                       />
                       {/* {item.description}
@@ -530,18 +538,18 @@ export default function ServicePageClient() {
                   </motion.div>
                 )}
               </div>
-            </div>
+              </div>
+            </>
           )}
-        </div>
-      </section>
+        </Section>
 
       {/* =============== SECTION 3: TOOLS & TECHNOLOGY =============== */}
-      <section className="relative w-full py-12 mx-auto">
+      <Section >
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
           <div className="absolute inset-0 z-0 common_background_gradient"></div>
 
           <div className="relative w-full z-10">
-            <div className="text-left max-lg:pt-0 py-12">
+            <div className="text-left  pb-12">
               <motion.div
                 initial={{ opacity: 0, y: noAnim ? 0 : -50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -563,7 +571,7 @@ export default function ServicePageClient() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
               >
-                <p className="mt-6 text-gray-600 max-w-3xl leading-relaxed"
+                <p className="mt-6 text-gray-600 max-w-3xl fonts_16"
                   dangerouslySetInnerHTML={{ __html: data?.toolsAndTechnology?.description || "", }}
                 />
                 {/* {data.toolsAndTechnology.description}
@@ -641,11 +649,11 @@ export default function ServicePageClient() {
             })()}
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* =============== SECTION 4: WHY COMPANY PREFERS =============== */}
       {data.whyCompanyPerfersThis && (
-        <section className="w-full relative mx-auto py-12">
+        <Section >
           <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left */}
@@ -655,20 +663,21 @@ export default function ServicePageClient() {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}
+                  className="mb-6 w-full flex content-start common_htags left_htags"
                 >
                   <h2
-                    className="common-h2-small leading-snug mb-4"
+                    className="common-h2-small leading-snug"
                     dangerouslySetInnerHTML={{
                       __html: data?.whyCompanyPerfersThis?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                     }}
                   />
-                  <div className="relative w-20 sm:w-24 h-1 bg-[#d68029] mb-4">
+                  {/* <div className="relative w-20 sm:w-24 h-1 bg-[#d68029] mb-4">
                     <div className="absolute right-0 top-1/2 w-2 h-2 bg-[#d68029] transform -translate-y-1/2 rotate-45"></div>
-                  </div>
+                  </div> */}
                 </motion.div>
 
                 <motion.p
-                  className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 [&_p]:mb-4
+                  className="text-gray-700 fonts_16 md:text-lg mb-6 [&_p]:mb-4
     										[&_p:last-child]:mb-0"
                   dangerouslySetInnerHTML={{
                     __html: data?.whyCompanyPerfersThis?.description || "",
@@ -747,7 +756,7 @@ export default function ServicePageClient() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </Section>
       )}
 
       {/* ✅ FIX 1: Lazy loaded below-fold sections */}
@@ -828,13 +837,13 @@ export default function ServicePageClient() {
                             className="mb-5 w-full rounded-lg bg-white p-2.5 shadow-[0_0_9px_0px_rgba(0,0,0,0.25)] border border-[#d5d8dc]"
                           >
                             <div
-                              className="cursor-pointer py-4 px-5 w-full flex items-center justify-between font-bold"
+                              className="cursor-pointer py-4 px-5 w-full flex items-center justify-between font-semibold gap-2"
                               onClick={() => toggleAccordion(index)}
                             >
                               <span className="font-medium text-[20px] text-black">
                                 {item.question}
                               </span>
-                              <span className="w-[1.5em] inline-block shrink-0">
+                              <span className="w-[1em] inline-block shrink-0">
                                 {isOpen ? <FaMinus /> : <FaPlus />}
                               </span>
                             </div>

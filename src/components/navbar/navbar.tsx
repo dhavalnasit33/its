@@ -450,7 +450,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                 <li className="relative flex items-center gap-2 pl-3 pb-2.5 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
                                     href={aboutData[2].href}
-                                    className="break-all px-3.75 text-center font-medium text-[18px] "
+                                    className="break-all px-3.75 text-left font-medium text-[18px] "
                                   >
                                     {aboutData[2].label}
                                   </a>
@@ -458,7 +458,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                 <li className="relative flex items-center gap-2 pl-3 pb-2.5 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
                                     href={aboutData[3].href}
-                                    className="break-all px-3.75 text-center font-medium text-[18px] "
+                                    className="break-all px-3.75 text-left font-medium text-[18px] "
                                   >
                                     {aboutData[3].label}
                                   </a>
@@ -475,7 +475,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                 <li className=" relative flex items-center gap-2 pl-3 mb-4 pb-2.5 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
                                     href={aboutData[4].href}
-                                    className="break-all px-3.75 text-center font-medium text-[18px] "
+                                    className="break-all px-3.75 text-left font-medium text-[18px] "
                                   >
                                     {aboutData[4].label}
                                   </a>

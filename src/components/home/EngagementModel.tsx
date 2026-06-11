@@ -8,6 +8,7 @@ import { EngagementModel } from "@/types";
 import Link from "next/link";
 import apiService from "@/lib/apiService";
 import TechBackground from "./TechBackground";
+import Section from "../Section";
 
 const themes = [
   {
@@ -68,7 +69,7 @@ export default function EngagementModels() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <section className="py-16 md:py-25 w-full relative overflow-hidden">
+    <Section className="overflow-hidden">
       {/* <video
         autoPlay
         loop
@@ -89,7 +90,7 @@ export default function EngagementModels() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
           className="flex flex-col justify-center mb-6 w-full relative "
         >
-          <h2 className="common-h2 text-center w-full  text-black font-bricolage">
+          <h2 className="common-h2 text-center w-full  text-black ">
 
             <span className="text-[#D68029]">Build Your Dream</span>{" "}
             <span className="text-white">Team With Our Engagement Model</span>
@@ -99,7 +100,7 @@ export default function EngagementModels() {
 
 
         <div
-          className={`grid gap-8 w-full mx-auto mb-10  relative justify-center ${models.length === 1
+          className={`grid gap-8 w-full mx-auto relative justify-center ${models.length === 1
             ? "grid-cols-1"
             : models.length === 2
               ? "grid-cols-1 md:grid-cols-2"
@@ -141,33 +142,33 @@ export default function EngagementModels() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 viewport={{ once: true, amount: 0.3 }}
                 className={` relative p-7 rounded-2xl justify-between text-white flex flex-col  overflow-hidden transition 
-                  bg-gradient-to-br ${theme.gradient}  border ${theme.border}
+                  bg-gradient-to-br ${theme.gradient}  border ${theme.border} 
                 `}
 
 
                 style={{
                   boxShadow:
                     index === 0
-                      ? "0 0 25px rgba(19,81,125,0.35)"
+                      ? "0 0 25px rgba(19,81,125,0.25)"
                       : index === 1
-                        ? "0 0 25px rgba(214,128,41,0.35)"
-                        : "0 0 25px rgba(16,185,129,0.35)",
+                        ? "0 0 25px rgba(214,128,41,0.25)"
+                        : "0 0 25px rgba(16,185,129,0.25)",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.boxShadow =
                     index === 0
-                      ? "0 0 30px rgba(19,81,125,0.6), 0 0 80px rgba(19,81,125,0.4)"
+                      ? "0 0 20px rgba(19,81,125,0.3), 0 0 80px rgba(19,81,125,0.1)"
                       : index === 1
-                        ? "0 0 30px rgba(214,128,41,0.6), 0 0 80px rgba(214,128,41,0.4)"
-                        : "0 0 30px rgba(16,185,129,0.6), 0 0 80px rgba(16,185,129,0.4)";
+                        ? "0 0 20px rgba(214,128,41,0.3), 0 0 80px rgba(214,128,41,0.1)"
+                        : "0 0 20px rgba(16,185,129,0.3), 0 0 80px rgba(16,185,129,0.1)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.boxShadow =
                     index === 0
-                      ? "0 0 25px rgba(19,81,125,0.35)"
+                      ? "0 0 25px rgba(19,81,125,0.25)"
                       : index === 1
-                        ? "0 0 25px rgba(214,128,41,0.35)"
-                        : "0 0 25px rgba(16,185,129,0.35)";
+                        ? "0 0 25px rgba(214,128,41,0.25)"
+                        : "0 0 25px rgba(16,185,129,0.25)";
                 }}
               >
                 <div>
@@ -182,7 +183,7 @@ export default function EngagementModels() {
                         className="object-contain filter brightness-0 invert"
                       />
                     </div>
-                    <h4 className="text-xl font-bold font-bricolage">{model.modelTitle}</h4>
+                    <h4 className="text-xl font-bold ">{model.modelTitle}</h4>
                   </div>
 
 
@@ -218,7 +219,7 @@ export default function EngagementModels() {
                               flex items-center gap-2
                               ${i === 0
                                 ? `font-bold text-xl ${theme.text} mb-1`
-                                : "text-xs text-white opacity-70 font-inter"
+                                : "text-xs text-white opacity-70 "
                               }
                             `}
                           >
@@ -256,7 +257,7 @@ export default function EngagementModels() {
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }
 

@@ -272,14 +272,14 @@ export default function GeneralContactForm() {
     };
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] font-inter ">
+        <div className="grid grid-cols-1 lg:grid-cols-[35%_65%]">
             <div className="bg-[#13213d] p-7 md:p-8 text-white flex flex-col  rounded-2xl relative overflow-hidden h-fit lg:mr-10 ">
                 <div className="flex items-center justify-between sm:gap-3 gap-2">
                     <div>
                         <h3 className="text-sm uppercase tracking-[0.18em]">
                             CONTACT DETAILS
                         </h3>
-                        <p className=" mt-2 text-xl font-bricolage text-white">
+                        <p className=" mt-2 text-xl  text-white">
                             Let's plan your next release.
                         </p>
                     </div>

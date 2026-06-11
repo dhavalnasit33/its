@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Motion from "@/components/motionbar";
 import Image from "next/image";
 import apiService from "@/lib/apiService";
+import Section from "../Section";
 
 interface ReviewLogo {
   _id?: string;
@@ -70,7 +71,7 @@ const Reviews: React.FC = () => {
   const displayLogos = [...logos, ...logos, ...logos, ...logos];
 
   return (
-    <section className="py-16 w-full bg-white relative text-center z-10 overflow-hidden">
+    <Section className=" bg-white  text-center overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: marqueeStyles }} />
       <div className="w-full relative">
         <div className="text-center pb-10 mb-2.5 w-full">
@@ -112,7 +113,7 @@ const Reviews: React.FC = () => {
           </div>
         )}
       </div>
-    </section>
+    </Section>
   );
 };
 

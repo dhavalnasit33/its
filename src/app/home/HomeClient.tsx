@@ -30,6 +30,7 @@ import ParallaxShape from "@/components/home/ParallaxShape";
 import CurveDivider from "@/components/home/CurveDivider";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import { useParams } from "next/navigation";
+import Section from "@/components/Section";
 
 const NextArrow = (props: any) => {
 	const { onClick } = props;
@@ -248,7 +249,7 @@ export default function HomeClient() {
 				/>
 				<div className="absolute inset-0 z-[1] pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_4px)]" />
 
-				<div className="w-full max-w-[95%] z-10 lg:max-w-[80%] relative mx-auto px-4  font-bricolage  ">
+				<div className="w-full max-w-[95%] z-10 lg:max-w-[80%] relative mx-auto px-4   ">
 					<motion.div
 						className="text-center mb-2 "
 						initial={{ y: -300, opacity: 0 }}
@@ -264,7 +265,7 @@ export default function HomeClient() {
 							<AutoTextSlider data={homePageData.heroSecton.technologySection} />
 						</div>
 
-						<div className="yellow-text max-w-[800px] mx-auto mb-[36px] text-center text-[15px] md:text-[15px] leading-[1.75] text-white"
+						<div className="yellow-text max-w-[800px] mx-auto mb-[36px] text-center fonts_16 text-white"
 							dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.description || "", }}
 						/>
 
@@ -316,7 +317,7 @@ export default function HomeClient() {
 				<div className="absolute bottom-0 left-0 right-0 h-[150px] bg-[linear-gradient(0deg,#030b1a_0,transparent)] pointer-events-none z-[10]" />
 			</section>
 
-			<section className="w-full relative py-10 md:py-20 overflow-hidden text-white z-10">
+			<Section className=" overflow-hidden text-white ">
 				<video
 					autoPlay
 					loop
@@ -332,7 +333,7 @@ export default function HomeClient() {
 				<div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-900/60 to-slate-800/75 pointer-events-none"></div>
 
 				{/* <div className="relative z-10 container mx-auto max-w-7xl px-4 flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch"> */}
-				<div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch  pb-10 md:pb-20
+				<div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-8 lg:gap-14 items-stretch  pb-10 md:pb-20
 				w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl">
 					<div className="lg:w-2/5 flex flex-col">
 						<div className="flex">
@@ -340,10 +341,10 @@ export default function HomeClient() {
 								{homePageData?.aisection?.subtitle}
 							</span>
 						</div>
-						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4 font-bricolage"
+						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4 "
 							dangerouslySetInnerHTML={{ __html: formattedTitle?.replace(/<\/?h[1-6][^>]*>/gi, "") }}
 						/>
-						<p className="text-sm sm:text-base text-slate-300 leading-relaxed sm:mb-6 mb-3"
+						<p className="fonts_16 text-slate-300  sm:mb-6 mb-3"
 							dangerouslySetInnerHTML={{
 								__html: homePageData?.aisection?.description || "",
 							}}
@@ -386,7 +387,7 @@ export default function HomeClient() {
 					
 					</div>
 				</div>
-			</section>
+			</Section>
 
 
 
@@ -439,7 +440,7 @@ export default function HomeClient() {
 							</div>
 				</motion.div>
 			</section> */}
-			<section className="w-full relative lg:pb-0 py-20 bg-white z-10 ">
+			<Section className=" lg:!pb-0  bg-white">
 				<CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
 				<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<div className="relative w-full flex justify-center lg:justify-center items-center">
@@ -501,7 +502,7 @@ export default function HomeClient() {
 								dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
 							/>
 						{/* </h2> */}
-						<p className="text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.description || "" }}/>
+						<p className="fonts_16 text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.description || "" }}/>
 
 							{/* {homePageData.aboutOurCompany.description}
 						</p> */}
@@ -531,13 +532,16 @@ export default function HomeClient() {
 							whileInView={{ opacity: 1, scale: 1 }}
 							viewport={{ once: true, amount: 0.2 }}
 							transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-							className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+							// className="bg-[#0d1b2a] relative  hidden xl:inline-flex items-center justify-center w-max overflow-hidden gap-2 text-white rounded-xl  transition-colors group"
+							className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
 						>
-							<span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-80 group-hover:h-80"></span>
+							{/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-80 group-hover:h-80"></span> */}
+							<span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
 							<a
 								href="/#contact-form-section"
-								className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
-								<span className="flex flex-row gap-3 uppercase justify-center">
+								// className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+								 className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
+								<span className="flex flex-row gap-3  justify-center">
 									Get a quote
 									<Image
 										src="/navbar/btn_icon.png"
@@ -553,7 +557,7 @@ export default function HomeClient() {
 					</div>
 					{/* <CurveDivider type="bottom" fillColor="#ffffff" className="absolute bottom-0 left-0 w-full transform translate-y-[99%] z-10" /> */}
 				</div>
-			</section>
+			</Section>
 
 			<ParallaxShape type="bottom" />
 
@@ -564,7 +568,7 @@ export default function HomeClient() {
 			<WhyChooseITS />
 			{/* <WebProcess /> */}
 			<Industries />
-			<section className="w-full py-12 bg-white z-10 relative">
+			<Section className=" bg-white ">
 				<div className="w-full mx-auto flex flex-col gap-12">
 					{/* <div className="mb-8 mx-auto flex flex-col items-center text-center px-4"> */}
 					<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto text-center flex flex-col items-center">
@@ -625,7 +629,7 @@ export default function HomeClient() {
 						{/* <Link href={`/${blogSlug}`} className="hover:underline">BLOG</Link> */}
 					</div>
 				</div>
-			</section>
+			</Section>
 			<Reviews />
 			<Testimonials />
 			<EngagementModel />

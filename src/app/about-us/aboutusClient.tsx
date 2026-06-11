@@ -17,6 +17,7 @@ import NotFoundPage from "@/components/NotFoundPage";
 import { Metadata } from "next";
 import { getSeoData } from "@/lib/seoService";
 import ParallaxShape from "@/components/home/ParallaxShape";
+import Section from "@/components/Section";
 interface AboutUsClientProps {
   title: string;
 }
@@ -72,7 +73,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
   return (
     <>
       {/* SECTION 1: ABOUT US HERO */}
-      <section className=" w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20 py-10 pb-20 gap-10 common_background_gradient bg-white z-10">
+      <Section className=" w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20 gap-10 common_background_gradient bg-white z-10">
         {/* Left Content */}
         <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-2xl text-gray-800">
           {/* Subtitle */}  
@@ -114,7 +115,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             />
           </motion.div>
           {/* Button (bottom → top) */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
@@ -130,6 +131,20 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 </span>
               </a>
             </div>
+          </motion.div> */}
+          <motion.div 
+           initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#D68029]   font-semibold text-white transition-colors group" >
+              <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
+              <a
+                  href="#contact-form-section"
+                  className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
+              <span className="flex flex-row gap-3 justify-center">
+                  Let&apos;s Discuss
+              </span>
+              </a>
           </motion.div>
         </div>
         {/* Right Image and Stats */}
@@ -285,7 +300,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                         </p>
                     </motion.div> */}
         </div>
-      </section>
+      </Section>
 
       {/* SECTION 2: WHO WE ARE */}
       {/* <section className="w-full mx-auto py-[50px] relative bg-white">
@@ -348,7 +363,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 </div>
             </section> */}
 
-      <section className="relative w-full py-12.5 bg-white z-10">
+      <Section className="bg-white ">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col relative lg:flex-row">
           <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
             <div className="flex flex-col  content-center items-center relative w-full">
@@ -358,7 +373,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="w-full text-center relative"
               >
-                <div className="relative w-full h-auto p-12 md:p-20 flex justify-center items-center">
+                <div className="relative w-full h-auto px-12 md:px-20 flex justify-center items-center">
                   {aboutUsData?.whoWeAre?.image ? (
                     <Image
                       src={aboutUsData.whoWeAre.image}
@@ -423,11 +438,11 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* SECTION 3: JUST KNOW ABOUT OUR GOALS */}
-      <section
-        className="w-full relative  py-16 z-10 bg-white
+      <Section
+        className=" bg-white
             [background:linear-gradient(90deg,#ff9f3_0%,rgba(255,249,243,0)_55.69%)]"
       >
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
@@ -544,11 +559,11 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* SECTION 4: UNIQUE FEATURES */}
       {/* SECTION 4: UNIQUE FEATURES */}
-      <section className="w-full  relative py-16 bg-white overflow-x-hidden z-10">
+      <Section className="bg-white overflow-x-hidden lg:!pb-0">
         <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
           <div className="flex flex-col lg:flex-row items-center w-full  justify-between gap-8">
             {/* Left Features - 3 items */}
@@ -683,14 +698,14 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             </motion.div>
           </div>
         </div>
-      </section>
+      </Section>
 
      {/* <section className="bg-[rgba(255,255,255,0.08)] relative z-10">
 				<span className="clipped-bottom bg-white h-[150px] w-full none lg:block rounded-tl-[100px] rounded-tr-[100px]" />
 			</section> */}
       <ParallaxShape type="bottom" />
       <TechnologyTabs />
-      <ParallaxShape type="top"  bg="bg-[#0d1b2a]"/>
+      {/* <ParallaxShape type="top"  bg="bg-[#0d1b2a]"/> */}
 
       {/* <section className="bg-[rgba(255,255,255,0.08)] relative -mb-1 ">
 				<span className="clipped-top bg-white h-[150px] w-full none lg:block rounded-tl-[100px] rounded-tr-[100px]" />

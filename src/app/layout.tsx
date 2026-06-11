@@ -14,17 +14,17 @@ const exo2 = Exo_2({
   variable: "--font-exo2",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-inter",
-});
+// const inter = Inter({
+//   subsets: ["latin"],
+//   weight: ["300", "400", "500", "600", "700"],
+//   variable: "--font-inter",
+// });
 
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-bricolage",
-});
+// const bricolage = Bricolage_Grotesque({
+//   subsets: ["latin"],
+//   weight: ["300", "400", "500", "600", "700"],
+//   variable: "--font-bricolage",
+// });
 
 import {
   getNavigationStructure,
@@ -53,11 +53,11 @@ export default async function RootLayout({
   const websiteSettings = await getWebsiteSettings();
 
   return (
-    // <html lang="en" className={exo2.className}>
-    <html
+    <html lang="en" className={exo2.className}>
+    {/* <html
       lang="en"
-      className={`${exo2.variable} ${inter.variable} ${bricolage.variable}`}
-    >
+      className={`${exo2.variable} ${inter.variable} `}
+    > */}
       <GoogleTagManager gtmId="GTM-5FSVQSMT" />
       <body>
         <SnackbarProvider>

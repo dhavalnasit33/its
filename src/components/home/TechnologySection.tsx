@@ -55,7 +55,7 @@ export default function TechnologyTabs() {
 
   return (
     <section className="w-full relative lg:min-h-[100vh] ">
-      <div className="lg:fixed lg:top-0 w-full py-16 relative overflow-hidden z-0 lg:min-h-[100vh]">
+      <div className="lg:fixed lg:top-0 w-full py-16 md:py-22 lg:py-25 relative overflow-hidden z-0 lg:min-h-[100vh] w-full relative lg:min-h-[100vh]">
         <TechBackground />
         {/* <div className="absolute inset-0 bg-[#0a1a33]/90"></div> */}
         <div className="w-full relative   ">
@@ -63,7 +63,7 @@ export default function TechnologyTabs() {
             {/* px-4 sm:px-8 md:px-20 */}
             {/* Section Header */}
             <div className="text-center w-full mb-12 lg:pt-20">
-              <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%] font-bricolage">
+              <h2 className="text-center w-full  text-black common-h2 ">
                 <span className="text-[#D68029]">Technologies</span>{" "}
                 <span className="text-white">That We Work With</span>
               </h2>
@@ -80,7 +80,7 @@ export default function TechnologyTabs() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab as keyof typeof technologies)}
-                  className={`px-6 py-2 cursor-pointer font-inter rounded-md font-medium text-[18px] transition-all duration-300 ${activeTab === tab
+                  className={`px-6 py-2 cursor-pointer rounded-md font-medium text-[18px] transition-all duration-300 ${activeTab === tab
                     ? "bg-[#ff7f000f] text-[#D68029] border border-[#D68029] shadow-md"
                     : "bg-white/[0.07] text-slate-200  border border-white/20 hover:bg-[#ff7f000f] hover:text-[#D68029] hover:border-[#D68029]"
                     }`}
@@ -106,7 +106,7 @@ export default function TechnologyTabs() {
                       height={60}
                     />
                   </div>
-                  <h4 className="text-base font-medium text-slate-200 font-inter">{tech.label}</h4>
+                  <h4 className="text-base font-medium text-slate-200 ">{tech.label}</h4>
                 </div>
               ))}
             </div>

@@ -9,6 +9,7 @@ import { Blog } from "@/types";
 import Motion from "@/components/motionbar";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
+import Section from "../Section";
 
 // This is the full, self-contained RelatedBlogs component
 export default function RelatedBlogs({
@@ -54,7 +55,7 @@ export default function RelatedBlogs({
   }
 
   return (
-    <section className=" py-16 relative bg-white z-10">
+    <Section className="bg-white">
       <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
         <div className="text-center  mb-2.5 w-full">
           <motion.div
@@ -70,18 +71,19 @@ export default function RelatedBlogs({
           </motion.div>
         </div>
         {/* 👇 FINAL BUTTON - Matches your images exactly 👇 */}
-        <div className="w-full mb-8 flex justify-end">
+        <div className="w-full mb-10 flex justify-end">
           <Link
             href={`/${blogSlug}`}
-            className="group relative p-4 md:p-5 inline-flex items-center justify-center font-semibold text-md md:text-xl text-[#12203d]"
+            // className="group relative p-4 md:p-5 inline-flex items-center justify-center font-semibold text-md md:text-xl text-[#12203d]"
+            className="group relative inline-flex items-center overflow-hidden rounded-full"
           >
             {/* Background circle that expands to a pill shape */}
             <span
-              // 👇 THIS LINE IS UPDATED: Circle now starts on the left
-              className="absolute top-1/2 left-3 -translate-y-1/2 -z-10 h-12 w-12 md:h-16 md:w-16 rounded-full bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"
+              // className="absolute top-1/2 left-3 -translate-y-1/2 -z-10 h-12 w-12 md:h-14 md:w-14 rounded-full bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"
+               className="absolute left-0 top-1/2 -translate-y-1/2 h-12 w-12 md:h-14 md:w-14 rounded-full bg-gray-200 transition-all duration-500 ease-in-out group-hover:w-full "
             ></span>
-            {/* Text content with padding to define the button size */}
-            <span className="px-6 md:px-8 py-3">
+            {/* <span className="px-6 md:px-8 py-3"> */}
+            <span className="relative z-10 flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 text-md md:text-xl font-semibold text-[#12203d]">
               View All Blogs <FaLongArrowAltRight className="inline-block" />
             </span>
           </Link>
@@ -164,6 +166,6 @@ export default function RelatedBlogs({
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

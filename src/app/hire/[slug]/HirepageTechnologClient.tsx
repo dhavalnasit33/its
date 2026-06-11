@@ -13,6 +13,7 @@ import TechnologyTabs from "@/components/home/TechnologySection";
 import RelatedBlogs from "@/components/blog/RelatedBlogs";
 import NotFoundPage from "@/components/NotFoundPage";
 import ParallaxShape from "@/components/home/ParallaxShape";
+import Section from "@/components/Section";
 
 function chunkArray<T>(array: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
@@ -207,9 +208,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
   return (
     <main className="w-full">
       {/* section 1 : hero section */}
-      <section
+      <Section
         id="hero1"
-        className="relative py-12.5 hire_hero_section common_background_gradient w-full z-10 bg-white"
+        className="  hire_hero_section common_background_gradient  "
       >
         <video
           autoPlay
@@ -256,7 +257,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                       }}
                     >
                       <div className="mb-2.5 w-full relative ">
-                        <h1 className="font-bold text-4xl md:text-[42px] lg:text-[46px]/[130%] tracking-[1.2px] relative  text-white font-bricolage">
+                        <h1 className="font-bold text-4xl md:text-[42px] lg:text-[46px]/[130%] tracking-[1.2px] relative  text-white ">
                           {pageData.title.toLowerCase().startsWith("hire") ? (
                             <>
                               <span className="text-[#d68029] uppercase">
@@ -385,8 +386,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
-                  className="w-full  shadow-[0_0_80px_10px_#0000001a] rounded-xl lg:max-w-[50%] flex relative mx-auto p-5 lg:p-6 min-h-px
-                   h-full border border-white/10 bg-[#ffffff08] backdrop-blur-md"
+                  className="w-full  shadow-[0_0_80px_10px_#0000001a] rounded-xl lg:max-w-[50%] flex  mx-auto p-5 lg:p-6 min-h-px
+                   h-full border border-white/10 bg-[#ffffff08] backdrop-blur-md sticky top-28 "
                 >
                   <HireFormSection />
                 </motion.div>
@@ -449,9 +450,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </section> */}
           </div>
         </div>
-      </section>
+      </Section>
       {/* section 2 : hire accodiong to your needs  */}
-      <section className="relative py-12.5 w-full z-20 bg-white">
+      <Section className=" z-20 bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex">
           <div className="flex relative min-h-px w-full">
             <div className="flex  content-start relative w-full flex-wrap">
@@ -688,7 +689,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
         </div>
-      </section>
+      </Section>
       {/* section3 : benifits  */}
       <section
         className="relative z-10 mt-[-6%] bg-[url('/hire/Rectangle-4181.png')] 
@@ -731,12 +732,15 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                  className="bg-[#12203d] relative -top-6 inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                  // className="bg-[#12203d] relative -top-6 inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                  className="relative -top-6 hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                 >
-                  <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
+                  {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
+                  <span className="absolute w-0 h-0 transition-all duration-900 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-56"></span>
                   <a
                     href="#contact-form-section"
-                    className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                    // className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                    className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors "
                   >
                     <span className="flex flex-row gap-3  items-center justify-center">
                       Schedule a Developer Interview
@@ -756,7 +760,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
       </section>
 
       {/* section 4 : hire daticated */}
-      <section className="relative w-full py-12.5 z-10 bg-white">
+      <Section className=" bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col-reverse relative lg:flex-row">
           <div className="flex w-full relative min-h-px max-w-full lg:max-w-[50%]">
             <div className="flex flex-col  content-center justify-center items-center relative w-full">
@@ -780,7 +784,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               >
                 {/* {pageData.hireDadiated.description && ( */}
                 <div
-                  className="prose max-w-none text-base font-normal text-[#6f6f6f] leading-8 tracking-wide
+                  className="prose max-w-none text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide
                                                 [&_p]:mb-4 [&_p:last-child]:mb-0  [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                   dangerouslySetInnerHTML={{
                     __html: pageData?.hireDadiated?.description || "",
@@ -814,9 +818,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
         </div>
-      </section>
+      </Section>
       {/* section5: Or experties */}
-      <section className="w-full relative py-12.5 bg-[#fff9f2] overflow-x-hidden z-10">
+      <Section className="bg-[#fff9f2] overflow-x-hidden">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
           <div className="flex w-full relative min-h-px">
             <div className="w-full flex flex-wrap content-start relative ">
@@ -875,12 +879,15 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                  className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                  // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                  className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                 >
-                  <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
+                  {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
+                  <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-80 group-hover:h-80"></span>
                   <a
                     href="#contact-form-section"
-                    className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                    // className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                    className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors "
                   >
                     <span className="flex flex-row gap-3 justify-center">
                       Talk to our{" "}
@@ -903,9 +910,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
         </div>
-      </section>
+      </Section>
       {/* section 6 tech stack */}
-      <section className="relative  py-12.5 mx-auto w-full z-20 common_background_gradient z-10 bg-white">
+      <Section className=" mx-auto common_background_gradient bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] flex flex-col relative mx-auto">
           {/* 🔽 Background gradient */}
 
@@ -1002,9 +1009,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             );
           })()}
         </div>
-      </section>
+      </Section>
       {/* section 7 : why hire from its ? */}
-      <section className="w-full  relative py-12.5 z-10 bg-white">
+      <Section className=" bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
           <div className="flex w-full relative min-h-px">
             <div className="w-full flex flex-wrap content-start relative ">
@@ -1065,10 +1072,10 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* section 8 : unloack power  */}
-      <section className="relative w-full py-12.5 z-10 bg-white">
+      <Section className=" bg-white">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative lg:flex-row">
           <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
             <div className="flex flex-col  content-center items-center relative w-full">
@@ -1128,9 +1135,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
         </div>
-      </section>
+      </Section>
       {/* section 9 : hire progress */}
-      <section className="relative w-full bg-[#f8f8f8] py-12.5 z-10">
+      <Section className="bg-[#f8f8f8] lg:!pb-0">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex flex-col">
           {/* Section Title */}
           <div className="text-center pb-10 mb-2.5 w-full">
@@ -1208,14 +1215,14 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </div>
           </div>
         </div>
-      </section>
+      </Section>
       {/* section : 10 Tecnology taht we work with  */}
       <ParallaxShape type="bottom" bg="bg-[#f8f8f8]" />
       <TechnologyTabs />
       <ParallaxShape type="top" />
 
       {/* section 11: faq question */}
-      <section className="relative w-full py-12.5 bg-white z-10">
+      <Section className=" bg-white lg:!pt-0">
         <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
           <div className="flex flex-wrap  w-full relative content-start">
             <div className="text-center pb-10 mb-2.5 w-full">
@@ -1248,12 +1255,14 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           ease: "easeOut",
                           delay: 0.1,
                         }}
-                        className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
-                      >
-                        <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
+                        // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                        className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+                        >
+                        {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
+                        <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
                         <a
                           href="/faqs"
-                          className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                          className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors "                       
                         >
                           <span className="flex flex-row gap-3  items-center justify-center">
                             Explore More
@@ -1281,13 +1290,13 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                               className="mb-5 w-full rounded-lg bg-white p-2.5 shadow-[0_0_9px_0px_rgba(0,0,0,0.25)] border border-[#d5d8dc] box-border  "
                             >
                               <div
-                                className="cursor-pointer py-4 px-5 box-border w-full  flex items-center justify-between font-bold"
+                                className="cursor-pointer py-4 px-5 box-border w-full  flex items-center justify-between font-semibold gap-2"
                                 onClick={() => toggleAccordion(index)}
                               >
-                                <span className="font-medium w-full text-[20px] text-black">
+                                <span className="font-semibold w-full text-[20px] text-black">
                                   {item.question}
                                 </span>
-                                <span className="w-[1.5em] inline-block">
+                                <span className="w-[1em] inline-block">
                                   {isOpen ? <FaMinus /> : <FaPlus />}
                                 </span>
                               </div>
@@ -1304,7 +1313,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                                     }}
                                     className="overflow-hidden"
                                   >
-                                    <div className="block px-5 py-4 text-[#7a7a7a] text-md">
+                                    <div className="block px-5 pb-4 text-[#7a7a7a] text-md">
                                       <div
                                         className="prose max-w-none font-normal text-[#6f6f6f] [&_a]:text-[#d68029] [&_a]:no-underline [&_a:hover]:underline"
                                         dangerouslySetInnerHTML={{
@@ -1325,7 +1334,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             </section>
           </div>
         </div>
-      </section>
+      </Section>
       <RelatedBlogs subCategory={matchCatgeory} />
     </main>
   );

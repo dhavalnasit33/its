@@ -587,7 +587,7 @@ export default function BlogDetailPageClient({
                 </h6>
                 <Link
                   href="/contact"
-                  className="inline-block text-base font-normal rounded-lg bg-[#12203d] text-white px-6 py-3 hover:bg-[#1a2f57] transition-colors"
+                  className="inline-block text-base font-normal rounded-[10px] bg-[#12203d] text-white px-6 py-3 hover:bg-[#1a2f57] transition-colors"
                 >
                   Get Started
                 </Link>

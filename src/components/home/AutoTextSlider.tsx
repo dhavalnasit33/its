@@ -36,7 +36,7 @@ export default function AutoTextSlider({ data }: AutoTextSliderProps) {
         delay: 0.05     
     }}
 
-    className=" font-bricolage font-bold slider_heading text-center"
+    className=" font-bold slider_heading text-center"
   >
     {data[currentIndex]?.title}
   </motion.span>
