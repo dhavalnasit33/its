@@ -12,6 +12,7 @@ const CACHED_ENDPOINTS: string[] = [
   "/expertise-industries",
   "/creative-work",
   "/read-our-review",
+  "/yoast-seo/public",
 ];
 
 function shouldCache(endpoint: string): boolean {
