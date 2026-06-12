@@ -5,6 +5,22 @@ const { protect } = require('../../middlewares/auth');
 
 const router = express.Router();
 
+// @desc    Get latest Yoast SEO entry for public site
+// @route   GET /api/yoast-seo/public
+// @access  Public
+router.get("/public", async (req, res) => {
+  try {
+    const seo = await YoastSEO.findOne().sort({ createdAt: -1 });
+    res.json({
+      success: true,
+      data: seo,
+    });
+  } catch (error) {
+    console.error("Get public Yoast SEO error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 // @desc    Get all Yoast SEO entries
 // @route   GET /api/yoast-seo
 // @access  Private (Admin only)
