@@ -2,28 +2,28 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import TechnologySection from "@/components/home/TechnologySection";
-import WebProcess from "@/components/home/WebProcess";
-import Industries from "@/components/home/Industries";
-import WorldProjects from "@/components/home/WorldProjects";
-import Reviews from "@/components/home/Reviews";
-import Testimonials from "@/components/home/Testimonials";
-import EngagementModel from "@/components/home/EngagementModel";
+// import TechnologySection from "@/components/home/TechnologySection";
+// import WebProcess from "@/components/home/WebProcess";
+// import Industries from "@/components/home/Industries";
+// import WorldProjects from "@/components/home/WorldProjects";
+// import Reviews from "@/components/home/Reviews";
+// import Testimonials from "@/components/home/Testimonials";
+// import EngagementModel from "@/components/home/EngagementModel";
 import Motion from "@/components/motionbar";
-import WhyChooseITS from "@/components/home/WhyChooseITS";
-import { getSeoData } from "@/lib/seoService";
-import { Metadata } from "next";
+// import WhyChooseITS from "@/components/home/WhyChooseITS";
+// import { getSeoData } from "@/lib/seoService";
+// import { Metadata } from "next";
 import { HomePageData, SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
 import NotFoundPage from "@/components/NotFoundPage";
 import Link from "next/link";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+// import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import RoundStatsCard from "@/components/home/RoundStatsCard";
-import ParticlesBg from "@/components/home/Particles";
+// import ParticlesBg from "@/components/home/Particles";
 import AutoTextSlider from "@/components/home/AutoTextSlider";
 import AiServices from "@/components/home/AiServices";
 import ParallaxShape from "@/components/home/ParallaxShape";
@@ -32,32 +32,43 @@ import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import { useParams } from "next/navigation";
 import Section from "@/components/Section";
 
-const NextArrow = (props: any) => {
-	const { onClick } = props;
-	return (
-		<button
-			onClick={onClick}
-			className="absolute top-1/2 -right-12 z-10 h-10 w-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white text-gray-700 shadow-[0_0_16px_#D6802940] transition-colors duration-300 flex items-center justify-center hover:bg-[#d68029] hover:text-white"
-		>
-			<FaChevronRight />
-		</button>
-	);
-};
+// const NextArrow = (props: any) => {
+// 	const { onClick } = props;
+// 	return (
+// 		<button
+// 			onClick={onClick}
+// 			className="absolute top-1/2 -right-12 z-10 h-10 w-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white text-gray-700 shadow-[0_0_16px_#D6802940] transition-colors duration-300 flex items-center justify-center hover:bg-[#d68029] hover:text-white"
+// 		>
+// 			<FaChevronRight />
+// 		</button>
+// 	);
+// };
 
-const PrevArrow = (props: any) => {
-	const { onClick } = props;
-	return (
-		<button
-			onClick={onClick}
-			className="absolute top-1/2 -left-12 z-10 h-10 w-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white text-gray-700 shadow-[0_0_16px_#D6802940] transition-colors duration-300 flex items-center justify-center hover:bg-[#d68029] hover:text-white"
-		>
-			<FaChevronLeft />
-		</button>
-	);
-};
+// const PrevArrow = (props: any) => {
+// 	const { onClick } = props;
+// 	return (
+// 		<button
+// 			onClick={onClick}
+// 			className="absolute top-1/2 -left-12 z-10 h-10 w-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white text-gray-700 shadow-[0_0_16px_#D6802940] transition-colors duration-300 flex items-center justify-center hover:bg-[#d68029] hover:text-white"
+// 		>
+// 			<FaChevronLeft />
+// 		</button>
+// 	);
+// };
+
+import dynamic from "next/dynamic";
+
+// Dynamically import heavy/below-the-fold components to improve PageSpeed and load performance
+const ParticlesBg = dynamic(() => import("@/components/home/Particles"), { ssr: false });
+const TechnologySection = dynamic(() => import("@/components/home/TechnologySection"), { ssr: false });
+const WhyChooseITS = dynamic(() => import("@/components/home/WhyChooseITS"), { ssr: false });
+const Industries = dynamic(() => import("@/components/home/Industries"), { ssr: false });
+const Reviews = dynamic(() => import("@/components/home/Reviews"), { ssr: false });
+const Testimonials = dynamic(() => import("@/components/home/Testimonials"), { ssr: false });
+const EngagementModel = dynamic(() => import("@/components/home/EngagementModel"), { ssr: false });
 
 
-export default function HomeClient() {
+export default function HomeClient({ initialData }: { initialData?: HomePageData }) {
 	const MotionImage = motion(Image);
 	const fadeInVariant = {
 		hidden: { opacity: 0, y: 40 },
@@ -68,12 +79,22 @@ export default function HomeClient() {
 		}),
 	};
 
-	const [gettingHomePageData, setGettingHomePageData] = useState(true);
-	const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
+	const [gettingHomePageData, setGettingHomePageData] = useState(!initialData);
+	const [homePageData, setHomePageData] = useState<HomePageData | null>(initialData || null);
 	const { portfolioSlug } = useWebsiteSettings();
 	const { slug } = useParams<{ slug: string }>();
 	const [notFound, setNotFound] = useState(false);
 	const [data, setData] = useState<HomePageData | null>(null);
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener("resize", checkMobile);
+		return () => window.removeEventListener("resize", checkMobile);
+	}, []);
 	   
 
 	useEffect(() => {
@@ -124,8 +145,10 @@ export default function HomeClient() {
 	}, []);
 
 	useEffect(() => {
-		fetchHomepageData();
-	}, [fetchHomepageData]);
+		if (!initialData) {
+			fetchHomepageData();
+		}
+	}, [fetchHomepageData, initialData]);
 
 	if (gettingHomePageData) {
 		return (
@@ -141,39 +164,39 @@ export default function HomeClient() {
 			</div>
 		);
 	}
-	const sliderSettings = {
-		speed: 500,
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		arrows: true,
-		nextArrow: <NextArrow />,
-		prevArrow: <PrevArrow />,
-		autoplaySpeed: 3000,
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 2,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 1,
+	// const sliderSettings = {
+	// 	speed: 500,
+	// 	slidesToShow: 3,
+	// 	slidesToScroll: 1,
+	// 	arrows: true,
+	// 	nextArrow: <NextArrow />,
+	// 	prevArrow: <PrevArrow />,
+	// 	autoplaySpeed: 3000,
+	// 	responsive: [
+	// 		{
+	// 			breakpoint: 1024,
+	// 			settings: {
+	// 				slidesToShow: 2,
+	// 			},
+	// 		},
+	// 		{
+	// 			breakpoint: 768,
+	// 			settings: {
+	// 				slidesToShow: 1,
 
-				},
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 1,
+	// 			},
+	// 		},
+	// 		{
+	// 			breakpoint: 480,
+	// 			settings: {
+	// 				slidesToShow: 1,
 
-					centerMode: true,
-					centerPadding: '20px',
-				},
-			},
-		],
-	};
+	// 				centerMode: true,
+	// 				centerPadding: '20px',
+	// 			},
+	// 		},
+	// 	],
+	// };
 
 
 	const glowColors = [
@@ -186,21 +209,21 @@ export default function HomeClient() {
 	];
 
 
-	const sliderStyles = `
-      .slick-slider {
-        width: 100%;
-      }
-      .slick-list {
-        margin: 0 -5px;
-      }
-      .slick-slide > div {
-        padding: 0 5px;
-      }
-      .slick-slide img {
-        max-width: 100%;
-        height: auto;
-      }
-    `;
+	// const sliderStyles = `
+    //   .slick-slider {
+    //     width: 100%;
+    //   }
+    //   .slick-list {
+    //     margin: 0 -5px;
+    //   }
+    //   .slick-slide > div {
+    //     padding: 0 5px;
+    //   }
+    //   .slick-slide img {
+    //     max-width: 100%;
+    //     height: auto;
+    //   }
+    // `;
 
 	const formattedTitle = homePageData?.aisection?.mainTitle?.replace(
 		/<strong>(.*?)<\/strong>/g,
@@ -210,12 +233,13 @@ export default function HomeClient() {
 
 	return (
 		<main className="relative isolate w-full bg-white text-gray-900">
-			<style dangerouslySetInnerHTML={{ __html: sliderStyles }} />
+			{/* <style dangerouslySetInnerHTML={{ __html: sliderStyles }} /> */}
 			<Image
 				src="/home/Group 37.png"
 				alt="Decorative blob"
 				width={200}
 				height={50}
+				priority
 				className="absolute left-0 top-50 hidden lg:flex -translate-x-10 h-118.75"
 			/>
 
@@ -223,8 +247,7 @@ export default function HomeClient() {
 				<div className="absolute inset-0 z-0 bg-gradient-to-r from-[#1a0f0f] via-[#0b0f1a] to-[#001a2e]" />
 
 				<div className="absolute inset-0 z-1">
-					<ParticlesBg
-					/>
+					{!isMobile && <ParticlesBg />}
 				</div>
 				<div
 					className="absolute inset-0 z-0"
@@ -323,8 +346,7 @@ export default function HomeClient() {
 					loop
 					muted
 					playsInline
-					preload="auto"
-					poster="/hire/hire_bg.mp4"
+					preload="metadata"
 					className="absolute top-0 left-0 w-full h-full object-cover"
 				>
 					<source src="/hire/hire_bg.mp4" type="video/mp4" />
@@ -637,23 +659,23 @@ export default function HomeClient() {
 	);
 }
 
-type FeatureCardProps = {
-	icon: React.ReactNode;
-	title: string;
-	desc: string;
-};
+// type FeatureCardProps = {
+// 	icon: React.ReactNode;
+// 	title: string;
+// 	desc: string;
+// };
 
-function FeatureCard({ icon, title, desc }: FeatureCardProps) {
-	return (
-		<div className="group relative rounded-2xl    border border-gray-200 bg-white p-6 m-4 md:m-0 shadow-sm transition-shadow hover:shadow-lg">
-			<div className="absolute right-3 top-3 flex gap-1 opacity-60">
-				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-			</div>
-			<div className="mb-3">{icon}</div>
-			<h3 className="text-base font-semibold mb-2">{title}</h3>
-			<p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
-		</div>
-	);
-}
+// function FeatureCard({ icon, title, desc }: FeatureCardProps) {
+// 	return (
+// 		<div className="group relative rounded-2xl    border border-gray-200 bg-white p-6 m-4 md:m-0 shadow-sm transition-shadow hover:shadow-lg">
+// 			<div className="absolute right-3 top-3 flex gap-1 opacity-60">
+// 				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
+// 				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
+// 				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
+// 			</div>
+// 			<div className="mb-3">{icon}</div>
+// 			<h3 className="text-base font-semibold mb-2">{title}</h3>
+// 			<p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
+// 		</div>
+// 	);
+// }

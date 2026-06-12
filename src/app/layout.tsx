@@ -93,13 +93,12 @@ export default async function RootLayout({
   const navStructure = await getNavigationStructure();
   const websiteSettings = await getWebsiteSettings();
   const yoastSeo = await getYoastSeoData();
-  const { scripts, noscripts } = parseGoogleTags(yoastSeo?.googletags || "");
-
-  console.log("website setting ", websiteSettings)
+  const { scripts, noscripts } = parseGoogleTags(yoastSeo?.googletags || ""); 
 
   return (
     <html lang="en" className={exo2.className}>
       <head>
+        <link rel="icon" href={websiteSettings?.favicon || "/favicon.ico"} />
         {/*  <GoogleTagManager gtmId="GTM-5FSVQSMT" /> */}
         {scripts.map((script, index) => (
           <script

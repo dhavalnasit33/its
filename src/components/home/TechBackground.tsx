@@ -16,8 +16,10 @@ export default function TechBackground() {
 
     let animationFrameId: number;
     let particles: any[] = [];
-    const numParticles = 90; // Optimized for a clean, flowing mesh
-    const connectionDistance = 150;
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const numParticles = isMobile ? 30 : 90; // 3x fewer particles on mobile
+    const connectionDistance = isMobile ? 90 : 150; // Shorter connection mesh on mobile
+    let isVisible = true;
 
     const resize = () => {
       const parent = containerRef.current;
@@ -60,6 +62,8 @@ export default function TechBackground() {
     window.addEventListener("mouseleave", handleMouseLeave);
 
     const animate = () => {
+      if (!isVisible) return;
+
       // Fully clear canvas every frame to prevent the "worm" trail effect
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -116,27 +120,46 @@ export default function TechBackground() {
           ctx.stroke();
         }
 
-        // Draw the particle
+        // Draw the soft outer glow (high-performance circle overlay instead of expensive ctx.shadowBlur)
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = `${p.color}${currentAlpha * 0.15})`;
+        ctx.fill();
+
+        // Draw the solid particle core
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `${p.color}${currentAlpha})`;
         ctx.fill();
-
-        // Add a soft glow to the particle
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = `${p.color}${currentAlpha})`;
       }
-
-      // Reset shadow for lines
-      ctx.shadowBlur = 0;
 
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    // Pause animation when the section is not in view to save CPU/GPU cycles
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const wasVisible = isVisible;
+        isVisible = entry.isIntersecting;
+        if (isVisible && !wasVisible) {
+          // Restart loop
+          animate();
+        }
+      },
+      { threshold: 0.01 }
+    );
+
+    const parent = containerRef.current;
+    if (parent) {
+      observer.observe(parent);
+    }
+
+    // Start loop
     animate();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      if (parent && observer) observer.unobserve(parent);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);

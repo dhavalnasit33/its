@@ -1,6 +1,8 @@
 import { Metadata } from "next";
-import { getSeoData } from "@/lib/seoService"; // Import the client component
+import { getSeoData } from "@/lib/seoService";
 import HomeClient from "./home/HomeClient";
+import apiService from "@/lib/apiService";
+import { HomePageData, SingleResponse } from "@/types";
 
 // This is the server-side function to generate metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -11,7 +13,6 @@ export async function generateMetadata(): Promise<Metadata> {
   // Fallback if the API fails
   if (!seoData) {
     return { title: "Home | Inspire Techno Solution" };
-    // return {title: "abc"}
   }
 
   // Return dynamic metadata from the API
@@ -28,7 +29,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // This is the server component for the page route
-export default function HomePage() {
-  // It simply renders the client component that holds the UI
-  return <HomeClient />;
+export default async function HomePage() {
+  let homepageData: HomePageData | null = null;
+  try {
+    const response = await apiService<SingleResponse<HomePageData>>("/homepage");
+    if (response.success) {
+      homepageData = response.data;
+    }
+  } catch (error) {
+    console.error("Error fetching homepage data on server:", error);
+  }
+
+  return <HomeClient initialData={homepageData || undefined} />;
 }
