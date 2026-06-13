@@ -10,6 +10,7 @@ import Motion from "@/components/motionbar";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import Section from "../Section";
+import Row from "../Row";
 
 // This is the full, self-contained RelatedBlogs component
 export default function RelatedBlogs({
@@ -56,7 +57,8 @@ export default function RelatedBlogs({
 
   return (
     <Section className="bg-white">
-      <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
+      {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"> */}
+      <Row >
         <div className="text-center  mb-2.5 w-full">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -165,7 +167,8 @@ export default function RelatedBlogs({
             </div>
           ))}
         </div>
-      </div>
+      </Row>
+      {/* </div> */}
     </Section>
   );
 }

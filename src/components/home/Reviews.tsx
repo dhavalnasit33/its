@@ -5,6 +5,7 @@ import Motion from "@/components/motionbar";
 import Image from "next/image";
 import apiService from "@/lib/apiService";
 import Section from "../Section";
+import Row from "../Row";
 
 interface ReviewLogo {
   _id?: string;
@@ -74,12 +75,13 @@ const Reviews: React.FC = () => {
     <Section className=" bg-white  text-center overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: marqueeStyles }} />
       <div className="w-full relative">
-        <div className="text-center pb-10 mb-2.5 w-full">
+        {/* <div className="text-center pb-10 mb-2.5 w-full"> */}
+        <Row className="text-center pb-10 mb-2.5">
           <h2 className="text-center w-full  text-black common-h2">
             Read Our Review on
           </h2>
           <Motion />
-        </div>
+        </Row>
 
         {loading ? (
           <div className="flex justify-center items-center py-6">

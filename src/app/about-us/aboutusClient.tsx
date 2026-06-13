@@ -18,6 +18,8 @@ import { Metadata } from "next";
 import { getSeoData } from "@/lib/seoService";
 import ParallaxShape from "@/components/home/ParallaxShape";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 interface AboutUsClientProps {
   title: string;
 }
@@ -132,11 +134,11 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
               </a>
             </div>
           </motion.div> */}
-          <motion.div 
+          {/* <motion.div 
            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-            className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#D68029]   font-semibold text-white transition-colors group" >
+            className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]   font-semibold text-white transition-colors group" >
               <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
               <a
                   href="#contact-form-section"
@@ -145,7 +147,18 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   Let&apos;s Discuss
               </span>
               </a>
-          </motion.div>
+          </motion.div> */}
+          <Button
+                motionProps={{
+                    initial: { opacity: 0, y: 40 },
+                    animate:{ opacity: 1, y: 0 },
+                    transition:{ duration: 0.8, ease: "easeOut", delay: 0.6 }
+                }}
+                bgColor="#D68029"
+                hoverColor="#0d1b2a"
+                text="Let&apos;s Discuss"
+                href="#contact-form-section"
+            />
         </div>
         {/* Right Image and Stats */}
         <div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-3xl">
@@ -364,7 +377,8 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             </section> */}
 
       <Section className="bg-white ">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col relative lg:flex-row">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col relative lg:flex-row"> */}
+        <Row className="flex gap-8 flex-col relative lg:flex-row">
           <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
             <div className="flex flex-col  content-center items-center relative w-full">
               <motion.div
@@ -437,7 +451,8 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
               </motion.div>
             </div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
 
       {/* SECTION 3: JUST KNOW ABOUT OUR GOALS */}
@@ -445,7 +460,8 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
         className=" bg-white
             [background:linear-gradient(90deg,#ff9f3_0%,rgba(255,249,243,0)_55.69%)]"
       >
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"> */}
+        <Row>
           <div className="flex flex-col items-center justify-center text-center w-full relative">
             <div className="flex flex-col items-center w-full justify-center text-center mb-10">
               <h2 className="common-h2 text-gray-900 relative">
@@ -558,13 +574,15 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
               </motion.div>
             </div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
 
       {/* SECTION 4: UNIQUE FEATURES */}
       {/* SECTION 4: UNIQUE FEATURES */}
       <Section className="bg-white overflow-x-hidden lg:!pb-0">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto"> */}
+        <Row>
           <div className="flex flex-col lg:flex-row items-center w-full  justify-between gap-8">
             {/* Left Features - 3 items */}
             <motion.div
@@ -697,7 +715,8 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
               </div>
             </motion.div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
 
      {/* <section className="bg-[rgba(255,255,255,0.08)] relative z-10">

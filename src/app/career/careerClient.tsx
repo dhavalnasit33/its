@@ -9,6 +9,8 @@ import NotFoundPage from "@/components/NotFoundPage";
 import { CareerContent, OpenningPosition, SingleResponse } from "@/types";
 import ApplyPositionModal from "@/components/career/ApplyPositionModal";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 
 export default function CareerClient() {
   const [careerData, setCareerData] = useState<CareerContent | null>(null);
@@ -115,7 +117,8 @@ export default function CareerClient() {
       {/* HERO */}
       {/* SECTION 1: Career HERO */}
       <Section className=" common_background_gradient">
-        <div className="w-full max-w-[90%] xl:max-w-[80%] mx-auto relative gap-8  flex flex-col-reverse lg:flex-row items-center justify-center ">
+        {/* <div className="w-full max-w-[90%] xl:max-w-[80%] mx-auto relative gap-8  flex flex-col-reverse lg:flex-row items-center justify-center "> */}
+         <Row className="gap-8  flex flex-col-reverse lg:flex-row items-center justify-center ">
           {/* Left Content */}
           <div className="w-full z-10 max-w-full xl:max-w-[65%] items-center content-center text-gray-800">
             {/* Heading (top → bottom) */}
@@ -159,11 +162,11 @@ export default function CareerClient() {
                 </a>
               </div>
             </motion.div> */}
-             <motion.div 
+             {/* <motion.div 
              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-              className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#D68029]   font-semibold text-white transition-colors group" >
+              className="relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]   font-semibold text-white transition-colors group" >
                 <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-70 group-hover:h-70"></span>
                 <a
                     href="#openning-position"
@@ -172,7 +175,18 @@ export default function CareerClient() {
                     Check Current Openings
                 </span>
                 </a>
-              </motion.div>
+              </motion.div> */}
+              <Button
+                  motionProps={{
+                      initial: { opacity: 0, y: 40 },
+                      animate:{ opacity: 1, y: 0 },
+                      transition:{ duration: 0.8, ease: "easeOut", delay: 0.6 }
+                  }}
+                  bgColor="#D68029"
+                  hoverColor="#0d1b2a"
+                  text="Check Current Openings"
+                  href="#openning-position"
+              />
           </div>
           {/* Right Image and Stats */}
           <motion.div
@@ -195,12 +209,14 @@ export default function CareerClient() {
               <div className="w-full h-7.5 bg-gray-200 rounded-lg animate-pulse"></div>
             )}
           </motion.div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
 
       {/* section 2 : openning position */}
       <Section className="scroll-mt-14" id="openning-position">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto"> */}
+        <Row>
           <div className="flex flex-wrap relative mx-auto">
             <motion.div
               className="flex flex-col items-center w-full justify-center text-center mb-10"
@@ -325,11 +341,12 @@ export default function CareerClient() {
                 ))}
             </motion.div>
           </div>
-        </div>
+        </Row>
       </Section>
       {/* section 3 : how career at its  */}
       <Section className="  bg-white">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] flex flex-col lg:flex-row items-center justify-center relative mx-auto gap-7.5 ">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] flex flex-col lg:flex-row items-center justify-center relative mx-auto gap-7.5 "> */}
+         <Row className="w-full max-w-[90%] lg:max-w-[80%] flex flex-col lg:flex-row items-center justify-center relative mx-auto gap-7.5 ">
           {/* Left Image (Animated Logo) */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -382,12 +399,14 @@ export default function CareerClient() {
               ))} */}
             </motion.div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
       {/* section 4 : why choose its  */}
       <Section className=" overflow-x-hidden">
+        <Row>
         <motion.div
-          className=" text-center mb-10 w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"
+          className=" text-center mb-10 "
           initial={{ opacity: 0, y: -100 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -402,10 +421,11 @@ export default function CareerClient() {
           )}
           <Motion />
         </motion.div>
-
+        </Row>
         {/* --- FIX: Added a key to this container to ensure animation re-runs after loading --- */}
+        <Row>
         <div
-          className="w-full max-w-[90%] lg:max-w-[80%] mt-7.5 flex justify-center mx-auto"
+          className="mt-7.5 flex justify-center"
           key={loading ? "skeleton" : "content"}
         >
           {loading ? (
@@ -474,6 +494,7 @@ export default function CareerClient() {
             </motion.div>
           )}
         </div>
+        </Row>
       </Section>
       <ApplyPositionModal
         open={isModalOpen}

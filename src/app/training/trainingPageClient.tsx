@@ -13,6 +13,8 @@ import { SingleResponse, TrainingMainPageData } from "@/types";
 import apiService from "@/lib/apiService";
 import NotFoundPage from "@/components/NotFoundPage";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 const CareerGrid = dynamic(() => import("@/components/CareerGrid"))
 
 const cards = [
@@ -78,8 +80,9 @@ export default function TrainingPageClient() {
             {/* <section className="relative  w-full  common_background_gradient">
                 <div className="relative max-w-384 mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
             <Section className=" common_background_gradient ">
-                <div className="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto">
-                <div className="xl:px-6  grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                {/* <div className="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+                <Row >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     {/* Content Left */}
                     <div className="order-2 md:order-1 z-10">
                         {/* First p tag - from top slow */}
@@ -139,7 +142,7 @@ export default function TrainingPageClient() {
                         {/* Animated Button - from bottom slower */}
 
 
-                        <motion.div
+                        {/* <motion.div
                             initial={{ opacity: 0, y: 70 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
@@ -147,12 +150,10 @@ export default function TrainingPageClient() {
                         >
                             <div 
                             // className="bg-[#D68029] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group">
-                             className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]  text-sm font-semibold text-white transition-colors group"
+                             className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]  text-sm font-semibold text-white transition-colors group"
 >
-                                {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56"></span> */}
                                                     <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
                                 <a href="#contact-form-section" className="  relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-color">
-                                {/* //  className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"> */}
                                     <span className="relative z-10 flex items-center gap-2">
                                         Get Started Today
                                         <Image
@@ -165,7 +166,21 @@ export default function TrainingPageClient() {
                                     </span>
                                 </a>
                             </div>
-                        </motion.div>
+                        </motion.div> */}
+                        <Button
+						  	motionProps={{
+								initial: { opacity: 0, y: 70 },
+								animate:{ opacity: 1, y: 0 },
+								transition: { duration: 0.8, ease: "easeOut", delay: 0.5 },
+							}}
+                            bgColor="#D68029"
+                            hoverColor="#0d1b2a"
+							text="Get Started Today"
+							href="/#contact-form-section"
+							icon="/navbar/btn_icon.png"
+                            className="mt-6"
+						/>
+
                         {/* Ellipse Image (below button) */}
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
@@ -213,12 +228,14 @@ export default function TrainingPageClient() {
                         </motion.div>
                     </div>
                 </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
 
             {/* CAREER TREE SECTION */}
             <Section className="max-w-full text-center">
-                <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto"> */}
+                <Row>
                     <motion.h2
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -228,7 +245,8 @@ export default function TrainingPageClient() {
                         Choose <span className="text-[#D68029]">Your Career</span>
                         <Motion />
                     </motion.h2>
-                </div>
+                </Row>
+                {/* </div> */}
                 <motion.div
                     initial={{ opacity: 0, scale: 1 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -251,8 +269,9 @@ export default function TrainingPageClient() {
             {/* <section className="py-20">
                 <div className="max-w-384 mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
             <Section >
-                <div className="relative w-full  max-w-[90%] lg:max-w-[80%] mx-auto ">
-                <div className="xl:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 items-center ">
+                {/* <div className="relative w-full  max-w-[90%] lg:max-w-[80%] mx-auto "> */}
+                <Row>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 items-center ">
                     {/* Image */}
                     <motion.div
                         className="relative flex justify-center"
@@ -379,7 +398,7 @@ export default function TrainingPageClient() {
                         </motion.div>
 
                         {/* Button */}
-                        <motion.a
+                        {/* <motion.a
                             href="#contact-form-section"
                             className="relative flex flex-row w-fit  cursor-pointer overflow-hidden mt-10 px-5 sm:px-6 py-2.5 sm:py-3 
                             bg-[#0b1833] text-white text-sm sm:text-base font-medium    rounded-lg shadow-md"
@@ -392,7 +411,6 @@ export default function TrainingPageClient() {
                             }}
                             transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         >
-                            {/* Background Animation Layer */}
                             <motion.span
                                 className="absolute inset-0 bg-linear-to-r from-[#D68025] to-[#D68029]"
                                 variants={{
@@ -403,14 +421,25 @@ export default function TrainingPageClient() {
                                 style={{ transformOrigin: "center" }}
                             />
 
-                            {/* Button Text */}
                             <span className="relative z-10 flex items-center gap-2">
                                 Learn More <FiArrowRight />
                             </span>
-                        </motion.a>
+                        </motion.a> */}
+                         <Button
+						  	motionProps={{
+								initial: { opacity: 0, y: 70 },
+								animate:{ opacity: 1, y: 0 },
+								transition: { type: "spring", stiffness: 300, damping: 20  },
+							}}
+							text="Learn More"
+							href="/#contact-form-section"
+							icon="/navbar/btn_icon.png"
+                            className="mt-10"
+						/>
                     </div>
                 </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
 
             {/* NEW SECTION: ITS Institute Facilities */}
@@ -433,7 +462,8 @@ export default function TrainingPageClient() {
                     className="absolute right-24 hidden lg:flex  top-28 transform -translate-y-1/2"
                 />
 
-                <div className=" text-center relative z-10 w-full max-w-[90%] lg:max-w-[80%] mx-auto">
+                {/* <div className=" text-center relative z-10 w-full max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+                <Row className=" text-center  z-10">
                     {/* Heading + Motion (from top) */}
                     <motion.div
                         initial={{ opacity: 0, y: -50 }}
@@ -481,12 +511,14 @@ export default function TrainingPageClient() {
                             </div>
                         ))}
                     </motion.div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
 
             {/* PICK THE RIGHT COURSE SECTION */}
             <Section className="bg-white ">
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"> */}
+                 <Row>
                     {/* Section Title + Motion */}
                     <div className="text-center mb-10 md:mb-12">
                         <motion.h2
@@ -682,7 +714,8 @@ export default function TrainingPageClient() {
                             </motion.div> */}
                         </div>
                     </div>
-                </div>
+                    </Row>
+                {/* </div> */}
             </Section>
         </div>
     );

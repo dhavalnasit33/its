@@ -10,6 +10,7 @@ import Image from "next/image";
 import Motion from "@/components/motionbar";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import RelatedBlogs from "@/components/blog/RelatedBlogs";
+import Row from "@/components/Row";
 
 interface BlogDetailPageProps {
   params: Promise<{
@@ -473,8 +474,8 @@ export default function BlogDetailPageClient({
   return (
     <>
       {/* Breadcrumb */}
-      <nav className=" w-full max-w-[95%] lg:max-w-[80%]  mx-auto text-base text-gray-500">
-        <div className="w-full px-4 md:px-8    py-4 flex flex-row">
+      <nav className=" w-full max-w-[90%] lg:max-w-[80%]  mx-auto text-base text-gray-500">
+        <div className="w-full lg:px-8    py-4 flex flex-row">
           <Link href="/" className="hover:text-[#d68029] mx-1">
             Home
           </Link>{" "}
@@ -492,7 +493,8 @@ export default function BlogDetailPageClient({
       {/* Blog Content */}
       <section className=" overflow-x-hidden  py-4">
       {/* <section className="w-full max-w-[95%] lg:max-w-[80%]  mx-auto overflow-x-hidden py-4 "> */}
-        <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 w-full  max-w-[90%] lg:max-w-[80%] mx-auto">
+        {/* <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 w-full  max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+         <Row className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 ">
           {/* Main Content */}
 
           <div className="w-full lg:max-w-5xl bg-white shadow-[0_0_16.9px_rgba(102,102,102,0.25)] p-8  ">
@@ -627,7 +629,8 @@ export default function BlogDetailPageClient({
               </div>
             </div>
           </motion.div>
-        </div>
+        </Row>
+        {/* </div> */}
       </section>
 
       {/* Related Blogs Section */}

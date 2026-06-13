@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import NotFoundPage from "@/components/NotFoundPage";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
 
 interface BlogCategory {
   _id: string;
@@ -308,7 +309,8 @@ export default function BlogPageClient() {
               className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 "
 
 >
-        <div className="flex w-full z-20  max-w-[90%] lg:max-w-[80%] relative mx-auto ">
+        {/* <div className="flex w-full z-20  max-w-[90%] lg:max-w-[80%] relative mx-auto "> */}
+        <Row className="flex z-20">
           <div className="flex mt-12.5 w-full">
             <div className="flex flex-wrap w-full mx-auto justify-center items-center">
               <motion.div
@@ -350,14 +352,16 @@ export default function BlogPageClient() {
               </motion.div>
             </div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
 
       {/* Blogs + Categories */}
       <Section
         ref={categoryRef}
       >
-        <div className="w-full  max-w-[90%] lg:max-w-[80%] mx-auto">
+        {/* <div className="w-full  max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+        <Row>
           {/* Categories */}
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {categories.map((category, index) => (
@@ -496,7 +500,8 @@ export default function BlogPageClient() {
               />
             </Stack>
           )}
-        </div>
+        {/* </div> */}
+        </Row>
       </Section>
     </>
   );

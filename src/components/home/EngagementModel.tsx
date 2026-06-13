@@ -9,6 +9,7 @@ import Link from "next/link";
 import apiService from "@/lib/apiService";
 import TechBackground from "./TechBackground";
 import Section from "../Section";
+import Row from "../Row";
 
 const themes = [
   {
@@ -82,7 +83,8 @@ export default function EngagementModels() {
       {/* <div className="absolute inset-0 bg-[#0a1a33]/90" /> */}
 
       {/* <div className="w-full max-w-7xl mx-auto relative flex flex-wrap p-2.5 z-10 "> */}
-      <div className="w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl mx-auto relative flex flex-wrap  z-10 ">
+      {/* <div className="w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl mx-auto relative flex flex-wrap  z-10 "> */}
+      <Row className="2xl:!max-w-7xl flex flex-wrap  z-10 ">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -255,8 +257,8 @@ export default function EngagementModels() {
             );
           })}
         </div>
-
-      </div>
+      </Row>
+      {/* </div> */}
     </Section>
   );
 }

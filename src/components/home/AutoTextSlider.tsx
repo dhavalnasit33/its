@@ -20,7 +20,7 @@ export default function AutoTextSlider({ data }: AutoTextSliderProps) {
     return () => clearInterval(interval);
   }, [data]);
   return (
-    <div className="relative flex items-center justify-center overflow-hidden h-[clamp(48px,6.6vw,96px)] w-full">
+    <div className="relative flex items-center justify-center overflow-hidden h-[clamp(48px,6.6vw,74px)] w-full">
       <AnimatePresence>
         <motion.span
           key={currentIndex}
@@ -32,7 +32,7 @@ export default function AutoTextSlider({ data }: AutoTextSliderProps) {
             ease: [0.16, 1, 0.3, 1], // easeOutExpo for ultra smooth movement
           }}
           style={{ transition: "none", animation: "none" }}
-          className="absolute left-0 right-0 mx-auto font-bricolage font-bold slider_heading text-center w-full"
+          className="absolute left-0 right-0 mx-auto font-bold slider_heading text-center w-full"
         >
           {data[currentIndex]?.title}
         </motion.span>

@@ -604,8 +604,8 @@ export default function GeneralContactForm() {
                         className={`w-full max-w-50 block ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                             }`}
                     >
-                        <div className="bg-[#D68029] relative inline-flex items-center justify-center w-full max-w-50 overflow-hidden text-white rounded-xl group">
-                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56"></span>
+                        <div className="bg-[#D68029] relative inline-flex items-center justify-center w-full max-w-50 overflow-hidden text-white rounded-xl group ">
+                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56 uration-750 delay-300 ease-in-out"></span>
                             <span className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-7.5 py-2.5 sm:px-8 sm:py-4 cursor-pointer font-semibold">
                                 {isSubmitting ? (
                                     <>

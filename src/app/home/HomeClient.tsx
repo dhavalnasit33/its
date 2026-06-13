@@ -31,6 +31,8 @@ import CurveDivider from "@/components/home/CurveDivider";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import { useParams } from "next/navigation";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 
 // const NextArrow = (props: any) => {
 // 	const { onClick } = props;
@@ -272,7 +274,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				/>
 				<div className="absolute inset-0 z-[1] pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_4px)]" />
 
-				<div className="w-full max-w-[95%] z-10 lg:max-w-[80%] relative mx-auto px-4   ">
+				{/* <div className="w-full max-w-[95%] z-10 lg:max-w-[80%] relative mx-auto px-4   "> */}
+				<Row className="z-10">
 					<motion.div
 						className="text-center mb-2 "
 						initial={{ y: -300, opacity: 0 }}
@@ -335,7 +338,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								</div>
 							))}
 					</motion.div>
-				</div>
+				</Row>
+				{/* </div> */}
 
 				<div className="absolute bottom-0 left-0 right-0 h-[150px] bg-[linear-gradient(0deg,#030b1a_0,transparent)] pointer-events-none z-[10]" />
 			</section>
@@ -354,9 +358,9 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				{/* <div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-950/80 to-slate-900/75 pointer-events-none"></div> */}
 				<div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-900/60 to-slate-800/75 pointer-events-none"></div>
 
-				{/* <div className="relative z-10 container mx-auto max-w-7xl px-4 flex flex-col lg:flex-row gap-5 lg:gap-14 items-stretch"> */}
-				<div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-8 lg:gap-14 items-stretch  pb-10 md:pb-20
-				w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl">
+				{/* <div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-8 lg:gap-14 items-stretch  pb-10 md:pb-20
+				w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl"> */}
+				<Row className="container  flex flex-col lg:flex-row gap-8 lg:gap-14 items-stretch  pb-10 md:pb-20 z-10 2xl:!max-w-7xl">
 					<div className="lg:w-2/5 flex flex-col">
 						<div className="flex">
 							<span className="inline-flex items-center rounded-full border border-white bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-200 mb-4">
@@ -408,7 +412,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						))}
 					
 					</div>
-				</div>
+					</Row>
+				{/* </div> */}
 			</Section>
 
 
@@ -464,7 +469,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 			</section> */}
 			<Section className=" lg:!pb-0  bg-white">
 				<CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
-				<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"> */}
+				<Row className=" grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<div className="relative w-full flex justify-center lg:justify-center items-center">
 						<Image
 							src={homePageData?.aboutOurCompany?.image}
@@ -549,15 +555,14 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 						</div>
 
-						<motion.div
+						{/* <motion.div
 							initial={{ opacity: 0, scale: 0.8 }}
 							whileInView={{ opacity: 1, scale: 1 }}
 							viewport={{ once: true, amount: 0.2 }}
 							transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
 							// className="bg-[#0d1b2a] relative  hidden xl:inline-flex items-center justify-center w-max overflow-hidden gap-2 text-white rounded-xl  transition-colors group"
-							className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+							className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
 						>
-							{/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-80 group-hover:h-80"></span> */}
 							<span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
 							<a
 								href="/#contact-form-section"
@@ -574,11 +579,23 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 									/>
 								</span>
 							</a>
-						</motion.div>
+						</motion.div> */}
+						<Button
+							motionProps={{
+								initial: { opacity: 0, scale: 0.8 },
+								whileInView: { opacity: 1, scale: 1 },
+								viewport: { once: true, amount: 0.2},
+								transition: { duration: 0.5, ease: "easeOut", delay: 0.1 },
+							}}
+							text="Get a Quote"
+							href="/#contact-form-section"
+							icon="/navbar/btn_icon.png"
+						/>
 
 					</div>
 					{/* <CurveDivider type="bottom" fillColor="#ffffff" className="absolute bottom-0 left-0 w-full transform translate-y-[99%] z-10" /> */}
-				</div>
+					</Row>
+				{/* </div> */}
 			</Section>
 
 			<ParallaxShape type="bottom" />
@@ -592,8 +609,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 			<Industries />
 			<Section className=" bg-white ">
 				<div className="w-full mx-auto flex flex-col gap-12">
-					{/* <div className="mb-8 mx-auto flex flex-col items-center text-center px-4"> */}
-					<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto text-center flex flex-col items-center">
+					{/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto text-center flex flex-col items-center"> */}
+					<Row className=" text-center flex flex-col items-center">
 						{/* <h2 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]"> */}
 							<h2
 								className="common-h2 text-center w-full  text-black rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
@@ -608,9 +625,10 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						/>
 							{/* {homePageData.overseasWebAgencies.desctiption}
 						</p> */}
-					</div>
-					{/* <div className="flex flex-col lg:flex-row items-center lg:items-center justify-center-safe w-full  gap-10"> */}
-					<div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto flex flex-col lg:flex-row items-center lg:items-center justify-center-safe gap-10">
+					</Row>
+					{/* </div> */}
+					{/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto flex flex-col lg:flex-row items-center lg:items-center justify-center-safe gap-10"> */}
+					<Row className="flex flex-col lg:flex-row items-center lg:items-center justify-center-safe gap-10">
 						<div className="w-full lg:w-4/6">
 							<Image
 								src={homePageData?.overseasWebAgencies?.image}
@@ -630,9 +648,11 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								</h3>
 							</div>
 						</div>
-					</div>
+						</Row>
+					{/* </div> */}
 					{/* Button */}
-					<div className="flex justify-center w-full max-w-[90%] lg:max-w-[80%] relative mx-auto ">
+					{/* <div className="flex justify-center w-full max-w-[90%] lg:max-w-[80%] relative mx-auto "> */}
+					<Row className="flex justify-center">
 						<Link href={`/${portfolioSlug}`} >
 							<button className="group cursor-pointer relative inline-flex items-center justify-center gap-2 px-6 py-2 rounded-full font-semibold text-[#0A1128] text-sm sm:text-base overflow-hidden">
 								<span className="absolute inset-0 flex">
@@ -649,7 +669,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						</Link>
 
 						{/* <Link href={`/${blogSlug}`} className="hover:underline">BLOG</Link> */}
-					</div>
+					</Row>
+					{/* </div> */}
 				</div>
 			</Section>
 			<Reviews />

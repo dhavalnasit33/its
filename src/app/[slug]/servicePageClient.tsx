@@ -24,6 +24,8 @@ import Link from "next/link";
 import NotFoundPage from "@/components/NotFoundPage";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 
 // ✅ FIX 1: Lazy load ALL below-fold heavy components
 const EngagementModels = dynamic(
@@ -168,7 +170,8 @@ export default function ServicePageClient() {
             </div>
 
             {/* Content */}
-            <div className="relative z-10  w-full max-w-[90%] lg:max-w-[80%] mx-auto text-center">
+            {/* <div className="relative z-10  w-full max-w-[90%] lg:max-w-[80%] mx-auto text-center"> */}
+            <Row className="z-10 text-center">
               <motion.h1
                 className="text-[2.3rem] md:text-[4rem] xl:text-[5rem] font-semibold mb-6 text-black break-words"
                 initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
@@ -204,7 +207,8 @@ export default function ServicePageClient() {
                 </div>
               </motion.div>
             {/* </div> */}
-          </div>
+            </Row>
+          {/* </div> */}
 
           {/* CONTACT BAR */}
           {/* <div className="relative w-full z-20 bg-[#0b1833] text-white px-4 sm:px-6 md:px-12 lg:px-36 py-3 text-sm"> */}
@@ -267,7 +271,8 @@ export default function ServicePageClient() {
           {/* INTRO */}
           <Section>
           {data.subMainTitle && (
-              <div className="text-center  w-full max-w-[90%] lg:max-w-[80%] mx-auto relative ">
+              // <div className="text-center  w-full max-w-[90%] lg:max-w-[80%] mx-auto relative ">
+              <Row className="text-center">
                 <motion.h2
                   className="common-h2 leading-snug "
                   initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
@@ -293,14 +298,15 @@ export default function ServicePageClient() {
                 />
                 {/* {data.subMainTitleDescription} */}
                 {/* </motion.p> */}
-            </div>
+              </Row>
+            //  </div> 
           )}
           </Section>
 
       {/* =============== SECTION 2: SERVICES + WHY CHOOSE US =============== */}
       <section className="relative w-full">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex flex-wrap">
-
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex flex-wrap"> */}
+         <Row className="flex flex-wrap">
           {/* SERVICES GRID */}
           <motion.div
             className="pb-16 grid grid-cols-1 sm:grid-cols-1  md:grid-cols-3"
@@ -409,9 +415,11 @@ export default function ServicePageClient() {
                       />
                       <span className="relative z-10">Talk to Our Experts</span>
                     </motion.button> */}
-                    <motion.a
+                    {/* <motion.a
                       href="#contact-form-section"
-                      className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 mt-6 bg-[#0b1833] text-white text-sm sm:text-base font-medium rounded-lg shadow-md"
+                      // className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 mt-6 bg-[#0b1833] text-white text-sm sm:text-base font-medium rounded-lg shadow-md"
+                      className="relative inline-flex items-center justify-center mt-6 overflow-hidden gap-2 rounded-lg bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+
                       whileHover="hover"
                       initial="rest"
                       animate="rest"
@@ -421,7 +429,6 @@ export default function ServicePageClient() {
                       // }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
-                      {/* Background Animation Layer */}
                       <motion.span
                         className="absolute inset-0 rounded-lg bg-linear-to-r from-[#D68025] to-[#D68029]"
                         variants={{
@@ -431,11 +438,24 @@ export default function ServicePageClient() {
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                         style={{ transformOrigin: "center" }}
                       />
+                      <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
+<div  className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
 
-                      {/* Button Text */}
-                      <span className="relative z-10">Talk to Our Experts</span>
-                    </motion.a>
+                      <span className="flex flex-row gap-3  justify-center">Talk to Our Experts</span>
+                      </div>
+                    </motion.a> */}
 
+                    <Button
+                      motionProps={{
+                      initial: { opacity: 0, scale: 0.8 },
+                      whileInView: { opacity: 1, scale: 1 },
+                      viewport: { once: true, amount: 0.2},
+                      transition: { duration: 0.4, ease: "easeInOut" },
+                    }}
+                    text="Talk to Our Experts"
+                    href="/#contact-form-section"
+                    className="mt-6"
+                  />
                   </motion.div>
                 )}
               </>
@@ -456,15 +476,16 @@ export default function ServicePageClient() {
               )}
               </motion.div>
 
-         
-        </div>
+         </Row>
+        {/* </div> */}
       </section>
        {/* WHY CHOOSE US */}
        <Section>
           {data.WhyWorkWithThis && (
             // <div className="py-20 w-full">
             <>
-              <div className="text-center mb-12">
+              {/* <div className="text-center mb-12"> */}
+              <Row className="text-center mb-12">
                 <motion.div
                   initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
@@ -495,9 +516,11 @@ export default function ServicePageClient() {
                   //   {data.WhyWorkWithThis.description}
                   // </motion.p>
                 )}
-              </div>
+                </Row>
+              {/* </div> */}
 
-              <div className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto">
+              {/* <div className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+              <Row>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-8 order-2 lg:order-1">
                   {data.WhyWorkWithThis.content?.map((item, idx) => (
@@ -538,14 +561,16 @@ export default function ServicePageClient() {
                   </motion.div>
                 )}
               </div>
-              </div>
+              </Row>
+              {/* </div> */}
             </>
           )}
         </Section>
 
       {/* =============== SECTION 3: TOOLS & TECHNOLOGY =============== */}
       <Section >
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"> */}
+        <Row>
           <div className="absolute inset-0 z-0 common_background_gradient"></div>
 
           <div className="relative w-full z-10">
@@ -648,13 +673,15 @@ export default function ServicePageClient() {
               );
             })()}
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
 
       {/* =============== SECTION 4: WHY COMPANY PREFERS =============== */}
       {data.whyCompanyPerfersThis && (
         <Section >
-          <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative">
+          {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative"> */}
+          <Row>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left */}
               <div>
@@ -692,9 +719,9 @@ export default function ServicePageClient() {
                   }}
                 />
 
-                <motion.button
+                {/* <motion.button
                   // className="relative cursor-pointer overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 bg-[#0b1833] text-white text-sm sm:text-base font-medium rounded-lg shadow-md"
-                  										className="relative hidden xl:inline-flex items-center justify-center overflow-hidden rounded-xl bg-[#0d1b2a] group "
+                  										className="relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-[#0d1b2a] group "
 
                   // whileHover={noAnim ? undefined : "hover"}
                   // initial="rest"
@@ -708,7 +735,7 @@ export default function ServicePageClient() {
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ duration: 0.9, ease: "easeOut", delay: 0.9 }}
                 >
-                  {/* <motion.span
+                  <motion.span
                     className="absolute inset-0 bg-gradient-to-r from-[#D68025] to-[#D68029]"
                     variants={{
                       rest: { scaleX: 0, originX: 0.5 },
@@ -716,7 +743,7 @@ export default function ServicePageClient() {
                     }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                     style={{ transformOrigin: "center" }}
-                  /> */}
+                  />
                   <motion.span
 										className="absolute left-1/2 top-1/2 w-0 h-0
 													-translate-x-1/2 -translate-y-1/2
@@ -730,7 +757,16 @@ export default function ServicePageClient() {
                       Let&apos;s Discuss Your Project Idea
                     </span>
                   </a>
-                </motion.button>
+                </motion.button> */}
+                   <Button
+                      motionProps={{
+                      initial: { opacity: 0, y: 40 },
+                      animate:{ opacity: 1, y: 0 },
+                      transition: { duration: 0.9, ease: "easeOut", delay: 0.9 },
+                    }}
+                    text="Let&apos;s Discuss Your Project Idea"
+                    href="/#contact-form-section"
+                  />
               </div>
 
               {/* Right: Cards */}
@@ -768,7 +804,8 @@ export default function ServicePageClient() {
                 )}
               </motion.div>
             </div>
-          </div>
+          </Row>
+          {/* </div> */}
         </Section>
       )}
 
@@ -778,13 +815,14 @@ export default function ServicePageClient() {
       <Testimonials />
 
       {/* =============== SECTION 5: FAQ =============== */}
-      <section className="relative w-full py-12">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto">
+      <Section>
+        {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+        <Row >
           {/* FAQ Header */}
           <div className="text-center pb-10 mb-2.5 w-full">
-            <h1 className="text-center w-full font-bold text-black tracking-tight text-2xl md:text-3xl lg:text-[40px]/[120%]">
+            <h2 className="text-center w-full  text-black common-h2">
               Frequently Asked Questions (FAQ)
-            </h1>
+            </h2>
             <Motion />
           </div>
 
@@ -804,8 +842,8 @@ export default function ServicePageClient() {
                       We are here to Answer you...
                     </h2>
                   </div>
-                  <div className="w-full flex justify-start">
-                    <motion.div
+                  {/* <div className="w-full flex justify-start"> */}
+                    {/* <motion.div
                       initial={{ opacity: 0, scale: noAnim ? 1 : 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true, amount: 0.2 }}
@@ -815,9 +853,8 @@ export default function ServicePageClient() {
                         delay: noAnim ? 0 : 0.1,
                       }}
                       // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
-                      className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+                      className="relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                     >
-                      {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
                       <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
                       <a
                         href="/faqs"
@@ -835,9 +872,20 @@ export default function ServicePageClient() {
                           />
                         </span>
                       </a>
-                    </motion.div>
+                    </motion.div> */}
+                     <Button
+                      motionProps={{
+                     initial:{ opacity: 0, scale: noAnim ? 1 : 0.8 },
+                      whileInView:{ opacity: 1, scale: 1 },
+                      viewport:{ once: true, amount: 0.2 },
+                      transition: { duration: noAnim ? 0.2 : 0.5, ease: "easeOut", delay: noAnim ? 0 : 0.1,},
+                    }}
+                    text="Explore More"
+                    href="/faqs"
+                    icon="/navbar/btn_icon.png"
+                  />
                   </div>
-                </div>
+                {/* </div> */}
               </div>
 
               {/* FAQ List */}
@@ -856,7 +904,7 @@ export default function ServicePageClient() {
                               className="cursor-pointer py-4 px-5 w-full flex items-center justify-between font-semibold gap-2"
                               onClick={() => toggleAccordion(index)}
                             >
-                              <span className="font-medium text-[20px] text-black">
+                              <span className="font-semibold text-[20px] text-black">
                                 {item.question}
                               </span>
                               <span className="w-[1em] inline-block shrink-0">
@@ -895,8 +943,9 @@ export default function ServicePageClient() {
 
             </div>
           </div>
-        </div>
-      </section>
+        </Row>
+        {/* </div> */}
+      </Section>
     </main>
   );
 }

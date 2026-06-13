@@ -1304,6 +1304,8 @@ import { HireMainPageData, SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
 import NotFoundPage from "@/components/NotFoundPage";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 
 export default function HireDevelopersPageClient() {
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -1433,7 +1435,8 @@ export default function HireDevelopersPageClient() {
                 <div className="absolute inset-0 bg-[#0a1a33]/90"></div>
 
 
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex  ">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex  "> */}
+                <Row className="flex  ">
                     <div className="flex flex-col lg:flex-row content-start w-full gap-10 mx-auto relative ">
                         <div className="w-full max-w-full lg:max-w-[60%] flex relative min-h-px">
                             <div className="flex items-center content-center  flex-wrap relative w-full ">
@@ -1448,7 +1451,7 @@ export default function HireDevelopersPageClient() {
                                     }}
                                 >
                                     {/* <div className="mb-2.5 w-full relative "> */}
-                                        <div className="mb-2.5 w-full relative  relative  text-black ">
+                                        <div className="mb-2.5 w-full relative   text-black ">
                                             {hireMainPageData.mainTitle ? (
                                                 <h1
                                                     className="font-bold text-4xl md:text-[42px] lg:text-[46px]/[130%] tracking-[1.2px] relative  text-white "
@@ -1500,9 +1503,9 @@ export default function HireDevelopersPageClient() {
                                         }}
                                         className="bg-[#D68029] relative w-auto inline-flex items-center justify-center  overflow-hidden text-white hover:text-[#0d1b2a] transition-all duration-700 ease-in-out group"
                                     >
-                                        <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#ffffff] rounded  group-hover:w-full group-hover:h-full"></span>
+                                        <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#ffffff]   group-hover:w-full group-hover:h-full"></span>
                                         <a href="#hero"
-                                            className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-2 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+                                            className="relative tracking-tight text-sm sm:text-base  px-6 py-2 sm:px-8 sm:py-4 cursor-pointer font-semibold">
                                             <span className="flex flex-row gap-3 items-center justify-center">
                                                 Get Started Today!
                                                 <div className="group">
@@ -1532,13 +1535,15 @@ export default function HireDevelopersPageClient() {
                             <HireFormSection />
                         </motion.div>
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
 
 
             {/* Hire Dedicated Web and Mobile App Development Team */}
             <Section className=" not-first:  ">
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative"> */}
+                <Row className="flex">
                     <div className="flex w-full relative min-h-px">
                         <div className="w-full flex flex-wrap content-start relative ">
                             <div className="text-center pb-10 mb-2.5 w-full">
@@ -1647,11 +1652,13 @@ export default function HireDevelopersPageClient() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
             {/* section 3 Hire Dedicated Web and Mobile App Developers */}
             <Section className="not-first:">
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative"> */}
+                <Row className="flex">
                     <div className="w-full flex flex-wrap content-start relative">
                         <div className="text-center pb-10 mb-2.5 w-full">
                             <motion.div
@@ -1690,11 +1697,13 @@ export default function HireDevelopersPageClient() {
                             hireData={hireMainPageData.dedicatedDeveloperSection.services}
                         />
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
             {/* section 4 : why hire developer for your  fro project  */}
             <Section >
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative"> */}
+                <Row className="flex">
                     <div className="flex w-full relative min-h-px">
                         <div className="w-full flex flex-wrap  content-start relative ">
                             <div className="text-center pb-10 mb-2.5 w-full">
@@ -1763,11 +1772,13 @@ export default function HireDevelopersPageClient() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
             {/* section 5 :   Why choose ITS for dedicated resources  */}
             <Section className=" overflow-x-hidden">
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative"> */}
+             <Row className="flex">
                     <div className="flex w-full relative min-h-px">
                         <div className="w-full flex flex-wrap  content-start relative ">
                             <div className="text-center pb-10 mb-2.5 w-full">
@@ -1946,11 +1957,14 @@ export default function HireDevelopersPageClient() {
                                             duration: 1,
                                             delay: 0.6,
                                         }}
-                                        className="bg-[#D68029] relative w-auto inline-flex items-center justify-center w-max overflow-hidden text-white  group"
+                                        // className="bg-[#D68029] relative w-auto inline-flex items-center justify-center w-max overflow-hidden text-white  group"
+                                        className="relative  inline-flex items-center justify-center overflow-hidden gap-2 bg-[#D68029]  text-sm font-semibold text-white transition-colors group"
                                     >
-                                        <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#12203d]  group-hover:w-full group-hover:h-full"></span>
+                                        <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-full group-hover:h-56"></span>
+
                                         <a href="#hero"
-                                            className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-2 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+                                            // className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-2 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                                             className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-2 sm:px-8 sm:py-4 text-white transition-colors ">
                                             <span className="flex flex-row gap-3 items-center justify-center">
                                                 Get Started Today!
                                                 <Image
@@ -1967,7 +1981,8 @@ export default function HireDevelopersPageClient() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
 
             {/* section 6 build my dream team & scale development team */}
@@ -2040,8 +2055,7 @@ export default function HireDevelopersPageClient() {
                                         className="   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
                                         dangerouslySetInnerHTML={{
                                             __html:
-                                                hireMainPageData?.hireDedicatedResourcesAndTalents[0]?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "")
- || "",
+                                                hireMainPageData?.hireDedicatedResourcesAndTalents[0]?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
                                         }}
                                     />
                             </div>
@@ -2062,13 +2076,15 @@ export default function HireDevelopersPageClient() {
                                     )}
 
                             </p>
-
-
-                            <a href="#contact-form-section">
+                            <a href="#contact-form-section" className="mt-2 relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-full bg-[#ffffff]  text-sm font-semibold text-white transition-colors group"
+>                               <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#12203d] rounded group-hover:w-full group-hover:h-56"></span>
                                 <button
-                                    className="bg-white text-[#d68029] font-bold py-3 px-8 rounded-full hover:text-white hover:bg-[#12203d] transition-colors duration-300 cursor-pointer"
+                                    // className="bg-white text-[#d68029] font-bold py-3 px-8 rounded-full hover:text-white hover:bg-[#12203d] transition-colors duration-300 cursor-pointer"
+                                 className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold py-3 px-8 text-[#d68029] hover:text-[#ffffff] transition-colors duration-750 delay-300 ease-in-out"
                                 >
+                                <span className="flex flex-row gap-3  justify-center">
                                     {hireMainPageData.hireDedicatedResourcesAndTalents[0].buttonTitle}
+                                </span>
                                 </button>
                             </a>
 
@@ -2148,16 +2164,26 @@ export default function HireDevelopersPageClient() {
                                             </React.Fragment>
                                         )
                                     )}
-                            </p>.
-                            <a href="#contact-form-section">
+                            </p>
+                            {/* <a href="#contact-form-section">
                                 <button
                                     className="bg-white text-[#12203d] font-bold py-3 px-8 rounded-full hover:text-white hover:bg-[#d68029] transition-colors duration-300 cursor-pointer"
                                 >
                                     {hireMainPageData.hireDedicatedResourcesAndTalents[1].buttonTitle}
 
                                 </button>
+                            </a> */}
+                             <a href="#contact-form-section" className="mt-2 relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-full bg-[#ffffff]  text-sm font-semibold text-white transition-colors group">
+                                <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#d68029] rounded group-hover:w-full group-hover:h-56"></span>
+                                <button
+                                    // className="bg-white text-[#d68029] font-bold py-3 px-8 rounded-full hover:text-white hover:bg-[#12203d] transition-colors duration-300 cursor-pointer"
+                                    className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold py-3 px-8 text-[#0d1b2a] hover:text-[#ffffff] transition-colors duration-750 delay-300 ease-in-out "
+                                >
+                                <span className="flex flex-row gap-3  justify-center">
+                                    {hireMainPageData.hireDedicatedResourcesAndTalents[1].buttonTitle}
+                                </span>
+                                </button>
                             </a>
-
                         </motion.div>
                     </motion.div>
                 </div>
@@ -2165,7 +2191,8 @@ export default function HireDevelopersPageClient() {
 
             {/* hire top 1% wordpress devlopers */}
             <Section >
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex"> */}
+                <Row className="flex">
                     <div className="flex relative min-h-px w-full">
                         <div className="flex  content-start relative w-full flex-wrap">
                             <div className="text-center pb-2.5  mb-2.5 w-full">
@@ -2400,7 +2427,8 @@ export default function HireDevelopersPageClient() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
             {/* section 8 : benifits  */}
             <section
@@ -2408,9 +2436,10 @@ export default function HireDevelopersPageClient() {
                    bg-center bg-size-[100%_auto] 
                    px-0 pt-40.5 pb-16 
                    transition-[background,border,border-radius,box-shadow] duration-300 
-                   max-[1200px]:mt-10 max-[1200px]:py-5"
+                   max-[1280px]:mt-10 max-[1200px]:py-12.5"
             >
-                <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[80%]">
+                {/* <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[80%]"> */}
+                  <Row className="flex">
                     <div className="flex w-full relative min-h-px">
                         <div className="flex flex-wrap content-start w-full  relative">
                             <div className="mb-5 w-full text-center relative hiring_model_benefits">
@@ -2439,17 +2468,19 @@ export default function HireDevelopersPageClient() {
                                 </div>
                             </div>
 
-                            <div className="w-full text-center mt-14">
-                                <motion.div
+                            <div className="w-full text-center mt-8 lg:mt-14">
+                                {/* <motion.div
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true, amount: 0.2 }}
                                     transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                                    className="bg-[#12203d] relative -top-6 inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                                    // className="bg-[#12203d] relative -top-6 inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
+                                    className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                                 >
-                                    <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span>
+                                    <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-56"></span>
                                     <a href="#contact-form-section"
-                                        className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
+                                        // className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
+                                        className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
                                         <span className="flex flex-row gap-3  items-center justify-center">
                                             Schedule a Developer Interview
                                             <Image
@@ -2460,15 +2491,29 @@ export default function HireDevelopersPageClient() {
                                             />
                                         </span>
                                     </a>
-                                </motion.div>
+                                </motion.div> */}
+                                <Button
+                                    motionProps={{
+                                        initial: { opacity: 0, scale: 0.8 },
+                                        whileInView:{ opacity: 1, scale: 1 },
+                                        viewport:{ once: true, amount: 0.2 },
+                                        transition:{ duration: 0.5, ease: "easeOut", delay: 0.1 }
+                                    }}
+                                    text="Schedule a Developer Interview"
+                                    href="#contact-form-section"
+                                    icon="/navbar/btn_icon.png"
+                                />
+                                
                             </div>
                         </div>
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </section>
             {/* section 9: faq question */}
             <Section ref={faqRef}>
-                <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  "> */}
+                <Row className=" flex gap-8 flex-col">
                     <div className="flex flex-wrap  w-full relative content-start">
                         <div className="text-center pb-10 mb-2.5 w-full">
                             <h2 className="text-center w-full  text-black common-h2">
@@ -2491,15 +2536,14 @@ export default function HireDevelopersPageClient() {
                                             </h2>
                                         </div>
                                         <div className="w-full text-center flex justify-start ">
-                                            <motion.div
+                                            {/* <motion.div
                                                 initial={{ opacity: 0, scale: 0.8 }}
                                                 whileInView={{ opacity: 1, scale: 1 }}
                                                 viewport={{ once: true, amount: 0.2 }}
                                                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                                                 // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
-                                                className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+                                                className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                                             >
-                                                {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
                                                 <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
 
                                                 <a href="/faqs"
@@ -2515,8 +2559,18 @@ export default function HireDevelopersPageClient() {
                                                         />
                                                     </span>
                                                 </a>
-                                            </motion.div>
-
+                                            </motion.div> */}
+                                                <Button
+                                                    motionProps={{
+                                                        initial: { opacity: 0, scale: 0.8 },
+                                                        whileInView:{ opacity: 1, scale: 1 },
+                                                        viewport:{ once: true, amount: 0.2 },
+                                                        transition:{ duration: 0.5, ease: "easeOut", delay: 0.1 }
+                                                    }}
+                                                    text="Explore More"
+                                                    href="/faqs"
+                                                    icon="/navbar/btn_icon.png"
+                                                />
                                         </div>
                                     </div>
                                 </div>
@@ -2576,7 +2630,7 @@ export default function HireDevelopersPageClient() {
                             </div>
                         </section>
                     </div>
-                </div>
+                </Row>
             </Section>
             <RelatedBlogs subCategory="CMS Development" />
         </main>

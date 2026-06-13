@@ -12,6 +12,8 @@ import apiService from "@/lib/apiService";
 import NotFoundPage from "../NotFoundPage";
 import Link from "next/link";
 import Section from "../Section";
+import Row from "../Row";
+import Button from "../Button";
 
 export default function OurServicesClient() {
 
@@ -59,7 +61,8 @@ export default function OurServicesClient() {
 		<>
 			<Section className=" common_background_gradient">
 				{/*   px-4 md:px-6  */}
-				<div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex flex-col">
+				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex flex-col"> */}
+				<Row className="flex flex-col">
 					<div
 						className="absolute w-full inset-0 bg-cover bg-center z-0 hidden md:block"
 						style={{
@@ -136,8 +139,8 @@ export default function OurServicesClient() {
 							{/* <motion.a
 								href="#contact-form-section"
 								className="relative overflow-hidden px-5 sm:px-6 py-2.5 sm:py-3 
-             bg-[#0b1833] text-white text-sm sm:text-base font-medium 
-             rounded-lg shadow-md"
+				bg-[#0b1833] text-white text-sm sm:text-base font-medium 
+				rounded-lg shadow-md"
 								whileHover="hover"
 								initial="rest"
 								animate="rest"
@@ -160,8 +163,8 @@ export default function OurServicesClient() {
 								<span className="relative z-10">Get Started</span>
 							</motion.a> */}
 
-					<motion.div
-                     	className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-[10px] bg-[#0d1b2a]  px-5 py-3 text-sm font-semibold text-white transition-colors group"
+					{/* <motion.div
+                     	className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-[10px] bg-[#0d1b2a]  px-5 py-3 text-sm font-semibold text-white transition-colors group"
                   	>
 						<span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
 						<a
@@ -171,7 +174,17 @@ export default function OurServicesClient() {
 							Get Started
 						</span>
 						</a>
-                  	</motion.div>
+                  	</motion.div> */}
+					<Button
+						motionProps={{
+							initial: { opacity: 0, scale: 0.8 },
+							whileInView: { opacity: 1, scale: 1 },
+							viewport: { once: true, amount: 0.2},
+							transition: { type: "spring", stiffness: 300, damping: 20  },
+						}}
+						text="Get Started"
+						href="/#contact-form-section"
+					/>
 
 				
 
@@ -250,11 +263,13 @@ export default function OurServicesClient() {
 							</motion.div>
 						</div>
 					</div>
-				</div>
+				</Row>
+				{/* </div> */}
 
 			</Section>
 			<section className="w-full py-12.5 relative  ">
-				<div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex flex-wrap">
+				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex flex-wrap"> */}
+				<Row className="flex flex-wrap">
 					{ourServicePageData.technologyDetails.map((service, index) => (
 						<div
 							key={index}
@@ -388,32 +403,41 @@ export default function OurServicesClient() {
 										<span className="relative z-10">Know More</span>
 									</motion.button>
 								</Link> */}
-								<Link href={service.developmentDetail[0].serviceId.slug}>
+								{/* <Link href={service.developmentDetail[0].serviceId.slug}>
 									<motion.button
-										className="relative hidden xl:inline-flex items-center justify-center overflow-hidden rounded-xl bg-[#0d1b2a] group mt-10"
+										className="relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-[#0d1b2a] group mt-10"
 										initial={{ opacity: 0, y: 40 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ duration: 0.9, ease: "easeOut", delay: 0.9 }}
 									>
-										{/* Hover Circle */}
 										<motion.span
 										className="absolute left-1/2 top-1/2 w-0 h-0
 													-translate-x-1/2 -translate-y-1/2
 													rounded bg-[#D68029]
-													transition-all duration-700 ease-in-out
+													transition-all duration-750 delay-300 ease-in-out
 													group-hover:w-56 group-hover:h-56"
 													
 										/>
-										{/* Content */}
 										<div className="relative z-10 px-6 py-3 text-sm sm:text-base font-medium text-white">
 											Know More
 										</div>
 									</motion.button>
-								</Link>
+								</Link> */}
+								<Button
+									motionProps={{
+										initial: { opacity: 0, y: 40 },
+										animate: { opacity: 1, y: 0 },
+										transition: { duration: 0.9, ease: "easeOut", delay: 0.9, },
+									}}
+									text="Know More"
+									href={service.developmentDetail[0].serviceId.slug}
+									className="mt-10"
+								/>
 							</div>
 						</div>
 					))}
-				</div>
+				</Row>
+				{/* </div> */}
 			</section>
 			{/* <ServicesContent /> */}
 			<EngagementModels />

@@ -265,6 +265,7 @@ import apiService from "@/lib/apiService";
 import Motion from "../motionbar";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import Section from "../Section";
+import Row from "../Row";
 type Testimonial = {
     _id: string;
     name: string;
@@ -514,18 +515,19 @@ const Testimonials: React.FC = () => {
 
     return (
         <Section className="bg-white">
-            <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-4 ">
+            {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-4 "> */}
+            <Row >
                 <div className="text-center pb-5 mb-2.5 w-full">
                     <h3 className="text-center w-full font-bold text-gray-800 tracking-tight text-3xl md:text-4xl">
                         Testimonials from our Clients
                     </h3>
                     <Motion />
                 </div>
-            </div>
+            </Row>
 
             <div className="w-full common_background_gradient relative">
-                <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto overflow-hidden">
-
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto overflow-hidden"> */}
+                <Row className="overflow-hidden">
                     {initialLoading && (
                         <div className="py-5 w-full h-125">
                             <div className="flex justify-center gap-4">
@@ -638,8 +640,8 @@ const Testimonials: React.FC = () => {
                             <MdArrowForward size={24} />
                         </button>
                     </div>
-
-                </div>
+                </Row>
+                {/* </div> */}
             </div>
         </Section>
     );

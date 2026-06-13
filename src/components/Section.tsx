@@ -33,8 +33,7 @@ interface CommonSectionProps extends HTMLAttributes<HTMLElement> {
 // }
 
 
-const Section = forwardRef<HTMLElement, CommonSectionProps>(
-  (
+const Section = forwardRef<HTMLElement, CommonSectionProps>((
     {
       children,
       className = "",
@@ -53,7 +52,7 @@ const Section = forwardRef<HTMLElement, CommonSectionProps>(
         style={style}
         {...props}
       >
-        {children}
+          {children}
       </section>
     );
   }

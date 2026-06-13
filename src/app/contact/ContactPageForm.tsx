@@ -243,6 +243,7 @@ import apiService from "@/lib/apiService";
 import { useToast } from "@/components/ui/snackbar-provider";
 import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
+import Row from "@/components/Row";
 
 
 const budgetOptions = [
@@ -427,7 +428,8 @@ export default function ContactPageForm() {
 
     return (
         <section className="relative bg-[#0d1b2a] w-full z-20">
-            <div className="max-w-[90%] lg:max-w-[80%] mx-auto">
+            {/* <div className="max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+            <Row >
                 <div className="border-t border-[#ffffff14] pt-10">
 
                     <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] items-start ">
@@ -669,7 +671,8 @@ export default function ContactPageForm() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Row>
+            {/* </div> */}
         </section>
     );
 }

@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ExpertiesIndustries, SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
 import Motion from "../motionbar";
+import Row from "../Row";
 
 const ROW_GRADIENTS = [
     ["from-rose-500", "to-orange-400"],
@@ -124,7 +125,8 @@ export default function Industries() {
                     paddingBottom: "50px",
                 }}
             >   
-                <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto ">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto "> */}
+                <Row >
                 <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-slate-300 mb-5">
                     Industries We Serve
                 </span>
@@ -137,7 +139,8 @@ export default function Industries() {
                     From early-stage startups to global enterprises - tailored digital
                     products across every major vertical.
                 </p>
-                </div>
+                </Row>
+                {/* </div> */}
             </div>
 
             <div className="relative" >

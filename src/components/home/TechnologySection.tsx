@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Motion from "@/components/motionbar";
 import TechBackground from "./TechBackground";
+import Row from "../Row";
 
 const technologies: Record<string, { image: string; label: string }[]> = {
   "Mobile": [
@@ -59,7 +60,8 @@ export default function TechnologyTabs() {
         <TechBackground />
         {/* <div className="absolute inset-0 bg-[#0a1a33]/90"></div> */}
         <div className="w-full relative   ">
-          <div className="w-full relative max-w-[90%] lg:max-w-[80%]  mx-auto ">
+          {/* <div className="w-full relative max-w-[90%] lg:max-w-[80%]  mx-auto "> */}
+          <Row >
             {/* px-4 sm:px-8 md:px-20 */}
             {/* Section Header */}
             <div className="text-center w-full mb-12 lg:pt-20">
@@ -110,8 +112,10 @@ export default function TechnologyTabs() {
                 </div>
               ))}
             </div>
+            </Row>
           </div>
-        </div>
+          
+        {/* </div> */}
       </div>
     </section>
   );

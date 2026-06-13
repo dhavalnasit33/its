@@ -16,6 +16,8 @@ import Reviews from "@/components/home/Reviews";
 import Testimonials from "@/components/home/Testimonials";
 import NotFoundPage from "@/components/NotFoundPage";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 // const categories = [
 //     { label: "Show All", value: "All" },
 //     { label: "Mobile App", value: "mobile-app" },
@@ -207,11 +209,11 @@ export default function PortfolioClient() {
                             </Link>
                         </div>
                     </motion.div> */}
-                     <motion.div 
+                     {/* <motion.div 
                        initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-                        className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]   font-semibold text-white transition-colors group" >
+                        className="relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]   font-semibold text-white transition-colors group" >
                                 <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
                                 <a
                                     href="/contact"
@@ -220,7 +222,18 @@ export default function PortfolioClient() {
                                     Let&apos;s Discuss
                                 </span>
                                 </a>
-                            </motion.div>
+                            </motion.div> */}
+                            <Button
+                                motionProps={{
+                                    initial: { opacity: 0, y: 40 },
+                                    animate:{ opacity: 1, y: 0 },
+                                    transition:{ duration: 0.8, ease: "easeOut", delay: 0.6 }
+                                }}
+                                bgColor="#D68029"
+                                hoverColor="#0d1b2a"
+                                text="Let&apos;s Discuss"
+                                href="/contact"
+                            />
                 </div>
                 <div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-3xl">
                     <motion.div
@@ -276,7 +289,8 @@ export default function PortfolioClient() {
                 </div>
             </Section>
             <Section >
-                <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto">
+                {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto"> */}
+                <Row>
                     <div className="w-full flex flex-wrap">
                         <motion.div
                             className="flex flex-col items-center w-full justify-center text-center mb-10"
@@ -420,7 +434,7 @@ export default function PortfolioClient() {
                                         <button
                                             onClick={handleLoadMore}
                                             disabled={loadingMore}
-                                            className=" relative hidden xl:inline-flex items-center justify-center overflow-hidden
+                                            className=" relative inline-flex items-center justify-center overflow-hidden
                                                 gap-2 rounded-md font-semibold text-white bg-[#D68029] group disabled:opacity-60 disabled:cursor-not-allowed "
                                         >
                                         <span className=" absolute w-0 h-0 rounded bg-[#0d1b2a] transition-all duration-750 delay-300 ease-in-out group-hover:w-56 group-hover:h-56 " />
@@ -440,7 +454,8 @@ export default function PortfolioClient() {
                             )}
                         </motion.div>
                     </div>
-                </div>
+                </Row>
+                {/* </div> */}
             </Section>
             <Reviews />
             <Testimonials />

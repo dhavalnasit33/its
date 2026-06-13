@@ -14,6 +14,8 @@ import RelatedBlogs from "@/components/blog/RelatedBlogs";
 import NotFoundPage from "@/components/NotFoundPage";
 import ParallaxShape from "@/components/home/ParallaxShape";
 import Section from "@/components/Section";
+import Row from "@/components/Row";
+import Button from "@/components/Button";
 
 function chunkArray<T>(array: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
@@ -26,6 +28,49 @@ function transpose<T>(matrix: T[][]): T[][] {
     matrix.map((row) => row[colIndex]).filter(Boolean),
   );
 }
+const processSteps = [
+  {
+    title: "Describe your needs",
+    borderColor: "#fb928c",
+    icon: "/hire/Describe.png",
+    line: "/hire/redline.png",
+    isBottom: false,
+  },
+  {
+    title: "Consult With Our Expert",
+    borderColor: "#eccf6b",
+    icon: "/hire/Consult.png",
+    line: "/hire/yellowline.png",
+    isBottom: true,
+  },
+  {
+    title: "Select Engagement Model and Timeline",
+    borderColor: "#66c6eb",
+    icon: "/hire/Engagement.png",
+    line: "/hire/blueline.png",
+    isBottom: false,
+  },
+  {
+    title: "Sign off and Begin Work",
+    borderColor: "#84c67e",
+    icon: "/hire/signOff.png",
+    line: "/hire/greenline.png",
+    isBottom: true,
+  },
+  {
+    title: "Escalation Handling",
+    borderColor: "#ee83f0",
+    icon: "/hire/Escalation.png",
+    line: "/hire/pinkline.png",
+    isBottom: false,
+  },
+  {
+    title: "Scale Our Team",
+    borderColor: "#9283f0",
+    icon: "/hire/OurTeam.png",
+    isBottom: true,
+  },
+];
 
 export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?: string }) {
   const params = useParams();
@@ -33,7 +78,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
   const [pageData, setPageData] = useState<HirePageData | null>(null);
   const [Loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>([]);
-  const [matchCatgeory, setMatchCatgeory] = useState<string>("");
+  const [matchCatgeory, setMatchCatgeory] = useState<string>("");  
   console.log("🚀 ~ HirepageTechnolog ~ matchCatgeory:", matchCatgeory);
   // Default the active accordion to the first item (index 0)
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -222,8 +267,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
         ></video>
 
         <div className="absolute inset-0 bg-[#0a1a33]/90"></div>
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex justify-center mb-10">
-          <h1 className="inline-flex gap-1 items-center rounded-full border border-white bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-slate-200">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto relative flex justify-center mb-10"> */}
+         <Row className="flex justify-center mb-10">
+          <h5 className="inline-flex gap-1 items-center rounded-full border border-white bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-slate-200">
             {pageData.title.toLowerCase().startsWith("hire") ? (
               <>
                 {/* <span className="text-[#d68029] uppercase">
@@ -238,9 +284,11 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             ) : (
               pageData.title
             )}
-          </h1>
-        </div>
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex  ">
+          </h5>
+        </Row>
+        {/* </div> */}
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto relative flex  "> */}
+        <Row className="flex  ">
           <div className="w-full flex flex-wrap  content-start relative ">
             <section className="w-full relative">
               <div className="flex flex-col lg:flex-row items-start w-full gap-10 mx-auto relative ">
@@ -448,11 +496,13 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               </div>
             </section> */}
           </div>
-        </div>
+          </Row>
+        {/* </div> */}
       </Section>
       {/* section 2 : hire accodiong to your needs  */}
-      <Section className=" z-20 bg-white">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex">
+      <Section className=" z-10 bg-white xl:!pb-0 ">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto relative flex"> */}
+        <Row className=" flex">
           <div className="flex relative min-h-px w-full">
             <div className="flex  content-start relative w-full flex-wrap">
               <div className="text-center pb-2.5  mb-2.5 w-full">
@@ -489,7 +539,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   </p>
                 </motion.div>
               </div>
-              <section className="w-full mt-8 relative">
+              <div className="w-full mt-8 relative z-30 xl:-mb-20">
                 <div className="flex flex-col lg:flex-row gap-8 w-full">
                   {/* Left Column: Info Boxes */}
                   <div className="w-full lg:w-1/3 xl:w-1/4">
@@ -682,22 +732,24 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                         )}
                       </ul>
                     </motion.div>
-                  </div>
+                  </div>  
                 </div>
-              </section>
+              </div>
             </div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
       {/* section3 : benifits  */}
       <section
-        className="relative z-10 mt-[-6%] bg-[url('/hire/Rectangle-4181.png')] 
-         bg-center bg-size[100%_auto] 
-         px-0 pt-37.5 pb-12.5 
+        className="relative z-1  bg-[url('/hire/Rectangle-4181.png')] 
+         bg-center bg-cover bg-size[100%_auto] 
+         px-0 pt-12.5 xl:pt-37.5 pb-12.5 
          transition-[background,border,border-radius,box-shadow] duration-300 
-         max-[1200px]:mt-0 max-[1200px]:py-10"
+         max-[1200px]:mt-0 max-[1200px]:py-10 "
       >
-        <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[80%]">
+        {/* <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[74%]"> */}
+         <Row className=" flex">
           <div className="flex w-full relative min-h-px">
             <div className="flex flex-wrap content-start w-full  relative">
               <div className="mb-5 w-full text-center relative hiring_model_benefits">
@@ -725,16 +777,15 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   )}
                 </div>
               </section>
-              <div className="w-full text-center mt-14">
-                <motion.div
+              <div className="w-full text-center mt-8 lg:mt-14">
+                {/* <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                   // className="bg-[#12203d] relative -top-6 inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
-                  className="relative -top-6 hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+                  className="relative -top-6  inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                 >
-                  {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
                   <span className="absolute w-0 h-0 transition-all duration-900 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-56"></span>
                   <a
                     href="#contact-form-section"
@@ -751,16 +802,29 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                       />
                     </span>
                   </a>
-                </motion.div>
+                </motion.div> */}
+                 <Button
+                    motionProps={{
+                        initial: { opacity: 0, scale: 0.8 },
+                        whileInView:{ opacity: 1, scale: 1 },
+                        viewport:{ once: true, amount: 0.2 },
+                        transition:{ duration: 0.5, ease: "easeOut", delay: 0.1 }
+                    }}
+                    text="Schedule a Developer Interview"
+                    href="#contact-form-section"
+                    icon="/navbar/btn_icon.png"
+                />
               </div>
             </div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </section>
 
       {/* section 4 : hire daticated */}
       <Section className=" bg-white">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col-reverse relative lg:flex-row">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto flex gap-8 flex-col-reverse relative lg:flex-row"> */}
+         <Row className=" flex gap-8 flex-col-reverse relative lg:flex-row">
           <div className="flex w-full relative min-h-px max-w-full lg:max-w-[50%]">
             <div className="flex flex-col  content-center justify-center items-center relative w-full">
               <motion.div
@@ -816,11 +880,13 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               </motion.div>
             </div>
           </div>
-        </div>
+          </Row>
+        {/* </div> */}
       </Section>
       {/* section5: Or experties */}
       <Section className="bg-[#fff9f2] overflow-x-hidden">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto flex relative"> */}
+        <Row className="flex">
           <div className="flex w-full relative min-h-px">
             <div className="w-full flex flex-wrap content-start relative ">
               <div className="text-center pb-10 mb-2.5 w-full">
@@ -861,7 +927,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           <h4 className="text-5xl font-bold text-transparent  font-poppins  [-webkit-text-stroke:2px_#FFB061] mb-4">
                             {String(index + 1).padStart(2, "0")}
                           </h4>
-                          <p className="text-black text-xl font-semibold leading-snug">
+                          <p className="text-black text-lg font-semibold leading-snug">
                             {item}
                           </p>
                         </motion.div>
@@ -879,9 +945,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                   // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
-                  className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+                  className="relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                 >
-                  {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
                   <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-80 group-hover:h-80"></span>
                   <a
                     href="#contact-form-section"
@@ -908,11 +973,13 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               </div>
             </div>
           </div>
-        </div>
+          </Row>
+        {/* </div> */}
       </Section>
       {/* section 6 tech stack */}
       <Section className=" mx-auto common_background_gradient bg-white">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] flex flex-col relative mx-auto">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] flex flex-col relative mx-auto"> */}
+        <Row className=" flex flex-col ">
           {/* 🔽 Background gradient */}
 
           {/* 🔼 Foreground content */}
@@ -1007,11 +1074,13 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               </motion.div>
             );
           })()}
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
       {/* section 7 : why hire from its ? */}
       <Section className=" bg-white">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex relative">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto flex relative"> */}
+        <Row className=" flex ">
           <div className="flex w-full relative min-h-px">
             <div className="w-full flex flex-wrap content-start relative ">
               <div className="text-center pb-10 mb-2.5 w-full">
@@ -1070,12 +1139,14 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               </section>
             </div>
           </div>
-        </div>
+          </Row>
+        {/* </div> */}
       </Section>
 
       {/* section 8 : unloack power  */}
       <Section className=" bg-white">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative lg:flex-row">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto flex gap-8 flex-col  relative lg:flex-row"> */}
+         <Row className="flex gap-8 flex-col lg:flex-row">
           <div className="flex w-full relative min-h-px content-center items-center max-w-full lg:max-w-[50%]">
             <div className="flex flex-col  content-center items-center relative w-full">
               <motion.div
@@ -1133,11 +1204,13 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               </motion.div>
             </div>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
       {/* section 9 : hire progress */}
       <Section className="bg-[#f8f8f8] lg:!pb-0">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex flex-col">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto flex flex-col"> */}
+        <Row className="flex flex-col">
           {/* Section Title */}
           <div className="text-center pb-10 mb-2.5 w-full">
             <motion.div
@@ -1147,7 +1220,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
             >
               <h2 className="text-center w-full text-black common-h2">
-                {pageData.title.replace(/^Hire\s*/, "").trim()} 4 steps hiring
+                {pageData.title.replace(/^Hire\s*/, "").trim()} 6 steps hiring
                 process
               </h2>
               <Motion />
@@ -1155,11 +1228,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
           </div>
 
           {/* Hiring Process Timeline */}
-          <div className="relative w-full">
-            {/* The flex container for the 4 steps */}
+          {/* <div className="relative w-full">
             <div className="flex flex-col md:flex-row justify-between relative">
               {pageData.hireingProcess.steps.map((step, index) => {
-                // Assign classes based on position for the CSS to target
                 const positionClass =
                   index === 0
                     ? "first_item"
@@ -1167,7 +1238,6 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                       ? "last_item"
                       : "middle_item";
 
-                // Array of images - make sure these paths are correct in your /public folder
                 const images = [
                   "/hire/3-31.png",
                   "/hire/4-31.png",
@@ -1212,8 +1282,140 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 );
               })}
             </div>
+          </div> */}
+
+        <div className="pb-20 max-sm:pb-14">
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-[20px] lg:gap-[30px] items-stretch">
+
+            {processSteps.map((step, index) => (
+              <div key={index} className="relative w-full flex h-full">
+
+                {step.isBottom && step.line && (
+                  <div className="max-md:hidden">
+                    <Image
+                      src={step.line}
+                      alt={`Line ${index}`}
+                      width={112}
+                      height={40}
+                      // className="absolute -right-8 top-4 w-auto h-auto object-contain"
+                      className="w-auto h-auto mx-auto object-contain absolute -right-8 top-4"
+                    />
+                  </div>
+                )}
+
+              <motion.div
+                  initial={{ opacity: 0, y: 90 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  className={` w-full h-full rounded-[20px] py-5 px-5 min-h-[180px] max-md:min-h-[160px] md:px-3 md:px-6 -[20px] border shadow-[0px_0px_10px_0px_rgba(0,0,0,0.1)] bg-white
+                    relative z-30 flex flex-col items-center justify-center text-center ${step.isBottom ? "-bottom-14" : ""}
+                  `}
+                  style={{
+                    borderColor: step.borderColor,
+                  }}
+                >
+                  <Image
+                    src={step.icon}
+                    alt={step.title}
+                    width={60}
+                    height={60}
+                    className="w-[50px] h-[50px] object-contain mx-auto"
+                  />
+
+                  <p className="text-black  text-base font-semibold mt-3 max-xl:break-all wrap-break-word leading-[24px]">
+                    {step.title}
+                  </p>
+                </motion.div>
+
+                {!step.isBottom &&
+                  step.line &&
+                  index !== processSteps.length - 1 && (
+                    <div className="hidden md:block">
+                      <Image
+                        src={step.line}
+                        alt={`Line ${index}`}
+                        width={112}
+                        height={41}
+                        // className="absolute -bottom-10 -right-8 w-auto h-auto object-contain z-10"
+                        className="w-auto h-auto mx-auto object-contain absolute -bottom-10 -right-8 z-10"
+                      />
+                    </div>
+                  )}
+              </div>
+            ))}
+                {/* {processSteps.map((step, index) => {
+                  const steps = pageData?.hireingProcess?.steps?.[index] || "";
+                    return (
+                            <div key={index} className="relative w-full flex h-full">
+
+                              {step.isBottom && step.line && (
+                                <div className="max-md:hidden">
+                                  <Image
+                                    src={step.line}
+                                    alt={`Line ${index}`}
+                                    width={112}
+                                    height={40}
+                                    // className="absolute -right-8 top-4 w-auto h-auto object-contain"
+                                    className="w-auto h-auto mx-auto object-contain absolute -right-8 top-4"
+                                  />
+                                </div>
+                              )}
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 90 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  duration: 0.4,
+                                  ease: "easeOut",
+                                }}
+                                viewport={{ once: true, amount: 0.2 }}
+                                className={` w-full h-full py-5 px-5 min-h-[180px] max-md:min-h-[160px] md:px-3 md:px-6 rounded-[20px] border shadow-[0px_0px_10px_0px_rgba(0,0,0,0.1)]
+                                  bg-white  relative z-30  flex flex-col items-center justify-center text-center ${step.isBottom ? "-bottom-14" : ""}
+                                `}
+                                style={{
+                                  borderColor: step.borderColor,
+                                }}
+                              >
+                                <Image
+                                  src={step.icon}
+                                  alt={steps}
+                                  width={60}
+                                  height={60}
+                                  className="w-[50px] h-[50px] object-contain mx-auto"
+                                />
+
+                                <h3 className="text-black  text-base font-semibold mt-3 max-xl:break-all wrap-break-word leading-[24px]">
+                                  {steps}
+                                </h3>
+                              </motion.div>
+
+                              {!step.isBottom &&
+                                step.line &&
+                                index !== processSteps.length - 1 && (
+                                  <div className="hidden md:block">
+                                    <Image
+                                      src={step.line}
+                                      alt={`Line ${index}`}
+                                      width={112}
+                                      height={41}
+                                      // className="absolute -bottom-10 -right-8 w-auto h-auto object-contain z-10"
+                                      className="w-auto h-auto mx-auto object-contain absolute -bottom-10 -right-8 z-10"
+                                    />
+                                  </div>
+                                )}
+                            </div>
+                    );
+              })} */}
           </div>
         </div>
+        
+        
+        </Row>
+        {/* </div> */}
       </Section>
       {/* section : 10 Tecnology taht we work with  */}
       <ParallaxShape type="bottom" bg="bg-[#f8f8f8]" />
@@ -1222,7 +1424,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
 
       {/* section 11: faq question */}
       <Section className=" bg-white lg:!pt-0">
-        <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex gap-8 flex-col  relative  ">
+        {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto flex gap-8 flex-col  relative  "> */}
+         <Row className=" flex gap-8 flex-col">
           <div className="flex flex-wrap  w-full relative content-start">
             <div className="text-center pb-10 mb-2.5 w-full">
               <h2 className="text-center w-full text-black common-h2">
@@ -1245,7 +1448,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                       </h2>
                     </div>
                     <div className="w-full text-center flex justify-start ">
-                      <motion.div
+                      {/* <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, amount: 0.2 }}
@@ -1255,9 +1458,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           delay: 0.1,
                         }}
                         // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
-                        className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
+                        className="relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                         >
-                        {/* <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-full"></span> */}
                         <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
                         <a
                           href="/faqs"
@@ -1274,7 +1476,19 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             />
                           </span>
                         </a>
-                      </motion.div>
+                      </motion.div> */}
+                      <Button
+                        motionProps={{
+                        initial: { opacity: 0, scale: 0.8 },
+                        whileInView: { opacity: 1, scale: 1 },
+                        viewport: { once: true, amount: 0.2},
+                        transition: { duration: 0.5, ease: "easeOut", delay: 0.1 },
+                      }}
+                      text="Explore More"
+                      href="/faqs"
+                      icon="/navbar/btn_icon.png"
+                    />
+
                     </div>
                   </div>
                 </div>
@@ -1333,7 +1547,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
               </div>
             </section>
           </div>
-        </div>
+        </Row>
+        {/* </div> */}
       </Section>
       <RelatedBlogs subCategory={matchCatgeory} />
     </main>
