@@ -101,13 +101,15 @@ html {
   /* prevent background from causing scroll */
 }
 
-.common_htags.left_htags h2 {
+.common_htags.left_htags h2,
+.common_htags.left_htags h3 {
   position: relative;
   display: inline-block;
   padding-bottom: 24px;
 }
 
-.common_htags.left_htags h2::after {
+.common_htags.left_htags h2::after ,
+.common_htags.left_htags h3::after {
   content: "";
   position: absolute;
   width: 100px;
@@ -117,6 +119,10 @@ html {
   background-repeat: no-repeat;
   left: 0;
   bottom: 0;
+}
+
+.common_htags.left_htags h3::after{
+  width: 76px;
 }
 
 .rhombus_icon_list {
@@ -401,9 +407,12 @@ html {
   height: 13px;
   transform: translate(-50%, 0);
 }
+.hire_wordpress_its_inner_sec {
+  position: relative;
+}
 
 @media (min-width: 1024px) {
-  .hire_wordpress_its_inner_sec::after {
+  /* .hire_wordpress_its_inner_sec::after {
     content: "" !important;
     position: absolute;
     background: url("/hire/Frame1.png");
@@ -411,10 +420,26 @@ html {
     height: 200px;
     width: 200px;
     top: -15%;
-    right: -7%;
+    right: -5%;
     background-repeat: no-repeat;
     transform: rotate(47deg);
-  }
+  } */
+   .hire_wordpress_its_inner_sec::after {
+  content: "";
+  position: absolute;
+
+  width: clamp(95px, 7vw, 200px);
+  height: clamp(95px, 7vw, 200px);
+
+  top: 0;
+  right: 0;
+
+  background: url("/hire/Frame1.png") no-repeat center;
+  background-size: contain;
+
+  transform: translate(30%, -30%) rotate(47deg);
+  pointer-events: none;
+}
 }
 
 @media screen and (max-width: 768px) {
@@ -744,30 +769,3 @@ html {
   /* letter-spacing: -0.04px; */
   word-break: break-word;
 }
-
-/* .common-btn {
-  @apply relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-md
-         bg-[#0d1b2a] px-5 py-3 text-sm font-semibold text-white
-         transition-all duration-300 group;
-}
-
-.common-btn::before {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  background: #D68029;
-  border-radius: 9999px;
-  transition: all 0.75s ease-in-out;
-  z-index: 0;
-}
-
-.common-btn:hover::before {
-  width: 250px;
-  height: 250px;
-}
-
-.common-btn span {
-  position: relative;
-  z-index: 1;
-} */

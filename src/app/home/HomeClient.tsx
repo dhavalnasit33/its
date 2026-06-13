@@ -155,7 +155,14 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	if (gettingHomePageData) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
-				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div>
+				{/* <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div> */}
+				 <Image
+					src="/LoderIcon.png" // place image in public folder
+					alt="Loading"
+					width={80}
+					height={80}
+					className="animate-spin"
+					/>
 			</div>
 		);
 	}

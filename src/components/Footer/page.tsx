@@ -25,6 +25,7 @@ import { MdEmail, MdPhone, MdWork } from "react-icons/md";
 import { BiHelpCircle } from "react-icons/bi";
 import { FaLaptopCode, FaMobileAlt, FaPaintBrush } from "react-icons/fa";
 import Section from "../Section";
+import Row from "../Row";
 
 // -------------------- Main Page --------------------
 export default function ContactFooterPage() {
@@ -46,12 +47,12 @@ export default function ContactFooterPage() {
   } = useWebsiteSettings();
 
   return (
-    <footer id="contact-form-section" className={` relative bg-white scroll-mt-18 ${
+    <footer id="contact-form-section" className={` relative bg-white scroll-mt-14 ${
       !isContactPage ? " pt-16 lg:pt-18 xl:pt-22" : ""
     }`}>
       {/* ---------------- Contact Form Floating Card ---------------- */}
       {/* <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%] pb-16 "> */}
-      <div className={`w-full relative mx-auto max-w-[90%] lg:max-w-[80%] ${
+      <Row className={`${
           !isContactPage ? "pb-16 lg:pb-18 xl:pb-22" : ""
         }`}
       >
@@ -76,14 +77,14 @@ export default function ContactFooterPage() {
             </div>
           </div>
         )}
-      </div>
+      </Row>
 
       {/* ---------------- Footer Content ---------------- */}
       {/* <div className="bg-[url('/footer-bg.png')] bg-cover bg-center md:pt-112.5 py-16 px-6"> */}
       <Section
         className={`bg-[url('/footer-bg.png')] bg-cover bg-center `}
       >
-        <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]">
+        <Row>
           {/* HR Inquiry + Sales Inquiry */}
           <div className=" w-full  mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-14 text-gray-800">
             <div className="space-y-8">
@@ -477,12 +478,12 @@ export default function ContactFooterPage() {
               </ul>
             </div>
           </div>
-        </div>
+        </Row>
       </Section>
 
       {/* Bottom Bar */}
       <div className="bg-[#0f1b2d] text-gray-300 text-sm py-4">
-        <div className="w-full relative mx-auto max-w-[90%] lg:max-w-[80%]  ">
+        <Row>
           <div className=" w-full mx-auto flex flex-col md:flex-row items-center justify-between md:px-6">
             <p className="text-center">
               © 2026 Inspire Techno Solution. All Rights Reserved.
@@ -496,7 +497,7 @@ export default function ContactFooterPage() {
               </a>
             </div>
           </div>
-        </div>
+        </Row>
       </div>
     </footer>
   );

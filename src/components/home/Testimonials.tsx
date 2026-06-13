@@ -266,6 +266,7 @@ import Motion from "../motionbar";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import Section from "../Section";
 import Row from "../Row";
+import { FaStar } from "react-icons/fa";
 type Testimonial = {
     _id: string;
     name: string;
@@ -324,8 +325,8 @@ const TestimonialCard = ({
     <div
         onClick={onClick}
         className={[
-            "w-full h-full flex flex-col text-left bg-white rounded-2xl border border-gray-100",
-            isCenter ? "p-8 shadow-xl" : "p-6 shadow-md",
+            "w-full h-full flex flex-col text-left bg-white rounded-2xl  ",
+            isCenter ? "p-6 md:p-8 shadow-xl border border-[#D68029]" : "p-4 md:p-6 shadow-md border border-gray-200",
             isSide ? "cursor-pointer opacity-80 hover:opacity-100" : "cursor-default opacity-100",
             "transition-opacity duration-300 relative",
         ].join(" ")}
@@ -339,7 +340,7 @@ const TestimonialCard = ({
             />
         </div>
 
-        <div className="flex items-center gap-4 mb-5 mt-2">
+        {/* <div className="flex items-center gap-4 mb-5 mt-2">
             {testimonial.image ? (
                 <Image
                     src={testimonial.image}
@@ -366,15 +367,66 @@ const TestimonialCard = ({
                 </h4>
                 <span className="text-sm text-gray-500">{testimonial.location}</span>
             </div>
-        </div>
+        </div> */}
 
-        <div className="grow overflow-hidden">
+        <div className="grow overflow-hidden mt-6 ">
+            <div className="flex items-center gap-1 text-yellow-400 mb-3 text-xs">
+                <FaStar />
+                <FaStar />
+                <FaStar />
+                <FaStar />
+                <FaStar />
+            </div>
             <p
                 className={`text-gray-600 leading-relaxed italic ${isCenter ? "text-base line-clamp-5" : "text-sm line-clamp-4"
                     }`}
             >
                 &quot;{testimonial.description}&quot;
             </p>
+        </div>
+        <div className="flex items-center justify-between border-t border-gray-200 pt-4 gap-2">
+         <div className="flex items-center gap-4 " >
+            {testimonial.image ? (
+                <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    width={isCenter ? 64 : 52}
+                    height={isCenter ? 64 : 52}
+                    className={`rounded-full object-cover flex-shrink-0 ${isCenter ? "w-16 h-16" : "w-13 h-13"
+                        }`}
+                />
+            ) : (
+                <div
+                    className={`rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 flex-shrink-0 ${isCenter ? "w-16 h-16 text-2xl" : "w-13 h-13 text-xl"
+                        }`}
+                >
+                    {testimonial.name.charAt(0)}
+                </div>
+            )}
+            <div >
+                <h4
+                    className={`font-semibold text-gray-900 ${isCenter ? "text-lg" : "text-base"
+                        }`}
+                >
+                    {testimonial.name}
+                </h4>
+                <span className="text-sm text-gray-500">{testimonial.location}</span>
+            </div>
+        </div>
+        <div  title="Google" 
+        className="w-8 h-8 p-1 bg-[#f1f1f1] flex items-center justify-center rounded cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg">
+            <a href="https://www.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Image
+                    src="/home/google.png"
+                    alt="/home/google.png"
+                    width={20}
+                    height={20}
+                />
+            </a>
+        </div>
         </div>
     </div>
 );
@@ -514,18 +566,18 @@ const Testimonials: React.FC = () => {
     };
 
     return (
-        <Section className="bg-white">
+        <Section className="bg-white common_background_gradient">
             {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-4 "> */}
             <Row >
                 <div className="text-center pb-5 mb-2.5 w-full">
-                    <h3 className="text-center w-full font-bold text-gray-800 tracking-tight text-3xl md:text-4xl">
+                    <h2 className="text-center  common-h2">
                         Testimonials from our Clients
-                    </h3>
+                    </h2>
                     <Motion />
                 </div>
             </Row>
 
-            <div className="w-full common_background_gradient relative">
+            <div className="w-full  relative">
                 {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto overflow-hidden"> */}
                 <Row className="overflow-hidden">
                     {initialLoading && (
@@ -545,7 +597,7 @@ const Testimonials: React.FC = () => {
 
 
                     {!initialLoading && !isMobile && testimonials.length >= 3 && (
-                        <div className="py-5 w-full">
+                        <div className="py-10 w-full">
 
                             <div
                                 className="relative w-full"

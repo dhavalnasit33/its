@@ -30,6 +30,7 @@ import {
   NavigationStructure,
 } from "@/lib/navigationService";
 import { getYoastSeoData } from "@/lib/seoService";
+import ScrollToTop from "@/components/ScrollToTop";
 
 interface ParsedScript {
   src?: string;
@@ -198,6 +199,7 @@ export default async function RootLayout({
         />
       </head>
       <body>
+        <ScrollToTop />
         {noscripts.map((htmlContent, index) => (
           <noscript
             key={`yoast-noscript-${index}`}

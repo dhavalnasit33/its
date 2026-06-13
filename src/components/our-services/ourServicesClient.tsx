@@ -44,7 +44,14 @@ export default function OurServicesClient() {
 	if (gettingOurServiceData) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
-				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div>
+				{/* <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div> */}
+				 <Image
+					src="/LoderIcon.png" // place image in public folder
+					alt="Loading"
+					width={80}
+					height={80}
+					className="animate-spin"
+					/>
 			</div>
 		);
 	}
@@ -61,22 +68,22 @@ export default function OurServicesClient() {
 		<>
 			<Section className=" common_background_gradient">
 				{/*   px-4 md:px-6  */}
+				<div
+					className="absolute w-full inset-0 bg-cover bg-center z-0 hidden md:block"
+					style={{
+						backgroundImage: "url('/services/Vector-2.png')",
+						backgroundSize: "1400px 740px",
+						backgroundRepeat: "no-repeat",
+						backgroundPosition: "center",
+					}}
+				/>
 				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto flex flex-col"> */}
 				<Row className="flex flex-col">
-					<div
-						className="absolute w-full inset-0 bg-cover bg-center z-0 hidden md:block"
-						style={{
-							backgroundImage: "url('/services/Vector-2.png')",
-							backgroundSize: "1400px 740px",
-							backgroundRepeat: "no-repeat",
-							backgroundPosition: "center",
-						}}
-					/>
 
 					<div className="w-full  mx-auto text-center relative z-10">
 						{/* Floating decorative elements */}
 						<motion.div
-							className="hidden lg:block absolute top-20 left-4 lg:top-72 lg:left-32 w-10 h-10 lg:w-auto lg:h-auto"
+							className="hidden lg:block absolute top-20 left-4 lg:top-60 lg:left-32 w-10 h-10 lg:w-auto lg:h-auto"
 							animate={{ y: [0, -15, 0] }}
 							transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
 						>
@@ -183,7 +190,7 @@ export default function OurServicesClient() {
 							transition: { type: "spring", stiffness: 300, damping: 20  },
 						}}
 						text="Get Started"
-						href="/#contact-form-section"
+						href="#contact-form-section"
 					/>
 
 				
@@ -274,7 +281,7 @@ export default function OurServicesClient() {
 						<div
 							key={index}
 							className={`w-full relative mx-auto flex flex-col md:flex-row ${index % 2 === 1 ? "md:flex-row-reverse" : ""
-								} items-center justify-between gap-10  xl:px-12 py-16`}
+								} items-center justify-between gap-10  py-16`}
 						>
 							{/* Image */}
 							<motion.div
@@ -311,7 +318,7 @@ export default function OurServicesClient() {
 									initial={{ opacity: 0, y: -50 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
-									transition={{ duration: 0.8, ease: "easeOut" }}
+									transition={{ duration: 0.6, ease: "easeOut" }}
 									className=" relative common_htags left_htags "
 								>
 									<h2 className="relative common-h2-small mb-6">
@@ -323,7 +330,7 @@ export default function OurServicesClient() {
 									initial={{ opacity: 0, y: 50 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
-									transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+									transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
 									className="text-gray-700 text-lg mb-8"
 								>
 									{/* {service.subtitle} */}
@@ -344,7 +351,7 @@ export default function OurServicesClient() {
 									initial={{ opacity: 0, y: 50 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
-									transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+									transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
 									className="flex items-center gap-6 mb-6 flex-wrap"
 								>
 									{service.technologyDetail.map((data, i) => (
@@ -363,7 +370,7 @@ export default function OurServicesClient() {
 									initial={{ opacity: 0, y: 30 }}
 									whileInView={{ opacity: 1, y: 0 }}
 									viewport={{ once: true, amount: 0.2 }}
-									transition={{ duration: 0.9, ease: "easeOut", delay: 0.9 }}
+									transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
 									className=" text-gray-700 grid gap-3 grid-cols-1 md:grid-cols-2"
 								>
 									{service.developmentDetail.map((data, i) => (

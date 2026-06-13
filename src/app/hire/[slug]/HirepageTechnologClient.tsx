@@ -191,7 +191,14 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
   if (Loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div>
+        {/* <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div> */}
+        <Image
+          src="/LoderIcon.png" // place image in public folder
+          alt="Loading"
+          width={80}
+          height={80}
+          className="animate-spin"
+        />
       </div>
     );
   }
@@ -746,7 +753,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
          bg-center bg-cover bg-size[100%_auto] 
          px-0 pt-12.5 xl:pt-37.5 pb-12.5 
          transition-[background,border,border-radius,box-shadow] duration-300 
-         max-[1200px]:mt-0 max-[1200px]:py-10 "
+        max-[1280px]:py-16 "
       >
         {/* <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[74%]"> */}
          <Row className=" flex">
@@ -947,7 +954,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                   // className="bg-[#12203d] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group"
                   className="relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a]  text-sm font-semibold text-white transition-colors group"
                 >
-                  <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-80 group-hover:h-80"></span>
+                  <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-full group-hover:h-80"></span>
                   <a
                     href="#contact-form-section"
                     // className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"

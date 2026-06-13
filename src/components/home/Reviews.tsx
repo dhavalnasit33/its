@@ -85,7 +85,14 @@ const Reviews: React.FC = () => {
 
         {loading ? (
           <div className="flex justify-center items-center py-6">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#d68029]"></div>
+            {/* <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#d68029]"></div> */}
+             <Image
+                src="/LoderIcon.png" // place image in public folder
+                alt="Loading"
+                width={80}
+                height={80}
+                className="animate-spin"
+              />
           </div>
         ) : (
           <div className="relative w-full overflow-hidden py-4">

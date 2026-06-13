@@ -51,7 +51,7 @@
 //                                 <div key={index} className="mb-8">
 
 //                                 {/* Title */}
-//                                 <h3 className="text-2xl font-semibold text-white mb-5 font-bricoalge">
+//                                 <h3 className="text-2xl font-semibold text-white mb-5">
 //                                     {item.title}
 //                                 </h3>
 
@@ -430,19 +430,18 @@ export default function ContactPageForm() {
         <section className="relative bg-[#0d1b2a] w-full z-20">
             {/* <div className="max-w-[90%] lg:max-w-[80%] mx-auto"> */}
             <Row >
-                <div className="border-t border-[#ffffff14] pt-10">
-
+                <div className="border-t border-[#ffffff14] pt-12">
                     <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] items-start ">
-
-                        <div className="lg:sticky lg:top-28 lg:mr-10">
+                        <div className="lg:sticky lg:top-28 lg:mr-12">
                             {contactData.map((item, index) => (
-                                <div key={index} className="mb-8">
+                                <div key={index} className="mb-10">
 
-                                    <h3 className="text-2xl font-semibold text-white mb-5 font-bricoalge">
+                                    <div className=" text-left w-full common_htags left_htags">
+                                    <h3 className="text-2xl font-semibold text-white mb-4">
                                         {item.title}
                                     </h3>
-
-                                    <div className="flex items-start gap-4 p-4 rounded-md bg-[#ffffff08] transition-colors w-full">
+                                    </div>
+                                    <div className="flex items-start gap-6 p-4 rounded-md bg-[#ffffff08] transition-colors w-full">
 
                                         <div className="w-14 h-20 rounded-md bg-[#ffffff06] flex items-center justify-center text-white font-semibold text-lg shrink-0">
                                             ITS
@@ -455,7 +454,7 @@ export default function ContactPageForm() {
                                                     <h4 className="text-white text-[16px] md:text-xl ">
                                                         {item.company}
                                                     </h4>
-                                                    <p className="text-white opacity-60 text-sm mt-1">
+                                                    <p className="text-white opacity-60 text-sm mt-2">
                                                         {item.role}
                                                     </p>
                                                 </div>
@@ -474,7 +473,7 @@ export default function ContactPageForm() {
                                             {item.email && (
                                                 <a
                                                     href={`mailto:${item.email}`}
-                                                    className="inline-flex items-start gap-2 text-base mt-6 text-white hover:underline transition-all break-all"
+                                                    className="inline-flex items-start gap-2 text-base mt-8 text-white hover:underline transition-all break-all"
                                                 >
                                                     <Image
                                                         src="/icon/Mail.png"
@@ -493,11 +492,11 @@ export default function ContactPageForm() {
                             ))}
                         </div>
 
-                        <div>
-                            <form className="space-y-4 md:space-y-6 mb-5" onSubmit={handleSubmit(onSubmit)}>
+                        <div className=" flex flex-col gap-4 p-6 xl:p-8 overflow-hidden rounded-xl border border-white/10 bg-white/2 backdrop-blur-md shadow-[0_0_80px_10px_#0000001a] ">
+                            <form className="space-y-6 md:space-y-8" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2">Your Name</label>
+                                        <label className="block text-base tracking-wider text-white mb-2">Your Name</label>
                                         <input
                                             type="text"
                                             {...register("firstname")}
@@ -508,7 +507,7 @@ export default function ContactPageForm() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Your Name</label>
+                                        <label className="block text-base tracking-wider text-white mb-2">Your Name</label>
                                         <input
                                             type="text"
                                             {...register("lastname")}
@@ -522,7 +521,7 @@ export default function ContactPageForm() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">E-mail</label>
+                                        <label className="block text-base tracking-wider text-white mb-2 ">E-mail</label>
                                         <input
                                             type="email"
                                             {...register("email")}
@@ -533,7 +532,7 @@ export default function ContactPageForm() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Phone</label>
+                                        <label className="block text-base tracking-wider text-white mb-2">Phone</label>
                                         <input
                                             type="tel"
                                             placeholder="Phone Number"
@@ -552,7 +551,7 @@ export default function ContactPageForm() {
 
                                 <div>
 
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 ">
+                                    <label className="block text-lg font-medium uppercase tracking-wider text-white mb-3 md:mb-6 ">
                                         Select Subject?
                                     </label>
 
@@ -584,7 +583,7 @@ export default function ContactPageForm() {
                                                 <span className="h-4 w-4 flex items-center justify-center rounded-full border border-gray-400 peer-checked:bg-orange-500 peer-checked:border-orange-500 text-white text-xs">
                                                     ✓
                                                 </span>
-                                                <span className="text-white opacity-60 text-xs sm:text-sm">{subject}</span>
+                                                <span className="text-white opacity-60 text-xs sm:text-[15px]">{subject}</span>
                                             </label>
                                         ))}
                                     </div>
@@ -592,7 +591,7 @@ export default function ContactPageForm() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 ">Message</label>
+                                    <label className="block text-base tracking-wider text-white mb-2 ">Message</label>
                                     <textarea
                                         rows={4}
                                         {...register("message")}
@@ -619,8 +618,8 @@ export default function ContactPageForm() {
                                         </label>
                                     </div>
 
-                                    <div className="col-span-12 sm:py-10 py-6">
-                                        <label className="block text-xs font-medium uppercase tracking-wider text-white mb-2 md:mb-4 ">
+                                    <div className="col-span-12 py-6 ">
+                                        <label className="block text-lg font-medium uppercase tracking-wider text-white mb-3 md:mb-6 ">
                                             Your budget for this project?
                                         </label>
                                         <div className="flex flex-wrap gap-2">

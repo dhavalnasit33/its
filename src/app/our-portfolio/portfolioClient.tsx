@@ -157,7 +157,14 @@ export default function PortfolioClient() {
     if (gettingProtfolioConetentData) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div>
+                {/* <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div> */}
+                 <Image
+                    src="/LoderIcon.png" // place image in public folder
+                    alt="Loading"
+                    width={80}
+                    height={80}
+                    className="animate-spin"
+                    />
             </div>
         );
     }
@@ -174,7 +181,7 @@ export default function PortfolioClient() {
     return (
         <>
             <Section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20  pb-20 gap-10 common_background_gradient">
-                <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-2xl text-gray-800">
+                <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-xl text-gray-800">
                     <motion.div
                         initial={{ opacity: 0, y: -40 }}
                         animate={{ opacity: 1, y: 0 }}

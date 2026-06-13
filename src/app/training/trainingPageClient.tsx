@@ -61,7 +61,14 @@ export default function TrainingPageClient() {
     if (gettingTrainingPageData) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div>
+                {/* <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div> */}
+                 <Image
+                    src="/LoderIcon.png" // place image in public folder
+                    alt="Loading"
+                    width={80}
+                    height={80}
+                    className="animate-spin"
+                    />
             </div>
         );
     }
@@ -176,7 +183,7 @@ export default function TrainingPageClient() {
                             bgColor="#D68029"
                             hoverColor="#0d1b2a"
 							text="Get Started Today"
-							href="/#contact-form-section"
+							href="#contact-form-section"
 							icon="/navbar/btn_icon.png"
                             className="mt-6"
 						/>
@@ -432,7 +439,7 @@ export default function TrainingPageClient() {
 								transition: { type: "spring", stiffness: 300, damping: 20  },
 							}}
 							text="Learn More"
-							href="/#contact-form-section"
+							href="#contact-form-section"
 							icon="/navbar/btn_icon.png"
                             className="mt-10"
 						/>

@@ -10,6 +10,7 @@ import { LuMenu } from "react-icons/lu";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { NavigationStructure } from "@/lib/navigationService";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
+import Row from "../Row";
 
 interface NavbarProps {
   navStructure: NavigationStructure;
@@ -212,7 +213,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
   return (
     // <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
     <nav className="w-full bg-white shadow-sm sticky top-0 z-[9999]">
-      <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto h-20 flex justify-between items-center">
+      <Row className=" h-20 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
@@ -743,7 +744,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
             color="#d68029"
           />
         </div>
-      </div>
+      </Row>
 
       <AnimatePresence>
         {menuOpen && (

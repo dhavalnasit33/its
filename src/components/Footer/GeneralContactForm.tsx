@@ -450,7 +450,7 @@ export default function GeneralContactForm() {
                                     <span className="h-4 w-4 flex items-center justify-center rounded-full border border-gray-400 peer-checked:bg-orange-500 peer-checked:border-orange-500 text-white text-xs">
                                         ✓
                                     </span>
-                                    <span className="text-gray-700 text-xs sm:text-sm">{subject}</span>
+                                    <span className="text-gray-700 text-xs sm:text-[15px]">{subject}</span>
                                 </label>
                             ))}
                         </div>

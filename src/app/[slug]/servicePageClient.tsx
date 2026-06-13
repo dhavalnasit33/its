@@ -453,7 +453,7 @@ export default function ServicePageClient() {
                       transition: { duration: 0.4, ease: "easeInOut" },
                     }}
                     text="Talk to Our Experts"
-                    href="/#contact-form-section"
+                    href="#contact-form-section"
                     className="mt-6"
                   />
                   </motion.div>
@@ -765,7 +765,8 @@ export default function ServicePageClient() {
                       transition: { duration: 0.9, ease: "easeOut", delay: 0.9 },
                     }}
                     text="Let&apos;s Discuss Your Project Idea"
-                    href="/#contact-form-section"
+                    href="#contact-form-section"
+                    className="mt-3"
                   />
               </div>
 

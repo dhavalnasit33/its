@@ -17,7 +17,7 @@ const themes = [
     box: "bg-[#0EA5E9]",
 
     bg: "bg-[#0EA5E9]/20",
-    border: "border-[#0EA5E9]/40",
+    border: "border-[#0EA5E9]/40 hover:border-[#0EA5E9]",
     text: "text-[#0EA5E9]",
     button: "bg-[#0EA5E9] hover:bg-[#0EA5E9] text-white",
   },
@@ -25,7 +25,7 @@ const themes = [
     gradient: "from-[#D68029]/70 via-[rgba(214, 128, 41, 0.8)]/10 to-slate-600/10",
     box: "bg-[#D68029]",
     bg: "bg-[#D68029]/20",
-    border: "border-[#D68029]/40",
+    border: "border-[#D68029]/40 hover:border-[#D68029]",
     text: "text-[#D68029]",
     button: "bg-[#D68029] hover:bg-[#D68029] text-white",
   },
@@ -33,7 +33,7 @@ const themes = [
     gradient: "from-emerald-500/40 via-emerald-800/10 to-slate-600/10",
     box: "bg-emerald-500",
     bg: "bg-emerald-500/20",
-    border: "border-emerald-400/40",
+    border: "border-emerald-400/40 hover:border-emerald-400",
     text: "text-emerald-200",
     button: "bg-emerald-500 hover:bg-emerald-600 text-white",
   },
@@ -159,10 +159,10 @@ export default function EngagementModels() {
                 onMouseEnter={(e) => {
                   e.currentTarget.style.boxShadow =
                     index === 0
-                      ? "0 0 20px rgba(19,81,125,0.3), 0 0 80px rgba(19,81,125,0.1)"
+                      ? "0 0 25px rgba(19,81,125,0.3), 0 0 80px rgba(19,81,125,0.1)"
                       : index === 1
-                        ? "0 0 20px rgba(214,128,41,0.3), 0 0 80px rgba(214,128,41,0.1)"
-                        : "0 0 20px rgba(16,185,129,0.3), 0 0 80px rgba(16,185,129,0.1)";
+                        ? "0 0 25px rgba(214,128,41,0.3), 0 0 80px rgba(214,128,41,0.1)"
+                        : "0 0 25px rgba(16,185,129,0.3), 0 0 80px rgba(16,185,129,0.1)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.boxShadow =

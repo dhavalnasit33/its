@@ -1349,7 +1349,14 @@ export default function HireDevelopersPageClient() {
     if (gettingHireMainPageData) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div>
+                {/* <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d68029]"></div> */}
+                 <Image
+                    src="/LoderIcon.png" // place image in public folder
+                    alt="Loading"
+                    width={80}
+                    height={80}
+                    className="animate-spin"
+                    />
             </div>
         );
     }
@@ -1529,7 +1536,7 @@ export default function HireDevelopersPageClient() {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
                             // className="w-full max-w-[90%] shadow-[0_0_80px_10px_#0000001a] lg:max-w-[40%] flex relative mx-auto p-2.5 xl:p-7.5 min-h-px h-full border border-white/10 bg-[#ffffff08] backdrop-blur-md rounded-xl"
-                          className=" w-full lg:max-w-[40%]  mx-auto  flex flex-col gap-4 p-4 xl:p-8 overflow-hidden rounded-xl
+                          className=" w-full lg:max-w-[40%]  mx-auto  flex flex-col gap-4 p-5 xl:p-6 overflow-hidden rounded-xl
                                     border border-white/10 bg-[#ffffff08] backdrop-blur-md shadow-[0_0_80px_10px_#0000001a] "
                         >
                             <HireFormSection />
@@ -2190,7 +2197,7 @@ export default function HireDevelopersPageClient() {
             </section>
 
             {/* hire top 1% wordpress devlopers */}
-            <Section >
+            <Section className="z-10 bg-white xl:!pb-0 ">
                 {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex"> */}
                 <Row className="flex">
                     <div className="flex relative min-h-px w-full">
@@ -2229,7 +2236,7 @@ export default function HireDevelopersPageClient() {
                                     </p>
                                 </motion.div>
                             </div>
-                            <div className="w-full mt-8 relative">
+                            <div className="w-full mt-8 relative z-30 xl:-mb-20">
                                 <div className="flex flex-col lg:flex-row gap-8 w-full">
                                     {/* Left Column: Info Boxes */}
                                     <div className="w-full lg:w-1/3 xl:w-1/4">
@@ -2432,11 +2439,16 @@ export default function HireDevelopersPageClient() {
             </Section>
             {/* section 8 : benifits  */}
             <section
-                className="relative z-0 mt-[-9%] bg-[url('/hire/Rectangle-4181.png')] 
-                   bg-center bg-size-[100%_auto] 
-                   px-0 pt-40.5 pb-16 
-                   transition-[background,border,border-radius,box-shadow] duration-300 
-                   max-[1280px]:mt-10 max-[1200px]:py-12.5"
+                // className="relative z-0 mt-[-9%] bg-[url('/hire/Rectangle-4181.png')] 
+                //    bg-center bg-size-[100%_auto] 
+                //    px-0 pt-40.5 pb-16 
+                //    transition-[background,border,border-radius,box-shadow] duration-300 
+                //    max-[1280px]:mt-10 max-[1280px]:py-12.5"
+                  className="relative z-1  bg-[url('/hire/Rectangle-4181.png')] 
+         bg-center bg-cover bg-size[100%_auto] 
+         px-0 pt-12.5 xl:pt-37.5 pb-12.5 
+         transition-[background,border,border-radius,box-shadow] duration-300 
+         max-[1280px]:py-16 "
             >
                 {/* <div className="flex relative mx-auto w-full max-w-[90%] lg:max-w-[80%]"> */}
                   <Row className="flex">
