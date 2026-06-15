@@ -25,19 +25,50 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (systemIdentifier === "hire") {
     const seoData = await getSeoData(slug);
+    const pageUrl = `https://inspiretechnosolution.com/${parentSlug}/${slug}`;
     if (!seoData) {
-      return { title: "Hire Developer | Inspire Techno Solution" };
+      return {
+        title: "Hire Developer | Inspire Techno Solution",
+        alternates: {
+          canonical: pageUrl,
+        },
+        openGraph: {
+          title: "Hire Developer | Inspire Techno Solution",
+          url: pageUrl,
+          type: "website",
+          images: ["/feature-logo.jpg"],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: "Hire Developer | Inspire Techno Solution",
+          images: ["/feature-logo.jpg"],
+          site: "@inspiretechnosolution",
+        },
+      };
     }
+
     return {
       title: seoData.seo_title || seoData.title,
       description: seoData.meta_description,
       keywords: seoData.seo_keyphrase
         ? seoData.seo_keyphrase.split(",").map((k) => k.trim())
         : [],
+      alternates: {
+        canonical: pageUrl,
+      },
       openGraph: {
         title: seoData.seo_title || seoData.title,
         description: seoData.meta_description || "",
+        url: pageUrl,
+        type: "website",
         images: [seoData.cover_image || "/default-og-image.png"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: seoData.seo_title || seoData.title,
+        description: seoData.meta_description || "",
+        images: [seoData.cover_image || "/default-og-image.png"],
+        site: "@inspiretechnosolution",
       },
     };
   }
@@ -48,9 +79,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         `/blogs/slug/${encodeURIComponent(slug)}`
       );
       const blog = res.data;
+      const pageUrl = `https://inspiretechnosolution.com/${parentSlug}/${slug}`;
       if (!blog) {
-        return { title: "Blog Post | Inspire Techno Solution" };
+        return {
+          title: "Blog Post | Inspire Techno Solution",
+          alternates: {
+            canonical: pageUrl,
+          },
+          openGraph: {
+            title: "Blog Post | Inspire Techno Solution",
+            url: pageUrl,
+            type: "article",
+            images: ["/feature-logo.jpg"],
+          },
+          twitter: {
+            card: "summary_large_image",
+            title: "Blog Post | Inspire Techno Solution",
+            images: ["/feature-logo.jpg"],
+            site: "@inspiretechnosolution",
+          },
+        };
       }
+
       return {
         title: blog.seo_title || blog.details.title.replace(/<[^>]*>/g, ""),
         description:
@@ -59,12 +109,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         keywords: blog.seo_keyphrase
           ? blog.seo_keyphrase.split(",").map((k) => k.trim())
           : [],
+        alternates: {
+          canonical: pageUrl,
+        },
         openGraph: {
           title: blog.seo_title || blog.details.title.replace(/<[^>]*>/g, ""),
           description:
             blog.meta_description ||
             blog.details.description.replace(/<[^>]*>/g, "").substring(0, 160),
-          images: [blog.cover_image || blog.image || "/default-og-image.png"],
+          url: pageUrl,
+          type: "article",
+          images: [blog.cover_image || blog.image || "//feature-logo.jpg"],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: blog.seo_title || blog.details.title.replace(/<[^>]*>/g, ""),
+          description:
+            blog.meta_description ||
+            blog.details.description.replace(/<[^>]*>/g, "").substring(0, 160),
+          images: [blog.cover_image || blog.image || "/feature-logo.jpg"],
+          site: "@inspiretechnosolution",
         },
       };
     } catch {
@@ -72,7 +136,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  return { title: "Not Found | Inspire Techno Solution" };
+  const pageUrl = `https://inspiretechnosolution.com/${parentSlug}/${slug}`;
+  return {
+    title: "Not Found | Inspire Techno Solution",
+    alternates: {
+      canonical: pageUrl,
+    },
+    openGraph: {
+      title: "Not Found | Inspire Techno Solution",
+      url: pageUrl,
+      type: "website",
+      images: ["/feature-logo.jpg"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Not Found | Inspire Techno Solution",
+      images: ["/feature-logo.jpg"],
+      site: "@inspiretechnosolution",
+    },
+  };
 }
 
 export default async function DynamicSubPage({ params }: Props) {

@@ -94,11 +94,23 @@ export default async function RootLayout({
   const navStructure = await getNavigationStructure();
   const websiteSettings = await getWebsiteSettings();
   const yoastSeo = await getYoastSeoData();
-  const { scripts, noscripts } = parseGoogleTags(yoastSeo?.googletags || ""); 
+  const { scripts, noscripts } = parseGoogleTags(yoastSeo?.googletags || "");
 
   return (
     <html lang="en" className={exo2.className}>
       <head>
+        {/* <link rel="canonical" href="https://inspiretechnosolution.com/" /> */}
+        <meta name="robots" content="index, follow" />
+        <link
+          rel="alternate"
+          hrefLang="en"
+          href="https://inspiretechnosolution.com/"
+        />
+        <link
+          rel="alternate"
+          hrefLang="x-default"
+          href="https://inspiretechnosolution.com/"
+        />
         <link rel="icon" href={websiteSettings?.favicon || "/favicon.ico"} />
         {/*  <GoogleTagManager gtmId="GTM-5FSVQSMT" /> */}
         {scripts.map((script, index) => (
@@ -107,7 +119,9 @@ export default async function RootLayout({
             src={script.src}
             async={script.async}
             defer={script.defer}
-            dangerouslySetInnerHTML={script.content ? { __html: script.content } : undefined}
+            dangerouslySetInnerHTML={
+              script.content ? { __html: script.content } : undefined
+            }
           />
         ))}
         <script
@@ -116,21 +130,21 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "SiteNavigationElement",
-              "name": [
+              name: [
                 "Home",
                 "About Us",
                 "Our Services",
                 "Hire Us",
-                "Our Portfolio"
+                "Our Portfolio",
               ],
-              "url": [
+              url: [
                 "https://inspiretechnosolution.com/",
                 "https://inspiretechnosolution.com/about-us/",
                 "https://inspiretechnosolution.com/our-service/",
                 "https://inspiretechnosolution.com/hire/",
-                "https://inspiretechnosolution.com/my-portfolio/"
-              ]
-            })
+                "https://inspiretechnosolution.com/my-portfolio/",
+              ],
+            }),
           }}
         />
         <script
@@ -140,28 +154,29 @@ export default async function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "@id": "https://inspiretechnosolution.com/#organization",
-              "name": "Inspire Techno Solution",
-              "url": "https://inspiretechnosolution.com/",
-              "logo": "https://inspiretechnosolution.com/logo.png",
-              "image": "https://inspiretechnosolution.com/feature-logo.jpg",
-              "description": "Inspire Techno Solution is a leading web and mobile app development company in India specializing in WordPress, ReactJS, NodeJS, PHP, Shopify, UI/UX Design, and custom software solutions.",
-              "email": "support@inspiretechnosolution.com",
-              "telephone": "+91-9327220484",
-              "areaServed": [
+              name: "Inspire Techno Solution",
+              url: "https://inspiretechnosolution.com/",
+              logo: "https://inspiretechnosolution.com/logo.png",
+              image: "https://inspiretechnosolution.com/feature-logo.jpg",
+              description:
+                "Inspire Techno Solution is a leading web and mobile app development company in India specializing in WordPress, ReactJS, NodeJS, PHP, Shopify, UI/UX Design, and custom software solutions.",
+              email: "support@inspiretechnosolution.com",
+              telephone: "+91-9327220484",
+              areaServed: [
                 {
                   "@type": "Country",
-                  "name": "India"
+                  name: "India",
                 },
                 {
                   "@type": "Country",
-                  "name": "Germany"
+                  name: "Germany",
                 },
                 {
                   "@type": "Country",
-                  "name": "United States"
-                }
+                  name: "United States",
+                },
               ],
-              "knowsAbout": [
+              knowsAbout: [
                 "WordPress Development",
                 "ReactJS Development",
                 "NodeJS Development",
@@ -169,32 +184,32 @@ export default async function RootLayout({
                 "MERN Development",
                 "UI/UX Design",
                 "Web Development",
-                "Mobile App Development"
+                "Mobile App Development",
               ],
-              "founder": {
+              founder: {
                 "@type": "Person",
-                "name": "Dhaval Nasit"
+                name: "Dhaval Nasit",
               },
-              "address":{  
-                "@type": "PostalAddress",  
-                "streetAddress": "302, Dhara Arcade Motavarachha Nr.Mahadevchowk",  
-                "addressLocality": "Surat",  
-                "addressRegion": "Gujarat",  
-                "postalCode": "394101",  
-                "addressCountry": "IN"
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "302, Dhara Arcade Motavarachha Nr.Mahadevchowk",
+                addressLocality: "Surat",
+                addressRegion: "Gujarat",
+                postalCode: "394101",
+                addressCountry: "IN",
               },
-              "sameAs": [
+              sameAs: [
                 "https://www.facebook.com/inspiretechnosolution",
                 "https://www.instagram.com/inspiretechnosolution/",
-                "https://www.linkedin.com/company/inspiretechnosolution/"
+                "https://www.linkedin.com/company/inspiretechnosolution/",
               ],
-              "contactPoint": {
+              contactPoint: {
                 "@type": "ContactPoint",
-                "telephone": "+91-9327220484",
-                "contactType": "customer service",
-                "availableLanguage": ["English", "Hindi", "Gujarati"]
-              }
-            })
+                telephone: "+91-9327220484",
+                contactType: "customer service",
+                availableLanguage: ["English", "Hindi", "Gujarati"],
+              },
+            }),
           }}
         />
       </head>

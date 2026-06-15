@@ -51,10 +51,9 @@ export async function getSeoData(slug: string): Promise<SeoData | null> {
     );
 
     const seo = response.success ? response.data : null;
+    const yoast = await getYoastSeoData();
 
-    // If no page-specific SEO data is found, fallback to Yoast SEO data
-    if (!seo || (!seo.seo_title && !seo.meta_description)) {
-      const yoast = await getYoastSeoData();
+    if (!seo) {
       if (yoast) {
         return {
           _id: yoast._id,
@@ -69,9 +68,16 @@ export async function getSeoData(slug: string): Promise<SeoData | null> {
           linkedPage: null,
         };
       }
+      return null;
     }
 
-    return seo;
+    return {
+      ...seo,
+      seo_title: seo.seo_title || yoast?.seo_title || seo.title || "",
+      meta_description: seo.meta_description || yoast?.meta_description || "",
+      seo_keyphrase: seo.seo_keyphrase || yoast?.seo_keyphrase || "",
+      cover_image: seo.cover_image || yoast?.cover_image || "",
+    };
   } catch (error) {
     console.error(`❌ SEO Error for ${slug}:`, error);
     // Fallback on error too

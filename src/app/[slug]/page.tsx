@@ -1,4 +1,3 @@
-
 import { Metadata } from "next";
 import { getSeoData } from "@/lib/seoService";
 import NotFoundPage from "@/components/NotFoundPage";
@@ -7,7 +6,7 @@ import ServicePageClient from "./servicePageClient";
 import AboutClient from "@/app/about-us/aboutusClient";
 import CareerClient from "@/app/career/careerClient";
 import ContactClient from "@/app/contact/contactClient";
-import FaqsClient from "@/app/faqs/faqsClient";
+// import FaqsClient from "@/app/faqs/faqsClient";
 import BlogPageClient from "@/app/blog/blogPageClient";
 import PortfolioClient from "@/app/our-portfolio/portfolioClient";
 import OurServicesClient from "@/components/our-services/ourServicesClient";
@@ -20,32 +19,68 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params; 
-  const seoData = await getSeoData(slug);
-  console.log("🚀 ~ generateMetadata ~ seoData:", seoData)
+  const { slug } = await params;
 
+  const seoData = await getSeoData(slug);
+  console.log("seo data ", seoData);
+
+  console.log("METADATA PAGE:", slug);
+
+  const pageUrl = `https://inspiretechnosolution.com/${slug}`;
   if (!seoData) {
     return {
       title: "Our Service | Inspire Techno Solution",
-      description: "Top-Tier Web & App Development Services"
+      description: "Top-Tier Web & App Development Services",
+      alternates: {
+        canonical: pageUrl,
+      },
+      openGraph: {
+        title: "Our Service | Inspire Techno Solution",
+        description: "Top-Tier Web & App Development Services",
+        url: pageUrl,
+        type: "website",
+        images: ["/feature-logo.jpg"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "Our Service | Inspire Techno Solution",
+        description: "Top-Tier Web & App Development Services",
+        images: ["/feature-logo.jpg"],
+        site: "@inspiretechnosolution",
+      },
     };
   }
-
   return {
     title: seoData.seo_title || seoData.title,
     description: seoData.meta_description,
     keywords: seoData.seo_keyphrase
       ? seoData.seo_keyphrase.split(",").map((k) => k.trim())
       : [],
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
       title: seoData.seo_title || seoData.title,
       description: seoData.meta_description || "",
-      images: [seoData.cover_image || "/default-og-image.png"],
+      url: pageUrl,
+      type: "website",
+      images: [seoData.cover_image || "/feature-logo.jpg"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seoData.seo_title || seoData.title,
+      description: seoData.meta_description || "",
+      images: [seoData.cover_image || "/feature-logo.jpg"],
+      site: "@inspiretechnosolution",
     },
   };
 }
 
-export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ServicePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const seoData = await getSeoData(slug);
 
@@ -59,22 +94,22 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     switch (seoData.systemIdentifier) {
       case "about-us":
         return <AboutClient title={displayTitle} />;
+      case "blog":
+        return <BlogPageClient />;
       case "career":
         return <CareerClient />;
       case "contact":
         return <ContactClient />;
-      // case "faqs":
-      //   return <FaqsClient />;
-      case "blog":
-        return <BlogPageClient />;
+      case "hire":
+        return <HireDevelopersPage />;
       case "portfolio":
         return <PortfolioClient />;
       case "services":
         return <OurServicesClient />;
       case "training":
         return <TrainingPageClient />;
-      case "hire":
-        return <HireDevelopersPage />;
+      // case "faqs":
+      //   return <FaqsClient />;
       default:
         break;
     }

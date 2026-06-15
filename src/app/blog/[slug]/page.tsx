@@ -12,7 +12,7 @@ type Props = {
 // Pre-generate static params
 export async function generateStaticParams() {
   try {
-    const apiUrl = API_BASE_URL || "https://itsbackend-production.up.railway.app";
+    const apiUrl = API_BASE_URL ;
     const res = await fetch(`${apiUrl}/api/blogs/slugs`);
     const response = await res.json();
 
@@ -50,10 +50,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     );
     const blog = res.data;
 
+    const pageUrl = `https://inspiretechnosolution.com/blog/${slug}`;
     if (!blog) {
-      return { title: "Blog Post | Inspire Techno Solution" };
+      return {
+        title: "Blog Post | Inspire Techno Solution",
+        alternates: {
+          canonical: pageUrl,
+        },
+        openGraph: {
+          title: "Blog Post | Inspire Techno Solution",
+          url: pageUrl,
+          type: "article",
+          images: ["/feature-logo.jpg"],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: "Blog Post | Inspire Techno Solution",
+          images: ["/feature-logo.jpg"],
+          site: "@inspiretechnosolution",
+        },
+      };
     }
-
     return {
       title: blog.seo_title || blog.details.title.replace(/<[^>]*>/g, ""),
       description:
@@ -62,12 +79,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       keywords: blog.seo_keyphrase
         ? blog.seo_keyphrase.split(",").map((k) => k.trim())
         : [],
+      alternates: {
+        canonical: pageUrl,
+      },
       openGraph: {
         title: blog.seo_title || blog.details.title.replace(/<[^>]*>/g, ""),
         description:
           blog.meta_description ||
           blog.details.description.replace(/<[^>]*>/g, "").substring(0, 160),
-        images: [blog.cover_image || blog.image || "/default-og-image.png"],
+        url: pageUrl,
+        type: "article",
+        images: [blog.cover_image || blog.image || "/feature-logo.jpg"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: blog.seo_title || blog.details.title.replace(/<[^>]*>/g, ""),
+        description:
+          blog.meta_description ||
+          blog.details.description.replace(/<[^>]*>/g, "").substring(0, 160),
+        images: [blog.cover_image || blog.image || "/feature-logo.jpg"],
+        site: "@inspiretechnosolution",
       },
     };
   } catch (error) {

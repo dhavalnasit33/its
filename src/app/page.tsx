@@ -16,14 +16,27 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   // Return dynamic metadata from the API
+  const pageUrl = "https://inspiretechnosolution.com";
   return {
     title: seoData.seo_title || seoData.title,
     description: seoData.meta_description,
     keywords: seoData.seo_keyphrase ? seoData.seo_keyphrase.split(',').map(k => k.trim()) : [],
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
       title: seoData.seo_title || seoData.title,
       description: seoData.meta_description || "",
-      images: [seoData.cover_image || '/default-og-image.png'],
+      url: pageUrl,
+      type: "website",
+      images: [seoData.cover_image || '/feature-logo.jpg'],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seoData.seo_title || seoData.title,
+      description: seoData.meta_description || "",
+      images: [seoData.cover_image || '/feature-logo.jpg'],
+      site: "@inspiretechnosolution",
     },
   };
 }

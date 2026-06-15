@@ -9,23 +9,51 @@ type Props = {
 // This function generates the specific SEO for the service sub-page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params; // 👈 await params here
-    const seoData = await getSeoData(slug);
-    console.log("🚀 ~ generateMetadata ~ seoData:", seoData)
+    const seoData = await getSeoData(slug); 
 
+    const pageUrl = `https://inspiretechnosolution.com/hire/${slug}`;
     if (!seoData) {
-        return { title: "Hire Developer | Inspire Techno Solution" };
+        return {
+            title: "Hire Developer | Inspire Techno Solution",
+            alternates: {
+                canonical: pageUrl,
+            },
+            openGraph: {
+                title: "Hire Developer | Inspire Techno Solution",
+                url: pageUrl,
+                type: "website",
+                images: ["/feature-logo.jpg"],
+            },
+            twitter: {
+                card: "summary_large_image",
+                title: "Hire Developer | Inspire Techno Solution",
+                images: ["/feature-logo.jpg"],
+                site: "@inspiretechnosolution",
+            },
+        };
     }
-
     return {
-        title: seoData.seo_title || seoData.title,
+        title: seoData.title || seoData.seo_title,
         description: seoData.meta_description,
         keywords: seoData.seo_keyphrase
             ? seoData.seo_keyphrase.split(",").map((k) => k.trim())
             : [],
+        alternates: {
+            canonical: pageUrl,
+        },
         openGraph: {
-            title: seoData.seo_title || seoData.title,
+            title: seoData.title || seoData.seo_title,
             description: seoData.meta_description || "",
-            images: [seoData.cover_image || "/default-og-image.png"],
+            url: pageUrl,
+            type: "website",
+            images: [seoData.cover_image || "/feature-logo.jpg"],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: seoData.title || seoData.seo_title,
+            description: seoData.meta_description || "",
+            images: [seoData.cover_image || "/feature-logo.jpg"],
+            site: "@inspiretechnosolution",
         },
     };
 }
