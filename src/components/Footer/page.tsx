@@ -1,7 +1,7 @@
 "use client";
 
 import { IoLogoBehance } from "react-icons/io5";
-import { FaR, FaSquareInstagram, FaW, FaAndroid } from "react-icons/fa6";
+import { FaR, FaSquareInstagram, FaW, FaAndroid, FaLinkedin, FaInstagram } from "react-icons/fa6";
 import { DiAndroid } from "react-icons/di";
 import { AiOutlineLinkedin } from "react-icons/ai";
 import { RiFacebookCircleLine } from "react-icons/ri";
@@ -21,11 +21,12 @@ import {
   FaReact,
   FaNodeJs,
 } from "react-icons/fa";
-import { MdEmail, MdPhone, MdWork } from "react-icons/md";
-import { BiHelpCircle } from "react-icons/bi";
+import { MdEmail, MdMarkEmailRead, MdPhone, MdWork } from "react-icons/md";
+import { BiHelpCircle, BiPhone } from "react-icons/bi";
 import { FaLaptopCode, FaMobileAlt, FaPaintBrush } from "react-icons/fa";
 import Section from "../Section";
 import Row from "../Row";
+import { HiMail } from "react-icons/hi";
 
 // -------------------- Main Page --------------------
 export default function ContactFooterPage() {
@@ -79,6 +80,169 @@ export default function ContactFooterPage() {
         )}
       </Row>
 
+  {/* <Row className=" mx-auto bg-gray-100 rounded-xl p-6 md:p-8 lg:px-10 py-9 " >
+        <div className="flex max-lg:flex-wrap items-center gap-6 justify-between">
+
+        <div className="max-lg:pb-4">
+          <Link href="/" className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Inspire Techno Solution"
+                width={210}
+                height={50}
+                priority
+              />
+            </Link>
+        </div>
+
+        <div className=" flex gap-8 lg:gap-10 lg:justify-end max-lg:flex-wrap">
+
+          <div className="flex items-center gap-4">
+            <Link
+              href={`tel:${phonePrimaryClean}`}
+            > 
+              <div
+                className="  w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-[#d68029] to-[#f7b733] ">
+                <MdPhone
+                  size={22}
+                  className="text-white"
+                />
+              </div>
+            </Link>
+
+              <div className="relative pl-4">
+                <div className=" absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
+
+                <p className="text-[13px] text-[#161616] uppercase">
+                  Ready to Build? Let's Talk!
+                </p>
+
+                <Link
+                  href={`tel:${phonePrimaryClean}`}
+                  className="flex items-center gap-4"
+                >
+                  <h4 className="font-semibold text-lg lg:text-xl text-[#0d1b2a] break-all">
+                    {phonePrimary}
+                  </h4>
+                </Link>
+              </div>
+
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link
+              href={`mailto:${hrEmail}`}
+            > 
+              <div
+                className="  w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-[#d68029] to-[#f7b733] ">
+                <MdEmail
+                  size={22}
+                  className="text-white"
+                />
+              </div>
+            </Link>
+
+            <div className="relative pl-4">
+              <div className=" absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
+
+              <p className="text-[13px] text-[#161616] uppercase">
+                Mail to our HR Department
+              </p>
+
+              <Link
+                href={`mailto:${hrEmail}`}
+                className="flex items-center gap-4"
+              >
+                <h4 className="font-semibold  text-lg lg:text-xl  text-[#0d1b2a] break-all">
+                  {hrEmail}
+                </h4>
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link
+               href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
+            > 
+              <div
+                className="  w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-[#d68029] to-[#f7b733] ">
+                <FaMicrosoft
+                  size={22}
+                  className="text-white"
+                />
+              </div>
+            </Link>
+
+            <div className="relative pl-4">
+              <div className=" absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
+
+              <p className="text-[13px] text-[#161616] uppercase">
+                Official Microsoft Partner
+              </p>
+
+              <Link
+                href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
+                className="flex items-center gap-4"
+              >
+                <h4 className="font-semibold text-lg lg:text-xl text-[#0d1b2a] break-all">
+                  {microsoftHandle}
+                </h4>
+              </Link>
+            </div>
+          </div>
+        </div>               
+        </div>
+
+        <div className="h-px bg-gray-300 my-8" />
+        <div
+          className="
+            flex
+            flex-col
+            lg:flex-row
+            justify-between
+            items-center text-center
+            gap-6
+          "
+        >
+            <p className=" break-all text-gray-700 ">
+            Driving innovation through digital transformation
+            for businesses across industries.
+          </p>
+
+           <div className="flex flex-wrap gap-4 text-white">
+                  <a
+                    href={linkedinLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-700 p-1 text-2xl rounded-2xl"
+                  >
+                    <AiOutlineLinkedin className="text-xl hover:text-[#d68029] transition-colors" />
+                  </a>
+                  <a href={behanceLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl">
+                    <IoLogoBehance className="text-xl hover:text-[#d68029] transition-colors" />
+                  </a>
+                  <a
+                    href={facebookLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-700 p-1 text-2xl rounded-2xl"
+                  >
+                    <RiFacebookCircleLine className="text-xl hover:text-[#d68029] transition-colors" />
+                  </a>
+                  <a
+                    href={instagramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-700 p-1 text-2xl rounded-2xl"
+                  >
+                    <FaSquareInstagram className="text-xl hover:text-[#d68029] transition-colors" />
+                  </a>
+                  <a href={youtubeLink} target="_blank" rel="noopener noreferrer" className="bg-gray-700 p-1 text-2xl rounded-2xl">
+                    <FaYoutube className="text-xl hover:text-[#d68029] transition-colors" />
+                  </a>
+                </div>
+        </div>
+      </Row> */}
       {/* ---------------- Footer Content ---------------- */}
       {/* <div className="bg-[url('/footer-bg.png')] bg-cover bg-center md:pt-112.5 py-16 px-6"> */}
       <Section
@@ -95,13 +259,6 @@ export default function ContactFooterPage() {
                   href={`mailto:${hrEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
                 >
-                  {/* <Image
-                    src="/icon/Mail.png"
-                    alt="mail"
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />{" "} */}
                   <MdEmail size={20}  className="flex-shrink-0"/>
                   <h4>{hrEmail}</h4>
                 </Link>
@@ -110,13 +267,6 @@ export default function ContactFooterPage() {
                   className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] "
                 >
                   <MdPhone size={20}  className="flex-shrink-0"/>
-                  {/* <Image
-                    src="/icon/Ringer Volume.png"
-                    alt="Volume"
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />{" "} */}
                   <h4>{phonePrimary}</h4>
                 </Link>
               </div>
@@ -129,13 +279,6 @@ export default function ContactFooterPage() {
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
                 >
                   <MdEmail size={20}  className="flex-shrink-0"/>
-                  {/* <Image
-                    src="/icon/Mail.png"
-                    alt="mail"
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />{" "} */}
                   <h4>{salesEmail}</h4>
                 </Link>
                  <Link
@@ -194,13 +337,6 @@ export default function ContactFooterPage() {
                     className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] transition-colors"
                   >
                     <BiHelpCircle size={20} />
-                    {/* <Image
-                      src="/icon/Safety Collection Place.png"
-                      alt="about us"
-                      width={24}
-                      height={24}
-                      className="object-contain"
-                    />{" "} */}
                     About Us
                   </Link>
                 </li>
@@ -210,13 +346,6 @@ export default function ContactFooterPage() {
                     className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] transition-colors"
                   >
                     <MdWork size={20} />
-                    {/* <Image
-                      src="/icon/Mail.png"
-                      alt="career"
-                      width={24}
-                      height={24}
-                      className="object-contain"
-                    />{" "} */}
                     Careers
                   </Link>
                 </li>
@@ -242,13 +371,6 @@ export default function ContactFooterPage() {
                     href="/contact"
                     className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] transition-colors"
                   >
-                    {/* <Image
-                      src="/icon/Ringer Volume.png"
-                      alt="Volume"
-                      width={24}
-                      height={24}
-                      className="object-contain"
-                    />{" "} */}
                     <MdPhone size={20} />
                     Contact Us
                   </Link>

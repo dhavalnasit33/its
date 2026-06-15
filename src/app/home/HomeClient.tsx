@@ -2,6 +2,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 // import TechnologySection from "@/components/home/TechnologySection";
 // import WebProcess from "@/components/home/WebProcess";
 // import Industries from "@/components/home/Industries";
@@ -59,6 +65,8 @@ import Button from "@/components/Button";
 // };
 
 import dynamic from "next/dynamic";
+import ContactPopup from "@/components/ContactPopup";
+import { FiClock, FiHeart, FiShield, FiUsers } from "react-icons/fi";
 
 // Dynamically import heavy/below-the-fold components to improve PageSpeed and load performance
 const ParticlesBg = dynamic(() => import("@/components/home/Particles"), { ssr: false });
@@ -218,6 +226,29 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	];
 
 
+	const statsData = [
+  {
+    icon: FiShield,
+    title: "NDA on Day One",
+    description: "Your clients never find us",
+  },
+  {
+    icon: FiClock,
+    title: "48hr Kickoff",
+    description: "Projects start fast",
+  },
+  {
+    icon: FiUsers,
+    title: "40+ Agency Partners",
+    description: "US, UK, Australia & Canada",
+  },
+  {
+    icon: FiHeart,
+    title: "95% Retention Rate",
+    description: "Partnerships since 2012",
+  },
+];
+
 	// const sliderStyles = `
     //   .slick-slider {
     //     width: 100%;
@@ -241,6 +272,9 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 
 	return (
+		<>
+		{/* <ContactPopup /> */}
+
 		<main className="relative isolate w-full bg-white text-gray-900">
 			{/* <style dangerouslySetInnerHTML={{ __html: sliderStyles }} /> */}
 			<Image
@@ -304,7 +338,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 						<div className="flex justify-center">
 							<motion.div
-								className="mb-17"
+								className="mb-14"
 								initial={{ opacity: 0, scale: 0.8 }}
 								whileInView={{ opacity: 1, scale: 1 }}
 								whileHover={{ y: -2 }}
@@ -330,7 +364,38 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 					</motion.div>
 
-					<motion.div className="flex flex-wrap gap-4 md:gap-3 justify-center md:mb-9" >
+					 <div className="max-w-[500px] lg:max-w-[840px] mx-auto px-4">
+						<div className="h-[1px] bg-[rgba(255,255,255,0.1)] my-10"></div>
+						<div className="grid grid-cols-2 lg:grid-cols-4 max-lg:gap-4">
+						{statsData.map((item, index) => {
+							const Icon = item.icon;
+
+							return (
+							<div key={index}
+								className="relative flex flex-col items-center text-center px-4 max-lg:py-5 max-lg:bg-[rgba(255,255,255,0.04)] max-lg:rounded-lg"
+							>
+								{index !== statsData.length - 1 && (
+									<div className=" hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-24 bg-gradient-to-b from-transparent via-[#D68029] to-transparent " />
+								)}
+								<Icon
+									size={34}
+									className="text-[#ff7a1a]/80 mb-3"
+								/>
+
+								<h3 className="text-white opacity-90 font-bold text-sm">
+									{item.title}
+								</h3>
+
+								<p className="text-white opacity-70 mt-2 font-medium text-xs">
+									{item.description}
+								</p>
+							</div>
+							);
+						})}
+						</div>
+					</div>
+
+					{/* <motion.div className="flex flex-wrap gap-4 md:gap-3 justify-center md:mb-9" >
 						{
 							homePageData.reasonsToChoose.deatailBox.length > 0 &&
 							homePageData.reasonsToChoose.deatailBox.map((item, idx) => (
@@ -344,13 +409,37 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 									/>
 								</div>
 							))}
-					</motion.div>
+					</motion.div> */}
 				</Row>
 				{/* </div> */}
 
 				<div className="absolute bottom-0 left-0 right-0 h-[150px] bg-[linear-gradient(0deg,#030b1a_0,transparent)] pointer-events-none z-[10]" />
 			</section>
-
+			<Section className="bg-gray-50">
+					 <Row className=" mx-auto px-4">
+						<motion.div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 " >
+						{
+							homePageData.reasonsToChoose.deatailBox.length > 0 &&
+							homePageData.reasonsToChoose.deatailBox.map((item, idx) => (
+								<div
+									key={idx}
+									// className="relative  rounded-xl overflow-hidden "
+									className={`
+									relative  overflow-hidden border-r border-gray-300
+									${(idx % 4 === 3) ? "border-r-0" : ""}
+									`}
+								>
+									{/* ${(idx % 4 === 3) ? "border-r-0" : ""} */}
+									<RoundStatsCard
+										value={item.total}
+										label={item.title}
+									/>
+								</div>
+							))}
+					</motion.div>
+					</Row>
+			</Section>
+{/* 
 			<Section className=" overflow-hidden text-white ">
 				<video
 					autoPlay
@@ -362,11 +451,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				>
 					<source src="/hire/hire_bg.mp4" type="video/mp4" />
 				</video>
-				{/* <div className="absolute inset-0 bg-gradient-to-br from-slate-950/75 via-slate-950/80 to-slate-900/75 pointer-events-none"></div> */}
 				<div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-900/60 to-slate-800/75 pointer-events-none"></div>
 
-				{/* <div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-8 lg:gap-14 items-stretch  pb-10 md:pb-20
-				w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl"> */}
 				<Row className="container  flex flex-col lg:flex-row gap-8 lg:gap-14 items-stretch  pb-10 md:pb-20 z-10 2xl:!max-w-7xl">
 					<div className="lg:w-2/5 flex flex-col">
 						<div className="flex">
@@ -382,7 +468,6 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								__html: homePageData?.aisection?.description || "",
 							}}
 						/>
-							{/* {homePageData?.aisection?.description}</p> */}
 						<motion.div
 							initial={{ opacity: 0, scale: 0.8 }}
 							whileInView={{ opacity: 1, scale: 1 }}
@@ -420,9 +505,83 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					
 					</div>
 					</Row>
-				{/* </div> */}
-			</Section>
+			</Section> */}
 
+			<Section className="bg-white z-10">
+				<Row>
+					<div className="grid lg:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-20">
+					
+					{/* LEFT SIDE */}
+
+					<div>
+						<h2 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight  "
+							dangerouslySetInnerHTML={{ __html: formattedTitle?.replace(/<\/?h[1-6][^>]*>/gi, "") }}
+						/>
+					</div>
+					<div>
+						<p className="text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide "
+							dangerouslySetInnerHTML={{
+								__html: homePageData?.aisection?.description || "",
+							}}
+						/>
+
+						<Button
+							motionProps={{
+							initial: { opacity: 0, scale: 0.8 },
+							whileInView: { opacity: 1, scale: 1 },
+							viewport: { once: true, amount: 0.2},
+							transition: { duration: 0.4, ease: "easeInOut" },
+						}}
+						text="Let's Build Something That Scales"
+						href="#contact-form-section"
+						icon="/navbar/btn_icon.png"
+						className="mt-8"
+						/>
+					</div>
+					</div>
+				</Row>
+				<Row>
+					<Swiper
+						modules={[Autoplay, Navigation, Pagination]}
+						spaceBetween={24}
+						slidesPerView={1}
+						loop={true}
+						speed={1000}
+						autoplay={{
+						delay: 1500,
+						disableOnInteraction: false,
+						}}
+						breakpoints={{
+						640: { slidesPerView: 1 },
+						768: { slidesPerView: 2 },
+						1024: { slidesPerView: 3 },
+						}}
+					>
+						{homePageData?.aisection?.deatailBox?.map((item, idx) => (
+						<SwiperSlide key={idx} className="!h-auto flex">
+							<div className="relative group rounded-xl overflow-hidden h-full w-full flex">
+
+							{/* glow background */}
+							<span
+								className="absolute -top-5 -right-5 h-32 w-32 blur-2xl z-10"
+								style={{
+								background: `radial-gradient(circle, ${glowColors[idx % glowColors.length]}, transparent 70%)`,
+								}}
+							/>
+
+							<AiServices
+								title={item.title}
+								heading={item.heading}
+								description={item.description}
+								glowColor={glowColors[idx % glowColors.length]}
+							/>
+
+							</div>
+						</SwiperSlide>
+						))}
+					</Swiper>
+				</Row>
+			</Section>
 
 
 
@@ -684,6 +843,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 			<Testimonials />
 			<EngagementModel />
 		</main>
+		</>
 	);
 }
 

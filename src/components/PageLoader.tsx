@@ -10,7 +10,7 @@ const Loader = () => {
         alt="Loading"
         width={80}
         height={80}
-        className="animate-spin"
+        className="transition-all duration-750 delay-300 ease-in-out"
       />
     </div>
   );

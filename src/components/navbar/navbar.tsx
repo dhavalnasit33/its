@@ -11,9 +11,16 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { NavigationStructure } from "@/lib/navigationService";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import Row from "../Row";
+import { MdOutlineMail } from "react-icons/md";
+import { FaWhatsapp } from "react-icons/fa6";
+import { FaWhatsappSquare } from "react-icons/fa";
 
 interface NavbarProps {
   navStructure: NavigationStructure;
+}
+interface ContactPopupProps {
+  phonePrimary?: string;
+  hrEmail?: string;
 }
 
 export default function Navbar({ navStructure }: NavbarProps) {
@@ -213,7 +220,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
   return (
     // <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
     <nav className="w-full bg-white shadow-sm sticky top-0 z-[9999]">
-      <Row className=" h-20 flex justify-between items-center">
+      <Row className=" h-20 flex justify-between items-center gap-2">
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
@@ -713,6 +720,25 @@ export default function Navbar({ navStructure }: NavbarProps) {
             );
           })}
         </ul>
+        {/* ----menu butto ------- */}
+        <div className="flex gap-5 items-center xl:bg-gray-100 py-2 px-3 rounded-md hidden xl:inline-flex">
+          <div className="relative  group">
+            <div  className="cursor-pointer bg-white p-2 rounded-md ">
+                <Image
+                    src="/navbar/contact_icon.png"
+                    alt="contact_icon"
+                    width={30}
+                    height={30}
+                  />
+            </div>
+            <ContactPopup   
+              phonePrimary={phonePrimary}
+              hrEmail={hrEmail}
+            />
+          </div>
+
+
+
 
         <div className="relative hidden xl:inline-flex items-center justify-center overflow-hidden gap-2 rounded-md bg-[#0d1b2a] px-5 py-3 text-sm font-semibold text-white transition-colors group">
           <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#D68029] rounded group-hover:w-56 group-hover:h-56"></span>
@@ -732,7 +758,23 @@ export default function Navbar({ navStructure }: NavbarProps) {
             />
           </Link>
         </div>
+        </div>
 
+        <div className="flex gap-2 items-center xl:hidden">
+          <div className="relative group ">
+            <div className="border border-gray-300 rounded-full p-2">
+            <Image
+                      src="/navbar/contact_icon.png"
+                      alt="contact_icon"
+                      width={24}
+                      height={24}
+                    />
+            </div>
+            <ContactPopup   
+              phonePrimary={phonePrimary}
+              hrEmail={hrEmail}
+            />
+          </div>
         <div
           className="flex flex-col gap-1.5 cursor-pointer xl:hidden"
           onClick={() => setMenuOpen(true)}
@@ -743,6 +785,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
             fontWeight={600}
             color="#d68029"
           />
+        </div>
         </div>
       </Row>
 
@@ -1074,3 +1117,67 @@ export default function Navbar({ navStructure }: NavbarProps) {
     </nav>
   );
 }
+
+
+const ContactPopup = ({ phonePrimary, hrEmail, }: ContactPopupProps) => {
+  return (
+    <div className=" absolute top-full left-0 -translate-x-[70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-[300px] xl:w-[340px] bg-white rounded-lg shadow-2xl 
+    border border-gray-200 p-5 xl:p-6 z-[99999]  opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
+    >
+      <div  className=" absolute -top-[10px] right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
+      <h3 className="text-xl font-bold text-black mb-6">
+        Let's Connect With Us!
+      </h3>
+
+      <div className="flex items-center gap-3 xl:gap-4 mb-5">
+        <div className=" w-12 h-12 bg-white rounded-md shadow-lg flex items-center
+            justify-center transition-all duration-300  hover:shadow-xl ">
+          <Image
+            src="/navbar/menu_whatsapp.png"
+            alt="WhatsApp"
+            width={26}
+            height={26}
+          />
+        </div>
+        <div>
+          <h4 className="font-semibold text-green-500">
+            WhatsApp
+          </h4>
+          {phonePrimary && (
+            <Link
+              href={`tel:${phonePrimary}`}
+              className="break-all text-gray-600 text-sm xl:text-base"
+            >
+              {phonePrimary}
+            </Link>
+          )}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3 xl:gap-4">
+        <div className=" w-12 h-12 bg-white rounded-md shadow-lg flex items-center
+            justify-center transition-all duration-300  hover:shadow-xl ">
+          <Image
+            src="/navbar/menu_mail.png"
+            alt="WhatsApp"
+            width={26}
+            height={26}
+          />
+        </div>
+        <div>
+          <h4 className="font-semibold text-red-500">
+            HR Inquiry
+          </h4>
+          {hrEmail && (
+            <Link
+              href={`mailto:${hrEmail}`}
+              className="break-all text-gray-600  text-sm xl:text-base"
+            >
+              {hrEmail}
+            </Link>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
