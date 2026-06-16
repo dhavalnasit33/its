@@ -67,6 +67,8 @@ import Button from "@/components/Button";
 import dynamic from "next/dynamic";
 import ContactPopup from "@/components/ContactPopup";
 import { FiClock, FiHeart, FiShield, FiUsers } from "react-icons/fi";
+import PlatformSlider from "@/components/home/PlatformSlider";
+import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
 
 // Dynamically import heavy/below-the-fold components to improve PageSpeed and load performance
 const ParticlesBg = dynamic(() => import("@/components/home/Particles"), { ssr: false });
@@ -96,6 +98,21 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	const [notFound, setNotFound] = useState(false);
 	const [data, setData] = useState<HomePageData | null>(null);
 	const [isMobile, setIsMobile] = useState(false);
+	const [navStructure, setNavStructure] = useState<NavigationStructure | null>(null);
+
+	useEffect(() => {
+	const fetchNavData = async () => {
+		try {
+		const data = await getNavigationStructure();
+		setNavStructure(data);
+		} catch (error) {
+		console.error(error);
+		}
+	};
+
+	fetchNavData();
+	}, []);
+
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -267,9 +284,22 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 	const formattedTitle = homePageData?.aisection?.mainTitle?.replace(
 		/<strong>(.*?)<\/strong>/g,
-		`<strong class="bg-gradient-to-r from-orange-400 via-amber-300 to-sky-300 bg-clip-text text-transparent">$1</strong>`
+		// `<strong class="bg-gradient-to-r from-orange-400 via-amber-300 to-sky-300 bg-clip-text text-transparent">$1</strong>`
+		`<strong class= "bg-gradient-to-r from-[#d68029] to-[#f7b733]   bg-clip-text text-transparent">$1</strong>`  
 	);
 
+// 	 const handleScroll = (e) => {
+//     e.preventDefault();
+
+//     const section = document.getElementById("conversation");
+
+//     if (section) {
+//       section.scrollIntoView({
+//         behavior: "smooth",
+//         block: "start",
+//       });
+//     }
+//   };
 
 	return (
 		<>
@@ -336,7 +366,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 							dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.description || "", }}
 						/>
 
-						<div className="flex justify-center">
+						{/* <div className="flex justify-center">
 							<motion.div
 								className="mb-14"
 								initial={{ opacity: 0, scale: 0.8 }}
@@ -359,9 +389,45 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 									</span>
 								</a>
 							</motion.div>
+						</div> */}
+						<div className="flex flex-wrap relative w-full justify-center mb-14">
+							<div className="relative flex flex-wrap items-center w-full max-w-[550px]">
+
+								<Link
+								href="#contact-form-section"
+								className=" w-full sm:flex-1 bg-white
+									text-[#0d1b2a] text-sm md:text-base font-semibold uppercase text-center max-sm:mb-3 leading-5 py-3 px-8 md:px-16 max-[640px]:rounded-lg sm:rounded-l-xl  transition-all
+									duration-300  hover:bg-gradient-to-r hover:from-[#20548b] hover:to-[#0d1b2a] hover:text-white "
+								>
+									Request a Callback
+								</Link>
+
+								<span
+								className=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  z-10 flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-[#0d1b2a]
+									text-white  text-sm font-medium  uppercase shadow-[0_0_0_4px_rgba(255,255,255,0.25)] sm:shadow-[0_0_0_6px_rgba(255,255,255,0.25)]  "
+								>
+									OR
+								</span>
+
+								<Link
+								href="#contact-form-section"
+								className=" w-full sm:flex-1 bg-gradient-to-r from-[#d68029] to-[#f7b733] text-[#0d1b2a] text-sm md:text-base font-semibold uppercase text-center leading-5
+									py-3 px-8 md:px-16 max-[640px]:rounded-lg sm:rounded-r-xl  transition-all duration-300   hover:bg-gradient-to-r hover:from-[#0d1b2a] hover:to-[#20548b] hover:text-white"
+								>
+									Schedule Free Consultation
+								</Link>
+
+							</div>
 						</div>
 
-
+					{/* <button
+						onClick={handleScroll}
+						className=" inline-flex -center justify-center p-1 border-2 border-[#f7b733] rounded-full  cursor-pointer "
+					>
+						<div className=" relative w-[30px] h-[60px] border-2 border-white rounded-full " >
+						<div className=" absolute left-1/2 top-6 w-3  h-3  bg-white rounded-full mx-auto animate-scrollDot " />
+						</div>
+					</button> */}
 					</motion.div>
 
 					 <div className="max-w-[500px] lg:max-w-[840px] mx-auto px-4">
@@ -415,6 +481,15 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 				<div className="absolute bottom-0 left-0 right-0 h-[150px] bg-[linear-gradient(0deg,#030b1a_0,transparent)] pointer-events-none z-[10]" />
 			</section>
+
+			<Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+				<Row>
+					{navStructure && (
+						<PlatformSlider navStructure={navStructure} />
+					)}
+				</Row>
+			</Section>
+
 			<Section className="bg-gray-50">
 					 <Row className=" mx-auto px-4">
 						<motion.div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 " >

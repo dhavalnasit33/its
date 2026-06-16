@@ -769,3 +769,20 @@ html {
   /* letter-spacing: -0.04px; */
   word-break: break-word;
 }
+
+@keyframes scrollDot {
+  0% {
+    transform: translate(-50%, -18px);
+  }
+
+  100% {
+    transform: translate(-50%, 18px);
+  }
+}
+
+.animate-scrollDot {
+  animation: scrollDot 2s ease-in-out infinite alternate;
+}
+.serviceSwiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
