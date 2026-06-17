@@ -130,7 +130,7 @@ export default function AiServices({ title, heading, description, glowColor }: A
           {title}
         </p>
 
-        <h4 className="text-[24px] sm:text-[40px] font-bold mb-2  group-hover:text-emerald-200 transition-colors leading-tight "
+        <h4 className="text-[24px] sm:text-[36px] font-bold mb-2  group-hover:text-emerald-200 transition-colors leading-tight "
           style={{
             color: isHover ? textColor : "#000000",
           }}>

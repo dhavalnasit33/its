@@ -155,10 +155,10 @@ html {
     position: absolute;
     background: url("/blog/Lines.png");
     background-size: cover !important;
-    background-position: center center;
+    background-position: center bottom;
     height: 241% !important;
     width: 100% !important;
-    top: -112% !important;
+    top: -118% !important;
     left: 0% !important;
     z-index: -1;
     background-repeat: no-repeat;

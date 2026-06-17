@@ -2006,7 +2006,7 @@ export default function ContactFooterPage() {
                 >
                   Privacy Policy
                 </a>
-                <a href="/"
+                <a href="/terms-condition"
                   className="px-2 md:px-3 border-r border-white/20 hover:text-[#d68029]"
                 >
                   Terms & Conditions

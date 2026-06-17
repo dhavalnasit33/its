@@ -286,13 +286,13 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	const formattedTitle = homePageData?.aisection?.mainTitle?.replace(
 		/<strong>(.*?)<\/strong>/g,
 		// `<strong class="bg-gradient-to-r from-orange-400 via-amber-300 to-sky-300 bg-clip-text text-transparent">$1</strong>`
-		`<strong class= "bg-gradient-to-r from-[#d68029] to-[#f7b733]   bg-clip-text text-transparent">$1</strong>`  
+		`<strong >$1</strong>`  
 	);
 
 	const handleScroll = ( e: React.MouseEvent<HTMLButtonElement> ) => {
   e.preventDefault();
 
-  const section = document.getElementById("ai-section");
+  const section = document.getElementById("ai-service");
 
   if (section) {
     section.scrollIntoView({
@@ -461,11 +461,9 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						onClick={handleScroll}
 						className=" inline-flex -center justify-center p-1 border-2 border-[#f7b733] rounded-full  cursor-pointer "
 					>
-						{/* <a href="/#ai-section"> */}
 						<div className=" relative w-[30px] h-[60px] border-2 border-white rounded-full " >
 							<div className=" absolute left-1/2 top-6 w-3  h-3  bg-white rounded-full mx-auto animate-scrollDot " />
 						</div>
-						{/* </a> */}
 					</button>
 				</div>
 					{/* <motion.div className="flex flex-wrap gap-4 md:gap-3 justify-center md:mb-9" >
@@ -589,14 +587,14 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</Row>
 			</Section> */}
 
-			<Section className="bg-white z-10">
+			<Section id="ai-service" className="bg-white z-10 scroll-mt-10">
 				<Row>
-					<div className="grid lg:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-20">
+					<div className="grid lg:grid-cols-2 gap-8 md:gap-12 mb-16 lg:mb-24">
 					
 					{/* LEFT SIDE */}
 
 					<div>
-						<h2 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight  "
+						<h2 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight"
 							dangerouslySetInnerHTML={{ __html: formattedTitle?.replace(/<\/?h[1-6][^>]*>/gi, "") }}
 						/>
 					</div>
@@ -614,6 +612,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						// 	viewport: { once: true, amount: 0.2},
 						// 	transition: { duration: 0.4, ease: "easeInOut" },
 						// }}
+						bgColor="#d68029"
+						hoverColor="#0d1b2a"
 						text="Let's Build Something That Scales"
 						href="#contact-form-section"
 						icon="/navbar/btn_icon.png"
@@ -667,128 +667,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 
 
-<section
-  id="ai-section"
-  className="relative overflow-hidden bg-white py-16 lg:py-24 z-10 scroll-mt-20"
->
-	<video
-					autoPlay
-					loop
-					muted
-					playsInline
-					preload="metadata"
-					className="absolute top-0 left-0 w-full h-full object-cover blur-md scale-110"
-				>
-					<source src="/home/banner-bg.mp4" type="video/mp4" />
-				</video>
-  {/* Background Effects */}
-  <div className="absolute right-0 top-5 w-[300px] h-[300px] bg-pink-200 rounded-full blur-[150px] opacity-40" />
 
-  <div className="absolute bottom-10 left-0 w-[350px] h-[350px] bg-cyan-200 rounded-full blur-[180px] opacity-40" />
-
-  {/* Left Image */}
-  <div className="absolute left-0 bottom-0 hidden lg:block">
-    <Image
-      src="/home/ai-hand.png"
-      alt="AI Robot"
-      width={800}
-      height={700}
-      className="w-[600px] xl:w-[850px] h-auto object-contain"
-    />
-  </div>
-
-  <Row>
-    {/* Right Content Wrapper */}
-    <div className="flex lg:justify-end">
-      <div className="w-full lg:max-w-[550px] xl:max-w-[700px] w-full">
-
-        {/* Badge */}
-        {/* <div className="inline-flex items-center bg-[#2f80ed] text-white px-8 py-3 rounded-full font-semibold mb-8">
-          Build With AI
-        </div> */}
-		 <p className="text-[15px] font-semibold uppercase tracking-widest text-[rgb(214,128,41)] mb-2" >
-          Build With AI
-         </p>
-
-        {/* Heading */}
-        <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
-          Agentic AI Smart Apps:
-          <br />
-          Predictive,
-          <span className="text-gray-300">
-            {" "}Custom,
-            <br />
-            Business-scale Ready
-          </span>
-        </h2>
-
-        {/* Description */}
-        <p className="mt-2 fonts_16 text-gray-600 mb-6">
-          Our smart AI applications leverage large language models,
-          AI APIs and automation engines to create adaptive and
-          business-scale digital products.
-        </p>
-
-        {/* Features */}
-        <div className="mt-10 space-y-8">
-
-          <div className="flex gap-4">
-            <div className="w-12 h-12 rounded-full bg-cyan-50 flex items-center justify-center">
-             <FaRobot  className="text-cyan-600 text-xl"/>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-xl">
-                Generative AI Integration
-              </h4>
-
-              <p className="text-gray-600 fonts_16">
-                Custom trained models for specific business logic.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center">
-              {/* 🧠 */}
-			  <FaChartLine  className="text-red-600 text-xl"/>
-			    
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-xl">
-                Predictive Analytics
-              </h4>
-
-              <p className="fonts_16 text-gray-600 ">
-                Anticipate user behaviour with data-driven precision.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Button */}
-        {/* <button className="mt-10 bg-[#2f80ed] text-white px-10 py-5 rounded-full hover:scale-105 transition-all">
-          Discuss Your Project →
-        </button> */}
-		 <Button
-								motionProps={{
-								initial: { opacity: 0, scale: 0.8 },
-								whileInView: { opacity: 1, scale: 1 },
-								viewport: { once: true, amount: 0.2},
-								transition: { duration: 0.5, ease: "easeOut", delay: 0.1 },
-							  }}
-							  text="Discuss Your Project"
-							  href="#contact-form-section"
-							  icon="/navbar/btn_icon.png"
-							  className="mt-10"
-							/>
-
-      </div>
-    </div>
-  </Row>
-</section>
 
 			{/* <section className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto px-6 md:px-8 lg:px-10 pb-20 text-center">
 				<motion.h2
