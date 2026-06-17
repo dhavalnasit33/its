@@ -25,9 +25,9 @@ export default function PlatformSlider({ navStructure }: PlatformSliderProps) {
   if (!services.length) return null;
 
   return (
-    <div className="flex gap-4 items-center overflow-hidden">
+    <div className="flex gap-2 md:gap-4 items-center overflow-hidden">
       {/* Left Title */}
-      <div className="flex items-center mr-4 border-r border-white/10 shrink-0">
+      <div className="flex items-center pr-2 md:pr-4 border-r border-white/10 shrink-0">
         <h4 className="text-[#D68029] text-xs md:text-sm font-semibold uppercase tracking-wider whitespace-nowrap">
           Platforms we build on
         </h4>

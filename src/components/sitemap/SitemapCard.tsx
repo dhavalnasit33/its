@@ -91,7 +91,20 @@ export default function SitemapCard({ title, links }: any) {
                 <span className="w-2 h-2 rounded-full bg-[#D68029]" />
                 <span>{label}</span>
               </Link>
-
+                {/* {href !== "#" ? (
+                  <Link
+                    href={href}
+                    className="flex gap-2 text-black hover:text-[#D68029] items-center"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-[#D68029]" />
+                    <span>{label}</span>
+                  </Link>
+                ) : (
+                  <div className="flex gap-2 items-center font-semibold text-black">
+                    <span className="w-2 h-2 rounded-full bg-[#D68029]" />
+                    <span>{label}</span>
+                  </div>
+              )} */}
               {item.children?.length > 0 && (
                 <ul className="ml-5 mt-3 border-l border-gray-200 pl-4 space-y-2">
                   {item.children.map((child: any, i: number) => {

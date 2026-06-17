@@ -1287,9 +1287,6 @@ import { HiMail } from "react-icons/hi";
 import { useEffect, useRef, useState } from "react";
 import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
 
-interface NavbarProps {
-  navStructure?: NavigationStructure;
-}
 
 // -------------------- Main Page --------------------
 export default function ContactFooterPage() {
@@ -1314,62 +1311,98 @@ export default function ContactFooterPage() {
     portfolioSlug
   } = useWebsiteSettings();
 
-  //      if (!navStructure) {
-  //   return null; // or loading skeleton
-//   // }
-// const servicesData =
-//   navStructure?.servicesNav?.map((group) => ({
-//     title: group.category ?? "",
-//     icon: typeof group.icon === "string" ? group.icon : "",
-//     services: group.links?.map((link) => ({
-//       href: link.slug ? `/${link.slug}` : "#",
-//       label: link.title ?? "",
-//     })) ?? [],
-//   })) ?? [];
-//   console.log("navStructure:", navStructure);
-// console.log("servicesData:", servicesData);
-//  const servicesData = (navStructure.servicesNav || []).map((group) => {
-//     const icon = typeof group.icon === "string" ? group.icon.trim() : "";
-//     return {
-//       title: group.category,
-//       icon: icon, // Safe string
-//       services: group.links.map((link) => ({
-//         href: `/${link.slug}`,
-//         label: link.title,
-//       })),
-//     };
-//   });
 
- useEffect(() => {
-    const fetchNavData = async () => {
-      try {
-        const data = await getNavigationStructure();
 
-        setNavStructure(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const nav: NavigationStructure = navStructure ?? {
+    mainNav: [],
+    servicesNav: [],
+    hireNav: [],
+  };
 
-    fetchNavData();
-  }, []);
+  const hireLink = nav.mainNav.find(
+      (l) => l.systemIdentifier === "hire"
+    );
+    const aboutLink = nav.mainNav.find(
+      (link) => link.systemIdentifier === "about-us"
+    );
 
-  const services =
-    navStructure?.servicesNav?.flatMap((category) =>
-      category.links?.map((service) => ({
-        title: service.title,
-        slug: service.slug,
-      })) || []
-    ) || [];
-    const hire =
-    navStructure?.hireNav?.flatMap((category) =>
-      category.links?.map((service) => ({
-        title: service.title,
-        slug: service.slug,
-      })) || []
-    ) || [];
+    const careerLink = nav.mainNav.find(
+      (link) => link.systemIdentifier === "career"
+    );
 
-  if (!services.length) return null;
+    const contactLink = nav.mainNav.find(
+      (link) => link.systemIdentifier === "contact"
+    );
+
+    const blogLink = nav.mainNav.find(
+      (link) => link.systemIdentifier === "blog"
+    );
+
+    const portfolioLink = nav.mainNav.find(
+      (link) => link.systemIdentifier === "portfolio"
+    );
+
+    const trainingLink = nav.mainNav.find(
+      (link) => link.systemIdentifier === "training"
+    );
+
+    const footerLinks = [
+      {
+        title: "About Us",
+        href: aboutLink ? `/${aboutLink.slug}` : "/about-us",
+      },
+      {
+        title: "Blogs",
+        href: blogLink ? `/${blogLink.slug}` : "/blog",
+      },
+      {
+        title: "Careers",
+        href: careerLink ? `/${careerLink.slug}` : "/career",
+      },
+      {
+        title: "Contact Us",
+        href: contactLink ? `/${contactLink.slug}` : "/contact",
+      },
+      {
+        title: "Our Portfolio",
+        href: portfolioLink ? `/${portfolioLink.slug}` : "/my-portfolio",
+      },
+      {
+        title: "Training",
+        href: trainingLink ? `/${trainingLink.slug}` : "/training",
+      },
+    ];
+
+    useEffect(() => {
+        const fetchNavData = async () => {
+          try {
+            const data = await getNavigationStructure();
+
+            setNavStructure(data);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+
+        fetchNavData();
+      }, []);
+
+    const serviceData = nav.servicesNav.flatMap((category) =>
+      (category.links ?? []).map((s) => ({
+        title: s.title,
+        slug: s.slug,
+      }))
+    );
+
+    const hireSlugPrefix = hireLink?.slug ?? "hire";
+    const hireServices = nav.hireNav.flatMap((group) =>
+      (group.links ?? []).map((link) => ({
+        title: link.title,
+        href: `/${hireSlugPrefix}/${link.slug}`,
+      }))
+    );
+
+    if (!navStructure) return null;
 
   return (
     <footer id="contact-form-section" className={` relative bg-white scroll-mt-14 ${
@@ -1404,7 +1437,8 @@ export default function ContactFooterPage() {
         )}
       </Row>
 
-  <Row className=" mx-auto bg-gray-100 rounded-xl p-6 md:p-8 lg:px-10 py-9 " >
+<Section className="bg-gray-100 !py-14">
+  <Row className=" mx-auto  rounded-xl " >
   {/* <Row> */}
         <div className="flex max-lg:flex-wrap items-center gap-6 justify-between">
 
@@ -1567,7 +1601,8 @@ export default function ContactFooterPage() {
                   </a>
                 </div>
         </div>
-      </Row>
+  </Row>
+</Section>
       {/* ---------------- Footer Content ---------------- */}
       {/* <div className="bg-[url('/footer-bg.png')] bg-cover bg-center md:pt-112.5 py-16 px-6"> */}
       {/* <Section
@@ -1824,9 +1859,9 @@ export default function ContactFooterPage() {
       </Section> */}
 
       <Section className="!py-8">
-        <Row className="flex flex-col shadow-md py-5 px-6 rounded-[20px] space-y-7 ">
+        <Row className="flex flex-col space-y-5 md:space-y-7 ">
           <div>  
-            <ul className="flex flex-wrap ">
+            {/* <ul className="flex flex-wrap ">
                 <li>
                   <Link href="/about-us"
                     className=" text-gray-700 hover:text-[#D68029] transition-all hover:underlin text-[14px]"
@@ -1876,14 +1911,33 @@ export default function ContactFooterPage() {
                     Training
                   </Link>
                 </li>
+            </ul> */}
+            <ul className="flex flex-wrap">
+              {footerLinks.map((item, index) => (
+                <li
+                  key={item.href}
+                  className="list-none py-1"
+                >
+                  <Link
+                    href={item.href}
+                    className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
+                  >
+                    {item.title}
+                  </Link>
+
+                  {index !== footerLinks.length - 1 && (
+                    <span className="mx-2 text-[#D68029]">|</span>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
           <div>
             <h4 className="font-bold text-lg mb-3">Our Services</h4>
             <ul className="flex flex-wrap ">
-                {services.map((service, index) => (
+                {serviceData.map((service, index) => (
                   <li
-                    key={service.slug}
+                    key={service.slug || index}
                     className="list-none py-1"
                   >
                     <Link
@@ -1896,7 +1950,7 @@ export default function ContactFooterPage() {
                         {service.title}
                       </span>
                     </Link>
-                    {index !== services.length - 1 && (
+                    {index !== serviceData.length - 1 && (
                       <span className="mx-2 text-[#D68029]">
                         |
                       </span>
@@ -1908,28 +1962,22 @@ export default function ContactFooterPage() {
           <div>
             <h4 className="font-bold text-lg mb-3">Hire Developer</h4>
             <ul className="flex flex-wrap ">
-                {hire.map((hires, index) => (
-                  <li
-                    key={hires.slug}
-                    className="list-none py-1"
-                  >
-                    <Link
-                      href={`/${hires.slug}`}
-                      className="  text-gray-700  hover:text-[#D68029]  transition-all hover:underline "
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D68029]" />
+               {hireServices.map((item, i) => (
+              <li key={item.href} className="py-1">
+                <Link
+                  href={item.href}
+                  className=" text-gray-700  hover:text-[#D68029]  transition-all hover:underline "
+                >
+                <span className="text-[14px] leading-5">
+                    {item.title}
+                  </span>
+                </Link>
 
-                      <span className="text-[14px] leading-5">
-                        {hires.title}
-                      </span>
-                    </Link>
-                    {index !== hire.length - 1 && (
-                      <span className="mx-2 text-[#D68029]">
-                        |
-                      </span>
-                    )}
-                  </li>
-                ))}
+                {i !== hireServices.length - 1 && (
+                  <span className="mx-2 text-[#D68029]">|</span>
+                )}
+              </li>
+            ))}
             </ul>
           </div>
           </Row>
@@ -1953,7 +2001,7 @@ export default function ContactFooterPage() {
                 />
               </div>
               <div className="flex flex-wrap items-center justify-center">
-                <a href="/"
+                <a href="/privacy-policy"
                   className="pr-2 md:pr-3 border-r border-white/20 hover:text-[#d68029]"
                 >
                   Privacy Policy

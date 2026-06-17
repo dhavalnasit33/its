@@ -69,6 +69,7 @@ import ContactPopup from "@/components/ContactPopup";
 import { FiClock, FiHeart, FiShield, FiUsers } from "react-icons/fi";
 import PlatformSlider from "@/components/home/PlatformSlider";
 import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
+import { FaChartLine, FaLongArrowAltRight, FaRobot } from "react-icons/fa";
 
 // Dynamically import heavy/below-the-fold components to improve PageSpeed and load performance
 const ParticlesBg = dynamic(() => import("@/components/home/Particles"), { ssr: false });
@@ -288,18 +289,18 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 		`<strong class= "bg-gradient-to-r from-[#d68029] to-[#f7b733]   bg-clip-text text-transparent">$1</strong>`  
 	);
 
-// 	 const handleScroll = (e) => {
-//     e.preventDefault();
+	const handleScroll = ( e: React.MouseEvent<HTMLButtonElement> ) => {
+  e.preventDefault();
 
-//     const section = document.getElementById("conversation");
+  const section = document.getElementById("ai-section");
 
-//     if (section) {
-//       section.scrollIntoView({
-//         behavior: "smooth",
-//         block: "start",
-//       });
-//     }
-//   };
+  if (section) {
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+};
 
 	return (
 		<>
@@ -316,7 +317,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				className="absolute left-0 top-50 hidden lg:flex -translate-x-10 h-118.75"
 			/>
 
-			<section className="w-full relative py-12 sm:py-25 lg:py-32 overflow-hidden z-10 ">
+			<section className="w-full relative py-12 sm:py-25 lg:py-32 overflow-hidden z-10 !pb-20 ">
 				<div className="absolute inset-0 z-0 bg-gradient-to-r from-[#1a0f0f] via-[#0b0f1a] to-[#001a2e]" />
 
 				<div className="absolute inset-0 z-1">
@@ -348,7 +349,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				{/* <div className="w-full max-w-[95%] z-10 lg:max-w-[80%] relative mx-auto px-4   "> */}
 				<Row className="z-10">
 					<motion.div
-						className="text-center mb-2 "
+						className="text-center"
 						initial={{ y: -300, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.5, ease: "easeOut" }}
@@ -362,7 +363,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 							<AutoTextSlider data={homePageData.heroSecton.technologySection} />
 						</div>
 
-						<div className="yellow-text max-w-[800px] mx-auto mb-[36px] text-center fonts_16 text-white"
+						<div className="yellow-text max-w-[800px] mx-auto mb-20 md:mb-30 text-center fonts_16 text-white"
 							dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.description || "", }}
 						/>
 
@@ -390,7 +391,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								</a>
 							</motion.div>
 						</div> */}
-						<div className="flex flex-wrap relative w-full justify-center mb-14">
+						<div className="flex flex-wrap relative w-full justify-center mb-10 md:mb-14">
 							<div className="relative flex flex-wrap items-center w-full max-w-[550px]">
 
 								<Link
@@ -420,14 +421,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 							</div>
 						</div>
 
-					{/* <button
-						onClick={handleScroll}
-						className=" inline-flex -center justify-center p-1 border-2 border-[#f7b733] rounded-full  cursor-pointer "
-					>
-						<div className=" relative w-[30px] h-[60px] border-2 border-white rounded-full " >
-						<div className=" absolute left-1/2 top-6 w-3  h-3  bg-white rounded-full mx-auto animate-scrollDot " />
-						</div>
-					</button> */}
+					
 					</motion.div>
 
 					 <div className="max-w-[500px] lg:max-w-[840px] mx-auto px-4">
@@ -461,6 +455,19 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						</div>
 					</div>
 
+
+<div className=" text-center mt-16">
+<button
+						onClick={handleScroll}
+						className=" inline-flex -center justify-center p-1 border-2 border-[#f7b733] rounded-full  cursor-pointer "
+					>
+						{/* <a href="/#ai-section"> */}
+						<div className=" relative w-[30px] h-[60px] border-2 border-white rounded-full " >
+							<div className=" absolute left-1/2 top-6 w-3  h-3  bg-white rounded-full mx-auto animate-scrollDot " />
+						</div>
+						{/* </a> */}
+					</button>
+				</div>
 					{/* <motion.div className="flex flex-wrap gap-4 md:gap-3 justify-center md:mb-9" >
 						{
 							homePageData.reasonsToChoose.deatailBox.length > 0 &&
@@ -490,8 +497,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				</Row>
 			</Section>
 
-			<Section className="bg-gray-50">
-					 <Row className=" mx-auto px-4">
+			<Section className="bg-gray-50 !py-14">
+					 <Row className=" mx-auto ">
 						<motion.div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 " >
 						{
 							homePageData.reasonsToChoose.deatailBox.length > 0 &&
@@ -601,12 +608,12 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						/>
 
 						<Button
-							motionProps={{
-							initial: { opacity: 0, scale: 0.8 },
-							whileInView: { opacity: 1, scale: 1 },
-							viewport: { once: true, amount: 0.2},
-							transition: { duration: 0.4, ease: "easeInOut" },
-						}}
+						// 	motionProps={{
+						// 	initial: { opacity: 0, scale: 0.8 },
+						// 	whileInView: { opacity: 1, scale: 1 },
+						// 	viewport: { once: true, amount: 0.2},
+						// 	transition: { duration: 0.4, ease: "easeInOut" },
+						// }}
 						text="Let's Build Something That Scales"
 						href="#contact-form-section"
 						icon="/navbar/btn_icon.png"
@@ -615,7 +622,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</div>
 					</div>
 				</Row>
-				<Row>
+				<Row className="p-1">
 					<Swiper
 						modules={[Autoplay, Navigation, Pagination]}
 						spaceBetween={24}
@@ -633,7 +640,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						}}
 					>
 						{homePageData?.aisection?.deatailBox?.map((item, idx) => (
-						<SwiperSlide key={idx} className="!h-auto flex">
+						<SwiperSlide key={idx} className="!h-auto flex ">
 							<div className="relative group rounded-xl overflow-hidden h-full w-full flex">
 
 							{/* glow background */}
@@ -660,9 +667,128 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 
 
+<section
+  id="ai-section"
+  className="relative overflow-hidden bg-white py-16 lg:py-24 z-10 scroll-mt-20"
+>
+	<video
+					autoPlay
+					loop
+					muted
+					playsInline
+					preload="metadata"
+					className="absolute top-0 left-0 w-full h-full object-cover blur-md scale-110"
+				>
+					<source src="/home/banner-bg.mp4" type="video/mp4" />
+				</video>
+  {/* Background Effects */}
+  <div className="absolute right-0 top-5 w-[300px] h-[300px] bg-pink-200 rounded-full blur-[150px] opacity-40" />
 
+  <div className="absolute bottom-10 left-0 w-[350px] h-[350px] bg-cyan-200 rounded-full blur-[180px] opacity-40" />
 
+  {/* Left Image */}
+  <div className="absolute left-0 bottom-0 hidden lg:block">
+    <Image
+      src="/home/ai-hand.png"
+      alt="AI Robot"
+      width={800}
+      height={700}
+      className="w-[600px] xl:w-[850px] h-auto object-contain"
+    />
+  </div>
 
+  <Row>
+    {/* Right Content Wrapper */}
+    <div className="flex lg:justify-end">
+      <div className="w-full lg:max-w-[550px] xl:max-w-[700px] w-full">
+
+        {/* Badge */}
+        {/* <div className="inline-flex items-center bg-[#2f80ed] text-white px-8 py-3 rounded-full font-semibold mb-8">
+          Build With AI
+        </div> */}
+		 <p className="text-[15px] font-semibold uppercase tracking-widest text-[rgb(214,128,41)] mb-2" >
+          Build With AI
+         </p>
+
+        {/* Heading */}
+        <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
+          Agentic AI Smart Apps:
+          <br />
+          Predictive,
+          <span className="text-gray-300">
+            {" "}Custom,
+            <br />
+            Business-scale Ready
+          </span>
+        </h2>
+
+        {/* Description */}
+        <p className="mt-2 fonts_16 text-gray-600 mb-6">
+          Our smart AI applications leverage large language models,
+          AI APIs and automation engines to create adaptive and
+          business-scale digital products.
+        </p>
+
+        {/* Features */}
+        <div className="mt-10 space-y-8">
+
+          <div className="flex gap-4">
+            <div className="w-12 h-12 rounded-full bg-cyan-50 flex items-center justify-center">
+             <FaRobot  className="text-cyan-600 text-xl"/>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-xl">
+                Generative AI Integration
+              </h4>
+
+              <p className="text-gray-600 fonts_16">
+                Custom trained models for specific business logic.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center">
+              {/* 🧠 */}
+			  <FaChartLine  className="text-red-600 text-xl"/>
+			    
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-xl">
+                Predictive Analytics
+              </h4>
+
+              <p className="fonts_16 text-gray-600 ">
+                Anticipate user behaviour with data-driven precision.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Button */}
+        {/* <button className="mt-10 bg-[#2f80ed] text-white px-10 py-5 rounded-full hover:scale-105 transition-all">
+          Discuss Your Project →
+        </button> */}
+		 <Button
+								motionProps={{
+								initial: { opacity: 0, scale: 0.8 },
+								whileInView: { opacity: 1, scale: 1 },
+								viewport: { once: true, amount: 0.2},
+								transition: { duration: 0.5, ease: "easeOut", delay: 0.1 },
+							  }}
+							  text="Discuss Your Project"
+							  href="#contact-form-section"
+							  icon="/navbar/btn_icon.png"
+							  className="mt-10"
+							/>
+
+      </div>
+    </div>
+  </Row>
+</section>
 
 			{/* <section className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto px-6 md:px-8 lg:px-10 pb-20 text-center">
 				<motion.h2
@@ -709,7 +835,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				</motion.div>
 			</section> */}
 			<Section className=" lg:!pb-0  bg-white">
-				<CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" />
+				{/* <CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" /> */}
 				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"> */}
 				<Row className=" grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<div className="relative w-full flex justify-center lg:justify-center items-center">
@@ -894,20 +1020,17 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					{/* Button */}
 					{/* <div className="flex justify-center w-full max-w-[90%] lg:max-w-[80%] relative mx-auto "> */}
 					<Row className="flex justify-center">
-						<Link href={`/${portfolioSlug}`} >
-							<button className="group cursor-pointer relative inline-flex items-center justify-center gap-2 px-6 py-2 rounded-full font-semibold text-[#0A1128] text-sm sm:text-base overflow-hidden">
-								<span className="absolute inset-0 flex">
-									<span className="h-full w-10 rounded-full bg-[#F1F1F1] transition-all duration-300 group-hover:w-100"></span>
-								</span>
-
-								<span className="relative z-10 flex items-center gap-2">
-									See our projects
-									<span className="transition-transform duration-300 group-hover:translate-x-1">
-										→
-									</span>
-								</span>
-							</button>
-						</Link>
+						<Link
+							href={`/${portfolioSlug}`}
+							className="group relative inline-flex items-center overflow-hidden rounded-full"
+							>
+							<span
+								className="absolute left-0 top-1/2 -translate-y-1/2 h-12 w-12 md:h-14 md:w-14 rounded-full bg-gray-200 transition-all duration-500 ease-in-out group-hover:w-full "
+							></span>
+							<span className="relative z-10 flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 text-md md:text-xl font-semibold text-[#12203d]">
+								See our projects <FaLongArrowAltRight className="inline-block" />
+							</span>
+							</Link>
 
 						{/* <Link href={`/${blogSlug}`} className="hover:underline">BLOG</Link> */}
 					</Row>

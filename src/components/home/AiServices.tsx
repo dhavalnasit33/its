@@ -113,10 +113,10 @@ export default function AiServices({ title, heading, description, glowColor }: A
                   flex-col"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      // initial={{ opacity: 0, y: 20 }}
+      // whileInView={{ opacity: 1, y: 0 }}
+      // viewport={{ once: true }}
+      // transition={{ duration: 0.5 }}
       style={{
         borderColor: isHover ? textColor : "rgba(255,255,255,0.1)"
       }}
