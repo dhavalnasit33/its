@@ -11,9 +11,16 @@ const sections = [
     id: "introduction",
     icon: FiFileText,
     title: "Introduction",
-    description:
-      "Welcome to Appifly Infotech. These Terms of Use govern your access to and use of our website, applications, and professional services. By engaging with our platform, you agree to comply with these terms in full.",
-    points: [],
+     description: (
+      <>
+        Welcome to{" "}
+        <a href="/" className="text-[#d68029] underline font-semibold">
+          Inspire Techno Solution
+        </a>{" "}
+        These Terms of Use govern your access to and use of our website, applications, and professional services. By engaging with our platform, you agree to comply with these terms in full.
+      </>
+    ),
+      points: [],
   },
   {
     id: "acceptance",
@@ -28,7 +35,7 @@ const sections = [
     icon: FiDownload,
     title: "Services Overview",
     description:
-      "Appifly Infotech provides digital transformation services, including but not limited to web development, mobile application development, AI/ML solutions, and cloud consulting. Specific service terms may apply to individual project engagements.",
+      "Inspire Techno Solutions provides digital transformation services, including but not limited to web development, mobile application development, AI/ML solutions, and cloud consulting. Specific service terms may apply to individual project engagements.",
     points: [
       "Contact forms submitted on our website.",
       "Newsletter subscriptions.",
