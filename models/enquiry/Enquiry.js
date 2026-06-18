@@ -5,7 +5,7 @@ const EnquirySchema = new mongoose.Schema(
         type: {
             type: String,
             required: true,
-            enum: ["Career", "Training", "Contact", "Hire", "FooterForm"],
+            enum: ["Career", "Training", "Contact", "Hire", "FooterForm", "PopupForm"],
         },
         // Common Fields
         name: {
@@ -84,7 +84,7 @@ const EnquirySchema = new mongoose.Schema(
         },
         source: {
             type: String,
-            enum: ["footer_form", "contact_page", "hire_page", "career_page", "training_page"],
+            enum: ["footer_form", "contact_page", "hire_page", "career_page", "training_page", "popup_form"],
             default: "footer_form",
         },
 
