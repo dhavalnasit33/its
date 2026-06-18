@@ -4,30 +4,17 @@ import { useEffect, useState } from "react";
 import { FiDatabase, FiDownload, FiFileText, FiGlobe, FiSettings, FiShare2, FiShield } from "react-icons/fi";
 import Section from "../Section";
 import Row from "../Row";
+import { FaAmazonPay, FaDiagramProject, FaPhoneVolume } from "react-icons/fa6";
+import { FaCookie, FaPhone } from "react-icons/fa";
 
 
 const sections = [
-  {
-    id: "introduction",
-    icon: FiFileText,
-    title: "Introduction",
-     description: (
-      <>
-        Welcome to{" "}
-        <a href="/" className="text-[#d68029] underline font-semibold">
-          Inspire Techno Solution
-        </a>{" "}
-        These Terms of Use govern your access to and use of our website, applications, and professional services. By engaging with our platform, you agree to comply with these terms in full.
-      </>
-    ),
-      points: [],
-  },
   {
     id: "acceptance",
     icon: FiDatabase,
     title: "Acceptance of Terms",
     description:
-      "Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service",
+      "By accessing this website, you acknowledge that you have read, understood, and agreed to these Terms & Conditions. If you do not agree with any part of these terms, you should discontinue the use of our website and services.",
     points: [],
   },
   {
@@ -35,20 +22,81 @@ const sections = [
     icon: FiDownload,
     title: "Services Overview",
     description:
-      "Inspire Techno Solutions provides digital transformation services, including but not limited to web development, mobile application development, AI/ML solutions, and cloud consulting. Specific service terms may apply to individual project engagements.",
+      "Inspire Techno Solution provides professional IT services including, but not limited to:",
     points: [
-      "Contact forms submitted on our website.",
-      "Newsletter subscriptions.",
+      "Website Design & Development",
+      "Mobile Application Development",
+      "UI/UX Design ",
+      "PHP Development",
+      "Full Stack Development"
+    ],
+    descriptions: "The scope, timeline, and deliverables for each project shall be defined in separate agreements, proposals, or contracts."
+  },
+  {
+    id: "property",
+    icon: FiSettings,
+    title: "Intellectual Property Rights",
+    description: "All content available on this website, including text, graphics, logos, images, designs, source code, and other materials, is the property of Inspire Techno Solution unless otherwise stated. You may not copy, reproduce, distribute, modify, or exploit any content from this website without prior written consent.",
+      points: [],
+  },
+  {
+    id: "project",
+    icon: FaDiagramProject,
+    title: "Project Engagement and Deliverables",
+    description: "Upon project approval, clients agree to provide all necessary information, content, feedback, and approvals required for successful project completion. Project timelines may be affected by:",
+      points: ["Delayed client feedback",
+        "Incomplete requirements",
+        "Third-party service interruptions",
+        "Unforeseen technical challenges"
+      ],
+    descriptions: "Any changes requested beyond the approved project scope may result in additional charges and timeline adjustments.",
+  },
+  {
+    id: "payment",
+    icon: FaAmazonPay,
+    title: "Payments and Billing",
+    description: "All payments shall be made according to the agreed proposal, quotation, or contract.",
+    points: [
+        "Deposits are generally non-refundable once work has commenced.",
+        "Milestone payments must be completed as agreed.",
+        "Final deliverables may be withheld until outstanding payments are cleared.",
+        "Late payments may result in project suspension or additional fees."
     ],
   },
   {
-    id: "usage",
-    icon: FiSettings,
-    title: "User Eligibility",
+    id: "third-party",
+    icon: FaCookie,
+    title: "Third-Party Services",
+    description: "Projects may involve third-party services, platforms, plugins, APIs, hosting providers, payment gateways, or software products. Inspire Techno Solution is not responsible for:",
+    points: [
+        "Third-party service outages",
+        "Pricing changes by third-party providers",
+        "Policy changes implemented by third parties",
+        "Security vulnerabilities originating from third-party products"
+    ],
+  },
+    {
+    id: "terms",
+    icon: FiShare2,
+    title: "Changes to Terms",
     description:
-      "You must be at least 18 years old to use our Services. By using our platform, you represent that you have the legal capacity to enter into a binding agreement and meet all eligibility requirements.",
+      "We reserve the right to update or modify these Terms & Conditions at any time without prior notice. Updated versions will be posted on this page with the revised effective date.",
     points: [],
   },
+    {
+      id: "contact",
+      icon: FaPhoneVolume,
+      title: "Contact Us",
+      description: (
+        <>If you have any questions about this Privacy Policy, contact us:<br /><br />
+          Email: hr@inspiretechnosolution.com <br />
+          Email: sales@inspiretechnosolution.com <br />
+          Phone: +91 93272 20484<br />
+          Website: https://inspiretechnosolution.com
+        </>
+      ),
+      points: [],
+    },
 ];
 
 export default function TermsCondition() {
@@ -88,6 +136,11 @@ export default function TermsCondition() {
 
           {/* Content */}
           <div className="space-y-8 lg:space-y-12">
+            <p className="text-lg text-gray-600 leading-8 mb-3">Last Updated: June 2026</p>
+            <p className="text-lg text-gray-600 leading-8 ">Welcome to  <a href="/" className="text-[#d68029] underline font-semibold">
+          Inspire Techno Solution
+        </a> , By accessing and using our website and services, you agree to comply with and be bound by the following Terms & Conditions. 
+              Please read them carefully before using our website or engaging our services.</p>
 
             {sections.map((item, index) => {
                 const Icon = item.icon;
@@ -128,6 +181,9 @@ export default function TermsCondition() {
                                 ))}
                             </ul>
                             )}
+                             <p className="text-lg text-gray-600 leading-8 mt-6">
+                            {item.descriptions}
+                        </p>
                         {index !== sections.length - 1 && (
                             <div className="border-b border-gray-200 mt-8 lg:mt-12"></div>
                         )}

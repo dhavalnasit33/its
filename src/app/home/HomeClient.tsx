@@ -304,7 +304,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 	return (
 		<>
-		{/* <ContactPopup /> */}
+		<ContactPopup />
 
 		<main className="relative isolate w-full bg-white text-gray-900">
 			{/* <style dangerouslySetInnerHTML={{ __html: sliderStyles }} /> */}
@@ -425,7 +425,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</motion.div>
 
 					 <div className="max-w-[500px] lg:max-w-[840px] mx-auto px-4">
-						<div className="h-[1px] bg-[rgba(255,255,255,0.1)] my-10"></div>
+						<div className="h-[1px] bg-[rgba(255,255,255,0.1)] mt-20 md:mt-30 mb-10"></div>
 						<div className="grid grid-cols-2 lg:grid-cols-4 max-lg:gap-4">
 						{statsData.map((item, index) => {
 							const Icon = item.icon;
@@ -456,7 +456,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</div>
 
 
-<div className=" text-center mt-16">
+<div className=" text-center mt-20 md:mt-26">
 <button
 						onClick={handleScroll}
 						className=" inline-flex -center justify-center p-1 border-2 border-[#f7b733] rounded-full  cursor-pointer "
@@ -622,7 +622,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</div>
 					</div>
 				</Row>
-				<Row className="p-1">
+				<Row className="p-1 py-2">
 					<Swiper
 						modules={[Autoplay, Navigation, Pagination]}
 						spaceBetween={24}
@@ -713,7 +713,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 							</div>
 				</motion.div>
 			</section> */}
-			<Section className=" lg:!pb-0  bg-white">
+			<Section className="lg:!pb-0  bg-white">
 				{/* <CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" /> */}
 				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"> */}
 				<Row className=" grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -836,6 +836,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 							text="Get a Quote"
 							href="/#contact-form-section"
 							icon="/navbar/btn_icon.png"
+							className="mb-2"
 						/>
 
 					</div>

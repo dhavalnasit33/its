@@ -7,6 +7,7 @@ import Row from "../Row";
 import Button from "../Button";
 import { FaPhone } from "react-icons/fa";
 import { title } from "node:process";
+import { FaPhoneVolume } from "react-icons/fa6";
 
 
 const sections = [
@@ -102,7 +103,7 @@ const sections = [
   },
   {
     id: "contact",
-    icon: FaPhone,
+    icon: FaPhoneVolume,
     title: "Contact Us",
     description: (
       <>If you have any questions about this Privacy Policy, contact us:<br /><br />

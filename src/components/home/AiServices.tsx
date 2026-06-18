@@ -104,7 +104,7 @@ export default function AiServices({ title, heading, description, glowColor }: A
 
   return (
     <motion.div
-      className="group relative overflow-hidden rounded-xl h-full bg-gradient-to-br  border border-white/10 shadow-lg 
+      className="group relative overflow-hidden rounded-xl h-full bg-gradient-to-br  border-2 border-white/10 shadow-lg 
                  hover:border-emerald-500/40 transition-all duration-500  bg-gray-100
                   rounded-[30px]
                   p-8

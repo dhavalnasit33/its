@@ -50,6 +50,7 @@ interface WebsiteSettingsContextProps {
   skypeHandle: string;
   microsoftHandle: string;
   linkedinLink: string;
+  whatsApplink: string;
   facebookLink: string;
   instagramLink: string;
   youtubeLink: string;
@@ -83,6 +84,7 @@ const WebsiteSettingsContext = createContext<WebsiteSettingsContextProps>({
   facebookLink: "https://www.facebook.com/inspiretechnosolution",
   // instagramLink: "https://www.instagram.com/inspiretechnosolution/",
   instagramLink: "https://www.instagram.com/inspiretechnosolution/",
+  whatsApplink: "https://api.whatsapp.com/send?phone=919327220484",
   youtubeLink: "#",
   behanceLink: "#",
 });
@@ -133,6 +135,7 @@ export function WebsiteSettingsProvider({
 
   // Social media links
   const linkedinLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "linkedin")?.link || "https://www.linkedin.com/company/inspiretechnosolution/";
+  const whatsApplink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "whatsapp")?.link || " https://api.whatsapp.com/send?phone=919327220484";
   const facebookLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "facebook")?.link || "https://www.facebook.com/inspiretechnosolution/";
   const instagramLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "instagram")?.link || "https://www.instagram.com/inspiretechnosolution/";
   const youtubeLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "youtube")?.link || "#";
@@ -170,6 +173,7 @@ export function WebsiteSettingsProvider({
         skypeHandle,
         microsoftHandle,
         linkedinLink,
+        whatsApplink,
         facebookLink,
         instagramLink,
         youtubeLink,

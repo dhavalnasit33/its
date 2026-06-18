@@ -786,3 +786,17 @@ html {
 .serviceSwiper .swiper-wrapper {
   transition-timing-function: linear !important;
 }
+
+@keyframes whatsapp-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.8);
+  }
+
+  100% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-ring {
+  animation: whatsapp-ring 2s infinite;
+}
