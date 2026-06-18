@@ -1656,22 +1656,42 @@ export default function ContactFooterPage() {
               </div> */}
 
               <div className="flex flex-wrap gap-3 lg:justify-center">
-  {socialMedia.map((social) => (
+  {/* {socialMedia.map((social) => (
     <a
       key={social._id || social.socialMediaName}
       href={social.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:scale-105 transition-all duration-300"
+      className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300"
       title={social.socialMediaName}
     >
       {social.image ? (
         <Image
           src={social.image}
           alt={social.socialMediaName}
-          width={20}
-          height={20}
-          className="w-5 h-5 object-contain"
+          width={40}
+          height={40}
+          className="w-10 h-10 object-contain rounded-full"
+        />
+      ) : null}
+    </a>
+  ))} */}
+ {socialMedia.map((social) => (
+    <a
+      key={social._id || social.socialMediaName}
+      href={social.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300"
+      title={social.socialMediaName}
+    >
+      {social.image ? (
+        <Image
+          src={social.image}
+          alt={social.socialMediaName}
+          width={40}
+          height={40}
+          className="w-10 h-10 object-contain rounded-full"
         />
       ) : null}
     </a>
