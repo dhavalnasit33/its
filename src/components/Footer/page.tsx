@@ -1605,99 +1605,56 @@ export default function ContactFooterPage() {
                     <FaYoutube className="text-xl hover:text-[#d68029] transition-colors" />
                   </a>
             </div> */}
+
               {/* <div className="flex flex-wrap gap-3 lg:justify-center">
-
-                <a
-                  href={linkedinLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border-2 border-[#0A66C2] flex items-center justify-center hover:scale-105 transition-all duration-300"
-                >
-                  <FaLinkedinIn className="text-xl text-[#0A66C2]" />
-                </a>
-              <a
-                href={instagramLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full p-[2px] bg-gradient-to-tr from-[#feda75] via-[#d62976] to-[#4f5bd5] flex items-center justify-center hover:scale-105 transition-all duration-300"
-              >
-                <div className="w-full h-full bg-gray-100 rounded-full flex items-center justify-center">
-                  <Image
-                  alt="Instagram"
-                  src="/instagram.png"
-                  width={20}
-                  height={20}
-                  className="w-5 h-5 object-contain"
-                />
+                {socialMedia.map((social) => (
+                    <a
+                      key={social._id || social.socialMediaName}
+                      href={social.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300"
+                      title={social.socialMediaName}
+                    >
+                      {social.image ? (
+                        <Image
+                          src={social.image}
+                          alt={social.socialMediaName}
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 object-contain rounded-full"
+                        />
+                      ) : null}
+                    </a>
+                  ))}
+                </div> */}
+                <div className="flex flex-wrap gap-3 lg:justify-center">
+                  {socialMedia
+                    .filter(
+                      (social) =>
+                        social.socialMediaName.toLowerCase() !== "whatsapp"
+                    )
+                    .map((social) => (
+                      <a
+                        key={social._id || social.socialMediaName}
+                        href={social.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300"
+                        title={social.socialMediaName}
+                      >
+                        {social.image ? (
+                          <Image
+                            src={social.image}
+                            alt={social.socialMediaName}
+                            width={40}
+                            height={40}
+                            className="w-10 h-10 object-contain rounded-full"
+                          />
+                        ) : null}
+                      </a>
+                    ))}
                 </div>
-              </a>
-                <a
-                  href={facebookLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border-2 border-[#1877F2] flex items-center justify-center hover:scale-105 transition-all duration-300"
-                >
-                  <FaFacebookF className="text-xl text-[#1877F2]" />
-                </a>
-              <a
-                href={youtubeLink} target="_blank" rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border-2 border-[#FF0000] flex items-center justify-center hover:scale-105 transition-all duration-300"
-              >
-                <FaYoutube className="text-xl text-[#FF0000]" />
-              </a>
-              
-                <a
-                  href={behanceLink} target="_blank" rel="noopener noreferrer" 
-                  className="w-10 h-10 rounded-full border-2 border-[#1769FF] flex items-center justify-center hover:scale-105 transition-all duration-300"
-                >
-                  <FaBehance className="text-[#1769FF] text-xl" />
-                </a>
-              
-              </div> */}
-
-              <div className="flex flex-wrap gap-3 lg:justify-center">
-  {/* {socialMedia.map((social) => (
-    <a
-      key={social._id || social.socialMediaName}
-      href={social.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300"
-      title={social.socialMediaName}
-    >
-      {social.image ? (
-        <Image
-          src={social.image}
-          alt={social.socialMediaName}
-          width={40}
-          height={40}
-          className="w-10 h-10 object-contain rounded-full"
-        />
-      ) : null}
-    </a>
-  ))} */}
- {socialMedia.map((social) => (
-    <a
-      key={social._id || social.socialMediaName}
-      href={social.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300"
-      title={social.socialMediaName}
-    >
-      {social.image ? (
-        <Image
-          src={social.image}
-          alt={social.socialMediaName}
-          width={40}
-          height={40}
-          className="w-10 h-10 object-contain rounded-full"
-        />
-      ) : null}
-    </a>
-  ))}
-</div>
-
 
         </div>
   </Row>
