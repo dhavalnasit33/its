@@ -91,7 +91,7 @@ app.use((req, res, next) => {
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 200,
+  max: 950,
 
   // Skip rate limiting for admin requests (assuming admins send a Bearer token)
   skip: (req, res) => {
