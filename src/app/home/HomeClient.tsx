@@ -187,7 +187,6 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					alt="Loading"
 					width={80}
 					height={80}
-					className="animate-spin"
 					/>
 			</div>
 		);

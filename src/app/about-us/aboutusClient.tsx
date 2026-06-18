@@ -20,6 +20,7 @@ import ParallaxShape from "@/components/home/ParallaxShape";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
+import UnderConstructionPage from "@/components/UnderConstruction";
 interface AboutUsClientProps {
   title: string;
 }
@@ -64,7 +65,6 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             alt="Loading"
             width={80}
             height={80}
-            className="animate-spin"
           />
         </div>
     );

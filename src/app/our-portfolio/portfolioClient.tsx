@@ -163,7 +163,6 @@ export default function PortfolioClient() {
                     alt="Loading"
                     width={80}
                     height={80}
-                    className="animate-spin"
                     />
             </div>
         );

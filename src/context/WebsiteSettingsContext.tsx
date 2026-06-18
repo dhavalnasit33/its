@@ -38,6 +38,8 @@ interface WebsiteSettingsContextProps {
   settings: WebsiteSettings;
   navStructure: NavigationStructure;
   blogSlug: string;
+  privacySlug: string;
+  termsSlug: string;
   portfolioSlug: string;
   hireSlug: string;
   hrEmail: string;
@@ -67,6 +69,8 @@ const WebsiteSettingsContext = createContext<WebsiteSettingsContextProps>({
   settings: defaultSettings,
   navStructure: defaultNavStructure,
   blogSlug: "blog",
+  privacySlug: "privacy-policy",
+  termsSlug: "terms-condition",
   portfolioSlug: "our-portfolio",
   hireSlug: "hire",
   hrEmail: "hr@inspiretechnosolution.com",
@@ -145,6 +149,12 @@ export function WebsiteSettingsProvider({
   const blogLink = (navStructure?.mainNav || []).find(
     (link) => link.systemIdentifier === "blog"
   );
+  const privacyLink = (navStructure?.mainNav || []).find(
+    (link) => link.systemIdentifier === "privacy-policy"
+  );
+  const termsLink = (navStructure?.mainNav || []).find(
+    (link) => link.systemIdentifier === "terms-condition"
+  );
   const portfolioLink = (navStructure?.mainNav || []).find(
     (link) => link.systemIdentifier === "portfolio"
   );
@@ -152,15 +162,19 @@ export function WebsiteSettingsProvider({
     (link) => link.systemIdentifier === "hire"
   );
   const blogSlug = blogLink?.slug || "blog";
+  const privacySlug = privacyLink?.slug || "privacy-policy";
+  const termsSlug = termsLink?.slug || "terms-condition";
   const portfolioSlug = portfolioLink?.slug || "our-portfolio";
   const hireSlug = hireLink?.slug || "hire";
-
+console.log("NAV STRUCTURE:", navStructure);
   return (
     <WebsiteSettingsContext.Provider
       value={{
         settings,
         navStructure,
         blogSlug,
+        privacySlug,
+        termsSlug,
         portfolioSlug,
         hireSlug,
         hrEmail,

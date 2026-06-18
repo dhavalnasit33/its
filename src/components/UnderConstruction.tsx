@@ -24,19 +24,45 @@
 //   );
 // }
 
-import React from "react";
 
-function UnderConstruction() {
+"use client";
+
+export default function UnderConstructionPage() {
   return (
-    <div className="uc-container">
-      <div className="uc-content">
-        <span className="uc-icon" role="img" aria-label="construction">🚧</span>
-        <h1>Page Under Construction</h1>
-        <p>We're working hard to bring you something great. Please check back soon!</p>
-        <a href="/" className="uc-button">Back to Home</a>
+    <main className="h-screen flex items-center justify-center bg-gradient-to-br from-[#0B1622] to-[#111c2e] text-center px-6">
+
+      <div className="max-w-xl">
+        {/* ICON */}
+        <div className="text-8xl mb-6 animate-bounce">
+          🚧
+        </div>
+
+        {/* TITLE */}
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+          We’re Under Construction
+        </h1>
+
+        {/* DESCRIPTION */}
+        <p className="text-slate-600 text-base sm:text-lg mb-6 leading-relaxed">
+          Our website is currently undergoing improvements to serve you better.
+          We’ll be back online very soon.
+        </p>
+
+        {/* PROGRESS BAR */}
+        <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden mb-2">
+          <div className="h-full w-[70%] bg-[#d68029] animate-pulse" />
+        </div>
+
+        <p className="text-sm text-slate-400 mb-6">
+          70% completed
+        </p>
+
+        <div className=" inline-flex mt-4 border border-gray-300 hover:bg-[#d68029] hover:border-transparent rounded-md">
+           <a href="mailto:hr@inspiretechnosolution.com" className="text-white p-4 ">
+          hr@inspiretechnosolution.com
+        </a>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
-
-export default UnderConstruction;

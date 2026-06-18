@@ -52,7 +52,6 @@ export default function RelatedBlogs({
             alt="Loading"
             width={80}
             height={80}
-            className="animate-spin"
           />
       </div>
     );

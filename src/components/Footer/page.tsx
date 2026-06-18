@@ -1310,7 +1310,9 @@ export default function ContactFooterPage() {
     youtubeLink,
     behanceLink,
     blogSlug,
-    portfolioSlug
+    portfolioSlug,
+    privacySlug,
+    termsSlug
   } = useWebsiteSettings();
 
 
@@ -1635,7 +1637,7 @@ export default function ContactFooterPage() {
                         social.socialMediaName.toLowerCase() !== "whatsapp"
                     )
                     .map((social) => (
-                      <a
+                      <a  
                         key={social._id || social.socialMediaName}
                         href={social.link}
                         target="_blank"
@@ -2057,12 +2059,16 @@ export default function ContactFooterPage() {
                 />
               </div>
               <div className="flex flex-wrap items-center justify-center">
-                <a href="/privacy-policy"
+                <a 
+                // href="/privacy-policy"
+                href={`/${privacySlug}`}
                   className="pr-2 md:pr-3 border-r border-white/20 hover:text-[#d68029]"
                 >
                   Privacy Policy
                 </a>
-                <a href="/terms-condition"
+                <a 
+                // href="/terms-condition"
+                 href={`/${termsSlug}`}
                   className="px-2 md:px-3 border-r border-white/20 hover:text-[#d68029]"
                 >
                   Terms & Conditions
