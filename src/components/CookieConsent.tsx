@@ -5,16 +5,34 @@ import Button from "./Button";
 
 export default function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
+// useEffect(() => {
+//   const consent = localStorage.getItem("cookieConsent");
+
+//   if (!consent) {
+//     const timer = setTimeout(() => {
+//       setShowBanner(true);
+//     }, 5000); // show after 5 seconds
+
+//     return () => clearTimeout(timer);
+//   }
+// }, []);
+
 useEffect(() => {
   const consent = localStorage.getItem("cookieConsent");
 
-  if (!consent) {
-    const timer = setTimeout(() => {
-      setShowBanner(true);
-    }, 5000); // show after 5 seconds
-
-    return () => clearTimeout(timer);
+  if (
+    consent === "accepted" ||
+    consent === "declined" ||
+    consent === "closed"
+  ) {
+    return;
   }
+
+  const timer = setTimeout(() => {
+    setShowBanner(true);
+  }, 5000);
+
+  return () => clearTimeout(timer);
 }, []);
 
   const acceptCookies = () => {
@@ -28,6 +46,7 @@ useEffect(() => {
   };
 
   const closePopup = () => {
+     localStorage.setItem("cookieConsent", "closed");
   setShowBanner(false);
 };
   if (!showBanner) return null;
@@ -79,10 +98,10 @@ useEffect(() => {
           </button> */}
           <Button
            bgColor="#D68029"
-                                hoverColor="#0d1b2a"
+           hoverColor="#0d1b2a"
            onClick={acceptCookies}
                 text="Accept"
-                href="#contact-form-section"
+                href=""
             />
         </div>
       </div>
