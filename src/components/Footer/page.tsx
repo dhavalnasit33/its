@@ -1314,6 +1314,9 @@ export default function ContactFooterPage() {
   } = useWebsiteSettings();
 
 
+  const { settings } = useWebsiteSettings();
+  const socialMedia = settings.social_media || [];
+
 
   const nav: NavigationStructure = navStructure ?? {
     mainNav: [],
@@ -1602,9 +1605,8 @@ export default function ContactFooterPage() {
                     <FaYoutube className="text-xl hover:text-[#d68029] transition-colors" />
                   </a>
             </div> */}
-              <div className="flex flex-wrap gap-3 lg:justify-center">
+              {/* <div className="flex flex-wrap gap-3 lg:justify-center">
 
-                  {/* LinkedIn */}
                 <a
                   href={linkedinLink}
                   target="_blank"
@@ -1613,7 +1615,6 @@ export default function ContactFooterPage() {
                 >
                   <FaLinkedinIn className="text-xl text-[#0A66C2]" />
                 </a>
-                {/* Instagram */}
               <a
                 href={instagramLink}
                 target="_blank"
@@ -1630,7 +1631,6 @@ export default function ContactFooterPage() {
                 />
                 </div>
               </a>
-                 {/* Facebook */}
                 <a
                   href={facebookLink}
                     target="_blank"
@@ -1639,7 +1639,6 @@ export default function ContactFooterPage() {
                 >
                   <FaFacebookF className="text-xl text-[#1877F2]" />
                 </a>
-                {/* YouTube */}
               <a
                 href={youtubeLink} target="_blank" rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border-2 border-[#FF0000] flex items-center justify-center hover:scale-105 transition-all duration-300"
@@ -1647,7 +1646,6 @@ export default function ContactFooterPage() {
                 <FaYoutube className="text-xl text-[#FF0000]" />
               </a>
               
-               {/* X */}
                 <a
                   href={behanceLink} target="_blank" rel="noopener noreferrer" 
                   className="w-10 h-10 rounded-full border-2 border-[#1769FF] flex items-center justify-center hover:scale-105 transition-all duration-300"
@@ -1655,7 +1653,32 @@ export default function ContactFooterPage() {
                   <FaBehance className="text-[#1769FF] text-xl" />
                 </a>
               
-              </div>
+              </div> */}
+
+              <div className="flex flex-wrap gap-3 lg:justify-center">
+  {socialMedia.map((social) => (
+    <a
+      key={social._id || social.socialMediaName}
+      href={social.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:scale-105 transition-all duration-300"
+      title={social.socialMediaName}
+    >
+      {social.image ? (
+        <Image
+          src={social.image}
+          alt={social.socialMediaName}
+          width={20}
+          height={20}
+          className="w-5 h-5 object-contain"
+        />
+      ) : null}
+    </a>
+  ))}
+</div>
+
+
         </div>
   </Row>
 </Section>

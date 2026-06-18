@@ -32,6 +32,7 @@ import {
 import { getYoastSeoData } from "@/lib/seoService";
 import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import CookieConsent from "@/components/CookieConsent";
 
 interface ParsedScript {
   src?: string;
@@ -239,6 +240,7 @@ export default async function RootLayout({
           </ClientContentWrapper> */}
             <SideBlurb />
               <WhatsAppButton />
+                <CookieConsent />
           </WebsiteSettingsProvider>
         </SnackbarProvider>
       </body>
