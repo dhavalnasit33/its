@@ -295,8 +295,6 @@ const closePopup = () => {
   setIsOpen(false);
 };
 
-if (!isOpen) return null;
-
 const [formData, setFormData] = useState({
   firstname: "",
   lastname: "",
@@ -321,35 +319,6 @@ const handleBudgetSelect = (budget: string) => {
       const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 const [captchaToken, setCaptchaToken] = useState<string>("");
 
-// const onSubmit = async (data: YourFormValues) => {
-//     const payload = {
-//         type: "PopupForm",          // ← required, tells backend which form
-//         source: "popup_form",       // ← required, tells backend where it came from
-//         name: `${data.firstname} ${data.lastname}`.trim(),  // or just data.name
-//         firstname: data.firstname,
-//         lastname: data.lastname,
-//         email: data.email,
-//         phone: data.phone,
-//         message: data.message,
-//         subject: data.subject || undefined,     // optional
-//         budget: data.budget || undefined,        // optional
-//         captchaToken: captchaToken,              // if using recaptcha
-//     };
-
-//     const response = await apiService<{ success: boolean; message?: string }>(
-//         "/enquiries",
-//         {
-//             method: "POST",
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify(payload),
-//         }
-//     );
-
-//     if (response.success) {
-//         // success logic — close popup, show toast, etc.
-//     }
-// };
-     
 const onSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
@@ -418,6 +387,10 @@ const onSubmit = async (e: React.FormEvent) => {
     );
   }
 };
+
+
+if (!isOpen) return null;
+
 
 const budgetOptions = [
     "UP TO $10K",
