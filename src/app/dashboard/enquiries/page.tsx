@@ -42,6 +42,7 @@ import {
   Briefcase,
   GraduationCap,
   Sparkles,
+  BellRing,
 } from "lucide-react";
 import ViewEnquiryDialog from "@/components/dashboard/enquiries/ViewEnquiryDialog";
 import DeleteEnquiryDialog from "@/components/dashboard/enquiries/DeleteEnquiryDialog";
@@ -233,6 +234,13 @@ export default function EnquiriesPage() {
             Footer Form
           </div>
         );
+      case "PopupForm":
+        return (
+          <div className="flex items-center gap-1.5 text-cyan-700 bg-cyan-50 border border-cyan-200 px-2 py-0.5 rounded-full text-xs font-semibold w-fit">
+            <BellRing className="h-3.5 w-3.5" />
+            Popup Form
+          </div>
+        );
       default:
         return <Badge variant="outline">{type}</Badge>;
     }
@@ -326,6 +334,7 @@ export default function EnquiriesPage() {
                   <SelectItem value="Training">Training Page</SelectItem>
                   <SelectItem value="Hire">Hire Developer</SelectItem>
                   <SelectItem value="FooterForm">Footer Form</SelectItem>
+                  <SelectItem value="PopupForm">Popup Form</SelectItem>
                 </SelectContent>
               </Select>
 

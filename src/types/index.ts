@@ -1521,7 +1521,7 @@ export interface HireMainPageData {
 
 export interface Enquiry {
   _id: string;
-  type: "Career" | "Training" | "Contact" | "Hire" | "FooterForm";
+  type: "Career" | "Training" | "Contact" | "Hire" | "FooterForm" | "PopupForm";
   name: string;
   firstname?: string;
   lastname?: string;
