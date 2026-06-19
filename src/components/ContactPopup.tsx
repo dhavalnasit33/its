@@ -38,7 +38,7 @@ useEffect(() => {
 
   const timer = setTimeout(() => {
     setIsOpen(true);
-  }, 30000);
+  }, 45000);
 
   return () => clearTimeout(timer);
 }, []);
