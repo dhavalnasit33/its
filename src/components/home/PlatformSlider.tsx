@@ -6,14 +6,31 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 
-import { NavigationStructure } from "@/lib/navigationService";
+import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
+import { useEffect, useState } from "react";
 
 interface PlatformSliderProps {
   navStructure?: NavigationStructure;
 }
 
-export default function PlatformSlider({ navStructure }: PlatformSliderProps) {
+export default function PlatformSlider() {
     
+   const [navStructure, setNavStructure] = useState<NavigationStructure | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getNavigationStructure();
+        setNavStructure(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
   const services =
     navStructure?.servicesNav?.flatMap((category) =>
       category.links?.map((service) => ({

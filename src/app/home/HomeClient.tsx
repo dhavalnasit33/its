@@ -303,7 +303,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 	return (
 		<>
-		<ContactPopup />
+		{/* <ContactPopup /> */}
 
 		<main className="relative isolate w-full bg-white text-gray-900">
 			{/* <style dangerouslySetInnerHTML={{ __html: sliderStyles }} /> */}
@@ -362,7 +362,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 							<AutoTextSlider data={homePageData.heroSecton.technologySection} />
 						</div>
 
-						<div className="yellow-text max-w-[800px] mx-auto mb-20 md:mb-30 text-center fonts_16 text-white"
+						<div className="yellow-text max-w-[800px] mx-auto mb-16 md:mb-20 text-center fonts_16 text-white"
 							dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.description || "", }}
 						/>
 
@@ -424,7 +424,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</motion.div>
 
 					 <div className="max-w-[500px] lg:max-w-[840px] mx-auto px-4">
-						<div className="h-[1px] bg-[rgba(255,255,255,0.1)] mt-20 md:mt-30 mb-10"></div>
+						<div className="h-[1px] bg-[rgba(255,255,255,0.1)] mt-16 md:mt-21 mb-10"></div>
 						<div className="grid grid-cols-2 lg:grid-cols-4 max-lg:gap-4">
 						{statsData.map((item, index) => {
 							const Icon = item.icon;
@@ -488,9 +488,10 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 			<Section  className="bg-[#0d1b2a] z-10 !py-6 ">
 				<Row>
-					{navStructure && (
+					{/* {navStructure && (
 						<PlatformSlider navStructure={navStructure} />
-					)}
+					)} */}
+					<PlatformSlider />
 				</Row>
 			</Section>
 
