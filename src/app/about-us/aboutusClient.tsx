@@ -1204,7 +1204,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8">We don’t just deliver software — we deliver peace of mind, measurable results, and long-term partnerships. With a skilled team of developers, designers, and strategists, we turn your ideas into scalable, future-ready digital solutions tailored to your goals.</p>
             </motion.div>
           </div>
-					<div className=" w-full relative min-h-px max-w-full lg:max-w-[50%]">
+					{/* <div className=" w-full relative min-h-px max-w-full lg:max-w-[50%]">
 					 <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -1220,30 +1220,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 className="w-full h-auto"
               />
             </motion.div>
-					</div>
-				</Row>
+					</div> */}
+          <div className=" w-full relative min-h-px max-w-full lg:max-w-[50%]">
 
-			</Section>
-
-
-      <Section className="py-16  relative bg-white z-10">
-        <Row>
-            {/* <motion.div 
-              initial={{ opacity: 0, y: -70 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}></motion.div> */}
-            <motion.div 
-              initial={{ opacity: 0, y: -70 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-               className="flex flex-col items-center w-full justify-center text-center mb-10">
-              <h2 className="common-h2 text-gray-900 relative">
-                Just Know About Our Goals
-              </h2>
-              <Motion />
-            </motion.div>
 
           <div className="mb-8">
             <motion.div
@@ -1252,10 +1231,10 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 viewport={{ once: true, amount: 0.3 }}
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
                 transition={{ duration: 0.6, ease: "easeOut" }} 
-            className="h-full bg-white rounded-[20px] p-8 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col justify-between">
+            className="h-full bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col justify-between">
 
               <div>
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8 bg-orange-100">
+                <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {/* <FiTarget className="w-7 h-7 text-blue-600" /> */}
                    {aboutUsData?.goals?.missionImage && (
                       <Image
@@ -1276,12 +1255,12 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   quality as a top-tier agency — without
                   the bloated cost or 9-month timeline.
                 </p> */}
-                <p className="text-[#6f6f6f] text-base sm:text-lg"
+                <p className="text-[#6f6f6f] text_16 "
                       dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.missionDescription  || "" }}
                     />
               </div>
 
-              <div className="flex flex-wrap gap-3 mt-16">
+              <div className="flex flex-wrap gap-3 mt-4">
                 <span className="px-4 py-1 border-gray-300 text-[#6f6f6f]  rounded-full border">
                   Coding
                 </span>
@@ -1317,10 +1296,141 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 className="grid md:grid-cols-2 gap-8">
 
               {/* Vision */}
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100">
+
+                <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
+                  {/* <FaEye className="w-7 h-7 text-indigo-600" /> */}
+                   {aboutUsData?.goals?.visionImage && (
+                      <Image
+                        src={aboutUsData.goals.visionImage}
+                        alt="Vision icon"
+                        width={47}
+                        height={47}
+                      />
+                    )}
+                </div>
+
+                <h4 className="common-h2-small mb-4">
+                  {aboutUsData?.goals?.visionTitle}
+                </h4>
+
+                <p className="text_16 text-[#6f6f6f]   [&_p]:mb-4">
+                 {aboutUsData?.goals?.visionDescription}
+                </p>
+
+              </div>
+
+              {/* Values */}
+              <div
+                className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100">
+                <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
+                  {aboutUsData?.goals?.valuesImage && (
+                      <Image
+                        src={aboutUsData.goals.valuesImage}
+                        alt="Values icon"
+                        width={47}
+                        height={47}
+                      />
+                    )}
+                </div>
+
+                <h4 className="common-h2-small mb-4">
+                  {aboutUsData?.goals?.valuesTitle}
+                </h4>
+
+                <p className="text_16  text-[#6f6f6f]   [&_p]:mb-4">
+                  {aboutUsData?.goals?.valuesDescription}
+                </p>
+
+              </div>
+
+            </motion.div>
+      </div>
+				</Row>
+
+			</Section>
+
+
+      {/* <Section className="py-16  relative bg-white z-10">
+        <Row>
+            <motion.div 
+              initial={{ opacity: 0, y: -70 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+               className="flex flex-col items-center w-full justify-center text-center mb-10">
+              <h2 className="common-h2 text-gray-900 relative">
+                Just Know About Our Goals
+              </h2>
+              <Motion />
+            </motion.div>
+
+          <div className="mb-8">
+            <motion.div
+                           initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                transition={{ duration: 0.6, ease: "easeOut" }} 
+            className="h-full bg-white rounded-[20px] p-8 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col justify-between">
+
+              <div>
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8 bg-orange-100">
+                   {aboutUsData?.goals?.missionImage && (
+                      <Image
+                        src={aboutUsData.goals.missionImage}
+                        alt="Mission icon"
+                        width={47}
+                        height={47}
+                      />
+                    )}
+                </div>
+
+                <h4 className="common-h2-small mb-4">
+                 {aboutUsData?.goals?.missionTitle}
+                </h4>
+                <p className="text-[#6f6f6f] text-base sm:text-lg"
+                      dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.missionDescription  || "" }}
+                    />
+              </div>
+
+              <div className="flex flex-wrap gap-3 mt-16">
+                <span className="px-4 py-1 border-gray-300 text-[#6f6f6f]  rounded-full border">
+                  Coding
+                </span>
+
+                <span className="px-4 py-1 border-gray-300 text-[#6f6f6f]  rounded-full border">
+                  Design
+                </span>
+
+                <span className="px-4 py-1 border-gray-300 text-[#6f6f6f]  rounded-full border">
+                  Strategy
+                </span>
+
+                <span className="px-4 py-1 border-[#d68029] text-[#6f6f6f]  rounded-full border bg-[#d68029]  text-white flex gap-2 items-center">
+                  Launch
+                  <Image 
+                      src="/navbar/btn_icon.png"
+                      alt="btn-icon"
+                      width={10}
+                      height={10}
+                      className="w-[16px] h-[16px] object-contain"/>
+                </span>
+              </div>
+
+            </motion.div>
+          </div>
+            <motion.div
+             initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                className="grid md:grid-cols-2 gap-8">
+
               <div className="bg-white rounded-[20px] p-8 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100">
 
                 <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8 bg-orange-100  ">
-                  {/* <FaEye className="w-7 h-7 text-indigo-600" /> */}
                    {aboutUsData?.goals?.visionImage && (
                       <Image
                         src={aboutUsData.goals.visionImage}
@@ -1341,7 +1451,6 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 
               </div>
 
-              {/* Values */}
               <div
                 className="bg-white rounded-[20px] p-8 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100">
                 <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8 bg-orange-100">
@@ -1367,7 +1476,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 
             </motion.div>
       </Row>
-    </Section>
+    </Section> */}
 
 
     <Section className="py-16  relative bg-white z-10 lg:!pb-0">
