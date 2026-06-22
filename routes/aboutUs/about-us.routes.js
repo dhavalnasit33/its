@@ -162,21 +162,22 @@ const router = express.Router();
  */
 router.post('/', protect, async (req, res) => {
     try {
-        const { pagename, slug, heroSection, whoWeAre, goals, seo } = req.body;
-
+        const { pagename, slug, heroSection, whyCompany,  goals, seo } = req.body;
+        // whoWeAre,
         // Validate required fields based on your schema requirements
-        if (!heroSection || !whoWeAre || !goals) {
+        if (!heroSection || !whyCompany || !goals || !flags) {  // || !whoWeAre 
+            
             return res.status(400).json({
                 success: false,
-                message: "heroSection, whoWeAre, and goals are required"
+                message: "heroSection, whyCompany, goals and flags are required" //whoWeAre,
             });
         }
 
         // Validate heroSection required fields
-        if (!heroSection.title || !heroSection.description || !heroSection.image ) {
+        if (!heroSection.title || !heroSection.subtitle || !heroSection.description || !heroSection.image ) {
             return res.status(400).json({
                 success: false,
-                message: "heroSection title, description, image are required"
+                message: "heroSection title, subtitle, description, image are required"
             });
         }
 
@@ -207,7 +208,7 @@ router.post('/', protect, async (req, res) => {
         //     }
         // }
 
-        const aboutUs = new AboutUs({ pagename, slug, heroSection, whoWeAre, goals, seo });
+        const aboutUs = new AboutUs({ pagename, slug, heroSection, whyCompany,  goals, flags, seo }); // whoWeAre,
         await aboutUs.save();
 
         try {
@@ -296,10 +297,11 @@ router.get('/', async (req, res) => {
  */
 router.put('/:id', protect, cleanupOldImages(AboutUs, "AboutUs"), async (req, res) => {
     try {
-        const { pagename, slug, heroSection, whoWeAre, goals, seo } = req.body;
+        const { pagename, slug, heroSection, whyCompany, goals, flags, seo } = req.body; //whoWeAre,
+
         const updatedAboutUs = await AboutUs.findByIdAndUpdate(
             req.params.id,
-            { pagename, slug, heroSection, whoWeAre, goals, seo },
+            { pagename, slug, heroSection, whyCompany, goals, flags, seo }, //whoWeAre,
             { new: true, runValidators: true }
         );
 

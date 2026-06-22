@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
-const HeroPointSchema = new mongoose.Schema({
-    label: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true
-    }
-}, { _id: false });
+// const HeroPointSchema = new mongoose.Schema({
+//     label: {
+//         type: String,
+//         required: true
+//     },
+//     image: {
+//         type: String,
+//         required: true
+//     }
+// }, { _id: false });
 
 const HeroSectionSchema = new mongoose.Schema({
     title: {
+        type: String,
+        required: true
+    },
+    subtitle:{
         type: String,
         required: true
     },
@@ -34,26 +38,63 @@ const HeroSectionSchema = new mongoose.Schema({
     //     }
     // }
 
-    points: {
-        type: [HeroPointSchema],
-        required: true,
-        validate: [arr => arr.length === 4, 'Exactly 4 points required']
-    }
+    // points: {
+    //     type: [HeroPointSchema],
+    //     required: true,
+    //     validate: [arr => arr.length === 4, 'Exactly 4 points required']
+    // }
 }, { _id: false });
 
-const WhoWeAreSchema = new mongoose.Schema({
-    description:{
+const WhyCompanySchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    companyDetails: [
+        {
+            image: {
+                type: String,
+                required: true
+            },
+            title: {
+                type: String,
+                required: true
+            },
+            description: {
+                type: String,
+                required: true
+            }
+        }
+    ]
+});
+
+// const WhoWeAreSchema = new mongoose.Schema({
+//     description:{
+//             type: String,
+//             required: true
+//         },
+//     image: {
+//         type: String,
+//         required: true,
+//         // default: null
+//     },
+// }, { _id: false });
+
+const GoalsSchema = new mongoose.Schema({
+    goalsDetails: {
+        title: {
             type: String,
             required: true
         },
-    image: {
-        type: String,
-        required: true,
-        // default: null
+        description: {
+            type: String,
+            required: true
+        }
     },
-}, { _id: false });
-
-const GoalsSchema = new mongoose.Schema({
     missionTitle: {
         type: String,
         required: true
@@ -95,6 +136,25 @@ const GoalsSchema = new mongoose.Schema({
     }
 }, { _id: false });
 
+const Flagschema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    flagsDetails: [
+        {
+            image: {
+                type: String,
+                required: true
+            },
+            title: {
+                type: String,
+                required: true
+            },
+        }
+    ]
+}, { _id: false });
+
 const SEOSchema = new mongoose.Schema(
     {
         title: { type: String, default: "" },
@@ -119,8 +179,10 @@ const AboutUsSchema = new mongoose.Schema({
         default: ""
     },
     heroSection: HeroSectionSchema,
-    whoWeAre: WhoWeAreSchema,
+    whyCompany: WhyCompanySchema,
+    // whoWeAre: WhoWeAreSchema,
     goals: GoalsSchema,
+    flags: Flagschema,
     seo: SEOSchema,
 }, { timestamps: true });
 

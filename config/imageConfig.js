@@ -68,11 +68,13 @@ module.exports = {
   // ✅ AboutUs
   AboutUs: [
     "heroSection.image",
-    "heroSection.points.image",
-    "whoWeAre.image",
+    "whyCompany.companyDetails.image",
+    // "heroSection.points.image",
+    // "whoWeAre.image",
     "goals.missionImage",
     "goals.visionImage",
     "goals.valuesImage",
+    "flags.flagsDetails.image",
     "seo.featureImage",
   ],
 
