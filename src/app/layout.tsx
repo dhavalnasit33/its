@@ -98,7 +98,6 @@ export default async function RootLayout({
   const websiteSettings = await getWebsiteSettings();
   const yoastSeo = await getYoastSeoData();
   const { scripts, noscripts } = parseGoogleTags(yoastSeo?.googletags || "");
-  // const UNDER_CONSTRUCTION = true;
 
   return (
     <html lang="en" className={exo2.className}>
@@ -232,13 +231,6 @@ export default async function RootLayout({
           >
             <Navbar navStructure={navStructure} />
             <ClientContentWrapper>{children}</ClientContentWrapper>
-            {/* <ClientContentWrapper>
-            {UNDER_CONSTRUCTION ? (
-              <UnderConstruction />
-            ) : (
-              children
-            )}
-          </ClientContentWrapper> */}
             <SideBlurb />
               <WhatsAppButton />
                 <CookieConsent />

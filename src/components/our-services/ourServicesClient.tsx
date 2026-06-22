@@ -14,6 +14,7 @@ import Link from "next/link";
 import Section from "../Section";
 import Row from "../Row";
 import Button from "../Button";
+import UnderConstructionPage from "../UnderConstruction";
 
 export default function OurServicesClient() {
 
@@ -57,9 +58,10 @@ export default function OurServicesClient() {
 
 	if (!ourServicePageData) {
 		return (
-			<div className="min-h-screen flex items-center justify-center">
-				<NotFoundPage />
-			</div>
+			// <div className="min-h-screen flex items-center justify-center">
+			// 	<NotFoundPage />
+			// </div>
+			<UnderConstructionPage />
 		)
 	}
 

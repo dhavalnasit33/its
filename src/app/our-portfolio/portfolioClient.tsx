@@ -18,6 +18,7 @@ import NotFoundPage from "@/components/NotFoundPage";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
+import UnderConstructionPage from "@/components/UnderConstruction";
 // const categories = [
 //     { label: "Show All", value: "All" },
 //     { label: "Mobile App", value: "mobile-app" },
@@ -169,9 +170,10 @@ export default function PortfolioClient() {
     }
     if (!portfolioContentData) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <NotFoundPage />
-            </div>
+            // <div className="min-h-screen flex items-center justify-center">
+            //     <NotFoundPage />
+            // </div>
+            <UnderConstructionPage />
         );
     }
     const hasMore = page < totalPages;

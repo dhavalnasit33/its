@@ -16,6 +16,7 @@ import ParallaxShape from "@/components/home/ParallaxShape";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
+import UnderConstructionPage from "@/components/UnderConstruction";
 
 function chunkArray<T>(array: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
@@ -204,9 +205,10 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
 
   if (!pageData) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <NotFoundPage />
-      </div>
+      // <div className="min-h-screen flex items-center justify-center">
+      //   <NotFoundPage />
+      // </div>
+      <UnderConstructionPage />
     );
   }
 

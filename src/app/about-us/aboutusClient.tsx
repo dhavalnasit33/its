@@ -768,7 +768,6 @@ import ParallaxShape from "@/components/home/ParallaxShape";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
-import UnderConstructionPage from "@/components/UnderConstruction";
 import { FaEye } from "react-icons/fa6";
 import { BiBarChart } from "react-icons/bi";
 import { FiTarget } from "react-icons/fi";
@@ -777,6 +776,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
+import UnderConstructionPage from "@/components/UnderConstruction";
 
 
 interface AboutUsClientProps {
@@ -810,26 +810,6 @@ const ratings = [
   },
 ];
 
-const features = [
-  {
-    title: "Global Exposure",
-    icon: "/aboutus/global.png",
-    description:
-      "We speak the language of code, in every time zone. We've delivered top-notch software solutions in the USA, UK, Canada, Europe, and Australia for 8+ years.",
-  },
-  {
-    title: "Lasting Impact",
-    icon: "/aboutus/lasting.png",
-    description:
-      "We unlock your business's hidden potential. Through customized solutions and lasting partnerships. That's the Patoliya Infotech difference.",
-  },
-  {
-    title: "Digital Architects",
-    icon: "/aboutus/digital.png",
-    description:
-      "Our top-tech magicians don't simply code; they create solutions in PHP, MERN, MEAN, hybrids, mobile magic, and AI.",
-  },
-];
 
 const statsData = [
   {
@@ -870,13 +850,36 @@ const countries = [
   { name: "Sweden", flag: "/aboutus/sweden.png" },
 ];
 
+
+const marqueeStyles = `
+  @keyframes marqueeCountries {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee-countries {
+    display: flex;
+    width: max-content;
+    animation: marqueeCountries 30s linear infinite;
+  }
+
+  .animate-marquee-countries:hover {
+    animation-play-state: paused;
+  }
+`;
+
+
 // export default function AboutClient() {
 export default function AboutUsClient({ title }: AboutUsClientProps) {
-  const floatAnimation = {
-    initial: { x: 0 },
-    animate: { x: [5, -5, 5], y: [5, -5, 5] },
-    transition: { duration: 4, repeat: Infinity, ease: easeInOut, delay: 0.5 },
-  };
+  // const floatAnimation = {
+  //   initial: { x: 0 },
+  //   animate: { x: [5, -5, 5], y: [5, -5, 5] },
+  //   transition: { duration: 4, repeat: Infinity, ease: easeInOut, delay: 0.5 },
+  // };
   
 
   const [gettngAboutUsData, setGettngAboutUsData] = useState(true);
@@ -920,9 +923,10 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 
   if (!aboutUsData) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <NotFoundPage />
-      </div>
+      // <div className="min-h-screen flex items-center justify-center">
+      //   <NotFoundPage />
+      // </div>
+      <UnderConstructionPage />
     );
   }
  
@@ -930,15 +934,15 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
   return (
     <>
       {/* SECTION 1: ABOUT US HERO */}
-      <Section className="relative w-full items-center justify-center  gap-10 common_background_gradient     bg-white z-1  md:!pb-44 ">
-         <div className="absolute inset-0 pointer-events-none">
-    <Image
-      src="/aboutus/banner-bg.png"
-      alt=""
-      fill
-      className="object-cover opacity-10"
-    />
-  </div>
+      <Section className="relative w-full items-center justify-center gap-10 common_background_gradient bg-white z-1  md:!pb-44 ">
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="/aboutus/banner-bg.png"
+            alt=""
+            fill
+            className="object-cover opacity-10"
+          />
+        </div>
 
         {/* Left Content */}
         <Row>
@@ -958,11 +962,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                     initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="rose text-4xl md:text-[42px]  lg:text-[46px]/[130%]  font-bold tracking-[-0.03em] leading-[1.08] text-[#d68029] "
-          >
-              Inspire Techno Solution
-            {/* </h1> */}
-          </motion.h2>
+            className="rose text-4xl md:text-[42px]  lg:text-[46px]/[130%]  font-bold tracking-[-0.03em] leading-[1.08]  "
+            dangerouslySetInnerHTML={{ __html: aboutUsData?.heroSection?.subtitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
+          />
 
           {/* Paragraph (bottom → top) */}
           <motion.div
@@ -971,7 +973,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
             className="mb-12 w-full mt-4"
           >
-            <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8"
+            <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 "
               // {aboutUsData.heroSection.description}
               dangerouslySetInnerHTML={{ __html: aboutUsData?.heroSection?.description  || "", }}
             />
@@ -1055,38 +1057,31 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 
         {/* Heading */}
         <div className="w-full md:max-w-3xl">
-        <motion.div 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className=" mb-6 content-start common_htags left_htags"
-        >
-          <h2 className="common-h2   text-black pb-4">
-            Why{" "}
-            <span className="text-[#d68029] ">
-              Inspire Techno Solutions?
-            </span>
-          </h2>
-        </motion.div>
+          <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+            className="mb-6 content-start common_htags left_htags"
+          >
+          <h2 className=" w-full common-h2 text-black   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
+            dangerouslySetInnerHTML={{
+                __html:
+                    aboutUsData?.whyCompany?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
+            }}/>
+          </motion.div>
       
-        <motion.div
-        // initial={{ opacity: 0, y: 30 }}
-        //         whileInView={{ opacity: 1, y: 0 }}
-        //         viewport={{ once: true, amount: 0.2 }}
-        //         transition={{ duration: 0.6, ease: "easeOut" , delay: 0.6}}
-        initial={{ opacity: 0, y: 80 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <p className="text-gray-600 text-lg leading-8">
-            Expertise earns respect, ethics earn trust,
-            and results earn long-term partnerships.
-            That's the standard we hold ourselves to,
-            every single project.
-          </p>
-        </motion.div>
+          <motion.p
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-gray-600 text-lg leading-8"
+              dangerouslySetInnerHTML={{
+                __html:
+                    aboutUsData?.whyCompany?.description.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
+            }}/>
+          {/* </motion.p> */}
         </div>
 
         {/* Cards */}
@@ -1094,11 +1089,10 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
           initial={{ opacity: 0, y: 70 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          whileHover={{ y: -10, transition: { duration: 0.3 } }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-10 md:mt-16">
 
-          {features.map((item, index) => (
+          {aboutUsData?.whyCompany?.companyDetails?.map((item, index) => (
             <div
             key={index}
               className="group relative overflow-hidden rounded-2xl border  border-gray-200  bg-white  p-6 sm:p-8 transition-all duration-300  hover:shadow-lg "
@@ -1106,7 +1100,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
               <div className=" absolute top-0 left-0 h-1 w-0  bg-[#d68029]  transition-all duration-500  ease-out group-hover:w-full "/>
               <div className=" mb-8 ">
                 <img
-                  src={item.icon}
+                  src={item.image}
                   alt={item.title}
                   className="w-16 h-16 object-contain "
                 />
@@ -1116,9 +1110,12 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 {item.title}
               </h4>
 
-              <p className="text-gray-600 fonts_16">
-                {item.description}
-              </p>
+              <p className="text-gray-600 fonts_16 "
+                dangerouslySetInnerHTML={{
+                __html:
+                    item.description.replace(/<[^>]*>/g, "") || "",
+            }}/>
+              {/* </p> */}
             </div>
           ))}
 
@@ -1188,51 +1185,40 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className=" mb-6 content-start common_htags left_htags">
-              <h2 className="common-h2">
-              Years of Innovation, Growth & Client Satisfaction
-              </h2>
+                className=" mb-6 content-start common_htags left_htags"
+               >
+              <h2 className="common-h2"  
+                dangerouslySetInnerHTML={{
+                  __html:
+                      aboutUsData?.goals?.goalsDetails?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
+                }}
+              />
             </motion.div>
             <motion.div
             initial={{ opacity: 0, y: 80 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
+                className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-2 [&_p]:mb-4 [&_p:last-child]:mb-0" 
+                dangerouslySetInnerHTML={{
+                __html:
+                    aboutUsData?.goals?.goalsDetails?.description.replace(/<[^>]*>/g, "") || "",
+            }}
             >
-            <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-2" >At Synarion IT Solutions, we’ve spent over seven years helping businesses unlock growth through smart technology. Our commitment to innovation, reliable project execution, and a client-first approach has made us a trusted name in the IT industry.</p>
-
-            <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8">We don’t just deliver software — we deliver peace of mind, measurable results, and long-term partnerships. With a skilled team of developers, designers, and strategists, we turn your ideas into scalable, future-ready digital solutions tailored to your goals.</p>
-            </motion.div>
+           </motion.div>
           </div>
-					{/* <div className=" w-full relative min-h-px max-w-full lg:max-w-[50%]">
-					 <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7 }}
-              className="flex w-full relative min-h-px max-w-full "
-            >
-              <Image
-                src="/aboutus/Virtual-reality-amico.png"
-                alt="Unique Features Illustration"
-                width={563}
-                height={563}
-                className="w-full h-auto"
-              />
-            </motion.div>
-					</div> */}
+
           <div className=" w-full relative min-h-px max-w-full lg:max-w-[50%]">
 
 
-          <div className="mb-8">
+          <div className="mb-6">
             <motion.div
-                           initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                transition={{ duration: 0.6, ease: "easeOut" }} 
-            className="h-full bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col justify-between">
-
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, ease: "easeOut" }} 
+              className="h-full bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col justify-between
+              transition-all duration-300 hover:-translate-y-[10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
               <div>
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {/* <FiTarget className="w-7 h-7 text-blue-600" /> */}
@@ -1255,7 +1241,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   quality as a top-tier agency — without
                   the bloated cost or 9-month timeline.
                 </p> */}
-                <p className="text-[#6f6f6f] text_16 "
+                <p className="text-[#6f6f6f] text_16  "
                       dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.missionDescription  || "" }}
                     />
               </div>
@@ -1291,12 +1277,12 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
              initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                //  whileHover={{ y: -10, transition: { duration: 0.3 } }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                className="grid md:grid-cols-2 gap-8">
+                className="grid md:grid-cols-2 gap-6">
 
               {/* Vision */}
-              <div className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100">
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 transition-all duration-300 hover:-translate-y-[10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)] ">
 
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {/* <FaEye className="w-7 h-7 text-indigo-600" /> */}
@@ -1314,15 +1300,15 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                   {aboutUsData?.goals?.visionTitle}
                 </h4>
 
-                <p className="text_16 text-[#6f6f6f]   [&_p]:mb-4">
-                 {aboutUsData?.goals?.visionDescription}
-                </p>
+                <p className="text_16 text-[#6f6f6f]   [&_p]:mb-4"   
+                  dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.visionDescription  || "" }}
+                />
 
               </div>
 
               {/* Values */}
               <div
-                className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100">
+                className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100 transition-all duration-300 hover:-translate-y-[10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {aboutUsData?.goals?.valuesImage && (
                       <Image
@@ -1337,11 +1323,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 <h4 className="common-h2-small mb-4">
                   {aboutUsData?.goals?.valuesTitle}
                 </h4>
-
-                <p className="text_16  text-[#6f6f6f]   [&_p]:mb-4">
-                  {aboutUsData?.goals?.valuesDescription}
-                </p>
-
+                <p className="text_16 text-[#6f6f6f]   "   
+                  dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.valuesDescription  || "" }}
+                />
               </div>
 
             </motion.div>
@@ -1479,67 +1463,84 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
     </Section> */}
 
 
-    <Section className="py-16  relative bg-white z-10 lg:!pb-0">
+    <Section className="relative bg-white overflow-hidden py-16 lg:!pb-0">
+      <style dangerouslySetInnerHTML={{ __html: marqueeStyles }} />
+
       <Row>
         <div className="flex flex-col items-center w-full justify-center text-center mb-10">
-          <motion.div
-                  initial={{ opacity: 0, y: -70 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}>
-            <h2 className="common-h2   text-black pb-4">
-                We deliver{" "}
-                <span className="text-[#d68029] ">
-                  Digital Development
-                </span>{" "}
-                Solution across
-              </h2>
+          {/* <motion.div
+            initial={{ opacity: 0, y: -70 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.6,
+              ease: "easeOut",
+              delay: 0.3,
+            }}
+          >
+            <h2 className="common-h2 text-black pb-4">
+              We deliver{" "}
+              <span className="text-[#d68029]">
+                Digital Development
+              </span>{" "}
+              Solution across
+            </h2>
+
             <Motion />
-          </motion.div>
-          </div>
-
-          <div className="flex items-center gap-4 overflow-hidden bg-gray-100 rounded-lg py-4">
-          <div className="flex-1 min-w-0 gap-2">
-            <Swiper
-              modules={[Autoplay]}
-                slidesPerView="auto"
-                spaceBetween={30}
-                loop={true}
-                speed={3000}
-                allowTouchMove={false}
-                autoplay={{
-                    delay: 0,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: false,
-                }}
-                className="serviceSwiper"
-            >
-
-              {countries.map((country) => (
-                <SwiperSlide
-                  key={country.name}
-                  className="!w-auto"
-                >
-                  <div className="flex flex-col items-center gap-3 rounded-full ">
-                    <span className="text-md font-medium whitespace-nowrap mb-1">
-                      {country.name}
-                    </span>
-                    <Image
-                      src={country.flag}
-                      alt={country.name}
-                      width={110}
-                      height={52}
-                      className="rounded-sm object-cover"
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+          </motion.div> */}
+           <motion.h2
+              initial={{ opacity: 0, y: -70 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.3,
+              }}
+            className="common-h2 text-black pb-4 "
+            dangerouslySetInnerHTML={{ __html: aboutUsData?.flags?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
+          />
         </div>
       </Row>
+
+      <div className="relative w-full overflow-hidden py-4">
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none" />
+
+        <div className="animate-marquee-countries gap-8 px-4">
+
+          {countries.map((country, index) => (
+            <div
+              key={`${country.name}-${index}`}
+              className="
+                flex flex-col gap-2 items-center justify-center
+                h-36
+                w-[210px]
+                flex-shrink-0
+                rounded-[13px]
+                bg-white
+                shadow-[0px_4px_15px_rgba(0,0,0,0.08)]
+                transition-all duration-300
+                hover:shadow-lg
+              "
+            >
+              <span className="text-md font-medium whitespace-nowrap mb-1">
+                {country.name}
+              </span>
+
+              <Image
+                src={country.flag}
+                alt={country.name}
+                width={130}
+                height={52}
+                className="rounded-sm object-cover"
+              />
+            </div>
+          ))}
+
+        </div>
+      </div>
     </Section>
-  
 
 {/* 
       <Section className="bg-white ">

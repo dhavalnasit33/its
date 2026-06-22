@@ -21,10 +21,11 @@ interface NavbarProps {
 interface ContactPopupProps {
   phonePrimary?: string;
   hrEmail?: string;
+  salesEmail?: string
 }
 
 export default function Navbar({ navStructure }: NavbarProps) {
-  const { hrEmail, contactEmail, phonePrimary, phonePrimaryClean } =
+  const { hrEmail, salesEmail, contactEmail, phonePrimary, phonePrimaryClean } =
     useWebsiteSettings();
 
   // State for mobile menu toggles
@@ -734,6 +735,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
             <ContactPopup   
               phonePrimary={phonePrimary}
               hrEmail={hrEmail}
+              salesEmail={salesEmail}
             />
           </div>
 
@@ -773,6 +775,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
             <ContactPopup   
               phonePrimary={phonePrimary}
               hrEmail={hrEmail}
+              salesEmail={salesEmail}
             />
           </div>
         <div
@@ -1119,18 +1122,18 @@ export default function Navbar({ navStructure }: NavbarProps) {
 }
 
 
-const ContactPopup = ({ phonePrimary, hrEmail, }: ContactPopupProps) => {
+const ContactPopup = ({ phonePrimary, hrEmail, salesEmail}: ContactPopupProps) => {
   return (
-    <div className=" absolute top-full left-0 -translate-x-[70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-[300px] xl:w-[340px] bg-white rounded-lg shadow-2xl 
-    border border-gray-200 p-5 xl:p-6 z-[99999]  opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
+    <div className=" absolute top-full left-0 -translate-x-[70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-[300px] md:w-[310px] xl:w-[360px] bg-white rounded-lg shadow-2xl 
+    border border-gray-200 p-4 md:p-5 xl:p-6 z-[99999] opacity-0 invisible  translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
     >
       <div  className=" absolute -top-[10px] right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
       <h3 className="text-xl font-bold text-black mb-6">
         Let's Connect With Us!
       </h3>
 
-      <div className="flex items-center gap-3 xl:gap-4 mb-5">
-        <div className=" w-12 h-12 bg-white rounded-md shadow-lg flex items-center
+      <div className="flex items-start gap-2 xl:gap-4 mb-5">
+        <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-md shadow-lg flex items-center
             justify-center transition-all duration-300  hover:shadow-xl ">
           <Image
             src="/navbar/menu_whatsapp.png"
@@ -1154,8 +1157,8 @@ const ContactPopup = ({ phonePrimary, hrEmail, }: ContactPopupProps) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-3 xl:gap-4">
-        <div className=" w-12 h-12 bg-white rounded-md shadow-lg flex items-center
+      <div className="flex items-start gap-2 xl:gap-4 mb-5">
+        <div className=" w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-md shadow-lg flex items-center
             justify-center transition-all duration-300  hover:shadow-xl ">
           <Image
             src="/navbar/menu_mail.png"
@@ -1174,6 +1177,30 @@ const ContactPopup = ({ phonePrimary, hrEmail, }: ContactPopupProps) => {
               className="break-all text-gray-600  text-sm xl:text-base"
             >
               {hrEmail}
+            </Link>
+          )}
+        </div>
+      </div>
+      <div className="flex items-start gap-2 xl:gap-4">
+        <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-md shadow-lg flex items-center
+            justify-center transition-all duration-300  hover:shadow-xl ">
+          <Image
+            src="/navbar/menu_mail.png"
+            alt="WhatsApp"
+            width={26}
+            height={26}
+          />
+        </div>
+        <div>
+          <h4 className="font-semibold text-red-500">
+            Sales Inquiry
+          </h4>
+          {salesEmail && (
+            <Link
+              href={`mailto:${salesEmail}`}
+              className="break-all text-gray-600  text-sm xl:text-base"
+            >
+              {salesEmail}
             </Link>
           )}
         </div>

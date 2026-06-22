@@ -11,6 +11,7 @@ import ApplyPositionModal from "@/components/career/ApplyPositionModal";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
+import UnderConstructionPage from "@/components/UnderConstruction";
 
 export default function CareerClient() {
   const [careerData, setCareerData] = useState<CareerContent | null>(null);
@@ -76,9 +77,10 @@ export default function CareerClient() {
 
   if (!careerData && !loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <NotFoundPage />
-      </div>
+      // <div className="min-h-screen flex items-center justify-center">
+      //   <NotFoundPage />
+      // </div>
+      <UnderConstructionPage />
     );
   }
 

@@ -60,18 +60,32 @@ export interface AboutUs {
 	_id: string;
 	heroSection: {
 		title: string;
+    subtitle: string;
 		description: string;
 		image: string;
-		points: {
-			label: string;
-			image: string;
-		}[];
+		// points: {
+		// 	label: string;
+		// 	image: string;
+		// }[];
 	};
-	whoWeAre: {
-		description: string[];
-		image: string;
-	};
+  whyCompany: {
+    title: string;
+    description: string;
+    companyDetails: {
+      image: string;
+      title: string;
+      description: string;
+    }[];
+  };
+	// whoWeAre: {
+	// 	description: string[];
+	// 	image: string;
+	// };
 	goals: {
+    goalsDetails: {
+      title: string;
+      description: string;
+    };
 		missionTitle: string;
 		missionDescription: string;
 		missionImage: string;
@@ -82,6 +96,13 @@ export interface AboutUs {
 		valuesDescription: string;
 		valuesImage: string;
 	};
+  flags: {
+    title: string;
+    flagsDetails: {
+      image: string;
+      title: string;
+    }[];
+  }
 	createdAt: string;
 	updatedAt: string;
 }

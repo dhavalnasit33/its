@@ -353,7 +353,7 @@ export default function GeneralContactForm() {
                             <input
                                 type="text"
                                 placeholder="First Name"
-                                className={`w-full border-b border-gray-300 focus:border-orange-500 focus:outline-none py-2 ${errors.firstname ? "border-red-500" : ""
+                                className={`w-full border-b border-gray-300 focus:border-[#d68029] focus:outline-none py-2 ${errors.firstname ? "border-red-500" : ""
                                     }`}
                                 {...register("firstname")}
                             />
@@ -367,7 +367,7 @@ export default function GeneralContactForm() {
                             <input
                                 type="text"
                                 placeholder="Last Name"
-                                className={`w-full border-b border-gray-300 focus:border-orange-500 focus:outline-none py-2 ${errors.lastname ? "border-red-500" : ""
+                                className={`w-full border-b border-gray-300 focus:border-[#d68029] focus:outline-none py-2 ${errors.lastname ? "border-red-500" : ""
                                     }`}
                                 {...register("lastname")}
                             />
@@ -384,7 +384,7 @@ export default function GeneralContactForm() {
                             <input
                                 type="email"
                                 placeholder="Email"
-                                className={`w-full border-b border-gray-300 focus:border-orange-500 focus:outline-none py-2 ${errors.email ? "border-red-500" : ""
+                                className={`w-full border-b border-gray-300 focus:border-[#d68029] focus:outline-none py-2 ${errors.email ? "border-red-500" : ""
                                     }`}
                                 {...register("email")}
                             />
@@ -400,7 +400,7 @@ export default function GeneralContactForm() {
                                 placeholder="Phone Number"
                                 maxLength={10}
                                 pattern="\d{10}"
-                                className={`w-full border-b border-gray-300 focus:border-orange-500 focus:outline-none py-2 ${errors.phone ? "border-red-500" : ""
+                                className={`w-full border-b border-gray-300 focus:border-[#d68029] focus:outline-none py-2 ${errors.phone ? "border-red-500" : ""
                                     }`}
                                 {...register("phone", {
                                     required: "Phone number is required",
@@ -460,7 +460,7 @@ export default function GeneralContactForm() {
                         <textarea
                             rows={4}
                             placeholder="Write your message.."
-                            className={`w-full border-b border-gray-300 focus:border-orange-500 focus:outline-none ${errors.message ? "border-red-500" : ""
+                            className={`w-full border-b border-gray-300 focus:border-[#d68029] focus:outline-none ${errors.message ? "border-red-500" : ""
                                 }`}
                             {...register("message")}
                         ></textarea>

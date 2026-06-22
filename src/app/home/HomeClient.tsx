@@ -70,6 +70,7 @@ import { FiClock, FiHeart, FiShield, FiUsers } from "react-icons/fi";
 import PlatformSlider from "@/components/home/PlatformSlider";
 import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
 import { FaChartLine, FaLongArrowAltRight, FaRobot } from "react-icons/fa";
+import UnderConstructionPage from "@/components/UnderConstruction";
 
 // Dynamically import heavy/below-the-fold components to improve PageSpeed and load performance
 const ParticlesBg = dynamic(() => import("@/components/home/Particles"), { ssr: false });
@@ -193,9 +194,10 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	}
 	if (!homePageData) {
 		return (
-			<div className="min-h-screen flex items-center justify-center">
-				<NotFoundPage />
-			</div>
+			// <div className="min-h-screen flex items-center justify-center">
+			// 	<NotFoundPage />
+			// </div>
+			<UnderConstructionPage />
 		);
 	}
 	// const sliderSettings = {
@@ -343,7 +345,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						// #141F3D #030b1a bg-gradient-to-br from-slate-950/75 via-slate-950/80 to-slate-900/75
 					}}
 				/>
-				<div className="absolute inset-0 z-[1] pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_4px)]" />
+				<div className="absolute inset-0 z-1 pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.06)_0,rgba(0,0,0,0.06)_4px)]" />
 
 				{/* <div className="w-full max-w-[95%] z-10 lg:max-w-[80%] relative mx-auto px-4   "> */}
 				<Row className="z-10">

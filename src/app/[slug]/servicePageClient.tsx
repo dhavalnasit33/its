@@ -26,6 +26,7 @@ import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
+import UnderConstructionPage from "@/components/UnderConstruction";
 
 // ✅ FIX 1: Lazy load ALL below-fold heavy components
 const EngagementModels = dynamic(
@@ -102,9 +103,10 @@ export default function ServicePageClient() {
 
   if (notFound) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <NotFoundPage />
-      </div>
+      // <div className="min-h-screen flex items-center justify-center">
+      //   <NotFoundPage />
+      // </div>
+      <UnderConstructionPage />
     );
   }
 

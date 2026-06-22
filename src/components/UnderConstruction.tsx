@@ -27,11 +27,14 @@
 
 "use client";
 
+import Row from "./Row";
+import Section from "./Section";
+
 export default function UnderConstructionPage() {
   return (
-    <main className="h-screen flex items-center justify-center bg-gradient-to-br from-[#0B1622] to-[#111c2e] text-center px-6">
+    <Section className="xl:h-screen relative flex items-center justify-center  bg-[#0B1622] text-center ">
 
-      <div className="max-w-xl">
+      <Row className="md:!max-w-xl">
         {/* ICON */}
         <div className="text-8xl mb-6 animate-bounce">
           🚧
@@ -57,12 +60,12 @@ export default function UnderConstructionPage() {
           70% completed
         </p>
 
-        <div className=" inline-flex mt-4 border border-gray-300 hover:bg-[#d68029] hover:border-transparent rounded-md">
-           <a href="mailto:hr@inspiretechnosolution.com" className="text-white p-4 ">
-          hr@inspiretechnosolution.com
+        <div className=" inline-flex mt-4 border border-gray-300 hover:bg-[#ffffff] hover:border-transparent rounded-md">
+           <a href="mailto:hr@inspiretechnosolution.com" className="text-white hover:text-[#0B1622] p-4 ">
+          hr@inspiretechnosolution.com  
         </a>
         </div>
-      </div>
-    </main>
+      </Row>
+    </Section>
   );
 }

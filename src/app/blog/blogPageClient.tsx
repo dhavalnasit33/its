@@ -9,6 +9,7 @@ import Image from "next/image";
 import NotFoundPage from "@/components/NotFoundPage";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
+import UnderConstructionPage from "@/components/UnderConstruction";
 
 interface BlogCategory {
   _id: string;
@@ -275,9 +276,10 @@ export default function BlogPageClient() {
 
   if (!blogs) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <NotFoundPage />
-      </div>
+      // <div className="min-h-screen flex items-center justify-center">
+      //   <NotFoundPage />
+      // </div>
+      <UnderConstructionPage />
     );
   }
 

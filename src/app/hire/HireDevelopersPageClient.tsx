@@ -1306,6 +1306,7 @@ import NotFoundPage from "@/components/NotFoundPage";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
+import UnderConstructionPage from "@/components/UnderConstruction";
 
 export default function HireDevelopersPageClient() {
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -1363,9 +1364,10 @@ export default function HireDevelopersPageClient() {
 
     if (!hireMainPageData) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <NotFoundPage />
-            </div>
+            // <div className="min-h-screen flex items-center justify-center">
+            //     <NotFoundPage />
+            // </div>
+            <UnderConstructionPage />
         );
     }
 
