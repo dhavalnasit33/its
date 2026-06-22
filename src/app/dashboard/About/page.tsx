@@ -31,8 +31,10 @@ export default function AboutUsPage() {
             pagename: record.pagename || "",
             slug: record.slug || "",
             heroSection: record.heroSection,
-            whoWeAre: record.whoWeAre,
+            whyCompany: record.whyCompany,
+            // whoWeAre: record.whoWeAre,
             goals: record.goals,
+            flags: record.flags,
             seo: record.seo || {
               title: "",
               keyphrase: "",

@@ -55,17 +55,33 @@ export default function AboutUsForm({
       slug: "",
       heroSection: {
         title: "",
+        subtitle: "",
         description: "",
         image: "",
-        points: [
-          { label: "", image: "" },
-          // { label: "", image: "" },
-          // { label: "", image: "" },
-          // { label: "", image: "" },
+        // points: [
+        //   { label: "", image: "" },
+        //   { label: "", image: "" },
+        //   { label: "", image: "" },
+        //   { label: "", image: "" },
+        // ],
+      },
+      whyCompany: {
+        title: "",
+        description: "",
+        companyDetails: [
+          {
+            image: "",
+            title: "",
+            description: "",
+          },
         ],
       },
-      whoWeAre: { description: "", image: "" },
+      // whoWeAre: { description: "", image: "" },
       goals: {
+        goalsDetails: {
+          title: "",
+          description: "",
+        },
         missionTitle: "",
         missionDescription: "",
         missionImage: "",
@@ -76,6 +92,15 @@ export default function AboutUsForm({
         valuesDescription: "",
         valuesImage: "",
       },
+      flags: {
+        title: "",
+        flagsDetails: [
+          {
+            image: "",
+            title: "",
+          },
+        ],
+      },
       seo: {
         title: "",
         keyphrase: "",
@@ -84,6 +109,13 @@ export default function AboutUsForm({
       },
     },
   });
+
+  useEffect(() => {
+  if (initialData) {
+    form.reset(initialData);
+  }
+}, [initialData, form]);
+
 const titleValue = form.watch("pagename");
    useEffect(() => {
        if (isFirstRender.current) {
@@ -96,25 +128,43 @@ const titleValue = form.watch("pagename");
          });
        }
      }, [titleValue, form]);
-  // Sync initialData when it changes
-  useEffect(() => {
-    if (initialData) {
-       const fixedPoints = [...initialData.heroSection.points];
-
-    while (fixedPoints.length < 4) {
-      fixedPoints.push({
-        label: "",
-        image: "",
-      });
-    }
-      form.reset({...initialData,
-         heroSection: {
-          ...initialData.heroSection,
-          points: initialData.heroSection.points.slice(0, 4),
-        },
+    
+  const {
+        fields: comapnyDetails,
+        append: appendComapnyDetail,
+        remove: removeCompanyDetail,
+    } = useFieldArray({
+        control: form.control as any,
+        name: "whyCompany.companyDetails",
     });
-    }
-  }, [initialData, form]);
+    const {
+        fields: flagsDetails,
+        append: appendFlagsDetail,
+        remove: removeFlagsDetail,
+    } = useFieldArray({
+        control: form.control as any,
+        name: "flags.flagsDetails",
+    });
+
+  // Sync initialData when it changes
+  // useEffect(() => {
+  //   if (initialData) {
+  //      const fixedPoints = [...initialData.heroSection.points];
+
+  //   while (fixedPoints.length < 4) {
+  //     fixedPoints.push({
+  //       label: "",
+  //       image: "",
+  //     });
+  //   }
+  //     form.reset({...initialData,
+  //        heroSection: {
+  //         ...initialData.heroSection,
+  //         points: initialData.heroSection.points.slice(0, 4),
+  //       },
+  //   });
+  //   }
+  // }, [initialData, form]);
 
    
   // const { fields: heroPoints, append: appendHeroPoint, remove: removeHeroPoint } = useFieldArray<any>({
@@ -224,7 +274,25 @@ const titleValue = form.watch("pagename");
                     </FormItem>
                   )}
                 />
-
+                 <FormField
+                  control={form.control as any}
+                  name="heroSection.subtitle"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subtitle</FormLabel>
+                      <FormControl>
+                        {/* <Textarea placeholder="Enter hero description" rows={4} {...field} /> */}
+                        <CustomCKEditor
+                          value={field.value || ""}
+                          onChange={(data: string) => {
+                              field.onChange(data);
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control as any}
                   name="heroSection.description"
@@ -306,7 +374,7 @@ const titleValue = form.watch("pagename");
                       </Card>
                     ))}
                   </div> */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {Array.from({ length: 4 }).map((_, index) => (
                       <Card
                         key={index}
@@ -347,65 +415,126 @@ const titleValue = form.watch("pagename");
                         </div>
                       </Card>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
 
-            {/* Who We Are Section */}
+            {/* why company section */}
             <Card>
+              <CardHeader>
+                <CardTitle>Why Company Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                    <div className="p-4 border rounded-md space-y-4">
+                      <FormField
+                          control={form.control as any}
+                          name="whyCompany.title"
+                          render={({ field }) => (
+                              <FormItem>
+                                  <FormLabel>Title</FormLabel>
+                                  <FormControl>
+                                    <CustomCKEditor
+                                      value={field.value || ""}
+                                      onChange={(data: string) => { field.onChange(data); }}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                              </FormItem>
+                          )}
+                      />
+                      <FormField
+                          control={form.control as any}
+                          name="whyCompany.description"
+                          render={({ field }) => (
+                              <FormItem>
+                                  <FormLabel>Description</FormLabel>
+                                  <FormControl>
+                                    <CustomCKEditor
+                                      value={field.value || ""}
+                                      onChange={(data: string) => { field.onChange(data); }}
+                                    /> 
+                                  </FormControl>
+                                  <FormMessage />
+                              </FormItem>
+                          )}
+                      />
+                      <div className="flex justify-between items-center">
+                          <FormLabel>Comapny Details</FormLabel>
+                          <Button type="button" variant="outline" size="sm" onClick={() => appendComapnyDetail({ image: "", title: "", description: "" })}>
+                              <Plus className="h-4 w-4 mr-2" /> Add Company Detail
+                          </Button>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {comapnyDetails.map((item, index) => (
+                              <Card key={item.id} className="p-4 relative border-dashed">
+                                  <Button 
+                                      type="button" 
+                                      variant="ghost" 
+                                      size="icon" 
+                                      className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                      onClick={() => removeCompanyDetail(index)}
+                                  >
+                                      <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                  <div className="space-y-4 pt-4">
+                                       <FormField
+                                        control={form.control}
+                                        name={`whyCompany.companyDetails.${index}.image`}
+                                        render={({ field }) => (
+                                          <FormItem>
+                                            <FormLabel>Image</FormLabel>
+                                            <FormControl>
+                                              <ImageUpload
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                className="h-40"
+                                              />
+                                            </FormControl>
+                                            <FormMessage />
+                                          </FormItem>
+                                        )}
+                                      />
+                                      <FormField
+                                          control={form.control as any}
+                                          name={`whyCompany.companyDetails.${index}.title`}
+                                          render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>title</FormLabel><FormControl><Input placeholder="Detail title" {...field} /></FormControl><FormMessage />
+                                              </FormItem>
+                                          )}
+                                      />
+                                      <FormField
+                                          control={form.control as any}
+                                          name={`whyCompany.companyDetails.${index}.description`}
+                                          render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>Description</FormLabel>
+                                                <FormControl>
+                                                  <CustomCKEditor
+                                                    value={field.value || ""}
+                                                    onChange={(data: string) => { field.onChange(data); }}
+                                                  />
+                                                </FormControl>
+                                                <FormMessage />
+                                              </FormItem>
+                                          )}
+                                      />
+                                     
+                                  </div>
+                              </Card>
+                          ))}
+                      </div>
+                  </div>
+              </CardContent>
+            </Card>
+            {/* Who We Are Section */}
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Who We Are</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <FormLabel>Description Paragraphs</FormLabel>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => appendWhoWeArePoint("")}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add Paragraph
-                    </Button>
-                  </div>
-                  <div className="space-y-4">
-                    {whoWeArePoints.map((field, index) => (
-                      <div key={field.id} className="flex gap-2 items-start">
-                        <FormField
-                          control={form.control as any}
-                          name={`whoWeAre.description.${index}`}
-                          render={({ field }) => (
-                            <FormItem className="flex-1">
-                              <FormControl>
-                                // {/* <Textarea placeholder={`Paragraph ${index + 1}`} rows={3} {...field} /> *
-                                <CustomCKEditor
-                                    value={field.value || ""}
-                                    onChange={(data: string) => {
-                                        field.onChange(data);
-                                    }}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="mt-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                          onClick={() => removeWhoWeArePoint(index)}
-                          disabled={whoWeArePoints.length === 1}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
+                
                 <FormField
                     control={form.control as any}
                     name="whoWeAre.description"
@@ -430,15 +559,49 @@ const titleValue = form.watch("pagename");
                     )}
                 />
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* Goals Section */}
             <Card>
+              
               <CardHeader>
                 <CardTitle>Our Goals (Mission, Vision, Values)</CardTitle>
               </CardHeader>
               <CardContent className="space-y-8">
-                {/* Mission */}
+                <FormField
+                  control={form.control}
+                  name="goals.goalsDetails.title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Goals Title</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter Goals Title"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="goals.goalsDetails.description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Goals Description</FormLabel>
+                      <FormControl>
+                        <CustomCKEditor
+                          value={field.value || ""}
+                          onChange={(data) => field.onChange(data)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                    {/* Mission */}
                 <div className="space-y-4 p-4 border rounded-lg bg-gray-50/50">
                   <h3 className="font-semibold text-lg border-b pb-2">Mission</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -614,6 +777,83 @@ const titleValue = form.watch("pagename");
               </CardContent>
             </Card>
 
+            {/* flag section */}
+                    
+                    <Card>
+              <CardHeader>
+                <CardTitle>Flag Slider Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                    <div className="p-4 border rounded-md space-y-4">
+                      <FormField
+                          control={form.control as any}
+                          name="flags.title"
+                          render={({ field }) => (
+                              <FormItem>
+                                  <FormLabel>Title</FormLabel>
+                                  <FormControl>
+                                    <CustomCKEditor
+                                      value={field.value || ""}
+                                      onChange={(data: string) => { field.onChange(data); }}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                              </FormItem>
+                          )}
+                      />
+                      <div className="flex justify-between items-center">
+                          <FormLabel>Country Flags Details</FormLabel>
+                          <Button type="button" variant="outline" size="sm" onClick={() => appendFlagsDetail({ image: "", title: ""})}>
+                              <Plus className="h-4 w-4 mr-2" /> Add Country Flags
+                          </Button>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {flagsDetails.map((item, index) => (
+                              <Card key={item.id} className="p-4 relative border-dashed">
+                                  <Button 
+                                      type="button" 
+                                      variant="ghost" 
+                                      size="icon" 
+                                      className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                      onClick={() => removeFlagsDetail(index)}
+                                  >
+                                      <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                  <div className="space-y-4 pt-4">
+                                       <FormField
+                                        control={form.control}
+                                        name={`flags.flagsDetails.${index}.image`}
+                                        render={({ field }) => (
+                                          <FormItem>
+                                            <FormLabel>Image</FormLabel>
+                                            <FormControl>
+                                              <ImageUpload
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                className="h-40"
+                                              />
+                                            </FormControl>
+                                            <FormMessage />
+                                          </FormItem>
+                                        )}
+                                      />
+                                      <FormField
+                                          control={form.control as any}
+                                          name={`flags.flagsDetails.${index}.title`}
+                                          render={({ field }) => (
+                                              <FormItem>
+                                                <FormLabel>title</FormLabel><FormControl><Input placeholder="Detail title" {...field} /></FormControl><FormMessage />
+                                              </FormItem>
+                                          )}
+                                      />
+                                </div>
+                              </Card>
+                          ))}
+                      </div>
+                  </div>
+              </CardContent>
+            </Card>
+
             {/* SEO Text Content */}
             <Card  >
               <CardHeader  >
@@ -687,7 +927,7 @@ const titleValue = form.watch("pagename");
                     </FormItem>
                   )}
                 />
-                <FormField
+                {/* <FormField
                   control={form.control as any}
                   name="whoWeAre.image"
                   render={({ field }) => (
@@ -703,7 +943,7 @@ const titleValue = form.watch("pagename");
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   control={form.control as any}
                   name="seo.featureImage"

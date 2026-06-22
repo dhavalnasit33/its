@@ -869,6 +869,7 @@ export interface SeoManager {
 /* -------------------- About Us Content -------------------- */
 export const HeroSectionAboutUsSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
+  subtitle: z.string().min(2, "sub title be at least 2 characters"),
   description: z.string().min(5, "Description must be at least 5 characters"),
   image: z.string().url("A valid image URL is required"),
 //   points:
@@ -880,27 +881,39 @@ export const HeroSectionAboutUsSchema = z.object({
 //     )
 //     // .min(1, "At least one point is required"),
 // });
-points: z.array(
-  z.object({
-    label: z.string().min(2),
-    image: z.string().url(),
-  })
-).length(4),
+// points: z.array(
+//   z.object({
+//     label: z.string().min(2),
+//     image: z.string().url(),
+//   })
+// ).length(4),
 })
-
-// export const WhoWeAreSchema = z.object({
-//   description: z.string().min(5),
-//     // .array(z.string().min(5, "Description must be at least 5 characters"))
-//     // .min(1, "At least one description point is required"),
-//   image: z.string().url("A valid image URL is required"),
-// });
-
-export const WhoWeAreSchema = z.object({
-  description: z.string().min(5, "Description must be at least 5 characters"),
-   image: z.string().url("A valid image URL is required"),
+export const WhyCompanySchema = z.object({
+  title: z.string().min(2, "Title is required"),
+  description: z.string().min( 5, "Description is required"),
+  companyDetails: z
+    .array(
+      z.object({
+        image: z.string().url( "A valid image URL is required" ),
+        title: z.string().min( 2, "Detail title is required" ),
+        description: z.string().min( 5, "Detail description is required" ),
+      }),
+    )
+    .min(1, "At least one company detail is required"),
 });
 
+
+
+// export const WhoWeAreSchema = z.object({
+//   description: z.string().min(5, "Description must be at least 5 characters"),
+//    image: z.string().url("A valid image URL is required"),
+// });
+
 export const GoalsSchema = z.object({
+  goalsDetails: z.object({
+    title: z.string().min(2, "Title is required"),
+    description: z.string().min(5, "Description is required"),
+  }),
   missionTitle: z.string().min(2, "Mission title is required"),
   missionDescription: z.string().min(5, "Mission description is required"),
   missionImage: z.string().url("Mission image URL is required"),
@@ -911,6 +924,18 @@ export const GoalsSchema = z.object({
   valuesDescription: z.string().min(5, "Values description is required"),
   valuesImage: z.string().url("Values image URL is required"),
 });
+
+export const Flagschema = z.object({
+  title: z.string().min(2, "Title is required"),
+
+  flagsDetails: z.array(
+    z.object({
+      image: z.string().url("Image URL is required"),
+      title: z.string().min(2, "Country name is required"),
+    })
+  ).min(5, "At least one country is required"),
+});
+
 export const AboutUsSEOSchema = z.object({
   title: z.string(),
   keyphrase: z.string(),
@@ -925,8 +950,10 @@ export const AboutUsContentSchema = z.object({
   pagename: z.string(),
   slug: z.string(),
   heroSection: HeroSectionAboutUsSchema,
-  whoWeAre: WhoWeAreSchema,
+  whyCompany: WhyCompanySchema,
+  // whoWeAre: WhoWeAreSchema,
   goals: GoalsSchema,
+  flags: Flagschema,
   seo: AboutUsSEOSchema,
 });
 
@@ -941,18 +968,32 @@ export interface AboutUsContent {
   slug: string;
   heroSection: {
     title: string;
+    subtitle: string;
     description: string;
     image: string;
-    points: {
-      label: string;
+    // points: {
+    //   label: string;
+    //   image: string;
+    // }[];
+  };
+  whyCompany: {
+    title: string;
+    description: string;
+    companyDetails: {
       image: string;
+      title: string;
+      description: string;
     }[];
   };
-  whoWeAre: {
-    description: string;
-    image: string;
-  };
+  // whoWeAre: {
+  //   description: string;
+  //   image: string;
+  // };
   goals: {
+    goalsDetails: {
+      title: string;
+      description: string;
+    };
     missionTitle: string;
     missionDescription: string;
     missionImage: string;
@@ -963,6 +1004,13 @@ export interface AboutUsContent {
     valuesDescription: string;
     valuesImage: string;
   };
+  flags: {
+    title: string;
+    flagsDetails: {
+      image: string;
+      title: string;
+    }[];
+  }
   seo: {
     title: string;
     keyphrase: string;
