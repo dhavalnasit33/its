@@ -63,6 +63,10 @@ export interface AboutUs {
     subtitle: string;
 		description: string;
 		image: string;
+    ratings: {
+      rating: number;
+      image: string;
+    }[];
 		// points: {
 		// 	label: string;
 		// 	image: string;
@@ -75,6 +79,12 @@ export interface AboutUs {
       image: string;
       title: string;
       description: string;
+    }[];
+  };
+  ReasonsChoose: {
+    detailBox: {
+      total: string;
+      title: string;
     }[];
   };
 	// whoWeAre: {

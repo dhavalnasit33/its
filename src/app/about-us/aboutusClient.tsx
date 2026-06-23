@@ -783,72 +783,6 @@ interface AboutUsClientProps {
   title: string;
 }
 
-const ratings = [
-  {
-    rating: "5.0",
-    stars: 5,
-    logo: "/home/clutch-logo.png",
-    name: "Clutch",
-  },
-  {
-    rating: "5.0",
-    stars: 5,
-    logo: "/home/upwork-logo.png",
-    name: "GoodFirms",
-  },
-  {
-    rating: "4.9",
-    stars: 4.5,
-    logo: "/home/google-logo.png",
-    name: "Google",
-  },
-  {
-    rating: "4.7",
-    stars: 4,
-    logo: "/home/glassdoor-logo.png",
-    name: "AmbitionBox",
-  },
-];
-
-
-const statsData = [
-  {
-    count: "12",
-    suffix: "+",
-    label: "Glorious Years",
-  },
-  {
-    count: "40",
-    suffix: "+",
-    label: "Happy Clients",
-  },
-  {
-    count: "750",
-    suffix: "+",
-    label: "Projects Delivers",
-  },
-  {
-    count: "20",
-    suffix: "+",
-    label: "Professionals",
-  },
-];
-
-const countries = [
-  { name: "USA", flag: "/aboutus/usa.png" },
-  { name: "Japan", flag: "/aboutus/japan.png" },
-  { name: "Canada", flag: "/aboutus/canada.png" },
-  { name: "United Kingdom", flag: "/aboutus/uk.png" },
-  { name: "Australia", flag: "/aboutus/australia.png" },
-  { name: "Germany", flag: "/aboutus/germany.png" },
-  { name: "Israel", flag: "/aboutus/Israel.png" },
-  
-  { name: "Italy", flag: "/aboutus/italy.png" },
-  { name: "France", flag: "/aboutus/france.png" },
-  { name: "Norway", flag: "/aboutus/norway.png" },
-  { name: "Singapore", flag: "/aboutus/singapore.png" },
-  { name: "Sweden", flag: "/aboutus/sweden.png" },
-];
 
 
 const marqueeStyles = `
@@ -880,11 +814,23 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
   //   animate: { x: [5, -5, 5], y: [5, -5, 5] },
   //   transition: { duration: 4, repeat: Infinity, ease: easeInOut, delay: 0.5 },
   // };
-  
+  const renderStars = (rating: number) => {
+  const stars = [];
+
+  for (let i = 1; i <= 5; i++) {
+    stars.push(
+      <FaStar
+        key={i}
+        className={i <= rating ? "text-yellow-400" : "text-gray-300"}
+      />
+    );
+  }
+
+  return stars;
+};
 
   const [gettngAboutUsData, setGettngAboutUsData] = useState(true);
   const [aboutUsData, setAboutUsData] = useState<AboutUs | null>(null);
-
   const fetchAboutUsData = useCallback(async () => {
     setGettngAboutUsData(true);
     try {
@@ -907,6 +853,11 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 
   console.log("Hero Section:", aboutUsData?.heroSection);
   
+  const marqueeCountries = [
+  ...(aboutUsData?.flags?.flagsDetails || []),
+  ...(aboutUsData?.flags?.flagsDetails || []),
+];
+
   if (gettngAboutUsData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -1017,28 +968,21 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 ease: "easeOut",
               }} 
               className="grid grid-cols-2 md:grid-cols-4 gap-4 max-[540px]:grid-cols-1 md:-mt-[170px] xl:-mt-[180px] !max-w-[750px] mx-auto">
-						{ratings.map((item, index) => (
+						{aboutUsData?.heroSection?.ratings.map((item, index) => (
               <div
                 key={index}
                 className="bg-white rounded-xl p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] flex flex-col justify-center items-center"
               >
-                <div>
-                  <h3 className="text-[18px] font-medium">
-                    Rating {item.rating}
-                  </h3>
-                  <div className="grow overflow-hidden mt-2 mb-6">
-                    <div className="flex items-center gap-1 text-yellow-400  text-xs">
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                    </div>
-                  </div>
-                </div>
+            <p className="text-[16px] font-medium">
+              Rating {item.rating}/5
+            </p>
+              <div className="flex items-center gap-1 mt-2 mb-6">
+              {renderStars(item.rating)}
+            </div>
+
                 <Image
-                  src={item.logo}
-                  alt={item.name}
+                  src={item.image}
+                  alt={item.image}
                   width={180}
                   height={50}
                   className="object-contain w-34 h-10"
@@ -1123,6 +1067,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
       </Row>
     </Section>
         
+
+
+        {/* reasons choose section */}
         <Section  className="bg-[#0d1b2a] z-10 !py-6 ">
 				<Row>
 					<PlatformSlider />
@@ -1131,7 +1078,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
       <Section className="bg-gray-50 !py-14">
         <Row>
             <div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 ">
-    {statsData.map((item, index) => (
+    {aboutUsData?.ReasonsChoose?.detailBox.map((item, index) => (
       <div
           key={index}
           className={`
@@ -1151,12 +1098,11 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
         }}
       >
         <h4 className="text-[40px] md:text-[56px] font-extrabold text-[#0d1b2a]">
-          {item.count}
-          {item.suffix}
+          {item.total}
         </h4>
 
         <p className="text-gray-600 font-bold opacity-70 text-sm sm:text-md text-center break-all ">
-          {item.label}
+          {item.title}
         </p>
       </motion.div>
       </div>
@@ -1199,7 +1145,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-2 [&_p]:mb-4 [&_p:last-child]:mb-0" 
+                className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-2 [&_p]:mb-4 [&_p:last-child]:mb-0 rose" 
                 dangerouslySetInnerHTML={{
                 __html:
                     aboutUsData?.goals?.goalsDetails?.description.replace(/<[^>]*>/g, "") || "",
@@ -1463,31 +1409,13 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
     </Section> */}
 
 
+
+          {/* flags slider section */}
     <Section className="relative bg-white overflow-hidden py-16 lg:!pb-0">
       <style dangerouslySetInnerHTML={{ __html: marqueeStyles }} />
 
       <Row>
         <div className="flex flex-col items-center w-full justify-center text-center mb-10">
-          {/* <motion.div
-            initial={{ opacity: 0, y: -70 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              duration: 0.6,
-              ease: "easeOut",
-              delay: 0.3,
-            }}
-          >
-            <h2 className="common-h2 text-black pb-4">
-              We deliver{" "}
-              <span className="text-[#d68029]">
-                Digital Development
-              </span>{" "}
-              Solution across
-            </h2>
-
-            <Motion />
-          </motion.div> */}
            <motion.h2
               initial={{ opacity: 0, y: -70 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1500,6 +1428,7 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
             className="common-h2 text-black pb-4 "
             dangerouslySetInnerHTML={{ __html: aboutUsData?.flags?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
           />
+          <Motion />
         </div>
       </Row>
 
@@ -1509,9 +1438,9 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
 
         <div className="animate-marquee-countries gap-8 px-4">
 
-          {countries.map((country, index) => (
+          {marqueeCountries.map((country, index) => (
             <div
-              key={`${country.name}-${index}`}
+              key={`${country.title}-${index}`}
               className="
                 flex flex-col gap-2 items-center justify-center
                 h-36
@@ -1524,13 +1453,13 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
                 hover:shadow-lg
               "
             >
-              <span className="text-md font-medium whitespace-nowrap mb-1">
-                {country.name}
-              </span>
+              <h5 className="text-md font-medium whitespace-nowrap mb-1">
+                {country.title}
+              </h5>
 
               <Image
-                src={country.flag}
-                alt={country.name}
+                src={country.image}
+                alt={country.title}
                 width={130}
                 height={52}
                 className="rounded-sm object-cover"

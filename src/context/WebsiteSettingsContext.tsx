@@ -9,7 +9,7 @@ export interface WebsiteSettings {
   address: string[];
   emails: {
     email: string;
-    emailType: "hr" | "sales" | "contact";
+    emailType: "hr" | "solution" | "sales" | "contact";
     _id?: string;
   }[];
   phone: string[];
@@ -27,6 +27,7 @@ const defaultSettings: WebsiteSettings = {
   address: ["215-Dhara Arcade, Digital Valley (Mota Varachha), Surat-394101, Gujarat, India"],
   emails: [
     { email: "hr@inspiretechnosolution.com", emailType: "hr" },
+    { email: "solutions@inspiretechnosolution.com", emailType: "solution" },
     { email: "sales@inspiretechnosolution.com", emailType: "sales" },
     { email: "contact@inspiretechnosolution.com", emailType: "contact" }
   ],
@@ -43,6 +44,7 @@ interface WebsiteSettingsContextProps {
   portfolioSlug: string;
   hireSlug: string;
   hrEmail: string;
+  solutionEmail: string;
   salesEmail: string;
   contactEmail: string;
   supportEmail: string;
@@ -74,6 +76,7 @@ const WebsiteSettingsContext = createContext<WebsiteSettingsContextProps>({
   portfolioSlug: "our-portfolio",
   hireSlug: "hire",
   hrEmail: "hr@inspiretechnosolution.com",
+  solutionEmail: "solutions@inspiretechnosolution.com",
   salesEmail: "sales@inspiretechnosolution.com",
   contactEmail: "contact@inspiretechnosolution.com",
   supportEmail: "Support@inspiretechnosolution.com",
@@ -120,6 +123,7 @@ export function WebsiteSettingsProvider({
   });
 
   const hrEmail = settings.emails.find(e => e.emailType === "hr")?.email || "hr@inspiretechnosolution.com";
+  const solutionEmail = settings.emails.find(e => e.emailType === "solution")?.email || "solutions@inspiretechnosolution.com";
   const salesEmail = settings.emails.find(e => e.emailType === "sales")?.email || "sales@inspiretechnosolution.com";
   const contactEmail = settings.emails.find(e => e.emailType === "contact")?.email || "contact@inspiretechnosolution.com";
   // Fallback support email using contact email or default Support@inspiretechnosolution.com
@@ -178,6 +182,7 @@ console.log("NAV STRUCTURE:", navStructure);
         portfolioSlug,
         hireSlug,
         hrEmail,
+        solutionEmail,
         salesEmail,
         contactEmail,
         supportEmail,

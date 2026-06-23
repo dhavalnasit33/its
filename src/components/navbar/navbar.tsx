@@ -21,11 +21,12 @@ interface NavbarProps {
 interface ContactPopupProps {
   phonePrimary?: string;
   hrEmail?: string;
+  solutionEmail?: string;
   salesEmail?: string
 }
 
 export default function Navbar({ navStructure }: NavbarProps) {
-  const { hrEmail, salesEmail, contactEmail, phonePrimary, phonePrimaryClean } =
+  const { hrEmail, solutionEmail, salesEmail, contactEmail, phonePrimary, phonePrimaryClean } =
     useWebsiteSettings();
 
   // State for mobile menu toggles
@@ -112,6 +113,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
     {
       href: `mailto:${hrEmail}`,
       label: hrEmail,
+    },
+    {
+      href: `mailto:${solutionEmail}`,
+      label: solutionEmail,
     },
     {
       href: `mailto:${contactEmail}`,
@@ -468,27 +473,35 @@ export default function Navbar({ navStructure }: NavbarProps) {
                             high-end creativity and world-class alliances.
                           </div>
                           <div className="flex flex-row w-full">
-                            <div className="relative w-full max-w-[50%] about_menu_mails border-r border-r-[#484848] border-dashed px-2.5 flex flex-col ">
+                            <div className="relative w-full max-w-[50%] about_menu_mails border-r border-r-[#484848] border-dashed pr-2.5 flex flex-col ">
                               <div className=" relative mb-5">
                                 <h4 className="font-semibold text-[24px] text-[#d68229] mb-[3%]">
                                   or mail us at
                                 </h4>
                               </div>
                               <ul className=" relative text-gray-600">
-                                <li className="relative flex items-center gap-2 pl-3 pb-2.5 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
+                                <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
                                     href={aboutData[3].href}
-                                    className="break-all px-3.75 text-center font-medium text-[18px] "
+                                    className="break-all px-3.5 text-center font-medium text-[18px] "
                                   >
                                     {aboutData[3].label}
                                   </a>
                                 </li>
-                                <li className="relative flex items-center gap-2 pl-3 pb-2.5 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
+                                 <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
                                     href={aboutData[4].href}
-                                    className="break-all px-3.75 text-center font-medium text-[18px] "
+                                    className="break-all px-3.5 text-center font-medium text-[18px] "
                                   >
                                     {aboutData[4].label}
+                                  </a>
+                                </li>
+                                <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
+                                  <a
+                                    href={aboutData[5].href}
+                                    className="break-all px-3.5 text-center font-medium text-[18px] "
+                                  >
+                                    {aboutData[5].label}
                                   </a>
                                 </li>
                               </ul>
@@ -502,10 +515,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
                               <ul className="relative text-gray-600">
                                 <li className=" relative flex items-center gap-2 pl-3 mb-4 pb-2.5 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
                                   <a
-                                    href={aboutData[5].href}
+                                    href={aboutData[6].href}
                                     className="break-all px-3.75 text-center font-medium text-[18px] "
                                   >
-                                    {aboutData[5].label}
+                                    {aboutData[6].label}
                                   </a>
                                 </li>
                               </ul>
@@ -1119,7 +1132,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
 const ContactPopup = ({ phonePrimary, hrEmail, salesEmail}: ContactPopupProps) => {
   return (
     <div className=" absolute top-full left-0 -translate-x-[70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-[300px] md:w-[310px] xl:w-[360px] bg-white rounded-lg shadow-2xl 
-    border border-gray-200 p-4 md:p-5 xl:p-6 z-[99999] opacity-0 invisible  translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
+    border border-gray-200 p-4 md:p-5 xl:p-6 z-[99999] opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
     >
       <div  className=" absolute -top-[10px] right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
       <h3 className="text-xl font-bold text-black mb-6">
@@ -1141,17 +1154,17 @@ const ContactPopup = ({ phonePrimary, hrEmail, salesEmail}: ContactPopupProps) =
             WhatsApp
           </h4>
           {phonePrimary && (
-            <Link
+            <a
               href={`tel:${phonePrimary}`}
-              className="break-all text-gray-600 text-sm xl:text-base"
+              className="break-all text-gray-600 text-[13px] xl:text-[14px]"
             >
               {phonePrimary}
-            </Link>
+            </a>
           )}
         </div>
       </div>
 
-      <div className="flex items-start gap-2 xl:gap-4 mb-5">
+      <div className="flex items-start gap-2 xl:gap-4">
         <div className=" w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-md shadow-lg flex items-center
             justify-center transition-all duration-300  hover:shadow-xl ">
           <Image
@@ -1168,14 +1181,14 @@ const ContactPopup = ({ phonePrimary, hrEmail, salesEmail}: ContactPopupProps) =
           {hrEmail && (
             <Link
               href={`mailto:${hrEmail}`}
-              className="break-all text-gray-600  text-sm xl:text-base"
+              className="break-all text-gray-600  text-[13px] xl:text-[14px]"
             >
               {hrEmail}
             </Link>
           )}
         </div>
       </div>
-      <div className="flex items-start gap-2 xl:gap-4">
+      {/* <div className="flex items-start gap-2 xl:gap-4">
         <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-md shadow-lg flex items-center
             justify-center transition-all duration-300  hover:shadow-xl ">
           <Image
@@ -1192,13 +1205,13 @@ const ContactPopup = ({ phonePrimary, hrEmail, salesEmail}: ContactPopupProps) =
           {salesEmail && (
             <Link
               href={`mailto:${salesEmail}`}
-              className="break-all text-gray-600  text-sm xl:text-base"
+              className="break-all text-gray-600  text-[13px] xl:text-[14px]"
             >
               {salesEmail}
             </Link>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
