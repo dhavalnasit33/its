@@ -1,6 +1,6 @@
 // middlewares/trafficControl.js
 const trafficControl = (req, res, next) => {
-  if (req.path === "/sitemap.xml" || req.path === "/robots.txt") {
+  if ((req.path.startsWith("/sitemap") && req.path.endsWith(".xml")) || req.path === "/robots.txt") {
     return next();
   }
 
