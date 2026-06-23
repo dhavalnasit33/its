@@ -247,7 +247,7 @@ export default function OurServicesClient() {
 															className="flex ml-8 gap-3 hover:text-black transition mt-6"
 														>
 
-															<Link href={item.serviceId.slug} className="flex flex-row gap-2 items-center" >
+															<Link href={`/${item.serviceId.slug}`} className="flex flex-row gap-2 items-center" >
 																{item.image && (
 																	<Image
 																		src={item.image}
@@ -376,7 +376,7 @@ export default function OurServicesClient() {
 								>
 									{service.developmentDetail.map((data, i) => (
 										<li key={i} className="flex items-center gap-3">
-											<Link href={data.serviceId.slug} className="flex flex-row gap-2 items-center">
+											<Link href={`/${data.serviceId.slug}`} className="flex flex-row gap-2 items-center">
 												<Image src={data.image} alt={data.label} width={24} height={24} />
 												{data.label}
 											</Link>
@@ -438,7 +438,7 @@ export default function OurServicesClient() {
 										transition: { duration: 0.9, ease: "easeOut", delay: 0.9, },
 									}}
 									text="Know More"
-									href={service.developmentDetail[0].serviceId.slug}
+									href={`/${service.developmentDetail[0].serviceId.slug}`}
 									className="mt-10"
 								/>
 							</div>

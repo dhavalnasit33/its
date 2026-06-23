@@ -1,11 +1,56 @@
+import { Metadata } from "next";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import TermsCondition from "@/components/terms-condition/TermsCondition";
 
+export const metadata: Metadata = {
+  title: "Terms & Conditions | Inspire Techno Solution",
+  description: "Read the Terms & Conditions governing your access and use of Inspire Techno Solution's website, products, and services.",
+  alternates: {
+    canonical: "https://inspiretechnosolution.com/terms-condition",
+  },
+  openGraph: {
+    title: "Terms & Conditions | Inspire Techno Solution",
+    description: "Read the Terms & Conditions governing your access and use of Inspire Techno Solution's website, products, and services.",
+    url: "https://inspiretechnosolution.com/terms-condition",
+    type: "website",
+    images: ["/feature-logo.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Terms & Conditions | Inspire Techno Solution",
+    description: "Read the Terms & Conditions governing your access and use of Inspire Techno Solution's website, products, and services.",
+    images: ["/feature-logo.jpg"],
+    site: "@inspiretechnosolution",
+  },
+};
+
 export default async function TermsConditionPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://inspiretechnosolution.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Terms & Conditions",
+        "item": "https://inspiretechnosolution.com/terms-condition"
+      }
+    ]
+  };
 
   return (
     <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+    />
     <Section className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 ">
         <Row className="flex z-20">
             <div className="flex flex-wrap w-full mx-auto justify-center items-center">

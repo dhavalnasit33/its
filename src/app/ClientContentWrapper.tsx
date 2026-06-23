@@ -9,32 +9,18 @@ import ContactFooterPage from "@/components/Footer/page";
 // This component now exclusively handles the client-side loading state.
 export default function ClientContentWrapper({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [showContact, setShowContact] = useState(false);
 
   useEffect(() => {
-    // Simulate initial page loading
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
+    setIsLoading(false);
   }, []);
-
-  useEffect(() => {
-    // Show ContactPage a bit after children appear
-    if (!isLoading) {
-      const contactTimer = setTimeout(() => setShowContact(true), 500);
-      return () => clearTimeout(contactTimer);
-    }
-  }, [isLoading]);
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <main>
-          {children}
-          {showContact && <ContactFooterPage />}
-        </main>
-      )}
+      {isLoading && <Loader />}
+      <main>
+        {children}
+        <ContactFooterPage />
+      </main>
     </>
   );
 }

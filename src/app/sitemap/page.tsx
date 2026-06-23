@@ -4,12 +4,58 @@ import Section from "@/components/Section";
 import SitemapSection from "@/components/sitemap/SitemapSection";
 import { getNavigationStructure } from "@/lib/navigationService";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sitemap | Inspire Techno Solution",
+  description: "Explore the sitemap of Inspire Techno Solution to navigate our services, company pages, careers, portfolios, and blogs.",
+  alternates: {
+    canonical: "https://inspiretechnosolution.com/sitemap",
+  },
+  openGraph: {
+    title: "Sitemap | Inspire Techno Solution",
+    description: "Explore the sitemap of Inspire Techno Solution to navigate our services, company pages, careers, portfolios, and blogs.",
+    url: "https://inspiretechnosolution.com/sitemap",
+    type: "website",
+    images: ["/feature-logo.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sitemap | Inspire Techno Solution",
+    description: "Explore the sitemap of Inspire Techno Solution to navigate our services, company pages, careers, portfolios, and blogs.",
+    images: ["/feature-logo.jpg"],
+    site: "@inspiretechnosolution",
+  },
+};
 
 export default async function SitemapPage() {
   const navStructure = await getNavigationStructure();
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://inspiretechnosolution.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Sitemap",
+        "item": "https://inspiretechnosolution.com/sitemap"
+      }
+    ]
+  };
+
   return (
     <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+    />
     <Section className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 ">
         <Row className="flex z-20">
             <div className="flex flex-wrap w-full mx-auto justify-center items-center">

@@ -27,6 +27,56 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   console.log("METADATA PAGE:", slug);
 
   const pageUrl = `https://inspiretechnosolution.com/${slug}`;
+
+  // Hardcoded overrides for Privacy Policy and Terms & Conditions fallbacks
+  if (slug === "privacy-policy") {
+    return {
+      title: "Privacy Policy | Inspire Techno Solution",
+      description: "Learn how Inspire Techno Solution collects, uses, and safeguards your personal data when you visit our website or engage with our services.",
+      alternates: {
+        canonical: pageUrl,
+      },
+      openGraph: {
+        title: "Privacy Policy | Inspire Techno Solution",
+        description: "Learn how Inspire Techno Solution collects, uses, and safeguards your personal data when you visit our website or engage with our services.",
+        url: pageUrl,
+        type: "website",
+        images: ["/feature-logo.jpg"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "Privacy Policy | Inspire Techno Solution",
+        description: "Learn how Inspire Techno Solution collects, uses, and safeguards your personal data when you visit our website or engage with our services.",
+        images: ["/feature-logo.jpg"],
+        site: "@inspiretechnosolution",
+      },
+    };
+  }
+
+  if (slug === "terms-condition") {
+    return {
+      title: "Terms & Conditions | Inspire Techno Solution",
+      description: "Read the Terms & Conditions governing your access and use of Inspire Techno Solution's website, products, and services.",
+      alternates: {
+        canonical: pageUrl,
+      },
+      openGraph: {
+        title: "Terms & Conditions | Inspire Techno Solution",
+        description: "Read the Terms & Conditions governing your access and use of Inspire Techno Solution's website, products, and services.",
+        url: pageUrl,
+        type: "website",
+        images: ["/feature-logo.jpg"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "Terms & Conditions | Inspire Techno Solution",
+        description: "Read the Terms & Conditions governing your access and use of Inspire Techno Solution's website, products, and services.",
+        images: ["/feature-logo.jpg"],
+        site: "@inspiretechnosolution",
+      },
+    };
+  }
+
   if (!seoData) {
     return {
       title: "Our Service | Inspire Techno Solution",
@@ -76,6 +126,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+import { API_BASE_URL } from "@/config";
+
+export const revalidate = 3600;
+
 export default async function ServicePage({
   params,
 }: {
@@ -88,41 +142,139 @@ export default async function ServicePage({
     return <NotFoundPage />;
   }
 
+  // Common BreadcrumbList schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://inspiretechnosolution.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": seoData.title,
+        "item": `https://inspiretechnosolution.com/${slug}`
+      }
+    ]
+  };
+
+  const renderWithSchemas = (element: React.ReactNode, extraSchemas: any[] = []) => {
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+        {extraSchemas.filter(Boolean).map((schema, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
+        {element}
+      </>
+    );
+  };
+
   // 1. If this slug maps to a system identifier (core static page)
   if (seoData.systemIdentifier) {
     const displayTitle = seoData.seo_title || seoData.title;
+    let component = null;
     switch (seoData.systemIdentifier) {
       case "about-us":
-        return <AboutClient title={displayTitle} />;
+        component = <AboutClient title={displayTitle} />;
+        break;
       case "blog":
-        return <BlogPageClient />;
+        component = <BlogPageClient />;
+        break;
       case "career":
-        return <CareerClient />;
+        component = <CareerClient />;
+        break;
       case "contact":
-        return <ContactClient />;
+        component = <ContactClient />;
+        break;
       case "hire":
-        return <HireDevelopersPage />;
+        component = <HireDevelopersPage />;
+        break;
       case "portfolio":
-        return <PortfolioClient />;
+        component = <PortfolioClient />;
+        break;
       case "services":
-        return <OurServicesClient />;
+        component = <OurServicesClient />;
+        break;
       case "training":
-        return <TrainingPageClient />;
-      // case "faqs":
-      //   return <FaqsClient />;
+        component = <TrainingPageClient />;
+        break;
       default:
         break;
+    }
+    if (component) {
+      return renderWithSchemas(component);
     }
   }
 
   // 2. If it is linked to a Service page details
   if (seoData.linkedType === "service") {
-    return <ServicePageClient />;
+    let serviceData = null;
+    let serviceSchema = null;
+    let faqSchema = null;
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/service/slug/${slug}`, {
+        next: { revalidate: 3600 }
+      });
+      if (response.ok) {
+        const json = await response.json();
+        serviceData = json?.data || json;
+      }
+    } catch (error) {
+      console.error("Error fetching service details in SSR:", error);
+    }
+
+    serviceSchema = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": seoData.seo_title || seoData.title,
+      "description": seoData.meta_description || "",
+      "url": `https://inspiretechnosolution.com/${slug}`,
+      "provider": {
+        "@type": "Organization",
+        "name": "Inspire Techno Solution",
+        "url": "https://inspiretechnosolution.com",
+        "logo": "https://inspiretechnosolution.com/logo.png"
+      },
+      "areaServed": "Worldwide"
+    };
+
+    if (serviceData?.faqs && serviceData.faqs.length > 0) {
+      faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": serviceData.faqs.map((faq: any) => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }))
+      };
+    }
+
+    return renderWithSchemas(
+      <ServicePageClient initialData={serviceData || undefined} />,
+      [serviceSchema, faqSchema]
+    );
   }
 
   // 3. If it is an independent custom page (e.g. Privacy Policy)
   if (seoData.linkedType === "independent") {
-    return <GenericPageClient />;
+    return renderWithSchemas(<GenericPageClient />);
   }
 
   return <NotFoundPage />;

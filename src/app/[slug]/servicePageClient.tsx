@@ -63,10 +63,14 @@ const useIsMobile = () => {
   return isMobile;
 };
 
-export default function ServicePageClient() {
+interface ServicePageClientProps {
+  initialData?: ITSService;
+}
+
+export default function ServicePageClient({ initialData }: ServicePageClientProps) {
   const { phonePrimary, phonePrimaryClean, supportEmail, microsoftHandle, blogSlug, portfolioSlug, hireSlug } = useWebsiteSettings();
   const { slug } = useParams<{ slug: string }>();
-  const [data, setData] = useState<ITSService | null>(null);
+  const [data, setData] = useState<ITSService | null>(initialData || null);
   const [notFound, setNotFound] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
@@ -81,6 +85,9 @@ export default function ServicePageClient() {
 
   // ✅ FIX 3: Fetch data
   useEffect(() => {
+    if (initialData && initialData.slug === slug) {
+      return;
+    }
     const fetchData = async () => {
       try {
         const json = await apiService<{ data: ITSService }>(
@@ -99,7 +106,7 @@ export default function ServicePageClient() {
       }
     };
     if (slug) fetchData();
-  }, [slug]);
+  }, [slug, initialData]);
 
   if (notFound) {
     return (

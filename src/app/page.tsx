@@ -41,6 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const revalidate = 3600;
+
 // This is the server component for the page route
 export default async function HomePage() {
   let homepageData: HomePageData | null = null;
@@ -53,5 +55,43 @@ export default async function HomePage() {
     console.error("Error fetching homepage data on server:", error);
   }
 
-  return <HomeClient initialData={homepageData || undefined} />;
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Inspire Techno Solution",
+    "url": "https://inspiretechnosolution.com",
+    "logo": "https://inspiretechnosolution.com/logo.png",
+    "sameAs": [
+      "https://www.facebook.com/inspiretechnosolution",
+      "https://twitter.com/inspiretechno",
+      "https://www.linkedin.com/company/inspire-techno-solution"
+    ]
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://inspiretechnosolution.com"
+      }
+    ]
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <HomeClient initialData={homepageData || undefined} />
+    </>
+  );
 }

@@ -500,7 +500,7 @@ export default function BlogDetailPageClient({
           <div className="w-full lg:max-w-5xl bg-white shadow-[0_0_16.9px_rgba(102,102,102,0.25)] p-8  ">
             {/* Blog Header */}
             <div className="mb-8">
-              <h2
+              <h1
                 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
                 dangerouslySetInnerHTML={{ __html: blog?.details?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
               />

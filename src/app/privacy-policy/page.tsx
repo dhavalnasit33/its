@@ -1,11 +1,56 @@
+import { Metadata } from "next";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import PrivacyPolicy from "@/components/privacy-policy/PrivacyPolicy";
 
+export const metadata: Metadata = {
+  title: "Privacy Policy | Inspire Techno Solution",
+  description: "Learn how Inspire Techno Solution collects, uses, and safeguards your personal data when you visit our website or engage with our services.",
+  alternates: {
+    canonical: "https://inspiretechnosolution.com/privacy-policy",
+  },
+  openGraph: {
+    title: "Privacy Policy | Inspire Techno Solution",
+    description: "Learn how Inspire Techno Solution collects, uses, and safeguards your personal data when you visit our website or engage with our services.",
+    url: "https://inspiretechnosolution.com/privacy-policy",
+    type: "website",
+    images: ["/feature-logo.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | Inspire Techno Solution",
+    description: "Learn how Inspire Techno Solution collects, uses, and safeguards your personal data when you visit our website or engage with our services.",
+    images: ["/feature-logo.jpg"],
+    site: "@inspiretechnosolution",
+  },
+};
+
 export default async function PrivacyPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://inspiretechnosolution.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Privacy Policy",
+        "item": "https://inspiretechnosolution.com/privacy-policy"
+      }
+    ]
+  };
 
   return (
     <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+    />
     <Section className="common_background_gradient blog_hero_section flex flex-col items-center justify-center gap-10 ">
         <Row className="flex z-20">
             <div className="flex flex-wrap w-full mx-auto justify-center items-center">

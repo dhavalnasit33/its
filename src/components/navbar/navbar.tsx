@@ -274,9 +274,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     <span>{item.label}</span>
                     <RiArrowDropDownLine className="text-2xl leading-none" />
                   </Link>
-                  {servicesOpen && (
                     <div
-                      className="fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 px-0 py-6 pb-0 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar"
+                      className={`fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 px-0 py-6 pb-0 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar ${servicesOpen ? "block" : "hidden"}`}
                       ref={servicesDropdownRef}
                       onMouseEnter={() => setServicesOpen(true)}
                       onMouseLeave={() => setServicesOpen(false)}
@@ -364,7 +363,6 @@ export default function Navbar({ navStructure }: NavbarProps) {
                         </div>
                       </div>
                     </div>
-                  )}
                 </li>
               );
             }
@@ -404,10 +402,9 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     <span>{item.label}</span>
                     <RiArrowDropDownLine className="text-2xl leading-none" />
                   </Link>
-                  {aboutOpen && (
                     <div
                       ref={aboutDropdownRef}
-                      className="fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 py-12.5 px-[7%] border-b-4 border-b-[#12203d] mx-auto border-t-px border-t-black max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar"
+                      className={`fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 py-12.5 px-[7%] border-b-4 border-b-[#12203d] mx-auto border-t-px border-t-black max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar ${aboutOpen ? "block" : "hidden"}`}
                       onMouseEnter={() => setAboutOpen(true)}
                       onMouseLeave={() => setAboutOpen(false)}
                     >
@@ -544,7 +541,6 @@ export default function Navbar({ navStructure }: NavbarProps) {
                         </div>
                       </div>
                     </div>
-                  )}
                 </li>
               );
             }
@@ -583,10 +579,9 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     <span>{item.label}</span>
                     <RiArrowDropDownLine className="text-2xl leading-none" />
                   </Link>
-                  {hireUsOpen && (
                     <div
                       ref={hireUsDropdownRef}
-                      className="fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar"
+                      className={`fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar ${hireUsOpen ? "block" : "hidden"}`}
                       onMouseEnter={() => setHireUsOpen(true)}
                       onMouseLeave={() => setHireUsOpen(false)}
                     >
@@ -703,7 +698,6 @@ export default function Navbar({ navStructure }: NavbarProps) {
                         </div>
                       </div>
                     </div>
-                  )}
                 </li>
               );
             }

@@ -73,5 +73,41 @@ export default async function HirepageTechnolog({ params }: { params: Promise<{ 
         redirect(`/${currentHireSlug}/${slug}`);
     }
 
-    return <HirepageTechnologClient />;
+    const seoData = await getSeoData(slug);
+    const pageTitle = seoData?.title || `Hire ${slug.replace(/-/g, ' ')}`;
+
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inspiretechnosolution.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Hire Developers",
+          "item": "https://inspiretechnosolution.com/hire"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": pageTitle,
+          "item": `https://inspiretechnosolution.com/hire/${slug}`
+        }
+      ]
+    };
+
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+        <HirepageTechnologClient />
+      </>
+    );
 }
