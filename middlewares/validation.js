@@ -81,7 +81,7 @@ exports.validateWebsiteSettings = [
     body('emails.*.emailType')
       .optional()
       .trim()
-      .isIn(['hr', 'sales', 'contact'])
+      .isIn(['hr', 'solution', 'sales', 'contact'])
       .withMessage('Email type must be hr, sales, or contact'),
     body('phone')
       .optional()

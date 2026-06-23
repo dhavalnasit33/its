@@ -25,7 +25,7 @@ const WebsiteSettingsSchema = new mongoose.Schema(
         emailType: {
           type: String,
           required: true,
-          enum: ["hr", "sales", "contact"],
+          enum: ["hr", "solution", "sales", "contact"],
         },
       },
     ],
