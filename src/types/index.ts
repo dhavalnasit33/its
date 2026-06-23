@@ -872,6 +872,15 @@ export const HeroSectionAboutUsSchema = z.object({
   subtitle: z.string().min(2, "sub title be at least 2 characters"),
   description: z.string().min(5, "Description must be at least 5 characters"),
   image: z.string().url("A valid image URL is required"),
+  ratings: z
+    .array(
+      z.object({
+        rating: z.number().min(0).max(5),
+        image: z.string().url( "A valid image URL is required" ),
+      }),
+    )
+    .min(1, "At least one company detail is required"),
+
 //   points:
 //    z.array(
 //       z.object({
@@ -902,7 +911,14 @@ export const WhyCompanySchema = z.object({
     .min(1, "At least one company detail is required"),
 });
 
-
+export const ReasonsChooseSchema = z.object({
+  detailBox: z.array(
+    z.object({
+      total: z.string().min(1, "Total is required"),
+      title: z.string().min(2, "Title is required"),
+    })
+  ).min(1, "At least one detail box is required"),
+});
 
 // export const WhoWeAreSchema = z.object({
 //   description: z.string().min(5, "Description must be at least 5 characters"),
@@ -933,7 +949,7 @@ export const Flagschema = z.object({
       image: z.string().url("Image URL is required"),
       title: z.string().min(2, "Country name is required"),
     })
-  ).min(5, "At least one country is required"),
+  ).min(8, "At least one country is required"),
 });
 
 export const AboutUsSEOSchema = z.object({
@@ -951,6 +967,7 @@ export const AboutUsContentSchema = z.object({
   slug: z.string(),
   heroSection: HeroSectionAboutUsSchema,
   whyCompany: WhyCompanySchema,
+  ReasonsChoose: ReasonsChooseSchema,
   // whoWeAre: WhoWeAreSchema,
   goals: GoalsSchema,
   flags: Flagschema,
@@ -971,6 +988,10 @@ export interface AboutUsContent {
     subtitle: string;
     description: string;
     image: string;
+    ratings: {
+      rating: number;
+      image: string;
+    }[];
     // points: {
     //   label: string;
     //   image: string;
@@ -983,6 +1004,12 @@ export interface AboutUsContent {
       image: string;
       title: string;
       description: string;
+    }[];
+  };
+  ReasonsChoose: {
+    detailBox: {
+      total: string;
+      title: string;
     }[];
   };
   // whoWeAre: {
@@ -1635,7 +1662,7 @@ export interface SocialMedia {
 export interface WebsiteSettingsEmail {
   _id?: string;
   email: string;
-  emailType: "hr" | "sales" | "contact";
+  emailType: "hr" | "solution" | "sales" | "contact";
 }
 
 export interface WebsiteSettings {
@@ -1654,7 +1681,7 @@ export interface WebsiteSettingsFormValues {
   favicon: string;
   logo_img: string;
   address: { value: string }[];
-  emails: { email: string; emailType: "hr" | "sales" | "contact" }[];
+  emails: { email: string; emailType: "hr" | "solution" | "sales" | "contact" }[];
   phone: { value: string }[];
   social_media: { socialMediaName: string; link: string; image: string; }[];
 }

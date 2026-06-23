@@ -244,6 +244,7 @@ export default function WebsiteSettingsForm({
                                 <SelectContent>
                                   <SelectItem value="contact">Contact / General</SelectItem>
                                   <SelectItem value="hr">HR / Careers</SelectItem>
+                                  <SelectItem value="solution">ITS / Solution </SelectItem>
                                   <SelectItem value="sales">Sales / Business</SelectItem>
                                 </SelectContent>
                               </Select>

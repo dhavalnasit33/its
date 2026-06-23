@@ -58,6 +58,9 @@ export default function AboutUsForm({
         subtitle: "",
         description: "",
         image: "",
+        ratings: [
+          { rating: 0, image: "" } // must have at least 1
+        ],
         // points: [
         //   { label: "", image: "" },
         //   { label: "", image: "" },
@@ -73,6 +76,14 @@ export default function AboutUsForm({
             image: "",
             title: "",
             description: "",
+          },
+        ],
+      },
+      ReasonsChoose: {
+        detailBox: [
+          {
+            total: "",
+            title: "",
           },
         ],
       },
@@ -129,6 +140,15 @@ const titleValue = form.watch("pagename");
        }
      }, [titleValue, form]);
     
+     const {
+        fields: ratingFields,
+        append: appendRating,
+        remove: removeRating,
+      } = useFieldArray({
+        control: form.control,
+        name: "heroSection.ratings",
+      });
+
   const {
         fields: comapnyDetails,
         append: appendComapnyDetail,
@@ -137,6 +157,14 @@ const titleValue = form.watch("pagename");
         control: form.control as any,
         name: "whyCompany.companyDetails",
     });
+    const {
+            fields: reasonsBoxFields,
+            append: appendReasonsBox,
+            remove: removeReasonsBox,
+        } = useFieldArray({
+            control: form.control,
+            name: "ReasonsChoose.detailBox",
+        });
     const {
         fields: flagsDetails,
         append: appendFlagsDetail,
@@ -420,6 +448,80 @@ const titleValue = form.watch("pagename");
               </CardContent>
             </Card>
 
+            {/* ratings */}
+             <Card>
+                <CardHeader>
+                    <CardTitle>Ratings</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
+                        <FormLabel>Ratings Boxes</FormLabel>
+                        <Button 
+                            type="button" 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => appendRating({ rating:0, image: "" })}
+                        >
+                            <Plus className="h-4 w-4 mr-2" /> Add Ratings
+                        </Button>
+                    </div>
+                    <div className="grid grid-cols-1  lg:grid-cols-2 gap-4 mt-4">
+                        {ratingFields.map((item, index) => (
+                            <Card key={item.id} className="p-4 relative border-dashed">
+                                <Button 
+                                    type="button" 
+                                    variant="ghost" 
+                                    size="icon" 
+                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                    onClick={() => removeRating(index)}
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                </Button>
+                                
+                                <div className="space-y-4 pt-4">
+                                  <FormField
+                                    control={form.control as any}
+                                    name={`heroSection.ratings.${index}.rating`}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Rating (0-5)</FormLabel>
+                                        <FormControl>
+                                          <Input
+                                            type="number"
+                                            min={0}
+                                            max={5}
+                                            {...field}
+                                            onChange={(e) => field.onChange(Number(e.target.value))}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                    <FormField
+                                      control={form.control as any}
+                                      name={`heroSection.ratings.${index}.image`}
+                                      render={({ field }) => (
+                                        <FormItem>
+                                          <FormLabel>Image</FormLabel>
+                                          <FormControl>
+                                            <ImageUpload
+                                              value={field.value}
+                                              onChange={field.onChange}
+                                              className="h-40"
+                                            />
+                                          </FormControl>
+                                          <FormMessage />
+                                        </FormItem>
+                                      )}
+                                    />
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                </CardContent>
+            </Card>
+
             {/* why company section */}
             <Card>
               <CardHeader>
@@ -528,6 +630,72 @@ const titleValue = form.watch("pagename");
                   </div>
               </CardContent>
             </Card>
+
+
+            {/* resons to choose */}
+               <Card>
+                <CardHeader>
+                    <CardTitle>Reasons to Choose Us</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="flex justify-between items-center">
+                        <FormLabel>Detail Boxes</FormLabel>
+                        <Button 
+                            type="button" 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => appendReasonsBox({ title: "", total: "" })}
+                        >
+                            <Plus className="h-4 w-4 mr-2" /> Add Details
+                        </Button>
+                    </div>
+                    <div className="grid grid-cols-1  lg:grid-cols-2 gap-4 mt-4">
+                        {reasonsBoxFields.map((item, index) => (
+                            <Card key={item.id} className="p-4 relative border-dashed">
+                                <Button 
+                                    type="button" 
+                                    variant="ghost" 
+                                    size="icon" 
+                                    className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10" 
+                                    onClick={() => removeReasonsBox(index)}
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                </Button>
+                                <div className="space-y-4 pt-4">
+                                    <FormField
+                                        control={form.control as any}
+                                        name={`ReasonsChoose.detailBox.${index}.title`}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Title</FormLabel>
+                                                <FormControl>
+                                                    <Input {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                      <FormField
+                                            control={form.control as any}
+                                            name={`ReasonsChoose.detailBox.${index}.total`}
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Total/Number</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                </CardContent>
+            </Card>
+
             {/* Who We Are Section */}
             {/* <Card>
               <CardHeader>

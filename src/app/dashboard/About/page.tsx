@@ -32,6 +32,7 @@ export default function AboutUsPage() {
             slug: record.slug || "",
             heroSection: record.heroSection,
             whyCompany: record.whyCompany,
+            ReasonsChoose: record.ReasonsChoose,
             // whoWeAre: record.whoWeAre,
             goals: record.goals,
             flags: record.flags,
