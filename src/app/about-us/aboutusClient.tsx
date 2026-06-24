@@ -777,6 +777,7 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import UnderConstructionPage from "@/components/UnderConstruction";
+import StatsGrid from "@/components/home/RoundStatsCard";
 
 
 interface AboutUsClientProps {
@@ -973,6 +974,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                 delay: 0.5, 
                 ease: "easeOut",
               }} 
+              
               className="grid grid-cols-2 md:grid-cols-4 gap-4 max-[540px]:grid-cols-1 md:-mt-[170px] xl:-mt-[180px] !max-w-[750px] mx-auto">
 						{aboutUsData?.heroSection?.ratings.map((item, index) => (
               <div
@@ -1082,41 +1084,11 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
 				</Row>
 			</Section>
       <Section className="bg-gray-50 !py-14">
-        <Row>
-            <div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 ">
-    {aboutUsData?.ReasonsChoose?.detailBox.map((item, index) => (
-      <div
-          key={index}
-          className={`
-          relative  overflow-hidden border-r border-gray-300
-          ${(index % 4 === 3) ? "border-r-0" : ""}
-          `}
-        >
-      <motion.div
-        key={index}
-        className="flex flex-col items-center  gap-1 px-3"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 0.5,
-          delay: index * 0.1,
-        }}
-      >
-        <h4 className="text-[40px] md:text-[56px] font-extrabold text-[#0d1b2a]">
-          {item.total}
-        </h4>
-
-        <p className="text-gray-600 font-bold opacity-70 text-sm sm:text-md text-center break-all ">
-          {item.title}
-        </p>
-      </motion.div>
-      </div>
-    ))}
-  </div>
-        </Row>
-      </Section>
-
+					 <Row className=" mx-auto ">
+					 	<StatsGrid  columns={4} bordered />
+					</Row>
+			</Section>
+    
 {/* section: 4 years */}
   <Section  className="bg-white z-10 scroll-mt-10">
 				<Row className="flex gap-10 flex-col-reverse relative lg:flex-row ">

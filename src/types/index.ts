@@ -81,12 +81,6 @@ export interface AboutUs {
       description: string;
     }[];
   };
-  ReasonsChoose: {
-    detailBox: {
-      total: string;
-      title: string;
-    }[];
-  };
 	// whoWeAre: {
 	// 	description: string[];
 	// 	image: string;
