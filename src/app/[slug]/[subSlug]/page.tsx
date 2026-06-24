@@ -6,7 +6,6 @@ import apiService from "@/lib/apiService";
 import { Blog, SingleResponse } from "@/types";
 import HirepageTechnologClient from "@/app/hire/[slug]/HirepageTechnologClient";
 import BlogDetailPageClient from "@/app/blog/[slug]/blogDetailPageClient";
-import NotFoundPage from "@/components/NotFoundPage";
 
 type Props = {
   params: Promise<{ slug: string; subSlug: string }>;
@@ -213,7 +212,10 @@ export default async function DynamicSubPage({ params }: Props) {
 
   if (systemIdentifier === "hire") {
     const seoData = await getSeoData(slug);
-    const pageTitle = seoData?.title || `Hire ${slug.replace(/-/g, ' ')}`;
+    if (!seoData) {
+      notFound();
+    }
+    const pageTitle = seoData.title || seoData.seo_title || `Hire ${slug.replace(/-/g, ' ')}`;
 
     const breadcrumbSchema = {
       "@context": "https://schema.org",
@@ -310,5 +312,5 @@ export default async function DynamicSubPage({ params }: Props) {
     }
   }
 
-  return <NotFoundPage />;
+  notFound();
 }

@@ -1287,7 +1287,7 @@ import Section from "../Section";
 import Row from "../Row";
 import { HiMail } from "react-icons/hi";
 import { useEffect, useRef, useState } from "react";
-import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
+import { NavigationStructure } from "@/lib/navigationService";
 
 
 // -------------------- Main Page --------------------
@@ -1295,8 +1295,6 @@ export default function ContactFooterPage() {
   const pathname = usePathname();
   const isTrainingPage = pathname === "/training";
   const isContactPage = pathname === "/contact";
-
-  const [navStructure, setNavStructure] = useState<NavigationStructure | null>(null);
 
   const {
     hrEmail,
@@ -1312,7 +1310,8 @@ export default function ContactFooterPage() {
     blogSlug,
     portfolioSlug,
     privacySlug,
-    termsSlug
+    termsSlug,
+    navStructure
   } = useWebsiteSettings();
 
 
@@ -1380,19 +1379,7 @@ export default function ContactFooterPage() {
       },
     ];
 
-    useEffect(() => {
-        const fetchNavData = async () => {
-          try {
-            const data = await getNavigationStructure();
 
-            setNavStructure(data);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-
-        fetchNavData();
-      }, []);
 
     const serviceData = nav.servicesNav.flatMap((category) =>
       (category.links ?? []).map((s) => ({
@@ -1409,7 +1396,7 @@ export default function ContactFooterPage() {
       }))
     );
 
-    if (!navStructure) return null;
+
 
   return (
     <footer id="contact-form-section" className={` relative bg-white scroll-mt-14 ${

@@ -12,7 +12,31 @@ export async function generateMetadata(): Promise<Metadata> {
 
   // Fallback if the API fails
   if (!seoData) {
-    return { title: "Home | Inspire Techno Solution" };
+    const pageUrl = "https://inspiretechnosolution.com";
+    const defaultTitle = "Web & Mobile App Development Company | Inspire Techno Solution";
+    const defaultDesc = "Inspire Techno Solution is a leading web and mobile app development company in India specializing in WordPress, React, NodeJS, PHP, MERN stack, and custom UI/UX design.";
+    return {
+      title: defaultTitle,
+      description: defaultDesc,
+      keywords: ["Web Development", "Mobile App Development", "WordPress Development", "ReactJS", "NodeJS", "UI/UX Design", "PHP Development", "MERN Stack"],
+      alternates: {
+        canonical: pageUrl,
+      },
+      openGraph: {
+        title: defaultTitle,
+        description: defaultDesc,
+        url: pageUrl,
+        type: "website",
+        images: ["/feature-logo.jpg"],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: defaultTitle,
+        description: defaultDesc,
+        images: ["/feature-logo.jpg"],
+        site: "@inspiretechnosolution",
+      },
+    };
   }
 
   // Return dynamic metadata from the API

@@ -1880,8 +1880,8 @@ export default function HireDevelopersPageClient() {
                                     <Image
                                         src="/hire/main/Group-1000013400.png"
                                         alt="Process flow"
-                                        layout="fill"
-                                        objectFit="contain"
+                                        fill
+                                        className="object-contain"
                                     />
                                 </motion.div>
 

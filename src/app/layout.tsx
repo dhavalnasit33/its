@@ -1,4 +1,5 @@
 import { Bricolage_Grotesque, Exo_2, Inter } from "next/font/google";
+import Script from "next/script";
 import Navbar from "@/components/navbar/navbar";
 import { SnackbarProvider } from "@/components/ui/snackbar-provider";
 import "./globals.css";
@@ -115,18 +116,27 @@ export default async function RootLayout({
           href="https://inspiretechnosolution.com/"
         />
         <link rel="icon" href={websiteSettings?.favicon || "/favicon.ico"} />
+        <link rel="apple-touch-icon" href="/logo.png" />
         {/*  <GoogleTagManager gtmId="GTM-5FSVQSMT" /> */}
-        {scripts.map((script, index) => (
-          <script
-            key={`yoast-script-${index}`}
-            src={script.src}
-            async={script.async}
-            defer={script.defer}
-            dangerouslySetInnerHTML={
-              script.content ? { __html: script.content } : undefined
-            }
-          />
-        ))}
+        {scripts.map((script, index) => {
+          if (script.src) {
+            return (
+              <Script
+                key={`yoast-script-${index}`}
+                src={script.src}
+                strategy="afterInteractive"
+              />
+            );
+          }
+          return (
+            <Script
+              key={`yoast-script-${index}`}
+              id={`yoast-script-content-${index}`}
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{ __html: script.content }}
+            />
+          );
+        })}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

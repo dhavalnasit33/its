@@ -217,9 +217,8 @@ export default function OurServicesClient() {
 													<Image
 														src={index == 0 ? "/services/Vector-1.png" : (index == 1 ? "/services/Vector2.png" : "/services/Vector-3.png")}
 														alt=""
-														layout="fill"
-														objectFit="contain"
-														className="absolute inset-0 z-0"
+														fill
+														className="absolute inset-0 z-0 object-contain"
 													/>
 
 

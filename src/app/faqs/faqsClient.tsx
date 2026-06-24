@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import apiService from "@/lib/apiService";
 import { FaPlus, FaMinus } from "react-icons/fa";
-import NotFoundPage from "@/components/NotFoundPage";
+import { notFound } from "next/navigation";
 import { HirePageData } from "@/types";
 
 interface Faqs {
@@ -86,11 +86,7 @@ function faqs() {
 
 
   if (!faqs) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <NotFoundPage />
-      </div>
-    )
+    notFound();
   }
   return (
     <>

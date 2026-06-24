@@ -74,7 +74,10 @@ export default async function HirepageTechnolog({ params }: { params: Promise<{ 
     }
 
     const seoData = await getSeoData(slug);
-    const pageTitle = seoData?.title || `Hire ${slug.replace(/-/g, ' ')}`;
+    if (!seoData) {
+        notFound();
+    }
+    const pageTitle = seoData.title || seoData.seo_title || `Hire ${slug.replace(/-/g, ' ')}`;
 
     const breadcrumbSchema = {
       "@context": "https://schema.org",

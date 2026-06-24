@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getSeoData } from "@/lib/seoService";
-import NotFoundPage from "@/components/NotFoundPage";
+import { notFound } from "next/navigation";
 
 import ServicePageClient from "./servicePageClient";
 import AboutClient from "@/app/about-us/aboutusClient";
@@ -78,23 +78,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   if (!seoData) {
+    const formattedSlug = slug.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+    const defaultTitle = `${formattedSlug} Services | Inspire Techno Solution`;
+    const defaultDesc = `Professional ${formattedSlug} services by Inspire Techno Solution. We deliver high-quality, scalable, and secure web and mobile app development solutions.`;
     return {
-      title: "Our Service | Inspire Techno Solution",
-      description: "Top-Tier Web & App Development Services",
+      title: defaultTitle,
+      description: defaultDesc,
+      keywords: [formattedSlug, "Web Development", "Mobile App Development", "Software Development", "Inspire Techno Solution"],
       alternates: {
         canonical: pageUrl,
       },
       openGraph: {
-        title: "Our Service | Inspire Techno Solution",
-        description: "Top-Tier Web & App Development Services",
+        title: defaultTitle,
+        description: defaultDesc,
         url: pageUrl,
         type: "website",
         images: ["/feature-logo.jpg"],
       },
       twitter: {
         card: "summary_large_image",
-        title: "Our Service | Inspire Techno Solution",
-        description: "Top-Tier Web & App Development Services",
+        title: defaultTitle,
+        description: defaultDesc,
         images: ["/feature-logo.jpg"],
         site: "@inspiretechnosolution",
       },
@@ -139,7 +143,7 @@ export default async function ServicePage({
   const seoData = await getSeoData(slug);
 
   if (!seoData) {
-    return <NotFoundPage />;
+    notFound();
   }
 
   // Common BreadcrumbList schema
@@ -274,8 +278,25 @@ export default async function ServicePage({
 
   // 3. If it is an independent custom page (e.g. Privacy Policy)
   if (seoData.linkedType === "independent") {
-    return renderWithSchemas(<GenericPageClient />);
+    let pageData = null;
+    try {
+      const response = await fetch(`${API_BASE_URL}/page/public/slug/${slug}`, {
+        next: { revalidate: 3600 }
+      });
+      if (response.ok) {
+        const json = await response.json();
+        pageData = json?.data || json;
+      }
+    } catch (error) {
+      console.error("Error fetching generic page details in SSR:", error);
+    }
+
+    if (!pageData) {
+      notFound();
+    }
+
+    return renderWithSchemas(<GenericPageClient initialData={pageData} />);
   }
 
-  return <NotFoundPage />;
+  notFound();
 }

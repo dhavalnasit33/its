@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import apiService from "@/lib/apiService";
 import Loader from "@/components/PageLoader";
-import NotFoundPage from "@/components/NotFoundPage";
+import { notFound } from "next/navigation";
 
 interface PageData {
   _id: string;
@@ -15,13 +15,18 @@ interface PageData {
   image?: string;
 }
 
-export default function GenericPageClient() {
+export default function GenericPageClient({ initialData }: { initialData?: PageData | null }) {
   const { slug } = useParams<{ slug: string }>();
-  const [data, setData] = useState<PageData | null>(null);
-  const [notFound, setNotFound] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<PageData | null>(initialData || null);
+  const [notFoundState, setNotFoundState] = useState(false);
+  const [loading, setLoading] = useState(!initialData);
 
   useEffect(() => {
+    if (initialData) {
+      setData(initialData);
+      setLoading(false);
+      return;
+    }
     const fetchPageData = async () => {
       try {
         setLoading(true);
@@ -32,11 +37,11 @@ export default function GenericPageClient() {
         if (response && response.success && response.data) {
           setData(response.data);
         } else {
-          setNotFound(true);
+          setNotFoundState(true);
         }
       } catch (error) {
         console.error("Error fetching generic page:", error);
-        setNotFound(true);
+        setNotFoundState(true);
       } finally {
         setLoading(false);
       }
@@ -45,16 +50,12 @@ export default function GenericPageClient() {
     if (slug) {
       fetchPageData();
     }
-  }, [slug]);
+  }, [slug, initialData]);
 
   if (loading) return <Loader />;
 
-  if (notFound || !data) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <NotFoundPage />
-      </div>
-    );
+  if (notFoundState || !data) {
+    notFound();
   }
 
   return (

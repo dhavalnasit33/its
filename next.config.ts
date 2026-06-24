@@ -10,6 +10,8 @@ const nextConfig: NextConfig = withAnalyzer({
   typescript: { ignoreBuildErrors: true },
   // eslint: { ignoreDuringBuilds: true },
   devIndicators: false,
+  poweredByHeader: false,
+  compress: true,
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 86400,
