@@ -237,7 +237,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                   />
                   <a
                     href={`tel:${phonePrimaryClean}`}
-                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[18px]"
+                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[16px] md:text-[18px]"
                   >
                     {phonePrimary}
                   </a>
@@ -252,7 +252,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                   />
                   <a
                     href={`mailto:${supportEmail}`}
-                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[18px]"
+                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[16px] md:text-[18px]"
                   >
                     {supportEmail}
                   </a>
@@ -263,7 +263,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                     href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[18px]"
+                    className="break-all px-2 lg:px-3.75 text-center font-medium text-[16px] md:text-[18px]"
                   >
                     {microsoftHandle}
                   </a>
@@ -398,10 +398,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                     <h2 className="text-xl font-semibold">
                       <span className="text-[#d97b2f]">Empower</span>{" "}
                       <span className="text-[#0b1833]">Your Business</span>{" "}
-                      <span className="text-[#d97b2f]">with</span>
-                    </h2>
-                    <h2 className="text-xl font-semibold text-[#d97b2f] mt-2">
-                      Dedicated Developers
+                      <span className="text-[#d97b2f]">with Dedicated Developers</span>
                     </h2>
                     {/* <motion.button
                       className="relative overflow-hidden mt-6 px-6 py-3 bg-[#0b1833] text-white font-medium rounded-md shadow-md"
@@ -473,10 +470,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                 <h2 className="text-2xl md:text-3xl font-semibold">
                   <span className="text-[#d97b2f]">Empower</span>{" "}
                   <span className="text-[#0b1833]">Your Business</span>{" "}
-                  <span className="text-[#d97b2f]">with</span>
-                </h2>
-                <h2 className="text-2xl md:text-3xl font-semibold text-[#d97b2f] mt-2">
-                  Dedicated Developers
+                  <span className="text-[#d97b2f]">with Dedicated Developers</span>
                 </h2>
                 <button className="mt-6 px-6 py-3 bg-[#0b1833] text-white font-medium rounded-md shadow-md hover:bg-[#131f47] transition">
                   Talk to Our Experts
@@ -712,7 +706,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                   </div> */}
                 </motion.div>
 
-                <motion.p
+                <motion.div
                   className="text-gray-700 fonts_16 md:text-lg mb-6 [&_p]:mb-4
     										[&_p:last-child]:mb-0"
                   dangerouslySetInnerHTML={{

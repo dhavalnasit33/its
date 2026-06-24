@@ -92,7 +92,7 @@ const WebsiteSettingsContext = createContext<WebsiteSettingsContextProps>({
   // instagramLink: "https://www.instagram.com/inspiretechnosolution/",
   instagramLink: "https://www.instagram.com/inspiretechnosolution/",
   whatsApplink: "https://api.whatsapp.com/send?phone=919327220484",
-  youtubeLink: "#",
+  youtubeLink: "https://www.youtube.com/channel/UCZn9F8mZ8k97Vtk9S6v8IPQ",
   behanceLink: "#",
 });
 
@@ -146,7 +146,7 @@ export function WebsiteSettingsProvider({
   const whatsApplink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "whatsapp")?.link || " https://api.whatsapp.com/send?phone=919327220484";
   const facebookLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "facebook")?.link || "https://www.facebook.com/inspiretechnosolution/";
   const instagramLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "instagram")?.link || "https://www.instagram.com/inspiretechnosolution/";
-  const youtubeLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "youtube")?.link || "#";
+  const youtubeLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "youtube")?.link || "https://www.youtube.com/channel/UCZn9F8mZ8k97Vtk9S6v8IPQ";
   const behanceLink = settings.social_media.find(s => s.socialMediaName.toLowerCase() === "behance")?.link || "#";
 
   // Precompute dynamic navigation slugs

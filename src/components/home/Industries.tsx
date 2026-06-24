@@ -119,7 +119,7 @@ export default function Industries() {
                 className="text-center w-full sticky !pt-16 md:!pt-22 lg:!pt-25  "
                 style={{
                     top: `${NAVBAR_HEIGHT}px`,
-                    zIndex: 2000,
+                    zIndex: 999,
                     // background: "#060610",
                     background: "#0d1b2a",
                     paddingBottom: "50px",

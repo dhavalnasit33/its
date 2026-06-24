@@ -21,7 +21,8 @@ import Motion from "@/components/motionbar";
 // import { Metadata } from "next";
 import { HomePageData, SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
-import NotFoundPage from "@/components/NotFoundPage";
+// import NotFoundPage from "@/components/NotFoundPage";
+import { notFound as nextNotFound } from "next/navigation";
 import Link from "next/link";
 // import Slider from "react-slick";
 // import "slick-carousel/slick/slick.css";
@@ -100,20 +101,20 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	const [notFound, setNotFound] = useState(false);
 	const [data, setData] = useState<HomePageData | null>(null);
 	const [isMobile, setIsMobile] = useState(false);
-	const [navStructure, setNavStructure] = useState<NavigationStructure | null>(null);
+	// const [navStructure, setNavStructure] = useState<NavigationStructure | null>(null);
 
-	useEffect(() => {
-	const fetchNavData = async () => {
-		try {
-		const data = await getNavigationStructure();
-		setNavStructure(data);
-		} catch (error) {
-		console.error(error);
-		}
-	};
+	// useEffect(() => {
+	// const fetchNavData = async () => {
+	// 	try {
+	// 	const data = await getNavigationStructure();
+	// 	setNavStructure(data);
+	// 	} catch (error) {
+	// 	console.error(error);
+	// 	}
+	// };
 
-	fetchNavData();
-	}, []);
+	// fetchNavData();
+	// }, []);
 
 
 	useEffect(() => {
@@ -148,11 +149,12 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	}, [slug]);
 
  	if (notFound) {
-		return (
-			<div className="min-h-screen flex items-center justify-center">
-				<NotFoundPage />
-			</div>
-		);
+		// return (
+		// 	<div className="min-h-screen flex items-center justify-center">
+		// 		<NotFoundPage />
+		// 	</div>
+		// );
+		nextNotFound();
 	}
 
 	const fetchHomepageData = useCallback(async () => {
@@ -778,7 +780,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
 							/>
 						{/* </h2> */}
-						<p className="fonts_16 text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.description || "" }}/>
+						<div className="fonts_16 text-gray-600 mb-6 [&_p]:mb-4 [&_p:last-child]:mb-0" dangerouslySetInnerHTML={{ __html: homePageData?.aboutOurCompany?.description || "" }}/>
 
 							{/* {homePageData.aboutOurCompany.description}
 						</p> */}
