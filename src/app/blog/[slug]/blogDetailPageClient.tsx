@@ -636,10 +636,15 @@ export default function BlogDetailPageClient({
       {/* Related Blogs Section */}
       {/* <RelatedBlogs subCategory={blog.subCategories} /> */}
       <RelatedBlogs
+        // subCategory={
+        //   typeof blog.subCategories === "string"
+        //     ? blog.subCategories
+        //     : blog.subCategories?.subcategory
+        // }
         subCategory={
           typeof blog.subCategories === "string"
             ? blog.subCategories
-            : blog.subCategories?.subcategory
+            : blog.subCategories?._id
         }
       />
     </>
