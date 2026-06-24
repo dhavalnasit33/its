@@ -1440,10 +1440,11 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
                     autoPlay
                     loop
                     muted
-                    src="/hire/hire_bg.mp4"
                     playsInline
+                    preload="metadata"
                     className="absolute inset-0 w-full h-full object-cover"
                 >
+                    <source src="/hire/hire_bg.mp4" type="video/mp4" />
                 </video>
 
                 <div className="absolute inset-0 bg-[#0a1a33]/90"></div>
@@ -2094,7 +2095,7 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
 >                               <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#12203d] rounded group-hover:w-full group-hover:h-56"></span>
                                 <button
                                     // className="bg-white text-[#d68029] font-bold py-3 px-8 rounded-full hover:text-white hover:bg-[#12203d] transition-colors duration-300 cursor-pointer"
-                                 className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold py-3 px-8 text-[#d68029] hover:text-[#ffffff] transition-colors duration-750 delay-300 ease-in-out"
+                                 className="relative tracking-tight rounded-[10px] cursor-pointer text-sm sm:text-base font-semibold py-3 px-8 text-[#d68029] hover:text-[#ffffff] transition-colors duration-750 delay-300 ease-in-out"
                                 >
                                 <span className="flex flex-row gap-3  justify-center">
                                     {hireMainPageData.hireDedicatedResourcesAndTalents[0].buttonTitle}
@@ -2191,7 +2192,7 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
                                 <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#d68029] rounded group-hover:w-full group-hover:h-56"></span>
                                 <button
                                     // className="bg-white text-[#d68029] font-bold py-3 px-8 rounded-full hover:text-white hover:bg-[#12203d] transition-colors duration-300 cursor-pointer"
-                                    className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold py-3 px-8 text-[#0d1b2a] hover:text-[#ffffff] transition-colors duration-750 delay-300 ease-in-out "
+                                    className="relative tracking-tight rounded-[10px] cursor-pointer text-sm sm:text-base font-semibold py-3 px-8 text-[#0d1b2a] hover:text-[#ffffff] transition-colors duration-750 delay-300 ease-in-out "
                                 >
                                 <span className="flex flex-row gap-3  justify-center">
                                     {hireMainPageData.hireDedicatedResourcesAndTalents[1].buttonTitle}

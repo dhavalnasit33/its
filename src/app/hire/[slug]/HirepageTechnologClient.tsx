@@ -216,7 +216,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
     const fullTitle = pageData.hireDevelopersAsYourNeeds.title;
     const techNameSingular = pageData.title.replace(/^Hire\s*/, "");
     const techNamePlural = techNameSingular + "s";
-
+    
     let termToHighlight = "";
 
     if (fullTitle.includes(techNamePlural)) {
@@ -269,11 +269,12 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
           autoPlay
           loop
           muted
-          src="/hire/hire_bg.mp4"
           playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
-        ></video>
-
+        >
+          <source src="/hire/hire_bg.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[#0a1a33]/90"></div>
         {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto relative flex justify-center mb-10"> */}
          <Row className="flex justify-center mb-10">

@@ -135,7 +135,7 @@ export default function CareerClient({
         {/* <div className="w-full max-w-[90%] xl:max-w-[80%] mx-auto relative gap-8  flex flex-col-reverse lg:flex-row items-center justify-center "> */}
          <Row className="gap-8  flex flex-col-reverse lg:flex-row items-center justify-center ">
           {/* Left Content */}
-          <div className="w-full z-10 max-w-full xl:max-w-[65%] items-center content-center text-gray-800">
+          <div className="w-full z-10 max-w-full xl:max-w-[60%] items-center content-center text-gray-800">
             {/* Heading (top → bottom) */}
             <motion.div
               initial={{ opacity: 0, y: -40 }}
@@ -208,7 +208,7 @@ export default function CareerClient({
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="relative z-10 w-full max-w-full xl:max-w-[35%]   "
+            className="relative z-10 w-full max-w-full xl:max-w-[40%]   "
           >
             {/* Main Illustration */}
 

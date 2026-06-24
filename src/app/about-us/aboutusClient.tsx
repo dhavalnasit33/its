@@ -931,7 +931,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
             className="mb-12 w-full mt-4"
           >
-            <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 "
+            <div className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 "
               // {aboutUsData.heroSection.description}
               dangerouslySetInnerHTML={{ __html: aboutUsData?.heroSection?.description  || "", }}
             />
@@ -1018,20 +1018,18 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
           >
           <h2 className=" w-full common-h2 text-black   rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
             dangerouslySetInnerHTML={{
-                __html:
-                    aboutUsData?.whyCompany?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
+                __html: aboutUsData?.whyCompany?.title.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
             }}/>
           </motion.div>
       
-          <motion.p
+          <motion.div
               initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="text-gray-600 text-lg leading-8"
               dangerouslySetInnerHTML={{
-                __html:
-                    aboutUsData?.whyCompany?.description.replace(/<\/?h[1-6][^>]*>/gm, "") || "",
+                __html: aboutUsData?.whyCompany?.description || "",
             }}/>
           {/* </motion.p> */}
         </div>
@@ -1247,7 +1245,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                 <h4 className="common-h2-small mb-4">
                   {aboutUsData?.goals?.valuesTitle}
                 </h4>
-                <p className="text_16 text-[#6f6f6f]   "   
+                <div className="text_16 text-[#6f6f6f]   "   
                   dangerouslySetInnerHTML={{ __html: aboutUsData?.goals?.valuesDescription  || "" }}
                 />
               </div>

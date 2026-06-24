@@ -771,7 +771,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
 
         <div className="flex gap-2 items-center xl:hidden">
           <div className="relative group ">
-            <div className="border border-gray-300 rounded-full p-2">
+            <div className="border border-gray-300 rounded-full p-2 cursor-pointer">
             <Image
                       src="/navbar/contact_icon.png"
                       alt="contact_icon"
@@ -824,7 +824,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                 <div className="flex justify-end w-full items-center mb-3 mt-2">
                   <button
                     onClick={() => setMenuOpen(false)}
-                    className="p-2 text-[#d68029] rounded-full mr-2 hover:bg-gray-100"
+                    className="p-2 text-[#d68029] rounded-full mr-2 hover:bg-gray-100 cursor-pointer"
                   >
                     <FiX size={30} />
                   </button>

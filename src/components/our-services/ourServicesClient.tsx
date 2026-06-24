@@ -365,7 +365,7 @@ export default function OurServicesClient() {
 										<div key={i} className="flex flex-col items-center">
 											{
 												data.image &&
-												<Image src={data.image} alt={data.label} width={40} height={40} />
+												<Image src={data.image} alt={data.label} width={40} height={40} className="w-10 h-10 object-contain" />
 											}
 											<span className="text-sm mt-1">{data.label}</span>
 										</div>

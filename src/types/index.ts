@@ -221,10 +221,10 @@ export interface PortfolioContent {
     title: string;
     description: string;
     image: string;
-    points: {
-      label: string;
-      image: string;
-    }[];
+    // points: {
+    //   label: string;
+    //   image: string;
+    // }[];
   };
   createdAt: string;
   updatedAt: string;

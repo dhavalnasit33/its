@@ -211,9 +211,31 @@ export default function TrainingContactForm() {
                 </Box>
 
                 <Box className="text-left">
-                    <Button type="submit" variant="contained" disabled={isSubmitting} sx={{ backgroundColor: "#D68029", "&:hover": { backgroundColor: "#B86E23" }, py: 1.5, px: 5, textTransform: "none", fontSize: "1rem" }}>
+                    {/* <Button type="submit" variant="contained" disabled={isSubmitting}
+                     sx={{ backgroundColor: "#D68029", "&:hover": { backgroundColor: "#B86E23" }, py: 1.5, px: 5, textTransform: "none", fontSize: "1rem" }}
+                     >
                         {isSubmitting ? <CircularProgress size={24} color="inherit" /> : "Send Message"}
-                    </Button>
+                    </Button> */}
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={` mt-8 block ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
+                    >
+                        <div className="bg-[#D68029] relative inline-flex items-center justify-center w-full max-w-50 overflow-hidden text-white rounded-xl group ">
+                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56 uration-750 delay-300 ease-in-out"></span>
+                            <span className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 sm:px-8 py-3 cursor-pointer font-semibold">
+                                {isSubmitting ? (
+                                    <>
+                                        <span>
+                                            Sending...
+                                        </span>
+                                    </>
+                                ) : (
+                                    "Send Message"
+                                )}
+                            </span>
+                        </div>
+                    </button>
                 </Box>
             </form>
         </Box>

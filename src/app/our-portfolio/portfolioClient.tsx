@@ -19,6 +19,8 @@ import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
+import PlatformSlider from "@/components/home/PlatformSlider";
+import StatsGrid from "@/components/home/RoundStatsCard";
 // const categories = [
 //     { label: "Show All", value: "All" },
 //     { label: "Mobile App", value: "mobile-app" },
@@ -198,7 +200,7 @@ export default function PortfolioClient({
 
     return (
         <>
-            <Section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20  pb-20 gap-10 common_background_gradient">
+            {/* <Section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20  pb-20 gap-10 common_background_gradien">
                 <div className="w-full z-10 max-w-[100%] lg:max-w-[90%] xl:max-w-xl text-gray-800">
                     <motion.div
                         initial={{ opacity: 0, y: -40 }}
@@ -220,45 +222,17 @@ export default function PortfolioClient({
                             {portfolioContentData?.heroSection.description}
                         </p>
                     </motion.div>
-                    {/* <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-                    >
-                        <div className="bg-[#D68029] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group">
-                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56"></span>
-                            <Link href="/contact" className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold">
-                                <span className="flex flex-row gap-3 justify-center">
-                                    Let&apos;s Discuss
-                                </span>
-                            </Link>
-                        </div>
-                    </motion.div> */}
-                     {/* <motion.div 
-                       initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-                        className="relative  inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]   font-semibold text-white transition-colors group" >
-                                <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
-                                <a
-                                    href="/contact"
-                                    className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors ">
-                                <span className="flex flex-row gap-3 justify-center">
-                                    Let&apos;s Discuss
-                                </span>
-                                </a>
-                            </motion.div> */}
-                            <Button
-                                motionProps={{
-                                    initial: { opacity: 0, y: 40 },
-                                    animate:{ opacity: 1, y: 0 },
-                                    transition:{ duration: 0.8, ease: "easeOut", delay: 0.6 }
-                                }}
-                                bgColor="#D68029"
-                                hoverColor="#0d1b2a"
-                                text="Let&apos;s Discuss"
-                                href="/contact"
-                            />
+                    <Button
+                        motionProps={{
+                            initial: { opacity: 0, y: 40 },
+                            animate:{ opacity: 1, y: 0 },
+                            transition:{ duration: 0.8, ease: "easeOut", delay: 0.6 }
+                        }}
+                        bgColor="#D68029"
+                        hoverColor="#0d1b2a"
+                        text="Let&apos;s Discuss"
+                        href="/contact"
+                    />
                 </div>
                 <div className="relative z-10 w-full max-w-md sm:max-w-lg md:max-w-3xl">
                     <motion.div
@@ -312,7 +286,73 @@ export default function PortfolioClient({
                         );
                     })}
                 </div>
+            </Section> */}
+            {/* <Section className="w-full flex flex-col-reverse xl:flex-row items-center justify-center px-6 sm:px-8 md:px-20  pb-20 gap-10 common_background_gradien"> */}
+              <Section className=" common_background_gradient">
+                <Row className="gap-8  flex flex-col-reverse lg:flex-row items-center justify-center ">
+                <div className="w-full z-10 max-w-full xl:max-w-[60%] items-center content-center text-gray-800">
+                    <motion.div
+                        initial={{ opacity: 0, y: -40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        className="mb-5"
+                    >
+                        <h1 className="text-4xl md:text-[42px] lg:text-[46px]/[130%] leading-snug font-semibold">
+                            {portfolioContentData?.heroSection.title}
+                        </h1>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                        className="mb-6 w-full"
+                    >
+                        <p className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8">
+                            {portfolioContentData?.heroSection.description}
+                        </p>
+                    </motion.div>
+                    <Button
+                        motionProps={{
+                            initial: { opacity: 0, y: 40 },
+                            animate:{ opacity: 1, y: 0 },
+                            transition:{ duration: 0.8, ease: "easeOut", delay: 0.6 }
+                        }}
+                        bgColor="#D68029"
+                        hoverColor="#0d1b2a"
+                        text="Let&apos;s Discuss"
+                        href="/contact"
+                    />
+                </div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        className="relative z-10 w-full max-w-full xl:max-w-[40%] "
+                    >
+                        {portfolioContentData?.heroSection.image ? (
+                            <Image
+                                src={portfolioContentData.heroSection.image}
+                                alt="Isometric illustration"
+                                width={594}
+                                height={499}
+                                className="w-full h-auto drop-shadow-lg"
+                            />
+                        ) : (
+                            <div className="w-full h-75 bg-gray-200 rounded-lg animate-pulse"></div>
+                        )}
+                    </motion.div>
+                </Row>
             </Section>
+            <Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+				<Row>
+					<PlatformSlider />
+				</Row>
+			</Section>
+			<Section className="bg-gray-50 !py-14">
+					 <Row className=" mx-auto ">
+					 	<StatsGrid  columns={4} bordered />
+					</Row>
+			</Section>
             <Section >
                 {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto"> */}
                 <Row>
@@ -460,7 +500,7 @@ export default function PortfolioClient({
                                             onClick={handleLoadMore}
                                             disabled={loadingMore}
                                             className=" relative inline-flex items-center justify-center overflow-hidden
-                                                gap-2 rounded-md font-semibold text-white bg-[#D68029] group disabled:opacity-60 disabled:cursor-not-allowed "
+                                                gap-2 rounded-md font-semibold text-white bg-[#D68029] group disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer "
                                         >
                                         <span className=" absolute w-0 h-0 rounded bg-[#0d1b2a] transition-all duration-750 delay-300 ease-in-out group-hover:w-56 group-hover:h-56 " />
                                         <span className="relative tracking-tight rounded-md text-sm sm:text-base font-semibold px-8 py-3 text-white transition-colors ">
