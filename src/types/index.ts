@@ -911,15 +911,6 @@ export const WhyCompanySchema = z.object({
     .min(1, "At least one company detail is required"),
 });
 
-export const ReasonsChooseSchema = z.object({
-  detailBox: z.array(
-    z.object({
-      total: z.string().min(1, "Total is required"),
-      title: z.string().min(2, "Title is required"),
-    })
-  ).min(1, "At least one detail box is required"),
-});
-
 // export const WhoWeAreSchema = z.object({
 //   description: z.string().min(5, "Description must be at least 5 characters"),
 //    image: z.string().url("A valid image URL is required"),
@@ -967,7 +958,6 @@ export const AboutUsContentSchema = z.object({
   slug: z.string(),
   heroSection: HeroSectionAboutUsSchema,
   whyCompany: WhyCompanySchema,
-  ReasonsChoose: ReasonsChooseSchema,
   // whoWeAre: WhoWeAreSchema,
   goals: GoalsSchema,
   flags: Flagschema,
@@ -1004,12 +994,6 @@ export interface AboutUsContent {
       image: string;
       title: string;
       description: string;
-    }[];
-  };
-  ReasonsChoose: {
-    detailBox: {
-      total: string;
-      title: string;
     }[];
   };
   // whoWeAre: {
