@@ -162,14 +162,14 @@ const router = express.Router();
  */
 router.post('/', protect, async (req, res) => {
     try {
-        const { pagename, slug, heroSection, whyCompany, ReasonsChoose,  goals, flags, seo } = req.body;
+        const { pagename, slug, heroSection, whyCompany, goals, flags, seo } = req.body;
         // whoWeAre,
         // Validate required fields based on your schema requirements
-        if (!heroSection || !whyCompany || !ReasonsChoose || !goals || !flags) {  // || !whoWeAre 
+        if (!heroSection || !whyCompany || !goals || !flags) {  // || !whoWeAre 
             
             return res.status(400).json({
                 success: false,
-                message: "heroSection, whyCompany, reasonschoose, goals and flags are required" //whoWeAre,
+                message: "heroSection, whyCompany, goals and flags are required" //whoWeAre,
             });
         }
 
@@ -208,7 +208,7 @@ router.post('/', protect, async (req, res) => {
         //     }
         // }
 
-        const aboutUs = new AboutUs({ pagename, slug, heroSection, whyCompany, ReasonsChoose, goals, flags, seo }); // whoWeAre,
+        const aboutUs = new AboutUs({ pagename, slug, heroSection, whyCompany, goals, flags, seo }); // whoWeAre,
         await aboutUs.save();
 
         try {
@@ -297,11 +297,11 @@ router.get('/', async (req, res) => {
  */
 router.put('/:id', protect, cleanupOldImages(AboutUs, "AboutUs"), async (req, res) => {
     try {
-        const { pagename, slug, heroSection,  whyCompany, ReasonsChoose, goals, flags, seo } = req.body; //whoWeAre,
+        const { pagename, slug, heroSection,  whyCompany, goals, flags, seo } = req.body; //whoWeAre,
 
         const updatedAboutUs = await AboutUs.findByIdAndUpdate(
             req.params.id,
-            { pagename, slug, heroSection,  whyCompany, ReasonsChoose, goals, flags, seo }, //whoWeAre,
+            { pagename, slug, heroSection,  whyCompany, goals, flags, seo }, //whoWeAre,
             { new: true, runValidators: true }
         );
 

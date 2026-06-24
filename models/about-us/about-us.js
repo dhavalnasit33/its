@@ -84,19 +84,6 @@ const WhyCompanySchema = new mongoose.Schema({
         }
     ]
 });
-const ReasonsChooseSchema = new mongoose.Schema({
-    detailBox: [{
-        total: {
-            type: String,
-            required: true
-        },
-        title: {
-            type: String,
-            required: true
-        }
-    }]
-
-}, { _id: false });
 
 // const WhoWeAreSchema = new mongoose.Schema({
 //     description:{
@@ -206,7 +193,6 @@ const AboutUsSchema = new mongoose.Schema({
     },
     heroSection: HeroSectionSchema,
     whyCompany: WhyCompanySchema,
-    ReasonsChoose: ReasonsChooseSchema,
     // whoWeAre: WhoWeAreSchema,
     goals: GoalsSchema,
     flags: Flagschema,
