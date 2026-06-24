@@ -633,8 +633,7 @@ const Testimonials: React.FC = () => {
                     {!initialLoading && isMobile && testimonials.length >= 1 && (
                         <div className="py-5 w-full">
                             <div
-                                className="relative w-full"
-                                style={{ height: "340px" }}
+                                className="relative w-full h-[340px]"
                             >
                                 {testimonials.map((t, i) => {
                                     const slot = getSlot(i);

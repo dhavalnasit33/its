@@ -13,14 +13,20 @@ import Row from "@/components/Row";
 import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
 
-export default function CareerClient() {
-  const [careerData, setCareerData] = useState<CareerContent | null>(null);
-  const [loading, setLoading] = useState(true);
+export default function CareerClient({
+  initialData,
+  initialPositions,
+}: {
+  initialData?: CareerContent | null;
+  initialPositions?: OpenningPosition[] | null;
+}) {
+  const [careerData, setCareerData] = useState<CareerContent | null>(initialData || null);
+  const [loading, setLoading] = useState(!initialData);
   const [avialblePositionData, setAvialblePositionData] = useState<
-    OpenningPosition[] | []
-  >([]);
+    OpenningPosition[]
+  >(initialPositions || []);
   const [avialblePositionDataLoading, setAvialblePositionDataLoading] =
-    useState(false);
+    useState(!initialPositions);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPositionId, setSelectedPositionId] = useState<
@@ -47,8 +53,13 @@ export default function CareerClient() {
   }, []);
 
   useEffect(() => {
+    if (initialData) {
+      setCareerData(initialData);
+      setLoading(false);
+      return;
+    }
     fetchContent();
-  }, []);
+  }, [fetchContent, initialData]);
 
   const fetchAvialblePositionData = useCallback(async () => {
     setAvialblePositionDataLoading(true);
@@ -72,14 +83,16 @@ export default function CareerClient() {
   }, []);
 
   useEffect(() => {
+    if (initialPositions) {
+      setAvialblePositionData(initialPositions);
+      setAvialblePositionDataLoading(false);
+      return;
+    }
     fetchAvialblePositionData();
-  }, []);
+  }, [fetchAvialblePositionData, initialPositions]);
 
   if (!careerData && !loading) {
     return (
-      // <div className="min-h-screen flex items-center justify-center">
-      //   <NotFoundPage />
-      // </div>
       <UnderConstructionPage />
     );
   }

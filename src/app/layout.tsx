@@ -5,7 +5,6 @@ import { SnackbarProvider } from "@/components/ui/snackbar-provider";
 import "./globals.css";
 import apiService from "@/lib/apiService";
 import ClientContentWrapper from "./ClientContentWrapper";
-import SideBlurb from "@/components/SideInfo";
 import { WebsiteSettingsProvider } from "@/context/WebsiteSettingsContext";
 
 const exo2 = Exo_2({
@@ -32,9 +31,6 @@ import {
 } from "@/lib/navigationService";
 import { getYoastSeoData } from "@/lib/seoService";
 import ScrollToTop from "@/components/ScrollToTop";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import CookieConsent from "@/components/CookieConsent";
-import ContactPopup from "@/components/ContactPopup";
 
 interface ParsedScript {
   src?: string;
@@ -225,6 +221,54 @@ export default async function RootLayout({
             }),
           }}
         />
+        <script
+          type="application/ld+json"
+          id="local-business-schema"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "@id": "https://inspiretechnosolution.com/#localbusiness",
+              "name": "Inspire Techno Solution",
+              "image": "https://inspiretechnosolution.com/feature-logo.jpg",
+              "url": "https://inspiretechnosolution.com/",
+              "logo": "https://inspiretechnosolution.com/logo.png",
+              "telephone": "+91-9327220484",
+              "priceRange": "$$",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "302, Dhara Arcade Motavarachha Nr.Mahadevchowk",
+                "addressLocality": "Surat",
+                "addressRegion": "Gujarat",
+                "postalCode": "394101",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 21.2369178,
+                "longitude": 72.885828
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              },
+              "sameAs": [
+                "https://www.facebook.com/inspiretechnosolution",
+                "https://www.instagram.com/inspiretechnosolution/",
+                "https://www.linkedin.com/company/inspiretechnosolution/"
+              ]
+            }),
+          }}
+        />
       </head>
       <body>
         <ScrollToTop />
@@ -241,10 +285,6 @@ export default async function RootLayout({
           >
             <Navbar navStructure={navStructure} />
             <ClientContentWrapper>{children}</ClientContentWrapper>
-            <SideBlurb />
-              <WhatsAppButton />
-                <CookieConsent />
-              <ContactPopup />
           </WebsiteSettingsProvider>
         </SnackbarProvider>
       </body>

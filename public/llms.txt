@@ -1,0 +1,35 @@
+# Inspire Techno Solution
+
+> Inspire Techno Solution is a leading web and mobile app development company based in India. We specialize in custom software development, WordPress, ReactJS, NodeJS, PHP, Shopify, MERN stack development, and UI/UX design.
+
+## Core Information
+- **Domain/URL:** https://inspiretechnosolution.com
+- **Founder:** Dhaval Nasit
+- **Location:** Surat, Gujarat, India (394101)
+- **Primary Email:** support@inspiretechnosolution.com
+- **Primary Phone:** +91-9327220484
+
+## Services
+We build high-performance, SEO-friendly, and secure digital products.
+- **Web Development:** ReactJS, NodeJS, PHP, MERN stack, Next.js
+- **CMS & E-commerce:** WordPress Development, Shopify Development, custom e-commerce platforms
+- **Mobile App Development:** Android & iOS apps, cross-platform hybrid solutions
+- **Design:** Modern UI/UX design, wireframing, prototyping, branding
+
+## Main Pages
+- [Home Page](https://inspiretechnosolution.com/) - Main portal highlighting services, industries, and engagement models.
+- [About Us](https://inspiretechnosolution.com/about-us) - Company background, values, and leadership team.
+- [Careers](https://inspiretechnosolution.com/career) - Join our growing team of developers, designers, and managers.
+- [Hire Developers](https://inspiretechnosolution.com/hire) - Scale your team with dedicated developers on flexible contracts.
+- [Portfolio](https://inspiretechnosolution.com/our-portfolio) - Explore our successful client projects, case studies, and products.
+- [Training](https://inspiretechnosolution.com/training) - IT professional training and skill development programs.
+
+## Key Service Details
+- **WordPress Development:** Custom themes, plugin integrations, performance tuning, and WooCommerce stores.
+- **Mobile Development:** High-quality iOS and Android applications engineered for performance and scalability.
+- **Dedicated Hiring:** Full-time, part-time, or hourly developers across React, Node, PHP, and UI/UX.
+
+## Social Profiles
+- [LinkedIn](https://www.linkedin.com/company/inspiretechnosolution/)
+- [Instagram](https://www.instagram.com/inspiretechnosolution/)
+- [Facebook](https://www.facebook.com/inspiretechnosolution)

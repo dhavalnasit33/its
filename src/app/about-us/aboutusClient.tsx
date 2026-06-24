@@ -781,6 +781,7 @@ import UnderConstructionPage from "@/components/UnderConstruction";
 
 interface AboutUsClientProps {
   title: string;
+  initialData?: AboutUs | null;
 }
 
 
@@ -808,7 +809,7 @@ const marqueeStyles = `
 
 
 // export default function AboutClient() {
-export default function AboutUsClient({ title }: AboutUsClientProps) {
+export default function AboutUsClient({ title, initialData }: AboutUsClientProps) {
   // const floatAnimation = {
   //   initial: { x: 0 },
   //   animate: { x: [5, -5, 5], y: [5, -5, 5] },
@@ -829,14 +830,14 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
   return stars;
 };
 
-  const [gettngAboutUsData, setGettngAboutUsData] = useState(true);
-  const [aboutUsData, setAboutUsData] = useState<AboutUs | null>(null);
+  const [gettngAboutUsData, setGettngAboutUsData] = useState(!initialData);
+  const [aboutUsData, setAboutUsData] = useState<AboutUs | null>(initialData || null);
   const fetchAboutUsData = useCallback(async () => {
     setGettngAboutUsData(true);
     try {
       const response = await apiService<SingleResponse<AboutUs>>("/about-us");
       if (response.success) {
-        setAboutUsData(response.data || []);
+        setAboutUsData(response.data || null);
       } else {
         console.log("Failed to fetch About Us data:", response.message);
       }
@@ -848,8 +849,13 @@ export default function AboutUsClient({ title }: AboutUsClientProps) {
   }, []);
 
   useEffect(() => {
+    if (initialData) {
+      setAboutUsData(initialData);
+      setGettngAboutUsData(false);
+      return;
+    }
     fetchAboutUsData();
-  }, []);
+  }, [fetchAboutUsData, initialData]);
 
   console.log("Hero Section:", aboutUsData?.heroSection);
   

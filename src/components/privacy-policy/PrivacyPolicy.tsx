@@ -8,6 +8,7 @@ import Button from "../Button";
 import { FaPhone } from "react-icons/fa";
 import { title } from "node:process";
 import { FaPhoneVolume } from "react-icons/fa6";
+import SafeEmail from "../SafeEmail";
 
 
 const sections = [
@@ -107,8 +108,8 @@ const sections = [
     title: "Contact Us",
     description: (
       <>If you have any questions about this Privacy Policy, contact us:<br /><br />
-        Email: hr@inspiretechnosolution.com <br />
-        Email: sales@inspiretechnosolution.com <br />
+        Email: <SafeEmail email="hr@inspiretechnosolution.com" /> <br />
+        Email: <SafeEmail email="sales@inspiretechnosolution.com" /> <br />
         Phone: +91 93272 20484<br />
         Website: https://inspiretechnosolution.com
       </>

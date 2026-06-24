@@ -1308,7 +1308,7 @@ import Row from "@/components/Row";
 import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
 
-export default function HireDevelopersPageClient() {
+export default function HireDevelopersPageClient({ initialData }: { initialData?: HireMainPageData | null }) {
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
     const faqRef = useRef<HTMLElement>(null);
@@ -1321,9 +1321,9 @@ export default function HireDevelopersPageClient() {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
-    const [gettingHireMainPageData, setGettingHireMainPageData] = useState(true);
+    const [gettingHireMainPageData, setGettingHireMainPageData] = useState(!initialData);
     const [hireMainPageData, setHireMainPageData] =
-        useState<HireMainPageData | null>(null);
+        useState<HireMainPageData | null>(initialData || null);
 
     const fetchHireMainPageContent = useCallback(async () => {
         setGettingHireMainPageData(true);
@@ -1344,8 +1344,13 @@ export default function HireDevelopersPageClient() {
     }, []);
 
     useEffect(() => {
+        if (initialData) {
+            setHireMainPageData(initialData);
+            setGettingHireMainPageData(false);
+            return;
+        }
         fetchHireMainPageContent();
-    }, [fetchHireMainPageContent]);
+    }, [fetchHireMainPageContent, initialData]);
 
     if (gettingHireMainPageData) {
         return (

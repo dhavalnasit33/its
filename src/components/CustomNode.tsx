@@ -65,14 +65,12 @@ function CustomNode({ data }: NodeProps<CustomNodeData>) {
       <Handle
         type="target"
         position={Position.Top}
-        className="bg-slate-400!"
-        style={{ zIndex: 20 }}
+        className="bg-slate-400! z-20"
       />
       <Handle
         type="source"
         position={Position.Bottom}
-        className="bg-slate-400!"
-        style={{ zIndex: 20 }}
+        className="bg-slate-400! z-20"
       />
     </div>
   );

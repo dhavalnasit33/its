@@ -189,30 +189,106 @@ export default async function ServicePage({
   if (seoData.systemIdentifier) {
     const displayTitle = seoData.seo_title || seoData.title;
     let component = null;
+
+    let initialData: any = null;
+    let initialExtraData: any = null;
+    let initialThirdData: any = null;
+
+    if (seoData.systemIdentifier === "about-us") {
+      try {
+        const res = await fetch(`${API_BASE_URL}/about-us`, { next: { revalidate: 3600 } });
+        if (res.ok) {
+          const json = await res.json();
+          initialData = json.data || json;
+        }
+      } catch (e) {
+        console.error("SSR about-us fetch failed:", e);
+      }
+    } else if (seoData.systemIdentifier === "career") {
+      try {
+        const [resContent, resPositions] = await Promise.all([
+          fetch(`${API_BASE_URL}/career-content`, { next: { revalidate: 3600 } }),
+          fetch(`${API_BASE_URL}/opennig-position`, { next: { revalidate: 3600 } }),
+        ]);
+        if (resContent.ok) {
+          const json = await resContent.json();
+          initialData = json.data || json;
+        }
+        if (resPositions.ok) {
+          const json = await resPositions.json();
+          initialExtraData = json.data || json;
+        }
+      } catch (e) {
+        console.error("SSR career fetch failed:", e);
+      }
+    } else if (seoData.systemIdentifier === "hire") {
+      try {
+        const res = await fetch(`${API_BASE_URL}/hire-main-page`, { next: { revalidate: 3600 } });
+        if (res.ok) {
+          const json = await res.json();
+          initialData = json.data || json;
+        }
+      } catch (e) {
+        console.error("SSR hire fetch failed:", e);
+      }
+    } else if (seoData.systemIdentifier === "portfolio") {
+      try {
+        const [resContent, resCategories, resWorks] = await Promise.all([
+          fetch(`${API_BASE_URL}/portfolio-content`, { next: { revalidate: 3600 } }),
+          fetch(`${API_BASE_URL}/portfolio-category`, { next: { revalidate: 3600 } }),
+          fetch(`${API_BASE_URL}/creative-work?page=1&limit=12`, { next: { revalidate: 3600 } }),
+        ]);
+        if (resContent.ok) {
+          const json = await resContent.json();
+          initialData = json.data || json;
+        }
+        if (resCategories.ok) {
+          const json = await resCategories.json();
+          initialExtraData = json.data || json;
+        }
+        if (resWorks.ok) {
+          const json = await resWorks.json();
+          initialThirdData = json.data || json;
+        }
+      } catch (e) {
+        console.error("SSR portfolio fetch failed:", e);
+      }
+    } else if (seoData.systemIdentifier === "training") {
+      try {
+        const res = await fetch(`${API_BASE_URL}/training-main-page`, { next: { revalidate: 3600 } });
+        if (res.ok) {
+          const json = await res.json();
+          initialData = json.data || json;
+        }
+      } catch (e) {
+        console.error("SSR training fetch failed:", e);
+      }
+    }
+
     switch (seoData.systemIdentifier) {
       case "about-us":
-        component = <AboutClient title={displayTitle} />;
+        component = <AboutClient title={displayTitle} initialData={initialData} />;
         break;
       case "blog":
         component = <BlogPageClient />;
         break;
       case "career":
-        component = <CareerClient />;
+        component = <CareerClient initialData={initialData} initialPositions={initialExtraData} />;
         break;
       case "contact":
         component = <ContactClient />;
         break;
       case "hire":
-        component = <HireDevelopersPage />;
+        component = <HireDevelopersPage initialData={initialData} />;
         break;
       case "portfolio":
-        component = <PortfolioClient />;
+        component = <PortfolioClient initialData={initialData} initialCategories={initialExtraData} initialWorks={initialThirdData} />;
         break;
       case "services":
         component = <OurServicesClient />;
         break;
       case "training":
-        component = <TrainingPageClient />;
+        component = <TrainingPageClient initialData={initialData} />;
         break;
       default:
         break;

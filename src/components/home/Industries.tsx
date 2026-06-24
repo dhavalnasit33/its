@@ -175,8 +175,9 @@ export default function Industries() {
                         >
                             <div
                                 // className="container max-w-7xl mx-auto"
-                                className="container w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl mx-auto relative"
-                                style={{ paddingBottom: isLast ? "80px" : "24px" }}
+                                className={`container w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl mx-auto relative ${
+                                    isLast ? "pb-20" : "pb-6"
+                                }`}
                             >
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                     {row.map((item, colIndex) => {

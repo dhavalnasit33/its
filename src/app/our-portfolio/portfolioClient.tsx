@@ -25,7 +25,15 @@ import UnderConstructionPage from "@/components/UnderConstruction";
 //     { label: "UI/UX", value: "ui-ux" },
 //     { label: "Web Development", value: "web-development" },
 // ];
-export default function PortfolioClient() {
+export default function PortfolioClient({
+    initialData,
+    initialCategories,
+    initialWorks,
+}: {
+    initialData?: PortfolioContent | null;
+    initialCategories?: PortfolioCategory[] | null;
+    initialWorks?: PaginatedResponse<CreativeWork> | null;
+}) {
     const floatAnimation = {
         initial: { x: 0 },
         animate: { x: [10, -10, 10], y: [10, -10, 10] },
@@ -36,15 +44,15 @@ export default function PortfolioClient() {
             delay: 0.5,
         },
     };
-    const [gettingProtfolioConetentData, setGettingProtfolioConetentData] = useState(true);
+    const [gettingProtfolioConetentData, setGettingProtfolioConetentData] = useState(!initialData);
     const [portfolioContentData, setPortfolioContentData] =
-        useState<PortfolioContent | null>(null);
-    const [creativeWorkData, setCreativeWorkData] = useState<CreativeWork[]>([]);
-    const [categories, setCategories] = useState<PortfolioCategory[]>([]);
+        useState<PortfolioContent | null>(initialData || null);
+    const [creativeWorkData, setCreativeWorkData] = useState<CreativeWork[]>(initialWorks?.data || []);
+    const [categories, setCategories] = useState<PortfolioCategory[]>(initialCategories || []);
     const [selectedCategory, setSelectedCategory] = useState<string>("All");
     const [page, setPage] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState<number>(1);
-    const [totalItems, setTotalItems] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState<number>(initialWorks?.pagination?.pages || 1);
+    const [totalItems, setTotalItems] = useState<number>(initialWorks?.pagination?.total || 0);
     const [initialLoading, setInitialLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const fetchPortfolioContent = useCallback(async () => {
@@ -75,11 +83,20 @@ export default function PortfolioClient() {
             }
         };
         useEffect(() => {
-        fetchCategories();
-        }, []);
+            if (initialCategories) {
+                setCategories(initialCategories);
+                return;
+            }
+            fetchCategories();
+        }, [initialCategories]);
     useEffect(() => {
+        if (initialData) {
+            setPortfolioContentData(initialData);
+            setGettingProtfolioConetentData(false);
+            return;
+        }
         fetchPortfolioContent();
-    }, [fetchPortfolioContent]);
+    }, [fetchPortfolioContent, initialData]);
     const fetchCreativeWorkData = useCallback(
         async (reset = false) => {
             if (reset) {

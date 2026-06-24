@@ -29,15 +29,15 @@ const cards = [
     { icon: "/training/community.svg", text: "Lifetime Support Community" },
 ];
 
-export default function TrainingPageClient() {
+export default function TrainingPageClient({ initialData }: { initialData?: TrainingMainPageData | null }) {
     // Media query for tablet and larger screens (e.g., iPad portrait)
     const isTabletOrLarger = useMediaQuery("(min-width: 768px)");
 
     // Media query for desktop screens
     const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-    const [gettingTrainingPageData, setGettingTrainingPageData] = useState(true);
-    const [trainingMainPageData, setTrainingMainPageData] = useState<TrainingMainPageData | null>(null);
+    const [gettingTrainingPageData, setGettingTrainingPageData] = useState(!initialData);
+    const [trainingMainPageData, setTrainingMainPageData] = useState<TrainingMainPageData | null>(initialData || null);
 
     const fetchTrainingContent = useCallback(async () => {
         setGettingTrainingPageData(true);
@@ -56,8 +56,13 @@ export default function TrainingPageClient() {
     }, [])
 
     useEffect(() => {
+        if (initialData) {
+            setTrainingMainPageData(initialData);
+            setGettingTrainingPageData(false);
+            return;
+        }
         fetchTrainingContent()
-    }, [fetchTrainingContent]);
+    }, [fetchTrainingContent, initialData]);
 
     if (gettingTrainingPageData) {
         return (

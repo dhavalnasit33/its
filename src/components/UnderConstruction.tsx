@@ -29,6 +29,7 @@
 
 import Row from "./Row";
 import Section from "./Section";
+import SafeEmail from "./SafeEmail";
 
 export default function UnderConstructionPage() {
   return (
@@ -60,10 +61,8 @@ export default function UnderConstructionPage() {
           70% completed
         </p>
 
-        <div className=" inline-flex mt-4 border border-gray-300 hover:bg-[#ffffff] hover:border-transparent rounded-md">
-           <a href="mailto:hr@inspiretechnosolution.com" className="text-white hover:text-[#0B1622] p-4 ">
-          hr@inspiretechnosolution.com  
-        </a>
+        <div className=" inline-flex mt-4 border border-gray-300 hover:bg-[#ffffff] hover:border-transparent rounded-md p-4">
+          <SafeEmail email="hr@inspiretechnosolution.com" className="text-white hover:text-[#0B1622]" />
         </div>
       </Row>
     </Section>

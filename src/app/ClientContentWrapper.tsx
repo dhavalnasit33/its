@@ -2,25 +2,27 @@
 
 "use client"; // ✨ FIX: This directive is essential for using hooks.
 
-import { useState, useEffect } from "react";
-import Loader from "@/components/PageLoader";
-import ContactFooterPage from "@/components/Footer/page";
+import dynamic from "next/dynamic";
 
-// This component now exclusively handles the client-side loading state.
+const ContactFooterPage = dynamic(() => import("@/components/Footer/page"), {
+  ssr: true,
+});
+
+const SideBlurb = dynamic(() => import("@/components/SideInfo"), { ssr: false });
+const WhatsAppButton = dynamic(() => import("@/components/WhatsAppButton"), { ssr: false });
+const CookieConsent = dynamic(() => import("@/components/CookieConsent"), { ssr: false });
+const ContactPopup = dynamic(() => import("@/components/ContactPopup"), { ssr: false });
+
+// This component now exclusively handles the wrapper structure.
 export default function ClientContentWrapper({ children }: { children: React.ReactNode }) {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
   return (
-    <>
-      {isLoading && <Loader />}
-      <main>
-        {children}
-        <ContactFooterPage />
-      </main>
-    </>
+    <main>
+      {children}
+      <ContactFooterPage />
+      <SideBlurb />
+      <WhatsAppButton />
+      <CookieConsent />
+      <ContactPopup />
+    </main>
   );
 }
