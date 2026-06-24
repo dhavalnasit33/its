@@ -15,6 +15,8 @@ import Section from "../Section";
 import Row from "../Row";
 import Button from "../Button";
 import UnderConstructionPage from "../UnderConstruction";
+import PlatformSlider from "../home/PlatformSlider";
+import StatsGrid from "../home/RoundStatsCard";
 
 export default function OurServicesClient() {
 
@@ -274,8 +276,17 @@ export default function OurServicesClient() {
 				{/* </div> */}
 
 			</Section>
+			<Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+				<Row>
+					<PlatformSlider />
+				</Row>
+			</Section>
+			<Section className="bg-gray-50 !py-14">
+					 <Row className=" mx-auto ">
+					 	<StatsGrid  columns={4} bordered />
+					</Row>
+			</Section>
 			<section className="w-full py-12.5 relative  ">
-				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex flex-wrap"> */}
 				<Row className="flex flex-wrap">
 					{ourServicePageData.technologyDetails.map((service, index) => (
 						<div
@@ -283,7 +294,6 @@ export default function OurServicesClient() {
 							className={`w-full relative mx-auto flex flex-col md:flex-row ${index % 2 === 1 ? "md:flex-row-reverse" : ""
 								} items-center justify-between gap-10  py-16`}
 						>
-							{/* Image */}
 							<motion.div
 								className="flex-1 flex justify-center"
 								initial={{ opacity: 0 }}
@@ -312,7 +322,6 @@ export default function OurServicesClient() {
 								}
 							</motion.div>
 
-							{/* Content */}
 							<div className="flex-1 ">
 								<motion.div
 									initial={{ opacity: 0, y: -50 }}
@@ -333,7 +342,6 @@ export default function OurServicesClient() {
 									transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
 									className="text-gray-700 text-lg mb-8"
 								>
-									{/* {service.subtitle} */}
 									{service.description ? (
 										<div
 											className="font-medium text-black rose max-w-none  [&_p]:mb-2
@@ -346,7 +354,6 @@ export default function OurServicesClient() {
 
 
 
-								{/* Tech Icons */}
 								<motion.div
 									initial={{ opacity: 0, y: 50 }}
 									whileInView={{ opacity: 1, y: 0 }}
@@ -365,7 +372,6 @@ export default function OurServicesClient() {
 									))}
 								</motion.div>
 
-								{/* List */}
 								<motion.ul
 									initial={{ opacity: 0, y: 30 }}
 									whileInView={{ opacity: 1, y: 0 }}

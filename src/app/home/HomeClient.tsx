@@ -72,6 +72,7 @@ import PlatformSlider from "@/components/home/PlatformSlider";
 import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
 import { FaChartLine, FaLongArrowAltRight, FaRobot } from "react-icons/fa";
 import UnderConstructionPage from "@/components/UnderConstruction";
+import StatsGrid from "@/components/home/RoundStatsCard";
 
 // Dynamically import heavy/below-the-fold components to improve PageSpeed and load performance
 const ParticlesBg = dynamic(() => import("@/components/home/Particles"), { ssr: false });
@@ -501,7 +502,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 			<Section className="bg-gray-50 !py-14">
 					 <Row className=" mx-auto ">
-						<motion.div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 " >
+						{/* <motion.div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 " >
 						{
 							homePageData.reasonsToChoose.deatailBox.length > 0 &&
 							homePageData.reasonsToChoose.deatailBox.map((item, idx) => (
@@ -513,14 +514,14 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 									${(idx % 4 === 3) ? "border-r-0" : ""}
 									`}
 								>
-									{/* ${(idx % 4 === 3) ? "border-r-0" : ""} */}
 									<RoundStatsCard
 										value={item.total}
 										label={item.title}
 									/>
 								</div>
 							))}
-					</motion.div>
+					</motion.div> */}
+					 <StatsGrid  columns={4} bordered />
 					</Row>
 			</Section>
 {/* 

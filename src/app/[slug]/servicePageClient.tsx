@@ -27,6 +27,8 @@ import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
+import PlatformSlider from "@/components/home/PlatformSlider";
+import StatsGrid from "@/components/home/RoundStatsCard";
 
 // ✅ FIX 1: Lazy load ALL below-fold heavy components
 const EngagementModels = dynamic(
@@ -224,7 +226,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
           
         {/* </div> */}
       </Section>
-      <div className="relative w-full z-20 bg-[#0b1833] text-white  py-3 text-sm">
+      {/* <div className="relative w-full z-20 bg-[#0b1833] text-white  py-3 text-sm">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 text-center lg:text-left w-full relative max-w-[90%] lg:max-w-[90%] mx-auto">
               <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6">
                 <div className="flex items-center gap-2">
@@ -275,7 +277,18 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                 <li><Link href={`/${hireSlug}`} className="hover:underline">GET IN TOUCH</Link></li>
               </ul>
             </div>
-          </div>
+          </div> */}
+        <Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+          <Row>
+            <PlatformSlider />
+          </Row>
+        </Section>
+
+        <Section className="bg-gray-50 !py-14">
+					 <Row className=" mx-auto ">
+					  <StatsGrid  columns={4} bordered />
+					</Row>
+			</Section>
 
           {/* INTRO */}
           <Section>

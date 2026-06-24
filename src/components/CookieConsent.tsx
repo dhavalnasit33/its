@@ -71,7 +71,7 @@ useEffect(() => {
       <div className="max-w-7xl mx-auto px-3 flex flex-col   items-center justify-between gap-4">
         <button
   onClick={closePopup}
-  className="absolute top-4 right-4 text-gray-500 hover:text-black text-md"
+  className="absolute top-4 right-4 text-gray-500 hover:text-black text-md cursor-pointer"
 >
   ✕
 </button>
@@ -85,7 +85,7 @@ useEffect(() => {
         <div className="flex gap-3">
           <button
             onClick={declineCookies}
-            className="px-4 py-2 border border-gray-500 rounded-md"
+            className="px-4 py-2 border border-gray-500 rounded-md cursor-pointer"
           >
             Decline
           </button>
@@ -96,7 +96,8 @@ useEffect(() => {
           >
             Accept
           </button> */}
-          <Button
+          <Button 
+          className=" cursor-pointer"
            bgColor="#D68029"
            hoverColor="#0d1b2a"
            onClick={acceptCookies}
