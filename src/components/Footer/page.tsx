@@ -1557,7 +1557,7 @@ export default function ContactFooterPage() {
             gap-6
           "
         >
-            <p className=" break-all text-gray-700 lg:text-left ">
+          <p className=" break-all text-gray-700 lg:text-left ">
             Empowering businesses with innovative web and mobile solutions that drive<br />digital transformation, growth, and long-term success.
           </p>
 
