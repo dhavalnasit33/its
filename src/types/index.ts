@@ -305,12 +305,12 @@ export const PortfolioContentFormValues = z.object({
     //     image: z.string().url("Image required"),
     //   }),
     // // ),
-    points: z.array(
-      z.object({
-        label: z.string().min(2),
-        image: z.string().url(),
-      })
-    ).length(4),
+    // points: z.array(
+    //   z.object({
+    //     label: z.string().min(2),
+    //     image: z.string().url(),
+    //   })
+    // ).length(4),
   }),
   seo: z.object({
     title: z.string(),
@@ -332,10 +332,10 @@ export interface PortfolioContent {
     title: string;
     description: string;
     image: string;
-    points: {
-      label: string;
-      image: string;
-    }[];
+    // points: {
+    //   label: string;
+    //   image: string;
+    // }[];
   };
   seo: {
     title: string;

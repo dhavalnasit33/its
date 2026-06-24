@@ -30,12 +30,12 @@ const portfolioSchema = z.object({
     title: z.string().min(2, "Title must be at least 2 characters"),
     description: z.string().min(5, "Description must be at least 5 characters"),
     image: z.string().url("Image required"),
-    points: z.array(
-      z.object({
-        label: z.string().min(2),
-        image: z.string().url(),
-      })
-    ).length(4),
+    // points: z.array(
+    //   z.object({
+    //     label: z.string().min(2),
+    //     image: z.string().url(),
+    //   })
+    // ).length(4),
     }),
   seo: z.object({
     title: z.string(),
@@ -78,12 +78,12 @@ export default function PortfolioContentForm({
         title: "",
         description: "",
         image: "",
-        points: [
-          { label: "", image: "" },
-          // { label: "", image: "" },
-          // { label: "", image: "" },
-          // { label: "", image: "" },
-        ],
+        // points: [
+        //   { label: "", image: "" },
+        //   // { label: "", image: "" },
+        //   // { label: "", image: "" },
+        //   // { label: "", image: "" },
+        // ],
       },
       seo: {
         title: "",
@@ -249,105 +249,9 @@ export default function PortfolioContentForm({
                   )}
                 />
 
-                <div className="space-y-4">
-                  {/* <div className="flex items-center justify-between">
-                    <FormLabel>Portfolio Points</FormLabel>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => appendHeroPoint({ label: "", image: "" })}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add Point
-                    </Button>
-                  </div> */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* {heroPoints.map((field, index) => (
-                      <Card key={field.id} className="relative p-4 border-dashed">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="absolute top-2 right-2 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                          onClick={() => removeHeroPoint(index)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                        <div className="space-y-4 pt-4">
-                          <FormField
-                            control={form.control as any}
-                            name={`heroSection.points.${index}.label`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Label</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="e.g. Website Development" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control as any}
-                            name={`heroSection.points.${index}.image`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Icon/Image</FormLabel>
-                                <FormControl>
-                                  <ImageUpload
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    className="w-full h-32"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                      </Card>
-                    ))} */}
-                    {/* {Array.from({ length: 4 }).map((_, index) => (
-                      <Card
-                        key={index}
-                        className="relative p-4 border border-dashed rounded-xl"
-                      >
-                        <div className="space-y-4">
-                          <FormField
-                            control={form.control as any}
-                            name={`heroSection.points.${index}.label`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Label</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="e.g. Innovation" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                {/* <div className="space-y-4">
 
-                          <FormField
-                            control={form.control as any}
-                            name={`heroSection.points.${index}.image`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Icon/Image</FormLabel>
-                                <FormControl>
-                                  <ImageUpload
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    className="w-full h-32"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                      </Card>
-                    ))} */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <Card
                       key={index}
@@ -396,7 +300,7 @@ export default function PortfolioContentForm({
                     </Card>
                   ))}
                 </div>
-                  </div>
+                  </div> */}
               </CardContent>
             </Card>
 
