@@ -15,3 +15,5 @@
 export const GOOGLE_CAPTACH_CLIENT_KEY =   '6LcF6qorAAAAAKFgoIuldo_LXsOpONeCbxcFfkxS';
 
 export const NEXT_PUBLIC_UNDER_CONSTRUCTION = "true";
+
+export const CACHE_REVALIDATE_TIME = 600; // 10 minutes in seconds (600)

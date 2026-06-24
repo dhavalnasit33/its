@@ -1,5 +1,6 @@
 import { SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
+import { CACHE_REVALIDATE_TIME } from "@/config";
 
 export interface SeoData {
   _id: string;
@@ -29,7 +30,7 @@ export async function getYoastSeoData(): Promise<YoastSeoData | null> {
     const response = await apiService<{ success: boolean; data: YoastSeoData }>(
       "/yoast-seo/public",
       {
-        next: { revalidate: 3600 }, // Cache for 60 min
+        next: { revalidate: CACHE_REVALIDATE_TIME },
       }
     );
     return response.success ? response.data : null;

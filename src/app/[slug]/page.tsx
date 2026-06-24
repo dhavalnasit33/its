@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getSeoData } from "@/lib/seoService";
 import { notFound } from "next/navigation";
+import { CACHE_REVALIDATE_TIME } from "@/config";
 
 import ServicePageClient from "./servicePageClient";
 import AboutClient from "@/app/about-us/aboutusClient";
@@ -196,7 +197,7 @@ export default async function ServicePage({
 
     if (seoData.systemIdentifier === "about-us") {
       try {
-        const res = await fetch(`${API_BASE_URL}/about-us`, { next: { revalidate: 3600 } });
+        const res = await fetch(`${API_BASE_URL}/about-us`, { next: { revalidate: CACHE_REVALIDATE_TIME } });
         if (res.ok) {
           const json = await res.json();
           initialData = json.data || json;
@@ -207,8 +208,8 @@ export default async function ServicePage({
     } else if (seoData.systemIdentifier === "career") {
       try {
         const [resContent, resPositions] = await Promise.all([
-          fetch(`${API_BASE_URL}/career-content`, { next: { revalidate: 3600 } }),
-          fetch(`${API_BASE_URL}/opennig-position`, { next: { revalidate: 3600 } }),
+          fetch(`${API_BASE_URL}/career-content`, { next: { revalidate: CACHE_REVALIDATE_TIME } }),
+          fetch(`${API_BASE_URL}/opennig-position`, { next: { revalidate: CACHE_REVALIDATE_TIME } }),
         ]);
         if (resContent.ok) {
           const json = await resContent.json();
@@ -223,7 +224,7 @@ export default async function ServicePage({
       }
     } else if (seoData.systemIdentifier === "hire") {
       try {
-        const res = await fetch(`${API_BASE_URL}/hire-main-page`, { next: { revalidate: 3600 } });
+        const res = await fetch(`${API_BASE_URL}/hire-main-page`, { next: { revalidate: CACHE_REVALIDATE_TIME } });
         if (res.ok) {
           const json = await res.json();
           initialData = json.data || json;
@@ -234,10 +235,11 @@ export default async function ServicePage({
     } else if (seoData.systemIdentifier === "portfolio") {
       try {
         const [resContent, resCategories, resWorks] = await Promise.all([
-          fetch(`${API_BASE_URL}/portfolio-content`, { next: { revalidate: 3600 } }),
-          fetch(`${API_BASE_URL}/portfolio-category`, { next: { revalidate: 3600 } }),
-          fetch(`${API_BASE_URL}/creative-work?page=1&limit=12`, { next: { revalidate: 3600 } }),
+          fetch(`${API_BASE_URL}/portfolio-content`, { next: { revalidate: CACHE_REVALIDATE_TIME } }),
+          fetch(`${API_BASE_URL}/portfolio-category`, { next: { revalidate: CACHE_REVALIDATE_TIME } }),
+          fetch(`${API_BASE_URL}/creative-work?page=1&limit=12`, { next: { revalidate: CACHE_REVALIDATE_TIME } }),
         ]);
+      
         if (resContent.ok) {
           const json = await resContent.json();
           initialData = json.data || json;
@@ -255,7 +257,7 @@ export default async function ServicePage({
       }
     } else if (seoData.systemIdentifier === "training") {
       try {
-        const res = await fetch(`${API_BASE_URL}/training-main-page`, { next: { revalidate: 3600 } });
+        const res = await fetch(`${API_BASE_URL}/training-main-page`, { next: { revalidate: CACHE_REVALIDATE_TIME } });
         if (res.ok) {
           const json = await res.json();
           initialData = json.data || json;
@@ -306,7 +308,7 @@ export default async function ServicePage({
 
     try {
       const response = await fetch(`${API_BASE_URL}/service/slug/${slug}`, {
-        next: { revalidate: 3600 }
+        next: { revalidate: CACHE_REVALIDATE_TIME }
       });
       if (response.ok) {
         const json = await response.json();
@@ -357,7 +359,7 @@ export default async function ServicePage({
     let pageData = null;
     try {
       const response = await fetch(`${API_BASE_URL}/page/public/slug/${slug}`, {
-        next: { revalidate: 3600 }
+        next: { revalidate: CACHE_REVALIDATE_TIME }
       });
       if (response.ok) {
         const json = await response.json();

@@ -6,6 +6,7 @@ import "./globals.css";
 import apiService from "@/lib/apiService";
 import ClientContentWrapper from "./ClientContentWrapper";
 import { WebsiteSettingsProvider } from "@/context/WebsiteSettingsContext";
+import { CACHE_REVALIDATE_TIME } from "@/config";
 
 const exo2 = Exo_2({
   subsets: ["latin"],
@@ -76,7 +77,7 @@ function parseGoogleTags(htmlString: string) {
 async function getWebsiteSettings(): Promise<any> {
   try {
     const response = await apiService<any>("/website-settings", {
-      next: { revalidate: 3600 }, // Cache for 60 min
+      next: { revalidate: CACHE_REVALIDATE_TIME },
     });
     if (response && response.success) {
       return response.data;

@@ -1,4 +1,4 @@
-const TTL_MS = 15 * 24 * 60 * 60 * 1000;
+const TTL_MS = 1 * 60 * 60 * 1000; // 1 hour
 
 interface CacheEntry<T> {
   data: T;
@@ -13,7 +13,8 @@ export function cacheRead<T>(key: string): T | null {
     if (!raw) return null;
 
     const entry: CacheEntry<T> = JSON.parse(raw);
-    if (Date.now() > entry.expiresAt) {
+    // Check against TTL_MS from savedAt to invalidate old cache entries immediately
+    if (Date.now() - entry.savedAt > TTL_MS || Date.now() > entry.expiresAt) {
       localStorage.removeItem(key);
       return null;
     }

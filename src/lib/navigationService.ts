@@ -1,4 +1,6 @@
 import apiService from "@/lib/apiService";
+import { CACHE_REVALIDATE_TIME } from "@/config";
+
 
 export type NavLink = {
   title: string;
@@ -23,7 +25,7 @@ export async function getNavigationStructure(): Promise<NavigationStructure> {
     const response = await apiService<any>(
       "/seo-manager/navigation-structure",
       {
-        next: { revalidate: 3600 }, // Cache for 60 minutes
+        next: { revalidate: CACHE_REVALIDATE_TIME },
       },
     );
     // console.log("Response:", response);
