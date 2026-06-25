@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema(
             type: Date,
             default: null,
         },
+        popupSubmitted:{
+            type:Boolean,
+            default:false
+        },
     },
     {
         timestamps: true,
