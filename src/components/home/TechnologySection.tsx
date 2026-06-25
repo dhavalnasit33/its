@@ -56,7 +56,7 @@ export default function TechnologyTabs() {
 
   return (
     <section className="w-full relative lg:min-h-[100vh] ">
-      <div className="lg:fixed lg:top-0 w-full py-16 md:py-22 lg:py-25 relative overflow-hidden z-0 lg:min-h-[100vh] w-full relative lg:min-h-[100vh]">
+      <div className="lg:fixed lg:top-0 w-full py-16 md:py-22 lg:py-25 relative overflow-hidden z-0 lg:min-h-[100vh]">
         <TechBackground />
         {/* <div className="absolute inset-0 bg-[#0a1a33]/90"></div> */}
         <div className="w-full relative   ">
@@ -100,12 +100,13 @@ export default function TechnologyTabs() {
                   className="flex flex-col items-center text-center p-5 bg-white/[0.07] rounded-xl border border-white/20 shadow-sm hover:shadow-md transition-all duration-300 
                     max-[360px]:w-full w-35 sm:w-40 md:w-45 "
                 >
-                  <div className="w-17.5 h-17.5 flex items-center justify-center rounded-lg   mb-3">
+                  <div className="w-15 h-15 flex items-center justify-center rounded-lg mb-3 relative">
                     <Image
                       src={tech.image}
                       alt={tech.label}
-                      width={60}
-                      height={60}
+                      fill
+                      sizes="60px"
+                      className="object-contain"
                     />
                   </div>
                   <h4 className="text-base font-medium text-slate-200 ">{tech.label}</h4>

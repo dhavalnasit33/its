@@ -1444,6 +1444,7 @@ export default function ContactFooterPage() {
                 width={210}
                 height={50}
                 priority
+                style={{ width: "210px", height: "50px" }}
               />
             </Link>
         </div>

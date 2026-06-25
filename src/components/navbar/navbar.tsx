@@ -234,6 +234,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
             width={200}
             height={50}
             priority
+            style={{ width: "200px", height: "50px" }}
           />
         </Link>
 
@@ -279,95 +280,97 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     <span>{item.label}</span>
                     <RiArrowDropDownLine className="text-2xl leading-none" />
                   </Link>
-                    <div
-                      className={`fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 px-0 py-6 pb-0 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar ${servicesOpen ? "block" : "hidden"}`}
-                      ref={servicesDropdownRef}
-                      onMouseEnter={() => setServicesOpen(true)}
-                      onMouseLeave={() => setServicesOpen(false)}
-                    >
-                      {/* ADD gap-y-10 to this div to create space between rows */}
-                      <div className="grid grid-cols-2 relative md:grid-cols-5 gap-y-10 max-w-full mx-auto text-sm font-medium">
-                        {servicesData.map((serviceCategory, index) => (
-                          <div
-                            key={index}
-                            className="px-8 border-r relative about_menu_mails border-[#757575] last:border-r-0 flex flex-col"
-                          >
-                            <h4 className="font-bold flex relative items-center gap-6 text-black mb-4 text-lg">
-                              {serviceCategory.icon ? (
-                                <Image
-                                  src={serviceCategory.icon}
-                                  alt={serviceCategory.title}
-                                  width={25}
-                                  height={25}
-                                />
-                              ) : null}
-                              {serviceCategory.title}
-                            </h4>
-                            <ul className="space-y-2 relative w-full text-base pt-2 text-gray-500 flex-1">
-                              {serviceCategory.services.map(
-                                (service, serviceIndex) => (
-                                  <li
-                                    key={serviceIndex}
-                                    className="flex relative items-center border-b border-dashed gap-2 pl-4 w-full pb-1"
-                                    style={{ borderColor: "#D68029" }}
-                                  >
-                                    <Link
-                                      href={service.href}
-                                      className="p-1 relative px-3.75 hover:text-[#D68029] transition-colors"
-                                      onClick={() => setServicesOpen(false)}
-                                    >
-                                      {service.label}
-                                    </Link>
-                                  </li>
-                                ),
-                              )}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="mt-10 grid grid-cols-1 md:grid-cols-[60%_40%] border-t border-gray-200 pb-0">
-                        <div className="bg-white p-6 border-r border-gray-200 flex flex-col gap-6">
-                          <h4 className="text-lg font-bold text-black">
-                            Awards & Recognition
-                          </h4>
-                          <div className="flex gap-x-15 items-center justify-center flex-wrap">
-                            {awards.map((award, index) => (
-                              <Image
-                                key={index}
-                                src={award.src}
-                                alt={award.alt}
-                                width={100}
-                                height={40}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <div className="bg-blue-950 text-white p-10 flex items-center">
-                          <div className="grid grid-cols-3 gap-6 w-full text-center">
-                            {stats.map((stat, index) => (
-                              <div
-                                key={index}
-                                className="flex flex-col items-center"
-                              >
-                                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white mb-4">
+                    {servicesOpen && (
+                      <div
+                        className="fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 px-0 py-6 pb-0 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar block"
+                        ref={servicesDropdownRef}
+                        onMouseEnter={() => setServicesOpen(true)}
+                        onMouseLeave={() => setServicesOpen(false)}
+                      >
+                        {/* ADD gap-y-10 to this div to create space between rows */}
+                        <div className="grid grid-cols-2 relative md:grid-cols-5 gap-y-10 max-w-full mx-auto text-sm font-medium">
+                          {servicesData.map((serviceCategory, index) => (
+                            <div
+                              key={index}
+                              className="px-8 border-r relative about_menu_mails border-[#757575] last:border-r-0 flex flex-col"
+                            >
+                              <h4 className="font-bold flex relative items-center gap-6 text-black mb-4 text-lg">
+                                {serviceCategory.icon ? (
                                   <Image
-                                    src={stat.icon}
-                                    alt={stat.label}
-                                    width={30}
-                                    height={30}
-                                    className="object-contain"
+                                    src={serviceCategory.icon}
+                                    alt={serviceCategory.title}
+                                    width={25}
+                                    height={25} 
                                   />
+                                ) : null}
+                                {serviceCategory.title}
+                              </h4>
+                              <ul className="space-y-2 relative w-full text-base pt-2 text-gray-500 flex-1">
+                                {serviceCategory.services.map(
+                                  (service, serviceIndex) => (
+                                    <li
+                                      key={serviceIndex}
+                                      className="flex relative items-center border-b border-dashed gap-2 pl-4 w-full pb-1"
+                                      style={{ borderColor: "#D68029" }}
+                                    >
+                                      <Link
+                                        href={service.href}
+                                        className="p-1 relative px-3.75 hover:text-[#D68029] transition-colors"
+                                        onClick={() => setServicesOpen(false)}
+                                      >
+                                        {service.label}
+                                      </Link>
+                                    </li>
+                                  ),
+                                )}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-10 grid grid-cols-1 md:grid-cols-[60%_40%] border-t border-gray-200 pb-0">
+                          <div className="bg-white p-6 border-r border-gray-200 flex flex-col gap-6">
+                            <h4 className="text-lg font-bold text-black">
+                              Awards & Recognition
+                            </h4>
+                            <div className="flex gap-x-15 items-center justify-center flex-wrap">
+                              {awards.map((award, index) => (
+                                <Image
+                                  key={index}
+                                  src={award.src}
+                                  alt={award.alt}
+                                  width={100}
+                                  height={40} 
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <div className="bg-blue-950 text-white p-10 flex items-center">
+                            <div className="grid grid-cols-3 gap-6 w-full text-center">
+                              {stats.map((stat, index) => (
+                                <div
+                                  key={index}
+                                  className="flex flex-col items-center"
+                                >
+                                  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white mb-4">
+                                    <Image
+                                      src={stat.icon}
+                                      alt={stat.label}
+                                      width={30}
+                                      height={30}
+                                      className="object-contain" 
+                                    />
+                                  </div>
+                                  <p className="text-2xl font-bold text--[#D68029]">
+                                    {stat.value}
+                                  </p>
+                                  <p className="text-sm mt-1">{stat.label}</p>
                                 </div>
-                                <p className="text-2xl font-bold text--[#D68029]">
-                                  {stat.value}
-                                </p>
-                                <p className="text-sm mt-1">{stat.label}</p>
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                 </li>
               );
             }
@@ -407,153 +410,156 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     <span>{item.label}</span>
                     <RiArrowDropDownLine className="text-2xl leading-none" />
                   </Link>
-                    <div
-                      ref={aboutDropdownRef}
-                      className={`fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 py-12.5 px-[7%] border-b-4 border-b-[#12203d] mx-auto border-t-px border-t-black max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar ${aboutOpen ? "block" : "hidden"}`}
-                      onMouseEnter={() => setAboutOpen(true)}
-                      onMouseLeave={() => setAboutOpen(false)}
-                    >
-                      <div className="flex items-start gap-10">
-                        <div className="flex flex-col w-full max-w-[25%] content-start gap-4 pt-2">
-                          <Link
-                            href={aboutData[0].href}
-                            onClick={() => setAboutOpen(false)}
-                            className="flex mb-5 items-center gap-3 text-gray-800 hover:text-[#D68029] transition-colors"
-                          >
-                            <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
-                              <Image
-                                src="/navbar/About-us.svg"
-                                width={32}
-                                height={32}
-                                alt="About us icon"
-                              />
-                            </div>
-                            <span className="font-medium text-lg">
-                              {aboutData[0].label}
-                            </span>
-                          </Link>
-                          <Link
-                            href={aboutData[1].href}
-                            onClick={() => setAboutOpen(false)}
-                            className="flex mb-5 items-center gap-3 text-gray-800 hover:tex-[#D68029] transition-colors"
-                          >
-                            <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
-                              <Image
-                                src="/navbar/career.svg"
-                                width={32}
-                                height={32}
-                                alt="Career icon"
-                              />
-                            </div>
-                            <span className="font-medium text-lg">
-                              {aboutData[1].label}
-                            </span>
-                          </Link>
-                          <Link
-                            href={aboutData[2].href}
-                            onClick={() => setAboutOpen(false)}
-                            className="flex mb-5 items-center gap-3 text-gray-800 hover:tex-[#D68029] transition-colors"
-                          >
-                            <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
-                              <Image
-                                src="/navbar/blogs.svg"
-                                width={32}
-                                height={32}
-                                alt="blogs icon"
-                              />
-                            </div>
-                            <span className="font-medium text-lg">
-                              {aboutData[2].label}
-                            </span>
-                          </Link>
-                        </div>
-                        <div className="flex flex-col w-full max-w-[49.64%] gap-2">
-                          <div className=" text-xl/[28px] text-[#484848] font-normal mb-7.5 pr-[4%] w-full max-w-[90%] ">
-                            Create disruptive business innovations through
-                            high-end creativity and world-class alliances.
-                          </div>
-                          <div className="flex flex-row w-full">
-                            <div className="relative w-full max-w-[50%] about_menu_mails border-r border-r-[#484848] border-dashed pr-2.5 flex flex-col ">
-                              <div className=" relative mb-5">
-                                <h4 className="font-semibold text-[24px] text-[#d68229] mb-[3%]">
-                                  or mail us at
-                                </h4>
+                    {aboutOpen && (
+                      <div
+                        ref={aboutDropdownRef}
+                        className="fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 py-12.5 px-[7%] border-b-4 border-b-[#12203d] mx-auto border-t-px border-t-black max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar block"
+                        onMouseEnter={() => setAboutOpen(true)}
+                        onMouseLeave={() => setAboutOpen(false)}
+                      >
+                        <div className="flex items-start gap-10">
+                          <div className="flex flex-col w-full max-w-[25%] content-start gap-4 pt-2">
+                            <Link
+                              href={aboutData[0].href}
+                              onClick={() => setAboutOpen(false)}
+                              className="flex mb-5 items-center gap-3 text-gray-800 hover:text-[#D68029] transition-colors"
+                            >
+                              <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
+                                <Image
+                                  src="/navbar/About-us.svg"
+                                  width={32}
+                                  height={32}
+                                  alt="About us icon" 
+                                />
                               </div>
-                              <ul className=" relative text-gray-600">
-                                <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
-                                  <a
-                                    href={aboutData[3].href}
-                                    className="break-all px-3.5 text-center font-medium text-[18px] "
-                                  >
-                                    {aboutData[3].label}
-                                  </a>
-                                </li>
-                                 <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
-                                  <a
-                                    href={aboutData[4].href}
-                                    className="break-all px-3.5 text-center font-medium text-[18px] "
-                                  >
-                                    {aboutData[4].label}
-                                  </a>
-                                </li>
-                                <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
-                                  <a
-                                    href={aboutData[5].href}
-                                    className="break-all px-3.5 text-center font-medium text-[18px] "
-                                  >
-                                    {aboutData[5].label}
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="relative w-full max-w-[50%] about_menu_mails border-l border-l-[#484848] border-dashed px-2.5 flex flex-col ">
-                              <div className="relative mb-5 ">
-                                <h4 className="font-semibold text-[24px] text-[#d68029] mb-[3%]">
-                                  or call us at
-                                </h4>
+                              <span className="font-medium text-lg">
+                                {aboutData[0].label}
+                              </span>
+                            </Link>
+                            <Link
+                              href={aboutData[1].href}
+                              onClick={() => setAboutOpen(false)}
+                              className="flex mb-5 items-center gap-3 text-gray-800 hover:text-[#D68029] transition-colors"
+                            >
+                              <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
+                                <Image
+                                  src="/navbar/career.svg"
+                                  width={32}
+                                  height={32}
+                                  alt="Career icon" 
+                                />
                               </div>
-                              <ul className="relative text-gray-600">
-                                <li className=" relative flex items-center gap-2 pl-3 mb-4 pb-2.5 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
-                                  <a
-                                    href={aboutData[6].href}
-                                    className="break-all px-3.75 text-center font-medium text-[18px] "
-                                  >
-                                    {aboutData[6].label}
-                                  </a>
-                                </li>
-                              </ul>
+                              <span className="font-medium text-lg">
+                                {aboutData[1].label}
+                              </span>
+                            </Link>
+                            <Link
+                              href={aboutData[2].href}
+                              onClick={() => setAboutOpen(false)}
+                              className="flex mb-5 items-center gap-3 text-gray-800 hover:text-[#D68029] transition-colors"
+                            >
+                              <div className="p-2.75 bg-[#f4f4f4] rounded-full justify-center items-center mr-3.75 ">
+                                <Image
+                                  src="/navbar/blogs.svg"
+                                  width={32}
+                                  height={32}
+                                  alt="blogs icon"
+                                  style={{ width: "32px", height: "32px" }}
+                                />
+                              </div>
+                              <span className="font-medium text-lg">
+                                {aboutData[2].label}
+                              </span>
+                            </Link>
+                          </div>
+                          <div className="flex flex-col w-full max-w-[49.64%] gap-2">
+                            <div className=" text-xl/[28px] text-[#484848] font-normal mb-7.5 pr-[4%] w-full max-w-[90%] ">
+                              Create disruptive business innovations through
+                              high-end creativity and world-class alliances.
+                            </div>
+                            <div className="flex flex-row w-full">
+                              <div className="relative w-full max-w-[50%] about_menu_mails border-r border-r-[#484848] border-dashed pr-2.5 flex flex-col ">
+                                <div className=" relative mb-5">
+                                  <h4 className="font-semibold text-[24px] text-[#d68229] mb-[3%]">
+                                    or mail us at
+                                  </h4>
+                                </div>
+                                <ul className=" relative text-gray-600">
+                                  <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
+                                    <a
+                                      href={aboutData[3].href}
+                                      className="break-all px-3.5 text-center font-medium text-[18px] "
+                                    >
+                                      {aboutData[3].label}
+                                    </a>
+                                  </li>
+                                   <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
+                                    <a
+                                      href={aboutData[4].href}
+                                      className="break-all px-3.5 text-center font-medium text-[18px] "
+                                    >
+                                      {aboutData[4].label}
+                                    </a>
+                                  </li>
+                                  <li className="relative flex items-center gap-2 pl-3 pb-2.75 mb-4 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
+                                    <a
+                                      href={aboutData[5].href}
+                                      className="break-all px-3.5 text-center font-medium text-[18px] "
+                                    >
+                                      {aboutData[5].label}
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div className="relative w-full max-w-[50%] about_menu_mails border-l border-l-[#484848] border-dashed px-2.5 flex flex-col ">
+                                <div className="relative mb-5 ">
+                                  <h4 className="font-semibold text-[24px] text-[#d68029] mb-[3%]">
+                                    or call us at
+                                  </h4>
+                                </div>
+                                <ul className="relative text-gray-600">
+                                  <li className=" relative flex items-center gap-2 pl-3 mb-4 pb-2.5 border-b border-b-[#d68029] border-dashed hover:text-[#D68029] transition-colors">
+                                    <a
+                                      href={aboutData[6].href}
+                                      className="break-all px-3.75 text-center font-medium text-[18px] "
+                                    >
+                                      {aboutData[6].label}
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="text-white p-6 rounded-lg flex flex-col content-start items-center text-center w-full max-w-[25%] -my-2">
-                          <div className="flex flex-wrap relative justify-center w-full py-5 px-10 rounded-[10px] bg-[url('/navbar/view-opening-bg-image.svg')] text-center bg-cover bg-no-repeat ">
-                            <div className="bg-white relative p-3 rounded-full mb-3">
-                              <Image
-                                src="/navbar/View-Opening-Icon.svg"
-                                width={30}
-                                height={30}
-                                alt="Vacancies Icon"
-                              />
-                            </div>
-                            <div className="w-full relative text-center justify-center flex flex-col">
-                              <p className="text-white font-semibold mb-5">
-                                Vacancies for skilled developers and designers
-                                are available at all times!
-                              </p>
-                              <p className="p-2.5 rounded-lg w-[80%] m-auto bg-white text-black font-semibold transition-colors hover:text-[#D68029] ">
-                                <Link
-                                  href={aboutData[1].href}
-                                  onClick={() => setAboutOpen(false)}
-                                  className="px-3.75 pb-3.75 text-center"
-                                >
-                                  View Opening
-                                </Link>
-                              </p>
+                          <div className="text-white p-6 rounded-lg flex flex-col content-start items-center text-center w-full max-w-[25%] -my-2">
+                            <div className="flex flex-wrap relative justify-center w-full py-5 px-10 rounded-[10px] bg-[url('/navbar/view-opening-bg-image.svg')] text-center bg-cover bg-no-repeat ">
+                              <div className="bg-white relative p-3 rounded-full mb-3">
+                                <Image
+                                  src="/navbar/View-Opening-Icon.svg"
+                                  width={30}
+                                  height={30}
+                                  alt="Vacancies Icon" 
+                                />
+                              </div>
+                              <div className="w-full relative text-center justify-center flex flex-col">
+                                <p className="text-white font-semibold mb-5">
+                                  Vacancies for skilled developers and designers
+                                  are available at all times!
+                                </p>
+                                <p className="p-2.5 rounded-lg w-[80%] m-auto bg-white text-black font-semibold transition-colors hover:text-[#D68029] ">
+                                  <Link
+                                    href={aboutData[1].href}
+                                    onClick={() => setAboutOpen(false)}
+                                    className="px-3.75 pb-3.75 text-center"
+                                  >
+                                    View Opening
+                                  </Link>
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                 </li>
               );
             }
@@ -592,125 +598,127 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     <span>{item.label}</span>
                     <RiArrowDropDownLine className="text-2xl leading-none" />
                   </Link>
-                    <div
-                      ref={hireUsDropdownRef}
-                      className={`fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar ${hireUsOpen ? "block" : "hidden"}`}
-                      onMouseEnter={() => setHireUsOpen(true)}
-                      onMouseLeave={() => setHireUsOpen(false)}
-                    >
-                      <div className="flex flex-row items-stretch mx-auto relative gap-x-7.5 px-10 py-12.5 w-full">
-                        {/* Left Side: Categories Grid (Max 4 columns per row) */}
-                        <div className="grid grid-cols-3 gap-x-7.5 gap-y-10 flex-1">
-                          {hireData.map((category, index) => (
-                            <div
-                              key={index}
-                              className="flex flex-col relative w-full border-r border-r-[#dee2e6] pr-4"
-                            >
-                              <div className="flex relative w-full flex-wrap ">
-                                <div className="mb-2.5 pr-5 relative ">
-                                  <div className="flex flex-row text-left items-center ">
-                                    {category.icon ? (
-                                      <figure className=" mr-3.75 p-3.75 bg-[#f8f8f8] justify-center flex shrink-0 w-16 h-16 rounded-full">
-                                        <Image
-                                          src={category.icon}
-                                          alt={category.title}
-                                          width={45}
-                                          height={45}
-                                        />
-                                      </figure>
-                                    ) : null}
-                                    <div className="w-full">
-                                      <h3 className="text-[20px] text-black font-semibold my-2.5 wrap-break-word">
-                                        {category.title}
-                                      </h3>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="w-full about_menu_mails flex justify-center relative pr-7.5 px-1.5 ">
-                                  <ul className=" relative w-full text-gray-600">
-                                    {category.services.map(
-                                      (service, serviceIndex) => (
-                                        <li
-                                          key={serviceIndex}
-                                          className=" pl-5 mt-2.5 pb-1.75 items-center relative border-b border-dashed border-b-[#d68029]"
-                                        >
-                                          <Link
-                                            href={service.href}
-                                            onClick={() => setHireUsOpen(false)}
-                                            className="flex items-center text-start text-[18px] font-medium text-[#717375] px-3.75 hover:text-[#D68029] transition-colors"
-                                          >
-                                            {service.label}
-                                          </Link>
-                                        </li>
-                                      ),
-                                    )}
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        {/* Right Side: Fixed Illustration Column */}
-                        <div className="flex items-center w-full max-w-[22%] justify-center pl-4">
-                          <Image
-                            src="/navbar/hire-us.svg"
-                            alt="Hire Developers Illustration"
-                            width={780}
-                            height={780}
-                            className="object-contain inline-block w-full max-w-full h-auto align-middle "
-                          />
-                        </div>
-                      </div>
-                      <div className="bg-[#f8f8f8] p-2.5 relative w-full border-b-4 border-b-[#d68029] ">
-                        <div className="w-full mx-auto flex relative flex-wrap items-center px-8 py-6">
-                          <div className="flex items-center relative w-[70.01%] flex-row ">
-                            {hireBottomBar.map((bottombar, index) => (
+                    {hireUsOpen && (
+                      <div
+                        ref={hireUsDropdownRef}
+                        className="fixed top-20 left-1/2 transform -translate-x-1/2 w-screen max-w-full bg-white shadow-xl border border-gray-200 rounded-lg z-10 max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar block"
+                        onMouseEnter={() => setHireUsOpen(true)}
+                        onMouseLeave={() => setHireUsOpen(false)}
+                      >
+                        <div className="flex flex-row items-stretch mx-auto relative gap-x-7.5 px-10 py-12.5 w-full">
+                          {/* Left Side: Categories Grid (Max 4 columns per row) */}
+                          <div className="grid grid-cols-3 gap-x-7.5 gap-y-10 flex-1">
+                            {hireData.map((category, index) => (
                               <div
                                 key={index}
-                                className="w-full max-w-[25%] flex relative "
+                                className="flex flex-col relative w-full border-r border-r-[#dee2e6] pr-4"
                               >
-                                <div className="w-full flex flex-wrap relative text-center ">
-                                  <figure className="flex items-center justify-center h-18.5 w-18.5 bg-white rounded-[50%] m-auto ">
-                                    <Image
-                                      src={bottombar.src}
-                                      alt={bottombar.alt}
-                                      width={48}
-                                      height={48}
-                                      className=""
-                                    />
-                                  </figure>
-                                  <div className="w-full">
-                                    <h3 className="text-[18px]/[24px] font-medium mt-2.5 text-[#484848cc] wrap-break-word ">
-                                      {bottombar.label}
-                                    </h3>
+                                <div className="flex relative w-full flex-wrap ">
+                                  <div className="mb-2.5 pr-5 relative ">
+                                    <div className="flex flex-row text-left items-center ">
+                                      {category.icon ? (
+                                        <figure className=" mr-3.75 p-3.75 bg-[#f8f8f8] justify-center flex shrink-0 w-16 h-16 rounded-full">
+                                          <Image
+                                            src={category.icon}
+                                            alt={category.title}
+                                            width={45}
+                                            height={45} 
+                                          />
+                                        </figure>
+                                      ) : null}
+                                      <div className="w-full">
+                                        <h3 className="text-[20px] text-black font-semibold my-2.5 wrap-break-word">
+                                          {category.title}
+                                        </h3>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="w-full about_menu_mails flex justify-center relative pr-7.5 px-1.5 ">
+                                    <ul className=" relative w-full text-gray-600">
+                                      {category.services.map(
+                                        (service, serviceIndex) => (
+                                          <li
+                                            key={serviceIndex}
+                                            className=" pl-5 mt-2.5 pb-1.75 items-center relative border-b border-dashed border-b-[#d68029]"
+                                          >
+                                            <Link
+                                              href={service.href}
+                                              onClick={() => setHireUsOpen(false)}
+                                              className="flex items-center text-start text-[18px] font-medium text-[#717375] px-3.75 hover:text-[#D68029] transition-colors"
+                                            >
+                                              {service.label}
+                                            </Link>
+                                          </li>
+                                        ),
+                                      )}
+                                    </ul>
                                   </div>
                                 </div>
                               </div>
                             ))}
                           </div>
-                          <div className="w-[29.61%] bg-[#12203d] px-11 py-4 rounded-[30px] flex flex-col justify-center">
-                            <div className="mb-5 text-white text-[22px]">
-                              Empower{" "}
-                              <span className="font-semibold text-[#d68029]">
-                                Your Business
-                              </span>{" "}
-                              with Dedicated{" "}
-                              <span className="font-semibold text-[#d68029]">
-                                Developers
-                              </span>
+                          {/* Right Side: Fixed Illustration Column */}
+                          <div className="flex items-center w-full max-w-[22%] justify-center pl-4">
+                            <Image
+                              src="/navbar/hire-us.svg"
+                              alt="Hire Developers Illustration"
+                              width={780}
+                              height={780} 
+                              className="object-contain inline-block w-full max-w-full h-auto align-middle " 
+                            />
+                          </div>
+                        </div>
+                        <div className="bg-[#f8f8f8] p-2.5 relative w-full border-b-4 border-b-[#d68029] ">
+                          <div className="w-full mx-auto flex relative flex-wrap items-center px-8 py-6">
+                            <div className="flex items-center relative w-[70.01%] flex-row ">
+                              {hireBottomBar.map((bottombar, index) => (
+                                <div
+                                  key={index}
+                                  className="w-full max-w-[25%] flex relative "
+                                >
+                                  <div className="w-full flex flex-wrap relative text-center ">
+                                    <figure className="flex items-center justify-center h-18.5 w-18.5 bg-white rounded-[50%] m-auto ">
+                                      <Image
+                                        src={bottombar.src}
+                                        alt={bottombar.alt}
+                                        width={48}
+                                        height={48}
+                                        className="" 
+                                      />
+                                    </figure>
+                                    <div className="w-full">
+                                      <h3 className="text-[18px]/[24px] font-medium mt-2.5 text-[#484848cc] wrap-break-word ">
+                                        {bottombar.label}
+                                      </h3>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
                             </div>
-                            <div className="w-full">
-                              <Link
-                                href={hireLink ? `/${hireLink.slug}` : "/hire"}
-                                className="inline-block cursor-pointer rounded-[10px] bg-[#d68029] px-7.5 py-3.75 text-center text-[18px] font-medium text-white transition-colors hover:bg-white hover:text-[#d68029] duration-300 "
-                              >
-                                Hire Us
-                              </Link>
+                            <div className="w-[29.61%] bg-[#12203d] px-11 py-4 rounded-[30px] flex flex-col justify-center">
+                              <div className="mb-5 text-white text-[22px]">
+                                Empower{" "}
+                                <span className="font-semibold text-[#d68029]">
+                                  Your Business
+                                </span>{" "}
+                                with Dedicated{" "}
+                                <span className="font-semibold text-[#d68029]">
+                                  Developers
+                                </span>
+                              </div>
+                              <div className="w-full">
+                                <Link
+                                  href={hireLink ? `/${hireLink.slug}` : "/hire"}
+                                  className="inline-block cursor-pointer rounded-[10px] bg-[#d68029] px-7.5 py-3.75 text-center text-[18px] font-medium text-white transition-colors hover:bg-white hover:text-[#d68029] duration-300 "
+                                >
+                                  Hire Us
+                                </Link>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                 </li>
               );
             }
@@ -736,7 +744,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     src="/navbar/contact_icon.png"
                     alt="contact_icon"
                     width={30}
-                    height={30}
+                    height={30} 
                   />
             </div>
             <ContactPopup   
@@ -763,7 +771,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
               src="/navbar/btn_icon.png"
               alt="Get a Quote Arrow"
               width={20}
-              height={20}
+              height={20} 
             />
           </Link>
         </div>
@@ -776,7 +784,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                       src="/navbar/contact_icon.png"
                       alt="contact_icon"
                       width={24}
-                      height={24}
+                      height={24} 
                     />
             </div>
             <ContactPopup   
@@ -1113,7 +1121,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                           src="/navbar/btn_icon.png"
                           alt="Get a Quote Arrow"
                           width={20}
-                          height={20}
+                          height={20} 
                         />
                       </span>
                     </Link>
@@ -1131,10 +1139,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
 
 const ContactPopup = ({ phonePrimary, hrEmail}: ContactPopupProps) => {
   return (
-    <div className=" absolute top-full left-0 -translate-x-[70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-[300px] md:w-[310px] xl:w-[360px] bg-white rounded-lg shadow-2xl 
+    <div className=" absolute top-full left-0 translate-x-[-70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-[300px] md:w-[310px] xl:w-[360px] bg-white rounded-lg shadow-2xl 
     border border-gray-200 p-4 md:p-5 xl:p-6 z-[9999] opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
     >
-      <div  className=" absolute -top-[10px] right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
+      <div  className=" absolute top-[-10px] right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
       <h3 className="text-xl font-bold text-black mb-6">
         Let's Connect With Us!
       </h3>

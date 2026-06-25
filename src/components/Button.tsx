@@ -80,7 +80,7 @@ export default function Button({
                 src={icon}
                 alt={text}
                 width={iconWidth}
-                height={iconHeight}
+                height={iconHeight} 
               />
             )}
 
@@ -91,7 +91,7 @@ export default function Button({
                 src={icon}
                 alt={text}
                 width={iconWidth}
-                height={iconHeight}
+                height={iconHeight} 
               />
             )}
           </span>

@@ -2673,7 +2673,7 @@ const Card = ({
                 alt={label}
                 width={40}
                 height={40}
-                className="object-contain shrink-0"
+                className="object-contain shrink-0" 
             />
             <h4 className="font-bold text-lg text-[#12203D]">{label}</h4>
         </div>

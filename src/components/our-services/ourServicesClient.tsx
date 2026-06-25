@@ -276,12 +276,12 @@ export default function OurServicesClient() {
 				{/* </div> */}
 
 			</Section>
-			<Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+			<Section  className="bg-[#0d1b2a] z-10 py-6! ">
 				<Row>
 					<PlatformSlider />
 				</Row>
 			</Section>
-			<Section className="bg-gray-50 !py-14">
+			<Section className="bg-gray-50 py-14!">
 					 <Row className=" mx-auto ">
 					 	<StatsGrid  columns={4} bordered />
 					</Row>

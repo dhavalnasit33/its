@@ -84,7 +84,7 @@ export default function EngagementModels() {
 
       {/* <div className="w-full max-w-7xl mx-auto relative flex flex-wrap p-2.5 z-10 "> */}
       {/* <div className="w-full max-w-[90%] lg:max-w-[80%] 2xl:max-w-7xl mx-auto relative flex flex-wrap  z-10 "> */}
-      <Row className="2xl:!max-w-7xl flex flex-wrap  z-10 ">
+      <Row className="2xl:max-w-7xl! flex flex-wrap  z-10 ">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -144,7 +144,7 @@ export default function EngagementModels() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 viewport={{ once: true, amount: 0.3 }}
                 className={` relative p-7 rounded-2xl justify-between text-white flex flex-col  overflow-hidden transition 
-                  bg-gradient-to-br ${theme.gradient}  border ${theme.border} 
+                  bg-linear-to-br ${theme.gradient}  border ${theme.border} 
                 `}
 
 

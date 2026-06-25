@@ -331,23 +331,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
                             viewport={{ once: true }}
                         >
-                            {/* Knowledge is power.
-                            <br />
-                            Information is liberating. */}
-                            {/* {
-                                trainingMainPageData?.aboutusSection.mainTitle ? (
-                                    <div
-                                        className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
-                                        dangerouslySetInnerHTML={{ __html: trainingMainPageData?.aboutusSection.mainTitle }}
-                                    />
-                                ) : (
-                                    <span>
-                                        Knowledge is power.
-                                        <br />
-                                        Information is liberating.
-                                    </span>
-                                )
-                            } */}
                             <h2
                                 className="common-h2 leading-tight text-black prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
                                 dangerouslySetInnerHTML={{ __html: trainingMainPageData?.aboutusSection?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "" }}
@@ -362,11 +345,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                             viewport={{ once: true }}
                         >
-                            {/* We stepped in the market with the goal to help students, working
-                            professionals and <br />
-                            other interested candidates get that dream job or open that
-                            desired freelance <br />
-                            business in some of the most popular Computer / IT fields. */}
                             {trainingMainPageData?.aboutusSection.description}
                         </motion.p>
 
@@ -402,12 +380,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                     </div>
                                 ))
                             }
-                            {/* <div className="text-left">
-                                <p className="text-2xl font-bold text-[#D68029]">9/10</p>
-                                <p className="text-gray-500 mt-1 text-sm">
-                                    9/10 companies reported better learning outcomes.
-                                </p>
-                            </div> */}
+
                         </motion.div>
 
                         {/* Button */}
@@ -699,32 +672,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                 ))
                             }
 
-                            {/* Life Time Support (from bottom slower) */}
-                            {/* <motion.div
-                                className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mt-8"
-                                initial={{ y: 100, opacity: 0 }}
-                                whileInView={{ y: 0, opacity: 1 }}
-                                transition={{ duration: 1.2, ease: "easeOut" }}
-                                viewport={{ once: true }}
-                            >
-                                <div className="flex-shrink-0">
-                                    <Image
-                                        src="/training/support.svg"
-                                        alt="Support"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-xl sm:text-2xl">
-                                        Life Time Support
-                                    </h3>
-                                    <p className="text-gray-600 text-sm sm:text-md mt-2 sm:mt-3 leading-relaxed">
-                                        Lorem Ipsum is simply dummy text of the printing and
-                                        industry Lorem Ipsum.
-                                    </p>
-                                </div>
-                            </motion.div> */}
+    
                         </div>
                     </div>
                     </Row>

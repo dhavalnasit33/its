@@ -80,7 +80,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
   const [Loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>([]);
   const [matchCatgeory, setMatchCatgeory] = useState<string>("");  
-  console.log("🚀 ~ HirepageTechnolog ~ matchCatgeory:", matchCatgeory);
+  // console.log("🚀 ~ HirepageTechnolog ~ matchCatgeory:", matchCatgeory);
   // Default the active accordion to the first item (index 0)
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   useEffect(() => {

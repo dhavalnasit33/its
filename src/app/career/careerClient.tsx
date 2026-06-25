@@ -160,23 +160,7 @@ export default function CareerClient({
               />
             </motion.div>
             {/* Button (bottom → top) */}
-            {/* <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-            >
-              <div className="bg-[#D68029] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group">
-                <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-64 group-hover:h-64"></span>
-                <a
-                  href="#openning-position"
-                  className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 py-3 sm:px-8 sm:py-4 cursor-pointer font-semibold"
-                >
-                  <span className="flex flex-row gap-3 justify-center">
-                    Check Current Openings
-                  </span>
-                </a>
-              </div>
-            </motion.div> */}
+         
              {/* <motion.div 
              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -481,13 +465,13 @@ export default function CareerClient({
                 >
                   <div className="text-lg/[32px] font-normal text-[#6f6f6f]">
                     <div className="flex flex-row items-center text-start">
-                      <div className="mr-3.75 shrink-0">
+                      <div className="mr-3.75 shrink-0 relative w-20 h-22.75">
                         <Image
                           src={point.image}
                           alt={point.title}
-                          width={80}
-                          height={91}
-                          className="max-w-20 max-h-22.75"
+                          fill
+                          sizes="80px"
+                          className="object-contain"
                         />
                       </div>
                       <div className="flex flex-col">

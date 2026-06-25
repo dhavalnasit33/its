@@ -892,7 +892,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
   return (
     <>
       {/* SECTION 1: ABOUT US HERO */}
-      <Section className="relative w-full items-center justify-center gap-10 common_background_gradient bg-white z-1  md:!pb-44 ">
+      <Section className="relative w-full items-center justify-center gap-10 common_background_gradient bg-white z-1  md:pb-44! ">
         <div className="absolute inset-0 pointer-events-none">
           <Image
             src="/aboutus/banner-bg.png"
@@ -963,7 +963,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
        
       </Section>
        {/* <section className="relative z-10 -mb-40 bg-white z-1" > */}
-       <Section className="relative z-10 bg-white md:!pb-6 transition-[background,border,border-radius,box-shadow] duration-300 overflow-visible ">
+       <Section className="relative z-10 bg-white md:pb-6! transition-[background,border,border-radius,box-shadow] duration-300 overflow-visible ">
 	        <Row>
 						<motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -975,7 +975,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                 ease: "easeOut",
               }} 
               
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 max-[540px]:grid-cols-1 md:-mt-[170px] xl:-mt-[180px] !max-w-[750px] mx-auto">
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 max-[540px]:grid-cols-1 md:mt-[-170px] xl:mt-[-180px] max-w-[750px]! mx-auto">
 						{aboutUsData?.heroSection?.ratings.map((item, index) => (
               <div
                 key={index}
@@ -1076,12 +1076,12 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
 
 
         {/* reasons choose section */}
-        <Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+        <Section  className="bg-[#0d1b2a] z-10 py-6! ">
 				<Row>
 					<PlatformSlider />
 				</Row>
 			</Section>
-      <Section className="bg-gray-50 !py-14">
+      <Section className="bg-gray-50 py-14!">
 					 <Row className=" mx-auto ">
 					 	<StatsGrid  columns={4} bordered />
 					</Row>
@@ -1100,6 +1100,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                width={250}
                 height={250}
                 className="mb-8 "
+                
             />
             
              <motion.div
@@ -1140,7 +1141,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }} 
               className="h-full bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col justify-between
-              transition-all duration-300 hover:-translate-y-[10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
+              transition-all duration-300 hover:translate-y-[-10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
               <div>
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {/* <FiTarget className="w-7 h-7 text-blue-600" /> */}
@@ -1181,7 +1182,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                   Strategy
                 </span>
 
-                <span className="px-4 py-1 border-[#d68029] text-[#6f6f6f]  rounded-full border bg-[#d68029]  text-white flex gap-2 items-center">
+                <span className="px-4 py-1 border-[#d68029] rounded-full border bg-[#d68029]  text-white flex gap-2 items-center">
                   Launch
                   <Image 
                       src="/navbar/btn_icon.png"
@@ -1204,7 +1205,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                 className="grid md:grid-cols-2 gap-6">
 
               {/* Vision */}
-              <div className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 transition-all duration-300 hover:-translate-y-[10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)] ">
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 transition-all duration-300 hover:translate-y-[-10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)] ">
 
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {/* <FaEye className="w-7 h-7 text-indigo-600" /> */}
@@ -1230,7 +1231,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
 
               {/* Values */}
               <div
-                className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100 transition-all duration-300 hover:-translate-y-[10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
+                className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100 transition-all duration-300 hover:translate-y-[-10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {aboutUsData?.goals?.valuesImage && (
                       <Image
@@ -1387,7 +1388,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
 
 
           {/* flags slider section */}
-    <Section className="relative bg-white overflow-hidden py-16 lg:!pb-0">
+    <Section className="relative bg-white overflow-hidden py-16 lg:pb-0!">
       <style dangerouslySetInnerHTML={{ __html: marqueeStyles }} />
 
       <Row>
@@ -1409,8 +1410,8 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
       </Row>
 
       <div className="relative w-full overflow-hidden py-4">
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-linear-to-r from-white to-transparent z-20 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white to-transparent z-20 pointer-events-none" />
 
         <div className="animate-marquee-countries gap-8 px-4">
 
@@ -1421,7 +1422,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                 flex flex-col gap-2 items-center justify-center
                 h-36
                 w-[210px]
-                flex-shrink-0
+                shrink-0
                 rounded-[13px]
                 bg-white
                 shadow-[0px_4px_15px_rgba(0,0,0,0.08)]
@@ -1438,7 +1439,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                 alt={country.title}
                 width={130}
                 height={52}
-                className="rounded-sm object-cover"
+                className="rounded-sm object-cover" 
               />
             </div>
           ))}

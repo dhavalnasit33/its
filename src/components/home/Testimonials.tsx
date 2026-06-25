@@ -392,7 +392,7 @@ const TestimonialCard = ({
                     alt={testimonial.name}
                     width={isCenter ? 64 : 52}
                     height={isCenter ? 64 : 52}
-                    className={`rounded-full object-cover flex-shrink-0 ${isCenter ? "w-16 h-16" : "w-13 h-13"
+                    className={`rounded-full object-cover shrink-0 ${isCenter ? "w-16 h-16" : "w-13 h-13"
                         }`}
                 />
             ) : (

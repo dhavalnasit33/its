@@ -116,7 +116,7 @@ export default function Industries() {
         >
             <div
                 ref={titleRef}
-                className="text-center w-full sticky !pt-16 md:!pt-22 lg:!pt-25  "
+                className="text-center w-full sticky pt-16! md:pt-22! lg:pt-25!  "
                 style={{
                     top: `${NAVBAR_HEIGHT}px`,
                     zIndex: 999,
@@ -268,6 +268,7 @@ export default function Industries() {
                                                         width={34}
                                                         height={34}
                                                         className="object-contain"
+                                                        style={{}}
                                                     />
                                                 </div>
 

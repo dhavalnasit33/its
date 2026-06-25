@@ -407,7 +407,7 @@ export default function HireForm() {
                         borderRadius: 3,
                     }}
                 >
-                    <span className="absolute top-0 left-[-100%] w-[60%] h-full bg-[linear-gradient(90deg,transparent,hsla(0,0%,100%,0.2),transparent)] animate-shine "></span>
+                    <span className="absolute top-0 -left-full w-[60%] h-full bg-[linear-gradient(90deg,transparent,hsla(0,0%,100%,0.2),transparent)] animate-shine "></span>
                     {isSubmitting ? (
                         <CircularProgress size={24} color="inherit" />
                     ) : (

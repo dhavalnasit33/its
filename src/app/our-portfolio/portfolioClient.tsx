@@ -482,20 +482,6 @@ export default function PortfolioClient({
                             {!initialLoading && creativeWorkData.length > 0 && (
                                 <div className="flex flex-col items-center gap-4 mt-12">
                                     {hasMore && (
-                                        // <button
-                                        //     onClick={handleLoadMore}
-                                        //     disabled={loadingMore}
-                                        //     className="mt-2 inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-[#d68029] hover:bg-[#c07020] active:scale-95 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
-                                        // >
-                                        //     {loadingMore ? (
-                                        //         <>
-                                        //             <span className="inline-block w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                                        //             Loading...
-                                        //         </>
-                                        //     ) : (
-                                        //         "Load More"
-                                        //     )}
-                                        // </button>
                                         <button
                                             onClick={handleLoadMore}
                                             disabled={loadingMore}

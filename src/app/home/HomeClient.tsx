@@ -16,21 +16,14 @@ import "swiper/css/pagination";
 // import Testimonials from "@/components/home/Testimonials";
 // import EngagementModel from "@/components/home/EngagementModel";
 import Motion from "@/components/motionbar";
-// import WhyChooseITS from "@/components/home/WhyChooseITS";
-// import { getSeoData } from "@/lib/seoService";
-// import { Metadata } from "next";
+
 import { HomePageData, SingleResponse } from "@/types";
 import apiService from "@/lib/apiService";
-// import NotFoundPage from "@/components/NotFoundPage";
 import { notFound as nextNotFound } from "next/navigation";
 import Link from "next/link";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 
 // import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import RoundStatsCard from "@/components/home/RoundStatsCard";
-// import ParticlesBg from "@/components/home/Particles";
 import AutoTextSlider from "@/components/home/AutoTextSlider";
 import AiServices from "@/components/home/AiServices";
 import ParallaxShape from "@/components/home/ParallaxShape";
@@ -41,29 +34,7 @@ import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
 
-// const NextArrow = (props: any) => {
-// 	const { onClick } = props;
-// 	return (
-// 		<button
-// 			onClick={onClick}
-// 			className="absolute top-1/2 -right-12 z-10 h-10 w-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white text-gray-700 shadow-[0_0_16px_#D6802940] transition-colors duration-300 flex items-center justify-center hover:bg-[#d68029] hover:text-white"
-// 		>
-// 			<FaChevronRight />
-// 		</button>
-// 	);
-// };
 
-// const PrevArrow = (props: any) => {
-// 	const { onClick } = props;
-// 	return (
-// 		<button
-// 			onClick={onClick}
-// 			className="absolute top-1/2 -left-12 z-10 h-10 w-10 -translate-y-1/2 transform cursor-pointer rounded-full bg-white text-gray-700 shadow-[0_0_16px_#D6802940] transition-colors duration-300 flex items-center justify-center hover:bg-[#d68029] hover:text-white"
-// 		>
-// 			<FaChevronLeft />
-// 		</button>
-// 	);
-// };
 
 import dynamic from "next/dynamic";
 import ContactPopup from "@/components/ContactPopup";
@@ -85,7 +56,7 @@ const EngagementModel = dynamic(() => import("@/components/home/EngagementModel"
 
 
 export default function HomeClient({ initialData }: { initialData?: HomePageData }) {
-	const MotionImage = motion(Image);
+	const MotionImage = motion.create(Image);
 	const fadeInVariant = {
 		hidden: { opacity: 0, y: 40 },
 		visible: (i: number) => ({
@@ -321,8 +292,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				className="absolute left-0 top-50 hidden lg:flex -translate-x-10 h-118.75"
 			/>
 
-			<section className="w-full relative py-12 sm:py-25 lg:py-32 overflow-hidden z-10 !pb-20 ">
-				<div className="absolute inset-0 z-0 bg-gradient-to-r from-[#1a0f0f] via-[#0b0f1a] to-[#001a2e]" />
+			<section className="w-full relative py-12 sm:py-25 lg:py-32 overflow-hidden z-10 pb-20! ">
+				<div className="absolute inset-0 z-0 bg-linear-to-r from-[#1a0f0f] via-[#0b0f1a] to-[#001a2e]" />
 
 				<div className="absolute inset-0 z-1">
 					{!isMobile && <ParticlesBg />}
@@ -402,7 +373,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								href="#contact-form-section"
 								className=" w-full sm:flex-1 bg-white
 									text-[#0d1b2a] text-sm md:text-base font-semibold uppercase text-center max-sm:mb-3 leading-5 py-3 px-8 md:px-16 max-[640px]:rounded-lg sm:rounded-l-xl  transition-all
-									duration-300  hover:bg-gradient-to-r hover:from-[#20548b] hover:to-[#0d1b2a] hover:text-white "
+									duration-300  hover:bg-linear-to-r hover:from-[#20548b] hover:to-[#0d1b2a] hover:text-white "
 								>
 									Request a Callback
 								</Link>
@@ -416,8 +387,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 								<Link
 								href="#contact-form-section"
-								className=" w-full sm:flex-1 bg-gradient-to-r from-[#d68029] to-[#f7b733] text-[#0d1b2a] text-sm md:text-base font-semibold uppercase text-center leading-5
-									py-3 px-8 md:px-16 max-[640px]:rounded-lg sm:rounded-r-xl  transition-all duration-300   hover:bg-gradient-to-r hover:from-[#0d1b2a] hover:to-[#20548b] hover:text-white"
+								className=" w-full sm:flex-1 bg-linear-to-r from-[#d68029] to-[#f7b733] text-[#0d1b2a] text-sm md:text-base font-semibold uppercase text-center leading-5
+									py-3 px-8 md:px-16 max-[640px]:rounded-lg sm:rounded-r-xl  transition-all duration-300   hover:bg-linear-to-r hover:from-[#0d1b2a] hover:to-[#20548b] hover:text-white"
 								>
 									Schedule Free Consultation
 								</Link>
@@ -429,7 +400,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</motion.div>
 
 					 <div className="max-w-[500px] lg:max-w-[840px] mx-auto px-4">
-						<div className="h-[1px] bg-[rgba(255,255,255,0.1)] mt-16 md:mt-21 mb-10"></div>
+						<div className="h-px bg-[rgba(255,255,255,0.1)] mt-16 md:mt-21 mb-10"></div>
 						<div className="grid grid-cols-2 lg:grid-cols-4 max-lg:gap-4">
 						{statsData.map((item, index) => {
 							const Icon = item.icon;
@@ -439,7 +410,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								className="relative flex flex-col items-center text-center px-4 max-lg:py-5 max-lg:bg-[rgba(255,255,255,0.04)] max-lg:rounded-lg"
 							>
 								{index !== statsData.length - 1 && (
-									<div className=" hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-24 bg-gradient-to-b from-transparent via-[#D68029] to-transparent " />
+									<div className=" hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-24 bg-linear-to-b from-transparent via-[#D68029] to-transparent " />
 								)}
 								<Icon
 									size={34}
@@ -488,10 +459,10 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				</Row>
 				{/* </div> */}
 
-				<div className="absolute bottom-0 left-0 right-0 h-[150px] bg-[linear-gradient(0deg,#030b1a_0,transparent)] pointer-events-none z-[10]" />
+				<div className="absolute bottom-0 left-0 right-0 h-[150px] bg-[linear-gradient(0deg,#030b1a_0,transparent)] pointer-events-none z-10" />
 			</section>
 
-			<Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+			<Section  className="bg-[#0d1b2a] z-10 py-6! ">
 				<Row>
 					{/* {navStructure && (
 						<PlatformSlider navStructure={navStructure} />
@@ -500,7 +471,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				</Row>
 			</Section>
 
-			<Section className="bg-gray-50 !py-14">
+			<Section className="bg-gray-50 py-14!">
 					 <Row className=" mx-auto ">
 						{/* <motion.div className="grid grid-cols-2 md:grid-cols-4  justify-center max-md:gap-y-6 " >
 						{
@@ -524,73 +495,6 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					 <StatsGrid  columns={4} bordered />
 					</Row>
 			</Section>
-{/* 
-			<Section className=" overflow-hidden text-white ">
-				<video
-					autoPlay
-					loop
-					muted
-					playsInline
-					preload="metadata"
-					className="absolute top-0 left-0 w-full h-full object-cover"
-				>
-					<source src="/hire/hire_bg.mp4" type="video/mp4" />
-				</video>
-				<div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-900/60 to-slate-800/75 pointer-events-none"></div>
-
-				<Row className="container  flex flex-col lg:flex-row gap-8 lg:gap-14 items-stretch  pb-10 md:pb-20 z-10 2xl:!max-w-7xl">
-					<div className="lg:w-2/5 flex flex-col">
-						<div className="flex">
-							<span className="inline-flex items-center rounded-full border border-white bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-200 mb-4">
-								{homePageData?.aisection?.subtitle}
-							</span>
-						</div>
-						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-4 "
-							dangerouslySetInnerHTML={{ __html: formattedTitle?.replace(/<\/?h[1-6][^>]*>/gi, "") }}
-						/>
-						<p className="fonts_16 text-slate-300  sm:mb-6 mb-3"
-							dangerouslySetInnerHTML={{
-								__html: homePageData?.aisection?.description || "",
-							}}
-						/>
-						<motion.div
-							initial={{ opacity: 0, scale: 0.8 }}
-							whileInView={{ opacity: 1, scale: 1 }}
-							whileHover={{ y: -2 }}
-							transition={{ duration: 0.1, ease: "easeOut" }}
-						>
-							<a href="/#contact-form-section" className="primary_button  group inline-block overflow-hidden">
-								<span className="absolute top-0 left-[-100%] w-[60%] h-full bg-[linear-gradient(90deg,transparent,hsla(0,0%,100%,0.2),transparent)] animate-shine" />
-								Explore AI Services
-							</a>
-						</motion.div>
-					</div>
-
-					<div className="lg:w-3/5 grid sm:grid-cols-2 gap-3 sm:gap-5">
-					
-						{homePageData?.aisection?.deatailBox?.map((item, idx) => (
-							<div key={idx}
-								className="relative group rounded-xl overflow-hidden h-full">
-								<span
-									className="absolute -top-5 -right-5 h-32 w-32  blur-2xl z-10"
-									style={{
-										background: `radial-gradient(circle, ${glowColors[idx % glowColors.length]}, transparent 70%)`,
-									}}
-								/>
-								<div className="h-full">
-								<AiServices
-									title={item.title}
-									heading={item.heading}
-									description={item.description}
-									glowColor={glowColors[idx % glowColors.length]}
-								/>
-								</div>
-							</div>
-						))}
-					
-					</div>
-					</Row>
-			</Section> */}
 
 			<Section id="ai-service" className="bg-white z-10 scroll-mt-10">
 				<Row>
@@ -645,7 +549,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						}}
 					>
 						{homePageData?.aisection?.deatailBox?.map((item, idx) => (
-						<SwiperSlide key={idx} className="!h-auto flex ">
+						<SwiperSlide key={idx} className="h-auto! flex ">
 							<div className="relative group rounded-xl overflow-hidden h-full w-full flex">
 
 							{/* glow background */}
@@ -670,55 +574,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				</Row>
 			</Section>
 
-
-
-
-
-			{/* <section className="w-full relative max-w-[90%] lg:max-w-[80%] mx-auto px-6 md:px-8 lg:px-10 pb-20 text-center">
-				<motion.h2
-					className="text-2xl md:text-3xl font-bold mb-4"
-					initial={{ opacity: 0, y: -40 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.9, ease: "easeOut" }}
-					viewport={{ once: true, amount: 0.3 }}
-				>
-					<div
-						className="    rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "
-						dangerouslySetInnerHTML={{ __html: homePageData.reasonsToChoose.mainTitle }}
-					/>
-				</motion.h2>
-
-				<Motion />
-
-				<motion.div
-					className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
-					initial={{ opacity: 0, scale: 0.9, y: 50 }}
-					whileInView={{ opacity: 1, scale: 1, y: 0 }}
-					transition={{ duration: 0.5, ease: "easeOut" }}
-					viewport={{ once: true, amount: 0.3 }}
-				>
-					{
-						homePageData.reasonsToChoose.deatailBox.length > 0 &&
-						homePageData.reasonsToChoose.deatailBox.map((item, idx) => (
-							<div
-								key={idx}
-								className="relative group rounded-xl overflow-hidden p-6 bg-white shadow-[0_0_16.9px_0_rgba(102,102,102,0.25)]"
-							>
-								<div
-									className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300"
-									style={{
-										background: `radial-gradient(circle, ${glowColors[idx % glowColors.length]}, transparent 70%)`,
-									}}
-								/>
-								<StatsCard
-									value={item.total}
-									label={item.title}
-									// icon={item.image}
-								/>
-							</div>
-				</motion.div>
-			</section> */}
-			<Section className="lg:!pb-0  bg-white">
+			<Section className="lg:pb-0!  bg-white">
 				{/* <CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" /> */}
 				{/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto   grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"> */}
 				<Row className=" grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -930,23 +786,4 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	);
 }
 
-// type FeatureCardProps = {
-// 	icon: React.ReactNode;
-// 	title: string;
-// 	desc: string;
-// };
 
-// function FeatureCard({ icon, title, desc }: FeatureCardProps) {
-// 	return (
-// 		<div className="group relative rounded-2xl    border border-gray-200 bg-white p-6 m-4 md:m-0 shadow-sm transition-shadow hover:shadow-lg">
-// 			<div className="absolute right-3 top-3 flex gap-1 opacity-60">
-// 				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-// 				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-// 				<span className="h-1.5 w-1.5 rounded-full bg-gray-300" />
-// 			</div>
-// 			<div className="mb-3">{icon}</div>
-// 			<h3 className="text-base font-semibold mb-2">{title}</h3>
-// 			<p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
-// 		</div>
-// 	);
-// }

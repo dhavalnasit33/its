@@ -98,7 +98,7 @@ export default async function RootLayout({
   const { scripts, noscripts } = parseGoogleTags(yoastSeo?.googletags || "");
 
   return (
-    <html lang="en" className={exo2.className}>
+    <html lang="en" className={exo2.className} suppressHydrationWarning>
       <head>
         {/* <link rel="canonical" href="https://inspiretechnosolution.com/" /> */}
         <meta name="robots" content="index, follow" />
@@ -271,7 +271,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ScrollToTop />
         {noscripts.map((htmlContent, index) => (
           <noscript

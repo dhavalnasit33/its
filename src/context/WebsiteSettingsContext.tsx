@@ -170,7 +170,7 @@ export function WebsiteSettingsProvider({
   const termsSlug = termsLink?.slug || "terms-condition";
   const portfolioSlug = portfolioLink?.slug || "our-portfolio";
   const hireSlug = hireLink?.slug || "hire";
-console.log("NAV STRUCTURE:", navStructure);
+  // console.log("NAV STRUCTURE:", navStructure);
   return (
     <WebsiteSettingsContext.Provider
       value={{

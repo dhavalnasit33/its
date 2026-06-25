@@ -103,13 +103,14 @@ export default function RelatedBlogs({
               className="flex flex-col overflow-hidden items-center justify-center rounded-md bg-white shadow-[0_0_12.2px_0_rgba(0,0,0,0.25)] scale-3d shadow-gray-200 transition-all duration-750 ease-in-out hover:scale-90 border border-gray-200"
             >
               {relatedBlog.image ? (
-                <Image
-                  src={relatedBlog.image}
-                  alt={relatedBlog.details.title}
+                  <Image
+                    src={relatedBlog.image}
+                    alt={relatedBlog.details.title}
                   width={400}
                   height={240}
-                  className="w-full h-60 object-fill"
-                />
+                  // className="w-full h-60 object-fill"
+                    className="w-full h-auto object-cover"
+                  />
               ) : (
                 <div className="w-full h-60 bg-gray-100 flex items-center justify-center">
                   <span className="text-gray-400">No Image Available</span>

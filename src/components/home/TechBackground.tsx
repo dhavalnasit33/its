@@ -171,8 +171,8 @@ export default function TechBackground() {
     <div ref={containerRef} className="absolute inset-0 w-full h-full overflow-hidden select-none pointer-events-auto bg-[#12203D] z-0">
 
       {/* Ambient static lighting for depth */}
-      <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-[#0EA5E9]/10 blur-[130px] pointer-events-none mix-blend-screen" />
-      <div className="absolute -bottom-[10%] -right-[10%] w-[50%] h-[50%] rounded-full bg-[#D68029]/10 blur-[130px] pointer-events-none mix-blend-screen" />
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#0EA5E9]/10 blur-[130px] pointer-events-none mix-blend-screen" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#D68029]/10 blur-[130px] pointer-events-none mix-blend-screen" />
 
       {/* Fixed: Canvas is now z-0 instead of z-10 */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0 opacity-80" />
