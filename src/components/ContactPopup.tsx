@@ -437,43 +437,84 @@
 //   );
 // }
 
-
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import ReCAPTCHA from "react-google-recaptcha";
-import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
+
 import apiService from "@/lib/apiService";
 import { useToast } from "./ui/snackbar-provider";
+
+function getCurrentUserId(): string | null {
+  try {
+    const stored = localStorage.getItem("user");
+    if (!stored) return null;
+    const parsed = JSON.parse(stored);
+    return parsed?._id || parsed?.id || null;
+  } catch {
+    return null;
+  }
+}
 
 
 export default function ContactPopup() {
   const { toast } = useToast();
 
-  const [showPopup, setShowPopup] = useState(false);
-   const [selectedBudget, setSelectedBudget] = useState<string>("");
-   const REOPEN_TIME = 60 * 60 * 1000; 
-// const REOPEN_TIME = 30 * 1000; // 1 minute
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedBudget, setSelectedBudget] = useState<string>("");
+  const REOPEN_TIME = 30 * 1000; // 1 hour
+  
+  const budgetOptions = [
+    "UP TO $10K",
+    "$10-$20K",
+    "$20-$50K",
+    "$50-$100K",
+    "$100K +",
+];
 
-// useEffect(() => {
-//   const isClosed = localStorage.getItem("contactPopupClosed");
-//   if (isClosed === "true") return;
+  const [formData, setFormData] = useState({
+  firstname: "",
+  lastname: "",
+  email: "",
+  phone: "",
+  subject: "",
+  message: "",
+});
 
-//   const timer = setTimeout(() => {
-//     setIsOpen(true);
-//   }, 45000);
+  // useEffect(() => {
+  //   let timer: NodeJS.Timeout;
+    
+  //   const handlePopup = () => {
+  //     const closedAt = localStorage.getItem("contactPopupClosedAt");
 
-//   return () => clearTimeout(timer);
-// }, []);
+  //     // Case 1: never closed
+  //     if (!closedAt) {
+  //       timer = setTimeout(() => 
+  //         setIsOpen(true), 3000);
+  //       return;
+  //     }
 
-// const closePopup = () => {
-//   setIsOpen(false);
+  //     const diff = Date.now() - Number(closedAt);
 
-//   // ✅ permanently stop future popup
-//   localStorage.setItem("contactPopupClosed", "true");
-// };
+  //     // Case 2: cooldown finished
+  //     if (diff >= REOPEN_TIME) {
+  //       timer = setTimeout(() => 
+  //         setIsOpen(true), 3000);
+
+  //       return;
+  //     }
+
+  //     // Case 3: still in cooldown → wait remaining time
+  //     const remaining = REOPEN_TIME - diff;
+
+  //      timer = setTimeout(() => 
+  //       setIsOpen(true), remaining);
+  //   };
+  
+  //   handlePopup();
+
+  //   return () => clearTimeout(timer);
+  // }, [isOpen]); // 🔥 IMPORTANT CHANGE
   
 useEffect(() => {
   const popupStatus = localStorage.getItem("contactPopup");
@@ -492,16 +533,16 @@ useEffect(() => {
       const remainingTime = REOPEN_TIME - diff;
 
       const timer = setTimeout(() => {
-        setShowPopup(true);
-      }, remainingTime);
+        setIsOpen(true);
+      }, remainingTime);  
 
       return () => clearTimeout(timer);
     }
   }
 
   const timer = setTimeout(() => {
-    setShowPopup(true);
-  }, 45000);
+    setIsOpen(true);
+  }, 2000);
 
   return () => clearTimeout(timer);
 }, []);
@@ -514,24 +555,14 @@ useEffect(() => {
     Date.now().toString()
   );
 
-  setShowPopup(false);
+  setIsOpen(false);
 
   setTimeout(() => {
     localStorage.removeItem("contactPopup");
     localStorage.removeItem("contactPopupClosedAt");
-    setShowPopup(true);
+    setIsOpen(true);
   }, REOPEN_TIME);
 };
-
-
-const [formData, setFormData] = useState({
-  firstname: "",
-  lastname: "",
-  email: "",
-  phone: "",
-  subject: "",
-  message: "",
-});
 
 const handleChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -544,11 +575,10 @@ const handleChange = (
 const handleBudgetSelect = (budget: string) => {
   setSelectedBudget(budget);
 };
-     
-
 
 const onSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
+  // const userId = getCurrentUserId();
 
   const payload = {
     type: "PopupForm",
@@ -565,7 +595,7 @@ const onSubmit = async (e: React.FormEvent) => {
     message: formData.message,
 
     budget: selectedBudget,
-    // captchaToken,
+    // userId,
   };
 
   console.log("Payload:", payload);
@@ -599,7 +629,7 @@ const onSubmit = async (e: React.FormEvent) => {
       setSelectedBudget("");
       
       localStorage.setItem("contactPopup", "submitted");
-      setShowPopup(false);
+      setIsOpen(false);
 
     }
   } catch (error: any) {
@@ -612,17 +642,7 @@ const onSubmit = async (e: React.FormEvent) => {
   }
 };
 
-
-if (!showPopup) return null;
-
-
-const budgetOptions = [
-    "UP TO $10K",
-    "$10-$20K",
-    "$20-$50K",
-    "$50-$100K",
-    "$100K +",
-];
+if (!isOpen) return null;
 
   
   return (
@@ -639,25 +659,8 @@ const budgetOptions = [
           {/* Close Button */}
           <button
             onClick={closePopup}
-            className="
-              absolute
-              top-4
-              right-4
-              z-20
-              w-10
-              h-10
-              rounded-full
-              bg-white
-              shadow-md
-              flex
-              font-bold
-              text-[#D68029]
-              items-center
-              justify-center
-              text-xl
-              hover:bg-gray-100
-              cursor-pointer
-            "
+            className=" absolute top-4 right-4 z-20  w-10 h-10 rounded-full  bg-white shadow-md flex font-bold text-[#D68029] items-center
+              justify-center text-xl hover:bg-gray-100 cursor-pointer "
           >
             ✕
           </button>
@@ -789,6 +792,20 @@ const budgetOptions = [
                           ))}
                       </div>
                   </div>
+
+
+                  {/* <div className="my-4 flex justify-start"> 
+                      <div className="scale-75 sm:scale-100 origin-left">
+                        <ReCAPTCHA
+                          ref={recaptchaRef}
+                          sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
+                          onChange={(token) => {
+                            console.log("CAPTCHA TOKEN:", token);
+                            setCaptchaToken(token || "");
+                          }}
+                        />
+                      </div>
+                  </div> */}
 
                   <button
                       type="submit"

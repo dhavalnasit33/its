@@ -30,8 +30,11 @@
 import Row from "./Row";
 import Section from "./Section";
 import SafeEmail from "./SafeEmail";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 export default function UnderConstructionPage() {
+  const { hrEmail, solutionEmail, salesEmail, contactEmail, phonePrimary, phonePrimaryClean } =
+      useWebsiteSettings();
   return (
     <Section className="xl:h-screen relative flex items-center justify-center  bg-[#0B1622] text-center ">
 
@@ -61,8 +64,11 @@ export default function UnderConstructionPage() {
           70% completed
         </p>
 
-        <div className=" inline-flex mt-4 border border-gray-300 hover:bg-[#ffffff] hover:border-transparent rounded-md p-4">
-          <SafeEmail email="hr@inspiretechnosolution.com" className="text-white hover:text-[#0B1622]" />
+        <div className=" inline-flex mt-4 border border-gray-300 hover:bg-[#ffffff]  hover:border-transparent rounded-md p-4 cursor-pointer">
+          {/* <SafeEmail email="hr@inspiretechnosolution.com" className="text-white hover:text-[#0B1622]" /> */}
+           <h4 className="text-white hover:text-[#0B1622]">
+              {hrEmail}
+            </h4>
         </div>
       </Row>
     </Section>
