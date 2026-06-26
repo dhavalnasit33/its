@@ -405,12 +405,12 @@ const TestimonialCard = ({
                 </div>
             )}
             <div >
-                <h4
+                <h3
                     className={`font-semibold text-gray-900 ${isCenter ? "text-lg" : "text-base"
                         }`}
                 >
                     {testimonial.name}
-                </h4>
+                </h3>
                 <span className="text-sm text-gray-500">{testimonial.location}</span>
             </div>
         </div>

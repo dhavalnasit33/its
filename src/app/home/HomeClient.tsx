@@ -2,19 +2,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-// import TechnologySection from "@/components/home/TechnologySection";
-// import WebProcess from "@/components/home/WebProcess";
-// import Industries from "@/components/home/Industries";
-// import WorldProjects from "@/components/home/WorldProjects";
-// import Reviews from "@/components/home/Reviews";
-// import Testimonials from "@/components/home/Testimonials";
-// import EngagementModel from "@/components/home/EngagementModel";
 import Motion from "@/components/motionbar";
 
 import { HomePageData, SingleResponse } from "@/types";
@@ -23,11 +10,11 @@ import { notFound as nextNotFound } from "next/navigation";
 import Link from "next/link";
 
 // import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import RoundStatsCard from "@/components/home/RoundStatsCard";
+// import RoundStatsCard from "@/components/home/RoundStatsCard";
 import AutoTextSlider from "@/components/home/AutoTextSlider";
-import AiServices from "@/components/home/AiServices";
+// import AiServices from "@/components/home/AiServices";
 import ParallaxShape from "@/components/home/ParallaxShape";
-import CurveDivider from "@/components/home/CurveDivider";
+// import CurveDivider from "@/components/home/CurveDivider";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import { useParams } from "next/navigation";
 import Section from "@/components/Section";
@@ -37,10 +24,10 @@ import Button from "@/components/Button";
 
 
 import dynamic from "next/dynamic";
-import ContactPopup from "@/components/ContactPopup";
+// import ContactPopup from "@/components/ContactPopup";
 import { FiClock, FiHeart, FiShield, FiUsers } from "react-icons/fi";
 import PlatformSlider from "@/components/home/PlatformSlider";
-import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
+// import { getNavigationStructure, NavigationStructure } from "@/lib/navigationService";
 import { FaChartLine, FaLongArrowAltRight, FaRobot } from "react-icons/fa";
 import UnderConstructionPage from "@/components/UnderConstruction";
 import StatsGrid from "@/components/home/RoundStatsCard";
@@ -53,6 +40,7 @@ const Industries = dynamic(() => import("@/components/home/Industries"), { ssr: 
 const Reviews = dynamic(() => import("@/components/home/Reviews"), { ssr: false });
 const Testimonials = dynamic(() => import("@/components/home/Testimonials"), { ssr: false });
 const EngagementModel = dynamic(() => import("@/components/home/EngagementModel"), { ssr: false });
+const AiServicesSlider = dynamic(() => import("@/components/home/AiServicesSlider"), { ssr: false });
 
 
 export default function HomeClient({ initialData }: { initialData?: HomePageData }) {
@@ -327,7 +315,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						className="text-center"
 						initial={{ y: -300, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.5, ease: "easeOut" }}
+						transition={{ duration: 0.3, ease: "easeOut" }}
 					>
 						<h1
 								className="rose text-[clamp(26px,5vw,64px)] text-white  font-normal tracking-[-0.03em] leading-[1.08] opacity-[0.92]  "
@@ -417,9 +405,9 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 									className="text-[#ff7a1a]/80 mb-3"
 								/>
 
-								<h3 className="text-white opacity-90 font-bold text-sm">
+								<p className="text-white opacity-90 font-bold text-sm">
 									{item.title}
-								</h3>
+								</p>
 
 								<p className="text-white opacity-70 mt-2 font-medium text-xs">
 									{item.description}
@@ -532,45 +520,10 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</div>
 				</Row>
 				<Row className="p-1 py-2">
-					<Swiper
-						modules={[Autoplay, Navigation, Pagination]}
-						spaceBetween={24}
-						slidesPerView={1}
-						loop={true}
-						speed={1000}
-						autoplay={{
-						delay: 1500,
-						disableOnInteraction: false,
-						}}
-						breakpoints={{
-						640: { slidesPerView: 1 },
-						768: { slidesPerView: 2 },
-						1024: { slidesPerView: 3 },
-						}}
-					>
-						{homePageData?.aisection?.deatailBox?.map((item, idx) => (
-						<SwiperSlide key={idx} className="h-auto! flex ">
-							<div className="relative group rounded-xl overflow-hidden h-full w-full flex">
-
-							{/* glow background */}
-							<span
-								className="absolute -top-5 -right-5 h-32 w-32 blur-2xl z-10"
-								style={{
-								background: `radial-gradient(circle, ${glowColors[idx % glowColors.length]}, transparent 70%)`,
-								}}
-							/>
-
-							<AiServices
-								title={item.title}
-								heading={item.heading}
-								description={item.description}
-								glowColor={glowColors[idx % glowColors.length]}
-							/>
-
-							</div>
-						</SwiperSlide>
-						))}
-					</Swiper>
+					<AiServicesSlider
+						deatailBox={homePageData?.aisection?.deatailBox}
+						glowColors={glowColors}
+					/>
 				</Row>
 			</Section>
 
@@ -615,7 +568,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</div>
 
 					<div className="w-full relative z-20 ">
-						<h6 className="text-gray-500 uppercase text-sm font-semibold mb-2 flex items-center gap-2">
+						<p className="text-gray-500 uppercase text-sm font-semibold mb-2 flex items-center gap-2">
 							<svg
 								className="w-4 h-4"
 								fill="none"
@@ -630,7 +583,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								/>
 							</svg>
 							{homePageData?.aboutOurCompany?.subtitle}
-						</h6>
+						</p>
 						{/* <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-snug"> */}
 							<h2
 								className="common-h2-small mb-4 leading-snug rose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline [&_a]:cursor-pointer  "

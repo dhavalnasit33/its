@@ -273,9 +273,9 @@ export default function Industries() {
                                                 </div>
 
                                                 <div>
-                                                    <h4 className="text-sm sm:text-[15px] font-semibold text-white leading-snug mb-1">
+                                                    <h3 className="text-sm sm:text-[15px] font-semibold text-white leading-snug mb-1">
                                                         {industry.title}
-                                                    </h4>
+                                                    </h3>
                                                     <p
                                                         className="text-sm leading-relaxed text-[#cccccc]"
                                                         style={{

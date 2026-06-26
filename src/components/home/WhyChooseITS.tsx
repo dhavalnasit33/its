@@ -76,7 +76,7 @@ export default function WhyChooseITS() {
                       className="w-auto h-auto mb-4"
 
                     />
-                    <h4 className="text-lg font-bold mb-2">{item.title}</h4>
+                    <h3 className="text-lg font-bold mb-2">{item.title}</h3>
                     <p className="text-gray-600 fonts_16"
                       dangerouslySetInnerHTML={{
                         __html: item?.description || "",

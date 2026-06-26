@@ -185,7 +185,7 @@ export default function EngagementModels() {
                         className="object-contain filter brightness-0 invert"
                       />
                     </div>
-                    <h4 className="text-xl font-bold ">{model.modelTitle}</h4>
+                    <h3 className="text-xl font-bold ">{model.modelTitle}</h3>
                   </div>
 
 

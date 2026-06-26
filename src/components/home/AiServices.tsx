@@ -130,12 +130,12 @@ export default function AiServices({ title, heading, description, glowColor }: A
           {title}
         </p>
 
-        <h4 className="text-[24px] sm:text-[36px] font-bold mb-2  group-hover:text-emerald-200 transition-colors leading-tight "
+        <h3 className="text-[24px] sm:text-[36px] font-bold mb-2  group-hover:text-emerald-200 transition-colors leading-tight "
           style={{
             color: isHover ? textColor : "#000000",
           }}>
           {heading}
-        </h4>
+        </h3>
         <p className="fonts_16 text-gray-600 mb-6 group-hover:opacity-50 transition-opacity duration-500 "
           dangerouslySetInnerHTML={{ __html: description || "", }}/>
           {/* {description}</p> */}

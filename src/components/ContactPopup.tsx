@@ -556,17 +556,15 @@ useEffect(() => {
     const userId = getCurrentUserId();
 
     try {
-      // 1. Check logged-in user in DB
-      if (userId) {
-        const res = await apiService<{
-          success: boolean;
-          submitted: boolean;
-        }>(`/enquiries/popup-status/${userId}`);
+      // 1. Check logged-in user or guest IP in DB
+      const res = await apiService<{
+        success: boolean;
+        submitted: boolean;
+      }>(`/enquiries/popup-status/${userId || "guest"}`);
 
-        if (res.submitted) {
-          setIsOpen(false);
-          return; // STOP popup completely
-        }
+      if (res && res.submitted) {
+        setIsOpen(false);
+        return; // STOP popup completely
       }
 
       // 2. Check localStorage for guest
@@ -596,6 +594,12 @@ useEffect(() => {
 
     } catch (error) {
       console.error("Popup API failed:", error);
+
+      // fallback check localStorage
+      if (localStorage.getItem("contactPopup") === "submitted") {
+        setIsOpen(false);
+        return;
+      }
 
       // fallback open
       timer = setTimeout(() => {

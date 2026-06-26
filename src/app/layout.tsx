@@ -12,6 +12,7 @@ const exo2 = Exo_2({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-exo2",
+  display: "swap",
 });
 
 // const inter = Inter({

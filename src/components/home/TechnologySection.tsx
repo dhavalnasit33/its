@@ -109,7 +109,7 @@ export default function TechnologyTabs() {
                       className="object-contain"
                     />
                   </div>
-                  <h4 className="text-base font-medium text-slate-200 ">{tech.label}</h4>
+                  <p className="text-base font-medium text-slate-200 ">{tech.label}</p>
                 </div>
               ))}
             </div>
