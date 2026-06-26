@@ -54,7 +54,6 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
             recruitment,
             source,
             captchaToken,
-             userId,
         } = req.body;
 
         // Basic Validation
@@ -85,8 +84,27 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
         }
 
         const fileUrl = req.file ? path.join("uploads/enquiries", req.file.filename) : null;
+        if (type === "PopupForm") {
+            let alreadySubmitted = null;
 
+            if (req.body.user) {
+                // Logged in user
+                alreadySubmitted = await Enquiry.findOne({
+                    user: req.body.user,
+                    type: "PopupForm",
+                });
+            }
+
+            if (alreadySubmitted) {
+                return res.json({
+                    success: true,
+                    submitted: true,
+                    message: "Already submitted.",
+                });
+            }
+        }
         const newEnquiry = new Enquiry({
+            user:req.body.user,
             type,
             name: finalName || "Anonymous",
             firstname,
@@ -110,14 +128,6 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
 
         const savedEnquiry = await newEnquiry.save();
 
-        if(source==="popup_form" && userId){
-            await User.findByIdAndUpdate(
-                userId,
-                {
-                    popupSubmitted:true
-                }
-            );
-        }
         // Populate position if Career
         let populatedEnquiry = savedEnquiry;
         if (type === "Career" && savedEnquiry.positionApplied) {
@@ -177,35 +187,22 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
     }
 });
 
-router.get("/popup-status/:userId", async(req,res)=>{
-  try{
-
-    const { userId } = req.params;
-
-    const user = await User.findById(userId)
-      .select("popupSubmitted");
-
-    if(!user){
-      return res.json({
-        success:true,
-        showPopup:true
-      });
-    }
-
-    return res.json({
-      success:true,
-      showPopup: !user.popupSubmitted
+router.get("/popup-status/:userId", async (req, res) => {
+  try {
+    const enquiry = await Enquiry.findOne({
+      user: req.params.userId,
+      type: "PopupForm",
     });
 
-  }catch(error){
-
-    console.log(error);
-
+    res.json({
+      success: true,
+      submitted: !!enquiry,
+    });
+  } catch (error) {
     res.status(500).json({
-      success:false,
-      message:"Server Error"
+      success: false,
+      submitted: false,
     });
-
   }
 });
 
