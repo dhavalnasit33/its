@@ -103,7 +103,7 @@ export const blogSchema = z.object({
     answerOrDetails: z.string().min(5, "Answer/Details required"),
   }),
   seo_title: z.string().optional(),
-  meta_description: z.string().max(500, "Meta description is too long").optional(),
+  meta_description: z.string().optional(),
   seo_keyphrase: z.string().optional(),
   cover_image: z.string().url("Must be a valid URL").optional().or(z.literal("")),
 });
@@ -829,10 +829,7 @@ export const SeoManagerSchema = z.object({
   slug: z.string().min(2, "Slug must be at least 2 characters"),
   seo_keyphrase: z.string().optional(),
   seo_title: z.string().optional(),
-  meta_description: z
-    .string()
-    .max(500, "Meta description must be less than 160 characters")
-    .optional(),
+  meta_description: z.string().optional(),
   cover_image: z
     .string()
     .url("Valid image URL required")

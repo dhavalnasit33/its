@@ -140,13 +140,12 @@ export default function YoastSEOForm({
                       <FormControl>
                         <Input
                           placeholder="e.g. inspire techno solution, best web developers"
-                          maxLength={50}
                           {...field}
                         />
                       </FormControl>
-                      <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
-                        {watchedKeyphrase?.length || 0} / 50
-                      </div>
+                      {/* <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
+                        {watchedKeyphrase?.length || 0} characters
+                      </div> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -166,13 +165,12 @@ export default function YoastSEOForm({
                       <FormControl>
                         <Input
                           placeholder="e.g. Inspire Techno Solution | Leading Software Development Company"
-                          maxLength={100}
                           {...field}
                         />
                       </FormControl>
-                      <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
-                        {watchedTitle?.length || 0} / 100
-                      </div>
+                      {/* <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
+                        {watchedTitle?.length || 0} characters
+                      </div> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -191,15 +189,14 @@ export default function YoastSEOForm({
                       </div>
                       <FormControl>
                         <Textarea
-                          placeholder="Provide a compelling meta description to increase click-through rate (ideal: 120-160 characters)"
+                          placeholder="Provide a compelling meta description to increase click-through rate"
                           rows={3}
-                          maxLength={160}
                           {...field}
                         />
                       </FormControl>
-                      <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
-                        {watchedMetaDesc?.length || 0} / 160
-                      </div>
+                      {/* <div className="flex justify-end text-xs text-slate-500 mt-1 select-none font-mono">
+                        {watchedMetaDesc?.length || 0} characters
+                      </div> */}
                       <FormMessage />
                     </FormItem>
                   )}
