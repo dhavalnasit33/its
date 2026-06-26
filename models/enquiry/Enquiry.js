@@ -98,6 +98,10 @@ const EnquirySchema = new mongoose.Schema(
             type: String,
             default: null,
         },
+        ip: {
+            type: String,
+            default: null,
+        },
 
         // Admin Metadata
         status: {

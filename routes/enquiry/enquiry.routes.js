@@ -84,6 +84,8 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
         }
 
         const fileUrl = req.file ? path.join("uploads/enquiries", req.file.filename) : null;
+        const clientIp = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.socket.remoteAddress || req.ip;
+
         if (type === "PopupForm") {
             let alreadySubmitted = null;
 
@@ -91,6 +93,12 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
                 // Logged in user
                 alreadySubmitted = await Enquiry.findOne({
                     user: req.body.user,
+                    type: "PopupForm",
+                });
+            } else {
+                // Guest user (by IP)
+                alreadySubmitted = await Enquiry.findOne({
+                    ip: clientIp,
                     type: "PopupForm",
                 });
             }
@@ -124,6 +132,7 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
             recruitment,
             source: source || "footer_form",
             fileUrl,
+            ip: clientIp,
         });
 
         const savedEnquiry = await newEnquiry.save();
@@ -189,10 +198,18 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
 
 router.get("/popup-status/:userId", async (req, res) => {
   try {
-    const enquiry = await Enquiry.findOne({
-      user: req.params.userId,
-      type: "PopupForm",
-    });
+    const { userId } = req.params;
+    const clientIp = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.socket.remoteAddress || req.ip;
+
+    let query = { type: "PopupForm" };
+
+    if (userId && userId !== "guest" && userId !== "null" && userId !== "undefined") {
+      query.user = userId;
+    } else {
+      query.ip = clientIp;
+    }
+
+    const enquiry = await Enquiry.findOne(query);
 
     res.json({
       success: true,

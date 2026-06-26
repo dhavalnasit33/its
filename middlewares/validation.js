@@ -26,29 +26,19 @@ exports.validationWhyChooseITS = [
 exports.validateYoastSEO = [
     body('seo_keyphrase')
       .optional({ checkFalsy: true })
-      .trim()
-      .isLength({ max: 200 })
-      .withMessage('SEO Keyphrase cannot exceed 200 characters'),
+      .trim(),
     body('seo_title')
       .optional({ checkFalsy: true })
-      .trim()
-      .isLength({ max: 200 })
-      .withMessage('SEO Title cannot exceed 200 characters'),
+      .trim(),
     body('meta_description')
       .optional({ checkFalsy: true })
-      .trim()
-      .isLength({ max: 300 })
-      .withMessage('Meta Description cannot exceed 300 characters'),
+      .trim(),
     body('cover_image')
       .optional({ checkFalsy: true })
-      .trim()
-      .isLength({ max: 1000 })
-      .withMessage('Cover Image URL cannot exceed 1000 characters'),
+      .trim(),
     body('page_description')
       .optional({ checkFalsy: true })
-      .trim()
-      .isLength({ max: 1000 })
-      .withMessage('Page Description cannot exceed 1000 characters'),
+      .trim(),
     body('googletags')
       .optional({ checkFalsy: true })
       .trim(),
