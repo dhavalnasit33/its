@@ -268,7 +268,7 @@ export default function Industries() {
                                                         width={34}
                                                         height={34}
                                                         className="object-contain"
-                                                        style={{}}
+                                                        style={{width: "34px" , height: "34px"}}
                                                     />
                                                 </div>
 

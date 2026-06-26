@@ -283,12 +283,13 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 		<main className="relative isolate w-full bg-white text-gray-900">
 			{/* <style dangerouslySetInnerHTML={{ __html: sliderStyles }} /> */}
-			<Image
+			<link rel="preload" as="image" href="/home/Group 37.png" fetchPriority="high" />
+			<img
 				src="/home/Group 37.png"
 				alt="Decorative blob"
 				width={200}
 				height={50}
-				priority
+				fetchPriority="high"
 				className="absolute left-0 top-50 hidden lg:flex -translate-x-10 h-118.75"
 			/>
 

@@ -337,6 +337,7 @@ const TestimonialCard = ({
                 alt="quote"
                 width={isCenter ? 60 : 45}
                 height={isCenter ? 60 : 45}
+                className="w-auto h-auto"
             />
         </div>
 

@@ -91,6 +91,8 @@ const Reviews: React.FC = () => {
                 alt="Loading"
                 width={80}
                 height={80}
+                className="object-contain"
+                style={{width: "80px" , height: "80px"}}
               />
           </div>
         ) : (

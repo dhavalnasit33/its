@@ -72,7 +72,9 @@ export default function WhyChooseITS() {
                       alt={item.title}
                       width={60}
                       height={60}
-                      className="h-12 w-12 mb-4"
+                      // className="h-12 w-12 mb-4 "
+                      className="w-auto h-auto mb-4"
+
                     />
                     <h4 className="text-lg font-bold mb-2">{item.title}</h4>
                     <p className="text-gray-600 fonts_16"

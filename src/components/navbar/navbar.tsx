@@ -340,8 +340,9 @@ export default function Navbar({ navStructure }: NavbarProps) {
                                   alt={award.alt}
                                   width={100}
                                   height={40} 
+                                  className="w-auto h-auto"
                                 />
-                              ))}
+                              ))} 
                             </div>
                           </div>
                           <div className="bg-blue-950 text-white p-10 flex items-center">
@@ -737,7 +738,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
           })}
         </ul>
         {/* ----menu butto ------- */}
-        <div className="flex gap-5 items-center xl:bg-gray-100 py-2 px-3 rounded-md hidden xl:inline-flex">
+        <div className=" gap-5 items-center xl:bg-gray-100 py-2 px-3 rounded-md hidden xl:inline-flex">
           <div className="relative  group">
             <div  className="cursor-pointer bg-white p-2 rounded-md ">
                 <Image
@@ -745,6 +746,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     alt="contact_icon"
                     width={30}
                     height={30} 
+                    className="w-auto h-auto"
                   />
             </div>
             <ContactPopup   
@@ -772,6 +774,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
               alt="Get a Quote Arrow"
               width={20}
               height={20} 
+              className="w-auto h-auto"
             />
           </Link>
         </div>
@@ -785,6 +788,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                       alt="contact_icon"
                       width={24}
                       height={24} 
+                      className="w-auto h-auto"
                     />
             </div>
             <ContactPopup   
@@ -1122,6 +1126,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                           alt="Get a Quote Arrow"
                           width={20}
                           height={20} 
+                          className="w-auto h-auto"
                         />
                       </span>
                     </Link>
