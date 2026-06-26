@@ -1049,9 +1049,11 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
             >
               <div className=" absolute top-0 left-0 h-1 w-0  bg-[#d68029]  transition-all duration-500  ease-out group-hover:w-full "/>
               <div className=" mb-8 ">
-                <img
+                <Image
                   src={item.image}
                   alt={item.title}
+                  width={64}
+  height={64}
                   className="w-16 h-16 object-contain "
                 />
               </div>
@@ -1187,9 +1189,9 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
                   <Image 
                       src="/navbar/btn_icon.png"
                       alt="btn-icon"
-                      width={10}
-                      height={10}
-                      className="w-[16px] h-[16px] object-contain"/>
+                      width={14}
+                      height={14}
+                      className="object-contain"/>
                 </span>
               </div>
 

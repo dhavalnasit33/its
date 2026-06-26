@@ -225,7 +225,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
 
   return (
     // <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
-    <nav className="w-full bg-white shadow-sm sticky top-0 z-[9999]">
+    <nav className="w-full bg-white shadow-sm sticky top-0 z-9999">
       <Row className=" h-20 flex justify-between items-center gap-2">
         <Link href="/" className="flex items-center">
           <Image
@@ -746,7 +746,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                     alt="contact_icon"
                     width={30}
                     height={30} 
-                    className="w-auto h-auto"
+                    className="w-7.5 h-7.5"
                   />
             </div>
             <ContactPopup   
@@ -774,7 +774,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
               alt="Get a Quote Arrow"
               width={20}
               height={20} 
-              className="w-auto h-auto"
+              className="w-5 h-5"
             />
           </Link>
         </div>
@@ -788,7 +788,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                       alt="contact_icon"
                       width={24}
                       height={24} 
-                      className="w-auto h-auto"
+                      className="w-6 h-6"
                     />
             </div>
             <ContactPopup   
@@ -1144,10 +1144,10 @@ export default function Navbar({ navStructure }: NavbarProps) {
 
 const ContactPopup = ({ phonePrimary, hrEmail}: ContactPopupProps) => {
   return (
-    <div className=" absolute top-full left-0 translate-x-[-70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-[300px] md:w-[310px] xl:w-[360px] bg-white rounded-lg shadow-2xl 
-    border border-gray-200 p-4 md:p-5 xl:p-6 z-[9999] opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
+    <div className=" absolute top-full left-0 translate-x-[-70%] xl:left-1/2 xl:right-auto xl:-translate-x-1/2 mt-4 w-75 md:w-77.5 xl:w-90 bg-white rounded-lg shadow-2xl 
+    border border-gray-200 p-4 md:p-5 xl:p-6 z-9999 opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
     >
-      <div  className=" absolute top-[-10px] right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
+      <div  className=" absolute -top-2.5 right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
       <p className="text-xl font-bold text-black mb-6">
         Let's Connect With Us!
       </p>

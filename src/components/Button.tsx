@@ -81,6 +81,7 @@ export default function Button({
                 alt={text}
                 width={iconWidth}
                 height={iconHeight} 
+                className="h-5 w-5"
               />
             )}
 
@@ -92,6 +93,7 @@ export default function Button({
                 alt={text}
                 width={iconWidth}
                 height={iconHeight} 
+                className="h-5 w-5"
               />
             )}
           </span>

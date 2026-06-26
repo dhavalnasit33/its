@@ -184,7 +184,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
             {/* <div className="relative z-10  w-full max-w-[90%] lg:max-w-[80%] mx-auto text-center"> */}
             <Row className="z-10 text-center">
               <motion.h1
-                className="text-[2.3rem] md:text-[4rem] xl:text-[5rem] font-semibold mb-6 text-black break-words"
+                className="text-[2.3rem] md:text-[4rem] xl:text-[5rem] font-semibold mb-6 text-black break-word"
                 initial={{ y: noAnim ? 0 : -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: noAnim ? 0.2 : 0.8, ease: "easeOut" }}

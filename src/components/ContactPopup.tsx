@@ -479,7 +479,7 @@ export default function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const REOPEN_TIME = 30 * 1000; // 1 hour
+  const REOPEN_TIME = 60 * 60 * 1000; // 1 hour
   
   const budgetOptions = [
     "UP TO $10K",
@@ -600,7 +600,7 @@ useEffect(() => {
       // fallback open
       timer = setTimeout(() => {
         setIsOpen(true);
-      }, 2000);
+      }, 45000);
     }
   };
 
@@ -726,7 +726,7 @@ if (!isOpen) return null;
 
   
   return (
-    <div className="fixed inset-0 z-[9999]">
+    <div className="fixed inset-0 z-9999">
       {/* Overlay */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-xs"
@@ -735,7 +735,7 @@ if (!isOpen) return null;
 
       {/* Modal */}
       <div className="flex items-center justify-center min-h-screen p-4 md:p-8">
-        <div className=" relative bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-[1000px] z-10 " >
+        <div className=" relative bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-250 z-10 " >
           {/* Close Button */}
           <button
             onClick={closePopup}
