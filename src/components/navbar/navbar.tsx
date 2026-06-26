@@ -1143,9 +1143,9 @@ const ContactPopup = ({ phonePrimary, hrEmail}: ContactPopupProps) => {
     border border-gray-200 p-4 md:p-5 xl:p-6 z-[9999] opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"      
     >
       <div  className=" absolute top-[-10px] right-14 xl:left-1/2 xl:-translate-x-1/2 w-5 h-5 bg-white border-l border-t  border-gray-200 rotate-45 "/>
-      <h3 className="text-xl font-bold text-black mb-6">
+      <p className="text-xl font-bold text-black mb-6">
         Let's Connect With Us!
-      </h3>
+      </p>
 
       <div className="flex items-start gap-2 xl:gap-4 mb-5">
         <div className="w-10 h-10 xl:w-12 xl:h-12 bg-white rounded-md shadow-lg flex items-center
@@ -1158,9 +1158,9 @@ const ContactPopup = ({ phonePrimary, hrEmail}: ContactPopupProps) => {
           />
         </div>
         <div>
-          <h4 className="font-semibold text-green-500">
+          <p className="font-semibold text-green-500">
             WhatsApp
-          </h4>
+          </p>
           {phonePrimary && (
             <a
               href={`tel:${phonePrimary}`}
@@ -1183,9 +1183,9 @@ const ContactPopup = ({ phonePrimary, hrEmail}: ContactPopupProps) => {
           />
         </div>
         <div>
-          <h4 className="font-semibold text-red-500">
+          <p className="font-semibold text-red-500">
             HR Inquiry
-          </h4>
+          </p>
           {hrEmail && (
             <Link
               href={`mailto:${hrEmail}`}

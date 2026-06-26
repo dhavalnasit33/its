@@ -2,39 +2,104 @@
 
 // import { useEffect, useRef, useState } from "react";
 // import Image from "next/image";
-// import ReCAPTCHA from "react-google-recaptcha";
-// import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
+
 // import apiService from "@/lib/apiService";
 // import { useToast } from "./ui/snackbar-provider";
 
+// function getCurrentUserId(): string | null {
+//   try {
+//     const stored = localStorage.getItem("user");
+//     if (!stored) return null;
+//     const parsed = JSON.parse(stored);
+//     return parsed?._id || parsed?.id || null;
+//   } catch {
+//     return null;
+//   }
+// }
 
-// type EnquiryResponse = {
-//   success: boolean;
-//   message?: string;
-// };
 
 // export default function ContactPopup() {
 //   const { toast } = useToast();
 
-//  const [isOpen, setIsOpen] = useState(false);
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [selectedBudget, setSelectedBudget] = useState<string>("");
+//   const REOPEN_TIME = 60 * 60 * 1000; // 1 hour
+  
+//   const budgetOptions = [
+//     "UP TO $10K",
+//     "$10-$20K",
+//     "$20-$50K",
+//     "$50-$100K",
+//     "$100K +",
+// ];
 
-// // useEffect(() => {
-// //   const alreadyShown = localStorage.getItem("contactPopupShown");
+//   const [formData, setFormData] = useState({
+//   firstname: "",
+//   lastname: "",
+//   email: "",
+//   phone: "",
+//   subject: "",
+//   message: "",
+// });
 
-// //   if (!alreadyShown) {
-// //     const timer = setTimeout(() => {
-// //       setIsOpen(true);
-// //       localStorage.setItem("contactPopupShown", "true");
-// //     }, 10000); // 3 seconds delay
+//   // useEffect(() => {
+//   //   let timer: NodeJS.Timeout;
+    
+//   //   const handlePopup = () => {
+//   //     const closedAt = localStorage.getItem("contactPopupClosedAt");
 
-// //     return () => clearTimeout(timer);
-// //   }
-// // }, []);
+//   //     // Case 1: never closed
+//   //     if (!closedAt) {
+//   //       timer = setTimeout(() => 
+//   //         setIsOpen(true), 3000);
+//   //       return;
+//   //     }
 
+//   //     const diff = Date.now() - Number(closedAt);
 
+//   //     // Case 2: cooldown finished
+//   //     if (diff >= REOPEN_TIME) {
+//   //       timer = setTimeout(() => 
+//   //         setIsOpen(true), 3000);
+
+//   //       return;
+//   //     }
+
+//   //     // Case 3: still in cooldown → wait remaining time
+//   //     const remaining = REOPEN_TIME - diff;
+
+//   //      timer = setTimeout(() => 
+//   //       setIsOpen(true), remaining);
+//   //   };
+  
+//   //   handlePopup();
+
+//   //   return () => clearTimeout(timer);
+//   // }, [isOpen]); // 🔥 IMPORTANT CHANGE
+  
 // useEffect(() => {
-//   const isClosed = localStorage.getItem("contactPopupClosed");
-//   if (isClosed === "true") return;
+//   const popupStatus = localStorage.getItem("contactPopup");
+
+//   // Form submitted successfully
+//   if (popupStatus === "submitted") {
+//     return;
+//   }
+
+//   const closedAt = localStorage.getItem("contactPopupClosedAt");
+
+//   if (popupStatus === "closed" && closedAt) {
+//     const diff = Date.now() - Number(closedAt);
+
+//     if (diff < REOPEN_TIME) {
+//       const remainingTime = REOPEN_TIME - diff;
+
+//       const timer = setTimeout(() => {
+//         setIsOpen(true);
+//       }, remainingTime);  
+
+//       return () => clearTimeout(timer);
+//     }
+//   }
 
 //   const timer = setTimeout(() => {
 //     setIsOpen(true);
@@ -43,26 +108,22 @@
 //   return () => clearTimeout(timer);
 // }, []);
 
-// const closePopup = () => {
+
+//   const closePopup = () => {
+//   localStorage.setItem("contactPopup", "closed");
+//   localStorage.setItem(
+//     "contactPopupClosedAt",
+//     Date.now().toString()
+//   );
+
 //   setIsOpen(false);
 
-//   // ✅ permanently stop future popup
-//   localStorage.setItem("contactPopupClosed", "true");
+//   setTimeout(() => {
+//     localStorage.removeItem("contactPopup");
+//     localStorage.removeItem("contactPopupClosedAt");
+//     setIsOpen(true);
+//   }, REOPEN_TIME);
 // };
-
-// // const closePopup = () => {
-// //   setIsOpen(false);
-// // };
-
-
-// const [formData, setFormData] = useState({
-//   firstname: "",
-//   lastname: "",
-//   email: "",
-//   phone: "",
-//   subject: "",
-//   message: "",
-// });
 
 // const handleChange = (
 //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -75,17 +136,10 @@
 // const handleBudgetSelect = (budget: string) => {
 //   setSelectedBudget(budget);
 // };
-//       const [selectedBudget, setSelectedBudget] = useState<string>("");
-// //       const recaptchaRef = useRef<ReCAPTCHA | null>(null);
-// // const [captchaToken, setCaptchaToken] = useState<string>("");
 
 // const onSubmit = async (e: React.FormEvent) => {
 //   e.preventDefault();
-
-//   //  if (!captchaToken) {
-//   //           toast("Please complete the CAPTCHA verification", "error");
-//   //           return;
-//   //       } 
+//   // const userId = getCurrentUserId();
 
 //   const payload = {
 //     type: "PopupForm",
@@ -102,7 +156,7 @@
 //     message: formData.message,
 
 //     budget: selectedBudget,
-//     // captchaToken,
+//     // userId,
 //   };
 
 //   console.log("Payload:", payload);
@@ -134,9 +188,10 @@
 //       });
 
 //       setSelectedBudget("");
-//       // setCaptchaToken("");
+      
+//       localStorage.setItem("contactPopup", "submitted");
+//       setIsOpen(false);
 
-//       // recaptchaRef.current?.reset();
 //     }
 //   } catch (error: any) {
 //     console.error("Submit Error:", error);
@@ -148,17 +203,7 @@
 //   }
 // };
 
-
 // if (!isOpen) return null;
-
-
-// const budgetOptions = [
-//     "UP TO $10K",
-//     "$10-$20K",
-//     "$20-$50K",
-//     "$50-$100K",
-//     "$100K +",
-// ];
 
   
 //   return (
@@ -166,45 +211,17 @@
 //       {/* Overlay */}
 //       <div
 //         className="absolute inset-0 bg-black/60 backdrop-blur-xs"
-//         onClick={closePopup}
+//         // onClick={closePopup}
 //       />
 
 //       {/* Modal */}
 //       <div className="flex items-center justify-center min-h-screen p-4 md:p-8">
-//         <div
-//           className="
-//             relative
-//             bg-white
-//             rounded-2xl
-//             overflow-hidden
-//             shadow-2xl
-//             w-full
-//             max-w-[1000px]
-//             z-10
-//           "
-//         >
+//         <div className=" relative bg-white rounded-2xl overflow-hidden shadow-2xl w-full max-w-[1000px] z-10 " >
 //           {/* Close Button */}
 //           <button
 //             onClick={closePopup}
-//             className="
-//               absolute
-//               top-4
-//               right-4
-//               z-20
-//               w-10
-//               h-10
-//               rounded-full
-//               bg-white
-//               shadow-md
-//               flex
-//               font-bold
-//               text-[#D68029]
-//               items-center
-//               justify-center
-//               text-xl
-//               hover:bg-gray-100
-//               cursor-pointer
-//             "
+//             className=" absolute top-4 right-4 z-20  w-10 h-10 rounded-full  bg-white shadow-md flex font-bold text-[#D68029] items-center
+//               justify-center text-xl hover:bg-gray-100 cursor-pointer "
 //           >
 //             ✕
 //           </button>
@@ -456,13 +473,13 @@ function getCurrentUserId(): string | null {
   }
 }
 
-
 export default function ContactPopup() {
   const { toast } = useToast();
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState<string>("");
-  const REOPEN_TIME = 60 * 60 * 1000; // 1 hour
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const REOPEN_TIME = 30 * 1000; // 1 hour
   
   const budgetOptions = [
     "UP TO $10K",
@@ -481,72 +498,118 @@ export default function ContactPopup() {
   message: "",
 });
 
-  // useEffect(() => {
-  //   let timer: NodeJS.Timeout;
-    
-  //   const handlePopup = () => {
-  //     const closedAt = localStorage.getItem("contactPopupClosedAt");
+// useEffect(() => {
+//   let timer: NodeJS.Timeout;
 
-  //     // Case 1: never closed
-  //     if (!closedAt) {
-  //       timer = setTimeout(() => 
-  //         setIsOpen(true), 3000);
-  //       return;
-  //     }
+//   const checkPopupStatus = async () => {
+//     const userId = getCurrentUserId();
 
-  //     const diff = Date.now() - Number(closedAt);
+//     // Logged in user -> check DB first
+//     if (userId) {
+//       try {
+//         const res = await apiService<{
+//           success: boolean;
+//           submitted: boolean;
+//         }>(`/enquiries/popup-status/${userId}`);
 
-  //     // Case 2: cooldown finished
-  //     if (diff >= REOPEN_TIME) {
-  //       timer = setTimeout(() => 
-  //         setIsOpen(true), 3000);
+//         if (res.submitted) return; 
+//       } catch (err) {
+//         console.error("Popup status error:", err);
+//       }
+//     }
 
-  //       return;
-  //     }
+//     const popupStatus = localStorage.getItem("contactPopup");
 
-  //     // Case 3: still in cooldown → wait remaining time
-  //     const remaining = REOPEN_TIME - diff;
+//     if (popupStatus === "submitted") {
+//       return;
+//     }
 
-  //      timer = setTimeout(() => 
-  //       setIsOpen(true), remaining);
-  //   };
-  
-  //   handlePopup();
+//     const closedAt = localStorage.getItem("contactPopupClosedAt");
 
-  //   return () => clearTimeout(timer);
-  // }, [isOpen]); // 🔥 IMPORTANT CHANGE
-  
+//     if (popupStatus === "closed" && closedAt) {
+//       const diff = Date.now() - Number(closedAt);
+
+//       if (diff < REOPEN_TIME) {
+//         timer = setTimeout(() => {
+//           setIsOpen(true);
+//         }, REOPEN_TIME - diff);
+
+//         return;
+//       }
+//     }
+
+//     timer = setTimeout(() => {
+//       setIsOpen(true);
+//     }, 2000);
+//   };
+
+//   checkPopupStatus();
+
+//   return () => {
+//     if (timer) clearTimeout(timer);
+//   };
+// }, []);
 useEffect(() => {
-  const popupStatus = localStorage.getItem("contactPopup");
+  let timer: NodeJS.Timeout;
 
-  // Form submitted successfully
-  if (popupStatus === "submitted") {
-    return;
-  }
+  const checkPopupStatus = async () => {
+    const userId = getCurrentUserId();
 
-  const closedAt = localStorage.getItem("contactPopupClosedAt");
+    try {
+      // 1. Check logged-in user in DB
+      if (userId) {
+        const res = await apiService<{
+          success: boolean;
+          submitted: boolean;
+        }>(`/enquiries/popup-status/${userId}`);
 
-  if (popupStatus === "closed" && closedAt) {
-    const diff = Date.now() - Number(closedAt);
+        if (res.submitted) {
+          setIsOpen(false);
+          return; // STOP popup completely
+        }
+      }
 
-    if (diff < REOPEN_TIME) {
-      const remainingTime = REOPEN_TIME - diff;
+      // 2. Check localStorage for guest
+      if (localStorage.getItem("contactPopup") === "submitted") {
+        setIsOpen(false);
+        return;
+      }
 
-      const timer = setTimeout(() => {
+      const closedAt = localStorage.getItem("contactPopupClosedAt");
+
+      if (closedAt) {
+        const diff = Date.now() - Number(closedAt);
+
+        if (diff < REOPEN_TIME) {
+          timer = setTimeout(() => {
+            setIsOpen(true);
+          }, REOPEN_TIME - diff);
+
+          return;
+        }
+      }
+
+      // 3. DEFAULT OPEN
+      timer = setTimeout(() => {
         setIsOpen(true);
-      }, remainingTime);  
+      }, 2000);
 
-      return () => clearTimeout(timer);
+    } catch (error) {
+      console.error("Popup API failed:", error);
+
+      // fallback open
+      timer = setTimeout(() => {
+        setIsOpen(true);
+      }, 2000);
     }
-  }
+  };
 
-  const timer = setTimeout(() => {
-    setIsOpen(true);
-  }, 45000);
+  checkPopupStatus();
 
-  return () => clearTimeout(timer);
+  return () => {
+    if (timer) clearTimeout(timer);
+  };
 }, []);
-
 
   const closePopup = () => {
   localStorage.setItem("contactPopup", "closed");
@@ -556,12 +619,15 @@ useEffect(() => {
   );
 
   setIsOpen(false);
-
   setTimeout(() => {
-    localStorage.removeItem("contactPopup");
-    localStorage.removeItem("contactPopupClosedAt");
     setIsOpen(true);
   }, REOPEN_TIME);
+
+  // setTimeout(() => {
+  //   localStorage.removeItem("contactPopup");
+  //   localStorage.removeItem("contactPopupClosedAt");
+  //   setIsOpen(true);
+  // }, REOPEN_TIME);
 };
 
 const handleChange = (
@@ -578,9 +644,10 @@ const handleBudgetSelect = (budget: string) => {
 
 const onSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-  // const userId = getCurrentUserId();
+  const userId = getCurrentUserId();
 
   const payload = {
+    user:userId,
     type: "PopupForm",
     source: "popup_form",
 
@@ -600,9 +667,12 @@ const onSubmit = async (e: React.FormEvent) => {
 
   console.log("Payload:", payload);
 
+  setIsSubmitting(true);
+
   try {
     const response = await apiService<{
       success: boolean;
+      submitted?: boolean;
       message?: string;
     }>("/enquiries", {
       method: "POST",
@@ -613,6 +683,12 @@ const onSubmit = async (e: React.FormEvent) => {
     });
 
     console.log("API Response:", response);
+
+     if (response.submitted) {
+      localStorage.setItem("contactPopup", "submitted");
+      setIsOpen(false);
+      return;
+    }
 
     if (response.success) {
       toast("Form submitted successfully!", "success");
@@ -629,6 +705,7 @@ const onSubmit = async (e: React.FormEvent) => {
       setSelectedBudget("");
       
       localStorage.setItem("contactPopup", "submitted");
+      localStorage.removeItem("contactPopupClosedAt");
       setIsOpen(false);
 
     }
@@ -640,6 +717,9 @@ const onSubmit = async (e: React.FormEvent) => {
       "error"
     );
   }
+   finally {
+        setIsSubmitting(false);
+    }
 };
 
 if (!isOpen) return null;
@@ -807,9 +887,9 @@ if (!isOpen) return null;
                       </div>
                   </div> */}
 
-                  <button
+                  {/* <button
                       type="submit"
-                          onClick={() => toast("Submitted", "success")}
+                          // onClick={() => toast("Submitted", "success")}
 
                       className="block cursor-pointer"
                   >
@@ -819,7 +899,50 @@ if (!isOpen) return null;
                               submit
                           </span>
                       </div>
-                  </button>
+                  </button> */}
+                   <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={` block ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                            }`}
+                    >
+                        <div className="bg-[#D68029] relative inline-flex items-center justify-center w-full max-w-50 overflow-hidden text-white rounded-xl group ">
+                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56 uration-750 delay-300 ease-in-out"></span>
+                            <span className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 sm:px-8 py-3 cursor-pointer font-semibold">
+                                {isSubmitting ? (
+                                    <>
+                                        <span>
+                                            <svg
+                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                ></circle>
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                ></path>
+                                            </svg>
+                                        </span>
+                                        <span>
+                                            Sending...
+                                        </span>
+                                    </>
+                                ) : (
+                                    "Send Message"
+                                )}
+                            </span>
+                        </div>
+                    </button>
               </form>
             </div>
 
