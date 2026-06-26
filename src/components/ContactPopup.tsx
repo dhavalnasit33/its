@@ -462,7 +462,7 @@ export default function ContactPopup() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState<string>("");
-  const REOPEN_TIME = 30 * 1000; // 1 hour
+  const REOPEN_TIME = 60 * 60 * 1000; // 1 hour
   
   const budgetOptions = [
     "UP TO $10K",
@@ -542,7 +542,7 @@ useEffect(() => {
 
   const timer = setTimeout(() => {
     setIsOpen(true);
-  }, 2000);
+  }, 45000);
 
   return () => clearTimeout(timer);
 }, []);
