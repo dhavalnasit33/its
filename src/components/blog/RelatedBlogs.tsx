@@ -116,11 +116,6 @@ export default function RelatedBlogs({
                   <span className="text-gray-400">No Image Available</span>
                 </div>
               )}
-              {/* <img
-            src={relatedBlog.image || "/placeholder.png"}
-            alt={relatedBlog.details.title}
-            className="w-full h-60 object-fill"
-          /> */}
               <div className="p-4 md:p-6 w-full">
                 <div className="flex flex-col md:flex-row justify-start items-start md:items-center gap-2 mb-4">
                   {relatedBlog.subCategories && (

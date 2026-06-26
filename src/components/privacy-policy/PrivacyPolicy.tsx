@@ -167,7 +167,7 @@ export default function PrivacyPolicy() {
                         className="scroll-mt-24"
                     >
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="w-10 h-10 flex-shrink-0 rounded-lg bg-gradient-to-r from-[#d68029] to-[#f7b733] hover:bg-[#0d1b2a] flex items-center justify-center">
+                            <div className="w-10 h-10 shrink-0 rounded-lg bg-linear-to-r from-[#d68029] to-[#f7b733] hover:bg-[#0d1b2a] flex items-center justify-center">
                                 {Icon && (
                                     <Icon
                                     size={20}
@@ -190,7 +190,7 @@ export default function PrivacyPolicy() {
                                     key={i}
                                     className="flex items-start gap-3 text-lg text-gray-600"
                                 >
-                                    <span className="mt-2.5 h-2 w-2 rounded-full bg-[#d68029] flex-shrink-0"></span>
+                                    <span className="mt-2.5 h-2 w-2 rounded-full bg-[#d68029] shrink-0"></span>
                                     <span>{point}</span>
                                 </li>
                                 ))}

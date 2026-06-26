@@ -233,8 +233,8 @@ export default function Navbar({ navStructure }: NavbarProps) {
             alt="Inspire Techno Solution"
             width={200}
             height={50}
-            // priority
-            style={{ width: "200px", height: "50px" }}
+            priority
+            // style={{ width: "200px", height: "50px" }}
           />
         </Link>
 

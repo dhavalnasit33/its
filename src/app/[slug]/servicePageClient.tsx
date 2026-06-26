@@ -278,13 +278,13 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
               </ul>
             </div>
           </div> */}
-        <Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+        <Section  className="bg-[#0d1b2a] z-10 py-6! ">
           <Row>
             <PlatformSlider />
           </Row>
         </Section>
 
-        <Section className="bg-gray-50 !py-14">
+        <Section className="bg-gray-50 py-14!">
 					 <Row className=" mx-auto ">
 					  <StatsGrid  columns={4} bordered />
 					</Row>
@@ -570,7 +570,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
                       width={700}
                       height={700}
                       sizes="(max-width: 768px) 90vw, 50vw"
-                      className="object-contain w-full max-w-[500px] h-auto"
+                      className="object-contain w-full max-w-125 h-auto"
                       loading="lazy"
                       quality={75}
                     />

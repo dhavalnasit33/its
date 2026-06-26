@@ -598,7 +598,7 @@ export default function ContactPageForm() {
                                         placeholder="Write your message.."
                                         className="flex w-full text-sm ring-offset-background focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 
                                                 bg-transparent border-0 border-b border-[#ffffff14] rounded-none px-0 py-7 text-white opacity-60 placeholder:text-white/60 focus-visible:ring-0 
-                                                focus-visible:border-[#f97316] focus-visible:outline-none min-h-[80px] resize-none"
+                                                focus-visible:border-[#f97316] focus-visible:outline-none min-h-20 resize-none"
                                     />
                                 </div>
 
@@ -650,9 +650,9 @@ export default function ContactPageForm() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="primary_button relative group overflow-hidden mt-3 min-w-[180px] uppercase"
+                                        className="primary_button relative group overflow-hidden mt-3 min-w-45 uppercase"
                                     >
-                                        <span className="absolute top-0 left-[-100%] w-[60%] h-full bg-[linear-gradient(90deg,transparent,hsla(0,0%,100%,0.2),transparent)] animate-shine"></span>
+                                        <span className="absolute top-0 -left-full w-[60%] h-full bg-[linear-gradient(90deg,transparent,hsla(0,0%,100%,0.2),transparent)] animate-shine"></span>
                                         <span className="relative z-10 flex items-center gap-2 justify-center">
                                             Submit
                                             <Image

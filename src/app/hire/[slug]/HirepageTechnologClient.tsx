@@ -1320,7 +1320,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                     ease: "easeOut",
                   }}
                   viewport={{ once: true, amount: 0.2 }}
-                  className={` w-full h-full rounded-[20px] py-5 px-5 min-h-[180px] max-md:min-h-[160px] md:px-3 md:px-6 -[20px] border shadow-[0px_0px_10px_0px_rgba(0,0,0,0.1)] bg-white
+                  className={` w-full h-full rounded-[20px] py-5 px-5 min-h-45 max-md:min-h-40 md:px-6 -[20px] border shadow-[0px_0px_10px_0px_rgba(0,0,0,0.1)] bg-white
                     relative z-30 flex flex-col items-center justify-center text-center ${step.isBottom ? "-bottom-14" : ""}
                   `}
                   style={{
@@ -1335,7 +1335,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                     className="w-[50px] h-[50px] object-contain mx-auto"
                   />
 
-                  <p className="text-black  text-base font-semibold mt-3 max-xl:break-all wrap-break-word leading-[24px]">
+                  <p className="text-black  text-base font-semibold mt-3 max-xl:break-all wrap-break-word leading-6">
                     {step.title}
                   </p>
                 </motion.div>
