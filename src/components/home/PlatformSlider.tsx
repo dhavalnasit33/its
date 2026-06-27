@@ -135,27 +135,23 @@ export default function PlatformSlider({
             </SwiperSlide>
           ))} */}
 
-          <ul className="flex items-center">
-                {items.map((item) => (
-                <SwiperSlide
-                    key={item.slug}
-                    className="!w-auto"
+          {items.map((item) => (
+            <SwiperSlide
+                key={item.slug}
+                className="w-auto!"
+            >
+                <Link
+                    href={`/${item.slug}`}
+                    className=" flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap  transition-all
+                    duration-300 hover:border-[#D68029] hover:text-[#D68029] "
                 >
-                    <li className="list-none">
-                    <Link
-                        href={`/${item.slug}`}
-                        className=" flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap  transition-all
-                        duration-300 hover:border-[#D68029] hover:text-[#D68029] "
-                    >
-                        <span className="w-1 h-1 bg-[#D68029] rounded-full"></span>
-                        <span className="text-[13px]">
-                        {item.title}
-                        </span>
-                    </Link>
-                    </li>
-                </SwiperSlide>
-                ))}
-            </ul>
+                    <span className="w-1 h-1 bg-[#D68029] rounded-full"></span>
+                    <span className="text-[13px]">
+                    {item.title}
+                    </span>
+                </Link>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>
