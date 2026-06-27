@@ -2219,7 +2219,8 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
                                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                                     >
                                         <h2 className="text-center w-full  text-black common-h2">
-                                            {getHighlightedTitle()}
+                                            {/* {getHighlightedTitle()} */}
+                                            Hire Top 1% Developers according to your needs
                                         </h2>
                                     </motion.div>
                                     <Motion />

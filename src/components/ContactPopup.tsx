@@ -590,7 +590,7 @@ useEffect(() => {
       // 3. DEFAULT OPEN
       timer = setTimeout(() => {
         setIsOpen(true);
-      }, 2000);
+      }, 45000);
 
     } catch (error) {
       console.error("Popup API failed:", error);
