@@ -34,40 +34,40 @@
 //       {/* Slider */}
 //       <div className="flex-1 min-w-0">
 //        <Swiper
-//             modules={[Autoplay]}
-//             slidesPerView="auto"
-//             spaceBetween={12}
-//             loop={true}
-//             speed={8000}
-//             allowTouchMove={false}
-//             autoplay={{
-//                 delay: 0,
-//                 disableOnInteraction: false,
-//                 pauseOnMouseEnter: false,
-//             }}
-//             className="serviceSwiper"
+            // modules={[Autoplay]}
+            // slidesPerView="auto"
+            // spaceBetween={12}
+            // loop={true}
+            // speed={8000}
+            // allowTouchMove={false}
+            // autoplay={{
+            //     delay: 0,
+            //     disableOnInteraction: false,
+            //     pauseOnMouseEnter: false,
+            // }}
+            // className="serviceSwiper"
 //             >
-//             <ul className="flex items-center">
-//                 {services.map((service) => (
-//                 <SwiperSlide
-//                     key={service.slug}
-//                     className="!w-auto"
-//                 >
-//                     <li className="list-none">
-//                     <Link
-//                         href={`/${service.slug}`}
-//                         className=" flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap  transition-all
-//                         duration-300 hover:border-[#D68029] hover:text-[#D68029] "
-//                     >
-//                         <span className="w-1 h-1 bg-[#D68029] rounded-full"></span>
-//                         <span className="text-[13px]">
-//                         {service.title}
-//                         </span>
-//                     </Link>
-//                     </li>
-//                 </SwiperSlide>
-//                 ))}
-//             </ul>
+            // <ul className="flex items-center">
+            //     {services.map((service) => (
+            //     <SwiperSlide
+            //         key={service.slug}
+            //         className="!w-auto"
+            //     >
+            //         <li className="list-none">
+            //         <Link
+            //             href={`/${service.slug}`}
+            //             className=" flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap  transition-all
+            //             duration-300 hover:border-[#D68029] hover:text-[#D68029] "
+            //         >
+            //             <span className="w-1 h-1 bg-[#D68029] rounded-full"></span>
+            //             <span className="text-[13px]">
+            //             {service.title}
+            //             </span>
+            //         </Link>
+            //         </li>
+            //     </SwiperSlide>
+            //     ))}
+            // </ul>
 //         </Swiper>
 //       </div>
 //     </div>
@@ -118,19 +118,44 @@ export default function PlatformSlider({
           autoplay={{
             delay: 0,
             disableOnInteraction: false,
+            pauseOnMouseEnter: false,
           }}
+           className="serviceSwiper"
         >
-          {items.map((item) => (
+          {/* {items.map((item) => (
             <SwiperSlide key={item.slug} className="!w-auto">
               <Link
                 href={`/${item.slug}`}
-                className="flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap transition-all duration-300 hover:border-[#D68029] hover:text-[#D68029]"
+                className="flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap  transition-all
+                        duration-300 hover:border-[#D68029] hover:text-[#D68029]"
               >
                 <span className="w-1 h-1 bg-[#D68029] rounded-full" />
                 <span className="text-[13px]">{item.title}</span>
               </Link>
             </SwiperSlide>
-          ))}
+          ))} */}
+
+          <ul className="flex items-center">
+                {items.map((item) => (
+                <SwiperSlide
+                    key={item.slug}
+                    className="!w-auto"
+                >
+                    <li className="list-none">
+                    <Link
+                        href={`/${item.slug}`}
+                        className=" flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap  transition-all
+                        duration-300 hover:border-[#D68029] hover:text-[#D68029] "
+                    >
+                        <span className="w-1 h-1 bg-[#D68029] rounded-full"></span>
+                        <span className="text-[13px]">
+                        {item.title}
+                        </span>
+                    </Link>
+                    </li>
+                </SwiperSlide>
+                ))}
+            </ul>
         </Swiper>
       </div>
     </div>
