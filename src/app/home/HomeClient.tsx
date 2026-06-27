@@ -317,14 +317,18 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.3, ease: "easeOut" }}
 					>
-						<h1
+						{/* <h1
 								className="rose text-[clamp(26px,5vw,64px)] text-white  font-normal tracking-[-0.03em] leading-[1.08] opacity-[0.92]  "
 								dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.title.replace(/<[^>]*>?/gm, "" )}}
 							/>
 						<div className="mb-5 md:mb-7 ">
 							
 							<AutoTextSlider data={homePageData.heroSecton.technologySection} />
-						</div>
+						</div> */}
+							<h1 className="rose text-[clamp(26px,5vw,64px)] text-white font-normal tracking-[-0.03em] leading-[1.08] opacity-[0.92]">
+								{homePageData?.heroSecton?.title?.replace(/<[^>]*>?/gm, "")}
+								<AutoTextSlider data={homePageData?.heroSecton?.technologySection} />
+							</h1>
 
 						<div className="yellow-text max-w-[800px] mx-auto mb-16 md:mb-20 text-center fonts_16 text-white"
 							dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.description || "", }}
