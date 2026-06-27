@@ -21,6 +21,7 @@ import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
 import PlatformSlider from "@/components/home/PlatformSlider";
 import StatsGrid from "@/components/home/RoundStatsCard";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 // const categories = [
 //     { label: "Show All", value: "All" },
 //     { label: "Mobile App", value: "mobile-app" },
@@ -57,6 +58,7 @@ export default function PortfolioClient({
     const [totalItems, setTotalItems] = useState<number>(initialWorks?.pagination?.total || 0);
     const [initialLoading, setInitialLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
+     const { navStructure } = useWebsiteSettings();
     const fetchPortfolioContent = useCallback(async () => {
         setGettingProtfolioConetentData(true);
         try {
@@ -174,6 +176,14 @@ export default function PortfolioClient({
             <div className="absolute bottom-0 left-0 right-0 h-12 bg-black/20 animate-pulse"></div>
         </div>
     );
+
+    const services = navStructure?.servicesNav?.flatMap((category) =>
+		category.links?.map((service) => ({
+			title: service.title,
+			slug: service.slug,
+		})) || []
+		) || [];
+
     if (gettingProtfolioConetentData) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -345,7 +355,7 @@ export default function PortfolioClient({
             </Section>
             <Section  className="bg-[#0d1b2a] z-10 !py-6 ">
 				<Row>
-					<PlatformSlider />
+					<PlatformSlider items={services}/>
 				</Row>
 			</Section>
 			<Section className="bg-gray-50 !py-14">

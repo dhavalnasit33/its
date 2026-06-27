@@ -778,6 +778,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import UnderConstructionPage from "@/components/UnderConstruction";
 import StatsGrid from "@/components/home/RoundStatsCard";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 
 interface AboutUsClientProps {
@@ -833,6 +834,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
 
   const [gettngAboutUsData, setGettngAboutUsData] = useState(!initialData);
   const [aboutUsData, setAboutUsData] = useState<AboutUs | null>(initialData || null);
+    const { navStructure } = useWebsiteSettings();
   const fetchAboutUsData = useCallback(async () => {
     setGettngAboutUsData(true);
     try {
@@ -864,6 +866,13 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
   ...(aboutUsData?.flags?.flagsDetails || []),
   ...(aboutUsData?.flags?.flagsDetails || []),
 ];
+
+const services = navStructure?.servicesNav?.flatMap((category) =>
+		category.links?.map((service) => ({
+			title: service.title,
+			slug: service.slug,
+		})) || []
+		) || [];
 
   if (gettngAboutUsData) {
     return (
@@ -1080,7 +1089,7 @@ export default function AboutUsClient({ title, initialData }: AboutUsClientProps
         {/* reasons choose section */}
         <Section  className="bg-[#0d1b2a] z-10 py-6! ">
 				<Row>
-					<PlatformSlider />
+					<PlatformSlider items={services}/>
 				</Row>
 			</Section>
       <Section className="bg-gray-50 py-14!">

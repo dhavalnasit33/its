@@ -70,11 +70,11 @@ interface ServicePageClientProps {
 }
 
 export default function ServicePageClient({ initialData }: ServicePageClientProps) {
-  const { phonePrimary, phonePrimaryClean, supportEmail, microsoftHandle, blogSlug, portfolioSlug, hireSlug } = useWebsiteSettings();
   const { slug } = useParams<{ slug: string }>();
   const [data, setData] = useState<ITSService | null>(initialData || null);
   const [notFound, setNotFound] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const { navStructure } = useWebsiteSettings();
 
   // ✅ FIX 2: Use mobile detection + reduced motion
   const isMobile = useIsMobile();
@@ -145,6 +145,13 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
       transition: { duration: noAnim ? 0.2 : 0.6, ease: easeOut },
     },
   };
+
+  const services = navStructure?.servicesNav?.flatMap((category) =>
+		category.links?.map((service) => ({
+			title: service.title,
+			slug: service.slug,
+		})) || []
+		) || [];
 
   return (
     <main className="w-full">
@@ -280,7 +287,7 @@ export default function ServicePageClient({ initialData }: ServicePageClientProp
           </div> */}
         <Section  className="bg-[#0d1b2a] z-10 py-6! ">
           <Row>
-            <PlatformSlider />
+            <PlatformSlider items={services} />
           </Row>
         </Section>
 

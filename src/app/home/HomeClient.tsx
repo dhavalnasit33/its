@@ -61,6 +61,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 	const [notFound, setNotFound] = useState(false);
 	const [data, setData] = useState<HomePageData | null>(null);
 	const [isMobile, setIsMobile] = useState(false);
+	 const { navStructure } = useWebsiteSettings();
 	// const [navStructure, setNavStructure] = useState<NavigationStructure | null>(null);
 
 	// useEffect(() => {
@@ -141,6 +142,13 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 		}
 	}, [fetchHomepageData, initialData]);
 
+	const services = navStructure?.servicesNav?.flatMap((category) =>
+		category.links?.map((service) => ({
+			title: service.title,
+			slug: service.slug,
+		})) || []
+		) || [];
+
 	if (gettingHomePageData) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
@@ -154,6 +162,8 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 			</div>
 		);
 	}
+	
+
 	if (!homePageData) {
 		return (
 			// <div className="min-h-screen flex items-center justify-center">
@@ -456,10 +466,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 
 			<Section  className="bg-[#0d1b2a] z-10 py-6! ">
 				<Row>
-					{/* {navStructure && (
-						<PlatformSlider navStructure={navStructure} />
-					)} */}
-					<PlatformSlider />
+					<PlatformSlider items={services} />
 				</Row>
 			</Section>
 

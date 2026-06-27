@@ -99,7 +99,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                     {/* Content Left */}
                     <div className="order-2 md:order-1 z-10">
                         {/* First p tag - from top slow */}
-                        <motion.h6
+                        <motion.span
                             initial={{ opacity: 0, y: -50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, ease: "easeOut" }}
@@ -107,10 +107,10 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                         >
                             {/* Learn New Things Daily */}
                             {trainingMainPageData?.heroSection?.subTitle || ""}
-                        </motion.h6>
+                        </motion.span>
 
                         {/* H1 - from top faster */}
-                        <motion.h1
+                        <motion.div
                             initial={{ opacity: 0, y: -60 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
@@ -138,7 +138,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                 className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
                                 dangerouslySetInnerHTML={{ __html: trainingMainPageData?.heroSection?.mainTitle || "" }}
                             />
-                        </motion.h1>
+                        </motion.div>
 
                         {/* Second p - from bottom */}
                         <motion.p

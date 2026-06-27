@@ -17,11 +17,13 @@ import Button from "../Button";
 import UnderConstructionPage from "../UnderConstruction";
 import PlatformSlider from "../home/PlatformSlider";
 import StatsGrid from "../home/RoundStatsCard";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 export default function OurServicesClient() {
 
 	const [gettingOurServiceData, setGettingOurServiceData] = useState(true);
 	const [ourServicePageData, setOurServicePageData] = useState<OurServicesMain | null>(null);
+	const { navStructure } = useWebsiteSettings();
 
 	const fetchOurServiceContent = useCallback(async () => {
 		setGettingOurServiceData(true);
@@ -43,6 +45,13 @@ export default function OurServicesClient() {
 	useEffect(() => {
 		fetchOurServiceContent();
 	}, [fetchOurServiceContent])
+
+	const services = navStructure?.servicesNav?.flatMap((category) =>
+		category.links?.map((service) => ({
+			title: service.title,
+			slug: service.slug,
+		})) || []
+		) || [];
 
 	if (gettingOurServiceData) {
 		return (
@@ -278,7 +287,7 @@ export default function OurServicesClient() {
 			</Section>
 			<Section  className="bg-[#0d1b2a] z-10 py-6! ">
 				<Row>
-					<PlatformSlider />
+					<PlatformSlider items={services}/>
 				</Row>
 			</Section>
 			<Section className="bg-gray-50 py-14!">

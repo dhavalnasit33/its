@@ -43,9 +43,9 @@ const contactItems = [
       <Section className="bg-[#0d1b2a] ">
         {/* <div className=" text-left   max-w-[90%] lg:max-w-[80%] mx-auto"> */}
         <Row className=" text-left">
-          <h6 className="text-white opacity-60  text-sm leading-[1.25] font-semibold uppercase tracking-[0.2em] max-[767px]:text-[12px] max-[767px]:tracking-[0.15em]">
+          <span className="text-white opacity-60  text-sm leading-[1.25] font-semibold uppercase tracking-[0.2em] max-[767px]:text-[12px] max-[767px]:tracking-[0.15em]">
             WE TURN BOLD IDEAS INTO SUCCESSFUL PRODUCTS
-          </h6>
+          </span>
           <h1 className=" text-white font-medium mb-12 md:mb-16 text-4xl md:text-[60px] lg:text-[76px]/[130%] leading-[1.1] max-[767px]:leading-[1.15] max-[767px]:mt-3">
             Got an idea?<br/>Let's talk!</h1>
         </Row>

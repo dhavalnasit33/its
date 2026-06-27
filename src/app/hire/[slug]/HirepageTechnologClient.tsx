@@ -17,6 +17,9 @@ import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
+import PlatformSlider from "@/components/home/PlatformSlider";
+import StatsGrid from "@/components/home/RoundStatsCard";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 function chunkArray<T>(array: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
@@ -80,6 +83,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
   const [Loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>([]);
   const [matchCatgeory, setMatchCatgeory] = useState<string>("");  
+  const { navStructure } = useWebsiteSettings();
   // console.log("🚀 ~ HirepageTechnolog ~ matchCatgeory:", matchCatgeory);
   // Default the active accordion to the first item (index 0)
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -189,6 +193,14 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
     }
   }, [slug]);
 
+ const hire =
+  navStructure?.hireNav?.flatMap((category) =>
+    category.links?.map((item) => ({
+      title: item.title,
+      slug: `hire/${item.slug}`, // 👈 ADD PREFIX HERE
+    })) || []
+  ) || [];
+
   if (Loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -278,7 +290,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
         <div className="absolute inset-0 bg-[#0a1a33]/90"></div>
         {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto relative flex justify-center mb-10"> */}
          <Row className="flex justify-center mb-10">
-          <h5 className="inline-flex gap-1 items-center rounded-full border border-white bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-slate-200">
+          <span className="inline-flex gap-1 items-center rounded-full border border-white bg-white/5 px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-slate-200">
             {pageData.title.toLowerCase().startsWith("hire") ? (
               <>
                 {/* <span className="text-[#d68029] uppercase">
@@ -293,7 +305,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
             ) : (
               pageData.title
             )}
-          </h5>
+          </span>
         </Row>
         {/* </div> */}
         {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto relative flex  "> */}
@@ -508,6 +520,17 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
           </Row>
         {/* </div> */}
       </Section>
+
+      <Section  className="bg-[#0d1b2a] z-10 py-6! ">
+				<Row>
+					<PlatformSlider items={hire}/>
+				</Row>
+			</Section>
+      <Section className="bg-gray-50 py-14!">
+            <Row className=" mx-auto ">
+            <StatsGrid  columns={4} bordered />
+          </Row>
+      </Section>
       {/* section 2 : hire accodiong to your needs  */}
       <Section className=" z-10 bg-white xl:!pb-0 ">
         {/* <div className="w-full max-w-[90%] lg:max-w-[74%] mx-auto relative flex"> */}
@@ -563,7 +586,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           ease: "easeOut",
                           delay: 0.1,
                         }}
-                        className="w-full rounded-sm relative px-5 py-2.5 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
+                        className="w-full rounded-sm relative px-5 py-4 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
                       >
                         <div className="flex items-center flex-row text-start gap-4">
                           <Image
@@ -573,8 +596,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h4 className="text-black text-lg font-semibold">
-                            24*7 Availability
+                          <h4 className="text-black text-md font-semibold">
+                            24/7 Project Support
                           </h4>
                         </div>
                       </motion.div>
@@ -588,7 +611,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           ease: "easeOut",
                           delay: 0.3,
                         }}
-                        className="w-full rounded-sm relative px-5 py-2.5 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
+                        className="w-full rounded-sm relative px-5 py-4 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
                       >
                         <div className="flex items-center flex-row text-start gap-4">
                           <Image
@@ -598,8 +621,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h4 className="text-black text-lg font-semibold">
-                            20+ Experts
+                          <h4 className="text-black text-md font-semibold">
+                            20+ Experienced Developers
                           </h4>
                         </div>
                       </motion.div>
@@ -613,7 +636,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           ease: "easeOut",
                           delay: 0.5,
                         }}
-                        className="w-full rounded-sm relative px-5 py-2.5 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
+                        className="w-full rounded-sm relative px-5 py-4 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
                       >
                         <div className="flex items-center flex-row text-start gap-4">
                           <Image
@@ -623,8 +646,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h4 className="text-black text-lg font-semibold">
-                            Hourly Hiring
+                          <h4 className="text-black text-md font-semibold">
+                            Flexible Hiring Models
                           </h4>
                         </div>
                       </motion.div>
@@ -638,7 +661,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                           ease: "easeOut",
                           delay: 0.7,
                         }}
-                        className="w-full rounded-sm relative px-5 py-2.5 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
+                        className="w-full rounded-sm relative px-5 py-4 shadow-[0_2px_7px_-3px_rgba(0,0,0,0.25)] bg-white"
                       >
                         <div className="flex items-center flex-row text-start gap-4">
                           <Image
@@ -648,8 +671,8 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                             height={50}
                             className="h-12.5 w-16.25 object-contain"
                           />
-                          <h4 className="text-black text-lg font-semibold">
-                            Full-Time hiring
+                          <h4 className="text-black text-md font-semibold">
+                            Dedicated Development Team
                           </h4>
                         </div>
                       </motion.div>
@@ -673,7 +696,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                               .timelLine
                           }
                           <br />
-                          <span className="text-[41px] font-bold group-hover:text-[#d68029] transition-colors duration-300 ">
+                          <span className="text-[34px] font-bold group-hover:text-[#d68029] transition-colors duration-300 ">
                             {
                               pageData.hireDevelopersAsYourNeeds.planDetails[0]
                                 .price
@@ -691,7 +714,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                               <span className="flex text-gray-400 text-2xl w-8 group-hover:text-[#d68029] transition-colors duration-300">
                                 <FaCheck />
                               </span>
-                              <span className="text-black self-center ps-1 text-lg font-normal">
+                              <span className="text-black self-center ps-1 text-md font-normal">
                                 {item}
                               </span>
                             </li>
@@ -715,7 +738,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                               .timelLine
                           }
                           <br />
-                          <span className="text-[41px] font-bold group-hover:text-[#d68029] transition-colors duration-300 ">
+                          <span className="text-[34px] font-bold group-hover:text-[#d68029] transition-colors duration-300 ">
                             {
                               pageData.hireDevelopersAsYourNeeds.planDetails[1]
                                 .price
@@ -733,7 +756,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                               <span className="flex text-gray-400 text-2xl w-8 group-hover:text-[#d68029] transition-colors duration-300">
                                 <FaCheck />
                               </span>
-                              <span className="text-black self-center ps-1 text-lg font-normal">
+                              <span className="text-black self-center ps-1 text-md font-normal">
                                 {item}
                               </span>
                             </li>
@@ -767,9 +790,9 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                 </h4>
               </div>
               <section className="w-full  relative ">
-                <div className="flex w-full xl:mx-auto max-w-full lg:max-w-[90%] xl:max-w-[80%]">
+                <div className="flex w-full mx-auto max-w-full lg:max-w-[90%] xl:max-w-[85%]">
                   {pageData?.hireDevelopersAsYourNeeds?.benefits && (
-                    <ul className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-4 w-full  max-w-full min-h-px   list-none rhombus_icon_list relative p-0">
+                    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-4 w-full  max-w-full min-h-px   list-none rhombus_icon_list relative p-0">
                       {pageData.hireDevelopersAsYourNeeds.benefits.map(
                         (benefit, index) => (
                           <li
@@ -819,7 +842,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                         viewport:{ once: true, amount: 0.2 },
                         transition:{ duration: 0.5, ease: "easeOut", delay: 0.1 }
                     }}
-                    text="Schedule a Developer Interview"
+                    text="Schedule a Free Consultation"
                     href="#contact-form-section"
                     icon="/navbar/btn_icon.png"
                 />
@@ -963,12 +986,13 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                     className="relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-colors "
                   >
                     <span className="flex flex-row gap-3 justify-center">
-                      Talk to our{" "}
+                      {/* Talk to our{" "}
                       {pageData.title
-                        .replace(/^Hire\s*/, "")
+                        .replace(/^Hire\s* /, "") 
                         .replace(/Developers?$/i, "")
                         .trim()}{" "}
-                      Expert
+                      Expert */}
+                      Talk to Our Experts
                       <Image
                         src="/navbar/btn_icon.png"
                         alt="Get a Quote Arrow"
