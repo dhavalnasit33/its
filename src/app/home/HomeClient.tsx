@@ -340,7 +340,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								<AutoTextSlider data={homePageData?.heroSecton?.technologySection} />
 							</h1>
 
-						<div className="yellow-text max-w-[800px] mx-auto mb-16 md:mb-20 text-center fonts_16 text-white"
+						<div className="yellow-text max-w-200 mx-auto mb-16 md:mb-20 text-center fonts_16 text-white"
 							dangerouslySetInnerHTML={{ __html: homePageData?.heroSecton?.description || "", }}
 						/>
 
@@ -548,6 +548,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 							alt="Global Network"
 							width={500}
 							height={500}
+							  sizes="(max-width: 768px) 100vw, 500px"
 							className="w-full  lg:max-w-125 h-auto object-contain"
 						/>
 						<motion.div

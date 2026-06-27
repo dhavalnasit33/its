@@ -222,7 +222,7 @@ export default function TrainingContactForm() {
                         className={` mt-8 block ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
                     >
                         <div className="bg-[#D68029] relative inline-flex items-center justify-center w-full max-w-50 overflow-hidden text-white rounded-xl group ">
-                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56 uration-750 delay-300 ease-in-out"></span>
+                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56 uration-750 delay-300"></span>
                             <span className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 sm:px-8 py-3 cursor-pointer font-semibold">
                                 {isSubmitting ? (
                                     <>

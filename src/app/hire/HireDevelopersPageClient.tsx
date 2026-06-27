@@ -1920,7 +1920,7 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
                                     transition={{ duration: 0.7, delay: 0.2 }}
                                     viewport={{ once: true, amount: 0.3 }}
                                     whileHover={{ scale: 0.95 }}
-                                    className="absolute -top-[6%] left-[6.5%] w-[42%] cursor-pointer"
+                                    className="absolute top-[-6%] left-[6.5%] w-[42%] cursor-pointer"
                                 >
                                     <Card
                                         {...hireMainPageData.whyChooseItsForDedicatedResources
@@ -1934,7 +1934,7 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
                                     transition={{ duration: 0.7, delay: 0.4 }}
                                     viewport={{ once: true, amount: 0.3 }}
                                     whileHover={{ scale: 0.95 }}
-                                    className="absolute -top-[6%] right-[5%] w-[42%] cursor-pointer"
+                                    className="absolute top-[-6%] right-[5%] w-[42%] cursor-pointer"
                                 >
                                     <Card
                                         {...hireMainPageData.whyChooseItsForDedicatedResources
@@ -1976,7 +1976,7 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
                                     transition={{ duration: 0.7, delay: 1 }}
                                     viewport={{ once: true, amount: 0.3 }}
                                     whileHover={{ scale: 0.95 }}
-                                    className="absolute -bottom-[8%] left-[6.5%] w-[42%] cursor-pointer"
+                                    className="absolute bottom-[-8%] left-[6.5%] w-[42%] cursor-pointer"
                                 >
                                     <Card
                                         {...hireMainPageData.whyChooseItsForDedicatedResources
@@ -2227,7 +2227,7 @@ export default function HireDevelopersPageClient({ initialData }: { initialData?
             </section>
 
             {/* hire top 1% wordpress devlopers */}
-            <Section className="z-10 bg-white xl:!pb-0 ">
+            <Section className="z-10 bg-white xl:pb-0! ">
                 {/* <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto relative flex"> */}
                 <Row className="flex">
                     <div className="flex relative min-h-px w-full">

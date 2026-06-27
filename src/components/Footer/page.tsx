@@ -1431,7 +1431,7 @@ export default function ContactFooterPage() {
         )}
       </Row>
 
-<Section className="bg-gray-100 !py-14">
+<Section className="bg-gray-100 py-14!">
   <Row className=" mx-auto  rounded-xl " >
   {/* <Row> */}
         <div className="flex max-lg:flex-wrap items-center gap-6 justify-between">
@@ -1456,7 +1456,7 @@ export default function ContactFooterPage() {
               href={`tel:${phonePrimaryClean}`}
             > 
               <div
-                className="  w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-[#d68029] to-[#f7b733] ">
+                className="  w-12 h-12 rounded-full flex items-center justify-center bg-linear-to-r from-[#d68029] to-[#f7b733] ">
                 <MdPhone
                   size={22}
                   className="text-white"
@@ -1465,7 +1465,7 @@ export default function ContactFooterPage() {
             </Link>
 
               <div className="relative pl-4">
-                <div className=" absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
+                <div className=" absolute left-0 top-0 h-full w-0.5 bg-linear-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
 
                 <p className="text-[13px] text-[#161616] uppercase">
                   Ready to Build? Let's Talk!
@@ -1488,7 +1488,7 @@ export default function ContactFooterPage() {
               href={`mailto:${hrEmail}`}
             > 
               <div
-                className="  w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-[#d68029] to-[#f7b733] ">
+                className="  w-12 h-12 rounded-full flex items-center justify-center bg-linear-to-r from-[#d68029] to-[#f7b733] ">
                 <MdEmail
                   size={22}
                   className="text-white"
@@ -1497,7 +1497,7 @@ export default function ContactFooterPage() {
             </Link>
 
             <div className="relative pl-4">
-              <div className=" absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
+              <div className=" absolute left-0 top-0 h-full w-0.5 bg-linear-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
 
               <p className="text-[13px] text-[#161616] uppercase">
                 Mail to our HR Department
@@ -1519,7 +1519,7 @@ export default function ContactFooterPage() {
                href={microsoftHandle.startsWith("http") ? microsoftHandle : `https://teams.microsoft.com/l/chat/0/0?users=${microsoftHandle}`}
             > 
               <div
-                className="  w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-r from-[#d68029] to-[#f7b733] ">
+                className="  w-12 h-12 rounded-full flex items-center justify-center bg-linear-to-r from-[#d68029] to-[#f7b733] ">
                 <FaMicrosoft
                   size={22}
                   className="text-white"
@@ -1528,7 +1528,7 @@ export default function ContactFooterPage() {
             </Link>
 
             <div className="relative pl-4">
-              <div className=" absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
+              <div className=" absolute left-0 top-0 h-full w-0.5 bg-linear-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
 
               <p className="text-[13px] text-[#161616] uppercase">
                 Official Microsoft Partner
@@ -1662,14 +1662,14 @@ export default function ContactFooterPage() {
                   href={`mailto:${hrEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
                 >
-                  <MdEmail size={20}  className="flex-shrink-0"/>
+                  <MdEmail size={20}  className="shrink-0"/>
                   <h4>{hrEmail}</h4>
                 </Link>
                 <Link
                   href={`tel:${phonePrimaryClean}`}
                   className="flex items-center gap-4 text-gray-700 hover:text-[#d68029] "
                 >
-                  <MdPhone size={20}  className="flex-shrink-0"/>
+                  <MdPhone size={20}  className="shrink-0"/>
                   <h4>{phonePrimary}</h4>
                 </Link>
               </div>
@@ -1680,7 +1680,7 @@ export default function ContactFooterPage() {
                   href={`mailto:${salesEmail}`}
                   className="flex items-center break-all gap-4 text-gray-700 hover:text-[#d68029]  mb-2"
                 >
-                  <MdEmail size={20}  className="flex-shrink-0"/>
+                  <MdEmail size={20}  className="shrink-0"/>
                   <h4>{salesEmail}</h4>
                 </Link>
                  <Link
@@ -1689,7 +1689,7 @@ export default function ContactFooterPage() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-gray-70 hover:text-[#d68029] "
                 >
-                  <FaMicrosoft size={20}  className="flex-shrink-0" />
+                  <FaMicrosoft size={20}  className="shrink-0" />
                   <h4>{microsoftHandle}</h4>
                 </Link>
 
@@ -1903,7 +1903,7 @@ export default function ContactFooterPage() {
         </Row>
       </Section> */}
 
-      <Section className="!py-8">
+      <Section className="py-8!">
         <Row className="flex flex-col space-y-5 md:space-y-7 ">
           <div>  
             {/* <ul className="flex flex-wrap ">

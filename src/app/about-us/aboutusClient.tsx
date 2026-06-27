@@ -984,7 +984,7 @@ const services = navStructure?.servicesNav?.flatMap((category) =>
                 ease: "easeOut",
               }} 
               
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 max-[540px]:grid-cols-1 md:mt-[-170px] xl:mt-[-180px] max-w-[750px]! mx-auto">
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 max-[540px]:grid-cols-1 md:-mt-42.5 xl:-mt-45 max-w-187.5! mx-auto">
 						{aboutUsData?.heroSection?.ratings.map((item, index) => (
               <div
                 key={index}
@@ -1152,7 +1152,7 @@ const services = navStructure?.servicesNav?.flatMap((category) =>
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }} 
               className="h-full bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col justify-between
-              transition-all duration-300 hover:translate-y-[-10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
+              transition-all duration-300 hover:-translate-y-2.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
               <div>
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {/* <FiTarget className="w-7 h-7 text-blue-600" /> */}
@@ -1216,7 +1216,7 @@ const services = navStructure?.servicesNav?.flatMap((category) =>
                 className="grid md:grid-cols-2 gap-6">
 
               {/* Vision */}
-              <div className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 transition-all duration-300 hover:translate-y-[-10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)] ">
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-gray-100 transition-all duration-300 hover:-translate-y-2.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)] ">
 
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {/* <FaEye className="w-7 h-7 text-indigo-600" /> */}
@@ -1242,7 +1242,7 @@ const services = navStructure?.servicesNav?.flatMap((category) =>
 
               {/* Values */}
               <div
-                className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100 transition-all duration-300 hover:translate-y-[-10px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
+                className="bg-white rounded-[20px] p-6 shadow-[0_0_20px_rgba(0,0,0,0.15)]  border border-gray-100 transition-all duration-300 hover:-translate-y-2.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
                 <div className="w-18 h-18 rounded-2xl flex items-center justify-center mb-6 bg-orange-100">
                   {aboutUsData?.goals?.valuesImage && (
                       <Image
@@ -1432,7 +1432,7 @@ const services = navStructure?.servicesNav?.flatMap((category) =>
               className="
                 flex flex-col gap-2 items-center justify-center
                 h-36
-                w-[210px]
+                w-52.5
                 shrink-0
                 rounded-[13px]
                 bg-white
