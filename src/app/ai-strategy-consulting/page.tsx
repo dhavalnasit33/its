@@ -14,6 +14,8 @@ import Results from "@/components/ai-strategy/Results";
 import Testimonials from "@/components/home/Testimonials";
 import CTA from "@/components/ai-strategy/CTA";
 import FAQ from "@/components/ai-strategy/FAQ";
+import IndustriesWeTransform from "@/components/ai-strategy/IndustriesWeTransform";
+import { getNavigationStructure } from "@/lib/navigationService";
 
  
 
@@ -53,7 +55,15 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600;
 
-export default function AIStrategyPage() {
+export default async function AIStrategyPage() {
+  const navStructure = await getNavigationStructure();
+  const services = navStructure?.servicesNav?.flatMap((category) =>
+    category.links?.map((service) => ({
+      title: service.title,
+      slug: service.slug,
+    })) || []
+  ) || [];
+
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -134,7 +144,7 @@ export default function AIStrategyPage() {
         {/* ── 3. Platform Slider (reused from home) ── */}
         <Section className="bg-[#0d1b2a] z-10 py-6!">
           <Row>
-            <PlatformSlider />
+            <PlatformSlider items={services} />
           </Row>
         </Section>
 
@@ -154,6 +164,8 @@ export default function AIStrategyPage() {
         {/* ── 6. AI Solutions Grid ── */}
         <Solutions />
 
+        {/* ── 7. Industries We Transform ── */}
+        <IndustriesWeTransform />
 
         {/* ── 11. CTA ── */}
         <CTA />
