@@ -671,6 +671,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 				{/* </div> */}
 			</Section>
 
+			<ParallaxShape type="top" />
 			<ParallaxShape type="bottom" />
 
 			<TechnologySection />

@@ -662,3 +662,52 @@ export interface SeoManager {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface AiStat {
+  value: string;
+  label: string;
+}
+
+export interface AiTool {
+  name: string;
+  logo: string;
+}
+
+export interface TimelineStep {
+  number: string;
+  title: string;
+  description: string;
+}
+
+export interface AiSolution {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface Industry {
+  icon: string;
+  title: string;
+}
+
+export interface ResultStat {
+  value: string;
+  suffix: string;
+  label: string;
+  icon: string;
+}
+
+export interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  avatar: string;
+  rating: number;
+  text: string;
+  source: string;
+}
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
