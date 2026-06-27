@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "framer-motion"; 
 import { useCountUp } from "@/hook/useCountUp";
 import { RESULT_STATS } from "@/data/constants";
+import Section from "../Section";
+import Row from "../Row";
 
 interface StatItemProps {
   value: string;
@@ -81,8 +83,8 @@ function StatItem({ value, suffix, label, index }: StatItemProps) {
 
 export default function Results() {
   return (
-    <section className="w-full bg-white py-12 md:py-16">
-      <div className="w-full max-w-[90%] lg:max-w-[80%] mx-auto">
+    <Section className=" bg-white">
+      <Row>
         <div className="relative bg-[#0d1b2a] rounded-3xl overflow-hidden px-8 py-10 md:px-12 md:py-12 border border-white/5 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
           {/* Ambient background glows */}
           <div className="absolute top-0 left-0 w-72 h-72 rounded-full bg-[#D68029]/10 blur-3xl pointer-events-none" />
@@ -100,7 +102,7 @@ export default function Results() {
               Real Impact. <span className="text-[#D68029]">Measurable Results.</span>
             </motion.h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
+            <div className="grid max-[480px]:grid-cols-1 grid-cols-2 xl:grid-cols-4 gap-6 md:gap-4">
               {RESULT_STATS.map((stat, idx) => (
                 <StatItem
                   key={idx}
@@ -119,18 +121,18 @@ export default function Results() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="w-full lg:w-[240px] shrink-0 flex justify-center lg:justify-end relative z-10"
+            className="w-full lg:w-100 shrink-0 flex justify-center lg:justify-end relative z-10"
           >
             <Image
               src="/ai-strategy/ai-head-illustration.png"
               alt="AI Results"
               width={240}
               height={240}
-              className="w-full max-w-[220px] h-auto object-contain"
+              className="w-full lg:max-w-120 h-auto object-contain"
             />
           </motion.div>
         </div>
-      </div>
-    </section>
+      </Row>
+    </Section>
   );
 }

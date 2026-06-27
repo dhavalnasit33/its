@@ -7,6 +7,7 @@ import Link from "next/link";
 import { AiSolution } from "@/types";
 import { AI_SOLUTIONS } from "@/data/constants";
 import Row from "@/components/Row";
+import Section from "../Section";
 
 function SolutionIcon({ solution }: { solution: AiSolution }) {
   const [hasError, setHasError] = React.useState(false);
@@ -129,7 +130,7 @@ function SolutionCard({ solution, index }: SolutionCardProps) {
 
 export default function Solutions() {
   return (
-    <section id="ai-solutions" className="w-full bg-gray-50 py-16 md:py-20">
+    <Section id="ai-solutions" >
       <Row>
         {/* Header */}
         <div className="text-center mb-12">
@@ -165,6 +166,6 @@ export default function Solutions() {
           ))}
         </div>
       </Row>
-    </section>
+    </Section>
   );
 }

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";  
 import Row from "@/components/Row";
+import Section from "../Section";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -20,7 +21,7 @@ const fadeRight = (delay = 0) => ({
 
 export default function Hero() {
   return (
-    <section className="w-full bg-white pt-8 pb-0 lg:pt-12 overflow-hidden">
+    <Section className=" overflow-hidden">
       <Row>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* ── Left Column ── */}
@@ -102,6 +103,6 @@ export default function Hero() {
           </motion.div>
         </div>
       </Row>
-    </section>
+    </Section>
   );
 }

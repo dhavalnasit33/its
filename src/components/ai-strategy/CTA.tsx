@@ -5,19 +5,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Row from "@/components/Row";
+import Section from "../Section";
 
 export default function CTA() {
   return (
-    <section className="w-full py-16 md:py-20">
+    <Section>
       <Row>
-        <div className="relative bg-[#0d1b2a] rounded-3xl overflow-hidden px-8 py-14 md:px-16 md:py-16">
+        {/* <div className="relative bg-[#0d1b2a] rounded-3xl overflow-hidden px-8 py-14 md:px-16 md:py-16"> */}
+        <div className="relative bg-[#0d1b2a] rounded-3xl overflow-hidden   lg:pl-16 pt-10 ">
           {/* Ambient glow */}
           <div className="absolute top-0 left-0 w-72 h-72 rounded-full bg-[#D68029]/10 blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 right-48 w-56 h-56 rounded-full bg-[#0EA5E9]/10 blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center ">
             {/* Left: Content */}
-            <div>
+            <div className="pl-8">
               <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -78,13 +80,13 @@ export default function CTA() {
                 src="/ai-strategy/rocket-illustration.png"
                 alt="Build AI Strategy"
                 width={340}
-                height={300}
-                className="w-full max-w-xs h-auto object-contain drop-shadow-2xl"
+                height={400}
+                className="w-full  h-100 object-cover drop-shadow-2xl"
               />
           </motion.div>
           </div>
         </div>
       </Row>
-    </section>
+    </Section>
   );
 }

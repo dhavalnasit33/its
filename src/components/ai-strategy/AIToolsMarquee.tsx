@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image"; 
 import { AI_TOOLS } from "@/data/constants";
 import Row from "@/components/Row";
+import Section from "../Section";
 
 const DUPLICATED = [...AI_TOOLS, ...AI_TOOLS, ...AI_TOOLS];
 
@@ -12,7 +13,7 @@ function AIToolItem({ logo, name }: { logo: string; name: string }) {
 
   return (
     <div
-      className="flex items-center justify-center px-6 py-3 rounded-xl border border-gray-100 shrink-0 hover:border-[#D68029]/40 transition-colors duration-200 min-w-[120px] h-14"
+      className="flex items-center justify-center px-6 py-3 rounded-xl  shrink-0 hover:border-[#D68029]/40 transition-colors duration-200 min-w-[120px] h-14"
     >
       {!logo || hasError ? (
         <span className="text-[#0d1b2a] text-sm font-bold whitespace-nowrap">
@@ -34,9 +35,9 @@ function AIToolItem({ logo, name }: { logo: string; name: string }) {
 
 export default function AIToolsMarquee() {
   return (
-    <div className="w-full bg-white border-y border-gray-100 py-4 overflow-hidden select-none">
-      <Row className="mb-3">
-        <p className="text-center text-gray-400 text-xs font-semibold uppercase tracking-widest">
+    <Section className=" bg-white  overflow-hidden select-none">
+      <Row >
+        <p className="text-center text-gray-400 text-xs font-semibold uppercase tracking-widest mb-10">
           Trusted by innovative companies worldwide
         </p>
       </Row>
@@ -63,6 +64,6 @@ export default function AIToolsMarquee() {
           animation: marquee 28s linear infinite;
         }
       `}</style>
-    </div>
+    </Section>
   );
 }

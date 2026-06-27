@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { TIMELINE_STEPS } from "@/data/constants";
 import Row from "@/components/Row";
+import Section from "../Section";
 
 function StepIcon({ index }: { index: number }) {
   switch (index) {
@@ -51,7 +52,7 @@ function StepIcon({ index }: { index: number }) {
 
 export default function Timeline() {
   return (
-    <section className="w-full bg-white py-16 md:py-24 overflow-hidden">
+    <Section className=" overflow-hidden">
       <Row>
         {/* Centered Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
@@ -162,6 +163,6 @@ export default function Timeline() {
           </div>
         </div>
       </Row>
-    </section>
+    </Section>
   );
 }
