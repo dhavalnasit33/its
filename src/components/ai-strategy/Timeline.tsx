@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { TIMELINE_STEPS } from "@/data/constants";
 import Row from "@/components/Row";
 import Section from "../Section";
+import Motion from "../motionbar";
 
 function StepIcon({ index }: { index: number }) {
   switch (index) {
@@ -70,7 +71,8 @@ export default function Timeline() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight mb-4"
+            // className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight mb-4"
+            className="common-h2 text-center w-full  text-black mb-4"
           >
             AI Consulting Progress
           </motion.h2>
@@ -84,36 +86,37 @@ export default function Timeline() {
             A proven step-by-step approach to turn your business challenges into
             intelligent solutions.
           </motion.p>
-          <div className="flex justify-center mt-4 gap-1">
+          {/* <div className="flex justify-center mt-4 gap-1">
             <span className="w-10 h-1 rounded-full bg-[#D68029]" />
             <span className="w-3 h-1 rounded-full bg-[#D68029]/40" />
-          </div>
+          </div> */}
+          <Motion />
         </div>
 
         {/* Timeline Container */}
         <div className="relative w-full">
           {/* Central track line (Desktop: middle, Mobile: left) */}
-          <div className="absolute left-[20px] lg:left-1/2 lg:-translate-x-1/2 top-4 bottom-4 w-0.5 bg-gray-100" />
+          <div className="absolute left-[20px] md:left-1/2 md:-translate-x-1/2 top-20 bottom-20 w-0.5 bg-gray-100" />
 
           {/* Steps List */}
-          <div className="space-y-12 lg:space-y-16">
+          <div className="space-y-12 md:space-y-16">
             {TIMELINE_STEPS.map((step, idx) => {
               const isEven = idx % 2 === 0;
 
               return (
                 <div
                   key={step.number}
-                  className="relative flex flex-col lg:flex-row items-start lg:items-center w-full"
+                  className="relative flex flex-col md:flex-row items-start md:items-center w-full"
                 >
                   {/* Left Side: Card for Odd Steps, Spacer for Even Steps */}
-                  <div className="w-full lg:w-1/2 pl-12 lg:pl-0 lg:pr-12 order-2 lg:order-1 flex justify-start lg:justify-end">
+                  <div className="w-full md:w-1/2 pl-16 md:pl-0 md:pr-12 order-2 md:order-1 flex justify-start md:justify-end">
                     {isEven && (
                       <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.6 }}
-                        className="w-full max-w-lg bg-white p-6 rounded-2xl border border-gray-100 shadow-md hover:shadow-lg hover:border-[#D68029]/20 transition-all duration-300 group"
+                        className="w-full md:max-w-lg bg-white p-6 rounded-2xl border border-gray-100 shadow-md hover:shadow-lg hover:border-[#D68029]/20 transition-all duration-300 group"
                       >
                         <span className="text-[#D68029] text-xs font-bold uppercase tracking-wider block mb-1">
                           {step.number} &mdash; Step
@@ -121,7 +124,7 @@ export default function Timeline() {
                         <h3 className="text-base sm:text-lg font-bold text-[#0d1b2a] mb-2 group-hover:text-[#D68029] transition-colors">
                           {step.title}
                         </h3>
-                        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                        <p className="fonts_16 text-gray-500">
                           {step.description}
                         </p>
                       </motion.div>
@@ -129,21 +132,21 @@ export default function Timeline() {
                   </div>
 
                   {/* Center Node Icon (Desktop: Center, Mobile: Left) */}
-                  <div className="absolute left-0 lg:left-1/2 lg:-translate-x-1/2 top-2 lg:top-auto z-10 order-1 lg:order-2 flex items-center justify-center">
+                  <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-1/2 -translate-y-1/2 z-10 order-1 md:order-2 flex items-center justify-center">
                     <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-200 hover:border-[#D68029] flex items-center justify-center shadow-md transition-colors duration-300">
                       <StepIcon index={idx} />
                     </div>
                   </div>
 
                   {/* Right Side: Spacer for Odd Steps, Card for Even Steps */}
-                  <div className="w-full lg:w-1/2 lg:pl-12 pl-12 lg:pr-0 order-2 lg:order-3 flex justify-start">
+                  <div className="w-full md:w-1/2  pl-16 md:pl-12 md:pr-0 order-2 md:order-3 flex justify-start">
                     {!isEven && (
                       <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.6 }}
-                        className="w-full max-w-lg bg-white p-6 rounded-2xl border border-gray-100 shadow-md hover:shadow-lg hover:border-[#D68029]/20 transition-all duration-300 group"
+                        className="w-full md:max-w-lg bg-white p-6 rounded-2xl border border-gray-100 shadow-md hover:shadow-lg hover:border-[#D68029]/20 transition-all duration-300 group"
                       >
                         <span className="text-[#D68029] text-xs font-bold uppercase tracking-wider block mb-1">
                           {step.number} &mdash; Step
@@ -151,7 +154,7 @@ export default function Timeline() {
                         <h3 className="text-base sm:text-lg font-bold text-[#0d1b2a] mb-2 group-hover:text-[#D68029] transition-colors">
                           {step.title}
                         </h3>
-                        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gray-500  fonts_16">
                           {step.description}
                         </p>
                       </motion.div>

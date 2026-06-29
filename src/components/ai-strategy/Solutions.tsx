@@ -8,6 +8,7 @@ import { AiSolution } from "@/types";
 import { AI_SOLUTIONS } from "@/data/constants";
 import Row from "@/components/Row";
 import Section from "../Section";
+import Motion from "../motionbar";
 
 function SolutionIcon({ solution }: { solution: AiSolution }) {
   const [hasError, setHasError] = React.useState(false);
@@ -119,10 +120,10 @@ function SolutionCard({ solution, index }: SolutionCardProps) {
 
       {/* Text */}
       <div>
-        <h3 className="text-[#0d1b2a] text-sm font-bold mb-1.5 group-hover:text-[#D68029] transition-colors duration-300">
+        <h4 className="text-[#0d1b2a] text-sm font-bold mb-1.5 group-hover:text-[#D68029] transition-colors duration-300">
           {solution.title}
-        </h3>
-        <p className="text-gray-500 text-xs leading-relaxed">{solution.description}</p>
+        </h4>
+        <p className="text-gray-500 text-sm leading-relaxed">{solution.description}</p>
       </div>
     </motion.div>
   );
@@ -148,15 +149,17 @@ export default function Solutions() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight"
+            // className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight"
+            className="common-h2 text-center w-full  text-black "
           >
             AI Solutions That Drive Real Value
           </motion.h2>
           {/* Divider accent */}
-          <div className="flex justify-center mt-4 gap-1">
+          {/* <div className="flex justify-center mt-4 gap-1">
             <span className="w-10 h-1 rounded-full bg-[#D68029]" />
             <span className="w-3 h-1 rounded-full bg-[#D68029]/40" />
-          </div>
+          </div> */}
+          <Motion />
         </div>
 
         {/* Grid */}

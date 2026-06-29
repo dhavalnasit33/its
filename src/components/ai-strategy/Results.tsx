@@ -69,10 +69,10 @@ function StatItem({ value, suffix, label, index }: StatItemProps) {
         <StatIcon label={label} />
       </div>
       <div>
-        <p className="text-white text-xl sm:text-2xl font-extrabold leading-none">
+        <h4 className="text-white text-xl sm:text-2xl font-extrabold leading-none">
           {count}
           {suffix}
-        </p>
+        </h4>
         <p className="text-gray-400 text-[11px] sm:text-xs mt-1.5 leading-snug max-w-[130px] font-semibold">
           {label}
         </p>
@@ -97,7 +97,8 @@ export default function Results() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-2xl sm:text-[32px] font-extrabold text-white leading-tight mb-8"
+              // className="text-2xl sm:text-[32px] font-extrabold text-white leading-tight mb-8"
+              className="common-h2-small leading-snug mb-8 text-white"
             >
               Real Impact. <span className="text-[#D68029]">Measurable Results.</span>
             </motion.h2>

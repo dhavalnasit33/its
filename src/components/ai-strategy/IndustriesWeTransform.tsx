@@ -19,6 +19,7 @@ import {
   LuPlane,
   LuCpu
 } from "react-icons/lu";
+import Motion from "../motionbar";
 
 interface IndustryFeature {
   title: string;
@@ -519,28 +520,32 @@ export default function IndustriesWeTransform() {
       <Row>
         {/* Section Heading */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <h2 className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight">
+          {/* <h2 className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight"> */}
+          <h2 className="common-h2 text-center w-full  text-black ">
             Industries We Transform Through Strategic AI Consulting
           </h2>
           {/* Divider accent */}
-          <div className="flex justify-center mt-4 gap-1">
+          {/* <div className="flex justify-center mt-4 gap-1">
             <span className="w-10 h-1 rounded-full bg-[#D68029]" />
             <span className="w-3 h-1 rounded-full bg-[#D68029]/40" />
-          </div>
+          </div> */}
+          <Motion />
         </div>
 
         {/* Tab-Sidebar layout grid */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start w-full">
           
           {/* Left Column: Tab list (vertical on desktop, horizontal scroll on mobile) */}
-          <div className="w-full lg:w-[35%] flex overflow-x-auto lg:overflow-x-visible lg:flex-col gap-3 py-2 px-1 scrollbar-none shrink-0 border-b border-gray-100 lg:border-b-0">
+          <div className="w-full lg:w-[35%] flex overflow-x-auto lg:overflow-x-visible lg:flex-col gap-3  scrollbar-none shrink-0 border-b border-gray-100 lg:border-b-0">
             {INDUSTRIES_DATA.map((ind) => {
               const isSelected = ind.id === selectedId;
               return (
                 <button
                   key={ind.id}
                   onClick={() => setSelectedId(ind.id)}
-                  className={`relative flex cursor-pointer items-center gap-4 px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm transition-all duration-300 whitespace-nowrap lg:whitespace-normal shrink-0 ${
+                  className={`relative flex items-center gap-4  cursor-pointer px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm lg:text-lg transition-all duration-300 whitespace-nowrap 
+                    lg:whitespace-normal shrink-0 hover:bg-white  hover:border hover:border-[#D68029] hover:text-[#0d1b2a] 
+                    ${
                     isSelected
                       ? "bg-white border-gray-100 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.06)] text-[#0d1b2a]"
                       : "bg-[#f8f9fa]/60 border-transparent text-gray-500 hover:bg-gray-50"
@@ -598,7 +603,7 @@ export default function IndustriesWeTransform() {
                         </h4>
                         <ul className="space-y-2 pl-1">
                           {feature.items.map((item, bulletIdx) => (
-                            <li key={bulletIdx} className="flex gap-2.5 items-start text-gray-500 text-xs sm:text-sm leading-relaxed">
+                            <li key={bulletIdx} className="flex gap-2.5 items-start text-gray-500 text-sm lg:text-[16px] leading-relaxed">
                               <span className="text-[#D68029] font-extrabold select-none mt-0.5">•</span>
                               <span>{item}</span>
                             </li>

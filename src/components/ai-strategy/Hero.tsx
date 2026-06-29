@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";  
 import Row from "@/components/Row";
 import Section from "../Section";
+import Button from "../Button";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -23,9 +24,14 @@ export default function Hero() {
   return (
     <Section className="common_background_gradient overflow-hidden">
       <Row>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        {/* <div className="absolute inset-0 ">
+          <div className="absolute top-0 md:top-8 right-0 w-80 md:w-105 h-80 md:h-105 rounded-full bg-purple-500/30 blur-[130px]" />
+        </div> */}
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"> */}
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-center">
           {/* ── Left Column ── */}
-          <div className="flex flex-col">
+          {/* <div className="flex flex-col"> */}
+          <div className="w-full z-10 max-w-full xl:max-w-[55%] items-center content-center text-gray-800">
             {/* Badge */}
             <motion.div {...fadeUp(0)}>
               <span className="inline-flex items-center gap-2 text-[#D68029] text-xs font-bold uppercase tracking-widest mb-5">
@@ -37,7 +43,8 @@ export default function Hero() {
             {/* Heading */}
             <motion.h1
               {...fadeUp(0.1)}
-              className="text-[32px] sm:text-[40px] lg:text-[48px] xl:text-[54px] font-extrabold leading-tight text-[#0d1b2a] mb-4"
+              // className="text-[32px] sm:text-[40px] lg:text-[48px] xl:text-[54px] font-extrabold leading-tight text-[#0d1b2a] mb-4"
+              className="text-4xl md:text-[42px] xl:text-5xl font-extrabold mb-6 md:mb-10 leading-snug text-black rose max-w-none "
             >
               AI Strategy &amp; Consulting{" "}
               <span className="block">
@@ -49,7 +56,7 @@ export default function Hero() {
             {/* Description */}
             <motion.p
               {...fadeUp(0.2)}
-              className="text-gray-600 text-base sm:text-lg leading-relaxed mb-8 max-w-lg"
+              className="text-gray-600 text-base sm:text-lg leading-relaxed mb-8 lg:max-w-lg"
             >
               We help businesses identify high-impact AI opportunities, build clear
               roadmaps, and implement practical AI solutions that drive efficiency,
@@ -58,26 +65,41 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <motion.div
-              {...fadeUp(0.3)}
+              initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                          duration: 0.6,
+                          ease: "easeOut",
+                          delay: 0.6,
+                      }}
               className="flex flex-wrap gap-4 mb-10"
             >
-              <Link
-                href="#contact-form-section"
-                className="relative inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-xl bg-[#D68029] text-white font-semibold text-sm sm:text-base overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-[#D68029]/30"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Book Free Consultation
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </span>
-              </Link>
 
-              <Link
-                href="/our-service"
-                className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-xl border border-[#0d1b2a] text-[#0d1b2a] font-semibold text-sm sm:text-base hover:bg-[#0d1b2a] hover:text-white transition-all duration-300"
-              >
-                Explore Our Services
-                <span>→</span>
-              </Link>
+              <Button
+                  bgColor="#D68029"
+                  hoverColor="#0d1b2a"
+                  text=" Book Free Consultation"
+                  href="#contact-form-section"
+              />
+            <motion.div className="border border-[#0d1b2a] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0d1b2a] hover:text-[#ffffff] transition-all duration-700 ease-in-out group"
+                  >
+                  <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded   group-hover:w-full group-hover:h-full"></span>
+                  <a href="/our-service"
+                      className="relative tracking-tight text-sm sm:text-base  px-6 py-3 sm:px-8 sm:py-3 cursor-pointer font-semibold">
+                      <span className="flex flex-row gap-3 items-center justify-center">
+                          Explore Our Services
+                          <div className="group">
+                          <Image
+                              src="/navbar/btn_icon.png"
+                              alt="FRAME"
+                              width={20}
+                              height={20}
+                                className="transition-all duration-700 ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert"
+                          />
+                          </div>
+                      </span>
+                  </a>
+              </motion.div>
             </motion.div>
 
 
@@ -86,19 +108,17 @@ export default function Hero() {
           {/* ── Right Column: Dashboard Illustration ── */}
           <motion.div
             {...fadeRight(0.2)}
-            className="relative w-full flex justify-center lg:justify-end items-center"
+            // className="relative w-full flex justify-center lg:justify-end items-center"
+            className="relative z-10 w-full max-w-full xl:max-w-[55%] "
           >
-            <div className="relative w-full max-w-[540px] aspect-[4/3] rounded-3xl border border-gray-100 bg-[#0d1b2a] shadow-2xl overflow-hidden flex items-center justify-center">
-              <div className="absolute inset-0 flex items-center justify-center scale-[1.32]">
-                <Image
-                  src="/ai-strategy/hero_section_main_image.png"
-                  alt="AI Strategy & Consulting"
-                  width={680}
-                  height={540}
-                  className="w-full h-full object-contain"
-                  priority
-                />
-              </div>
+            <div className="relative w-full lg:max-w-170 aspect-680/540">
+              <Image
+                src="/ai-strategy/hero_section_main_image.png"
+                alt="AI Strategy & Consulting"
+                fill
+                priority
+                className="object-contain"
+              />
             </div>
           </motion.div>
         </div>
