@@ -519,10 +519,11 @@ export default function IndustriesWeTransform() {
     <Section className="bg-white py-16 lg:py-24">
       <Row>
         {/* Section Heading */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
+        <div className="text-center mb-16  mx-auto">
           {/* <h2 className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight"> */}
           <h2 className="common-h2 text-center w-full  text-black ">
-            Industries We Transform Through Strategic AI Consulting
+            Industries We Transform Through Strategic {" "}
+            <span className="text-[#D68029]">AI Consulting</span>
           </h2>
           {/* Divider accent */}
           {/* <div className="flex justify-center mt-4 gap-1">
@@ -543,12 +544,12 @@ export default function IndustriesWeTransform() {
                 <button
                   key={ind.id}
                   onClick={() => setSelectedId(ind.id)}
-                  className={`relative flex items-center gap-4  cursor-pointer px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm lg:text-lg transition-all duration-300 whitespace-nowrap 
+                  className={`relative flex items-center  gap-4  cursor-pointer px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm lg:text-xl transition-all duration-300 whitespace-nowrap 
                     lg:whitespace-normal shrink-0 hover:bg-white  hover:border hover:border-[#D68029] hover:text-[#0d1b2a] 
                     ${
                     isSelected
                       ? "bg-white border-gray-100 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.06)] text-[#0d1b2a]"
-                      : "bg-[#f8f9fa]/60 border-transparent text-gray-500 hover:bg-gray-50"
+                      : "bg-gray-50 border-transparent text-gray-500 hover:bg-gray-50"
                   }`}
                 >
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
@@ -572,7 +573,7 @@ export default function IndustriesWeTransform() {
           </div>
 
           {/* Right Column: Display details of selected industry */}
-          <div className="w-full lg:w-[65%] min-h-[500px]">
+          <div className="w-full lg:w-[65%] min-h-125">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedId}
@@ -583,7 +584,7 @@ export default function IndustriesWeTransform() {
                 className="w-full"
               >
                 {/* Description */}
-                <p className="text-[#0d1b2a] font-semibold text-lg sm:text-xl leading-relaxed mb-10 border-l-4 border-[#D68029]/30 pl-5">
+                <p className="text-[#0d1b2a] font-semibold text-md leading-relaxed mb-12 border-l-4 border-[#d68029] pl-5">
                   {selectedIndustry.description}
                 </p>
 
@@ -592,19 +593,19 @@ export default function IndustriesWeTransform() {
                   {selectedIndustry.features.map((feature, idx) => (
                     <div key={idx} className="flex gap-5 items-start">
                       {/* Orange Square Number Badge */}
-                      <div className="w-7 h-7 rounded-md bg-[#D68029] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm mt-0.5">
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-md bg-linear-to-r from-[#d68029] to-[#f7b733] text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-sm mt-0.5">
                         {idx + 1}
                       </div>
 
                       {/* Content block */}
                       <div className="flex-1">
-                        <h4 className="text-base sm:text-lg font-bold text-[#0d1b2a] mb-3">
+                        <h4 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#0d1b2a] mb-4 lg:mb-5">
                           {feature.title}
                         </h4>
-                        <ul className="space-y-2 pl-1">
+                        <ul className="space-y-3">
                           {feature.items.map((item, bulletIdx) => (
-                            <li key={bulletIdx} className="flex gap-2.5 items-start text-gray-500 text-sm lg:text-[16px] leading-relaxed">
-                              <span className="text-[#D68029] font-extrabold select-none mt-0.5">•</span>
+                            <li key={bulletIdx} className="flex gap-2.5 items-start text-[#6f6f6f] text-lg">
+                              <span className="text-[#D68029] font-extrabold select-none  text-xl rounded-full">•</span>
                               <span>{item}</span>
                             </li>
                           ))}

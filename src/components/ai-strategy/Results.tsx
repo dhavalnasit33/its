@@ -73,7 +73,8 @@ function StatItem({ value, suffix, label, index }: StatItemProps) {
           {count}
           {suffix}
         </h4>
-        <p className="text-gray-400 text-[11px] sm:text-xs mt-1.5 leading-snug max-w-[130px] font-semibold">
+        {/* <p className="text-gray-400 text-[11px] sm:text-xs mt-1.5 leading-snug max-w-[130px] font-semibold"> */}
+        <p className="text-white opacity-70 mt-2 font-medium text-xs">
           {label}
         </p>
       </div>
@@ -83,9 +84,9 @@ function StatItem({ value, suffix, label, index }: StatItemProps) {
 
 export default function Results() {
   return (
-    <Section className=" bg-white">
-      <Row>
-        <div className="relative bg-[#0d1b2a] rounded-3xl overflow-hidden px-8 py-10 md:px-12 md:py-12 border border-white/5 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
+    <Section className="relative bg-[#0d1b2a]  overflow-hidden  md:py-12! border border-white/5 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
+      <Row className="flex flex-col-reverse lg:flex-row items-center justify-center gap-10">
+        {/* <div className="relative bg-[#0d1b2a] rounded-3xl overflow-hidden px-8 py-10 md:px-12 md:py-12 border border-white/5 shadow-2xl "> */}
           {/* Ambient background glows */}
           <div className="absolute top-0 left-0 w-72 h-72 rounded-full bg-[#D68029]/10 blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-[#0EA5E9]/10 blur-3xl pointer-events-none" />
@@ -122,17 +123,17 @@ export default function Results() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="w-full lg:w-100 shrink-0 flex justify-center lg:justify-end relative z-10"
+            className="w-full lg:w-140 shrink-0 flex justify-center lg:justify-end relative z-10"
           >
             <Image
-              src="/ai-strategy/ai-head-illustration.png"
+              src="/ai-strategy/ai-head-illustration1.png"
               alt="AI Results"
               width={240}
               height={240}
-              className="w-full lg:max-w-120 h-auto object-contain"
+              className="w-full lg:max-w-140 h-auto object-contain"
             />
           </motion.div>
-        </div>
+        {/* </div> */}
       </Row>
     </Section>
   );

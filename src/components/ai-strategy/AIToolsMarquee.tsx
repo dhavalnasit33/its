@@ -37,7 +37,7 @@ export default function AIToolsMarquee() {
   return (
     <Section className=" bg-white  overflow-hidden select-none">
       <Row >
-        <p className="text-center text-gray-600 opacity-70 text-sm font-bold uppercase tracking-widest mb-10">
+        <p className="text-center text-gray-600 opacity-70 text-md font-bold uppercase tracking-widest mb-10">
           Trusted by innovative companies worldwide
         </p>
       </Row>

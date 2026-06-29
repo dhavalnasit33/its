@@ -111,7 +111,7 @@ function SolutionCard({ solution, index }: SolutionCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group relative flex flex-col gap-3 p-5 rounded-2xl border border-gray-100 bg-white hover:border-[#D68029]/30 hover:shadow-lg hover:shadow-[#D68029]/5 transition-all duration-300"
+      className="group relative flex h-full flex-col gap-4 p-5 rounded-2xl border border-gray-200 bg-white hover:border-[#D68029] hover:shadow-lg hover:shadow-[#D68029]/5 transition-all duration-300"
     >
       {/* Icon */}
       <div className="w-12 h-12 rounded-xl bg-[#D68029]/10 flex items-center justify-center shrink-0 group-hover:bg-[#D68029]/20 transition-colors duration-300">
@@ -120,10 +120,10 @@ function SolutionCard({ solution, index }: SolutionCardProps) {
 
       {/* Text */}
       <div>
-        <h4 className="text-[#0d1b2a] text-sm font-bold mb-1.5 group-hover:text-[#D68029] transition-colors duration-300">
+        <h4 className=" text-xl font-bold mb-2 group-hover:text-[#D68029] transition-colors duration-300">
           {solution.title}
         </h4>
-        <p className="text-gray-500 text-sm leading-relaxed">{solution.description}</p>
+        <p className="text-gray-600 fonts_16">{solution.description}</p>
       </div>
     </motion.div>
   );
@@ -135,15 +135,15 @@ export default function Solutions() {
       <Row>
         {/* Header */}
         <div className="text-center mb-12">
-          <motion.span
+          {/* <motion.span
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-block text-[#D68029] text-xs font-bold uppercase tracking-widest mb-3"
+            className="inline-block text-[#D68029] text-sm font-bold uppercase tracking-widest mb-3"
           >
             What We Deliver
-          </motion.span>
+          </motion.span> */}
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -163,11 +163,33 @@ export default function Solutions() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {AI_SOLUTIONS.map((solution, idx) => (
             <SolutionCard key={idx} solution={solution} index={idx} />
           ))}
-        </div>
+        </div> */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-stretch">
+          {AI_SOLUTIONS.map((solution, idx) => {
+            const isLastTwo =
+              AI_SOLUTIONS.length % 4 === 2 &&
+              idx >= AI_SOLUTIONS.length - 2;
+
+            return (
+              <div
+                key={idx}
+                 className={`h-full ${
+                  isLastTwo
+                    ? idx === AI_SOLUTIONS.length - 2
+                      ? "xl:col-start-2"
+                      : "xl:col-start-3"
+                    : ""
+                }`}
+              >
+                <SolutionCard solution={solution} index={idx} />
+              </div>
+            );
+          })}
+      </div>
       </Row>
     </Section>
   );

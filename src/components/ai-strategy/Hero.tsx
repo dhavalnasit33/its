@@ -22,19 +22,19 @@ const fadeRight = (delay = 0) => ({
 
 export default function Hero() {
   return (
-    <Section className="common_background_gradient overflow-hidden">
+    <Section className=" lg:py-18! common_background_gradient overflow-hidden">
       <Row>
         {/* <div className="absolute inset-0 ">
           <div className="absolute top-0 md:top-8 right-0 w-80 md:w-105 h-80 md:h-105 rounded-full bg-purple-500/30 blur-[130px]" />
         </div> */}
         {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"> */}
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-center">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-10">
           {/* ── Left Column ── */}
           {/* <div className="flex flex-col"> */}
           <div className="w-full z-10 max-w-full xl:max-w-[55%] items-center content-center text-gray-800">
             {/* Badge */}
             <motion.div {...fadeUp(0)}>
-              <span className="inline-flex items-center gap-2 text-[#D68029] text-xs font-bold uppercase tracking-widest mb-5">
+              <span className="inline-flex items-center gap-2 text-[#D68029] text-sm font-bold uppercase tracking-widest mb-5">
                 <span className="w-4 h-px bg-[#D68029]" />
                 AI Strategy &amp; Consulting
               </span>
@@ -44,7 +44,7 @@ export default function Hero() {
             <motion.h1
               {...fadeUp(0.1)}
               // className="text-[32px] sm:text-[40px] lg:text-[48px] xl:text-[54px] font-extrabold leading-tight text-[#0d1b2a] mb-4"
-              className="text-4xl md:text-[42px] xl:text-5xl font-extrabold mb-6 md:mb-10 leading-snug text-black rose max-w-none "
+              className="text-4xl md:text-[42px] xl:text-5xl font-extrabold mb-5 leading-snug text-black rose max-w-none "
             >
               AI Strategy &amp; Consulting{" "}
               <span className="block">
@@ -56,7 +56,8 @@ export default function Hero() {
             {/* Description */}
             <motion.p
               {...fadeUp(0.2)}
-              className="text-gray-600 text-base sm:text-lg leading-relaxed mb-8 lg:max-w-lg"
+              // className=" text-base sm:text-lg leading-relaxed mb-8 lg:max-w-lg"
+              className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-8 lg:max-w-xl"
             >
               We help businesses identify high-impact AI opportunities, build clear
               roadmaps, and implement practical AI solutions that drive efficiency,
@@ -111,7 +112,7 @@ export default function Hero() {
             // className="relative w-full flex justify-center lg:justify-end items-center"
             className="relative z-10 w-full max-w-full xl:max-w-[55%] "
           >
-            <div className="relative w-full lg:max-w-170 aspect-680/540">
+            <div className="relative w-full lg:max-w-170 aspect-680/400">
               <Image
                 src="/ai-strategy/hero_section_main_image.png"
                 alt="AI Strategy & Consulting"

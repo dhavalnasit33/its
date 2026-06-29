@@ -142,7 +142,7 @@ export default function PlatformSlider({
             >
                 <Link
                     href={`/${item.slug}`}
-                    className=" flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/[0.03] text-white whitespace-nowrap  transition-all
+                    className=" flex items-center gap-2 px-4 py-1 rounded-full border border-white/10 bg-white/3 text-white whitespace-nowrap  transition-all
                     duration-300 hover:border-[#D68029] hover:text-[#D68029] "
                 >
                     <span className="w-1 h-1 bg-[#D68029] rounded-full"></span>
