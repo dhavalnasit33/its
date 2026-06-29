@@ -21,7 +21,7 @@ const fadeRight = (delay = 0) => ({
 
 export default function Hero() {
   return (
-    <Section className=" overflow-hidden">
+    <Section className="common_background_gradient overflow-hidden">
       <Row>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* ── Left Column ── */}
@@ -72,7 +72,7 @@ export default function Hero() {
               </Link>
 
               <Link
-                href="#ai-solutions"
+                href="/our-service"
                 className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-xl border border-[#0d1b2a] text-[#0d1b2a] font-semibold text-sm sm:text-base hover:bg-[#0d1b2a] hover:text-white transition-all duration-300"
               >
                 Explore Our Services

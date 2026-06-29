@@ -540,7 +540,7 @@ export default function IndustriesWeTransform() {
                 <button
                   key={ind.id}
                   onClick={() => setSelectedId(ind.id)}
-                  className={`relative flex items-center gap-4 px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm transition-all duration-300 whitespace-nowrap lg:whitespace-normal shrink-0 ${
+                  className={`relative flex cursor-pointer items-center gap-4 px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm transition-all duration-300 whitespace-nowrap lg:whitespace-normal shrink-0 ${
                     isSelected
                       ? "bg-white border-gray-100 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.06)] text-[#0d1b2a]"
                       : "bg-[#f8f9fa]/60 border-transparent text-gray-500 hover:bg-gray-50"

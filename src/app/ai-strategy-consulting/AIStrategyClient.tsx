@@ -100,7 +100,7 @@ export default function AIStrategyClient() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <main className="relative overflow-hidden">
+      <main className="relative">
         {/* ── 1. Hero ── */}
         <Hero />
 
