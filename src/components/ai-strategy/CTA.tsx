@@ -106,7 +106,7 @@ export default function CTA() {
               className="flex justify-center lg:justify-end order-1 lg:order-2"
             >
               <Image
-                src="/ai-strategy/rockets.png"
+                src="/ai-strategy/rocket_img.png"
                 alt="Build AI Strategy"
                 width={300}
                 height={350}
