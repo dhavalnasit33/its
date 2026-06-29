@@ -108,8 +108,10 @@ export default function CTA() {
               <Image
                 src="/ai-strategy/rocket_img.png"
                 alt="Build AI Strategy"
-                width={300}
-                height={350}
+                width={800}
+                height={800}
+                priority
+                unoptimized
                 className="w-full h-auto lg:h-120 drop-shadow-2xl object-contain" 
               />
           </motion.div>
