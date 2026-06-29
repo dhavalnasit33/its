@@ -95,7 +95,7 @@ export default function Hero() {
                               alt="FRAME"
                               width={20}
                               height={20}
-                                className="transition-all duration-700 ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert"
+                                className="transition-all duration-700 ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert w-5 h-5"
                           />
                           </div>
                       </span>
@@ -118,6 +118,7 @@ export default function Hero() {
                 alt="AI Strategy & Consulting"
                 fill
                 priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-contain"
               />
             </div>

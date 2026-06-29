@@ -121,11 +121,11 @@ export default function AIStrategyClient() {
         {/* ── 2. AI Tools Marquee (trusted by) ── */}
         <AIToolsMarquee />
 
-        {/* ── 5. AI Consulting Timeline / Process ── */}
-        <Timeline />
-
-        {/* ── 6. AI Solutions Grid ── */}
+        {/* ── 5. AI Solutions Grid ── */}
         <Solutions />
+
+        {/* ── 6. AI Consulting Timeline / Process ── */}
+        <Timeline />        
 
         {/* ── 7. Industries We Transform ── */}
         <IndustriesWeTransform />

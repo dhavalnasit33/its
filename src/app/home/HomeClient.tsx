@@ -401,7 +401,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					
 					</motion.div>
 
-					 <div className="max-w-[500px] lg:max-w-[840px] mx-auto px-4">
+					 <div className="max-w-125 lg:max-w-210 mx-auto px-4">
 						<div className="h-px bg-[rgba(255,255,255,0.1)] mt-16 md:mt-21 mb-10"></div>
 						<div className="grid grid-cols-2 lg:grid-cols-4 max-lg:gap-4">
 						{statsData.map((item, index) => {
@@ -412,7 +412,7 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 								className="relative flex flex-col items-center text-center px-4 max-lg:py-5 max-lg:bg-[rgba(255,255,255,0.04)] max-lg:rounded-lg"
 							>
 								{index !== statsData.length - 1 && (
-									<div className=" hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[2px] h-24 bg-linear-to-b from-transparent via-[#D68029] to-transparent " />
+									<div className=" hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-0.5 h-24 bg-linear-to-b from-transparent via-[#D68029] to-transparent " />
 								)}
 								<Icon
 									size={34}
@@ -433,12 +433,12 @@ export default function HomeClient({ initialData }: { initialData?: HomePageData
 					</div>
 
 
-<div className=" text-center mt-20 md:mt-26">
-<button
+					<div className=" text-center mt-20 md:mt-26">
+					<button
 						onClick={handleScroll}
 						className=" inline-flex -center justify-center p-1 border-2 border-[#f7b733] rounded-full  cursor-pointer "
 					>
-						<div className=" relative w-[30px] h-[60px] border-2 border-white rounded-full " >
+						<div className=" relative w-[30px] h-15 border-2 border-white rounded-full " >
 							<div className=" absolute left-1/2 top-6 w-3  h-3  bg-white rounded-full mx-auto animate-scrollDot " />
 						</div>
 					</button>

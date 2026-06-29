@@ -84,7 +84,7 @@ function StatItem({ value, suffix, label, index }: StatItemProps) {
 
 export default function Results() {
   return (
-    <Section className="relative bg-[#0d1b2a]  overflow-hidden  md:py-12! border border-white/5 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
+    <Section className="relative bg-[#0d1b2a]  overflow-hidden  lg:py-0! border border-white/5 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-10">
       <Row className="flex flex-col-reverse lg:flex-row items-center justify-center gap-10">
         {/* <div className="relative bg-[#0d1b2a] rounded-3xl overflow-hidden px-8 py-10 md:px-12 md:py-12 border border-white/5 shadow-2xl "> */}
           {/* Ambient background glows */}
@@ -126,10 +126,10 @@ export default function Results() {
             className="w-full lg:w-140 shrink-0 flex justify-center lg:justify-end relative z-10"
           >
             <Image
-              src="/ai-strategy/ai-head-illustration1.png"
+              src="/ai-strategy/robot.png"
               alt="AI Results"
-              width={240}
-              height={240}
+              width={700}
+              height={700}
               className="w-full lg:max-w-140 h-auto object-contain"
             />
           </motion.div>

@@ -111,8 +111,10 @@ function SolutionCard({ solution, index }: SolutionCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="group relative flex h-full flex-col gap-4 p-5 rounded-2xl border border-gray-200 bg-white hover:border-[#D68029] hover:shadow-lg hover:shadow-[#D68029]/5 transition-all duration-300"
+      // className="group relative flex h-full flex-col gap-4 p-5 rounded-2xl overflow-hidden border border-gray-200 bg-white  hover:shadow-xl hover:shadow-[#D68029]/5 transition-all duration-300"
+    className="group relative overflow-hidden rounded-xl h-full bg-linear-to-br  border-2 border-white/10 shadow-md    transition-all duration-500  bg-gray-100  gap-4    p-5     flex   flex-col"
     >
+      <div className=" absolute top-0 left-0 h-1 w-0  bg-[#d68029]  transition-all duration-500  ease-out group-hover:w-full "></div>
       {/* Icon */}
       <div className="w-12 h-12 rounded-xl bg-[#D68029]/10 flex items-center justify-center shrink-0 group-hover:bg-[#D68029]/20 transition-colors duration-300">
         <SolutionIcon solution={solution} />

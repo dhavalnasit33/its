@@ -172,7 +172,7 @@ export default function PortfolioClient({
     };
     const CreativeWorkSkeleton = () => (
         <div className="relative rounded-lg overflow-hidden shadow-md border border-gray-200">
-            <div className="w-full aspect-[640/450] bg-gray-200 animate-pulse"></div>
+            <div className="w-full aspect-640/450 bg-gray-200 animate-pulse"></div>
             <div className="absolute bottom-0 left-0 right-0 h-12 bg-black/20 animate-pulse"></div>
         </div>
     );
@@ -353,12 +353,12 @@ export default function PortfolioClient({
                     </motion.div>
                 </Row>
             </Section>
-            <Section  className="bg-[#0d1b2a] z-10 !py-6 ">
+            <Section  className="bg-[#0d1b2a] z-10 py-6! ">
 				<Row>
 					<PlatformSlider items={services}/>
 				</Row>
 			</Section>
-			<Section className="bg-gray-50 !py-14">
+			<Section className="bg-gray-50 py-14!">
 					 <Row className=" mx-auto ">
 					 	<StatsGrid  columns={4} bordered />
 					</Row>
@@ -472,10 +472,10 @@ export default function PortfolioClient({
                                                             alt={work.title}
                                                             width={640}
                                                             height={450}
-                                                            className="w-full aspect-[640/450] object-cover transition-transform duration-500 group-hover:scale-110"
+                                                            className="w-full aspect-640/450 object-cover transition-transform duration-500 group-hover:scale-110"
                                                         />
                                                     ) : (
-                                                        <div className="w-full aspect-[640/450] bg-gray-200"></div>
+                                                        <div className="w-full aspect-640/450 bg-gray-200"></div>
                                                     )}
                                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                                         <h3 className="text-white text-lg font-semibold text-center px-4">
