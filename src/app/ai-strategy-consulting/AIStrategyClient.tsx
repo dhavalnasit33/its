@@ -9,11 +9,11 @@ import Timeline from "@/components/ai-strategy/Timeline";
 import Solutions from "@/components/ai-strategy/Solutions";
 import Results from "@/components/ai-strategy/Results";
 import Testimonials from "@/components/home/Testimonials";
-import CTA from "@/components/ai-strategy/CTA";
 import FAQ from "@/components/ai-strategy/FAQ";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import IndustriesWeTransform from "@/components/ai-strategy/IndustriesWeTransform";
 import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
+import CTA from "@/components/common/CTA";
 
 export default function AIStrategyClient() {
   const { navStructure } = useWebsiteSettings();
@@ -131,7 +131,7 @@ export default function AIStrategyClient() {
         <IndustriesWeTransform />
 
         {/* ── 11. CTA ── */}
-        <CTA />
+        <CTA highlightedText="AI Strategy?" />
 
         {/* ── 10. Testimonials ── */}
         <Testimonials />

@@ -12,11 +12,12 @@ import Hero from "@/components/ai-product-dev/Hero";
 import AISolutionsGrid from "@/components/ai-product-dev/AISolutionsGrid";
 import DevelopmentJourney from "@/components/ai-product-dev/DevelopmentJourney";
 import WhyChooseUs from "@/components/ai-product-dev/WhyChooseUs";
-import TechStack from "@/components/ai-product-dev/TechStack";
 import Industries from "@/components/ai-product-dev/Industries";
-import CTABanner from "@/components/ai-product-dev/CTABanner";
+
 import FAQ from "@/components/FAQ";
 import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
+import CTA from "@/components/common/CTA";
+
 
 const CUSTOM_FAQS = [
   {
@@ -166,14 +167,13 @@ export default function AIProductDevClient() {
         {/* ── 7. Why Choose Us ── */}
         <WhyChooseUs />
 
-        {/* ── 8. Technology Stack (tabbed) ── */}
-        <TechStack />
-
         {/* ── 9. Industries ── */}
         <Industries />
 
         {/* ── 10. CTA Banner ── */}
-        <CTABanner />
+       <CTA 
+          highlightedText="Custom AI Product?" 
+        />
 
         {/* ── 11. Testimonials (reused) ── */}
         <Testimonials />
