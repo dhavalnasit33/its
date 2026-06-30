@@ -5,7 +5,6 @@ import Row from "@/components/Row";
 import PlatformSlider from "@/components/home/PlatformSlider";
 import StatsGrid from "@/components/home/RoundStatsCard";
 import Hero from "@/components/ai-strategy/Hero";
-import AIToolsMarquee from "@/components/ai-strategy/AIToolsMarquee";
 import Timeline from "@/components/ai-strategy/Timeline";
 import Solutions from "@/components/ai-strategy/Solutions";
 import Results from "@/components/ai-strategy/Results";
@@ -14,6 +13,7 @@ import CTA from "@/components/ai-strategy/CTA";
 import FAQ from "@/components/ai-strategy/FAQ";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import IndustriesWeTransform from "@/components/ai-strategy/IndustriesWeTransform";
+import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
 
 export default function AIStrategyClient() {
   const { navStructure } = useWebsiteSettings();
@@ -81,7 +81,7 @@ export default function AIStrategyClient() {
         category.links?.map((service) => ({
           title: service.title,
           slug: service.slug,
-        })) || []
+        })) || [],
     ) || [];
 
   return (
@@ -119,13 +119,13 @@ export default function AIStrategyClient() {
         </Section>
 
         {/* ── 2. AI Tools Marquee (trusted by) ── */}
-        <AIToolsMarquee />
+        <GlobalLogoMarquee />
 
         {/* ── 5. AI Solutions Grid ── */}
         <Solutions />
 
         {/* ── 6. AI Consulting Timeline / Process ── */}
-        <Timeline />        
+        <Timeline />
 
         {/* ── 7. Industries We Transform ── */}
         <IndustriesWeTransform />

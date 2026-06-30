@@ -9,7 +9,6 @@ import Testimonials from "@/components/home/Testimonials";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 import Hero from "@/components/ai-product-dev/Hero";
-import TechMarquee from "@/components/ai-product-dev/TechMarquee";
 import AISolutionsGrid from "@/components/ai-product-dev/AISolutionsGrid";
 import DevelopmentJourney from "@/components/ai-product-dev/DevelopmentJourney";
 import WhyChooseUs from "@/components/ai-product-dev/WhyChooseUs";
@@ -17,31 +16,38 @@ import TechStack from "@/components/ai-product-dev/TechStack";
 import Industries from "@/components/ai-product-dev/Industries";
 import CTABanner from "@/components/ai-product-dev/CTABanner";
 import FAQ from "@/components/FAQ";
+import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
 
 const CUSTOM_FAQS = [
   {
     question: "What types of AI products do you build?",
-    answer: "We build a wide range of AI products including AI chatbots, autonomous agents, document AI systems, voice AI, computer vision solutions, predictive analytics platforms, workflow automation tools, and recommendation engines. Each product is custom-designed for your specific business requirements.",
+    answer:
+      "We build a wide range of AI products including AI chatbots, autonomous agents, document AI systems, voice AI, computer vision solutions, predictive analytics platforms, workflow automation tools, and recommendation engines. Each product is custom-designed for your specific business requirements.",
   },
   {
     question: "How long does it take to build an AI product?",
-    answer: "The timeline depends on the complexity of your project. A typical AI chatbot or automation tool takes 6–12 weeks. More complex systems like computer vision platforms or full enterprise AI products may take 3–6 months. We always provide a detailed timeline during the discovery phase.",
+    answer:
+      "The timeline depends on the complexity of your project. A typical AI chatbot or automation tool takes 6–12 weeks. More complex systems like computer vision platforms or full enterprise AI products may take 3–6 months. We always provide a detailed timeline during the discovery phase.",
   },
   {
     question: "Do you work with our existing data and infrastructure?",
-    answer: "Yes, absolutely. We conduct a thorough data and infrastructure audit during the discovery phase and design AI solutions that integrate seamlessly with your existing systems — whether it's a cloud environment, on-premise infrastructure, or a hybrid setup.",
+    answer:
+      "Yes, absolutely. We conduct a thorough data and infrastructure audit during the discovery phase and design AI solutions that integrate seamlessly with your existing systems — whether it's a cloud environment, on-premise infrastructure, or a hybrid setup.",
   },
   {
     question: "Which LLMs and AI models do you use?",
-    answer: "We are LLM-agnostic and work with all major models including GPT-4o, Claude 3.5, Gemini Pro, Llama 3, Mistral, and more. Our architecture is designed to be model-flexible so you can swap or upgrade models without rebuilding your entire AI system.",
+    answer:
+      "We are LLM-agnostic and work with all major models including GPT-4o, Claude 3.5, Gemini Pro, Llama 3, Mistral, and more. Our architecture is designed to be model-flexible so you can swap or upgrade models without rebuilding your entire AI system.",
   },
   {
     question: "How do you ensure the security of our data?",
-    answer: "Security is a top priority. We implement end-to-end encryption, role-based access control, and data anonymization techniques. We can also deploy AI solutions on your private cloud or on-premise infrastructure to ensure complete data sovereignty and compliance with GDPR, HIPAA, or any other regulations relevant to your industry.",
+    answer:
+      "Security is a top priority. We implement end-to-end encryption, role-based access control, and data anonymization techniques. We can also deploy AI solutions on your private cloud or on-premise infrastructure to ensure complete data sovereignty and compliance with GDPR, HIPAA, or any other regulations relevant to your industry.",
   },
   {
     question: "What happens after the AI product is deployed?",
-    answer: "Deployment is just the beginning of our partnership. We provide 24/7 monitoring, proactive maintenance, model retraining as your data evolves, and version upgrades. We also offer dedicated support plans to ensure your AI product continues to perform at its best as your business scales.",
+    answer:
+      "Deployment is just the beginning of our partnership. We provide 24/7 monitoring, proactive maintenance, model retraining as your data evolves, and version upgrades. We also offer dedicated support plans to ensure your AI product continues to perform at its best as your business scales.",
   },
 ];
 
@@ -111,7 +117,7 @@ export default function AIProductDevClient() {
         category.links?.map((service) => ({
           title: service.title,
           slug: service.slug,
-        })) || []
+        })) || [],
     ) || [];
 
   return (
@@ -149,7 +155,7 @@ export default function AIProductDevClient() {
         </Section>
 
         {/* ── 4. Trusted Technologies Marquee ── */}
-        <TechMarquee />
+        <GlobalLogoMarquee />
 
         {/* ── 5. AI Solutions Grid ── */}
         <AISolutionsGrid />

@@ -3,7 +3,7 @@ import type {
   TimelineStep,
   AiSolution,
   Industry,
-  ResultStat, 
+  ResultStat,
   FAQ,
 } from "../types";
 
@@ -11,12 +11,16 @@ export const AI_TOOLS: AiTool[] = [
   { name: "ChatGPT", logo: "/ai-strategy/chatgpt.svg" },
   { name: "Claude", logo: "/ai-strategy/claude.svg" },
   { name: "Gemini", logo: "/ai-strategy/gemini.svg" },
-  { name: "Grok", logo: "/ai-strategy/grok.svg" },
   { name: "Meta", logo: "/ai-strategy/meta.svg" },
-  {name:"Deepseek", logo:"/ai-strategy/deepseek.svg"},
-  {name:"Grok", logo:"/ai-strategy/grok.svg"},
+  { name: "DeepSeek", logo: "/ai-strategy/deepseek.svg" },
+  { name: "Grok", logo: "/ai-strategy/grok.svg" },
   { name: "Perplexity", logo: "/ai-strategy/perplexity.svg" },
   { name: "Mistral AI", logo: "/ai-strategy/mistral.svg" },
+  { name: "Qwen", logo: "/ai-strategy/qwen.png" },
+  { name: "Kimi AI", logo: "/ai-strategy/kimi.svg" },
+  { name: "Microsoft Copilot", logo: "/ai-strategy/copilot.svg" },
+    { name: "Replit AI", logo: "/ai-strategy/replit.svg" },
+     { name: "Lovable", logo: "/ai-strategy/lovable.svg" },
 ];
 
 export const TIMELINE_STEPS: TimelineStep[] = [
@@ -62,65 +66,91 @@ export const AI_SOLUTIONS: AiSolution[] = [
   {
     icon: "/ai-strategy/solutions/readiness.svg",
     title: "AI Readiness Assessment",
-    description: "Evaluate your business readiness for AI adoption with a detailed gap analysis.",
+    description:
+      "Evaluate your business readiness for AI adoption with a detailed gap analysis.",
   },
   {
     icon: "/ai-strategy/solutions/strategy.svg",
     title: "AI Strategy & Roadmap",
-    description: "Build a customized AI strategy aligned with your business goals and timelines.",
+    description:
+      "Build a customized AI strategy aligned with your business goals and timelines.",
   },
   {
     icon: "/ai-strategy/solutions/usecase.svg",
     title: "Use Case Discovery",
-    description: "Identify and prioritize AI use cases with the highest impact and feasibility.",
+    description:
+      "Identify and prioritize AI use cases with the highest impact and feasibility.",
   },
   {
     icon: "/ai-strategy/solutions/data.svg",
     title: "Data Strategy & Engineering",
-    description: "Design data architecture and pipelines for AI success at scale.",
+    description:
+      "Design data architecture and pipelines for AI success at scale.",
   },
   {
     icon: "/ai-strategy/solutions/llm.svg",
     title: "LLM & GenAI Consulting",
-    description: "Leverage LLMs to create intelligent and transformative solutions for your business.",
+    description:
+      "Leverage LLMs to create intelligent and transformative solutions for your business.",
   },
   {
     icon: "/ai-strategy/solutions/automation.svg",
     title: "Automation Planning",
-    description: "Workflow automation to boost productivity and efficiency across your operations.",
+    description:
+      "Workflow automation to boost productivity and efficiency across your operations.",
   },
   {
     icon: "/ai-strategy/solutions/model.svg",
     title: "AI Model Development & Training",
-    description: "Build and fine-tune AI models tailored to your specific business needs.",
+    description:
+      "Build and fine-tune AI models tailored to your specific business needs.",
   },
   {
     icon: "/ai-strategy/solutions/poc.svg",
     title: "Proof of Concept (PoC)",
-    description: "Validate ideas quickly with scalable prototypes before full-scale development.",
+    description:
+      "Validate ideas quickly with scalable prototypes before full-scale development.",
   },
   {
     icon: "/ai-strategy/solutions/mlops.svg",
     title: "MLOps & Deployment",
-    description: "End-to-end deployment and monitoring of AI models in production environments.",
+    description:
+      "End-to-end deployment and monitoring of AI models in production environments.",
   },
   {
     icon: "/ai-strategy/solutions/support.svg",
     title: "Ongoing Support & Optimization",
-    description: "Continuous support to improve and scale your AI solution post-deployment.",
+    description:
+      "Continuous support to improve and scale your AI solution post-deployment.",
   },
 ];
 
-
-
 export const RESULT_STATS: ResultStat[] = [
-  { value: "500", suffix: "+", label: "Projects Delivered", icon: "/ai-strategy/results/projects.svg" },
-  { value: "98", suffix: "%", label: "Client Satisfaction", icon: "/ai-strategy/results/satisfaction.svg" },
-  { value: "60", suffix: "%+", label: "Increase in Productivity", icon: "/ai-strategy/results/productivity.svg" },
-  { value: "40", suffix: "%", label: "Cost Reduction on Average", icon: "/ai-strategy/results/cost.svg" },
+  {
+    value: "500",
+    suffix: "+",
+    label: "Projects Delivered",
+    icon: "/ai-strategy/results/projects.svg",
+  },
+  {
+    value: "98",
+    suffix: "%",
+    label: "Client Satisfaction",
+    icon: "/ai-strategy/results/satisfaction.svg",
+  },
+  {
+    value: "60",
+    suffix: "%+",
+    label: "Increase in Productivity",
+    icon: "/ai-strategy/results/productivity.svg",
+  },
+  {
+    value: "40",
+    suffix: "%",
+    label: "Cost Reduction on Average",
+    icon: "/ai-strategy/results/cost.svg",
+  },
 ];
-
-
 
 export const FAQS: FAQ[] = [
   {
@@ -149,8 +179,6 @@ export const FAQS: FAQ[] = [
       "Yes. We provide ongoing support and optimization services post-deployment. Our team continuously monitors, tunes, and scales your AI solution to ensure it keeps delivering value.",
   },
 ];
-
-
 
 export const FOOTER_STATS = [
   { value: "12+", label: "Glorious Years" },
