@@ -3,8 +3,15 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { IconType } from "react-icons";
-import { LuBot, LuBrainCircuit, LuScanEye, LuWorkflow, LuDatabaseZap, LuTrendingUp, LuCheck } from "react-icons/lu";
+import {
+  LuBot,
+  LuBrainCircuit,
+  LuScanEye,
+  LuWorkflow,
+  LuDatabaseZap,
+  LuTrendingUp,
+  LuCheck,
+} from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import Button from "@/components/Button";
@@ -24,14 +31,13 @@ const FEATURES = [
   "Scalable & Secure Solutions",
 ];
 
-
 const FLOATING_CARDS = [
   {
     title: "AI Agents",
     description: "Autonomous agents that get work done.",
     icon: LuBot,
     color: "#3B82F6",
-    pos: "top-[0%] left-[-8%]",
+    pos: "top-[4%] left-[1%]",
     delay: 0,
   },
   {
@@ -47,7 +53,7 @@ const FLOATING_CARDS = [
     description: "Extract insights from images & videos.",
     icon: LuScanEye,
     color: "#22C55E",
-    pos: "top-[32%] left-[-16%]",
+    pos: "top-[35%] left-[-10%]",
     delay: 0.3,
   },
   {
@@ -55,7 +61,7 @@ const FLOATING_CARDS = [
     description: "Streamline workflows with intelligent AI.",
     icon: LuWorkflow,
     color: "#F97316",
-    pos: "top-[40%] right-[-10%]",
+    pos: "top-[40%] right-[-15%]",
     delay: 0.45,
   },
   {
@@ -63,7 +69,7 @@ const FLOATING_CARDS = [
     description: "Turn data into actionable predictions.",
     icon: LuDatabaseZap,
     color: "#8B5CF6",
-    pos: "bottom-[0%] left-[-8%]",
+    pos: "bottom-[5%] left-[-8%]",
     delay: 0.6,
   },
   {
@@ -78,7 +84,7 @@ const FLOATING_CARDS = [
 
 export default function Hero() {
   return (
-    <Section className="lg:py-16! common_background_gradient overflow-hidden">
+    <Section className="common_background_gradient py-20 md:py-24 lg:py-28 overflow-hidden">
       <Row>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
           {/* ── Left Column ── */}
@@ -97,14 +103,18 @@ export default function Hero() {
               className="text-4xl md:text-[46px] xl:text-[54px] font-extrabold mb-6 leading-[1.15] text-[#0F172A]"
             >
               We Build Custom AI Products{" "}
-              <span className="text-[#D27E2B]">That Drive Real Business Impact</span>
+              <span className="text-[#D27E2B]">
+                That Drive Real Business Impact
+              </span>
             </motion.h1>
 
             <motion.p
               {...fadeUp(0.2)}
               className="text-[#6f6f6f] text-base sm:text-lg leading-relaxed mb-8 max-w-xl"
             >
-              From intelligent AI agents to enterprise automation, we design, develop, and deploy premium AI products that solve real problems and accelerate your growth.
+              From intelligent AI agents to enterprise automation, we design,
+              develop, and deploy premium AI products that solve real problems
+              and accelerate your growth.
             </motion.p>
 
             {/* Feature Checklist */}
@@ -113,7 +123,10 @@ export default function Hero() {
               className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-10"
             >
               {FEATURES.map((feat) => (
-                <div key={feat} className="flex items-center gap-2.5 text-[#0F172A]">
+                <div
+                  key={feat}
+                  className="flex items-center gap-2.5 text-[#0F172A]"
+                >
                   <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#D27E2B]/15 flex items-center justify-center">
                     <LuCheck className="w-3 h-3 text-[#D27E2B] stroke-[3]" />
                   </span>
@@ -127,7 +140,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
-              className="flex flex-wrap gap-4 mb-10"
+              className="flex flex-wrap gap-4"
             >
               <Button
                 bgColor="#D27E2B"
@@ -167,7 +180,7 @@ export default function Hero() {
             <div className="relative w-full aspect-square max-w-[850px] mx-auto flex items-center justify-center">
               {/* Outer Glow Ring */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#D27E2B]/15 to-transparent blur-2xl scale-95" />
-              
+
               <Image
                 src="/ai-strategy/hero_ai_product_development-1.png"
                 alt="AI Product Development"
@@ -190,18 +203,26 @@ export default function Hero() {
                   >
                     <motion.div
                       animate={{ y: [0, -8, 0] }}
-                      transition={{ duration: 4 + card.delay * 2, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{
+                        duration: 4 + card.delay * 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                       className="bg-white/95 backdrop-blur-md border border-gray-100/80 shadow-[0_12px_40px_rgba(0,0,0,0.08)] rounded-[18px] p-4 flex gap-3.5 items-start hover:shadow-lg transition-all duration-300"
                     >
                       <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: `${card.color}15`, color: card.color }}
+                        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-md"
+                        style={{ backgroundColor: card.color }}
                       >
-                        <IconComponent className="w-5.5 h-5.5" />
+                        <IconComponent className="w-5.5 h-5.5 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-extrabold text-gray-900 mb-1 leading-snug">{card.title}</h4>
-                        <p className="text-xs text-gray-600 leading-relaxed font-semibold">{card.description}</p>
+                        <h4 className="text-sm font-bold text-gray-900 mb-1 leading-snug">
+                          {card.title}
+                        </h4>
+                        <p className="text-xs text-slate-500 leading-relaxed">
+                          {card.description}
+                        </p>
                       </div>
                     </motion.div>
                   </motion.div>

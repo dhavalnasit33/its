@@ -14,7 +14,7 @@ const STEPS = [
     number: "01",
     title: "Discovery & Auditing",
     description:
-      "We analyze your business processes, existing infrastructure, data availability, and legacy systems to identify the highest ROI AI opportunities.",
+      "Analyze business needs, data, and infrastructure to identify AI opportunities.",
     icon: LuSearch,
     color: "#D27E2B",
     gradient: "from-[#D27E2B] to-[#f0a050]",
@@ -25,7 +25,7 @@ const STEPS = [
     number: "02",
     title: "Strategy & Roadmap",
     description:
-      "We design a comprehensive AI implementation roadmap, choosing optimal AI models (LLMs, SLMs) and defining architectural requirements.",
+      "Create a clear AI roadmap with the right models and architecture.",
     icon: LuCompass,
     color: "#6366F1",
     gradient: "from-[#6366F1] to-[#818CF8]",
@@ -36,7 +36,7 @@ const STEPS = [
     number: "03",
     title: "Custom Model & Architecture",
     description:
-      "Our team designs custom neural architectures, configures vector databases, maps RAG pipelines, and implements agentic frameworks.",
+      "Build custom AI models, RAG pipelines, and scalable infrastructure.",
     icon: LuCpu,
     color: "#22C55E",
     gradient: "from-[#22C55E] to-[#4ADE80]",
@@ -47,7 +47,7 @@ const STEPS = [
     number: "04",
     title: "Agile Engineering & Training",
     description:
-      "We develop the solution through agile sprints, training and fine-tuning models on domain-specific datasets to guarantee performance.",
+      "Develop, train, and fine-tune AI solutions through agile sprints.",
     icon: LuCode,
     color: "#3B82F6",
     gradient: "from-[#3B82F6] to-[#60A5FA]",
@@ -57,8 +57,7 @@ const STEPS = [
   {
     number: "05",
     title: "Deployment & Optimization",
-    description:
-      "We deploy production-ready AI models with enterprise-grade CI/CD pipelines, integrating continuous monitoring and automated retraining.",
+    description: "Deploy, monitor, and continuously optimize AI solutions.",
     icon: LuRocket,
     color: "#EC4899",
     gradient: "from-[#EC4899] to-[#F472B6]",
@@ -154,7 +153,7 @@ function DesktopStepCard({
                 STEP {step.number}
               </span>
             </div>
-            <p className="text-xs md:text-sm text-slate-400 leading-relaxed line-clamp-2">
+            <p className="text-xs md:text-sm text-slate-400 leading-relaxed line-clamp-3">
               {step.description}
             </p>
           </div>
