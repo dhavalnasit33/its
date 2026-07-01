@@ -128,7 +128,7 @@ export default function Hero() {
                   className="flex items-center gap-2.5 text-[#0F172A]"
                 >
                   <span className="shrink-0 w-5 h-5 rounded-full bg-[#D27E2B]/15 flex items-center justify-center">
-                    <LuCheck className="w-3 h-3 text-[#D27E2B] stroke-[3]" />
+                    <LuCheck className="w-3 h-3 text-[#D27E2B] stroke-3" />
                   </span>
                   <span className="text-sm font-bold">{feat}</span>
                 </div>
@@ -179,7 +179,7 @@ export default function Hero() {
           >
             <div className="relative w-full aspect-square max-w-[850px] mx-auto flex items-center justify-center">
               {/* Outer Glow Ring */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#D27E2B]/15 to-transparent blur-2xl scale-95" />
+              <div className="absolute inset-0 rounded-full bg-linear-to-br from-[#D27E2B]/15 to-transparent blur-2xl scale-95" />
 
               <Image
                 src="/ai-strategy/hero_ai_product_development-1.png"
@@ -199,7 +199,7 @@ export default function Hero() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.6 + card.delay }}
-                    className={`absolute ${card.pos} z-20 hidden lg:block max-w-[240px]`}
+                    className={`absolute ${card.pos} z-20 hidden lg:block max-w-60`}
                   >
                     <motion.div
                       animate={{ y: [0, -8, 0] }}

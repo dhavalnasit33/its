@@ -203,7 +203,7 @@ export default function WhyChooseUs() {
         {/* ── DESKTOP VIEW (Hub layout with Glowing Circuit Lines) ── */}
         <div className="hidden lg:flex items-center justify-between gap-12 w-full max-w-7xl mx-auto relative h-[650px] mb-12">
           {/* Background Ambient Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#4a90e2]/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-[800px] bg-[#4a90e2]/5 rounded-full blur-[100px] pointer-events-none" />
 
           {/* SVG Connecting Circuit Lines */}
           {/* SVG Connecting Circuit Lines */}
@@ -345,18 +345,18 @@ export default function WhyChooseUs() {
           <div className="flex-1 flex justify-center items-center h-full relative z-10">
             {/* Outer Faint Tech Rings */}
             <div className="absolute w-[380px] h-[380px] rounded-full border border-[#4a90e2]/15 animate-[spin_60s_linear_infinite]" />
-            <div className="absolute w-[320px] h-[320px] rounded-full border border-dashed border-[#ff9d42]/30 animate-[spin_40s_linear_infinite_reverse]" />
+            <div className="absolute w-[320px] h-80 rounded-full border border-dashed border-[#ff9d42]/30 animate-[spin_40s_linear_infinite_reverse]" />
 
             {/* Inner Glowing Ring */}
             <div className="absolute w-[250px] h-[250px] rounded-full border-4 border-[#ff9d42]/80 shadow-[0_0_40px_rgba(255,157,66,0.5),inset_0_0_30px_rgba(255,157,66,0.3)] animate-[pulse_3s_ease-in-out_infinite]" />
 
             {/* Core Dark Blue Circle */}
-            <div className="relative w-56 h-56 rounded-full flex flex-col items-center justify-center text-center border-2 border-[#ffb770] shadow-[0_0_50px_rgba(255,157,66,0.6)] bg-gradient-to-br from-[#121b2b] to-[#1a253c] overflow-hidden group shrink-0">
+            <div className="relative w-56 h-56 rounded-full flex flex-col items-center justify-center text-center border-2 border-[#ffb770] shadow-[0_0_50px_rgba(255,157,66,0.6)] bg-linear-to-br from-[#121b2b] to-[#1a253c] overflow-hidden group shrink-0">
               {/* Inner ambient core glow */}
               <div className="absolute inset-0 bg-[#ff9d42]/10 blur-2xl rounded-full" />
 
               {/* Center Text */}
-              <h3 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#ffe0b2] via-[#ffb770] to-[#e67e22] drop-shadow-[0_2px_15px_rgba(230,126,34,0.9)] tracking-wider leading-none select-none z-10">
+              <h3 className="text-6xl font-black text-transparent bg-clip-text bg-linear-to-b from-[#ffe0b2] via-[#ffb770] to-[#e67e22] drop-shadow-[0_2px_15px_rgba(230,126,34,0.9)] tracking-wider leading-none select-none z-10">
                 AI
               </h3>
               <p className="text-[11px] text-white font-extrabold uppercase tracking-[0.25em] mt-3 leading-none select-none z-10">
@@ -399,11 +399,11 @@ export default function WhyChooseUs() {
           {/* Mobile Central Hub */}
           <div className="relative flex justify-center items-center w-full mt-8">
             <div className="absolute w-[280px] h-[280px] rounded-full border border-dashed border-[#ff9d42]/30 animate-[spin_40s_linear_infinite_reverse]" />
-            <div className="absolute w-[220px] h-[220px] rounded-full border-4 border-[#ff9d42]/80 shadow-[0_0_30px_rgba(255,157,66,0.5),inset_0_0_20px_rgba(255,157,66,0.3)] animate-[pulse_3s_ease-in-out_infinite]" />
+            <div className="absolute w-55 h-55 rounded-full border-4 border-[#ff9d42]/80 shadow-[0_0_30px_rgba(255,157,66,0.5),inset_0_0_20px_rgba(255,157,66,0.3)] animate-[pulse_3s_ease-in-out_infinite]" />
 
-            <div className="relative w-48 h-48 rounded-full flex flex-col items-center justify-center text-center border-2 border-[#ffb770] shadow-[0_0_40px_rgba(255,157,66,0.6)] bg-gradient-to-br from-[#121b2b] to-[#1a253c] overflow-hidden shrink-0">
+            <div className="relative w-48 h-48 rounded-full flex flex-col items-center justify-center text-center border-2 border-[#ffb770] shadow-[0_0_40px_rgba(255,157,66,0.6)] bg-linear-to-br from-[#121b2b] to-[#1a253c] overflow-hidden shrink-0">
               <div className="absolute inset-0 bg-[#ff9d42]/10 blur-xl rounded-full" />
-              <h3 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#ffe0b2] via-[#ffb770] to-[#e67e22] drop-shadow-[0_2px_15px_rgba(230,126,34,0.9)] tracking-wider leading-none select-none z-10">
+              <h3 className="text-5xl font-black text-transparent bg-clip-text bg-linear-to-b from-[#ffe0b2] via-[#ffb770] to-[#e67e22] drop-shadow-[0_2px_15px_rgba(230,126,34,0.9)] tracking-wider leading-none select-none z-10">
                 AI
               </h3>
               <p className="text-[10px] text-white font-extrabold uppercase tracking-[0.25em] mt-3 leading-none select-none z-10">

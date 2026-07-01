@@ -163,7 +163,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
         <div className="min-h-screen overflow-hidden ">
             {/* HERO SECTION */}
             <Section className=" lg:py-14! common_background_gradient overflow-hidden">
-     
                 <motion.div className="max-sm:hidden "
                     initial={{ opacity: 0, x: 0 }}
                     animate={{ opacity: 1,  }}
@@ -181,7 +180,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                 
                     <div className="absolute -right-55 -top-30   xl:w-220 xl:h-157.5 rounded-full bg-[#D68029]/10 -rotate-12 " />
                     <div className="absolute -right-40 top-5  w-185 h-135 rounded-full bg-[#D68029]/10 -rotate-12 " />
-                    <div className="absolute -right-25 top-20 w-150 h-113.5 rounded-full bg-[#D68029]/10 -rotate-12 " />
+                    <div className="absolute -right-25 top-20 w-150 h-113.5 rounded-full bg-[#D68029]/10 -rotate-12 " />                
                 </motion.div>
                 
                 <Row >
@@ -344,7 +343,9 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
             
 
             {/* section:2  */}
-            <Section className="relative z-10 py-10! ">
+            <Section className="relative z-10 py-10!  bg-gray-100"
+            //  style={{ clipPath: "polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px)" }}
+            >
                 <Row>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -561,7 +562,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.7, ease: "easeOut" }}
                         >
-                            <span className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#D68029] to-[#f0a84e]" />
+                            <span className="absolute top-0 left-0 w-full h-1.5 bg-linear-to-r from-[#D68029] to-[#f0a84e]" />
 
                             {/* Fixed-height header so both cards' lists start at the same line */}
                             <div className="min-h-32 sm:min-h-28">
@@ -647,7 +648,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.7, ease: "easeOut" }}
                         >
-                            <span className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#f0a84e] to-[#D68029]" />
+                            <span className="absolute top-0 left-0 w-full h-1.5 bg-linear-to-r from-[#f0a84e] to-[#D68029]" />
                             <span className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-[#D68029]/10" />
                             <span className="absolute -left-6 bottom-10 w-24 h-24 rounded-full bg-[#D68029]/10" />
 
@@ -744,7 +745,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                         <div className="hidden md:block relative max-w-4xl mx-auto mt-16">
                             {/* center connecting line */}
                             {/* <span className="absolute left-1/2 top-14  bottom-14 w-px border-l-2 border-dashed border-[#D68029]/40 -translate-x-1/2" /> */}
-                            <div className="absolute left-1/2 top-2 bottom-10 -translate-x-1/2 h-full w-[190px] pointer-events-none">
+                            <div className="absolute left-1/2 top-2 bottom-10 -translate-x-1/2 h-full w-47.5 pointer-events-none">
                                 <svg
                                     className="w-full h-full"
                                     viewBox="0 0 180 1250"
@@ -834,7 +835,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 
                         {/* ===== MOBILE: left-aligned vertical roadmap ===== */}
                         <div className="md:hidden relative mt-12 max-w-sm mx-auto">
-                            <span className="absolute left-8 top-2 bottom-24 w-px border-l-2 border-dashed border-[#D68029]" />
+                            <span className="absolute left-8 top-2 max-[400px]:bottom-30 min-[100px]:bottom-24 w-px border-l-2 border-dashed border-[#D68029]" />
 
                             <div className="flex flex-col gap-8">
                                 {whyChooseSteps.map((step, idx) => {
@@ -873,6 +874,80 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                     </div>
                 </Row>
             </Section>
+
+
+
+ <Section className="lg:py-10!">
+      <Row>
+        <motion.div  initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-[#0d1b2a] rounded-2xl"></div>
+
+        {/* Content */}
+        <div className="relative z-10  justify-between gap-10 px-8 py-10 lg:py-18 lg:px-14 grid grid-cols-1 lg:grid-cols-2 items-center">
+          {/* Left Content */}
+
+          <div className=" ">
+            <h2 className="common-h2 text-white">
+              Ready to Start Your {" "}
+              <span className="text-[#D68029]">Journey?</span>
+            </h2>
+
+            <p className="mt-4 fonts_16 text-white/70 ">
+              Join our training or internship program and take the first
+              step towards a successful career in the IT industry.
+            </p>
+          </div>
+
+          {/* Right Buttons */}
+
+          {/* <div className="flex flex-col sm:flex-row gap-5 lg:justify-end"> */}
+          <div className="flex  flex-wrap gap-4 sm:gap-5 lg:justify-end items-stretch sm:items-center">
+
+            <motion.div         
+              className="bg-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-white hover:text-[#0d1b2a] transition-all duration-700 ease-in-out group"
+            >
+              <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#ffffff]  rounded group-hover:w-full group-hover:h-full"></span>
+              <a
+                href="#contact-form-section"
+                className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-3 cursor-pointer font-semibold"
+              >
+                <span className="flex flex-row gap-3 items-center justify-center">
+                  Enquire Now
+                  <div className="group">
+                    <Image
+                      src="/navbar/btn_icon.png"
+                      alt="FRAME"
+                      width={20}
+                      height={20}
+                      className="transition-all duration-700 ease-in-out group-hover:brightness-0 group-hover:sepia w-5 h-5"
+                    />
+                  </div>
+                </span>
+              </a>
+            </motion.div>
+
+            <motion.div className="border border-[#ffffff] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#ffffff] hover:text-[#ffffff] transition-all duration-700 ease-in-out group">
+                <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded group-hover:w-full group-hover:h-full"></span>
+                <a
+                href="#contact-form-section"
+                className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-3 cursor-pointer font-semibold"
+                >
+                <span className="flex flex-row gap-3 items-center justify-center">
+                    Book Free Consultation
+                </span>
+                </a>
+            </motion.div>
+          </div>
+        </div>
+        </motion.div>
+      </Row>
+    </Section>
+
+
 
             {/* NEW SECTION: ITS Institute Facilities */}
             <Section className=" bg-white ">
