@@ -343,7 +343,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
             
 
             {/* section:2  */}
-            <Section className="relative z-10 py-10!  bg-gray-100"
+            <Section className="relative z-10 py-10!  "
             //  style={{ clipPath: "polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px)" }}
             >
                 <Row>
