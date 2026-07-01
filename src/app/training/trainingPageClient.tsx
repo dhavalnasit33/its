@@ -163,7 +163,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
         <div className="min-h-screen overflow-hidden ">
             {/* HERO SECTION */}
             <Section className=" lg:py-14! common_background_gradient overflow-hidden">
-                <motion.div className="max-sm:hidden "
+                {/* <motion.div className="max-sm:hidden "
                     initial={{ opacity: 0, x: 0 }}
                     animate={{ opacity: 1,  }}
                     transition={{
@@ -181,7 +181,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                     <div className="absolute -right-55 -top-30   xl:w-220 xl:h-157.5 rounded-full bg-[#D68029]/10 -rotate-12 " />
                     <div className="absolute -right-40 top-5  w-185 h-135 rounded-full bg-[#D68029]/10 -rotate-12 " />
                     <div className="absolute -right-25 top-20 w-150 h-113.5 rounded-full bg-[#D68029]/10 -rotate-12 " />                
-                </motion.div>
+                </motion.div> */}
                 
                 <Row >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -933,11 +933,11 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
             <motion.div className="border border-[#ffffff] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#ffffff] hover:text-[#ffffff] transition-all duration-700 ease-in-out group">
                 <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded group-hover:w-full group-hover:h-full"></span>
                 <a
-                href="#contact-form-section"
+                href="/our-service"
                 className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-3 cursor-pointer font-semibold"
                 >
                 <span className="flex flex-row gap-3 items-center justify-center">
-                    Book Free Consultation
+                   Explore Our Services
                 </span>
                 </a>
             </motion.div>
