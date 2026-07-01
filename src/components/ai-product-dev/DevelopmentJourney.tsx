@@ -82,7 +82,7 @@ function DesktopStepCard({
     <div
       ref={ref}
       style={{ transform: `translateX(${step.translateX})` }}
-      className="relative group w-full h-[120px]"
+      className="relative group w-full h-30"
     >
       {/* Connector Line & Dot */}
       <motion.div
@@ -126,13 +126,13 @@ function DesktopStepCard({
       >
         {/* Left colored border bar */}
         <div
-          className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-[22px] bg-gradient-to-b ${step.gradient}`}
+          className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-[22px] bg-linear-to-b ${step.gradient}`}
         />
 
         <div className="pl-6 pr-6 py-5 flex items-start gap-4 h-full">
           {/* Icon */}
           <div
-            className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br ${step.gradient} shadow-lg`}
+            className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-linear-to-br ${step.gradient} shadow-lg`}
           >
             <IconComponent className="w-5 h-5 text-white" />
           </div>
@@ -176,13 +176,13 @@ function MobileStepCard({
   const IconComponent = step.icon;
 
   return (
-    <div className="relative flex items-start pl-14 md:pl-16 w-full pb-8 last:pb-0 group min-h-[180px]">
+    <div className="relative flex items-start pl-14 md:pl-16 w-full pb-8 last:pb-0 group min-h-45">
       {/* Icon node on timeline line */}
       <div className="absolute left-0 top-0 bottom-0 flex flex-col items-center z-10">
         {/* Line Above */}
         {index !== 0 && (
           <div
-            className="w-[2px] flex-1"
+            className="w-0.5 flex-1"
             style={{
               background: step.color,
             }}
@@ -195,7 +195,7 @@ function MobileStepCard({
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: index * 0.1 }}
-          className={`w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br ${step.gradient}
+          className={`w-9 h-9 md:w-10 md:h-10 rounded-full bg-linear-to-br ${step.gradient}
       border-[3px] border-[#F5F5F5] flex items-center justify-center shrink-0`}
           style={{
             boxShadow: `0 0 15px ${step.color}30`,
@@ -207,7 +207,7 @@ function MobileStepCard({
         {/* Line Below */}
         {index !== STEPS.length - 1 && (
           <div
-            className="w-[2px] flex-1"
+            className="w-0.5 flex-1"
             style={{
               background: step.color,
             }}
@@ -229,11 +229,11 @@ function MobileStepCard({
       >
         {/* Left colored border bar */}
         <div
-          className={`absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b ${step.gradient}`}
+          className={`absolute left-0 top-0 bottom-0 w-1.5 bg-linear-to-b ${step.gradient}`}
         />
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-          <h3 className="text-base md:text-lg font-bold text-white group-hover:text-[#D27E2B] transition-colors">
+          <h3 className="text-xl md:text-lg font-bold text-white group-hover:text-[#D27E2B] transition-colors">
             {step.title}
           </h3>
           <span
@@ -247,7 +247,7 @@ function MobileStepCard({
             Step {step.number}
           </span>
         </div>
-        <p className="text-xs md:text-sm text-slate-400 leading-relaxed">
+        <p className="text-md md:text-sm text-slate-400 leading-relaxed">
           {step.description}
         </p>
       </motion.div>
@@ -295,7 +295,7 @@ export default function DevelopmentJourney() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-slate-300 text-base sm:text-lg mt-4 max-w-3xl mx-auto"
+            className="text-slate-200 text-base sm:text-lg md:text-xl mt-4  "
           >
             A structured, proven 5-step process from idea to deployed AI product
             — with full transparency at every stage.
@@ -305,7 +305,7 @@ export default function DevelopmentJourney() {
         {/* ── DESKTOP VIEW (Arc infographic layout) ── */}
         <div className="hidden lg:flex items-center gap-8 w-full max-w-6xl mx-auto relative py-12">
           {/* LEFT: Central Hub Circle */}
-          <div className="w-[700px] flex-shrink-0 flex items-center justify-center relative z-10">
+          <div className="w-[700px] shrink-0 flex items-center justify-center relative z-10">
             {/* Concentric pulsing glow rings */}
             {[1, 2, 3].map((i) => (
               <motion.div

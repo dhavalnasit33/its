@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title:
     "AI Product Development Services | Inspire Techno Solution",
   description:
-    "We design, build, and deploy premium AI products, from autonomous agents to enterprise machine learning systems. Partner with our expert team.",
+    "Build innovative AI products with custom development, automation, ML, and scalable AI solutions by experts.",
   keywords: [
     "AI Product Development",
     "Custom AI Development",

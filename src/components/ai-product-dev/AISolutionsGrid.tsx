@@ -136,12 +136,12 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
 
         {/* Text */}
         <h3
-          className="text-lg font-bold mb-3 transition-colors duration-300"
+          className="text-xl font-bold mb-3 transition-colors duration-300"
           style={{ color: "#0F172A" }}
         >
           {solution.title}
         </h3>
-        <p className="text-gray-500 text-sm leading-relaxed flex-1">{solution.description}</p>
+        <p className="text-gray-600 fonts_16 flex-1">{solution.description}</p>
 
         {/* Learn More */}
         <div className="mt-5 pt-4 border-t border-gray-100">

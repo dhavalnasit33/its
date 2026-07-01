@@ -116,10 +116,10 @@ function StatCounter({
           {count}
           {suffix}
         </p>
-        <p className="text-sm font-bold text-[#0F172A] mb-1 group-hover:text-[#ff9d42] transition-colors duration-300">
+        <p className="fonts_16 font-bold text-[#0F172A] mb-1 group-hover:text-[#ff9d42] transition-colors duration-300">
           {label}
         </p>
-        <p className="text-xs text-slate-500 leading-relaxed">{description}</p>
+        <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
       </div>
     </motion.div>
   );
@@ -150,10 +150,10 @@ function FeatureCard({
         <IconComponent className="w-5 h-5" />
       </div>
       <div className="min-w-0">
-        <h4 className="text-sm font-bold text-[#0F172A] mb-1 group-hover:text-[#ff9d42] transition-colors duration-300">
+        <h4 className="text-lg font-bold text-[#0F172A] mb-1 group-hover:text-[#ff9d42] transition-colors duration-300">
           {title}
         </h4>
-        <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
+        <p className="fonts_16 text-gray-600 leading-relaxed">{desc}</p>
       </div>
     </motion.div>
   );
@@ -161,7 +161,7 @@ function FeatureCard({
 
 export default function WhyChooseUs() {
   return (
-    <Section className="bg-gradient-to-b from-slate-50 to-white overflow-hidden relative">
+    <Section className="bg-linear-to-b from-slate-50 to-white overflow-hidden relative">
       <Row>
         {/* Header */}
         <div className="text-center mb-16 max-w-4xl mx-auto relative z-20">
@@ -170,7 +170,7 @@ export default function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center rounded-full border border-slate-200 bg-[#ff9d42]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#e67e22] mb-5"
+            className="inline-flex items-center rounded-full border border-[#d68029] bg-[#d68029]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#d68029] mb-5"
           >
             • Why Choose Inspire •
           </motion.span>
@@ -179,12 +179,12 @@ export default function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="common-h2 text-center text-[#0F172A] leading-tight"
+            className="common-h2 text-center"
           >
             Why Businesses Trust Inspire
             <br />
             For Enterprise{" "}
-            <span className="text-[#ff9d42]">AI Development</span>
+            <span className="text-[#d68029]">AI Development</span>
           </motion.h2>
           <Motion />
           <motion.p
@@ -192,7 +192,7 @@ export default function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-slate-500 text-base sm:text-lg mt-4 max-w-3xl mx-auto"
+            className="text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide "
           >
             We combine deep AI expertise, robust engineering practices, and a
             client-first mindset to deliver intelligent solutions that create
@@ -201,7 +201,7 @@ export default function WhyChooseUs() {
         </div>
 
         {/* ── DESKTOP VIEW (Hub layout with Glowing Circuit Lines) ── */}
-        <div className="hidden lg:flex items-center justify-between gap-12 w-full max-w-6xl mx-auto relative h-[600px] mb-12">
+        <div className="hidden lg:flex items-center justify-between gap-12 w-full max-w-7xl mx-auto relative h-[650px] mb-12">
           {/* Background Ambient Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#4a90e2]/5 rounded-full blur-[100px] pointer-events-none" />
 

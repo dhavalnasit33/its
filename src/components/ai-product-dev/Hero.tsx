@@ -84,7 +84,7 @@ const FLOATING_CARDS = [
 
 export default function Hero() {
   return (
-    <Section className="common_background_gradient py-20 md:py-24 lg:py-28 overflow-hidden">
+    <Section className="common_background_gradient  lg:py-12! overflow-hidden">
       <Row>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
           {/* ── Left Column ── */}
@@ -100,7 +100,7 @@ export default function Hero() {
             {/* Heading */}
             <motion.h1
               {...fadeUp(0.1)}
-              className="text-4xl md:text-[46px] xl:text-[54px] font-extrabold mb-6 leading-[1.15] text-[#0F172A]"
+              className="text-4xl md:text-[42px] xl:text-5xl font-extrabold mb-5 leading-snug text-black rose max-w-none "
             >
               We Build Custom AI Products{" "}
               <span className="text-[#D27E2B]">
@@ -110,7 +110,7 @@ export default function Hero() {
 
             <motion.p
               {...fadeUp(0.2)}
-              className="text-[#6f6f6f] text-base sm:text-lg leading-relaxed mb-8 max-w-xl"
+              className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-8 lg:max-w-2xl"
             >
               From intelligent AI agents to enterprise automation, we design,
               develop, and deploy premium AI products that solve real problems
@@ -127,7 +127,7 @@ export default function Hero() {
                   key={feat}
                   className="flex items-center gap-2.5 text-[#0F172A]"
                 >
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#D27E2B]/15 flex items-center justify-center">
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-[#D27E2B]/15 flex items-center justify-center">
                     <LuCheck className="w-3 h-3 text-[#D27E2B] stroke-[3]" />
                   </span>
                   <span className="text-sm font-bold">{feat}</span>
@@ -149,7 +149,7 @@ export default function Hero() {
                 href="#contact-form-section"
                 icon="/navbar/btn_icon.png"
               />
-              <motion.div className="border border-[#0F172A]/20 hover:border-[#D27E2B] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0F172A] hover:text-[#ffffff] transition-all duration-700 ease-in-out group bg-white shadow-sm">
+              <motion.div className="border border-[#0d1b2a] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0d1b2a] hover:text-[#ffffff] transition-all duration-700 ease-in-out group">
                 <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded group-hover:w-full group-hover:h-full"></span>
                 <a
                   href="#ai-solutions"
@@ -175,7 +175,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="relative z-10 w-full max-w-full lg:max-w-[48%] flex justify-center items-center min-h-[520px] lg:min-h-[640px] py-10"
+            className="relative z-10 w-full max-w-full lg:max-w-[48%] flex justify-center items-center min-h-[520px] lg:min-h-[640px] "
           >
             <div className="relative w-full aspect-square max-w-[850px] mx-auto flex items-center justify-center">
               {/* Outer Glow Ring */}

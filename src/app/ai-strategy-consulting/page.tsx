@@ -3,9 +3,9 @@ import AIStrategyClient from "./AIStrategyClient";
 
 export const metadata: Metadata = {
   title:
-    "AI Strategy & Consulting for Smarter Business Growth | Inspire Techno Solution",
+    "AI Strategy Consulting Services | Inspire Techno Solution",
   description:
-    "We help businesses identify high-impact AI opportunities, build clear roadmaps, and implement practical AI solutions that drive efficiency, innovation, and measurable growth.",
+    "Drive business growth with AI strategy consulting, digital transformation, automation, and AI implementation experts.",
   keywords: [
     "AI Strategy",
     "AI Consulting",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     canonical: "https://inspiretechnosolution.com/ai-strategy-consulting",
   },
   openGraph: {
-    title: "AI Strategy & Consulting | Inspire Techno Solution",
+    title: "AI Strategy Consulting Services | Inspire Techno Solution",
     description:
       "Build smarter AI-powered business solutions with expert strategy and consulting services.",
     url: "https://inspiretechnosolution.com/ai-strategy-consulting",

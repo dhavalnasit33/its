@@ -26,14 +26,36 @@ import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
+import { FaClipboard, FaClipboardCheck } from "react-icons/fa";
+import { BiChart, BiClipboard, BiCloudDownload, BiCompass } from "react-icons/bi";
 const CareerGrid = dynamic(() => import("@/components/CareerGrid"))
+import {
+  FaLayerGroup,
+  FaDiagramProject,
+  FaPen,
+  FaClock,
+  FaShieldHalved,
+  FaUserCheck,
+  FaUserGroup,
+  FaLaptopCode,
+  FaHandshake,
+} from "react-icons/fa6";
 
 const trainingPrograms = [
-    { icon: FiMonitor, color: "#3B82F6", title: "Web Development", desc: "HTML, CSS, JavaScript, React, Node.js, MongoDB" },
-    { icon: FiSmartphone, color: "#16A34A", title: "Mobile App Development", desc: "Flutter, React Native, Android Studio" },
-    { icon: FiPenTool, color: "#DB2777", title: "UI/UX Design", desc: "Figma, Adobe XD, Photoshop, UI Design Principles" },
-    { icon: FiCode, color: "#7C3AED", title: "PHP & Laravel Development", desc: "Core PHP, MySQL, Laravel Framework" },
-    { icon: FiTrendingUp, color: "#D68029", title: "Digital Marketing", desc: "SEO, Social Media, Google Ads, Analytics" },
+    { icon: FiMonitor, color: "#3B82F6", title: "Web Development", desc: "HTML, CSS, JavaScript, React, Node.js, MongoDB", 
+      hoverDesc: "Master HTML, CSS, JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git, deployment, and real-world full-stack development projects.",
+    }, 
+    { icon: FiSmartphone, color: "#16A34A", title: "Mobile App Development", desc: "Flutter, React Native, Android Studio", 
+      hoverDesc: "Learn Flutter, React Native, Android Studio, Firebase, API integration, state management, and publish Android & iOS apps." },
+    { icon: FiPenTool, color: "#DB2777", title: "UI/UX Design", desc: "Figma, Adobe XD, Photoshop, UI Design Principles",
+      hoverDesc: "Create professional UI/UX designs using Figma, Adobe XD, Photoshop, wireframing, prototyping, design systems, and user research."
+    },
+    { icon: FiCode, color: "#7C3AED", title: "PHP & Laravel Development", desc: "Core PHP, MySQL, Laravel Framework" ,
+      hoverDesc: "Build secure web applications using PHP, MySQL, Laravel, MVC architecture, authentication, REST APIs, and deployment."
+    },
+    { icon: FiTrendingUp, color: "#D68029", title: "Digital Marketing", desc: "SEO, Social Media, Google Ads, Analytics",
+      hoverDesc: "Learn SEO, Google Ads, Facebook Ads, Social Media Marketing, Analytics, Email Marketing, and content marketing strategies."
+    },
 ];
 
 const internshipPrograms = [
@@ -45,10 +67,12 @@ const internshipPrograms = [
 ];
 
 const whyChooseSteps = [
-    { num: "01", icon: FiBookOpen, title: "Learn", desc: "Industry-relevant curriculum crafted by experts" },
-    { num: "02", icon: FiMonitor, title: "Practice", desc: "Hands-on projects and real-world assignments" },
-    { num: "03", icon: FiTrendingUp, title: "Grow", desc: "Enhance your skills and build your confidence" },
-    { num: "04", icon: FiBriefcase, title: "Succeed", desc: "Get placed with top companies with our assistance" },
+    { num: "01", icon: BiCompass, points: "15-minute career fit call", title: "Discover", desc: "Take a free skill assessment and career consultation to find the track that matches your goals, background, and timeline." },
+    { num: "02", icon: FiBookOpen, points: "120+ hours of expert-led content", title: "Learn", desc: "Work through an industry-relevant curriculum built with hiring partners and refreshed every quarter to match real job requirements."},
+    { num: "03", icon: FiMonitor, points: "8 capstone projects", title: "Practice", desc: "Apply every concept immediately through hands-on labs, sandbox environments, and real client-style assignments." },
+    { num: "04", icon: BiClipboard, points: "1:1 mentor review after every module", title: "Assess", desc: "Get evaluated by mentors against real hiring rubrics, with detailed feedback on where you're strong and what to sharpen next." },
+    { num: "05", icon: FiTrendingUp, points: "Personalized growth plan", title: "Grow", desc: "Close skill gaps through targeted practice, mock interviews, and portfolio reviews that build genuine confidence, not just knowledge." },
+    { num: "06", icon: FiBriefcase, points: "92% placement rate within 90 days", title: "Succeed", desc: "Get placed with our hiring partners through dedicated placement support, resume prep, and direct introductions to recruiters." },
 ];
 
 const cards = [
@@ -60,6 +84,21 @@ const cards = [
     { icon: "/training/interview.svg", text: "Interview Support" },
     { icon: "/training/personalized.svg", text: "Personalized Attention" },
     { icon: "/training/community.svg", text: "Lifetime Support Community" },
+];
+
+const heroHighlights = [
+  { icon: FaLayerGroup, label: "Industry Relevant\nCurriculum" },
+  { icon: FaDiagramProject, label: "Hands-on\nProjects" },
+  { icon: FaPen, label: "Certificate of\nCompletion" },
+  { icon: FaClock, label: "Flexible\nBatch Timings" },
+  { icon: FaShieldHalved, label: "100% Practical\nLearning" },
+  { icon: FaUserCheck, label: "Placement\nAssistance" },
+];
+
+const heroTrustPoints = [
+  { icon: FaUserGroup, label: "Expert Trainers" },
+  { icon: FaLaptopCode, label: "Real Projects" },
+  { icon: FaHandshake, label: "Placement Support" },
 ];
 
 export default function TrainingPageClient({ initialData }: { initialData?: TrainingMainPageData | null }) {
@@ -123,14 +162,32 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
     return (
         <div className="min-h-screen overflow-hidden ">
             {/* HERO SECTION */}
-            {/* <section className="relative  w-full  common_background_gradient">
-                <div className="relative max-w-384 mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
-            <Section className=" lg:py-12! common_background_gradient ">
-                {/* <div className="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto"> */}
+            <Section className=" lg:py-14! common_background_gradient overflow-hidden">
+     
+                <motion.div className="max-sm:hidden "
+                    initial={{ opacity: 0, x: 0 }}
+                    animate={{ opacity: 1,  }}
+                    transition={{
+                        opacity: { duration: 1, ease: "easeOut" }, // fade-in same time as first <p>
+                        x: { duration: 2, ease: "easeInOut" }, // wiggle effect
+                    }}>
+                    <div
+                        className="absolute top-8 right-20 w-26 h-15 opacity-30 hidden md:block"
+                        style={{
+                            backgroundImage: "radial-gradient(#D68029  2px, transparent 2px)",
+                            backgroundSize: "12px 12px",
+                        }}
+                        />
+                
+                    <div className="absolute -right-55 -top-30   xl:w-220 xl:h-157.5 rounded-full bg-[#D68029]/10 -rotate-12 " />
+                    <div className="absolute -right-40 top-5  w-185 h-135 rounded-full bg-[#D68029]/10 -rotate-12 " />
+                    <div className="absolute -right-25 top-20 w-150 h-113.5 rounded-full bg-[#D68029]/10 -rotate-12 " />
+                </motion.div>
+                
                 <Row >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {/* Content Left */}
-                    <div className="order-2 md:order-1 z-10">
+                    <div className="order-2 lg:order-1 z-10">
                         {/* First p tag - from top slow */}
                         <motion.span
                             initial={{ opacity: 0, y: -50 }}
@@ -149,27 +206,9 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
                             className="text-4xl md:text-[42px] xl:text-5xl font-bold leading-tight mt-3"
                         >
-                            {/* Education Is A <br />
-                            Path To <span className="text-[#D68029]">Success</span> <br />
-                            In Life */}
-                            {/* {
-                                trainingMainPageData?.heroSection.mainTitle ? (
-
-                                    <div
-                                        className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
-                                        dangerouslySetInnerHTML={{ __html: trainingMainPageData?.heroSection.mainTitle }}
-                                    />
-                                ) : (
-                                    <span>
-                                        Education Is A <br />
-                                        Path To <span className="text-[#D68029]">Success</span> <br />
-                                        In Life
-                                    </span>
-                                )
-                            } */}
-                            <div
-                                className="prose max-w-none [&_a]:no-underline [&_a]:text-[#d68029] [&_a:hover]:underline"
-                                dangerouslySetInnerHTML={{ __html: trainingMainPageData?.heroSection?.mainTitle || "" }}
+                            <h1
+                                className="text-4xl md:text-[42px] xl:text-5xl font-extrabold mb-5 leading-snug text-black rose max-w-none "
+                                dangerouslySetInnerHTML={{ __html: trainingMainPageData?.heroSection?.mainTitle.replace(/<\/?h[1-6][^>]*>/gm, "") || "",}}
                             />
                         </motion.div>
 
@@ -178,39 +217,10 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             initial={{ opacity: 0, y: 60 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-                            className="text-gray-600 mt-4 prose max-w-none"
+                            className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-8 lg:max-w-2xl"
                             dangerouslySetInnerHTML={{ __html: trainingMainPageData?.heroSection?.description || "" }}
                         />
-
-                        {/* Animated Button - from bottom slower */}
-
-
-                        {/* <motion.div
-                            initial={{ opacity: 0, y: 70 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
-                            className="mt-6"
-                        >
-                            <div 
-                            // className="bg-[#D68029] relative inline-flex items-center justify-center w-max overflow-hidden text-white rounded-xl group">
-                             className="relative inline-flex items-center justify-center overflow-hidden gap-2 rounded-xl bg-[#D68029]  text-sm font-semibold text-white transition-colors group"
->
-                                                    <span className="absolute w-0 h-0 transition-all duration-750 delay-300 ease-in-out bg-[#0d1b2a] rounded group-hover:w-56 group-hover:h-56"></span>
-                                <a href="#contact-form-section" className="  relative tracking-tight rounded-[10px] text-sm sm:text-base font-semibold px-6 py-3 sm:px-8 sm:py-4 text-white transition-color">
-                                    <span className="relative z-10 flex items-center gap-2">
-                                        Get Started Today
-                                        <Image
-                                            src="/navbar/btn_icon.png"
-                                            alt="Button Icon"
-                                            width={20}
-                                            height={20}
-                                            className="object-contain"
-                                        />
-                                    </span>
-                                </a>
-                            </div>
-                        </motion.div> */}
-                        <Button
+                        {/* <Button
 						  	motionProps={{
 								initial: { opacity: 0, y: 70 },
 								animate:{ opacity: 1, y: 0 },
@@ -222,10 +232,67 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 							href="#contact-form-section"
 							icon="/navbar/btn_icon.png"
                             className="mt-6"
-						/>
+						/> */}
+                         <motion.div
+                                  initial={{ opacity: 0, y: 30 }}
+                                          animate={{ opacity: 1, y: 0 }}
+                                          transition={{
+                                              duration: 0.6,
+                                              ease: "easeOut",
+                                              delay: 0.6,
+                                          }}
+                                  className="flex flex-wrap gap-4 mb-14"
+                                >
+                    
+                                  <Button
+                                      bgColor="#D68029"
+                                      hoverColor="#0d1b2a"
+                                      text="Explore Programs"
+                                      href="#contact-form-section"
+                                  />
+                                   <motion.div className="border border-[#0d1b2a] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0d1b2a] hover:text-[#ffffff] transition-all duration-700 ease-in-out group">
+                                        <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded group-hover:w-full group-hover:h-full"></span>
+                                        <a
+                                        href="#contact-form-section"
+                                        className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-3 cursor-pointer font-semibold"
+                                        >
+                                        <span className="flex flex-row gap-3 items-center justify-center">
+                                            Enquire Now
+                                            <Image
+                                            src="/navbar/btn_icon.png"
+                                            alt="Arrow" 
+                                            width={20}
+                                            height={20}
+                                            className="transition-all duration-700 ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert w-5 h-5"
+                                            />
+                                        </span>
+                                        </a>
+                                    </motion.div>
+                                </motion.div>
+                                <motion.div className="flex flex-wrap gap-x-8 gap-y-3"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.8,
+                                    ease: "easeOut",
+                                    delay: 0.8,
+                                }}>
+                                {heroTrustPoints.map((item, i) => {
+                                    const Icon = item.icon;
+                                    return (
+                                    <div key={i} className="flex items-center gap-2">
+                                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
+                                        <Icon className="w-5 h-5 text-[#d68029]" />
+                                        </div>
+                                        <span className="fonts_16 font-semibold  leading-tight whitespace-pre-line">
+                                        {item.label}
+                                        </span>
+                                    </div>
+                                    );
+                                })}
+                                </motion.div>
 
-                        {/* Ellipse Image (below button) */}
-                        <motion.div
+                        {/* <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut", delay: 1.2 }}
@@ -239,11 +306,11 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                 height={75}
                                 className="object-contain"
                             />
-                        </motion.div>
+                        </motion.div> */}
                     </div>
 
                     {/* Content Right (Hero Image with wiggle synced to text start) */}
-                    <div className="flex justify-center relative order-1 md:order-2">
+                    <div className="flex justify-center relative order-1 lg:order-2">
                         <motion.div
                             initial={{ opacity: 0, x: 0 }}
                             animate={{ opacity: 1, x: [0, 15, -15, 10, -10, 0] }}
@@ -251,7 +318,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                 opacity: { duration: 1, ease: "easeOut" }, // fade-in same time as first <p>
                                 x: { duration: 2, ease: "easeInOut" }, // wiggle effect
                             }}
-                            className="relative"
+                            className="relative w-full"
                         >
                             {
                                 trainingMainPageData?.heroSection.image ? (
@@ -260,7 +327,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                         alt="Training Illustration"
                                         width={600}
                                         height={600}
-                                        className="drop-shadow-xl relative z-10"
+                                        className="drop-shadow-xl relative z-10 w-full"
                                         priority
                                     />
                                 ) : (
@@ -275,6 +342,45 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                 {/* </div> */}
             </Section>
             
+
+            {/* section:2  */}
+            <Section className="relative z-10 py-10! ">
+                <Row>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6 }}
+                        className=" mx-auto bg-white rounded-2xl shadow-md px-4 py-6 md:py-7"
+                    >
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-y-6 gap-x-2">
+                        {heroHighlights.map((item, i) => {
+                            const Icon = item.icon;
+                            const isLast = i === heroHighlights.length - 1;
+                            return (
+                            <div
+                                key={i}
+                                // className={`flex max-sm:flex-col items-center gap-3 px-2 ${
+                                //   !isLast ? "border-r border-gray-200" : ""
+                                // }`}
+                                className={` flex max-sm:flex-col items-center gap-3 px-2
+                                        ${!isLast ? "border-r border-gray-200" : ""}
+                                        ${i === 4 ? "lg:col-start-2 xl:col-start-auto" : ""}
+                                    `}
+                            >
+                                <div className="w-9 h-9 shrink-0 rounded-full bg-[#d68029]/10 flex items-center justify-center">
+                                <Icon className="w-4.5 h-4.5 text-[#d68029]" />
+                                </div>
+                                <p className="text-[13px] md:text-sm font-semibold  leading-tight whitespace-pre-line">
+                                {item.label}
+                                </p>
+                            </div>
+                            );
+                        })}
+                        </div>
+                    </motion.div>
+                </Row>
+            </Section>
 
             {/* CAREER TREE SECTION */}
             <Section className="max-w-full text-center">
@@ -418,7 +524,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                 </Row> */}
                 {/* </div> */}
             {/* </Section> */}
-
             {/* NEW SECTION: Training & Internship Programs */}
             <Section className="bg-gray-50 overflow-hidden">
                 <Row>
@@ -440,7 +545,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                         <div className="mt-4 flex justify-center mb-2">
                             <Motion />
                         </div>
-                        <p className="text-gray-500 mt-3 text-sm sm:text-base">
+                        <p className="text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide mt-3 ">
                             Whether you want to learn from scratch or gain real-world
                             experience, we have a program designed for you.
                         </p>
@@ -504,12 +609,21 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                                 <Icon style={{ color: item.color }} size={18} />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-semibold text-[#0b1833] text-sm sm:text-base group-hover:text-white transition-colors">
+                                                <h3 className="font-semibold text-[#0b1833] text-sm sm:text-base group-hover:text-white transition-colors">
                                                     {item.title}
-                                                </h4>
+                                                </h3>
                                                 <p className="text-gray-500 text-xs sm:text-sm group-hover:text-gray-300 transition-colors">
                                                     {item.desc}
                                                 </p>
+                                                {/* <div className="relative h-10 overflow-hidden">
+                                                    <p className="absolute inset-0 text-gray-600 text-xs sm:text-sm transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-2">
+                                                        {item.desc}
+                                                    </p>
+
+                                                    <p className="absolute inset-0 text-gray-300 text-xs sm:text-sm leading-5 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                                                        {item.hoverDesc}
+                                                    </p>
+                                                </div> */}
                                             </div>
                                             <FiArrowRight className="shrink-0 text-gray-400 group-hover:text-[#D68029] group-hover:translate-x-1 transition-all" />
                                         </motion.a>
@@ -535,7 +649,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                         >
                             <span className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#f0a84e] to-[#D68029]" />
                             <span className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-[#D68029]/10" />
-                            <span className="absolute -right-4 bottom-10 w-24 h-24 rounded-full bg-[#D68029]/10" />
+                            <span className="absolute -left-6 bottom-10 w-24 h-24 rounded-full bg-[#D68029]/10" />
 
                             {/* Fixed-height header matching the Training card so both lists start level */}
                             <div className="relative min-h-32 sm:min-h-28">
@@ -616,20 +730,44 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                         >
-                            <h3 className="text-2xl sm:text-3xl font-bold text-[#0b1833]">
+                            <h2 className="common-h2  ">
                                 Why Choose Our Programs?
-                            </h3>
-                            <p className="text-gray-500 mt-2 max-w-xl mx-auto text-sm sm:text-base">
+                            </h2>
+                            <Motion />
+                            <p className="text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide mt-2 max-w-2xl mx-auto">
                                 Our proven approach helps you learn, grow and succeed in
                                 your career.
                             </p>
                         </motion.div>
 
                         {/* ===== DESKTOP / TABLET: zig-zag vertical roadmap ===== */}
-                        <div className="hidden md:block relative max-w-3xl mx-auto mt-16">
+                        <div className="hidden md:block relative max-w-4xl mx-auto mt-16">
                             {/* center connecting line */}
-                            <span className="absolute left-1/2 top-4 bottom-4 w-px border-l-2 border-dashed border-[#D68029]/40 -translate-x-1/2" />
-
+                            {/* <span className="absolute left-1/2 top-14  bottom-14 w-px border-l-2 border-dashed border-[#D68029]/40 -translate-x-1/2" /> */}
+                            <div className="absolute left-1/2 top-2 bottom-10 -translate-x-1/2 h-full w-[190px] pointer-events-none">
+                                <svg
+                                    className="w-full h-full"
+                                    viewBox="0 0 180 1250"
+                                    preserveAspectRatio="none"
+                                >
+                                    <path
+                                        d="
+                                            M90 40
+                                            C90 130 170 160 150 220
+                                            C150 270 30 320 30 400
+                                            C30 480 150 510 150 600
+                                            C150 690 30 720 30 820
+                                            C30 900 150 950 150 1040
+                                            C150 1100 120 1140 90 1180
+                                        "
+                                        fill="none"
+                                        stroke="#D68029"
+                                        strokeWidth={3}
+                                        strokeLinecap="round"
+                                        strokeDasharray="8 8"
+                                    />
+                                </svg>
+                            </div>
                             <div className="flex flex-col gap-16">
                                 {whyChooseSteps.map((step, idx) => {
                                     const Icon = step.icon;
@@ -637,7 +775,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                     return (
                                         <motion.div
                                             key={idx}
-                                            className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-x-6"
+                                            className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-x-14"
                                             initial={{ opacity: 0, x: isEven ? -50 : 50 }}
                                             whileInView={{ opacity: 1, x: 0 }}
                                             viewport={{ once: true, amount: 0.4 }}
@@ -647,22 +785,29 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                             <div className={isEven ? "text-right" : ""}>
                                                 {isEven && (
                                                     <>
-                                                        <h4 className="font-bold text-[#0b1833] text-lg">
+                                                        <h4 className="font-bold text-[#0b1833] text-xl">
                                                             {step.title}
                                                         </h4>
-                                                        <p className="text-gray-500 text-sm mt-1">
+                                                        <p className="text-gray-500 fonts_16 mt-1">
                                                             {step.desc}
                                                         </p>
+                                                        <span className="mt-3 text-sm text-[#D68029] font-semibold step-point inline-flex items-center gap-3 flex-row-reverse">{step.points}</span>
                                                     </>
                                                 )}
                                             </div>
 
                                             {/* Center node */}
                                             <div className="relative z-10 mx-auto">
-                                                <div className="w-20 h-20 rounded-full bg-white shadow-lg flex items-center justify-center border border-gray-100">
+                                                <div className="w-20 h-20 rounded-full bg-white shadow-lg flex items-center justify-center border border-gray-100 ">
                                                     <Icon className="text-[#0b1833]" size={28} />
                                                 </div>
-                                                <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-[#D68029] text-white text-xs font-bold flex items-center justify-center shadow-md">
+                                                {/* <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-[#D68029] text-white text-xs font-bold flex items-center justify-center shadow-md">
+                                                    {step.num}
+                                                </span> */}
+                                                <span  className={`absolute -top-1 ${
+                                                        isEven ? "-right-1" : "-left-1"
+                                                    } w-7 h-7 rounded-full bg-[#D68029] text-white text-xs font-bold flex items-center justify-center shadow-md`}
+                                                    >
                                                     {step.num}
                                                 </span>
                                             </div>
@@ -671,12 +816,13 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                             <div className={!isEven ? "" : ""}>
                                                 {!isEven && (
                                                     <>
-                                                        <h4 className="font-bold text-[#0b1833] text-lg">
+                                                        <h4 className="font-bold text-[#0b1833] text-xl">
                                                             {step.title}
                                                         </h4>
-                                                        <p className="text-gray-500 text-sm mt-1">
+                                                        <p className="text-gray-500 fonts_16 mt-1">
                                                             {step.desc}
                                                         </p>
+                                                        <span className="mt-3 text-sm text-[#D68029] font-semibold step-point inline-flex items-center gap-3">{step.points}</span>
                                                     </>
                                                 )}
                                             </div>
@@ -688,7 +834,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 
                         {/* ===== MOBILE: left-aligned vertical roadmap ===== */}
                         <div className="md:hidden relative mt-12 max-w-sm mx-auto">
-                            <span className="absolute left-8 top-2 bottom-2 w-px border-l-2 border-dashed border-[#D68029]/40" />
+                            <span className="absolute left-8 top-2 bottom-24 w-px border-l-2 border-dashed border-[#D68029]" />
 
                             <div className="flex flex-col gap-8">
                                 {whyChooseSteps.map((step, idx) => {
@@ -696,7 +842,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                     return (
                                         <motion.div
                                             key={idx}
-                                            className="relative flex items-start gap-4"
+                                            className="relative flex items-start gap-8"
                                             initial={{ opacity: 0, y: 30 }}
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true, amount: 0.3 }}
@@ -717,6 +863,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                                 <p className="text-gray-500 text-sm mt-1">
                                                     {step.desc}
                                                 </p>
+                                                <span className="mt-3 text-sm text-[#D68029] font-semibold step-point inline-flex items-center gap-3 ">{step.points}</span>
                                             </div>
                                         </motion.div>
                                     );
@@ -771,13 +918,25 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.8 }}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4"
+                        // className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4"
+                          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
                     >
                         {trainingMainPageData?.itsInstituteFacilitiesSection.points.map((card, i) => (
                             <div
                                 key={i}
-                                className="group bg-gray-100 p-6 rounded-lg min-h-52.5 text-center flex flex-col items-center justify-center space-y-4 shadow-sm transition duration-300 hover:shadow-lg hover:bg-[#D68029] hover:text-white"
+                                // className="group bg-gray-100 p-6 rounded-lg min-h-52.5 text-center flex flex-col items-center justify-center space-y-4 shadow-sm transition duration-300 hover:shadow-lg hover:bg-[#D68029] hover:text-white"
+                                className=" group relative overflow-hidden rounded-lg bg-gray-100 min-h-52.5 p-8 flex flex-col items-center justify-center text-center
+                                        cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-lg "
                             >
+                            <div className=" absolute inset-0 translate-y-full  bg-linear-to-t  from-[#d68029] from-0%
+    via-[#d68029] via-50%
+    to-[#f7b733] to-100% transition-transform duration-500 ease-in-out 
+                                group-hover:translate-y-0 " />
+
+                            {/* Decorative Dot */}
+                            <span className=" absolute top-4 right-4 z-10 h-3 w-3 rounded-full border-2 border-white/60 opacity-0 scale-50 transition-all duration-500 group-hover:opacity-100
+                                group-hover:scale-100 " />
+                            <div className="relative z-20 flex flex-col items-center">
                                 {
                                     card.image ? (
 
@@ -786,16 +945,22 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                             alt={card.heading}
                                             width={64}
                                             height={64}
-                                            className="transition duration-300 group-hover:filter group-hover:brightness-0 group-hover:invert"
+                                            className="transition duration-300 group-hover:filter group-hover:brightness-0 group-hover:invert group-hover:-translate-y-1 group-hover:scale-110"
                                         />
                                     ) : (
-                                        <div className="w-full h-16 bg-gray-200 rounded-lg animate-pulse"></div>
+                                        // <div className="w-full h-16 bg-gray-200 rounded-lg animate-pulse"></div>
+                                        <div className="w-14 h-14 rounded bg-gray-300 animate-pulse" />
                                     )
                                 }
-                                <h4 className="font-semibold text-lg">{card.heading}</h4>
+                                {/* <h4 className="font-semibold text-lg"> */}
+                                <h4  className=" mt-6 text-lg font-semibold text-[#0F1B33] transition-colors duration-300 group-hover:text-white">
+                                    {card.heading}
+                                </h4>
                             </div>
+                             <span className=" absolute bottom-5 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-white transition-all duration-500 group-hover:w-10  z-20 " />
+                            </div> 
                         ))}
-                    </motion.div>
+                    </motion.div>             
                 </Row>
                 {/* </div> */}
             </Section>
@@ -856,13 +1021,14 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                 trainingMainPageData?.rightCoursePickSection.cardBox.map((card, idx) => (
                                     <motion.div
                                         key={idx}
-                                        className="relative bg-white min-h-40 sm:min-h-48 shadow-2xl px-5 sm:px-6 py-8 sm:py-10 flex flex-col text-xl sm:text-2xl font-semibold rounded-xl"
+                                        className="relative bg-white min-h-40 sm:min-h-48 shadow-2xl px-5 sm:px-6 py-8 sm:py-10 flex flex-col text-xl sm:text-2xl font-semibold rounded-xl group"
                                         initial={{ scale: 0.9, opacity: 0 }}
                                         whileInView={{ scale: 1, opacity: 1 }}
                                         transition={{ duration: 0.6, ease: "easeOut" }} // 👈 no delay
                                         viewport={{ once: true }}
                                     >
-                                        <div className="absolute top-0 right-3 sm:right-5 bg-[#0B1C3F] w-12 h-16 sm:w-14 sm:h-20 flex items-center justify-center rounded-full rounded-tl-xl rounded-tr-xl">
+                                        <div className="absolute top-0 right-3 sm:right-5 bg-[#0B1C3F] w-12 h-16 sm:w-14 sm:h-20 flex items-center justify-center rounded-full 
+                                        rounded-tl-xl rounded-tr-xl  group-hover:bg-linear-to-r group-hover:from-[#d68029] group-hover:to-[#f7b733]   ">
                                             {
                                                 card.image ? (
 
@@ -933,7 +1099,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 
                                     <motion.div
                                         key={index}
-                                        className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mt-4"
+                                        className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mt-6"
                                         initial={{ y: 80, opacity: 0 }}
                                         whileInView={{ y: 0, opacity: 1 }}
                                         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -960,7 +1126,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                                 {/* Trusted By Thousands */}
                                                 {data.title}
                                             </h4>
-                                            <p className="text-gray-600 text-sm sm:text-md mt-2  leading-relaxed">
+                                            <p className="text-gray-600 fonts_16 mt-2 ">
                                                 {/* “Trusted by Thousands” Lorem Ipsum is simply dummy text of
                                                 the printing and typesetting industry. Lorem Ipsum has been
                                                 the industry's standard dummy text ever since the 1500s. */}

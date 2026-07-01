@@ -169,12 +169,12 @@ function IndustryCard({
       {/* Card Body */}
       <div className="p-6 pt-8 flex-1 flex flex-col">
         {/* Title */}
-        <h3 className="text-lg font-bold text-[#0F172A] mt-1 transition-all duration-300">
+        <h3 className="text-xl font-bold text-[#0F172A] mt-1 transition-all duration-300">
           {industry.title}
         </h3>
 
         {/* Description */}
-        <p className="text-xs text-slate-500 leading-relaxed mt-2.5 min-h-[60px] flex-1">
+        <p className="fonts_16 text-gray-600 mt-2.5 min-h-[60px] flex-1">
           {industry.description}
         </p>
 
@@ -187,7 +187,7 @@ function IndustryCard({
             >
               <span className="shrink-0 w-4 h-4 rounded-full flex items-center justify-center bg-transparent">
                 <svg
-                  className="w-3.5 h-3.5"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="3"
@@ -201,7 +201,7 @@ function IndustryCard({
                   />
                 </svg>
               </span>
-              <span className="text-xs font-semibold leading-none">{feat}</span>
+              <span className="text-sm font-semibold leading-none text-gray-600">{feat}</span>
             </div>
           ))}
         </div>
@@ -246,7 +246,7 @@ export default function Industries() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="text-slate-500 text-base sm:text-lg mt-4 max-w-2xl mx-auto"
+            className="text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide mt-4"
           >
             We build domain-specific AI products with deep industry expertise
             across 8+ verticals.
