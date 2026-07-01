@@ -17,7 +17,7 @@ import {
   LuShoppingCart,
   LuFactory,
   LuPlane,
-  LuCpu
+  LuCpu,
 } from "react-icons/lu";
 import Motion from "../motionbar";
 
@@ -31,6 +31,7 @@ interface IndustryData {
   name: string;
   iconName: string;
   description: string;
+  imageUrl?: string;
   features: IndustryFeature[];
 }
 
@@ -39,442 +40,389 @@ const INDUSTRIES_DATA: IndustryData[] = [
     id: "marketing",
     name: "Marketing and Advertising",
     iconName: "megaphone",
-    description: "Supercharge your campaigns with AI-driven audience intelligence, hyper-personalization, and predictive performance analytics to maximize marketing ROI.",
+    description:
+      "Supercharge your campaigns with AI-driven audience intelligence, hyper-personalization, and predictive performance analytics to maximize marketing ROI.",
+    imageUrl: "/strategic/marketing.png",
     features: [
       {
         title: "Principal Advantages and Use Cases",
         items: [
-          "Data-driven audience segmentation and profiling",
-          "Automated hyper-personalization of ad creatives at scale",
-          "Real-time campaign bidding and placement optimization",
-          "Predictive customer lifetime value (LTV) forecasting",
-          "Advanced sentiment analysis across social channels"
-        ]
+          "AI-powered audience segmentation and customer profiling",
+          "Personalized marketing campaigns across multiple channels",
+          "Predictive analytics for customer behavior and sales forecasting",
+          "Automated content creation for ads, emails, and social media",
+        ],
       },
       {
         title: "Software Resources and Tools",
         items: [
-          "AI-powered CRM integrations",
-          "Marketing automation and email platforms",
-          "Programmatic advertising platforms (Meta & Google Ads)",
-          "Predictive SEO and intent-mapping tools",
-          "Multi-touch attribution analytics dashboards"
-        ]
+          "CRM and customer data platforms (Salesforce, HubSpot)",
+          "Marketing automation tools (Mailchimp, ActiveCampaign)",
+          "Advertising platforms (Google Ads, Meta Ads Manager)",
+          "Analytics and SEO tools (Google Analytics, SEMrush)",
+        ],
       },
-      {
-        title: "Future Prospects",
-        items: [
-          "Generative AI autonomous copywriters and video creators",
-          "Synthetic consumer persona modeling and simulation",
-          "Immersive spatial AR/VR interactive ads",
-          "Zero-party data predictive targeting engines",
-          "Conversational voice-activated advertising"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "business",
     name: "Business Services",
     iconName: "briefcase",
-    description: "Streamline enterprise workflows, automate back-office operations, and enable decision intelligence with custom AI automation.",
+    description:
+      "Streamline enterprise workflows, automate back-office operations, and enable decision intelligence with custom AI automation.",
+    imageUrl: "/strategic/business.png",
     features: [
       {
         title: "Principal Advantages and Applications",
         items: [
-          "Cognitive process automation to cut operational overhead",
-          "Intelligent document parsing and auto-accounting",
-          "Predictive HR hiring models and payroll analytics",
-          "Compliance audits powered by NLP text processing",
-          "Strategic IT cloud infrastructure utilization modeling"
-        ]
+          "Automate repetitive business processes with AI",
+          "Improve decision-making using predictive analytics",
+          "Enhance customer support with intelligent virtual assistants",
+          "Optimize financial planning and operational efficiency",
+          "Reduce manual workload through workflow automation",
+        ],
       },
       {
         title: "Software Resources and Tools",
         items: [
-          "Enterprise resource planning (ERP) AI plugins",
-          "Intelligent HRMS and recruitment portals",
-          "Workflow automation and RPA tools",
-          "Predictive business intelligence (BI) systems"
-        ]
+          "Enterprise Resource Planning (ERP) platforms",
+          "Customer Relationship Management (CRM) software",
+          "Robotic Process Automation (RPA) tools",
+          "Business Intelligence and analytics platforms",
+        ],
       },
-      {
-        title: "Future Prospects",
-        items: [
-          "Autonomous digital workforce agents (AI Employees)",
-          "Self-optimizing corporate operational frameworks",
-          "Predictive macro-economic strategy simulators",
-          "Fully automated enterprise resource scheduling"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "education",
     name: "Education",
     iconName: "graduation",
-    description: "Transform learning experiences with adaptive learning systems, smart assessment assistants, and automated student support services.",
+    description:
+      "Transform learning experiences with adaptive learning systems, smart assessment assistants, and automated student support services.",
+    imageUrl: "/strategic/education.png",
     features: [
       {
         title: "Key Benefits and Use Cases",
         items: [
-          "Adaptive and customized learning paths for students",
-          "Intelligent tutoring bots with 24/7 concept support",
-          "Automated grading and targeted study feedback",
-          "Student retention risk modeling and predictive alerts"
-        ]
+          "Deliver personalized learning experiences",
+          "Provide AI-powered tutoring and student assistance",
+          "Automate grading and performance evaluation",
+          "Track student progress with learning analytics",
+          "Generate engaging educational content automatically",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "AI-integrated Learning Management Systems (LMS)",
-          "Natural language student support chatbots",
-          "Identity verification and smart proctoring tools",
-          "Interactive EdTech web & mobile applications"
-        ]
+          "Learning Management Systems (LMS)",
+          "AI tutoring platforms",
+          "Online assessment and proctoring software",
+          "Educational content creation tools",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "AI-driven immersive classrooms using VR/AR",
-          "Personalized virtual research companion agents",
-          "Dynamic, real-time curriculum adjustment engines",
-          "Non-intrusive focus and engagement analytical tools"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "healthcare",
     name: "Healthcare and Wellness",
     iconName: "heart",
-    description: "Deploy AI solutions for diagnostic support, hospital resource allocation, and remote patient monitoring to elevate care quality.",
+    description:
+      "Deploy AI solutions for diagnostic support, hospital resource allocation, and remote patient monitoring to elevate care quality.",
+    imageUrl: "/strategic/healthcare.png",
     features: [
       {
         title: "Principal Advantages and Applications",
         items: [
-          "Computer vision assistants for diagnostic imaging",
-          "Telemetry analysis for remote patient monitoring",
-          "Automated transcription for clinical documentation",
-          "Resource forecasting for hospital bed management",
-          "Personalized nutrition and physical therapy modeling"
-        ]
+          "Improve diagnostic accuracy with AI imaging",
+          "Enable remote patient monitoring and telemedicine",
+          "Predict diseases using healthcare analytics",
+          "Automate clinical documentation and reporting",
+          "Support personalized treatment recommendations",
+        ],
       },
       {
-        title: "Solutions and Software Tools",
+        title: "Software Resources and Tools",
         items: [
-          "AI-enhanced EHR/EMR platforms",
-          "Telehealth portals with built-in preliminary triage bots",
-          "Image analysis pipelines (MRI/CT scans)",
-          "Wearable wellness sensor synchronization hubs"
-        ]
+          "Electronic Health Record (EHR) systems",
+          "Telemedicine platforms",
+          "Medical imaging AI software",
+          "Healthcare analytics dashboards",
+        ],
       },
-      {
-        title: "Future Prospects",
-        items: [
-          "Early-stage oncology and genomic pattern warning networks",
-          "AI-guided micro-surgical robotic systems",
-          "Fully custom-designed precision medicine formulas",
-          "Prescriptive digital therapeutics platforms"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "fintech",
     name: "Fintech and Financial Services",
     iconName: "landmark",
-    description: "Optimize financial operations with automated fraud detection, algorithmic risk modeling, and AI-powered robo-advisory engines.",
+    description:
+      "Optimize financial operations with automated fraud detection, algorithmic risk modeling, and AI-powered robo-advisory engines.",
+    imageUrl: "/strategic/fintech.png",
     features: [
       {
         title: "Key Advantages and Applications",
         items: [
-          "Automated fraud monitoring and instant prevention",
-          "AI credit underwriting for rapid lending decisions",
-          "Robo-advisory and automated investment management",
-          "Compliance mapping for financial regulations"
-        ]
+          "Detect fraudulent transactions in real time",
+          "Automate credit scoring and loan approvals",
+          "Deliver AI-powered investment recommendations",
+          "Improve financial risk assessment and compliance",
+          "Provide personalized financial planning services",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "Secure mobile banking frameworks",
-          "Smart gateway payment routing",
-          "Anomalous transaction detection engines",
-          "Trading recommendation algorithms"
-        ]
+          "Digital banking platforms",
+          "Fraud detection systems",
+          "Investment and trading software",
+          "Financial analytics platforms",
+        ],
       },
-      {
-        title: "Future Prospects",
-        items: [
-          "Fully self-correcting financial portfolios",
-          "Autonomous, risk-optimized micro-lending networks",
-          "Biometric continuous identity verification",
-          "Open banking conversational advisors"
-        ]
-      }
-    ]
+    ],
   },
   {
     id: "real-estate",
     name: "Real Estate",
     iconName: "building",
-    description: "Incorporate machine learning to forecast property values, optimize building energy consumption, and personalize property match recommendations.",
+    description:
+      "Incorporate machine learning to forecast property values, optimize building operations, and personalize property recommendations.",
+    imageUrl: "/strategic/real-estate.png",
     features: [
       {
         title: "Key Benefits and Use Cases",
         items: [
-          "Intelligent Property Valuation (Automated Valuation Models)",
-          "High-ROI commercial investment location scoring",
-          "Smart lease abstraction and document management"
-        ]
+          "AI-powered property valuation and pricing",
+          "Personalized property recommendations",
+          "Real estate market trend forecasting",
+          "Automated lease and document management",
+          "Investment opportunity analysis",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "AI-driven Property Management Systems (PMS)",
-          "Intelligent PropTech CRM systems",
-          "Energy usage optimization dashboards"
-        ]
+          "Property Management Systems (PMS)",
+          "Real Estate CRM platforms",
+          "Property valuation software",
+          "Virtual property tour solutions",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "AI agent-led immersive virtual house showings",
-          "Self-executing blockchain smart lease systems",
-          "Climate change and demographic demand forecasting"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "automotive",
     name: "Automotive",
     iconName: "car",
-    description: "Enhance safety systems, streamline factory assembly, and implement predictive vehicle maintenance through AI integrations.",
+    description:
+      "Enhance vehicle safety, optimize manufacturing, and improve fleet management through AI-powered solutions.",
+    imageUrl: "/strategic/automotive.png",
     features: [
       {
         title: "Key Benefits and Use Cases",
         items: [
-          "Sensor fusion and computer vision for ADAS systems",
-          "Telemetry-driven predictive vehicle breakdown warnings",
-          "Production-line quality inspection using computer vision",
-          "Dynamic EV battery management and routing optimization"
-        ]
+          "Predictive vehicle maintenance",
+          "AI-powered driver assistance systems",
+          "Manufacturing quality inspection",
+          "Fleet management optimization",
+          "Electric vehicle battery monitoring",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "Connected vehicle telematics portals",
-          "Embedded firmware analytics",
-          "AI fleet dispatch and navigation platforms"
-        ]
+          "Vehicle telematics platforms",
+          "Fleet management software",
+          "Automotive diagnostic systems",
+          "Manufacturing automation tools",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "Level 4 & 5 fully autonomous vehicle operations",
-          "Smart city V2X (Vehicle-to-Everything) traffic grids",
-          "Self-healing vehicle telemetry diagnostics"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "telecom",
     name: "Telecom",
     iconName: "tower",
-    description: "Boost network efficiency, reduce downtime, and automate customer support using predictive network optimization algorithms.",
+    description:
+      "Improve network performance, automate customer support, and optimize operations using AI-driven technologies.",
+    imageUrl: "/strategic/telecom.png",
     features: [
       {
         title: "Key Benefits and Use Cases",
         items: [
-          "Predictive maintenance for cell towers and fiber networks",
-          "Automated network traffic congestion rerouting",
-          "AI-driven customer subscription churn predictions"
-        ]
+          "Predictive network maintenance",
+          "AI-driven traffic optimization",
+          "Customer churn prediction",
+          "Automated customer support",
+          "Network performance monitoring",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "AI-enabled OSS/BSS monitoring tools",
-          "Conversational customer care assistants",
-          "Network capacity optimization software"
-        ]
+          "OSS/BSS management systems",
+          "AI customer service chatbots",
+          "Network monitoring platforms",
+          "Telecom analytics software",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "Self-healing autonomous networks powered by AI",
-          "Dynamic 6G slicing allocation engines",
-          "Smart edge computing device coordination"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "logistics",
     name: "Logistics & Supply Chain",
     iconName: "truck",
-    description: "Optimize transit routes, predict warehouse demands, and minimize operational overheads with intelligent supply chain networks.",
+    description:
+      "Optimize transportation, warehouse operations, and inventory management with AI-powered logistics solutions.",
+    imageUrl: "/strategic/logistics.png",
     features: [
       {
         title: "Key Benefits and Use Cases",
         items: [
-          "Real-time delivery route optimization algorithms",
-          "High-precision warehouse demand planning",
-          "Supplier reliability assessment modeling",
-          "Automated container packing optimizations"
-        ]
+          "Smart route optimization",
+          "Warehouse inventory forecasting",
+          "Supply chain demand prediction",
+          "Fleet performance monitoring",
+          "Automated warehouse operations",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "AI-enhanced Warehouse Management Systems (WMS)",
-          "Dispatch routing and tracking dashboards",
-          "Predictive stock-level warning systems"
-        ]
+          "Warehouse Management Systems (WMS)",
+          "Transportation Management Systems (TMS)",
+          "Fleet tracking platforms",
+          "Supply chain analytics software",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "Fully autonomous distribution warehouses",
-          "Decentralized ledger blockchain tracking pipelines",
-          "Predictive weather and transit risk modeling"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "retail",
     name: "Retail and E-commerce",
     iconName: "cart",
-    description: "Deploy AI recommendation engines, dynamic price optimization, and conversational virtual shoppers to drive higher conversion rates.",
+    description:
+      "Increase customer engagement and sales with AI-driven recommendations, pricing optimization, and shopping experiences.",
+    imageUrl: "/strategic/retail.png",
     features: [
       {
         title: "Key Benefits and Use Cases",
         items: [
-          "Algorithmic dynamic pricing optimization",
-          "Hyper-personalized cross-sell recommendation engines",
-          "Visual search and visual matching tools",
-          "Inventory stocking level demand models"
-        ]
+          "Personalized product recommendations",
+          "Dynamic pricing optimization",
+          "Customer behavior analysis",
+          "Inventory demand forecasting",
+          "AI-powered virtual shopping assistants",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "AI plugins for Shopify, Magento, and WooCommerce",
-          "Intelligent point-of-sale (POS) systems",
-          "Visual query search engine frameworks"
-        ]
+          "Shopify and WooCommerce AI plugins",
+          "Point-of-Sale (POS) systems",
+          "Inventory management software",
+          "E-commerce analytics platforms",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "Immersive VR stores with virtual sales assistants",
-          "Predictive auto-replenishment shopping models",
-          "Autonomous micro-drone delivery networks"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "manufacturing",
     name: "Manufacturing",
     iconName: "factory",
-    description: "Achieve smart factory status through machine vision quality inspection, predictive machine upkeep, and automated design cycles.",
+    description:
+      "Improve production efficiency, product quality, and factory automation with intelligent AI solutions.",
+    imageUrl: "/strategic/manufacturing.png",
     features: [
       {
         title: "Principal Advantages and Applications",
         items: [
-          "Zero-defect computer vision camera checking",
-          "Machine wear predictive maintenance scheduling",
-          "Generative design part optimization",
-          "Supply chain disruption impact simulations"
-        ]
+          "Predictive equipment maintenance",
+          "Automated quality inspection",
+          "Production planning optimization",
+          "Supply chain performance monitoring",
+          "Smart factory automation",
+        ],
       },
       {
         title: "Software Resources and Tools",
         items: [
-          "Manufacturing Execution Systems (MES) with AI modules",
-          "Predictive sensor anomaly alerts",
-          "Generative CAD part modeling suites"
-        ]
+          "Manufacturing Execution Systems (MES)",
+          "Industrial IoT monitoring platforms",
+          "CAD/CAM design software",
+          "Production analytics dashboards",
+        ],
       },
-      {
-        title: "Future Prospects",
-        items: [
-          "Digital Twin plant-wide operational replicas",
-          "Intelligent cooperative industrial robots (cobots)",
-          "End-to-end self-correcting assembly lines"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "travel",
     name: "Travel and Hospitality",
     iconName: "plane",
-    description: "Implement predictive pricing, automated booking management, and personalized travel curation to elevate hospitality services.",
+    description:
+      "Deliver personalized travel experiences, automate bookings, and optimize hospitality services with AI.",
+    imageUrl: "/strategic/travel.png",
     features: [
       {
         title: "Key Benefits and Use Cases",
         items: [
-          "Real-time dynamic room and flight pricing",
-          "Personalized vacation itinerary builders",
-          "AI check-in guest profiling systems"
-        ]
+          "Personalized travel recommendations",
+          "Dynamic pricing for flights and hotels",
+          "AI-powered booking assistance",
+          "Guest experience personalization",
+          "Customer feedback analysis",
+        ],
       },
       {
         title: "Software Tools and Solutions",
         items: [
-          "AI-driven Booking and PMS integrations",
-          "Conversational hotel concierge assistants",
-          "Hospitality customer feedback analytics"
-        ]
+          "Hotel Property Management Systems",
+          "Online booking platforms",
+          "Virtual concierge software",
+          "Hospitality analytics tools",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "AI virtual travel companion agents",
-          "Smart room IoT predictive preset controls",
-          "AR spatial historic tour systems"
-        ]
-      }
-    ]
+    ],
   },
+
   {
     id: "technology",
     name: "Technology",
     iconName: "cpu",
-    description: "Accelerate software development, automate cloud infrastructure, and deploy cybersecurity response loops with core AI infrastructure.",
+    description:
+      "Accelerate software development, strengthen cybersecurity, and optimize cloud infrastructure with AI-powered technologies.",
+
     features: [
       {
         title: "Principal Advantages and Uses",
         items: [
-          "Automated code completion and bug detection",
-          "Predictive cloud server auto-scaling",
-          "Real-time cyberattack threat pattern isolation"
-        ]
+          "AI-assisted software development",
+          "Cloud infrastructure optimization",
+          "Cybersecurity threat detection",
+          "Automated system monitoring",
+          "Intelligent DevOps automation",
+        ],
       },
       {
         title: "Tools and Solutions",
         items: [
-          "LLM programming helper integrations",
-          "Infrastructure monitoring AI systems",
-          "Continuous intrusion pattern mapping"
-        ]
+          "AI coding assistants",
+          "Cloud monitoring platforms",
+          "Cybersecurity management software",
+          "DevOps automation tools",
+        ],
       },
-      {
-        title: "Future Possibilities",
-        items: [
-          "Self-writing software architecture generators",
-          "Autonomous devops engineers",
-          "Self-patching cybersecurity firewall systems"
-        ]
-      }
-    ]
-  }
+    ],
+  },
 ];
 
 function IndustryIcon({ name }: { name: string }) {
@@ -512,59 +460,61 @@ function IndustryIcon({ name }: { name: string }) {
 }
 
 export default function IndustriesWeTransform() {
-  const [selectedId, setSelectedId] = useState<string>("business");
-  const selectedIndustry = INDUSTRIES_DATA.find((ind) => ind.id === selectedId) || INDUSTRIES_DATA[1];
+  const [selectedId, setSelectedId] = useState<string>("marketing");
+  const selectedIndustry =
+    INDUSTRIES_DATA.find((ind) => ind.id === selectedId) || INDUSTRIES_DATA[0];
 
   return (
     <Section className="bg-white py-16 lg:py-24">
       <Row>
         {/* Section Heading */}
-        <div className="text-center mb-16  mx-auto">
-          {/* <h2 className="text-[28px] sm:text-[36px] lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight"> */}
-          <h2 className="common-h2 text-center w-full  text-black ">
-            Industries We Transform Through Strategic {" "}
+        <div className="text-center mb-16 mx-auto">
+          <h2 className="common-h2 text-center w-full text-black">
+            Industries We Transform Through Strategic{" "}
             <span className="text-[#D68029]">AI Consulting</span>
           </h2>
-          {/* Divider accent */}
-          {/* <div className="flex justify-center mt-4 gap-1">
-            <span className="w-10 h-1 rounded-full bg-[#D68029]" />
-            <span className="w-3 h-1 rounded-full bg-[#D68029]/40" />
-          </div> */}
           <Motion />
         </div>
 
         {/* Tab-Sidebar layout grid */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start w-full">
-          
-          {/* Left Column: Tab list (vertical on desktop, horizontal scroll on mobile) */}
-          <div className="w-full lg:w-[35%] flex overflow-x-auto lg:overflow-x-visible lg:flex-col gap-3  scrollbar-none shrink-0 border-b border-gray-100 lg:border-b-0">
+          {/* Left Column: Tab list */}
+          <div className="w-full lg:w-[32%] flex overflow-x-auto lg:overflow-x-visible lg:flex-col gap-3 scrollbar-none shrink-0 border-b border-gray-100 lg:border-b-0">
             {INDUSTRIES_DATA.map((ind) => {
               const isSelected = ind.id === selectedId;
               return (
                 <button
                   key={ind.id}
                   onClick={() => setSelectedId(ind.id)}
-                  className={`relative flex items-center  gap-4  cursor-pointer px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm lg:text-xl transition-all duration-300 whitespace-nowrap 
-                    lg:whitespace-normal shrink-0 hover:bg-white  hover:border hover:border-[#D68029] hover:text-[#0d1b2a] 
+                  className={`relative flex items-center gap-4 cursor-pointer px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm lg:text-[17px] transition-all duration-300 whitespace-nowrap 
+                    lg:whitespace-normal shrink-0 hover:bg-white hover:border hover:border-[#D68029] hover:text-[#0d1b2a] group
                     ${
-                    isSelected
-                      ? "bg-white border-gray-100 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.06)] text-[#0d1b2a]"
-                      : "bg-gray-50 border-transparent text-gray-500 hover:bg-gray-50"
-                  }`}
+                      isSelected
+                        ? "bg-white border-gray-100 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.06)] text-[#0d1b2a]"
+                        : "bg-gray-50 border-transparent text-gray-500 hover:bg-gray-50"
+                    }`}
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
-                    isSelected ? "bg-[#D68029]/10" : "bg-white border border-gray-100 shadow-sm"
-                  }`}>
+                  <div
+                    className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                      isSelected
+                        ? "bg-[#D68029]/10 scale-105"
+                        : "bg-white border border-gray-100 shadow-sm group-hover:scale-105"
+                    }`}
+                  >
                     <IndustryIcon name={ind.iconName} />
                   </div>
                   <span className="pr-4 lg:pr-0">{ind.name}</span>
 
-                  {/* Selected orange vertical pill bar on the right side of the card */}
+                  {/* Selected orange vertical pill bar */}
                   {isSelected && (
                     <motion.div
                       layoutId="activeIndicator"
                       className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-[#D68029] rounded-l-full hidden lg:block"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </button>
@@ -573,7 +523,7 @@ export default function IndustriesWeTransform() {
           </div>
 
           {/* Right Column: Display details of selected industry */}
-          <div className="w-full lg:w-[65%] min-h-125">
+          <div className="w-full lg:w-[68%] min-h-[500px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedId}
@@ -581,43 +531,61 @@ export default function IndustriesWeTransform() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
-                className="w-full"
+                className="w-full flex flex-col"
               >
-                {/* Description */}
-                <p className="text-[#0d1b2a] font-semibold text-md leading-relaxed mb-12 border-l-4 border-[#d68029] pl-5">
-                  {selectedIndustry.description}
-                </p>
+                {/* 1. Main Industry Banner Image */}
+                {selectedIndustry.imageUrl && (
+                  <div className="w-full mb-8 rounded-2xl overflow-hidden shadow-[0_4px_20px_-2px_rgba(0,0,0,0.08)] border border-gray-100 bg-gray-50 flex justify-center">
+                    <img
+                      src={selectedIndustry.imageUrl}
+                      alt={selectedIndustry.name}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                )}
 
-                {/* Sub-sections */}
-                <div className="space-y-8">
+                {/* 2. Description Header */}
+                <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 mb-10">
+                  <p className="text-[#0d1b2a] font-semibold text-lg leading-relaxed border-l-4 border-[#d68029] pl-5">
+                    {selectedIndustry.description}
+                  </p>
+                </div>
+
+                {/* 3. Sub-sections (Text only, grouped in cards for a clean look) */}
+                <div className="space-y-6">
                   {selectedIndustry.features.map((feature, idx) => (
-                    <div key={idx} className="flex gap-5 items-start">
-                      {/* Orange Square Number Badge */}
-                      <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-md bg-linear-to-r from-[#d68029] to-[#f7b733] text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-sm mt-0.5">
-                        {idx + 1}
-                      </div>
-
-                      {/* Content block */}
-                      <div className="flex-1">
-                        <h4 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#0d1b2a] mb-4 lg:mb-5">
+                    <div
+                      key={idx}
+                      className="bg-white rounded-2xl p-6 shadow-[0_4px_15px_-2px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-[0_4px_25px_-2px_rgba(0,0,0,0.06)] transition-shadow duration-300"
+                    >
+                      <div className="flex items-center gap-4 mb-5">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#d68029] to-[#f7b733] text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-sm">
+                          {idx + 1}
+                        </div>
+                        <h4 className="text-xl md:text-2xl font-bold text-[#0d1b2a]">
                           {feature.title}
                         </h4>
-                        <ul className="space-y-3">
-                          {feature.items.map((item, bulletIdx) => (
-                            <li key={bulletIdx} className="flex gap-2.5 items-start text-[#6f6f6f] text-lg">
-                              <span className="text-[#D68029] font-extrabold select-none  text-xl rounded-full">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
                       </div>
+
+                      <ul className="space-y-3 pl-1 md:pl-2">
+                        {feature.items.map((item, bulletIdx) => (
+                          <li
+                            key={bulletIdx}
+                            className="flex gap-3 items-start text-[#5a5a5a] text-[17px] leading-relaxed"
+                          >
+                            <span className="text-[#D68029] font-black select-none text-xl mt-0.5">
+                              •
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   ))}
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
-
         </div>
       </Row>
     </Section>
