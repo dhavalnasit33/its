@@ -1,7 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { FiArrowRight } from "react-icons/fi";
+import {
+    FiArrowRight,
+    FiBookOpen,
+    FiMonitor,
+    FiSmartphone,
+    FiPenTool,
+    FiCode,
+    FiTrendingUp,
+    FiEdit3,
+    FiBriefcase,
+} from "react-icons/fi";
 import { motion } from "framer-motion";
 import CareerGraph from "@/components/CareerGraph";
 import Motion from "@/components/motionbar";
@@ -17,6 +27,29 @@ import Row from "@/components/Row";
 import Button from "@/components/Button";
 import UnderConstructionPage from "@/components/UnderConstruction";
 const CareerGrid = dynamic(() => import("@/components/CareerGrid"))
+
+const trainingPrograms = [
+    { icon: FiMonitor, color: "#3B82F6", title: "Web Development", desc: "HTML, CSS, JavaScript, React, Node.js, MongoDB" },
+    { icon: FiSmartphone, color: "#16A34A", title: "Mobile App Development", desc: "Flutter, React Native, Android Studio" },
+    { icon: FiPenTool, color: "#DB2777", title: "UI/UX Design", desc: "Figma, Adobe XD, Photoshop, UI Design Principles" },
+    { icon: FiCode, color: "#7C3AED", title: "PHP & Laravel Development", desc: "Core PHP, MySQL, Laravel Framework" },
+    { icon: FiTrendingUp, color: "#D68029", title: "Digital Marketing", desc: "SEO, Social Media, Google Ads, Analytics" },
+];
+
+const internshipPrograms = [
+    { icon: FiCode, title: "Web Development Internship", desc: "Work on live projects and enhance coding skills" },
+    { icon: FiSmartphone, title: "Mobile App Internship", desc: "Build and deploy real mobile applications" },
+    { icon: FiPenTool, title: "UI/UX Design Internship", desc: "Design real user interfaces and UX flows" },
+    { icon: FiTrendingUp, title: "Digital Marketing Internship", desc: "SEO, SMM & Paid Campaigns on live projects" },
+    { icon: FiEdit3, title: "Content Writing Internship", desc: "Write, optimize and manage content projects" },
+];
+
+const whyChooseSteps = [
+    { num: "01", icon: FiBookOpen, title: "Learn", desc: "Industry-relevant curriculum crafted by experts" },
+    { num: "02", icon: FiMonitor, title: "Practice", desc: "Hands-on projects and real-world assignments" },
+    { num: "03", icon: FiTrendingUp, title: "Grow", desc: "Enhance your skills and build your confidence" },
+    { num: "04", icon: FiBriefcase, title: "Succeed", desc: "Get placed with top companies with our assistance" },
+];
 
 const cards = [
     { icon: "/training/trainer.svg", text: "Industry Expert Trainers" },
@@ -92,7 +125,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
             {/* HERO SECTION */}
             {/* <section className="relative  w-full  common_background_gradient">
                 <div className="relative max-w-384 mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
-            <Section className=" common_background_gradient ">
+            <Section className=" lg:py-12! common_background_gradient ">
                 {/* <div className="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto"> */}
                 <Row >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -141,16 +174,13 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                         </motion.div>
 
                         {/* Second p - from bottom */}
-                        <motion.p
+                        <motion.div
                             initial={{ opacity: 0, y: 60 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-                            className="text-gray-600 mt-4"
-                        >
-                            {/* Industry oriented training and courses are developed by top IT
-                            trainers */}
-                            {trainingMainPageData?.heroSection.description}
-                        </motion.p>
+                            className="text-gray-600 mt-4 prose max-w-none"
+                            dangerouslySetInnerHTML={{ __html: trainingMainPageData?.heroSection?.description || "" }}
+                        />
 
                         {/* Animated Button - from bottom slower */}
 
@@ -244,6 +274,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                 </Row>
                 {/* </div> */}
             </Section>
+            
 
             {/* CAREER TREE SECTION */}
             <Section className="max-w-full text-center">
@@ -281,11 +312,10 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 
             {/* <section className="py-20">
                 <div className="max-w-384 mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"> */}
-            <Section >
+            {/* <Section > */}
                 {/* <div className="relative w-full  max-w-[90%] lg:max-w-[80%] mx-auto "> */}
-                <Row>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 items-center ">
-                    {/* Image */}
+                {/* <Row>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-12 items-center "> 
                     <motion.div
                         className="relative flex justify-center"
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -308,23 +338,18 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                 )
                             }
                         </div>
-                    </motion.div>
-
-                    {/* Text Content */}
-                    <div className="text-left pb-24">
-                        {/* Small heading */}
+                    </motion.div> 
+                    <div className="text-left pb-24"> 
                         <motion.p
                             className="text-[#d68029] uppercase tracking-widest font-semibold mb-2"
                             initial={{ opacity: 0, y: -40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             viewport={{ once: true }}
-                        >
-                            {/* About Us */}
+                        > 
                             {trainingMainPageData?.aboutusSection.subTitle}
-                        </motion.p>
+                        </motion.p> 
 
-                        {/* Main heading */}
                         <motion.div
                             initial={{ opacity: 0, y: -40 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -337,7 +362,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             />
                         </motion.div>
 
-                        {/* Description */}
                         <motion.p
                             className="text-gray-500 mt-4 max-w-4xl text-[1.1rem] mx-auto"
                             initial={{ opacity: 0, y: 40 }}
@@ -348,7 +372,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             {trainingMainPageData?.aboutusSection.description}
                         </motion.p>
 
-                        {/* Subheading */}
                         <motion.h3
                             className="text-xl font-bold mt-8"
                             initial={{ opacity: 0, y: 40 }}
@@ -356,11 +379,9 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
                             viewport={{ once: true }}
                         >
-                            {/* People Love To Learn With Us */}
                             {trainingMainPageData?.aboutusSection.detailbox.title}
                         </motion.h3>
 
-                        {/* Stats */}
                         <motion.div
                             className="flex justify-center items-center gap-8 lg:gap-12 mt-4"
                             initial={{ opacity: 0, y: 40 }}
@@ -374,7 +395,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                     <div className="text-left" key={index}>
                                         <h4 className="text-2xl font-bold text-[#D68029]">{data.heading}</h4>
                                         <p className="text-gray-600 mt-1 text-sm">
-                                            {/* 90% of students see their course through to completion. */}
                                             {data.description}
                                         </p>
                                     </div>
@@ -382,35 +402,6 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                             }
 
                         </motion.div>
-
-                        {/* Button */}
-                        {/* <motion.a
-                            href="#contact-form-section"
-                            className="relative flex flex-row w-fit  cursor-pointer overflow-hidden mt-10 px-5 sm:px-6 py-2.5 sm:py-3 
-                            bg-[#0b1833] text-white text-sm sm:text-base font-medium    rounded-lg shadow-md"
-                            whileHover="hover"
-                            initial="rest"
-                            animate="rest"
-                            variants={{
-                                rest: { scale: 1 },
-                                hover: { scale: 1.02 },
-                            }}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                        >
-                            <motion.span
-                                className="absolute inset-0 bg-linear-to-r from-[#D68025] to-[#D68029]"
-                                variants={{
-                                    rest: { scaleX: 0, originX: 0.5 }, // hidden at rest (from center)
-                                    hover: { scaleX: 1, originX: 0.5 }, // expands outwards on hover
-                                }}
-                                transition={{ duration: 0.4, ease: "easeInOut" }}
-                                style={{ transformOrigin: "center" }}
-                            />
-
-                            <span className="relative z-10 flex items-center gap-2">
-                                Learn More <FiArrowRight />
-                            </span>
-                        </motion.a> */}
                          <Button
 						  	motionProps={{
 								initial: { opacity: 0, y: 70 },
@@ -424,8 +415,316 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 						/>
                     </div>
                 </div>
-                </Row>
+                </Row> */}
                 {/* </div> */}
+            {/* </Section> */}
+
+            {/* NEW SECTION: Training & Internship Programs */}
+            <Section className="bg-gray-50 overflow-hidden">
+                <Row>
+                    {/* Heading */}
+                    <motion.div
+                        className="text-center max-w-2xl mx-auto"
+                        initial={{ opacity: 0, y: -40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                    >
+                        <p className="text-[#d68029] uppercase tracking-widest font-semibold mb-2">
+                            Our Programs
+                        </p>
+                        <h2 className="common-h2">
+                            Choose The Right Path To{" "}
+                            <span className="text-[#D68029]">Build Your Career</span>
+                        </h2>
+                        <div className="mt-4 flex justify-center mb-2">
+                            <Motion />
+                        </div>
+                        <p className="text-gray-500 mt-3 text-sm sm:text-base">
+                            Whether you want to learn from scratch or gain real-world
+                            experience, we have a program designed for you.
+                        </p>
+                    </motion.div>
+
+                    {/* Program Cards */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mt-12 items-stretch">
+                        {/* TRAINING PROGRAMS CARD */}
+                        <motion.div
+                            className="relative bg-white rounded-2xl shadow-xl p-6 sm:p-8 overflow-hidden flex flex-col h-full"
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.7, ease: "easeOut" }}
+                        >
+                            <span className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#D68029] to-[#f0a84e]" />
+
+                            {/* Fixed-height header so both cards' lists start at the same line */}
+                            <div className="min-h-32 sm:min-h-28">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-12 h-12 shrink-0 rounded-xl bg-[#D68029]/10 flex items-center justify-center">
+                                        <FiBookOpen className="text-[#D68029]" size={24} />
+                                    </div>
+                                    <h3 className="text-xl sm:text-2xl font-bold text-[#0b1833]">
+                                        Training Programs
+                                    </h3>
+                                </div>
+                                <p className="text-gray-500 text-sm sm:text-base">
+                                    Learn from industry experts with our job-oriented training
+                                    programs and upgrade your skills.
+                                </p>
+                            </div>
+
+                            <motion.div
+                                className="space-y-3 flex-1"
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, amount: 0.2 }}
+                                variants={{
+                                    hidden: {},
+                                    show: { transition: { staggerChildren: 0.1 } },
+                                }}
+                            >
+                                {trainingPrograms.map((item, idx) => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <motion.a
+                                            key={idx}
+                                            href="#contact-form-section"
+                                            className="group flex items-center gap-4 p-3 sm:p-4 rounded-xl border border-gray-100 hover:border-transparent hover:bg-[#0b1833] transition-colors duration-300"
+                                            variants={{
+                                                hidden: { opacity: 0, y: 20 },
+                                                show: { opacity: 1, y: 0 },
+                                            }}
+                                            transition={{ duration: 0.5, ease: "easeOut" }}
+                                        >
+                                            <div
+                                                className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center"
+                                                style={{ backgroundColor: `${item.color}1A` }}
+                                            >
+                                                <Icon style={{ color: item.color }} size={18} />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h4 className="font-semibold text-[#0b1833] text-sm sm:text-base group-hover:text-white transition-colors">
+                                                    {item.title}
+                                                </h4>
+                                                <p className="text-gray-500 text-xs sm:text-sm group-hover:text-gray-300 transition-colors">
+                                                    {item.desc}
+                                                </p>
+                                            </div>
+                                            <FiArrowRight className="shrink-0 text-gray-400 group-hover:text-[#D68029] group-hover:translate-x-1 transition-all" />
+                                        </motion.a>
+                                    );
+                                })}
+                            </motion.div>
+
+                            <a
+                                href="#contact-form-section"
+                                className="inline-flex items-center gap-2 mt-6 text-[#D68029] font-semibold text-sm sm:text-base hover:gap-3 transition-all self-start"
+                            >
+                                View All Training Programs <FiArrowRight />
+                            </a>
+                        </motion.div>
+
+                        {/* INTERNSHIP PROGRAMS CARD */}
+                        <motion.div
+                            className="relative bg-[#0b1833] rounded-2xl shadow-xl p-6 sm:p-8 overflow-hidden text-white flex flex-col h-full"
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.7, ease: "easeOut" }}
+                        >
+                            <span className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#f0a84e] to-[#D68029]" />
+                            <span className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-[#D68029]/10" />
+                            <span className="absolute -right-4 bottom-10 w-24 h-24 rounded-full bg-[#D68029]/10" />
+
+                            {/* Fixed-height header matching the Training card so both lists start level */}
+                            <div className="relative min-h-32 sm:min-h-28">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-12 h-12 shrink-0 rounded-xl bg-white/10 flex items-center justify-center">
+                                        <FiBriefcase className="text-[#D68029]" size={24} />
+                                    </div>
+                                    <h3 className="text-xl sm:text-2xl font-bold">
+                                        Internship Programs
+                                    </h3>
+                                </div>
+                                <p className="text-gray-300 text-sm sm:text-base">
+                                    Work on real projects, gain practical exposure and build
+                                    your professional portfolio.
+                                </p>
+                            </div>
+
+                            <motion.div
+                                className="relative space-y-3 flex-1"
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, amount: 0.2 }}
+                                variants={{
+                                    hidden: {},
+                                    show: { transition: { staggerChildren: 0.1 } },
+                                }}
+                            >
+                                {internshipPrograms.map((item, idx) => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <motion.a
+                                            key={idx}
+                                            href="#contact-form-section"
+                                            className="group flex items-center gap-4 p-3 sm:p-4 rounded-xl border border-white/10 hover:border-transparent hover:bg-[#D68029] transition-colors duration-300"
+                                            variants={{
+                                                hidden: { opacity: 0, y: 20 },
+                                                show: { opacity: 1, y: 0 },
+                                            }}
+                                            transition={{ duration: 0.5, ease: "easeOut" }}
+                                        >
+                                            <div className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-white/10 group-hover:bg-white/20 transition-colors">
+                                                <Icon className="text-[#f0a84e] group-hover:text-white transition-colors" size={18} />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h4 className="font-semibold text-sm sm:text-base">
+                                                    {item.title}
+                                                </h4>
+                                                <p className="text-gray-300 text-xs sm:text-sm group-hover:text-white/90 transition-colors">
+                                                    {item.desc}
+                                                </p>
+                                            </div>
+                                            <FiArrowRight className="shrink-0 text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                                        </motion.a>
+                                    );
+                                })}
+                            </motion.div>
+
+                            <a
+                                href="#contact-form-section"
+                                className="relative inline-flex items-center gap-2 mt-6 text-[#f0a84e] font-semibold text-sm sm:text-base hover:gap-3 transition-all self-start"
+                            >
+                                View All Internship Programs <FiArrowRight />
+                            </a>
+                        </motion.div>
+                    </div>
+                </Row>
+            </Section>
+
+            {/* NEW SECTION: Why Choose Our Programs */}
+            <Section className="bg-white overflow-hidden">
+                <Row>
+                    {/* WHY CHOOSE OUR PROGRAMS */}
+                    <div className="mt-0">
+                        <motion.div
+                            className="text-center"
+                            initial={{ opacity: 0, y: -30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                        >
+                            <h3 className="text-2xl sm:text-3xl font-bold text-[#0b1833]">
+                                Why Choose Our Programs?
+                            </h3>
+                            <p className="text-gray-500 mt-2 max-w-xl mx-auto text-sm sm:text-base">
+                                Our proven approach helps you learn, grow and succeed in
+                                your career.
+                            </p>
+                        </motion.div>
+
+                        {/* ===== DESKTOP / TABLET: zig-zag vertical roadmap ===== */}
+                        <div className="hidden md:block relative max-w-3xl mx-auto mt-16">
+                            {/* center connecting line */}
+                            <span className="absolute left-1/2 top-4 bottom-4 w-px border-l-2 border-dashed border-[#D68029]/40 -translate-x-1/2" />
+
+                            <div className="flex flex-col gap-16">
+                                {whyChooseSteps.map((step, idx) => {
+                                    const Icon = step.icon;
+                                    const isEven = idx % 2 === 0;
+                                    return (
+                                        <motion.div
+                                            key={idx}
+                                            className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-x-6"
+                                            initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: true, amount: 0.4 }}
+                                            transition={{ duration: 0.6, ease: "easeOut" }}
+                                        >
+                                            {/* Left column content (only for even steps) */}
+                                            <div className={isEven ? "text-right" : ""}>
+                                                {isEven && (
+                                                    <>
+                                                        <h4 className="font-bold text-[#0b1833] text-lg">
+                                                            {step.title}
+                                                        </h4>
+                                                        <p className="text-gray-500 text-sm mt-1">
+                                                            {step.desc}
+                                                        </p>
+                                                    </>
+                                                )}
+                                            </div>
+
+                                            {/* Center node */}
+                                            <div className="relative z-10 mx-auto">
+                                                <div className="w-20 h-20 rounded-full bg-white shadow-lg flex items-center justify-center border border-gray-100">
+                                                    <Icon className="text-[#0b1833]" size={28} />
+                                                </div>
+                                                <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-[#D68029] text-white text-xs font-bold flex items-center justify-center shadow-md">
+                                                    {step.num}
+                                                </span>
+                                            </div>
+
+                                            {/* Right column content (only for odd steps) */}
+                                            <div className={!isEven ? "" : ""}>
+                                                {!isEven && (
+                                                    <>
+                                                        <h4 className="font-bold text-[#0b1833] text-lg">
+                                                            {step.title}
+                                                        </h4>
+                                                        <p className="text-gray-500 text-sm mt-1">
+                                                            {step.desc}
+                                                        </p>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* ===== MOBILE: left-aligned vertical roadmap ===== */}
+                        <div className="md:hidden relative mt-12 max-w-sm mx-auto">
+                            <span className="absolute left-8 top-2 bottom-2 w-px border-l-2 border-dashed border-[#D68029]/40" />
+
+                            <div className="flex flex-col gap-8">
+                                {whyChooseSteps.map((step, idx) => {
+                                    const Icon = step.icon;
+                                    return (
+                                        <motion.div
+                                            key={idx}
+                                            className="relative flex items-start gap-4"
+                                            initial={{ opacity: 0, y: 30 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.3 }}
+                                            transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.1 }}
+                                        >
+                                            <div className="relative z-10 shrink-0">
+                                                <div className="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center border border-gray-100">
+                                                    <Icon className="text-[#0b1833]" size={22} />
+                                                </div>
+                                                <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#D68029] text-white text-[10px] font-bold flex items-center justify-center shadow-md">
+                                                    {step.num}
+                                                </span>
+                                            </div>
+                                            <div className="pt-3">
+                                                <h4 className="font-bold text-[#0b1833]">
+                                                    {step.title}
+                                                </h4>
+                                                <p className="text-gray-500 text-sm mt-1">
+                                                    {step.desc}
+                                                </p>
+                                            </div>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </Row>
             </Section>
 
             {/* NEW SECTION: ITS Institute Facilities */}
@@ -557,7 +856,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                 trainingMainPageData?.rightCoursePickSection.cardBox.map((card, idx) => (
                                     <motion.div
                                         key={idx}
-                                        className="relative bg-white min-h-40 sm:min-h-45 shadow-2xl px-5 sm:px-6 py-8 sm:py-10 flex flex-col text-xl sm:text-2xl font-semibold rounded-xl"
+                                        className="relative bg-white min-h-40 sm:min-h-48 shadow-2xl px-5 sm:px-6 py-8 sm:py-10 flex flex-col text-xl sm:text-2xl font-semibold rounded-xl"
                                         initial={{ scale: 0.9, opacity: 0 }}
                                         whileInView={{ scale: 1, opacity: 1 }}
                                         transition={{ duration: 0.6, ease: "easeOut" }} // 👈 no delay
@@ -586,9 +885,9 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                         </motion.div>
 
                         {/* RIGHT SIDE: TEXT CONTENT */}
-                        <div className="space-y-6 md:space-y-8 lg:pl-6 order-1 lg:order-2">
+                        <div className="space-y-2 lg:pl-6 order-1 lg:order-2">
                             <motion.h6
-                                className="uppercase text-[#D68029] font-semibold tracking-wider mt-16"
+                                className="uppercase text-[#D68029] font-semibold tracking-wider mt-10"
                                 initial={{ y: -50, opacity: 0 }}
                                 whileInView={{ y: 0, opacity: 1 }}
                                 transition={{ duration: 1.2, ease: "easeOut" }}
@@ -600,7 +899,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 
                             {/* Heading from top */}
                             <motion.h2
-                                className="common-h2 leading-snug mt-3"
+                                className="common-h2 leading-snug "
                                 initial={{ y: -60, opacity: 0 }}
                                 whileInView={{ y: 0, opacity: 1 }}
                                 transition={{ duration: 0.9, ease: "easeOut" }}
@@ -613,7 +912,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 
                             {/* Paragraph from bottom */}
                             <motion.p
-                                className="text-gray-500 text-sm sm:text-base md:text-lg leading-relaxed mt-6"
+                                className="text-gray-500 text-sm sm:text-base md:text-lg leading-relaxed mt-2"
                                 initial={{ y: 60, opacity: 0 }}
                                 whileInView={{ y: 0, opacity: 1 }}
                                 transition={{ duration: 0.9, ease: "easeOut" }}
@@ -634,7 +933,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
 
                                     <motion.div
                                         key={index}
-                                        className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mt-8"
+                                        className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mt-4"
                                         initial={{ y: 80, opacity: 0 }}
                                         whileInView={{ y: 0, opacity: 1 }}
                                         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -661,7 +960,7 @@ export default function TrainingPageClient({ initialData }: { initialData?: Trai
                                                 {/* Trusted By Thousands */}
                                                 {data.title}
                                             </h4>
-                                            <p className="text-gray-600 text-sm sm:text-md mt-2 sm:mt-3 leading-relaxed">
+                                            <p className="text-gray-600 text-sm sm:text-md mt-2  leading-relaxed">
                                                 {/* “Trusted by Thousands” Lorem Ipsum is simply dummy text of
                                                 the printing and typesetting industry. Lorem Ipsum has been
                                                 the industry's standard dummy text ever since the 1500s. */}

@@ -5,6 +5,12 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input';
 import * as z from "zod";
+import Image from "next/image";
+import Link from "next/link";
+import { FaMicrosoft } from "react-icons/fa";
+import { MdEmail, MdPhone } from "react-icons/md";
+import { BiCalendar } from "react-icons/bi";
+import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 import {
     TextField,
@@ -60,6 +66,7 @@ const inputStyles: SxProps<Theme> = {
 };
 
 export default function TrainingContactForm() {
+    const { contactEmail, phonePrimary, addressPrimary, microsoftHandle } = useWebsiteSettings();
     const { toast } = useToast();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -136,108 +143,182 @@ export default function TrainingContactForm() {
         "Other Services",
     ];
 
+    const contactItems = [
+        {
+            icon: <MdPhone className="text-[22px] font-bold shrink-0" />,
+            label: "Call",
+            value: phonePrimary,
+        },
+        {
+            icon: <MdEmail className="text-[22px] font-bold shrink-0" />,
+            label: "Email",
+            value: contactEmail,
+            isEmail: true,
+        },
+        {
+            icon: <MdPhone className="text-[22px] font-bold shrink-0" />,
+            label: "Address",
+            value: addressPrimary,
+        },
+    ];
+
     return (
-        <Box className="bg-white  xl:px-8  rounded-xl w-full mx-auto  ">
-            {/* <Typography variant="h4" component="h2" align="center" fontWeight="bold" className="text-black mb-14" sx={{
-                marginBottom: "30px"
-            }}>
-                Any Questions? Feel Free to Contact Us
-            </Typography> */}
-            <h2 className="relative common-h2 mb-14 w-full text-center">
-                Any Questions? Feel Free to Contact Us
-            </h2>
-
-            <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
-                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3 }}>
-                    <Controller name="fullname" control={control} render={({ field }) => (
-                        <TextField {...field} label="Your Full Name (required)" error={!!errors.fullname} helperText={errors.fullname?.message} fullWidth sx={inputStyles} />
-                    )} />
-                    <Controller name="phone" control={control} render={({ field, fieldState }) => (
-                        <MuiTelInput {...field} label="Mobile No. (required)" fullWidth error={!!fieldState.error} helperText={fieldState.error?.message} defaultCountry="IN" sx={inputStyles} />
-                    )} />
-                    <Controller name="email" control={control} render={({ field }) => (
-                        <TextField {...field} label="Email (required)" type="email" error={!!errors.email} helperText={errors.email?.message} fullWidth sx={inputStyles} />
-                    )} />
-                    <Controller name="location" control={control} render={({ field }) => (
-                        <TextField {...field} label="Enter Location" error={!!errors.location} helperText={errors.location?.message} fullWidth sx={inputStyles} />
-                    )} />
-                </Box>
-                <FormControl component="fieldset" error={!!errors.selectedCourse} fullWidth>
-                    <FormLabel component="legend" sx={{ fontWeight: 'bold', color: '#000', mb: 1, }}>Select Course?</FormLabel>
-                    <Controller
-                        name="selectedCourse"
-                        control={control}
-                        render={({ field }) => (
-                            <RadioGroup
-                                {...field}
-                                // 2. Changed to flex wrap
-                                sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}
-                            >
-                                {courseOptions.map((option) => (
-                                    <FormControlLabel key={option} value={option} control={
-                                        <Radio disableRipple icon={<IoIosRadioButtonOff size={24} color="#d1d5db" />} checkedIcon={<IoIosCheckmarkCircle size={24} color="#d68029" />} />
-                                    } label={option}
-                                        sx={{
-                                            color: field.value === option ? '#d68029' : 'inherit',
-                                            '& .MuiTypography-root': {
-                                                fontWeight: field.value === option ? 500 : 400,
-                                            },
-                                        }}
-
-                                    />
-                                ))}
-                            </RadioGroup>
-                        )}
-                    />
-                    <FormHelperText>{errors.selectedCourse?.message}</FormHelperText>
-                </FormControl>
-                <Controller name="message" control={control} render={({ field }) => (
-                    <TextField {...field} label="Message" multiline rows={4} error={!!errors.message} helperText={errors.message?.message} fullWidth sx={inputStyles} />
-                )} />
-
-                <Box className="flex justify-start my-4">
-                    {/* <ReCAPTCHA ref={recaptchaRef} sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} onChange={(token) => setCaptchaToken(token)} /> */}
-                    <div className="scale-75 sm:scale-100 origin-left">
-                        <ReCAPTCHA
-                            ref={recaptchaRef}
-                            // sitekey={
-                            //     process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-                            //     "YOUR_SITE_KEY"
-                            // }
-                            sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
-                            onChange={(token) => setCaptchaToken(token || "")}
-                        />
+        <div className="grid grid-cols-1 lg:grid-cols-[35%_65%]">
+            {/* Left Box: Contact Details */}
+            <div className="bg-[#13213d] p-7 md:p-8 text-white flex flex-col rounded-2xl relative overflow-hidden h-fit lg:mr-10 mb-8 lg:mb-0">
+                <div className="flex items-center justify-between sm:gap-3 gap-2">
+                    <div>
+                        <h3 className="text-sm uppercase tracking-[0.18em] font-bold">
+                            CONTACT DETAILS
+                        </h3>
+                        <p className="mt-2 text-xl text-white font-medium">
+                            Let's plan your next release.
+                        </p>
                     </div>
-                </Box>
+                    <div className="hidden md:flex w-6 h-6 rounded-full bg-white/10 border border-white/10 items-center justify-center">
+                        <span className="w-2 h-2 rounded-full bg-[#02caa6] shadow-[0_0_12px_rgba(52,211,153,0.9)]" />
+                    </div>
+                </div>
 
-                <Box className="text-left">
-                    {/* <Button type="submit" variant="contained" disabled={isSubmitting}
-                     sx={{ backgroundColor: "#D68029", "&:hover": { backgroundColor: "#B86E23" }, py: 1.5, px: 5, textTransform: "none", fontSize: "1rem" }}
-                     >
-                        {isSubmitting ? <CircularProgress size={24} color="inherit" /> : "Send Message"}
-                    </Button> */}
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={` mt-8 block ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
-                    >
-                        <div className="bg-[#D68029] relative inline-flex items-center justify-center w-full max-w-50 overflow-hidden text-white rounded-xl group ">
-                            <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#21203d] rounded group-hover:w-56 group-hover:h-56 uration-750 delay-300"></span>
-                            <span className="relative tracking-tight text-sm sm:text-base rounded-[10px] px-6 sm:px-8 py-3 cursor-pointer font-semibold">
-                                {isSubmitting ? (
-                                    <>
-                                        <span>
-                                            Sending...
-                                        </span>
-                                    </>
-                                ) : (
-                                    "Send Message"
-                                )}
-                            </span>
+                <div className="md:space-y-4 mt-5 md:mt-10 text-base md:text-lg">
+                    {contactItems.map((item, index) => (
+                        <div
+                            key={index}
+                            className={`flex items-start gap-3 w-full rounded-md bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-3 text-left transition-colors ${
+                                index !== contactItems.length - 1 ? "mb-4" : "mb-0"
+                            }`}
+                        >
+                            <div className="p-2 rounded-md bg-white/10">
+                                {item.icon}
+                            </div>
+
+                            <div className="flex flex-col">
+                                <h4 className="text-xs uppercase tracking-[0.16em] text-slate-300">
+                                    {item.label}
+                                </h4>
+                                <p className={`text-[16px] text-white mt-0.5 ${item.isEmail ? "break-all" : "wrap-break-words"}`}>
+                                    {item.value}
+                                </p>
+                            </div>
                         </div>
-                    </button>
-                </Box>
-            </form>
-        </Box>
+                    ))}
+                </div>
+
+                <button
+                    type="button"
+                    className="w-full mt-7 flex items-center gap-3 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-3 text-left transition-colors"
+                >
+                    <div className="p-3 bg-white/10 rounded-md text-white">
+                        <BiCalendar size={30} />
+                    </div>
+                    <h4 className="text-[18px] text-white font-semibold leading-[22px] capitalize">
+                        Book a meeting
+                    </h4>
+                </button>
+
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-auto mt-6"
+                    href="https://www.dmca.com/Protection/Status.aspx?ID=bacf8e02-d48d-415f-8b3b-cf0dbe330960"
+                >
+                    <Image
+                        alt="DMCA.com"
+                        src="/home/dmca.png"
+                        width={250}
+                        height={50}
+                        className="h-8 w-auto"
+                    />
+                </a>
+            </div>
+
+            {/* Right Box: Form */}
+            <Box className="bg-white xl:px-4 rounded-xl w-full mx-auto">
+                <h2 className="text-2xl font-bold mb-6 text-gray-800">
+                    Any Questions? Feel Free to Contact Us
+                </h2>
+
+                <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
+                    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3 }}>
+                        <Controller name="fullname" control={control} render={({ field }) => (
+                            <TextField {...field} label="Your Full Name (required)" error={!!errors.fullname} helperText={errors.fullname?.message} fullWidth sx={inputStyles} />
+                        )} />
+                        <Controller name="phone" control={control} render={({ field, fieldState }) => (
+                            <MuiTelInput {...field} label="Mobile No. (required)" fullWidth error={!!fieldState.error} helperText={fieldState.error?.message} defaultCountry="IN" sx={inputStyles} />
+                        )} />
+                        <Controller name="email" control={control} render={({ field }) => (
+                            <TextField {...field} label="Email (required)" type="email" error={!!errors.email} helperText={errors.email?.message} fullWidth sx={inputStyles} />
+                        )} />
+                        <Controller name="location" control={control} render={({ field }) => (
+                            <TextField {...field} label="Enter Location" error={!!errors.location} helperText={errors.location?.message} fullWidth sx={inputStyles} />
+                        )} />
+                    </Box>
+                    <FormControl component="fieldset" error={!!errors.selectedCourse} fullWidth>
+                        <FormLabel component="legend" sx={{ fontWeight: 'bold', color: '#000', mb: 1, }}>Select Course?</FormLabel>
+                        <Controller
+                            name="selectedCourse"
+                            control={control}
+                            render={({ field }) => (
+                                <RadioGroup
+                                    {...field}
+                                    sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}
+                                >
+                                    {courseOptions.map((option) => (
+                                        <FormControlLabel key={option} value={option} control={
+                                            <Radio disableRipple icon={<IoIosRadioButtonOff size={24} color="#d1d5db" />} checkedIcon={<IoIosCheckmarkCircle size={24} color="#d68029" />} />
+                                        } label={option}
+                                            sx={{
+                                                color: field.value === option ? '#d68029' : 'inherit',
+                                                '& .MuiTypography-root': {
+                                                    fontWeight: field.value === option ? 500 : 400,
+                                                },
+                                            }}
+                                        />
+                                    ))}
+                                </RadioGroup>
+                            )}
+                        />
+                        <FormHelperText>{errors.selectedCourse?.message}</FormHelperText>
+                    </FormControl>
+                    <Controller name="message" control={control} render={({ field }) => (
+                        <TextField {...field} label="Message" multiline rows={4} error={!!errors.message} helperText={errors.message?.message} fullWidth sx={inputStyles} />
+                    )} />
+
+                    <Box className="flex justify-start my-4">
+                        <div className="scale-75 sm:scale-100 origin-left">
+                            <ReCAPTCHA
+                                ref={recaptchaRef}
+                                sitekey={GOOGLE_CAPTACH_CLIENT_KEY}
+                                onChange={(token) => setCaptchaToken(token)}
+                            />
+                        </div>
+                    </Box>
+
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        disabled={isSubmitting}
+                        sx={{
+                            backgroundColor: "#D68029",
+                            '&:hover': {
+                                backgroundColor: "#0b1833",
+                            },
+                            borderRadius: "8px",
+                            padding: "10px 24px",
+                            fontWeight: "bold",
+                            textTransform: "none",
+                            fontSize: "16px",
+                            color: "white",
+                        }}
+                    >
+                        {isSubmitting ? (
+                            <CircularProgress size={24} color="inherit" />
+                        ) : (
+                            "Send Message"
+                        )}
+                    </Button>
+                </form>
+            </Box>
+        </div>
     );
 }
