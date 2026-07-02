@@ -104,6 +104,7 @@ export const navItemsList: NavItem[] = [
     icon: GraduationCap,
     children: [
       { href: "/dashboard/trainingMainPage", label: "Training MainPage Data", icon: Presentation },
+      { href: "/dashboard/training-user-data", label: "Training User Data", icon: ClipboardList },
     ]
   },
   {

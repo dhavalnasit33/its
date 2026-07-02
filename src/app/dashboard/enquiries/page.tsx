@@ -127,16 +127,11 @@ export default function EnquiriesPage() {
     try {
       const res = await apiService<{
         success: boolean;
-        data: Enquiry[];
-      }>("/enquiries?limit=99999", { method: "GET" });
+        data: { total: number; pending: number; reviewed: number; contacted: number; closed: number };
+      }>("/enquiries/stats", { method: "GET" });
 
       if (res.success && res.data) {
-        const totalEnq = res.data.length;
-        const pending = res.data.filter(e => e.status === "Pending").length;
-        const reviewed = res.data.filter(e => e.status === "Reviewed").length;
-        const contacted = res.data.filter(e => e.status === "Contacted").length;
-        const closed = res.data.filter(e => e.status === "Closed").length;
-        setStats({ total: totalEnq, pending, reviewed, contacted, closed });
+        setStats(res.data);
       }
     } catch (error) {
       console.error("Failed to fetch stats:", error);
