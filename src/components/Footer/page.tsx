@@ -1293,7 +1293,6 @@ import { NavigationStructure } from "@/lib/navigationService";
 // -------------------- Main Page --------------------
 export default function ContactFooterPage() {
   const pathname = usePathname();
-  const isTrainingPage = pathname === "/training";
   const isContactPage = pathname === "/contact";
 
   const {
@@ -1351,6 +1350,8 @@ export default function ContactFooterPage() {
     const trainingLink = nav.mainNav.find(
       (link) => link.systemIdentifier === "training"
     );
+
+    const isTrainingPage = pathname === "/training" || (trainingLink ? pathname === `/${trainingLink.slug}` : false);
 
     const footerLinks = [
       {

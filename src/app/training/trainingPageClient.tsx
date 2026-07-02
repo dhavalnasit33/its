@@ -45,6 +45,7 @@ import {
   FaLaptopCode,
   FaHandshake,
 } from "react-icons/fa6";
+import TrainingContactForm from "@/components/Footer/TrainingContactForm";
 
 const trainingPrograms = [
   {
@@ -1285,7 +1286,6 @@ export default function TrainingPageClient({
             </div>
           </div>
         </Row>
-        {/* </div> */}
       </Section>
     </div>
   );

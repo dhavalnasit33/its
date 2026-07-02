@@ -97,20 +97,18 @@ export default function TrainingContactForm() {
         setIsSubmitting(true);
 
         const payload = {
-            type: "Training",
-            name: data.fullname,
+            fullname: data.fullname,
             email: data.email,
             phone: data.phone,
             location: data.location,
             selectedCourse: data.selectedCourse,
             message: data.message,
-            source: "training_page",
-            captchaToken: captchaToken,
+            token: captchaToken,
         };
 
         try {
             const response = await apiService<{ success: boolean; message?: string }>(
-                "/enquiries",
+                "/tranning-contact",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
