@@ -346,6 +346,25 @@ router.get("/stats/group", protect, async (req, res) => {
     }
 });
 
+// GET /api/enquiries/stats - Admin Status Stats Counts
+router.get("/stats", protect, async (req, res) => {
+    try {
+        const [total, pending, reviewed, contacted, closed] = await Promise.all([
+            Enquiry.countDocuments({}),
+            Enquiry.countDocuments({ status: "Pending" }),
+            Enquiry.countDocuments({ status: "Reviewed" }),
+            Enquiry.countDocuments({ status: "Contacted" }),
+            Enquiry.countDocuments({ status: "Closed" }),
+        ]);
+        res.json({
+            success: true,
+            data: { total, pending, reviewed, contacted, closed }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
 // GET /api/enquiries/:id - Admin Detail
 router.get("/:id", protect, async (req, res) => {
     try {

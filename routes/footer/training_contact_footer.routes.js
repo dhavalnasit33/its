@@ -271,11 +271,15 @@ router.post("/", async (req, res) => {
 
 router.get("/", protect, async (req, res) => {
     try {
-        const { page = 1, limit = 10, category = '', value = '' } = req.query;
+        const { page = 1, limit = 10, category = '', value = '', status = '' } = req.query;
         let query = {};
 
-        if (category) {
+        if (category && category !== 'all') {
             query.selectedCourse = category;
+        }
+
+        if (status && status !== 'all') {
+            query.status = status;
         }
 
         if (value) {
@@ -314,6 +318,153 @@ router.get("/", protect, async (req, res) => {
 });
 
 
+// GET /api/tranning-contact/stats - Admin Status Stats Counts
+router.get("/stats", protect, async (req, res) => {
+    try {
+        const [total, pending, reviewed, contacted, closed] = await Promise.all([
+            TranningContact.countDocuments({}),
+            TranningContact.countDocuments({ status: "Pending" }),
+            TranningContact.countDocuments({ status: "Reviewed" }),
+            TranningContact.countDocuments({ status: "Contacted" }),
+            TranningContact.countDocuments({ status: "Closed" }),
+        ]);
+        res.json({
+            success: true,
+            data: { total, pending, reviewed, contacted, closed }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+
+/**
+ * @swagger
+ * /api/tranning-contact/{id}:
+ *   get:
+ *     summary: Get a training contact by ID
+ *     tags: [TranningContact]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Contact details
+ *       404:
+ *         description: Contact not found
+ */
+router.get("/:id", protect, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const contact = await TranningContact.findById(id);
+        if (!contact) {
+            return res.status(404).json({ success: false, message: "Contact not found" });
+        }
+        res.status(200).json({ success: true, data: contact });
+    } catch (error) {
+        console.error("❌ Error getting training contact by ID:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+
+/**
+ * @swagger
+ * /api/tranning-contact/{id}:
+ *   put:
+ *     summary: Update status and notes of a training contact by ID
+ *     tags: [TranningContact]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: ["Pending", "Reviewed", "Contacted", "Closed"]
+ *               adminNotes:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Contact updated successfully
+ *       404:
+ *         description: Contact not found
+ */
+router.put("/:id", protect, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status, adminNotes } = req.body;
+        const contact = await TranningContact.findById(id);
+        if (!contact) {
+            return res.status(404).json({ success: false, message: "Contact not found" });
+        }
+
+        if (status) contact.status = status;
+        if (adminNotes !== undefined) contact.adminNotes = adminNotes;
+
+        await contact.save();
+        res.status(200).json({ success: true, message: "Contact updated successfully", data: contact });
+    } catch (error) {
+        console.error("❌ Error updating training contact:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
+
+/**
+ * @swagger
+ * /api/tranning-contact/bulk-delete:
+ *   post:
+ *     summary: Delete multiple training contacts
+ *     tags: [TranningContact]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - ids
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Contacts deleted successfully
+ */
+router.post("/bulk-delete", protect, async (req, res) => {
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids)) {
+            return res.status(400).json({ success: false, message: "Invalid IDs" });
+        }
+        await TranningContact.deleteMany({ _id: { $in: ids } });
+        res.status(200).json({ success: true, message: "Bulk delete successful" });
+    } catch (error) {
+        console.error("❌ Error bulk deleting training contacts:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
 
 /**
  * @swagger
@@ -335,7 +486,6 @@ router.get("/", protect, async (req, res) => {
  *       404:
  *         description: Contact not found
  */
-
 router.delete("/:id", protect, async (req, res) => {
     try {
         const { id } = req.params;

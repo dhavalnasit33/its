@@ -29,6 +29,15 @@ const tranningContactFooterSchema = new mongoose.Schema(
             required: true,
             enum:["Web Development","Full Stack Development", "Mobile App Development", "UI/UX Design", "Web Design", "Other Services" ]
         },
+        status: {
+            type: String,
+            enum: ["Pending", "Reviewed", "Contacted", "Closed"],
+            default: "Pending"
+        },
+        adminNotes: {
+            type: String,
+            default: ""
+        }
     },
     {
         timestamps: true
