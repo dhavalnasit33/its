@@ -8,7 +8,7 @@ module.exports = {
             fontFamily: {
                 // poppins: ["Poppins", "sans-serif"],
                 // exo: ["'Exo 2'", "sans-serif"],
-                exo: ["var(--font-exo2"],
+                exo: ["var(--font-exo2)"],
                 // inter: ["var(--font-inter)"],
                 // bricolage: ["var(--font-bricolage)"],
             },

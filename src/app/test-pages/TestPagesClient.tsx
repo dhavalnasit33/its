@@ -184,6 +184,44 @@ const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function TestPagesClient() {
   const { navStructure } = useWebsiteSettings();
+  const [activeCaseStudy, setActiveCaseStudy] = React.useState(0);
+
+  const caseStudies = [
+    {
+      title: "AI Chatbot for E-commerce Brand",
+      description: "Deploying a conversational AI system that handles customer inquiries, recommends personalized products, and automates order tracking in real-time.",
+      stats: [
+        { value: "+65%", label: "Customer Engagement" },
+        { value: "-40%", label: "Support Cost" },
+        { value: "+32%", label: "Sales Growth" }
+      ],
+      image: "/home-test/mobile.png",
+      tags: ["NLP", "Retail", "Automation"]
+    },
+    {
+      title: "AI Diagnostics Support System",
+      description: "An advanced machine learning model aiding radiologists in identifying anomalies in chest X-rays with clinical-grade accuracy.",
+      stats: [
+        { value: "+80%", label: "Diagnosis Speed" },
+        { value: "99.2%", label: "Detection Rate" },
+        { value: "-60%", label: "Human Error" }
+      ],
+      image: "/home-test/mobile.png",
+      tags: ["Computer Vision", "Healthcare", "Deep Learning"]
+    },
+    {
+      title: "Predictive Analytics for Fintech",
+      description: "Implementing a real-time transaction monitoring engine that detects fraudulent activities using transaction monitoring algorithms.",
+      stats: [
+        { value: "+95%", label: "Fraud Detection" },
+        { value: "-75%", label: "False Positives" },
+        { value: "2ms", label: "Response Speed" }
+      ],
+      image: "/home-test/mobile.png",
+      tags: ["Anomaly Detection", "Fintech", "Security"]
+    }
+  ];
+
   const containerVariants = {
     hidden: {},
     visible: {
@@ -261,7 +299,7 @@ export default function TestPagesClient() {
       iconColor: "text-blue-500",
     },
     {
-      title: "Fintech",
+      title: "Finance",
       icon: FiCreditCard,
       bgColor: "bg-green-50",
       iconColor: "text-green-500",
@@ -291,7 +329,7 @@ export default function TestPagesClient() {
       iconColor: "text-orange-500",
     },
     {
-      title: "Travel",
+      title: "Travel & Hospitality",
       icon: FiCompass,
       bgColor: "bg-sky-50",
       iconColor: "text-sky-500",
@@ -331,6 +369,7 @@ export default function TestPagesClient() {
       </Section>
 
       {/* ── SECTION 3: OUR SERVICES (UPDATED TO MATCH IMAGE 2) ── */}
+      {/* ── SECTION 3: OUR SERVICES (UPDATED TO MATCH IMAGE 2) ── */}
       <Section className="bg-white py-20 lg:py-28 relative">
         <Row>
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
@@ -342,11 +381,12 @@ export default function TestPagesClient() {
               <h2 className="text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#0d1b2a] leading-[1.2] mt-3 mb-6">
                 Intelligent Solutions for Modern Businesses
               </h2>
-              <p className="text-slate-500 text-sm leading-relaxed mb-8 max-w-sm">
+              <p className="text-slate-500 fonts_16  leading-relaxed mb-8 max-w-sm">
                 End-to-end AI and software development services designed to
-                transform your ideas into digital reality.
+                transform your ideas into digital reality. We build scalable,
+                innovative solutions that drive growth and deliver lasting
+                value.
               </p>
-
               <Link
                 href="#contact-form-section"
                 className="self-start border border-slate-300 text-slate-700 hover:border-slate-400 hover:text-[#0d1b2a] font-semibold px-6 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 group text-sm"
@@ -408,21 +448,23 @@ export default function TestPagesClient() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
                     className="bg-white text-slate-800 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between hover:border-slate-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group cursor-pointer shadow-sm"
                   >
                     <div>
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600 transition-colors group-hover:bg-slate-100 shrink-0">
-                          <ChatbotIcon className="w-5 h-5" />
+                        <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600">
+                          <AIAutomationIcon className="w-5 h-5" />
                         </div>
-                        <h4 className="text-[17px] font-bold text-[#0d1b2a] leading-snug">
-                          AI Chatbots
+
+                        <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
+                          Web Development
                         </h4>
                       </div>
-                      <p className="text-slate-500 text-sm leading-relaxed">
-                        Build smart conversational AI agents that engage
-                        customers and drive business growth.
+
+                      <p className="fonts_16 text-gray-600">
+                        Modern, scalable and high-performance web applications
+                        built with latest technologies.
                       </p>
                     </div>
                     <div className="mt-4 flex items-center">
@@ -440,16 +482,18 @@ export default function TestPagesClient() {
                   >
                     <div>
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-full border border-orange-200 bg-orange-100 flex items-center justify-center text-[#d68029] shrink-0">
-                          <CustomAIDevIcon className="w-5 h-5" />
+                        <div className="w-12 h-12 rounded-full border border-orange-200 bg-orange-100 flex items-center justify-center text-[#d68029]">
+                          <FiSmartphone className="w-5 h-5" />
                         </div>
-                        <h4 className="text-[17px] font-bold text-[#0d1b2a] leading-snug">
-                          Custom AI Development
+
+                        <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
+                          App Development
                         </h4>
                       </div>
-                      <p className="text-slate-500 text-sm leading-relaxed">
-                        Custom AI models and applications tailored to your
-                        unique business challenges.
+
+                      <p className="fonts_16 text-gray-600">
+                        Develop powerful Android, iOS, and cross-platform mobile
+                        applications.
                       </p>
                     </div>
                     <div className="mt-4 flex items-center">
@@ -465,21 +509,23 @@ export default function TestPagesClient() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
                     className="bg-white text-slate-800 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between hover:border-slate-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group cursor-pointer shadow-sm"
                   >
                     <div>
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600 transition-colors group-hover:bg-slate-100 shrink-0">
-                          <AIConsultingIcon className="w-5 h-5" />
+                        <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600">
+                          <FiShield className="w-5 h-5" />
                         </div>
-                        <h5 className="text-[15px] font-bold text-[#0d1b2a] leading-snug">
-                          AI Consulting
-                        </h5>
+
+                        <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
+                          UI/UX Design
+                        </h4>
                       </div>
-                      <p className="text-slate-500 text-xs leading-relaxed">
-                        Expert AI strategy and consulting to identify
-                        opportunities and drive transformation.
+
+                      <p className="fonts_16 text-gray-600">
+                        Design intuitive and engaging user experiences that
+                        delight customers.
                       </p>
                     </div>
                     <div className="mt-4 flex items-center">
@@ -497,16 +543,18 @@ export default function TestPagesClient() {
                   >
                     <div>
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600 transition-colors group-hover:bg-slate-100 shrink-0">
-                          <WebDevIcon className="w-5 h-5" />
+                        <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600">
+                          <AIConsultingIcon className="w-5 h-5" />
                         </div>
-                        <h5 className="text-[15px] font-bold text-[#0d1b2a] leading-snug">
-                          Web Development
-                        </h5>
+
+                        <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
+                          AI Chatbots
+                        </h4>
                       </div>
-                      <p className="text-slate-500 text-xs leading-relaxed">
-                        Modern, scalable and high-performance web applications
-                        built with latest technologies.
+
+                      <p className="fonts_16 text-gray-600">
+                        Build smart conversational AI agents that engage
+                        customers and drive business growth.
                       </p>
                     </div>
                     <div className="mt-4 flex items-center">
@@ -520,122 +568,48 @@ export default function TestPagesClient() {
         </Row>
       </Section>
       {/* ============================
-    CHALLENGES VS SOLUTIONS
-============================= */}
-
+          CHALLENGES VS SOLUTIONS
+      ============================= */}
       <Section
         id="challenges-section"
         className="relative overflow-hidden bg-gradient-to-b from-[#030d22] to-[#081838] py-24"
       >
-        {/* Background Glow */}
-        {/* ================= Background ================= */}
+        {/* ================= Background Glow ================= */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Main Center Glow */}
-          <div
-            className="
-      absolute
-      left-1/2
-      top-1/2
-      w-[1100px]
-      h-[700px]
-      -translate-x-1/2
-      -translate-y-1/2
-      rounded-full
-      opacity-60
-      blur-3xl
-      bg-[radial-gradient(circle,rgba(30,64,175,0.18)_0%,rgba(15,23,42,0.08)_45%,transparent_75%)]
-    "
-          />
-
-          {/* Left Glow */}
-          <div
-            className="
-      absolute
-      left-[-220px]
-      top-1/2
-      w-[420px]
-      h-[420px]
-      -translate-y-1/2
-      rounded-full
-      bg-[#1E40AF]/10
-      blur-[140px]
-    "
-          />
-
-          {/* Right Glow */}
-          <div
-            className="
-      absolute
-      right-[-220px]
-      top-1/2
-      w-[420px]
-      h-[420px]
-      -translate-y-1/2
-      rounded-full
-      bg-[#1E40AF]/10
-      blur-[140px]
-    "
-          />
-
-          {/* Top Highlight */}
-          <div
-            className="
-      absolute
-      left-1/2
-      top-0
-      h-[220px]
-      w-[800px]
-      -translate-x-1/2
-      bg-[radial-gradient(circle,rgba(255,122,26,0.08)_0%,transparent_70%)]
-    "
-          />
+          <div className="absolute left-1/2 top-1/2 w-[1100px] h-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-3xl bg-[radial-gradient(circle,rgba(30,64,175,0.18)_0%,rgba(15,23,42,0.08)_45%,transparent_75%)]" />
+          <div className="absolute left-[-220px] top-1/2 w-[420px] h-[420px] -translate-y-1/2 rounded-full bg-[#1E40AF]/10 blur-[140px]" />
+          <div className="absolute right-[-220px] top-1/2 w-[420px] h-[420px] -translate-y-1/2 rounded-full bg-[#1E40AF]/10 blur-[140px]" />
+          <div className="absolute left-1/2 top-0 h-[220px] w-[800px] -translate-x-1/2 bg-[radial-gradient(circle,rgba(255,122,26,0.08)_0%,transparent_70%)]" />
         </div>
 
-        {/* Max width reduced to pull outer elements inward */}
         <div className="relative z-10 mx-auto w-[96%] max-w-[1250px]">
-          {/* VS Badge */}
           {/* ================= VS CENTER ================= */}
           <div className="hidden lg:flex absolute left-1/2 top-4 -translate-x-1/2 z-30 flex-col items-center">
-            {/* Soft Orange Glow */}
             <div className="absolute inset-0 w-20 h-20 rounded-full bg-[#ff7a1a]/20 blur-2xl" />
-
-            {/* VS Circle */}
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-[3px] border-[#061325] bg-gradient-to-br from-[#FFA63A] via-[#FF8A1E] to-[#F97316] text-[18px] font-black text-white shadow-[0_0_28px_rgba(255,122,26,0.45)]">
+            <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-[3px] border-[#061325] bg-gradient-to-br from-[#FFA63A] via-[#FF8A1E] to-[#F97316] text-[18px] font-black text-white shadow-[0_0_28px_rgba(255,122,26,0.45)] hover:scale-110 transition-transform duration-300 cursor-default">
               VS
             </div>
-
-            {/* Vertical Line */}
             <div className="mt-3 h-[360px] w-px bg-gradient-to-b from-[#7A879B]/35 via-[#556274]/20 to-transparent" />
           </div>
 
-          {/* Main Layout */}
-
-          {/* Changed justify-between to justify-center and added gap to reduce space */}
+          {/* ================= Main Layout ================= */}
           <div className="flex flex-col justify-center gap-10 lg:gap-16 lg:flex-row">
-            {/* ================= LEFT COLUMN ================= */}
-
-            {/* Added lg:items-end to push the content block towards the center */}
+            {/* ================= LEFT COLUMN (CHALLENGES) ================= */}
             <div className="relative w-full lg:w-[46%] flex flex-col items-center lg:items-end lg:pr-6">
-              {/* Left Side Graphic */}
               <img
                 src="/home-test/left-lines.png"
                 alt=""
                 className="absolute left-[-230px] top-[49px] hidden xl:block w-[295px] opacity-95 select-none pointer-events-none"
               />
 
-              {/* Heading */}
-
               <div className="mb-8 w-full max-w-[450px] lg:w-[86%] text-left">
-                <span className="block text-[34px] font-semibold text-white tracking-wide">
+                <span className="block text-2xl sm:text-3xl font-bold text-white tracking-wide">
                   Your Business
                 </span>
-
-                <h2 className="mt-1 text-[31px] font-bold leading-tight text-[#ff7a1a]">
+                <h2 className="mt-1 text-3xl sm:text-[36px] font-bold leading-tight text-[#ff7a1a]">
                   Challenges
                 </h2>
               </div>
-
-              {/* Challenge Cards */}
 
               <motion.div
                 variants={containerVariants}
@@ -648,87 +622,56 @@ export default function TestPagesClient() {
                   <motion.div
                     key={idx}
                     variants={itemVariants}
-                    whileHover={{
-                      x: 5,
-                      scale: 1.01,
-                    }}
-                    transition={{
-                      duration: 0.25,
-                    }}
+                    whileHover={{ scale: 1.03, x: 8 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     className="
-      group
-      flex
-      items-center
-      h-[50px]
-      rounded-[12px]
-      border
-      border-[#294368]
-      bg-gradient-to-r
-      from-[#162544]
-      via-[#18294A]
-      to-[#1A2C4D]
-      px-4
-      transition-all
-      duration-300
-      hover:border-[#3F5F91]
-      hover:shadow-[0_8px_20px_rgba(0,0,0,.28)]
-    "
+                      group relative flex items-center h-[54px] rounded-xl border border-[#294368] 
+                      bg-gradient-to-r from-[#162544] via-[#18294A] to-[#1A2C4D] px-5 
+                      overflow-hidden cursor-pointer
+                      transition-all duration-300 
+                      hover:border-[#3B82F6]/60 hover:shadow-[0_0_20px_rgba(59,130,246,0.25)]
+                    "
                   >
-                    {/* Icon */}
+                    {/* Hover Light Sweep Effect */}
+                    <div className="absolute inset-0 -translate-x-[150%] skew-x-[30deg] bg-gradient-to-r from-transparent via-white/5 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[150%]" />
 
+                    {/* Icon */}
                     <div
                       className="
-        mr-4
-        flex
-        h-5
-        w-5
-        shrink-0
-        items-center
-        justify-center
-        rounded-full
-        border
-        border-[#2F68C8]
-        bg-[#1B4FB8]
-        shadow-[0_0_10px_rgba(59,130,246,.30)]
-      "
+                      relative z-10 mr-4 flex h-6 w-6 shrink-0 items-center justify-center rounded-full 
+                      border border-[#2F68C8] bg-[#1B4FB8] shadow-[0_0_10px_rgba(59,130,246,.30)]
+                      transition-transform duration-300 group-hover:scale-110 group-hover:rotate-90
+                    "
                     >
-                      <FiX className="h-[11px] w-[11px] text-white stroke-[3]" />
+                      <FiX className="h-[12px] w-[12px] text-white stroke-[3]" />
                     </div>
 
                     {/* Text */}
-
-                    <span className="text-[13px] font-medium text-[#EDF4FF]">
+                    <span className="relative z-10 text-sm sm:text-base font-medium text-[#EDF4FF] transition-colors duration-300 group-hover:text-white">
                       {challenge}
                     </span>
                   </motion.div>
                 ))}
               </motion.div>
             </div>
-            {/* ================= RIGHT COLUMN ================= */}
 
-            {/* Changed from lg:items-end to lg:items-start to push the content block left towards the center */}
+            {/* ================= RIGHT COLUMN (SOLUTIONS) ================= */}
             <div className="relative w-full lg:w-[46%] flex flex-col items-center lg:items-start lg:pl-6">
-              {/* Right Side Graphic */}
               <img
                 src="/home-test/right-lines.png"
                 alt=""
                 className="absolute right-[-220px] top-[14px] hidden xl:block w-[235px] opacity-95 select-none pointer-events-none"
               />
 
-              {/* Heading */}
-
-              {/* Removed text-right to match the left-aligned look in your second image */}
-              <div className="mb-8 w-full max-w-[450px] lg:w-[86%] text-right">
-                <span className="block text-[34px] font-semibold tracking-wide text-white">
+              <div className="mb-8 w-full max-w-[450px] lg:w-[86%] text-left">
+                <span className="block text-2xl sm:text-3xl font-bold tracking-wide text-white">
                   Our AI-Powered
                 </span>
-
-                <h2 className="mt-1 text-[31px] font-bold leading-tight text-[#ff7a1a]">
+                <h2 className="mt-1 text-3xl sm:text-[36px] font-bold leading-tight text-[#ff7a1a]">
                   Solutions
                 </h2>
               </div>
-
-              {/* Solution Cards */}
 
               <motion.div
                 variants={containerVariants}
@@ -741,56 +684,33 @@ export default function TestPagesClient() {
                   <motion.div
                     key={idx}
                     variants={itemVariants}
-                    whileHover={{
-                      x: -5,
-                      scale: 1.01,
-                    }}
-                    transition={{
-                      duration: 0.25,
-                    }}
+                    whileHover={{ scale: 1.03, x: -8 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     className="
-      group
-      flex
-      items-center
-      h-[50px]
-      rounded-[12px]
-      border
-      border-[#294368]
-      bg-gradient-to-r
-      from-[#162544]
-      via-[#18294A]
-      to-[#1A2C4D]
-      px-4
-      transition-all
-      duration-300
-      hover:border-[#ff7a1a]/40
-      hover:shadow-[0_8px_20px_rgba(0,0,0,.28)]
-    "
+                      group relative flex items-center h-[54px] rounded-xl border border-[#294368] 
+                      bg-gradient-to-r from-[#162544] via-[#18294A] to-[#1A2C4D] px-5 
+                      overflow-hidden cursor-pointer
+                      transition-all duration-300 
+                      hover:border-[#ff7a1a]/60 hover:shadow-[0_0_20px_rgba(255,122,26,0.25)]
+                    "
                   >
-                    {/* Icon */}
+                    {/* Hover Light Sweep Effect */}
+                    <div className="absolute inset-0 -translate-x-[150%] skew-x-[30deg] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[150%]" />
 
+                    {/* Icon */}
                     <div
                       className="
-        mr-4
-        flex
-        h-5
-        w-5
-        shrink-0
-        items-center
-        justify-center
-        rounded-full
-        border
-        border-[#ff9d3b]
-        bg-[#ff7a1a]
-        shadow-[0_0_10px_rgba(255,122,26,.35)]
-      "
+                      relative z-10 mr-4 flex h-6 w-6 shrink-0 items-center justify-center rounded-full 
+                      border border-[#ff9d3b] bg-[#ff7a1a] shadow-[0_0_10px_rgba(255,122,26,.35)]
+                      transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12
+                    "
                     >
-                      <FiCheck className="h-[11px] w-[11px] text-white stroke-[3]" />
+                      <FiCheck className="h-[12px] w-[12px] text-white stroke-[3]" />
                     </div>
 
                     {/* Text */}
-
-                    <span className="text-[13px] font-medium text-[#EDF4FF]">
+                    <span className="relative z-10 text-sm sm:text-base font-medium text-[#EDF4FF] transition-colors duration-300 group-hover:text-[#ffea9d]">
                       {solution}
                     </span>
                   </motion.div>
@@ -806,7 +726,7 @@ export default function TestPagesClient() {
         <Row>
           {/* Section Heading */}
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#0d1b2a] leading-tight">
+            <h2 className="common-h2 text-[#0d1b2a]">
               Our <span className="text-[#d68029]">AI Development</span> Process
             </h2>
           </div>
@@ -847,7 +767,7 @@ export default function TestPagesClient() {
                       <h4 className="text-lg lg:text-xl font-bold text-[#0d1b2a] mb-2">
                         {step.title}
                       </h4>
-                      <p className="text-slate-500 text-sm leading-relaxed max-w-[200px] mx-auto lg:mx-auto">
+                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-[200px] mx-auto lg:mx-auto">
                         {step.description}
                       </p>
                     </div>
@@ -864,352 +784,260 @@ export default function TestPagesClient() {
             </div>
           </div>
 
-          {/* Split Layout: Industries We Empower & Case Studies */}
+          {/* Dynamic Full Width Case Studies Showcase */}
           <div className="mt-16 pt-16 max-w-[1400px] w-full mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_auto_1.15fr] gap-10 items-stretch">
-              {/* Left Column: Industries We Empower */}
-              <div className="flex flex-col justify-center">
-                <div className="grid grid-cols-1 xl:grid-cols-[1fr_2.2fr] gap-8 items-center">
-                  {/* Left part: Title, Description, Button */}
-                  <div className="flex flex-col justify-between h-full py-2">
-                    <div>
-                      <h3 className="text-3xl font-extrabold text-[#0d1b2a] leading-tight">
-                        Industries <br />
-                        <span className="text-[#d68029]">We Empower</span>
-                      </h3>
-                      <p className="text-slate-500 text-sm mt-4 leading-relaxed max-w-xs">
-                        AI solutions for every industry and business vertical.
-                      </p>
-                    </div>
-                    <Link
-                      href="#contact-form-section"
-                      className="mt-8 self-start border border-slate-300 hover:border-slate-400 text-slate-700 hover:text-[#0d1b2a] font-bold px-5 py-2.5 rounded-full transition-all duration-300 flex items-center gap-2 text-xs"
-                    >
-                      View All Industries
-                      <FaLongArrowAltRight className="w-3.5 h-3.5 text-[#d68029]" />
-                    </Link>
-                  </div>
+            {/* Heading */}
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-3">
+                CASE STUDIES
+              </span>
+              <h2 className="common-h2 text-[#0d1b2a]">
+                Real Results, Real Impact
+              </h2>
+              <p className="fonts_16 text-gray-600 mt-4">
+                Explore how our AI-powered solutions drive growth, reduce costs, and transform operations.
+              </p>
+            </div>
 
-                  {/* Right part: Grid of 8 cards */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {industryCards.map((card, idx) => {
-                      const Icon = card.icon;
-                      return (
-                        <motion.div
-                          key={idx}
-                          whileHover={{ y: -3, scale: 1.02 }}
-                          className="bg-white border border-slate-100 rounded-2xl p-3.5 flex flex-col items-center text-center shadow-[0_4px_15px_rgba(0,0,0,0.01)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 min-h-[115px] justify-center"
-                        >
-                          <div
-                            className={`w-9 h-9 rounded-full ${card.bgColor} flex items-center justify-center text-base ${card.iconColor} mb-2.5 shrink-0`}
-                          >
-                            <Icon className="w-4.5 h-4.5" />
-                          </div>
-                          <span className="text-[13px] font-bold text-slate-800 leading-tight">
-                            {card.title}
-                          </span>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Vertical Divider */}
-              <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
-
-              {/* Right Column: Case Studies */}
-              <div className="flex flex-col justify-center">
-                <div className="flex items-end justify-between mb-6 gap-4">
-                  <div>
-                    <h3 className="text-3xl font-extrabold text-[#0d1b2a] leading-tight">
-                      Case Studies <br />
-                      <span className="text-[#d68029]">
-                        Real Results, Real Impact
-                      </span>
-                    </h3>
-                  </div>
-                  <Link
-                    href="#contact-form-section"
-                    className="text-slate-600 hover:text-slate-900 font-bold text-xs flex items-center gap-1 shrink-0 pb-1.5 transition-colors"
+            {/* Tab Switcher */}
+            <div className="flex flex-col gap-8">
+              {/* Tabs selector */}
+              <div className="flex flex-wrap justify-center gap-3">
+                {caseStudies.map((study, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveCaseStudy(idx)}
+                    className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
+                      activeCaseStudy === idx
+                        ? "bg-[#d68029] text-white shadow-md shadow-[#d68029]/20"
+                        : "bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-800"
+                    }`}
                   >
-                    Explore Our Work
-                    <FiChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-
-                {/* Case Study Card */}
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className="bg-[#f8fafc] border border-slate-100 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.015)] hover:border-slate-200/80 transition-all duration-300 min-h-[290px]"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-[1.3fr_0.7fr] gap-6 items-center w-full">
-                    {/* Left Column: Heading & Stats */}
-                    <div className="flex flex-col justify-center">
-                      <h4 className="text-lg md:text-xl font-extrabold text-[#0d1b2a] mb-2 leading-snug">
-                        AI Chatbot for E-commerce Brand
-                      </h4>
-                      <div className="w-full h-px bg-slate-200/60 my-4" />
-
-                      {/* Stats Grid */}
-                      <div className="grid grid-cols-3 gap-2 mt-2">
-                        <div>
-                          <span className="block text-2xl font-black text-[#d68029] tracking-tight">
-                            +65%
-                          </span>
-                          <span className="block text-[10px] font-bold text-slate-500 mt-1 leading-snug">
-                            Customer Engagement
-                          </span>
-                        </div>
-                        <div>
-                          <span className="block text-2xl font-black text-[#d68029] tracking-tight">
-                            -40%
-                          </span>
-                          <span className="block text-[10px] font-bold text-slate-500 mt-1 leading-snug">
-                            Support Cost
-                          </span>
-                        </div>
-                        <div>
-                          <span className="block text-2xl font-black text-[#d68029] tracking-tight">
-                            +32%
-                          </span>
-                          <span className="block text-[10px] font-bold text-slate-500 mt-1 leading-snug">
-                            Sales Growth
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Right Column: Mockup Image */}
-                    <div className="relative w-full h-[160px] md:h-[190px] flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="/home-test/mobile.png"
-                        alt="AI Chatbot Showcase"
-                        fill
-                        className="object-contain"
-                        priority
-                      />
-                    </div>
-                  </div>
-
-                  {/* Slider dot pagination */}
-                  <div className="flex justify-center gap-1.5 mt-6 border-t border-slate-200/40 pt-4">
-                    <span className="w-2 h-2 rounded-full bg-[#d68029]" />
-                    <span className="w-2 h-2 rounded-full bg-slate-200" />
-                    <span className="w-2 h-2 rounded-full bg-slate-200" />
-                    <span className="w-2 h-2 rounded-full bg-slate-200" />
-                  </div>
-                </motion.div>
+                    {study.title.split(" for ")[1] || study.title.split(" for")[0] || study.title}
+                  </button>
+                ))}
               </div>
+
+              {/* Showcase Container */}
+              <motion.div
+                key={activeCaseStudy}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="bg-[#f8fafc] border border-slate-200/80 rounded-3xl p-6 md:p-12 shadow-[0_4px_30px_rgba(0,0,0,0.015)] hover:border-slate-300 transition-all duration-300"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
+                  {/* Left Column: Info & Stats */}
+                  <div className="flex flex-col justify-center">
+                    {/* Technology Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {caseStudies[activeCaseStudy].tags.map((tag, tagIdx) => (
+                        <span
+                          key={tagIdx}
+                          className="bg-orange-50 border border-orange-200/50 text-[#d68029] px-3 py-1 rounded-full text-xs font-semibold"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <h3 className="text-2xl md:text-3.5xl font-bold text-[#0d1b2a] leading-tight mb-4">
+                      {caseStudies[activeCaseStudy].title}
+                    </h3>
+                    
+                    <p className="fonts_16 text-gray-600 leading-relaxed mb-8">
+                      {caseStudies[activeCaseStudy].description}
+                    </p>
+
+                    <div className="w-full h-px bg-slate-200/80 mb-8" />
+
+                    {/* Stats counters */}
+                    <div className="grid grid-cols-3 gap-4">
+                      {caseStudies[activeCaseStudy].stats.map((stat, statIdx) => (
+                        <div key={statIdx} className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-[0_4px_10px_rgba(0,0,0,0.01)] hover:border-slate-300 transition-all duration-300">
+                          <span className="block text-2.5xl sm:text-3.5xl font-bold text-[#d68029] tracking-tight">
+                            {stat.value}
+                          </span>
+                          <span className="block text-xs font-semibold text-slate-500 mt-2 leading-tight">
+                            {stat.label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right Column: Device mockups */}
+                  <div className="relative w-full h-[240px] md:h-[320px] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-orange-100/30 to-blue-50/10 rounded-2xl -z-10" />
+                    <Image
+                      src={caseStudies[activeCaseStudy].image}
+                      alt={caseStudies[activeCaseStudy].title}
+                      fill
+                      className="object-contain p-2"
+                      priority
+                    />
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </Row>
       </Section>
 
-      {/* ── SECTION 5: GLOBAL PRESENCE & TRANSFORM BUSINESS ── */}
-      <Section className="bg-white relative">
+      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
+      <Section className="bg-white py-20 lg:py-24 relative overflow-hidden">
         <Row>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Left Column: Global Presence & Stylized Dotted Map */}
-            <div className="relative min-h-[320px] flex flex-col md:flex-row items-center gap-8">
-              {/* Left Part: Text & Stats */}
-              <div className="w-full md:w-[48%] shrink-0 z-10">
-                <span className="text-[#d68029] text-xs font-extrabold uppercase tracking-widest block mb-3">
-                  OUR IMPACT
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_auto_1.4fr] gap-12 items-stretch">
+            {/* Left Column: Industries We Serve */}
+            <div className="flex flex-col justify-between py-2">
+              <div>
+                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-3">
+                  INDUSTRIES WE SERVE
                 </span>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-[#0d1b2a] leading-tight mb-5">
-                  Global Presence, <br />
-                  <span className="text-[#d68029]">Local Support</span>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#0d1b2a] leading-[1.25] mb-8">
+                  AI solutions tailored for <br className="hidden sm:block" />
+                  every industry
                 </h2>
-                <p className="text-slate-600 text-sm leading-relaxed mb-8 max-w-sm">
-                  We work with clients worldwide and deliver solutions that make
-                  an impact globally.
-                </p>
 
-                {/* Stats Counters */}
-                <div className="flex items-center gap-8">
-                  <div>
-                    <h4 className="text-3xl md:text-4xl font-black text-[#0d1b2a]">
-                      20+
-                    </h4>
-                    <p className="text-slate-500 font-bold text-[10px] uppercase tracking-wider mt-1">
-                      Countries Served
-                    </p>
-                  </div>
-                  <div className="w-px h-10 bg-slate-200" />
-                  <div>
-                    <h4 className="text-3xl md:text-4xl font-black text-[#0d1b2a]">
-                      5+
-                    </h4>
-                    <p className="text-slate-500 font-bold text-[10px] uppercase tracking-wider mt-1">
-                      Global Offices
-                    </p>
-                  </div>
+                {/* Grid of 8 cards */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+                  {industryCards.map((card, idx) => {
+                    const Icon = card.icon;
+                    return (
+                      <motion.div
+                        key={idx}
+                        whileHover={{ y: -3, scale: 1.02 }}
+                        className="bg-white border border-slate-100 rounded-2xl p-4 flex flex-col items-center text-center shadow-[0_4px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
+                      >
+                        <div
+                          className={`w-10 h-10 rounded-full ${card.bgColor} flex items-center justify-center text-lg ${card.iconColor} mb-3 shrink-0`}
+                        >
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <span className="text-sm font-bold text-slate-800 leading-tight">
+                          {card.title}
+                        </span>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Right Part: Dotted Map Watermark */}
-              <div className="relative w-full md:w-[52%] h-[480px] flex items-center justify-center">
-                {/* World Map */}
-                <div
-                  className="absolute inset-0 opacity-30 pointer-events-none"
-                  style={{
-                    backgroundImage:
-                      'url("https://res.cloudinary.com/dctvxbvuz/image/upload/v1782469240/ydydz7sp8skfxquzyyar.gif")',
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    filter: "grayscale(100%) brightness(1.2)",
-                  }}
-                />
-
-                {/* Pins */}
-                <MapPin top="30%" left="18%" />
-                <MapPin top="34%" left="30%" />
-                <MapPin top="24%" left="63%" />
-                <MapPin top="33%" left="88%" />
-                <MapPin top="60%" left="25%" />
-                <MapPin top="46%" left="56%" />
-                <MapPin top="68%" left="86%" />
-              </div>
+              <Link
+                href="#contact-form-section"
+                className="mt-8 self-start border border-[#d68029] hover:bg-[#d68029] text-[#d68029] hover:text-white font-bold px-6 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm"
+              >
+                Explore All Industries
+                <FaLongArrowAltRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
-            {/* Right Column: Premium Dark CTA Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="bg-[#040d21] text-white p-8 md:p-12 rounded-3xl border border-slate-900 shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[380px] group"
-            >
-              {/* Decorative Neural Net Globe Watermark */}
-              <div className="absolute right-[-20px] top-1/2 -translate-y-1/2 w-[280px] h-[280px] opacity-75 pointer-events-none select-none">
-                <svg
-                  viewBox="0 0 100 100"
-                  className="w-full h-full animate-[spin_60s_linear_infinite]"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    stroke="#f97316"
-                    strokeWidth="0.3"
-                    fill="none"
-                    strokeDasharray="3 6"
-                    opacity="0.3"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    stroke="#f97316"
-                    strokeWidth="0.5"
-                    fill="none"
-                    opacity="0.4"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="35"
-                    stroke="#fb923c"
-                    strokeWidth="0.2"
-                    fill="none"
-                    strokeDasharray="5 2"
-                    opacity="0.3"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="30"
-                    stroke="#fb923c"
-                    strokeWidth="0.6"
-                    fill="none"
-                    opacity="0.5"
-                  />
-                  <path
-                    d="M50,10 Q65,30 80,50 Q65,70 50,90 Q35,70 20,50 Q35,30 50,10 Z"
-                    stroke="#f97316"
-                    strokeWidth="0.4"
-                    fill="none"
-                    opacity="0.4"
-                  />
-                  <path
-                    d="M10,50 Q30,65 50,80 Q70,65 90,50 Q70,35 50,20 Q30,35 10,50 Z"
-                    stroke="#f97316"
-                    strokeWidth="0.4"
-                    fill="none"
-                    opacity="0.4"
-                  />
-                  <line
-                    x1="50"
-                    y1="10"
-                    x2="50"
-                    y2="90"
-                    stroke="#f97316"
-                    strokeWidth="0.3"
-                    opacity="0.3"
-                  />
-                  <line
-                    x1="10"
-                    y1="50"
-                    x2="90"
-                    y2="50"
-                    stroke="#f97316"
-                    strokeWidth="0.3"
-                    opacity="0.3"
-                  />
-                  <circle cx="50" cy="10" r="1.5" fill="#f97316" />
-                  <circle cx="90" cy="50" r="1.5" fill="#f97316" />
-                  <circle cx="50" cy="90" r="1.5" fill="#f97316" />
-                  <circle cx="10" cy="50" r="1.5" fill="#f97316" />
-                  <circle cx="27" cy="27" r="1.2" fill="#fb923c" />
-                  <circle cx="73" cy="27" r="1.2" fill="#fb923c" />
-                  <circle cx="73" cy="73" r="1.2" fill="#fb923c" />
-                  <circle cx="27" cy="73" r="1.2" fill="#fb923c" />
-                  <circle cx="50" cy="30" r="2" fill="#ffedd5" />
-                  <circle cx="50" cy="70" r="2" fill="#ffedd5" />
-                  <circle cx="30" cy="50" r="2" fill="#ffedd5" />
-                  <circle cx="70" cy="50" r="2" fill="#ffedd5" />
-                </svg>
+            {/* Vertical Divider */}
+            <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
+
+            {/* Right Column: Global Presence */}
+            <div className="flex flex-col justify-start py-2">
+              <div>
+                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-3">
+                  GLOBAL PRESENCE
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#0d1b2a] leading-[1.25] mb-8">
+                  Serving Clients <br />
+                  Worldwide
+                </h2>
               </div>
 
-              <div className="relative z-10 max-w-sm">
-                <h3 className="text-3xl md:text-[38px] font-extrabold text-white leading-tight mb-4">
-                  Ready to Transform <br />
-                  Your Business?
-                </h3>
-                <p className="text-slate-300 text-sm md:text-[15px] leading-relaxed mb-8">
-                  Let's build intelligent solutions that drive innovation,
-                  growth and real results.
-                </p>
-
-                <Link
-                  href="#contact-form-section"
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#ff9a1f] to-[#f97316] hover:from-[#f97316] hover:to-[#ea580c] px-8 py-3.5 text-sm font-bold uppercase rounded-full shadow-[0_4px_20px_rgba(214,128,41,0.35)] text-white group-hover:scale-[1.02] transition-all duration-300"
-                >
-                  Book a Free Consultation
-                  <FaLongArrowAltRight className="w-4 h-4 text-white" />
-                </Link>
-              </div>
-
-              {/* Contact Call details */}
-              <div className="relative z-10 flex items-center gap-3 mt-8 border-t border-slate-800/80 pt-6">
-                <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-[#d68029]">
-                  <FiPhone className="w-4 h-4" />
+              {/* Stats & Map Split Row */}
+              <div className="grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-6 items-center w-full relative">
+                {/* Stats list stack */}
+                <div className="flex flex-col gap-6">
+                  <div>
+                    <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
+                      20+
+                    </span>
+                    <span className="block text-sm font-semibold text-slate-700 mt-1">
+                      Countries
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
+                      120+
+                    </span>
+                    <span className="block text-sm font-semibold text-slate-700 mt-1">
+                      Happy Clients
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
+                        150+
+                      </span>
+                      <span className="block text-[13px] font-semibold text-slate-700 mt-1">
+                        Projects
+                      </span>
+                    </div>
+                    <div>
+                      <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
+                        24/7
+                      </span>
+                      <span className="block text-[13px] font-semibold text-slate-700 mt-1">
+                        Support Coverage
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">
-                    Or Call Us:
-                  </span>
-                  <a
-                    href="tel:+13024987213"
-                    className="text-white hover:text-[#d68029] font-bold text-sm md:text-base tracking-wide transition-colors"
-                  >
-                    +1 (302) 498-7213
-                  </a>
+
+                {/* Map with Overlay Widget */}
+                <div className="relative w-full h-[350px] flex items-center justify-center">
+                  {/* World Map */}
+                  <div
+                    className="absolute inset-0 opacity-95 pointer-events-none"
+                    style={{
+                      backgroundImage: 'url("/home-test/map.png")',
+                      backgroundSize: "contain",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                    }}
+                  />
+
+                  {/* Pins */}
+                  <MapPin top="30%" left="18%" />
+                  <MapPin top="34%" left="30%" />
+                  <MapPin top="24%" left="63%" />
+                  <MapPin top="33%" left="88%" />
+                  <MapPin top="60%" left="25%" />
+                  <MapPin top="46%" left="56%" />
+                  <MapPin top="68%" left="86%" />
+
+                  {/* Our Global Network Widget Card */}
+                  <div className="absolute bottom-2 right-2 bg-[#030b1a] border border-[#d68029]/20 rounded-2xl p-4 shadow-2xl w-[190px] z-20 text-white">
+                    <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
+                      Our Global Network
+                    </h4>
+                    <ul className="flex flex-col gap-2">
+                      {[
+                        "North America",
+                        "Europe",
+                        "Middle East",
+                        "Asia Pacific",
+                      ].map((region) => (
+                        <li
+                          key={region}
+                          className="flex items-center justify-between text-[10px] text-slate-300 hover:text-[#d68029] transition-colors cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-1.5">
+                            <FaMapMarkerAlt className="text-[#d68029] text-[9px]" />
+                            <span>{region}</span>
+                          </div>
+                          <FiChevronRight className="text-slate-500 group-hover:text-[#d68029] transition-colors" />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </Row>
       </Section>
