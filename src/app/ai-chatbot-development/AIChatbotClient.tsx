@@ -151,14 +151,15 @@ const services =
         {/* ── 2. Solutions Grid ── */}
         <AIChatbotSolutions />
 
+  
         {/* ── 3. Conversation Flow ── */}
         <ConversationFlow />
 
-        {/* ── 4. Powerful Capabilities ── */}
-        <PowerfulCapabilities />
-
         {/* ── 5. Industry Use Cases ── */}
         <IndustryUseCases />
+        
+      {/* ── 4. Powerful Capabilities ── */}
+        <PowerfulCapabilities />
 
         {/* ── 6. Integrations Grid ── */}
         <Integrations />
