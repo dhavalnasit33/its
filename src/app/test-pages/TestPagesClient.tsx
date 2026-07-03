@@ -189,37 +189,40 @@ export default function TestPagesClient() {
   const caseStudies = [
     {
       title: "AI Chatbot for E-commerce Brand",
-      description: "Deploying a conversational AI system that handles customer inquiries, recommends personalized products, and automates order tracking in real-time.",
+      description:
+        "Deploying a conversational AI system that handles customer inquiries, recommends personalized products, and automates order tracking in real-time.",
       stats: [
         { value: "+65%", label: "Customer Engagement" },
         { value: "-40%", label: "Support Cost" },
-        { value: "+32%", label: "Sales Growth" }
+        { value: "+32%", label: "Sales Growth" },
       ],
       image: "/home-test/mobile.png",
-      tags: ["NLP", "Retail", "Automation"]
+      tags: ["NLP", "Retail", "Automation"],
     },
     {
       title: "AI Diagnostics Support System",
-      description: "An advanced machine learning model aiding radiologists in identifying anomalies in chest X-rays with clinical-grade accuracy.",
+      description:
+        "An advanced machine learning model aiding radiologists in identifying anomalies in chest X-rays with clinical-grade accuracy.",
       stats: [
         { value: "+80%", label: "Diagnosis Speed" },
         { value: "99.2%", label: "Detection Rate" },
-        { value: "-60%", label: "Human Error" }
+        { value: "-60%", label: "Human Error" },
       ],
       image: "/home-test/mobile.png",
-      tags: ["Computer Vision", "Healthcare", "Deep Learning"]
+      tags: ["Computer Vision", "Healthcare", "Deep Learning"],
     },
     {
       title: "Predictive Analytics for Fintech",
-      description: "Implementing a real-time transaction monitoring engine that detects fraudulent activities using transaction monitoring algorithms.",
+      description:
+        "Implementing a real-time transaction monitoring engine that detects fraudulent activities using transaction monitoring algorithms.",
       stats: [
         { value: "+95%", label: "Fraud Detection" },
         { value: "-75%", label: "False Positives" },
-        { value: "2ms", label: "Response Speed" }
+        { value: "2ms", label: "Response Speed" },
       ],
       image: "/home-test/mobile.png",
-      tags: ["Anomaly Detection", "Fintech", "Security"]
-    }
+      tags: ["Anomaly Detection", "Fintech", "Security"],
+    },
   ];
 
   const containerVariants = {
@@ -795,7 +798,8 @@ export default function TestPagesClient() {
                 Real Results, Real Impact
               </h2>
               <p className="fonts_16 text-gray-600 mt-4">
-                Explore how our AI-powered solutions drive growth, reduce costs, and transform operations.
+                Explore how our AI-powered solutions drive growth, reduce costs,
+                and transform operations.
               </p>
             </div>
 
@@ -813,7 +817,9 @@ export default function TestPagesClient() {
                         : "bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-800"
                     }`}
                   >
-                    {study.title.split(" for ")[1] || study.title.split(" for")[0] || study.title}
+                    {study.title.split(" for ")[1] ||
+                      study.title.split(" for")[0] ||
+                      study.title}
                   </button>
                 ))}
               </div>
@@ -844,7 +850,7 @@ export default function TestPagesClient() {
                     <h3 className="text-2xl md:text-3.5xl font-bold text-[#0d1b2a] leading-tight mb-4">
                       {caseStudies[activeCaseStudy].title}
                     </h3>
-                    
+
                     <p className="fonts_16 text-gray-600 leading-relaxed mb-8">
                       {caseStudies[activeCaseStudy].description}
                     </p>
@@ -853,16 +859,21 @@ export default function TestPagesClient() {
 
                     {/* Stats counters */}
                     <div className="grid grid-cols-3 gap-4">
-                      {caseStudies[activeCaseStudy].stats.map((stat, statIdx) => (
-                        <div key={statIdx} className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-[0_4px_10px_rgba(0,0,0,0.01)] hover:border-slate-300 transition-all duration-300">
-                          <span className="block text-2.5xl sm:text-3.5xl font-bold text-[#d68029] tracking-tight">
-                            {stat.value}
-                          </span>
-                          <span className="block text-xs font-semibold text-slate-500 mt-2 leading-tight">
-                            {stat.label}
-                          </span>
-                        </div>
-                      ))}
+                      {caseStudies[activeCaseStudy].stats.map(
+                        (stat, statIdx) => (
+                          <div
+                            key={statIdx}
+                            className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-[0_4px_10px_rgba(0,0,0,0.01)] hover:border-slate-300 transition-all duration-300"
+                          >
+                            <span className="block text-2.5xl sm:text-3.5xl font-bold text-[#d68029] tracking-tight">
+                              {stat.value}
+                            </span>
+                            <span className="block text-xs font-semibold text-slate-500 mt-2 leading-tight">
+                              {stat.label}
+                            </span>
+                          </div>
+                        ),
+                      )}
                     </div>
                   </div>
 
@@ -885,155 +896,159 @@ export default function TestPagesClient() {
       </Section>
 
       {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
-      <Section className="bg-white py-20 lg:py-24 relative overflow-hidden">
-        <Row>
-          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_auto_1.4fr] gap-12 items-stretch">
-            {/* Left Column: Industries We Serve */}
-            <div className="flex flex-col justify-between py-2">
-              <div>
-                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-3">
-                  INDUSTRIES WE SERVE
-                </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#0d1b2a] leading-[1.25] mb-8">
-                  AI solutions tailored for <br className="hidden sm:block" />
-                  every industry
-                </h2>
+      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
+      <Section className="bg-white py-12 lg:py-16 relative overflow-hidden">
+        <Row className="max-w-[1600px] mx-auto">
+          {/* Main Card Container - Reduced padding to decrease overall height */}
+          <div className="bg-[#fafcff] rounded-[32px] p-6 lg:p-8 border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+              {/* Left Column: Industries We Serve */}
+              <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
+                <div>
+                  <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
+                    INDUSTRIES WE SERVE
+                  </span>
+                  <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25] mb-6">
+                    AI solutions tailored for <br className="hidden sm:block" />
+                    every industry
+                  </h2>
 
-                {/* Grid of 8 cards */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 gap-4">
-                  {industryCards.map((card, idx) => {
-                    const Icon = card.icon;
-                    return (
-                      <motion.div
-                        key={idx}
-                        whileHover={{ y: -3, scale: 1.02 }}
-                        className="bg-white border border-slate-100 rounded-2xl p-4 flex flex-col items-center text-center shadow-[0_4px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
-                      >
-                        <div
-                          className={`w-10 h-10 rounded-full ${card.bgColor} flex items-center justify-center text-lg ${card.iconColor} mb-3 shrink-0`}
+                  {/* Grid of 8 cards - Removed aspect-square, adjusted padding to reduce height */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {industryCards.map((card, idx) => {
+                      const Icon = card.icon;
+                      return (
+                        <motion.div
+                          key={idx}
+                          whileHover={{ y: -2 }}
+                          className="bg-white border border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
                         >
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <span className="text-sm font-bold text-slate-800 leading-tight">
-                          {card.title}
-                        </span>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <Link
-                href="#contact-form-section"
-                className="mt-8 self-start border border-[#d68029] hover:bg-[#d68029] text-[#d68029] hover:text-white font-bold px-6 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm"
-              >
-                Explore All Industries
-                <FaLongArrowAltRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
-            {/* Vertical Divider */}
-            <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
-
-            {/* Right Column: Global Presence */}
-            <div className="flex flex-col justify-start py-2">
-              <div>
-                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-3">
-                  GLOBAL PRESENCE
-                </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#0d1b2a] leading-[1.25] mb-8">
-                  Serving Clients <br />
-                  Worldwide
-                </h2>
-              </div>
-
-              {/* Stats & Map Split Row */}
-              <div className="grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-6 items-center w-full relative">
-                {/* Stats list stack */}
-                <div className="flex flex-col gap-6">
-                  <div>
-                    <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
-                      20+
-                    </span>
-                    <span className="block text-sm font-semibold text-slate-700 mt-1">
-                      Countries
-                    </span>
-                  </div>
-                  <div>
-                    <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
-                      120+
-                    </span>
-                    <span className="block text-sm font-semibold text-slate-700 mt-1">
-                      Happy Clients
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
-                        150+
-                      </span>
-                      <span className="block text-[13px] font-semibold text-slate-700 mt-1">
-                        Projects
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-3.5xl md:text-4xl font-bold text-[#d68029] tracking-tight">
-                        24/7
-                      </span>
-                      <span className="block text-[13px] font-semibold text-slate-700 mt-1">
-                        Support Coverage
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Map with Overlay Widget */}
-                <div className="relative w-full h-[350px] flex items-center justify-center">
-                  {/* World Map */}
-                  <div
-                    className="absolute inset-0 opacity-95 pointer-events-none"
-                    style={{
-                      backgroundImage: 'url("/home-test/map.png")',
-                      backgroundSize: "contain",
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "center",
-                    }}
-                  />
-
-                  {/* Pins */}
-                  <MapPin top="30%" left="18%" />
-                  <MapPin top="34%" left="30%" />
-                  <MapPin top="24%" left="63%" />
-                  <MapPin top="33%" left="88%" />
-                  <MapPin top="60%" left="25%" />
-                  <MapPin top="46%" left="56%" />
-                  <MapPin top="68%" left="86%" />
-
-                  {/* Our Global Network Widget Card */}
-                  <div className="absolute bottom-2 right-2 bg-[#030b1a] border border-[#d68029]/20 rounded-2xl p-4 shadow-2xl w-[190px] z-20 text-white">
-                    <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
-                      Our Global Network
-                    </h4>
-                    <ul className="flex flex-col gap-2">
-                      {[
-                        "North America",
-                        "Europe",
-                        "Middle East",
-                        "Asia Pacific",
-                      ].map((region) => (
-                        <li
-                          key={region}
-                          className="flex items-center justify-between text-[10px] text-slate-300 hover:text-[#d68029] transition-colors cursor-pointer group"
-                        >
-                          <div className="flex items-center gap-1.5">
-                            <FaMapMarkerAlt className="text-[#d68029] text-[9px]" />
-                            <span>{region}</span>
+                          <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#5c728e] mb-2 shrink-0">
+                            <Icon className="w-5 h-5" />
                           </div>
-                          <FiChevronRight className="text-slate-500 group-hover:text-[#d68029] transition-colors" />
-                        </li>
-                      ))}
-                    </ul>
+                          <span className="text-[13px] font-bold text-slate-700 leading-tight">
+                            {card.title}
+                          </span>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <Link
+                  href="#contact-form-section"
+                  className="mt-8 self-start border border-orange-200 hover:bg-orange-50 text-[#d68029] font-bold px-6 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm"
+                >
+                  Explore All Industries
+                  <FaLongArrowAltRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              {/* Vertical Divider */}
+              <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
+
+              {/* Right Column: Global Presence */}
+              <div className="flex-1 flex flex-col justify-start w-full lg:w-[50%]">
+                <div className="mb-4">
+                  <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
+                    GLOBAL PRESENCE
+                  </span>
+                  <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25]">
+                    Serving Clients <br className="hidden sm:block" />
+                    Worldwide
+                  </h2>
+                </div>
+
+                {/* Stats & Map Flex Layout */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-4 flex-1">
+                  {/* Stats list stack - Font sizes increased */}
+                  <div className="flex flex-col gap-6 z-10 w-full sm:w-[150px] shrink-0 pt-2">
+                    <div>
+                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                        20+
+                      </span>
+                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                        Countries
+                      </span>
+                    </div>
+                    <div>
+                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                        120+
+                      </span>
+                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                        Happy Clients
+                      </span>
+                    </div>
+
+                    {/* 150+ and 24/7 Side by Side */}
+                    <div className="flex gap-10">
+                      <div>
+                        <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                          150+
+                        </span>
+                        <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                          Projects
+                        </span>
+                      </div>
+                      <div>
+                        <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                          24/7
+                        </span>
+                        <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                          Support Coverage
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Map taking remaining space */}
+                  <div className="relative w-full h-[260px] sm:h-full min-h-[280px] flex-1 flex items-center justify-center ml-[70px] mt-[-70px]">
+                    {/* World Map Background */}
+                    <div
+                      className="absolute inset-0 opacity-95 pointer-events-none scale-110 sm:scale-125 transform origin-center"
+                      style={{
+                        backgroundImage: 'url("/home-test/map.png")',
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                      }}
+                    />
+
+                    {/* Adjusted Pins */}
+                    <MapPin top="32%" left="18%" />
+                    <MapPin top="36%" left="32%" />
+                    <MapPin top="26%" left="58%" />
+                    <MapPin top="34%" left="78%" />
+                    <MapPin top="60%" left="25%" />
+                    <MapPin top="48%" left="52%" />
+                    <MapPin top="66%" left="75%" />
+
+                    {/* Our Global Network Widget Card - Texts slightly enlarged */}
+                    <div className="absolute -bottom-20 left-80 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-4 shadow-2xl w-[180px] z-20 text-white">
+                      <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
+                        Our Global Network
+                      </h4>
+                      <ul className="flex flex-col gap-2.5">
+                        {[
+                          "North America",
+                          "Europe",
+                          "Middle East",
+                          "Asia Pacific",
+                        ].map((region) => (
+                          <li
+                            key={region}
+                            className="flex items-center justify-between text-[11px] text-slate-300 hover:text-[#d68029] transition-colors cursor-pointer group"
+                          >
+                            <div className="flex items-center gap-1.5">
+                              <FaMapMarkerAlt className="text-[#d68029] text-[10px]" />
+                              <span>{region}</span>
+                            </div>
+                            <FiChevronRight className="text-slate-500 group-hover:text-[#d68029] transition-colors" />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
