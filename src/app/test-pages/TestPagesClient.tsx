@@ -26,6 +26,11 @@ import {
   FiHome,
   FiTruck,
   FiCompass,
+  FiShoppingBag,
+  FiUsers,
+  FiDollarSign,
+  FiTrendingUp,
+  FiCalendar,
 } from "react-icons/fi";
 import {
   FaLongArrowAltRight,
@@ -33,6 +38,7 @@ import {
   FaHeadset,
   FaBrain,
   FaRegLightbulb,
+  FaUniversity,
 } from "react-icons/fa";
 import {
   LuBot,
@@ -49,6 +55,10 @@ import StatsGrid from "@/components/home/RoundStatsCard";
 import PlatformSlider from "@/components/home/PlatformSlider";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import Image from "next/image";
+import Reviews from "@/components/home/Reviews";
+import Testimonials from "@/components/home/Testimonials";
+import EngagementModels from "@/components/home/EngagementModel";
+import TechnologyShowcase from "@/components/home/TechnologyShowcase";
 
 const MapPin = ({ top, left }: { top: string; left: string }) => (
   <div
@@ -188,40 +198,158 @@ export default function TestPagesClient() {
 
   const caseStudies = [
     {
+      tabLabel: "E-commerce Brand",
+      tabIcon: FiShoppingBag,
       title: "AI Chatbot for E-commerce Brand",
       description:
         "Deploying a conversational AI system that handles customer inquiries, recommends personalized products, and automates order tracking in real-time.",
-      stats: [
-        { value: "+65%", label: "Customer Engagement" },
-        { value: "-40%", label: "Support Cost" },
-        { value: "+32%", label: "Sales Growth" },
-      ],
-      image: "/home-test/mobile.png",
       tags: ["NLP", "Retail", "Automation"],
+      stats: [
+        {
+          value: "65%",
+          label: "Customer Engagement",
+          arrow: "up",
+          icon: FiUsers,
+        },
+        {
+          value: "40%",
+          label: "Support Cost",
+          arrow: "down",
+          icon: FiDollarSign,
+        },
+        {
+          value: "32%",
+          label: "Sales Growth",
+          arrow: "up",
+          icon: FiTrendingUp,
+        },
+      ],
+      image: "/home-test/mobile-1.png",
+      features: [
+        {
+          title: "Smart Conversations",
+          description: "Understands intent and delivers accurate answers",
+          icon: FiMessageSquare,
+          colorClass:
+            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
+        },
+        {
+          title: "Product Recommendations",
+          description:
+            "AI suggests the right products based on user preferences",
+          icon: FiShoppingCart,
+          colorClass:
+            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
+        },
+        {
+          title: "Order Tracking",
+          description: "Real-time updates and automated notifications",
+          icon: FiTruck,
+          colorClass:
+            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
+        },
+      ],
+      details: {
+        industry: "Retail / E-commerce",
+        duration: "3 Months",
+        team: "AI Engineers, NLP Experts, Front-end Developers",
+        techStack: "OpenAI, Node.js, React, MongoDB, Redis",
+      },
     },
     {
+      tabLabel: "AI Diagnostics Support System",
+      tabIcon: FiShield,
       title: "AI Diagnostics Support System",
       description:
-        "An advanced machine learning model aiding radiologists in identifying anomalies in chest X-rays with clinical-grade accuracy.",
-      stats: [
-        { value: "+80%", label: "Diagnosis Speed" },
-        { value: "99.2%", label: "Detection Rate" },
-        { value: "-60%", label: "Human Error" },
-      ],
-      image: "/home-test/mobile.png",
+        "Developing an AI-powered diagnostic support platform that assists healthcare professionals by analyzing medical images, detecting abnormalities with high accuracy, and accelerating clinical decision-making for improved patient outcomes.",
       tags: ["Computer Vision", "Healthcare", "Deep Learning"],
+      stats: [
+        {
+          value: "80%",
+          label: "Diagnosis Speed",
+          arrow: "up",
+          icon: FiActivity,
+        },
+        { value: "99.2%", label: "Detection Rate", arrow: "up", icon: FiCheck },
+        { value: "60%", label: "Human Error", arrow: "down", icon: FiX },
+      ],
+      image: "/home-test/mobile-1.png",
+      features: [
+        {
+          title: "Anomaly Detection",
+          description:
+            "Identifies fractures, pneumonia, or tumors with clinical-grade precision",
+          icon: FiSearch,
+          colorClass:
+            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
+        },
+        {
+          title: "Speed & Performance",
+          description:
+            "Reduces time-to-diagnosis by up to 80% to expedite care",
+          icon: FiActivity,
+          colorClass:
+            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
+        },
+        {
+          title: "PACS Integration",
+          description: "Integrates seamlessly into existing DICOM databases",
+          icon: FiShield,
+          colorClass:
+            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
+        },
+      ],
+      details: {
+        industry: "Healthcare / Medicine",
+        duration: "6 Months",
+        team: "ML Researchers, Radiologists, Cloud Architects",
+        techStack: "Python, PyTorch, AWS, Docker, PACS/DICOM",
+      },
     },
     {
+      tabLabel: "Fintech",
+      tabIcon: FaUniversity,
       title: "Predictive Analytics for Fintech",
       description:
-        "Implementing a real-time transaction monitoring engine that detects fraudulent activities using transaction monitoring algorithms.",
-      stats: [
-        { value: "+95%", label: "Fraud Detection" },
-        { value: "-75%", label: "False Positives" },
-        { value: "2ms", label: "Response Speed" },
-      ],
-      image: "/home-test/mobile.png",
+        "Building an AI-driven fraud detection and predictive analytics platform that monitors financial transactions in real time, identifies suspicious activities, assesses risk, and strengthens security while minimizing false positives.",
       tags: ["Anomaly Detection", "Fintech", "Security"],
+      stats: [
+        { value: "95%", label: "Fraud Detection", arrow: "up", icon: FiShield },
+        { value: "75%", label: "False Positives", arrow: "down", icon: FiX },
+        { value: "2ms", label: "Response Speed", arrow: "up", icon: FiCpu },
+      ],
+      image: "/home-test/mobile-1.png",
+      features: [
+        {
+          title: "Risk Scoring",
+          description:
+            "Calculates risk levels on each transaction in real-time",
+          icon: FiTarget,
+          colorClass:
+            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
+        },
+        {
+          title: "Behavioral Profiling",
+          description:
+            "Adapts continuously to user behavior to minimize false flags",
+          icon: FiUsers,
+          colorClass:
+            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
+        },
+        {
+          title: "Instant Blocking",
+          description: "Flags and suspends suspicious activities under 2ms",
+          icon: FiShield,
+          colorClass:
+            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
+        },
+      ],
+      details: {
+        industry: "Fintech / Banking",
+        duration: "4 Months",
+        team: "Data Scientists, Security Experts, Backend Developers",
+        techStack: "Python, Spark, Kafka, Scala, PostgreSQL",
+      },
     },
   ];
 
@@ -795,11 +923,16 @@ export default function TestPagesClient() {
                 CASE STUDIES
               </span>
               <h2 className="common-h2 text-[#0d1b2a]">
-                Real Results, Real Impact
+                Real Results,{" "}
+                <span className="relative inline-block">
+                  Real
+                  <span className="absolute bottom-[2px] left-0 w-full h-[3px] bg-[#d68029] rounded-full" />
+                </span>{" "}
+                <span className="text-[#d68029]">Impact</span>
               </h2>
               <p className="fonts_16 text-gray-600 mt-4">
-                Explore how our AI-powered solutions drive growth, reduce costs,
-                and transform operations.
+                Discover how businesses are leveraging AI to solve challenges,
+                improve efficiency, and achieve measurable growth.
               </p>
             </div>
 
@@ -811,90 +944,256 @@ export default function TestPagesClient() {
                   <button
                     key={idx}
                     onClick={() => setActiveCaseStudy(idx)}
-                    className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
+                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold cursor-pointer transition-all duration-300 ${
                       activeCaseStudy === idx
-                        ? "bg-[#d68029] text-white shadow-md shadow-[#d68029]/20"
-                        : "bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-800"
+                        ? "bg-[#e06c16] text-white shadow-md shadow-[#e06c16]/20"
+                        : "bg-white border border-slate-200/80 text-[#334155] hover:bg-slate-50 hover:text-slate-800"
                     }`}
                   >
-                    {study.title.split(" for ")[1] ||
-                      study.title.split(" for")[0] ||
-                      study.title}
+                    {/* Icon */}
+                    {React.createElement(study.tabIcon, {
+                      className: `w-4 h-4 ${
+                        activeCaseStudy === idx
+                          ? "text-white"
+                          : "text-slate-500"
+                      }`,
+                    })}
+                    {study.tabLabel}
                   </button>
                 ))}
               </div>
 
+              {/* Showcase Container */}
               {/* Showcase Container */}
               <motion.div
                 key={activeCaseStudy}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="bg-[#f8fafc] border border-slate-200/80 rounded-3xl p-6 md:p-12 shadow-[0_4px_30px_rgba(0,0,0,0.015)] hover:border-slate-300 transition-all duration-300"
+                className="bg-white rounded-[32px] overflow-hidden shadow-[0_15px_50px_rgba(214,128,41,0.08)] transition-all duration-300 flex flex-col lg:flex-row relative"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
-                  {/* Left Column: Info & Stats */}
-                  <div className="flex flex-col justify-center">
+                {/* Left Column: Info & Stats (Navy Blue bg) */}
+                <div className="w-full lg:w-[55%] bg-[#1c2a40] p-8 md:p-12 lg:p-12 xl:p-14 flex flex-col justify-between relative overflow-hidden">
+                  {/* Subtle dot pattern background */}
+                  <div
+                    className="absolute bottom-0 left-0 w-64 h-64 opacity-10 pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(#ffffff 1.5px, transparent 1.5px)",
+                      backgroundSize: "16px 16px",
+                    }}
+                  />
+
+                  <div className="relative z-10 lg:pr-24">
                     {/* Technology Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="flex flex-wrap gap-3 mb-6 md:mb-8">
                       {caseStudies[activeCaseStudy].tags.map((tag, tagIdx) => (
                         <span
                           key={tagIdx}
-                          className="bg-orange-50 border border-orange-200/50 text-[#d68029] px-3 py-1 rounded-full text-xs font-semibold"
+                          className="bg-transparent border border-[#ff7a1a] text-[#ff7a1a] px-4 py-1.5 rounded-full text-[12px] font-semibold tracking-wide"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <h3 className="text-2xl md:text-3.5xl font-bold text-[#0d1b2a] leading-tight mb-4">
+                    <h3 className="text-3xl lg:text-[40px] font-bold text-white leading-[1.2] mb-5 tracking-tight">
                       {caseStudies[activeCaseStudy].title}
                     </h3>
 
-                    <p className="fonts_16 text-gray-600 leading-relaxed mb-8">
+                    <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-10 max-w-lg">
                       {caseStudies[activeCaseStudy].description}
                     </p>
-
-                    <div className="w-full h-px bg-slate-200/80 mb-8" />
-
-                    {/* Stats counters */}
-                    <div className="grid grid-cols-3 gap-4">
-                      {caseStudies[activeCaseStudy].stats.map(
-                        (stat, statIdx) => (
-                          <div
-                            key={statIdx}
-                            className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-[0_4px_10px_rgba(0,0,0,0.01)] hover:border-slate-300 transition-all duration-300"
-                          >
-                            <span className="block text-2.5xl sm:text-3.5xl font-bold text-[#d68029] tracking-tight">
-                              {stat.value}
-                            </span>
-                            <span className="block text-xs font-semibold text-slate-500 mt-2 leading-tight">
-                              {stat.label}
-                            </span>
-                          </div>
-                        ),
-                      )}
-                    </div>
                   </div>
 
-                  {/* Right Column: Device mockups */}
-                  <div className="relative w-full h-[240px] md:h-[320px] flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-orange-100/30 to-blue-50/10 rounded-2xl -z-10" />
-                    <Image
-                      src={caseStudies[activeCaseStudy].image}
-                      alt={caseStudies[activeCaseStudy].title}
-                      fill
-                      className="object-contain p-2"
-                      priority
-                    />
+                  {/* Stats counters */}
+                  <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-4 xl:gap-5 mt-auto lg:pr-14">
+                    {caseStudies[activeCaseStudy].stats.map((stat, statIdx) => {
+                      const StatIcon = stat.icon;
+                      return (
+                        <div
+                          key={statIdx}
+                          className="bg-[#28384d] rounded-2xl p-5 flex flex-col justify-center transition-transform hover:-translate-y-1 duration-300"
+                        >
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 rounded-full bg-[#ff7a1a] flex items-center justify-center shrink-0">
+                              <StatIcon className="w-4 h-4 text-white" />
+                            </div>
+                            <span className="text-2xl lg:text-[28px] font-bold text-white tracking-tight">
+                              {stat.value}
+                            </span>
+                          </div>
+                          <div className="text-[13px] font-medium text-slate-300 flex items-center gap-1.5 pt-1">
+                            <span>{stat.label}</span>
+                            <span
+                              className={`font-bold text-sm ${stat.arrow === "up" ? "text-green-400" : "text-green-400"}`}
+                            >
+                              {stat.arrow === "up" ? "↗" : "↘"}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Right Column: Premium Feature Cards (No Image) */}
+                <div className="w-full lg:w-[45%] bg-[#fffcf8] p-8 md:p-12 xl:p-14 relative flex flex-col justify-center min-h-[480px] overflow-hidden z-0">
+                  {/* Decorative Ambient Glows */}
+                  <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] bg-[#ff7a1a]/10 blur-[100px] rounded-full pointer-events-none" />
+                  <div className="absolute bottom-[-10%] left-[-20%] w-[300px] h-[300px] bg-[#6320a3]/10 blur-[80px] rounded-full pointer-events-none" />
+
+                  {/* Subtle Dotted overlay for texture */}
+                  <div
+                    className="absolute inset-0 opacity-[0.15] pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(#d68029 1.5px, transparent 1.5px)",
+                      backgroundSize: "24px 24px",
+                    }}
+                  />
+
+                  {/* Feature Cards Container */}
+                  <div className="relative z-10 flex flex-col gap-4 w-full max-w-[500px] mx-auto">
+                    {/* Small context header */}
+                    <div className="mb-4 px-2">
+                      <span className="text-[#d68029] text-[11px] font-extrabold uppercase tracking-widest block mb-1">
+                        Key Capabilities
+                      </span>
+                      <h4 className="text-2xl font-bold text-[#0d1b2a]">
+                        Platform Features
+                      </h4>
+                    </div>
+
+                    {caseStudies[activeCaseStudy].features.map(
+                      (feat, featIdx) => {
+                        const FeatIcon = feat.icon;
+
+                        return (
+                          <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              delay: featIdx * 0.15,
+                              duration: 0.5,
+                            }}
+                            key={featIdx}
+                            className="group relative bg-white/70 backdrop-blur-xl border border-white rounded-[24px] p-5 lg:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(214,128,41,0.08)] hover:-translate-y-1 transition-all duration-400 cursor-default overflow-hidden"
+                          >
+                            {/* Accent Line on hover */}
+                            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#ff7a1a] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                            <div className="flex items-center gap-5 pr-6">
+                              {/* Icon Container with glowing effect */}
+                              <div className="relative shrink-0">
+                                <div
+                                  className={`absolute inset-0 blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-300 ${feat.colorClass}`}
+                                />
+                                <div
+                                  className={`relative w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center shadow-sm ${feat.colorClass}`}
+                                >
+                                  <FeatIcon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+                                </div>
+                              </div>
+
+                              {/* Text Content */}
+                              <div className="flex-1">
+                                <h4 className="text-[16px] lg:text-[17px] font-bold text-[#0d1b2a] leading-tight mb-1.5 group-hover:text-[#d68029] transition-colors duration-300">
+                                  {feat.title}
+                                </h4>
+                                <p className="text-[13px] lg:text-[14px] text-slate-500 font-medium leading-relaxed">
+                                  {feat.description}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Hover Arrow Indicator */}
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                              <FiChevronRight className="w-6 h-6 text-[#d68029]" />
+                            </div>
+                          </motion.div>
+                        );
+                      },
+                    )}
                   </div>
                 </div>
               </motion.div>
+
+              {/* Bottom details bar */}
+              <div className="bg-white border border-slate-200/50 rounded-[24px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.01)]">
+                <div className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap items-stretch justify-between gap-6">
+                  {/* Item 1: Industry */}
+                  <div className="flex-1 flex items-center gap-4 min-w-[200px] px-2">
+                    <div className="w-11 h-11 rounded-full bg-[#f3f0ff] border border-[#e8d5ff] text-[#7c3aed] flex items-center justify-center shrink-0">
+                      <FiTarget className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                        Industry
+                      </span>
+                      <span className="block text-sm font-bold text-[#0d1b2a] mt-0.5 leading-snug">
+                        {caseStudies[activeCaseStudy].details.industry}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="hidden lg:block w-px bg-slate-200/80 self-stretch my-1" />
+
+                  {/* Item 2: Duration */}
+                  <div className="flex-1 flex items-center gap-4 min-w-[200px] px-2">
+                    <div className="w-11 h-11 rounded-full bg-[#fff8f2] border border-[#ffe0cc] text-[#ff7a1a] flex items-center justify-center shrink-0">
+                      <FiCalendar className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                        Duration
+                      </span>
+                      <span className="block text-sm font-bold text-[#0d1b2a] mt-0.5 leading-snug">
+                        {caseStudies[activeCaseStudy].details.duration}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="hidden lg:block w-px bg-slate-200/80 self-stretch my-1" />
+
+                  {/* Item 3: Team Involved */}
+                  <div className="flex-1 flex items-center gap-4 min-w-[200px] px-2">
+                    <div className="w-11 h-11 rounded-full bg-[#ebfbf3] border border-[#c3fae8] text-[#10b981] flex items-center justify-center shrink-0">
+                      <FiUsers className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                        Team Involved
+                      </span>
+                      <span className="block text-sm font-bold text-[#0d1b2a] mt-0.5 leading-snug">
+                        {caseStudies[activeCaseStudy].details.team}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="hidden lg:block w-px bg-slate-200/80 self-stretch my-1" />
+
+                  {/* Item 4: Tech Stack */}
+                  <div className="flex-1 flex items-center gap-4 min-w-[200px] px-2">
+                    <div className="w-11 h-11 rounded-full bg-[#f0f7ff] border border-[#d0e8ff] text-[#3b82f6] flex items-center justify-center shrink-0">
+                      <FaRocket className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                        Tech Stack
+                      </span>
+                      <span className="block text-sm font-bold text-[#0d1b2a] mt-0.5 leading-snug">
+                        {caseStudies[activeCaseStudy].details.techStack}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </Row>
       </Section>
-
+      <TechnologyShowcase />
       {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
       {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
       <Section className="bg-white py-12 lg:py-16 relative overflow-hidden">
@@ -923,7 +1222,7 @@ export default function TestPagesClient() {
                           whileHover={{ y: -2 }}
                           className="bg-white border border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
                         >
-                          <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#5c728e] mb-2 shrink-0">
+                          <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#d68029] mb-2 shrink-0">
                             <Icon className="w-5 h-5" />
                           </div>
                           <span className="text-[13px] font-bold text-slate-700 leading-tight">
@@ -1056,6 +1355,10 @@ export default function TestPagesClient() {
           </div>
         </Row>
       </Section>
+
+      <Reviews />
+      <Testimonials />
+      <EngagementModels />
     </main>
   );
 }
