@@ -59,6 +59,8 @@ import Reviews from "@/components/home/Reviews";
 import Testimonials from "@/components/home/Testimonials";
 import EngagementModels from "@/components/home/EngagementModel";
 import TechnologyShowcase from "@/components/home/TechnologyShowcase";
+import apiService from "@/lib/apiService";
+import { HomePageData, SingleResponse } from "@/types";
 
 const MapPin = ({ top, left }: { top: string; left: string }) => (
   <div
@@ -195,6 +197,21 @@ const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function TestPagesClient() {
   const { navStructure } = useWebsiteSettings();
   const [activeCaseStudy, setActiveCaseStudy] = React.useState(0);
+  const [homePageData, setHomePageData] = React.useState<HomePageData | null>(null);
+
+  React.useEffect(() => {
+    const fetchHomepageData = async () => {
+      try {
+        const response = await apiService<SingleResponse<HomePageData>>("/homepage");
+        if (response.success) {
+          setHomePageData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching homepage data:", error);
+      }
+    };
+    fetchHomepageData();
+  }, []);
 
   const caseStudies = [
     {
@@ -485,7 +502,7 @@ export default function TestPagesClient() {
   return (
     <main className="relative w-full bg-white text-gray-900 overflow-x-hidden">
       {/* ── SECTION 1: HERO SECTION ── */}
-      <Hero scrollToId="challenges-section" />
+      <Hero heroSecton={homePageData?.heroSecton} scrollToId="challenges-section" />
 
       <Section className="bg-[#0d1b2a] z-10 py-6! ">
         <Row>

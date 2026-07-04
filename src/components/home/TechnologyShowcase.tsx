@@ -230,12 +230,12 @@ export default function TechnologyShowcase() {
   const getSlotProps = (index: number, total: number) => {
     if (total === 6) {
       return [
-        { top: "8%", left: "50%" },
-        { top: "28%", left: "78%" },
-        { top: "72%", left: "75%" },
+        { top: "2%", left: "50%" },
+        { top: "25%", left: "75%" },
+        { top: "68%", left: "72%" },
         { top: "83%", left: "50%" },
-        { top: "72%", left: "19%" },
-        { top: "28%", left: "16%" },
+        { top: "68%", left: "21%" },
+        { top: "18%", left: "21%" },
       ][index];
     }
 
@@ -276,13 +276,16 @@ export default function TechnologyShowcase() {
         </div>
 
         {/* ORBITAL SHOWCASE CENTER */}
-        {isDesktop ? (
-          <div className="relative w-full max-w-[1400px] h-[920px] flex items-center justify-center my-6 transform scale-75 md:scale-90 lg:scale-100">
-            <div className="absolute w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
-            <div className="absolute w-[900px] h-[900px] rounded-full border border-blue-500/10 pointer-events-none" />
-            <div className="absolute w-[700px] h-[700px] rounded-full border border-blue-500/15 pointer-events-none" />
-            <div className="absolute w-[500px] h-[500px] rounded-full border border-[#D68029]/10 pointer-events-none" />
+        {isDesktop ? (
+          <div className="relative w-full max-w-[1200px] h-[680px] flex items-center justify-center my-6 transform scale-90 lg:scale-100">
+            {/* Background Glow */}
+            <div className="absolute w-[450px] h-[450px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
+
+            {/* Concentric Rings */}
+            <div className="absolute w-[700px] h-[700px] rounded-full border border-blue-500/10 pointer-events-none" />
+            <div className="absolute w-[550px] h-[550px] rounded-full border border-blue-500/15 pointer-events-none" />
+            <div className="absolute w-[400px] h-[400px] rounded-full border border-[#D68029]/10 pointer-events-none" />
 
             {/* AI Core */}
             <motion.div
@@ -290,15 +293,15 @@ export default function TechnologyShowcase() {
               animate={{ y: [0, -10, 0], scale: [1, 1.03, 1] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
-              <div className="absolute w-[650px] h-[650px] rounded-full bg-blue-500/20 blur-[180px]" />
-              <div className="absolute w-[500px] h-[500px] rounded-full bg-cyan-400/20 blur-[120px]" />
+              <div className="absolute w-[500px] h-[500px] rounded-full bg-blue-500/20 blur-[140px]" />
+              <div className="absolute w-[350px] h-[350px] rounded-full bg-cyan-400/20 blur-[100px]" />
               <Image
                 src="/home-test/ai-core-logo.png"
                 alt="AI Core"
-                width={650}
-                height={650}
+                width={550}
+                height={550}
                 priority
-                className="relative z-20 select-none pointer-events-none drop-shadow-[0_0_60px_rgba(59,130,246,0.65)]"
+                className="relative z-20 select-none pointer-events-none drop-shadow-[0_0_50px_rgba(59,130,246,0.65)]"
               />
             </motion.div>
 
@@ -329,8 +332,6 @@ export default function TechnologyShowcase() {
                       transform: "translate(-50%, -50%)",
                     }}
                   >
-                    {/* WRAPPER FIX: Label is absolute so it doesn't affect the centering of the Bubble */}
-                    {/* WRAPPER FIX: Label is absolute so it doesn't affect the centering of the Bubble */}
                     <div className="relative flex flex-col items-center justify-center">
                       {/* BUBBLE */}
                       <motion.div
@@ -350,7 +351,7 @@ export default function TechnologyShowcase() {
                         </div>
                       </motion.div>
 
-                      {/* FIXED ROUNDED LABEL CARD - Aa bhag replace karjo */}
+                      {/* FIXED ROUNDED LABEL CARD */}
                       <div className="absolute -bottom-15 w-[130px] px-2 py-2 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-xl text-center shadow-lg z-20">
                         <h3 className="text-white font-semibold text-[13px] leading-tight">
                           {tech.label}
@@ -405,7 +406,7 @@ export default function TechnologyShowcase() {
         )}
 
         {/* BOTTOM TABS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 w-full mt-4 z-30">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 w-full mt-6 z-30">
           {categories.map((card) => {
             const Icon = card.icon;
             const isActive = activeTab === card.id;
