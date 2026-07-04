@@ -53,7 +53,7 @@ export default function FAQ({
               
               {/* Sticky Sidebar */}
               <div className="w-full max-w-full lg:max-w-[29.99%] flex relative min-h-px">
-                <div className="flex items-start content-start w-full flex-wrap top-[13%] z-10 h-fit sticky">
+                <div className="flex items-start content-start w-full flex-wrap top-[120px] z-10 h-fit sticky">
                   <div className="mb-5">
                     <h6 className="text-xl text-[#d68029] font-semibold">
                       {sideTitle}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
@@ -20,6 +20,7 @@ import {
   LuCpu,
 } from "react-icons/lu";
 import Motion from "../motionbar";
+import Image from "next/image";
 
 interface IndustryFeature {
   title: string;
@@ -400,7 +401,7 @@ const INDUSTRIES_DATA: IndustryData[] = [
     iconName: "cpu",
     description:
       "Accelerate software development, strengthen cybersecurity, and optimize cloud infrastructure with AI-powered technologies.",
-
+    imageUrl: "/strategic/technology.png",
     features: [
       {
         title: "Principal Advantages and Uses",
@@ -461,31 +462,42 @@ function IndustryIcon({ name }: { name: string }) {
 
 export default function IndustriesWeTransform() {
   const [selectedId, setSelectedId] = useState<string>("marketing");
+  const sectionRef = useRef<HTMLDivElement>(null);
   const selectedIndustry =
     INDUSTRIES_DATA.find((ind) => ind.id === selectedId) || INDUSTRIES_DATA[0];
 
+  const handleTabClick = (id: string) => {
+    setSelectedId(id);
+    if (sectionRef.current) {
+      const yOffset = -100; // offset for sticky navbar
+      const y = sectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   return (
     <Section className="bg-white py-16 lg:py-24">
-      <Row>
-        {/* Section Heading */}
-        <div className="text-center mb-16 mx-auto">
-          <h2 className="common-h2 text-center w-full text-black">
-            Industries We Transform Through Strategic{" "}
-            <span className="text-[#D68029]">AI Consulting</span>
-          </h2>
-          <Motion />
-        </div>
-
-        {/* Tab-Sidebar layout grid */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start w-full">
-          {/* Left Column: Tab list */}
-          <div className="w-full lg:w-[32%] flex overflow-x-auto lg:overflow-x-visible lg:flex-col gap-3 scrollbar-none shrink-0 border-b border-gray-100 lg:border-b-0">
-            {INDUSTRIES_DATA.map((ind) => {
-              const isSelected = ind.id === selectedId;
-              return (
-                <button
-                  key={ind.id}
-                  onClick={() => setSelectedId(ind.id)}
+      <div ref={sectionRef}>
+        <Row>
+          {/* Section Heading */}
+          <div className="text-center mb-16 mx-auto">
+            <h2 className="common-h2 text-center w-full text-black">
+              Industries We Transform Through Strategic{" "}
+              <span className="text-[#D68029]">AI Consulting</span>
+            </h2>
+            <Motion />
+          </div>
+  
+          {/* Tab-Sidebar layout grid */}
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start w-full">
+            {/* Left Column: Tab list */}
+            <div className="w-full lg:w-[32%] flex overflow-x-auto lg:overflow-x-visible lg:flex-col gap-3 scrollbar-none shrink-0 border-b border-gray-100 lg:border-b-0">
+              {INDUSTRIES_DATA.map((ind) => {
+                const isSelected = ind.id === selectedId;
+                return (
+                  <button
+                    key={ind.id}
+                    onClick={() => handleTabClick(ind.id)}
                   className={`relative flex items-center gap-4 cursor-pointer px-5 py-4 w-fit lg:w-full rounded-2xl border text-left font-semibold text-sm lg:text-[17px] transition-all duration-300 whitespace-nowrap 
                     lg:whitespace-normal shrink-0 hover:bg-white hover:border hover:border-[#D68029] hover:text-[#0d1b2a] group
                     ${
@@ -535,11 +547,13 @@ export default function IndustriesWeTransform() {
               >
                 {/* 1. Main Industry Banner Image */}
                 {selectedIndustry.imageUrl && (
-                  <div className="w-full mb-8 rounded-2xl overflow-hidden shadow-[0_4px_20px_-2px_rgba(0,0,0,0.08)] border border-gray-100 bg-gray-50 flex justify-center">
-                    <img
+                  <div className="w-full max-w-[600px]  mx-auto mb-8 rounded-2xl overflow-hidden shadow-[0_4px_20px_-2px_rgba(0,0,0,0.08)] border border-gray-100 bg-gray-50 flex justify-center">
+                    <Image
                       src={selectedIndustry.imageUrl}
                       alt={selectedIndustry.name}
                       className="w-full h-auto object-contain"
+                      width={500}
+                      height={500}
                     />
                   </div>
                 )}
@@ -588,6 +602,7 @@ export default function IndustriesWeTransform() {
           </div>
         </div>
       </Row>
-    </Section>
+    </div>
+  </Section>
   );
 }

@@ -46,13 +46,14 @@ import {
   FaHandshake,
 } from "react-icons/fa6";
 import TrainingContactForm from "@/components/Footer/TrainingContactForm";
+import CommonFAQ from "@/components/FAQ";
 
 const trainingPrograms = [
   {
     icon: FiMonitor,
     color: "#3B82F6",
-    title: "Web Development",
-    desc: "HTML, CSS, JavaScript, React, Node.js, MongoDB",
+    title: "Full-Stack Web Development",
+    desc: "React.js, Next.js, Node.js, Express, MongoDB & REST APIs",
     hoverDesc:
       "Master HTML, CSS, JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git, deployment, and real-world full-stack development projects.",
   },
@@ -60,31 +61,31 @@ const trainingPrograms = [
     icon: FiSmartphone,
     color: "#16A34A",
     title: "Mobile App Development",
-    desc: "Flutter, React Native, Android Studio",
+    desc: "Flutter, React Native, iOS & Android App Development",
     hoverDesc:
       "Learn Flutter, React Native, Android Studio, Firebase, API integration, state management, and publish Android & iOS apps.",
   },
   {
     icon: FiPenTool,
     color: "#DB2777",
-    title: "UI/UX Design",
-    desc: "Figma, Adobe XD, Photoshop, UI Design Principles",
+    title: "UI/UX Design & Prototyping",
+    desc: "Figma, Adobe XD, Wireframing, UI Design & User Research",
     hoverDesc:
       "Create professional UI/UX designs using Figma, Adobe XD, Photoshop, wireframing, prototyping, design systems, and user research.",
   },
   {
     icon: FiCode,
     color: "#7C3AED",
-    title: "PHP & Laravel Development",
-    desc: "Core PHP, MySQL, Laravel Framework",
+    title: "PHP & Laravel Web Development",
+    desc: "Backend PHP, MySQL Databases, Laravel MVC & Web Security",
     hoverDesc:
       "Build secure web applications using PHP, MySQL, Laravel, MVC architecture, authentication, REST APIs, and deployment.",
   },
   {
     icon: FiTrendingUp,
     color: "#D68029",
-    title: "Digital Marketing",
-    desc: "SEO, Social Media, Google Ads, Analytics",
+    title: "Digital Marketing & SEO",
+    desc: "Search Engine Optimization, Google Ads, SMM & Web Analytics",
     hoverDesc:
       "Learn SEO, Google Ads, Facebook Ads, Social Media Marketing, Analytics, Email Marketing, and content marketing strategies.",
   },
@@ -94,27 +95,27 @@ const internshipPrograms = [
   {
     icon: FiCode,
     title: "Web Development Internship",
-    desc: "Work on live projects and enhance coding skills",
+    desc: "Build production-ready web apps on live corporate projects",
   },
   {
     icon: FiSmartphone,
-    title: "Mobile App Internship",
-    desc: "Build and deploy real mobile applications",
+    title: "Mobile App Development Internship",
+    desc: "Deploy cross-platform mobile apps to App & Play Stores",
   },
   {
     icon: FiPenTool,
     title: "UI/UX Design Internship",
-    desc: "Design real user interfaces and UX flows",
+    desc: "Design real-world user interfaces, wireframes, and UX flows",
   },
   {
     icon: FiTrendingUp,
-    title: "Digital Marketing Internship",
-    desc: "SEO, SMM & Paid Campaigns on live projects",
+    title: "Digital Marketing & SEO Internship",
+    desc: "Execute SEO audits, run ad campaigns, and drive traffic",
   },
   {
     icon: FiEdit3,
-    title: "Content Writing Internship",
-    desc: "Write, optimize and manage content projects",
+    title: "Content Writing & Strategy Internship",
+    desc: "Write SEO-optimized blog posts, copy, and digital content",
   },
 ];
 
@@ -189,6 +190,49 @@ const heroTrustPoints = [
   { icon: FaHandshake, label: "Placement Support" },
 ];
 
+const trainingFAQs = [
+  {
+    question: "What types of IT training programs do you offer?",
+    answer: "We offer comprehensive, job-oriented training courses across multiple disciplines including Full-Stack Web Development (React.js, Next.js, Node.js, Express, MongoDB), Mobile App Development (Flutter, React Native), UI/UX Design and Prototyping (Figma, Adobe XD), PHP & Laravel Development, and Digital Marketing & SEO. All courses are taught by industry experts with hands-on labs."
+  },
+  {
+    question: "Who can apply for your internship programs?",
+    answer: "Our internship programs are open to college students, recent graduates, self-taught developers, and career switchers looking to build their professional portfolios. We accept applicants with basic programming or design knowledge who want to gain hands-on, real-world experience working on live client projects."
+  },
+  {
+    question: "Do you provide placement assistance after course completion?",
+    answer: "Yes, we provide 100% placement assistance. This includes resume-building workshops, career counseling sessions, mock interview preparation, soft skills improvement, and direct placement opportunities through our network of hiring partners."
+  },
+  {
+    question: "What is the duration of the training and internship courses?",
+    answer: "The duration varies depending on the course. On average, our technical training courses run for 3 to 6 months, offering flexible batch timings to accommodate students and working professionals. Our internships typically range from 2 to 6 months."
+  },
+  {
+    question: "Will I work on live client projects during the internship?",
+    answer: "Absolutely. Unlike standard classroom assignments, our internship programs focus entirely on practical experience. You will work alongside senior engineers on live client websites, mobile apps, and digital marketing campaigns, helping you build a high-quality portfolio."
+  },
+  {
+    question: "Will I receive a certificate of completion?",
+    answer: "Yes, upon successful completion of your training or internship program, you will be awarded an industry-recognized Certificate of Completion. For interns, we also provide a detailed letter of recommendation highlighting the specific projects you worked on and your key technical contributions."
+  },
+  {
+    question: "What is the fee structure for the courses?",
+    answer: "Our fee structure is highly competitive and designed to be affordable for students. We offer flexible payment plans, installment options, and special discounts for early registration. Please contact our support team or fill out the enquiry form for detailed pricing on specific courses."
+  },
+  {
+    question: "Are the classes conducted online or offline?",
+    answer: "We offer hybrid options to suit your needs. You can choose to attend in-person classes at our institute for hands-on, face-to-face learning and collaboration, or participate in interactive online live sessions if you prefer learning from home."
+  },
+  {
+    question: "Do I need a technical background or computer science degree to enroll?",
+    answer: "No, a technical background or a CS degree is not required. Our IT training courses are structured from basic to advanced levels, making them accessible to beginners, self-taught individuals, and career switchers."
+  },
+  {
+    question: "Is there a coding test or interview to qualify for the internship program?",
+    answer: "We conduct a basic assessment or fit-call interview to evaluate your fundamental knowledge and passion. This helps us place you in the correct track (Web, Mobile, Design, or Marketing) to ensure you get the maximum benefit from the internship."
+  }
+];
+
 export default function TrainingPageClient({
   initialData,
 }: {
@@ -256,7 +300,7 @@ export default function TrainingPageClient({
   }
 
   return (
-    <div className="min-h-screen overflow-hidden ">
+    <div className="min-h-screen relative overflow-x-clip ">
       {/* HERO SECTION */}
       <Section className="relative lg:py-14! common_background_gradient overflow-hidden">
         {/* Background Overlay */}
@@ -606,18 +650,16 @@ export default function TrainingPageClient({
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <p className="text-[#d68029] uppercase tracking-widest font-semibold mb-2">
-              Our Programs
+              Professional IT Training & Internships
             </p>
             <h2 className="common-h2">
-              Choose The Right Path To{" "}
-              <span className="text-[#D68029]">Build Your Career</span>
+              Accelerate Your Career with Industry-Leading <span className="text-[#D68029]">Tech Training & Internship Programs</span>
             </h2>
             <div className="mt-4 flex justify-center mb-2">
               <Motion />
             </div>
             <p className="text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide mt-3 ">
-              Whether you want to learn from scratch or gain real-world
-              experience, we have a program designed for you.
+              Gain in-demand technical skills, work on live client projects, and secure your future with our comprehensive, job-oriented IT training courses and professional hands-on internships designed for developers, designers, and marketers.
             </p>
           </motion.div>
 
@@ -640,12 +682,11 @@ export default function TrainingPageClient({
                     <FiBookOpen className="text-[#D68029]" size={24} />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-[#0b1833]">
-                    Training Programs
+                    Job-Oriented Training Courses
                   </h3>
                 </div>
                 <p className="text-gray-500 text-sm sm:text-base">
-                  Learn from industry experts with our job-oriented training
-                  programs and upgrade your skills.
+                  Master cutting-edge technologies with structured, expert-led training courses. Build a solid theoretical foundation and transition into practical skills with real-world coding projects.
                 </p>
               </div>
 
@@ -685,28 +726,12 @@ export default function TrainingPageClient({
                         <p className="text-gray-500 text-xs sm:text-sm group-hover:text-gray-300 transition-colors">
                           {item.desc}
                         </p>
-                        {/* <div className="relative h-10 overflow-hidden">
-                                                    <p className="absolute inset-0 text-gray-600 text-xs sm:text-sm transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-2">
-                                                        {item.desc}
-                                                    </p>
-
-                                                    <p className="absolute inset-0 text-gray-300 text-xs sm:text-sm leading-5 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                                        {item.hoverDesc}
-                                                    </p>
-                                                </div> */}
                       </div>
                       <FiArrowRight className="shrink-0 text-gray-400 group-hover:text-[#D68029] group-hover:translate-x-1 transition-all" />
                     </motion.a>
                   );
                 })}
               </motion.div>
-
-              <a
-                href="#contact-form-section"
-                className="inline-flex items-center gap-2 mt-6 text-[#D68029] font-semibold text-sm sm:text-base hover:gap-3 transition-all self-start"
-              >
-                View All Training Programs <FiArrowRight />
-              </a>
             </motion.div>
 
             {/* INTERNSHIP PROGRAMS CARD */}
@@ -728,12 +753,11 @@ export default function TrainingPageClient({
                     <FiBriefcase className="text-[#D68029]" size={24} />
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold">
-                    Internship Programs
+                    Hands-On Internship Programs
                   </h3>
                 </div>
                 <p className="text-gray-300 text-sm sm:text-base">
-                  Work on real projects, gain practical exposure and build your
-                  professional portfolio.
+                  Bridge the gap between academic learning and industry demands. Work on live projects, gain real corporate exposure, and build a high-caliber professional portfolio.
                 </p>
               </div>
 
@@ -779,13 +803,6 @@ export default function TrainingPageClient({
                   );
                 })}
               </motion.div>
-
-              <a
-                href="#contact-form-section"
-                className="relative inline-flex items-center gap-2 mt-6 text-[#f0a84e] font-semibold text-sm sm:text-base hover:gap-3 transition-all self-start"
-              >
-                View All Internship Programs <FiArrowRight />
-              </a>
             </motion.div>
           </div>
         </Row>
@@ -1025,6 +1042,7 @@ export default function TrainingPageClient({
         </Row>
       </Section>
 
+   
       {/* NEW SECTION: ITS Institute Facilities */}
       <Section className=" bg-white ">
         {/* Left Decorative Image */}
@@ -1287,6 +1305,16 @@ export default function TrainingPageClient({
           </div>
         </Row>
       </Section>
+
+      {/* FAQ SECTION */}
+      <CommonFAQ
+        faqs={trainingFAQs}
+        title="Frequently Asked Questions (FAQ)"
+        sideTitle="Have Queries?"
+        sideSubtitle="We are here to Answer you..."
+        buttonText="Enquire Now"
+        buttonHref="#contact-form-section"
+      />
     </div>
   );
 }
