@@ -62,6 +62,7 @@ import WhyChoosePremium from "@/components/home/WhyChoosePremium";
 import apiService from "@/lib/apiService";
 import { HomePageData, SingleResponse, WhyChooseItem } from "@/types";
 import Button from "@/components/Button";
+import FAQ from "@/components/FAQ";
 
 const MapPin = ({ top, left }: { top: string; left: string }) => (
   <div
@@ -81,6 +82,91 @@ const MapPin = ({ top, left }: { top: string; left: string }) => (
     <span className="absolute top-[7px] left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white z-20"></span>
   </div>
 );
+
+const trainingFAQs = [
+  {
+    question: "What types of IT training programs do you offer?",
+    answer:
+      "We offer comprehensive, job-oriented training courses across multiple disciplines including Full-Stack Web Development (React.js, Next.js, Node.js, Express, MongoDB), Mobile App Development (Flutter, React Native), UI/UX Design and Prototyping (Figma, Adobe XD), PHP & Laravel Development, and Digital Marketing & SEO. All courses are taught by industry experts with hands-on labs.",
+  },
+  {
+    question: "Who can apply for your internship programs?",
+    answer:
+      "Our internship programs are open to college students, recent graduates, self-taught developers, and career switchers looking to build their professional portfolios. We accept applicants with basic programming or design knowledge who want to gain hands-on, real-world experience working on live client projects.",
+  },
+  {
+    question: "Do you provide placement assistance after course completion?",
+    answer:
+      "Yes, we provide 100% placement assistance. This includes resume-building workshops, career counseling sessions, mock interview preparation, soft skills improvement, and direct placement opportunities through our network of hiring partners.",
+  },
+  {
+    question: "What is the duration of the training and internship courses?",
+    answer:
+      "The duration varies depending on the course. On average, our technical training courses run for 3 to 6 months, offering flexible batch timings to accommodate students and working professionals. Our internships typically range from 2 to 6 months.",
+  },
+  {
+    question: "Will I work on live client projects during the internship?",
+    answer:
+      "Absolutely. Unlike standard classroom assignments, our internship programs focus entirely on practical experience. You will work alongside senior engineers on live client websites, mobile apps, and digital marketing campaigns, helping you build a high-quality portfolio.",
+  },
+  {
+    question: "Will I receive a certificate of completion?",
+    answer:
+      "Yes, upon successful completion of your training or internship program, you will be awarded an industry-recognized Certificate of Completion. For interns, we also provide a detailed letter of recommendation highlighting the specific projects you worked on and your key technical contributions.",
+  },
+  {
+    question: "What is the fee structure for the courses?",
+    answer:
+      "Our fee structure is highly competitive and designed to be affordable for students. We offer flexible payment plans, installment options, and special discounts for early registration. Please contact our support team or fill out the enquiry form for detailed pricing on specific courses.",
+  },
+  {
+    question: "Are the classes conducted online or offline?",
+    answer:
+      "We offer hybrid options to suit your needs. You can choose to attend in-person classes at our institute for hands-on, face-to-face learning and collaboration, or participate in interactive online live sessions if you prefer learning from home.",
+  },
+  {
+    question:
+      "Do I need a technical background or computer science degree to enroll?",
+    answer:
+      "No, a technical background or a CS degree is not required. Our IT training courses are structured from basic to advanced levels, making them accessible to beginners, self-taught individuals, and career switchers.",
+  },
+  {
+    question:
+      "Is there a coding test or interview to qualify for the internship program?",
+    answer:
+      "We conduct a basic assessment or fit-call interview to evaluate your fundamental knowledge and passion. This helps us place you in the correct track (Web, Mobile, Design, or Marketing) to ensure you get the maximum benefit from the internship.",
+  },
+  // --- NEW SEO-FRIENDLY FAQS ADDED BELOW ---
+  {
+    question:
+      "Do you offer weekend batches or flexible timings for working professionals?",
+    answer:
+      "Yes, we offer flexible learning options, including weekend batches and evening classes. These are specifically designed for working professionals who want to upgrade their skills in software development, mobile app creation, or digital marketing without leaving their current jobs.",
+  },
+  {
+    question: "What makes your IT training institute different from others?",
+    answer:
+      "Our IT training institute focuses on 100% practical, project-based learning. Instead of just theoretical concepts, our industry-expert trainers guide you through hands-on projects, sandbox environments, and corporate-level assignments, ensuring you are completely job-ready for the modern tech industry upon graduation.",
+  },
+  {
+    question:
+      "Do you provide portfolio building and interview preparation support?",
+    answer:
+      "Yes, comprehensive portfolio building is a core part of our UI/UX design, web development, and digital marketing training. You will complete multiple capstone projects to showcase to employers. Additionally, we conduct technical mock interviews and HR screening prep to help you stand out to hiring managers.",
+  },
+  {
+    question:
+      "Are these certification courses valid for jobs abroad or remote tech roles?",
+    answer:
+      "Absolutely. The modern tech stacks we teach—such as React, Node.js, Flutter, and UI/UX design—are highly sought after by employers globally. The industry-recognized Certificate of Completion you receive adds significant value to your resume, making you a strong candidate for both local and remote tech jobs.",
+  },
+  {
+    question:
+      "Can I switch to a career in IT if I am from a non-technical background?",
+    answer:
+      "Absolutely! Many of our most successful students and interns come from non-IT backgrounds like commerce, arts, or non-computer engineering. Our foundational modules in software development, UI/UX design, and digital marketing are tailored to help career switchers build practical skills from scratch. With dedicated mentorship, step-by-step guidance, and real-world projects, you can smoothly transition into a high-paying tech career regardless of your previous degree.",
+  },
+];
 
 // Custom SVG components to match reference designs exactly
 const ChatbotIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -198,13 +284,16 @@ const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export default function TestPagesClient() {
   const { navStructure } = useWebsiteSettings();
   const [activeCaseStudy, setActiveCaseStudy] = React.useState(0);
-  const [homePageData, setHomePageData] = React.useState<HomePageData | null>(null);
+  const [homePageData, setHomePageData] = React.useState<HomePageData | null>(
+    null,
+  );
   const [whyChooseData, setWhyChooseData] = React.useState<WhyChooseItem[]>([]);
 
   React.useEffect(() => {
     const fetchHomepageData = async () => {
       try {
-        const response = await apiService<SingleResponse<HomePageData>>("/homepage");
+        const response =
+          await apiService<SingleResponse<HomePageData>>("/homepage");
         if (response.success) {
           setHomePageData(response.data);
         }
@@ -216,7 +305,8 @@ export default function TestPagesClient() {
 
     const fetchWhyChoose = async () => {
       try {
-        const res = await apiService<SingleResponse<WhyChooseItem[]>>('/choose_its_home');
+        const res =
+          await apiService<SingleResponse<WhyChooseItem[]>>("/choose_its_home");
         if (res.success) setWhyChooseData(res.data || []);
       } catch (err) {
         console.error("Error fetching WhyChoose data:", err);
@@ -226,6 +316,64 @@ export default function TestPagesClient() {
   }, []);
 
   const caseStudies = [
+    {
+      tabLabel: "Popular",
+      tabIcon: FiTrendingUp,
+      title: "Enterprise AI Automation Suite",
+      description:
+        "Our most popular solution: seamlessly integrating AI into existing enterprise workflows to automate redundant tasks, analyze data instantly, and boost overall productivity.",
+      tags: ["AI", "Enterprise", "Automation"],
+      stats: [
+        {
+          value: "80%",
+          label: "Efficiency Boost",
+          arrow: "up",
+          icon: FiTrendingUp,
+        },
+        {
+          value: "50%",
+          label: "Time Saved",
+          arrow: "up",
+          icon: FiActivity,
+        },
+        {
+          value: "10k+",
+          label: "Active Users",
+          arrow: "up",
+          icon: FiUsers,
+        },
+      ],
+      image: "/home-test/mobile-1.png",
+      features: [
+        {
+          title: "Seamless Integration",
+          description: "Easily connects with your existing CRM and ERP systems",
+          icon: FiSettings,
+          colorClass:
+            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
+        },
+        {
+          title: "Predictive Analytics",
+          description: "Forecast trends and behaviors with high accuracy",
+          icon: FiTarget,
+          colorClass:
+            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
+        },
+        {
+          title: "Automated Workflows",
+          description: "Reduce manual data entry with intelligent automation",
+          icon: FiCpu,
+          colorClass:
+            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
+        },
+      ],
+      details: {
+        industry: "Cross-Industry",
+        duration: "1-2 Months",
+        team: "AI Engineers, Full-Stack Developers",
+        techStack: "Python, OpenAI, Node.js, React",
+      },
+    },
     {
       tabLabel: "E-commerce Brand",
       tabIcon: FiShoppingBag,
@@ -300,7 +448,12 @@ export default function TestPagesClient() {
           icon: FiActivity,
         },
         { value: "45%", label: "Bounce Rate", arrow: "down", icon: FiX },
-        { value: "60%", label: "Online Sales", arrow: "up", icon: FiTrendingUp },
+        {
+          value: "60%",
+          label: "Online Sales",
+          arrow: "up",
+          icon: FiTrendingUp,
+        },
       ],
       image: "/home-test/mobile-1.png",
       features: [
@@ -320,7 +473,8 @@ export default function TestPagesClient() {
         },
         {
           title: "SEO & Performance",
-          description: "Optimized for speed, Core Web Vitals, and search visibility",
+          description:
+            "Optimized for speed, Core Web Vitals, and search visibility",
           icon: FiTrendingUp,
           colorClass:
             "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
@@ -341,7 +495,12 @@ export default function TestPagesClient() {
         "Building a cross-platform mobile app that connects customers with service providers in real time, with live tracking, secure in-app payments, and instant booking for a smooth end-to-end experience.",
       tags: ["React Native", "On-Demand", "Mobile"],
       stats: [
-        { value: "50K+", label: "App Downloads", arrow: "up", icon: FiSmartphone },
+        {
+          value: "50K+",
+          label: "App Downloads",
+          arrow: "up",
+          icon: FiSmartphone,
+        },
         { value: "4.7", label: "App Store Rating", arrow: "up", icon: FiCheck },
         { value: "30%", label: "Booking Time", arrow: "down", icon: FiX },
       ],
@@ -510,7 +669,10 @@ export default function TestPagesClient() {
   return (
     <main className="relative w-full bg-white text-gray-900 overflow-x-hidden">
       {/* ── SECTION 1: HERO SECTION ── */}
-      <Hero heroSecton={homePageData?.heroSecton} scrollToId="challenges-section" />
+      <Hero
+        heroSecton={homePageData?.heroSecton}
+        scrollToId="challenges-section"
+      />
 
       <Section className="bg-[#0d1b2a] z-10 py-6! ">
         <Row>
@@ -544,12 +706,12 @@ export default function TestPagesClient() {
                 value.
               </p>
               <Button
-                 text="View All Services"
-                 icon="/navbar/btn_icon.png" 
+                text="View All Services"
+                icon="/navbar/btn_icon.png"
                 className="max-w-[250px]"
-                 bgColor="#0D1B2A"
-                 hoverColor="#D27E2B"
-                 href="#contact-form-section"
+                bgColor="#0D1B2A"
+                hoverColor="#D27E2B"
+                href="#contact-form-section"
               />
             </div>
 
@@ -644,7 +806,7 @@ export default function TestPagesClient() {
                         </div>
 
                         <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
-                          App Development
+                          Mobile App Developer
                         </h4>
                       </div>
 
@@ -676,7 +838,7 @@ export default function TestPagesClient() {
                         </div>
 
                         <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
-                          UI/UX Design
+                          UI/UX & Design Services
                         </h4>
                       </div>
 
@@ -705,13 +867,13 @@ export default function TestPagesClient() {
                         </div>
 
                         <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
-                          AI Chatbots
+                          eCommerce & CMS Development
                         </h4>
                       </div>
 
                       <p className="fonts_16 text-gray-600">
-                        Build smart conversational AI agents that engage
-                        customers and drive business growth.
+                        Develop fast, secure, and user-friendly eCommerce and
+                        CMS websites.
                       </p>
                     </div>
                     <div className="mt-4 flex items-center">
@@ -1221,171 +1383,166 @@ export default function TestPagesClient() {
       </Section>
       <TechnologyShowcase />
       <WhyChoosePremium items={whyChooseData} />
-      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
-      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
-      <Section className="bg-white py-12 lg:py-16 relative overflow-hidden">
-        <Row className=" w-full relative">
-          {/* Main Card Container - Reduced padding to decrease overall height */}
-          <div className="bg-[#fafcff] rounded-[32px] p-6 lg:p-8 border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.02)] w-full relative">
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
-              {/* Left Column: Industries We Serve */}
-              <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
-                <div>
-                  <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
-                    INDUSTRIES WE SERVE
-                  </span>
-                  <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25] mb-6">
-                    AI solutions tailored for <br className="hidden sm:block" />
-                    every industry
-                  </h2>
+      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE (FULL WIDTH) ── */}
+      <Section className="bg-[#fafcff] py-12 lg:py-16 relative overflow-hidden border-y border-slate-100 !max-w-full !px-0">
+        {/* Full width container with responsive padding */}
+        <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 relative">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-stretch">
+            {/* Left Column: Industries We Serve */}
+            <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
+              <div>
+                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
+                  INDUSTRIES WE SERVE
+                </span>
+                <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25] mb-6">
+                  AI solutions tailored for <br className="hidden sm:block" />
+                  every industry
+                </h2>
 
-                  {/* Grid of 8 cards - Removed aspect-square, adjusted padding to reduce height */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {industryCards.map((card, idx) => {
-                      const Icon = card.icon;
-                      return (
-                        <motion.div
-                          key={idx}
-                          whileHover={{ y: -2 }}
-                          className="bg-white border border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
-                        >
-                          <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#d68029] mb-2 shrink-0">
-                            <Icon className="w-5 h-5" />
-                          </div>
-                          <span className="text-[13px] font-bold text-slate-700 leading-tight">
-                            {card.title}
-                          </span>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
+                {/* Grid of 8 cards */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {industryCards.map((card, idx) => {
+                    const Icon = card.icon;
+                    return (
+                      <motion.div
+                        key={idx}
+                        whileHover={{ y: -2 }}
+                        className="bg-white border border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#d68029] mb-2 shrink-0">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <span className="text-[13px] font-bold text-slate-700 leading-tight">
+                          {card.title}
+                        </span>
+                      </motion.div>
+                    );
+                  })}
                 </div>
+              </div>
+            </div>
 
-                <Link
-                  href="#contact-form-section"
-                  className="mt-8 self-start border border-orange-200 hover:bg-orange-50 text-[#d68029] font-bold px-6 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm"
-                >
-                  Explore All Industries
-                  <FaLongArrowAltRight className="w-4 h-4" />
-                </Link>
+            {/* Vertical Divider */}
+            <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
+
+            {/* Right Column: Global Presence */}
+            <div className="flex-1 flex flex-col justify-start w-full lg:w-[50%]">
+              <div className="mb-4">
+                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
+                  GLOBAL PRESENCE
+                </span>
+                <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25]">
+                  Serving Clients <br className="hidden sm:block" />
+                  Worldwide
+                </h2>
               </div>
 
-              {/* Vertical Divider */}
-              <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
-
-              {/* Right Column: Global Presence */}
-              <div className="flex-1 flex flex-col justify-start w-full lg:w-[50%]">
-                <div className="mb-4">
-                  <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
-                    GLOBAL PRESENCE
-                  </span>
-                  <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25]">
-                    Serving Clients <br className="hidden sm:block" />
-                    Worldwide
-                  </h2>
-                </div>
-
-                {/* Stats & Map Flex Layout */}
-                <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-4 flex-1">
-                  {/* Stats list stack - Font sizes increased */}
-                  <div className="flex flex-col gap-6 z-10 w-full sm:w-[150px] shrink-0 pt-2">
-                    <div>
-                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                        20+
-                      </span>
-                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                        Countries
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                        40+
-                      </span>
-                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                        Happy Clients
-                      </span>
-                    </div>
-
-                    {/* 150+ and 24/7 Side by Side */}
-                    <div className="flex gap-10">
-                      <div>
-                        <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                          750+
-                        </span>
-                        <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                          Projects
-                        </span>
-                      </div>
-                      <div>
-                        <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                          24/7
-                        </span>
-                        <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                          Support Coverage
-                        </span>
-                      </div>
-                    </div>
+              {/* Stats & Map Flex Layout */}
+              <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-4 flex-1">
+                {/* Stats list stack */}
+                <div className="flex flex-col gap-6 z-10 w-full sm:w-[150px] shrink-0 pt-2">
+                  <div>
+                    <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                      20+
+                    </span>
+                    <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                      Countries
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                      40+
+                    </span>
+                    <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                      Happy Clients
+                    </span>
                   </div>
 
-                  {/* Map taking remaining space */}
-                  <div className="relative w-full max-w-[500px] aspect-[1.8/1] sm:flex-1 flex items-center justify-center mt-6 sm:mt-0 sm:ml-8 mx-auto">
-                    {/* World Map Background */}
-                    <div
-                      className="absolute inset-0 opacity-95 pointer-events-none"
-                      style={{
-                        backgroundImage: 'url("/home-test/map.png")',
-                        backgroundSize: "contain",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
-                      }}
-                    />
-
-                    {/* Adjusted Pins */}
-                    <MapPin top="30%" left="18%" /> {/* North America West */}
-                    <MapPin top="38%" left="26%" /> {/* North America East */}
-                    <MapPin top="68%" left="32%" /> {/* South America */}
-                    <MapPin top="34%" left="50%" /> {/* Europe */}
-                    <MapPin top="54%" left="53%" /> {/* Africa */}
-                    <MapPin top="40%" left="60%" /> {/* Middle East */}
-                    <MapPin top="52%" left="69%" /> {/* India */}
-                    <MapPin top="70%" left="81%" /> {/* Australia */}
-
-                    {/* Our Global Network Widget Card - Hidden on mobile, positioned neatly on tablet/desktop */}
-                    <div className="absolute -bottom-20 right-0 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[160px] sm:w-[180px] z-20 text-white hidden md:block">
-                      <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
-                        Our Global Network
-                      </h4>
-                      <ul className="flex flex-col gap-2.5">
-                        {[
-                          "North America",
-                          "Europe",
-                          "Middle East",
-                          "Asia Pacific",
-                        ].map((region) => (
-                          <li
-                            key={region}
-                            className="flex items-center justify-between text-[11px] text-slate-300 hover:text-[#d68029] transition-colors cursor-pointer group"
-                          >
-                            <div className="flex items-center gap-1.5">
-                              <FaMapMarkerAlt className="text-[#d68029] text-[10px]" />
-                              <span>{region}</span>
-                            </div>
-                            <FiChevronRight className="text-slate-500 group-hover:text-[#d68029] transition-colors" />
-                          </li>
-                        ))}
-                      </ul>
+                  {/* 150+ and 24/7 Side by Side */}
+                  <div className="flex gap-10">
+                    <div>
+                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                        750+
+                      </span>
+                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                        Projects
+                      </span>
                     </div>
+                    <div>
+                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                        24/7
+                      </span>
+                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                        Support Coverage
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Map taking remaining space */}
+                <div className="relative flex-1 w-full aspect-[1.8/1] flex items-center justify-center bottom-25">
+                  {/* World Map Background */}
+                  <div
+                    className="absolute inset-0 opacity-95 pointer-events-none"
+                    style={{
+                      backgroundImage: 'url("/home-test/map.png")',
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "left top",
+                      backgroundSize: "100% auto",
+                    }}
+                  />
+                  {/* Adjusted Pins */}
+                  <MapPin top="30%" left="18%" /> {/* North America West */}
+                  <MapPin top="38%" left="26%" /> {/* North America East */}
+                  <MapPin top="68%" left="32%" /> {/* South America */}
+                  <MapPin top="34%" left="50%" /> {/* Europe */}
+                  <MapPin top="54%" left="53%" /> {/* Africa */}
+                  <MapPin top="40%" left="60%" /> {/* Middle East */}
+                  <MapPin top="52%" left="69%" /> {/* India */}
+                  <MapPin top="70%" left="81%" /> {/* Australia */}
+                  {/* Our Global Network Widget Card */}
+                  <div className="absolute -bottom-33 right-5 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[160px] sm:w-[180px] z-20 text-white hidden md:block">
+                    <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
+                      Our Global Network
+                    </h4>
+                    <ul className="flex flex-col gap-2.5">
+                      {[
+                        "North America",
+                        "Europe",
+                        "Middle East",
+                        "Asia Pacific",
+                      ].map((region) => (
+                        <li
+                          key={region}
+                          className="flex items-center justify-between text-[11px] text-slate-300 hover:text-[#d68029] transition-colors cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-1.5">
+                            <FaMapMarkerAlt className="text-[#d68029] text-[10px]" />
+                            <span>{region}</span>
+                          </div>
+                          <FiChevronRight className="text-slate-500 group-hover:text-[#d68029] transition-colors" />
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </Row>
+        </div>
       </Section>
 
       <Reviews />
       <Testimonials />
+      <FAQ
+        faqs={trainingFAQs}
+        title="Frequently Asked Questions (FAQ)"
+        sideTitle="Have Queries?"
+        sideSubtitle="We are here to Answer you..."
+        buttonText="Enquire Now"
+        buttonHref="#contact-form-section"
+      />
       <EngagementModels />
     </main>
   );
