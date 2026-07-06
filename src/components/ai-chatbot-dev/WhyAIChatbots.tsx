@@ -113,10 +113,10 @@ export default function WhyAIChatbots() {
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D27E2B]/50 to-transparent" />
 
             {/* Table Header */}
-            <div className="grid grid-cols-3 bg-[#0c1827] border-b border-white/5 px-6 py-5 text-xs sm:text-sm font-black uppercase tracking-widest text-center items-center">
-              <span className="text-left text-slate-400">Features</span>
-              <span className="text-slate-400">Traditional Support</span>
-              <span className="text-[#D27E2B] flex items-center justify-center gap-1.5">
+            <div className="grid grid-cols-3 bg-[#0c1827] border-b border-white/5 px-6 py-5 text-xs sm:text-sm font-black uppercase tracking-widest items-stretch">
+              <span className="text-left text-slate-400 border-r border-white/5 pr-4 flex items-center">Features</span>
+              <span className="text-left text-slate-400 border-r border-white/5 px-4 flex items-center justify-start">Traditional Support</span>
+              <span className="text-left text-[#D27E2B] pl-4 flex items-center justify-start gap-1.5">
                 <LuSparkles className="w-3.5 h-3.5" />
                 AI Chatbot
               </span>
@@ -131,23 +131,25 @@ export default function WhyAIChatbots() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: idx * 0.05 }}
                   key={row.feature}
-                  className="grid grid-cols-3 px-6 py-3 text-xs sm:text-sm font-bold text-center items-center hover:bg-white/[0.02] transition-colors group"
+                  className="grid grid-cols-3 px-6 text-xs sm:text-sm font-bold items-stretch hover:bg-white/[0.02] transition-colors group"
                 >
                   {/* Feature Title */}
-                  <span className="text-left text-white font-extrabold group-hover:text-[#D27E2B] transition-colors">
+                  <span className="text-left text-white font-extrabold group-hover:text-[#D27E2B] transition-colors border-r border-white/5 pr-4 py-4 flex items-center">
                     {row.feature}
                   </span>
                   
                   {/* Traditional Support Column */}
-                  <span className="text-slate-400 font-medium flex justify-center items-center gap-1.5 px-2">
-                    <LuX className="w-4 h-4 text-red-500/80 shrink-0  " />
+                  <span className="text-left text-slate-400 font-medium flex justify-start items-center gap-1.5 border-r border-white/5 px-4 py-4">
+                    <LuX className="w-4 h-4 text-red-500/80 shrink-0" />
                     <span className="text-slate-400/90">{row.traditional}</span>
                   </span>
                   
-                  {/* AI Chatbot Column (Highlighted with subtle glow block) */}
-                  <div className="py-2 px-3 rounded-xl bg-[#D27E2B]/5 border border-[#D27E2B]/10 flex justify-center items-center gap-1.5 shadow-[inset_0_1px_0_rgba(210,126,43,0.1)] group-hover:border-[#D27E2B]/30 group-hover:bg-[#D27E2B]/10 transition-all duration-300">
-                    <LuCheck className="w-4 h-4 text-emerald-400 shrink-0  " />
-                    <span className="text-white font-extrabold">{row.chatbot}</span>
+                  {/* AI Chatbot Column (Highlighted with left alignment) */}
+                  <div className="py-2.5 pl-4 flex items-center">
+                    <div className="w-full py-2 px-3.5 rounded-xl bg-[#D27E2B]/5 border border-[#D27E2B]/10 flex justify-start items-center gap-2 shadow-[inset_0_1px_0_rgba(210,126,43,0.1)] group-hover:border-[#D27E2B]/30 group-hover:bg-[#D27E2B]/10 transition-all duration-300">
+                      <LuCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span className="text-white font-extrabold">{row.chatbot}</span>
+                    </div>
                   </div>
                 </motion.div>
               ))}

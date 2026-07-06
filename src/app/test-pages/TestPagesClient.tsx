@@ -38,7 +38,6 @@ import {
   FaHeadset,
   FaBrain,
   FaRegLightbulb,
-  FaUniversity,
 } from "react-icons/fa";
 import {
   LuBot,
@@ -59,8 +58,10 @@ import Reviews from "@/components/home/Reviews";
 import Testimonials from "@/components/home/Testimonials";
 import EngagementModels from "@/components/home/EngagementModel";
 import TechnologyShowcase from "@/components/home/TechnologyShowcase";
+import WhyChoosePremium from "@/components/home/WhyChoosePremium";
 import apiService from "@/lib/apiService";
-import { HomePageData, SingleResponse } from "@/types";
+import { HomePageData, SingleResponse, WhyChooseItem } from "@/types";
+import Button from "@/components/Button";
 
 const MapPin = ({ top, left }: { top: string; left: string }) => (
   <div
@@ -198,6 +199,7 @@ export default function TestPagesClient() {
   const { navStructure } = useWebsiteSettings();
   const [activeCaseStudy, setActiveCaseStudy] = React.useState(0);
   const [homePageData, setHomePageData] = React.useState<HomePageData | null>(null);
+  const [whyChooseData, setWhyChooseData] = React.useState<WhyChooseItem[]>([]);
 
   React.useEffect(() => {
     const fetchHomepageData = async () => {
@@ -211,6 +213,16 @@ export default function TestPagesClient() {
       }
     };
     fetchHomepageData();
+
+    const fetchWhyChoose = async () => {
+      try {
+        const res = await apiService<SingleResponse<WhyChooseItem[]>>('/choose_its_home');
+        if (res.success) setWhyChooseData(res.data || []);
+      } catch (err) {
+        console.error("Error fetching WhyChoose data:", err);
+      }
+    };
+    fetchWhyChoose();
   }, []);
 
   const caseStudies = [
@@ -274,98 +286,94 @@ export default function TestPagesClient() {
       },
     },
     {
-      tabLabel: "AI Diagnostics Support System",
-      tabIcon: FiShield,
-      title: "AI Diagnostics Support System",
+      tabLabel: "E-commerce Website",
+      tabIcon: FiGlobe,
+      title: "E-commerce Website for Fashion Retailer",
       description:
-        "Developing an AI-powered diagnostic support platform that assists healthcare professionals by analyzing medical images, detecting abnormalities with high accuracy, and accelerating clinical decision-making for improved patient outcomes.",
-      tags: ["Computer Vision", "Healthcare", "Deep Learning"],
+        "Designing and developing a fast, SEO-optimized e-commerce website with a seamless checkout, real-time inventory sync, and a scalable storefront that helped the brand grow its online sales.",
+      tags: ["Next.js", "E-commerce", "SEO"],
       stats: [
         {
-          value: "80%",
-          label: "Diagnosis Speed",
+          value: "3x",
+          label: "Page Speed",
           arrow: "up",
           icon: FiActivity,
         },
-        { value: "99.2%", label: "Detection Rate", arrow: "up", icon: FiCheck },
-        { value: "60%", label: "Human Error", arrow: "down", icon: FiX },
+        { value: "45%", label: "Bounce Rate", arrow: "down", icon: FiX },
+        { value: "60%", label: "Online Sales", arrow: "up", icon: FiTrendingUp },
       ],
       image: "/home-test/mobile-1.png",
       features: [
         {
-          title: "Anomaly Detection",
-          description:
-            "Identifies fractures, pneumonia, or tumors with clinical-grade precision",
-          icon: FiSearch,
+          title: "Responsive Storefront",
+          description: "Pixel-perfect design that adapts to every device",
+          icon: FiGlobe,
           colorClass:
             "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
         },
         {
-          title: "Speed & Performance",
-          description:
-            "Reduces time-to-diagnosis by up to 80% to expedite care",
-          icon: FiActivity,
+          title: "Fast Checkout",
+          description: "Streamlined, multi-step checkout that reduces drop-off",
+          icon: FiShoppingCart,
           colorClass:
             "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
         },
         {
-          title: "PACS Integration",
-          description: "Integrates seamlessly into existing DICOM databases",
-          icon: FiShield,
+          title: "SEO & Performance",
+          description: "Optimized for speed, Core Web Vitals, and search visibility",
+          icon: FiTrendingUp,
           colorClass:
             "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
         },
       ],
       details: {
-        industry: "Healthcare / Medicine",
-        duration: "6 Months",
-        team: "ML Researchers, Radiologists, Cloud Architects",
-        techStack: "Python, PyTorch, AWS, Docker, PACS/DICOM",
+        industry: "Retail / Fashion",
+        duration: "2 Months",
+        team: "Frontend Developers, UI/UX Designers, SEO Specialist",
+        techStack: "Next.js, Tailwind CSS, Shopify, Node.js",
       },
     },
     {
-      tabLabel: "Fintech",
-      tabIcon: FaUniversity,
-      title: "Predictive Analytics for Fintech",
+      tabLabel: "On-Demand App",
+      tabIcon: FiSmartphone,
+      title: "On-Demand Service Booking App",
       description:
-        "Building an AI-driven fraud detection and predictive analytics platform that monitors financial transactions in real time, identifies suspicious activities, assesses risk, and strengthens security while minimizing false positives.",
-      tags: ["Anomaly Detection", "Fintech", "Security"],
+        "Building a cross-platform mobile app that connects customers with service providers in real time, with live tracking, secure in-app payments, and instant booking for a smooth end-to-end experience.",
+      tags: ["React Native", "On-Demand", "Mobile"],
       stats: [
-        { value: "95%", label: "Fraud Detection", arrow: "up", icon: FiShield },
-        { value: "75%", label: "False Positives", arrow: "down", icon: FiX },
-        { value: "2ms", label: "Response Speed", arrow: "up", icon: FiCpu },
+        { value: "50K+", label: "App Downloads", arrow: "up", icon: FiSmartphone },
+        { value: "4.7", label: "App Store Rating", arrow: "up", icon: FiCheck },
+        { value: "30%", label: "Booking Time", arrow: "down", icon: FiX },
       ],
       image: "/home-test/mobile-1.png",
       features: [
         {
-          title: "Risk Scoring",
-          description:
-            "Calculates risk levels on each transaction in real-time",
-          icon: FiTarget,
+          title: "Real-Time Tracking",
+          description: "Live location updates for every booking, end to end",
+          icon: FiCompass,
           colorClass:
             "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
         },
         {
-          title: "Behavioral Profiling",
-          description:
-            "Adapts continuously to user behavior to minimize false flags",
-          icon: FiUsers,
+          title: "Secure Payments",
+          description: "Multiple payment gateways integrated safely in-app",
+          icon: FiCreditCard,
           colorClass:
             "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
         },
         {
-          title: "Instant Blocking",
-          description: "Flags and suspends suspicious activities under 2ms",
-          icon: FiShield,
+          title: "Instant Notifications",
+          description: "Push alerts keep users updated at every step",
+          icon: FiMessageSquare,
           colorClass:
             "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
         },
       ],
       details: {
-        industry: "Fintech / Banking",
+        industry: "On-Demand Services",
         duration: "4 Months",
-        team: "Data Scientists, Security Experts, Backend Developers",
-        techStack: "Python, Spark, Kafka, Scala, PostgreSQL",
+        team: "Mobile Developers, Backend Engineers, QA Testers",
+        techStack: "React Native, Firebase, Node.js, Stripe",
       },
     },
   ];
@@ -416,7 +424,7 @@ export default function TestPagesClient() {
     {
       number: "02",
       title: "Strategy",
-      description: "We design the right AI solution for you.",
+      description: "We design the right solution for your business.",
       icon: FiTarget,
     },
     {
@@ -535,13 +543,14 @@ export default function TestPagesClient() {
                 innovative solutions that drive growth and deliver lasting
                 value.
               </p>
-              <Link
-                href="#contact-form-section"
-                className="self-start border border-slate-300 text-slate-700 hover:border-slate-400 hover:text-[#0d1b2a] font-semibold px-6 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 group text-sm"
-              >
-                View All Services
-                <FaLongArrowAltRight className="transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
+              <Button
+                 text="View All Services"
+                 icon="/navbar/btn_icon.png" 
+                className="max-w-[250px]"
+                 bgColor="#0D1B2A"
+                 hoverColor="#D27E2B"
+                 href="#contact-form-section"
+              />
             </div>
 
             {/* Right Column: Grid Layout */}
@@ -869,13 +878,13 @@ export default function TestPagesClient() {
         </div>
       </Section>
 
-      {/* ── SECTION 4: OUR AI DEVELOPMENT PROCESS & INDUSTRIES / CASE STUDIES ── */}
+      {/* ── SECTION 4: OUR DEVELOPMENT PROCESS & INDUSTRIES / CASE STUDIES ── */}
       <Section className="bg-white relative overflow-hidden">
         <Row>
           {/* Section Heading */}
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="common-h2 text-[#0d1b2a]">
-              Our <span className="text-[#d68029]">AI Development</span> Process
+              Our <span className="text-[#d68029]">Development</span> Process
             </h2>
           </div>
 
@@ -1211,12 +1220,13 @@ export default function TestPagesClient() {
         </Row>
       </Section>
       <TechnologyShowcase />
+      <WhyChoosePremium items={whyChooseData} />
       {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
       {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
       <Section className="bg-white py-12 lg:py-16 relative overflow-hidden">
-        <Row className="max-w-[1600px] mx-auto">
+        <Row className=" w-full relative">
           {/* Main Card Container - Reduced padding to decrease overall height */}
-          <div className="bg-[#fafcff] rounded-[32px] p-6 lg:p-8 border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+          <div className="bg-[#fafcff] rounded-[32px] p-6 lg:p-8 border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.02)] w-full relative">
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
               {/* Left Column: Industries We Serve */}
               <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
@@ -1289,7 +1299,7 @@ export default function TestPagesClient() {
                     </div>
                     <div>
                       <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                        120+
+                        40+
                       </span>
                       <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
                         Happy Clients
@@ -1300,7 +1310,7 @@ export default function TestPagesClient() {
                     <div className="flex gap-10">
                       <div>
                         <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                          150+
+                          750+
                         </span>
                         <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
                           Projects
@@ -1318,10 +1328,10 @@ export default function TestPagesClient() {
                   </div>
 
                   {/* Map taking remaining space */}
-                  <div className="relative w-full h-[260px] sm:h-full min-h-[280px] flex-1 flex items-center justify-center ml-[70px] mt-[-70px]">
+                  <div className="relative w-full max-w-[500px] aspect-[1.8/1] sm:flex-1 flex items-center justify-center mt-6 sm:mt-0 sm:ml-8 mx-auto">
                     {/* World Map Background */}
                     <div
-                      className="absolute inset-0 opacity-95 pointer-events-none scale-110 sm:scale-125 transform origin-center"
+                      className="absolute inset-0 opacity-95 pointer-events-none"
                       style={{
                         backgroundImage: 'url("/home-test/map.png")',
                         backgroundSize: "contain",
@@ -1331,16 +1341,17 @@ export default function TestPagesClient() {
                     />
 
                     {/* Adjusted Pins */}
-                    <MapPin top="32%" left="18%" />
-                    <MapPin top="36%" left="32%" />
-                    <MapPin top="26%" left="58%" />
-                    <MapPin top="34%" left="78%" />
-                    <MapPin top="60%" left="25%" />
-                    <MapPin top="48%" left="52%" />
-                    <MapPin top="66%" left="75%" />
+                    <MapPin top="30%" left="18%" /> {/* North America West */}
+                    <MapPin top="38%" left="26%" /> {/* North America East */}
+                    <MapPin top="68%" left="32%" /> {/* South America */}
+                    <MapPin top="34%" left="50%" /> {/* Europe */}
+                    <MapPin top="54%" left="53%" /> {/* Africa */}
+                    <MapPin top="40%" left="60%" /> {/* Middle East */}
+                    <MapPin top="52%" left="69%" /> {/* India */}
+                    <MapPin top="70%" left="81%" /> {/* Australia */}
 
-                    {/* Our Global Network Widget Card - Texts slightly enlarged */}
-                    <div className="absolute -bottom-20 left-80 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-4 shadow-2xl w-[180px] z-20 text-white">
+                    {/* Our Global Network Widget Card - Hidden on mobile, positioned neatly on tablet/desktop */}
+                    <div className="absolute -bottom-20 right-0 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[160px] sm:w-[180px] z-20 text-white hidden md:block">
                       <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
                         Our Global Network

@@ -230,9 +230,30 @@ const trainingFAQs = [
   {
     question: "Is there a coding test or interview to qualify for the internship program?",
     answer: "We conduct a basic assessment or fit-call interview to evaluate your fundamental knowledge and passion. This helps us place you in the correct track (Web, Mobile, Design, or Marketing) to ensure you get the maximum benefit from the internship."
+  },
+  // --- NEW SEO-FRIENDLY FAQS ADDED BELOW ---
+  {
+    question: "Do you offer weekend batches or flexible timings for working professionals?",
+    answer: "Yes, we offer flexible learning options, including weekend batches and evening classes. These are specifically designed for working professionals who want to upgrade their skills in software development, mobile app creation, or digital marketing without leaving their current jobs."
+  },
+  {
+    question: "What makes your IT training institute different from others?",
+    answer: "Our IT training institute focuses on 100% practical, project-based learning. Instead of just theoretical concepts, our industry-expert trainers guide you through hands-on projects, sandbox environments, and corporate-level assignments, ensuring you are completely job-ready for the modern tech industry upon graduation."
+  },
+  {
+    question: "Do you provide portfolio building and interview preparation support?",
+    answer: "Yes, comprehensive portfolio building is a core part of our UI/UX design, web development, and digital marketing training. You will complete multiple capstone projects to showcase to employers. Additionally, we conduct technical mock interviews and HR screening prep to help you stand out to hiring managers."
+  },
+  {
+    question: "Are these certification courses valid for jobs abroad or remote tech roles?",
+    answer: "Absolutely. The modern tech stacks we teach—such as React, Node.js, Flutter, and UI/UX design—are highly sought after by employers globally. The industry-recognized Certificate of Completion you receive adds significant value to your resume, making you a strong candidate for both local and remote tech jobs."
+  },
+  {
+    question: "Can I switch to a career in IT if I am from a non-technical background?",
+    answer: "Absolutely! Many of our most successful students and interns come from non-IT backgrounds like commerce, arts, or non-computer engineering. Our foundational modules in software development, UI/UX design, and digital marketing are tailored to help career switchers build practical skills from scratch. With dedicated mentorship, step-by-step guidance, and real-world projects, you can smoothly transition into a high-paying tech career regardless of your previous degree."
   }
-];
 
+];
 export default function TrainingPageClient({
   initialData,
 }: {

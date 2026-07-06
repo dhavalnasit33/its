@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { LuArrowRight } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import Image from "next/image";
@@ -12,62 +11,62 @@ const BASE = "/ai-strategy/ai-chartbot-development";
 const CAPABILITIES = [
   {
     title: "24/7 Availability",
-    desc: "Always on to support your customers anytime, day or night.",
+    desc: "Deploy custom conversational AI agents that resolve customer queries instantly, providing seamless round-the-clock support without human intervention.",
     image: `${BASE}/24x7_Availability.png`,
   },
   {
     title: "Multi-language Support",
-    desc: "Communicate naturally in 100+ languages across the globe.",
+    desc: "Communicate globally with intelligent multilingual translation capabilities supporting over 100 languages naturally for localized client experiences.",
     image: `${BASE}/multi-language-support.png`,
   },
   {
     title: "Contextual Memory",
-    desc: "Remembers past interactions and provides personalized responses.",
+    desc: "Our state-of-the-art NLP models retain user preferences and past interactions to deliver hyper-personalized, context-aware chatbot conversations.",
     image: `${BASE}/contextual_memory.png`,
   },
   {
     title: "Knowledge Base Integration",
-    desc: "Sync documents, PDFs, URLs and knowledge sources seamlessly.",
+    desc: "Connect your AI agent to PDFs, websites, databases, and company wikis to generate accurate, source-backed answers in real-time.",
     image: `${BASE}/knowledge_base_Integration.png`,
   },
   {
     title: "CRM & API Integration",
-    desc: "Connect with CRM, APIs and third-party tools effortlessly.",
+    desc: "Synchronize data across platforms with pre-built connectors for Salesforce, HubSpot, and custom RESTful APIs for complete operational alignment.",
     image: `${BASE}/crm-api-integration.png`,
   },
   {
     title: "Lead Capture & Qualification",
-    desc: "Capture leads, qualify prospects and sync directly to your CRM.",
+    desc: "Automate top-of-funnel lead generation by qualifying visitors, collecting details, and routing warm prospects directly to your sales pipeline.",
     image: `${BASE}/lead-capture-qualification.png`,
   },
   {
     title: "Appointment Booking",
-    desc: "Schedule, reschedule and manage appointments automatically.",
+    desc: "Enable friction-free scheduling and calendar booking through conversational workflows integrated directly with Google Calendar or Outlook.",
     image: `${BASE}/appointment-booking.png`,
   },
   {
     title: "Order Tracking & Updates",
-    desc: "Provide real-time order status and delivery updates instantly.",
+    desc: "Provide customers with real-time shipping milestones, delivery status, and order tracking notifications directly inside the chat window.",
     image: `${BASE}/order-tracking-updates.png`,
   },
   {
     title: "Payment & Invoice Support",
-    desc: "Generate invoices and handle payments securely in chat.",
+    desc: "Secure transactions using Stripe and PayPal integrations, allowing users to process payments and generate invoices directly in chat.",
     image: `${BASE}/payment-invoice-support.png`,
   },
   {
     title: "Analytics & Reporting",
-    desc: "Track conversations, performance and customer satisfaction.",
+    desc: "Optimize conversion rates with interactive dashboards tracking intent analysis, message volume, and customer satisfaction metrics.",
     image: `${BASE}/analytics-reporting.png`,
   },
   {
     title: "Workflow Automation",
-    desc: "Automate tasks, triggers and notifications with smart workflows.",
+    desc: "Connect conversational flows with backend processes using webhook triggers, automation routines, and instant messaging alerts.",
     image: `${BASE}/workflow-automation.png`,
   },
   {
     title: "Secure & Compliant",
-    desc: "Enterprise-grade security with GDPR ready infrastructure.",
+    desc: "Designed with enterprise-grade data security protocols, secure token encryption, and full compliance with GDPR and HIPAA standards.",
     image: `${BASE}/secure-compliant.png`,
   },
 ];
@@ -118,10 +117,8 @@ export default function PowerfulCapabilities() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group relative flex flex-col rounded-2xl bg-white border border-gray-100 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_16px_48px_rgba(210,126,43,0.14)] hover:border-[#D27E2B]/30"
+              className="group relative flex flex-col rounded-2xl bg-white border border-gray-100 p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:cursor-pointer hover:shadow-[0_16px_48px_rgba(210,126,43,0.14)] hover:border-[#D27E2B]/30"
             >
-
-
               {/* Image */}
               <div className="mb-5 flex h-[90px] w-full items-center justify-start">
                 <div className="relative h-[90px] w-[90px]">
@@ -135,23 +132,14 @@ export default function PowerfulCapabilities() {
               </div>
 
               {/* Title */}
-              <h4 className="mb-2 text-sm font-extrabold leading-tight text-[#0F172A] sm:text-base">
+              <h4 className="mb-2.5 text-sm font-extrabold leading-tight text-[#0F172A] sm:text-base">
                 {cap.title}
               </h4>
 
               {/* Description */}
-              <p className="mb-4 flex-1 text-sm leading-relaxed text-gray-500 font-medium">
+              <p className="text-sm leading-relaxed text-gray-500 font-medium">
                 {cap.desc}
               </p>
-
-              {/* Learn more link */}
-              <a
-                href="#contact-form-section"
-                className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#D27E2B] hover:gap-2.5 transition-all duration-200"
-              >
-                Learn more
-                <LuArrowRight className="h-3.5 w-3.5" />
-              </a>
             </motion.div>
           ))}
         </div>

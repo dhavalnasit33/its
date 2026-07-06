@@ -161,14 +161,17 @@ const services =
       {/* ── 4. Powerful Capabilities ── */}
         <PowerfulCapabilities />
 
+{/* ── 12. Final CTA Banner ── */}
+        <FinalCTA />
         {/* ── 6. Integrations Grid ── */}
         <Integrations />
+
+        {/* ── 8. Development Process ── */}
+        <DevelopmentProcess />
 
         {/* ── 7. Why AI Chatbots Comparison ── */}
         <WhyAIChatbots />
 
-        {/* ── 8. Development Process ── */}
-        <DevelopmentProcess />
 
         {/* ── 9. Success Metrics & Statistics ── */}
         <SuccessMetrics />
@@ -179,8 +182,7 @@ const services =
         {/* ── 11. FAQ Accordion ── */}
         <FAQ faqs={CHATBOT_FAQS} />
 
-        {/* ── 12. Final CTA Banner ── */}
-        <FinalCTA />
+        
       </main>
     </>
   );

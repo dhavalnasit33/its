@@ -37,7 +37,7 @@ export default function WhyChooseITS() {
   }, []);
 
   return (
-    <Section className=" mx-auto  bg-white z-10 lg:!pt-0">
+    <Section className=" mx-auto  bg-white z-10 lg:pt-0!">
       {/* <CurveDivider type="top" fillColor="#ffffff" className="absolute top-0 left-0 w-full transform -translate-y-[99%] z-10" /> */}
       {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto flex flex-wrap"> */}
       <Row className=" flex flex-wrap">

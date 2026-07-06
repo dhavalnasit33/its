@@ -11,7 +11,6 @@ import {
   LuBookOpen,
   LuUsers,
   LuKey,
-  LuArrowRight,
 } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
@@ -113,7 +112,7 @@ export default function AIChatbotSolutions() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="bg-white rounded-[22px] border border-gray-100 shadow-[0_15px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-6 flex flex-col justify-between hover:border-[#D27E2B]/30 transition-all duration-300 group"
+                className="cursor-pointer bg-white rounded-[22px] border border-gray-100 shadow-[0_15px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_rgba(210,126,43,0.14)] hover:-translate-y-2 p-6 flex flex-col justify-between hover:border-[#D27E2B]/30 transition-all duration-300 group"
               >
                 <div>
                   {/* Top Bar: Icon & Illustration */}
@@ -135,13 +134,6 @@ export default function AIChatbotSolutions() {
                   </p>
                 </div>
 
-                <a
-                  href="#contact-form-section"
-                  className="inline-flex items-center gap-2 text-xs font-extrabold text-[#0F172A] hover:text-[#D27E2B] transition-colors"
-                >
-                  Learn More
-                  <LuArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </a>
               </motion.div>
             );
           })}
