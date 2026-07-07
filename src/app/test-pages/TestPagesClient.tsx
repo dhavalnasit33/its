@@ -3,20 +3,19 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import Link from "next/link";
 import {
   FiCheck,
   FiX,
   FiCpu,
   FiMessageSquare,
-  FiSettings,
+  FiGitMerge,
   FiShield,
   FiGlobe,
   FiSmartphone,
-  FiPhone,
+  FiBarChart2,
   FiTarget,
   FiSearch,
-  FiCodesandbox,
+  FiMessageCircle,
   FiChevronRight,
   FiBookOpen,
   FiActivity,
@@ -26,27 +25,28 @@ import {
   FiHome,
   FiTruck,
   FiCompass,
-  FiShoppingBag,
+  FiLink,
   FiUsers,
-  FiDollarSign,
+  FiZap,
   FiTrendingUp,
   FiCalendar,
+  FiLayers,
+  FiCode,
+  FiRepeat,
+  FiMonitor,
+  FiLayout,
+  FiCloud,
+  FiBell,
+  FiBriefcase,
+  FiDatabase,
 } from "react-icons/fi";
 import {
   FaLongArrowAltRight,
   FaRocket,
-  FaHeadset,
-  FaBrain,
-  FaRegLightbulb,
+  FaChartLine,
+  FaStar,
 } from "react-icons/fa";
-import {
-  LuBot,
-  LuCpu,
-  LuShield,
-  LuGlobe,
-  LuSmartphone,
-  LuWorkflow,
-} from "react-icons/lu";
+
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Hero from "@/components/home/Hero";
@@ -318,221 +318,310 @@ export default function TestPagesClient() {
   const caseStudies = [
     {
       tabLabel: "Popular",
-      tabIcon: FiTrendingUp,
-      title: "Enterprise AI Automation Suite",
+      tabIcon: FaStar,
+
+      title: "AI-Powered Business Automation Platform",
+
       description:
-        "Our most popular solution: seamlessly integrating AI into existing enterprise workflows to automate redundant tasks, analyze data instantly, and boost overall productivity.",
-      tags: ["AI", "Enterprise", "Automation"],
+        "Our most popular solution combines AI, web, and cloud technologies to automate business processes, improve productivity, and accelerate digital transformation for modern organizations.",
+
+      tags: ["AI", "Automation", "Enterprise"],
+
       stats: [
+        {
+          value: "70%",
+          label: "Productivity Boost",
+          icon: FiTrendingUp,
+          arrow: "up",
+        },
+        {
+          value: "50+",
+          label: "AI Integrations",
+          icon: FiCpu,
+          arrow: "up",
+        },
+        {
+          value: "99.9%",
+          label: "System Uptime",
+          icon: FiShield,
+          arrow: "up",
+        },
+      ],
+
+      features: [
+        {
+          title: "AI Workflow Automation",
+          description:
+            "Automate repetitive business tasks using intelligent AI workflows.",
+          icon: FiCpu,
+          colorClass: "bg-[#ff7a1a]",
+        },
+        {
+          title: "Business Process Integration",
+          description:
+            "Connect CRM, ERP, APIs, and third-party platforms seamlessly.",
+          icon: FiGitMerge,
+          colorClass: "bg-[#2563eb]",
+        },
+        {
+          title: "Real-Time Analytics",
+          description:
+            "Track performance with dashboards and actionable business insights.",
+          icon: FiBarChart2,
+          colorClass: "bg-[#10b981]",
+        },
+      ],
+
+      details: {
+        industry: "All Industries",
+        duration: "Agile Delivery",
+        team: "AI • Web • Mobile",
+        techStack: "React • Node.js • Python • OpenAI",
+      },
+    },
+
+    {
+      tabLabel: "AI Automation",
+      tabIcon: FiCpu,
+
+      title: "Custom AI Solutions for Modern Businesses",
+
+      description:
+        "Build intelligent AI applications including chatbots, virtual assistants, document processing, and workflow automation powered by modern LLM technologies.",
+
+      tags: ["OpenAI", "LLM", "Python"],
+
+      stats: [
+        {
+          value: "24/7",
+          label: "AI Availability",
+          icon: FiMessageSquare,
+          arrow: "up",
+        },
         {
           value: "80%",
-          label: "Efficiency Boost",
+          label: "Task Automation",
+          icon: FiZap,
           arrow: "up",
-          icon: FiTrendingUp,
         },
         {
-          value: "50%",
-          label: "Time Saved",
+          value: "100+",
+          label: "API Integrations",
+          icon: FiLink,
           arrow: "up",
-          icon: FiActivity,
-        },
-        {
-          value: "10k+",
-          label: "Active Users",
-          arrow: "up",
-          icon: FiUsers,
         },
       ],
-      image: "/home-test/mobile-1.png",
+
       features: [
         {
-          title: "Seamless Integration",
-          description: "Easily connects with your existing CRM and ERP systems",
-          icon: FiSettings,
-          colorClass:
-            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
-        },
-        {
-          title: "Predictive Analytics",
-          description: "Forecast trends and behaviors with high accuracy",
-          icon: FiTarget,
-          colorClass:
-            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
-        },
-        {
-          title: "Automated Workflows",
-          description: "Reduce manual data entry with intelligent automation",
-          icon: FiCpu,
-          colorClass:
-            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
-        },
-      ],
-      details: {
-        industry: "Cross-Industry",
-        duration: "1-2 Months",
-        team: "AI Engineers, Full-Stack Developers",
-        techStack: "Python, OpenAI, Node.js, React",
-      },
-    },
-    {
-      tabLabel: "E-commerce Brand",
-      tabIcon: FiShoppingBag,
-      title: "AI Chatbot for E-commerce Brand",
-      description:
-        "Deploying a conversational AI system that handles customer inquiries, recommends personalized products, and automates order tracking in real-time.",
-      tags: ["NLP", "Retail", "Automation"],
-      stats: [
-        {
-          value: "65%",
-          label: "Customer Engagement",
-          arrow: "up",
-          icon: FiUsers,
-        },
-        {
-          value: "40%",
-          label: "Support Cost",
-          arrow: "down",
-          icon: FiDollarSign,
-        },
-        {
-          value: "32%",
-          label: "Sales Growth",
-          arrow: "up",
-          icon: FiTrendingUp,
-        },
-      ],
-      image: "/home-test/mobile-1.png",
-      features: [
-        {
-          title: "Smart Conversations",
-          description: "Understands intent and delivers accurate answers",
-          icon: FiMessageSquare,
-          colorClass:
-            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
-        },
-        {
-          title: "Product Recommendations",
+          title: "AI Chatbots",
           description:
-            "AI suggests the right products based on user preferences",
-          icon: FiShoppingCart,
-          colorClass:
-            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
+            "Enterprise AI assistants for customer support and sales.",
+          icon: FiMessageCircle,
+          colorClass: "bg-[#ff7a1a]",
         },
         {
-          title: "Order Tracking",
-          description: "Real-time updates and automated notifications",
-          icon: FiTruck,
-          colorClass:
-            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
+          title: "LLM Integration",
+          description: "OpenAI and custom AI model integration.",
+          icon: FiCpu,
+          colorClass: "bg-[#2563eb]",
+        },
+        {
+          title: "Workflow Automation",
+          description: "Reduce manual work with AI-powered automation.",
+          icon: FiRepeat,
+          colorClass: "bg-[#10b981]",
         },
       ],
+
       details: {
-        industry: "Retail / E-commerce",
-        duration: "3 Months",
-        team: "AI Engineers, NLP Experts, Front-end Developers",
-        techStack: "OpenAI, Node.js, React, MongoDB, Redis",
+        industry: "AI Solutions",
+        duration: "Custom Timeline",
+        team: "AI Engineers",
+        techStack: "Python • OpenAI • LangChain",
       },
     },
+
     {
-      tabLabel: "E-commerce Website",
+      tabLabel: "Business Website",
       tabIcon: FiGlobe,
-      title: "E-commerce Website for Fashion Retailer",
+
+      title: "High-Performance Business Websites",
+
       description:
-        "Designing and developing a fast, SEO-optimized e-commerce website with a seamless checkout, real-time inventory sync, and a scalable storefront that helped the brand grow its online sales.",
-      tags: ["Next.js", "E-commerce", "SEO"],
+        "Develop modern, secure, and SEO-friendly websites that strengthen your online presence and drive measurable business growth.",
+
+      tags: ["React", "Next.js", "SEO"],
+
       stats: [
+        {
+          value: "95+",
+          label: "Performance Score",
+          icon: FiActivity,
+          arrow: "up",
+        },
         {
           value: "3x",
-          label: "Page Speed",
+          label: "Faster Loading",
+          icon: FiZap,
           arrow: "up",
-          icon: FiActivity,
         },
-        { value: "45%", label: "Bounce Rate", arrow: "down", icon: FiX },
         {
-          value: "60%",
-          label: "Online Sales",
+          value: "100%",
+          label: "Responsive",
+          icon: FiMonitor,
           arrow: "up",
-          icon: FiTrendingUp,
         },
       ],
-      image: "/home-test/mobile-1.png",
+
       features: [
         {
-          title: "Responsive Storefront",
-          description: "Pixel-perfect design that adapts to every device",
-          icon: FiGlobe,
-          colorClass:
-            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
+          title: "Modern UI/UX",
+          description: "Responsive and engaging website experiences.",
+          icon: FiLayout,
+          colorClass: "bg-[#ff7a1a]",
         },
         {
-          title: "Fast Checkout",
-          description: "Streamlined, multi-step checkout that reduces drop-off",
-          icon: FiShoppingCart,
-          colorClass:
-            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
+          title: "SEO Optimized",
+          description: "Built to improve visibility and search rankings.",
+          icon: FiSearch,
+          colorClass: "bg-[#2563eb]",
         },
         {
-          title: "SEO & Performance",
-          description:
-            "Optimized for speed, Core Web Vitals, and search visibility",
-          icon: FiTrendingUp,
-          colorClass:
-            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
+          title: "Secure Architecture",
+          description: "Reliable and scalable backend development.",
+          icon: FiShield,
+          colorClass: "bg-[#10b981]",
         },
       ],
+
       details: {
-        industry: "Retail / Fashion",
-        duration: "2 Months",
-        team: "Frontend Developers, UI/UX Designers, SEO Specialist",
-        techStack: "Next.js, Tailwind CSS, Shopify, Node.js",
+        industry: "Business Websites",
+        duration: "4–12 Weeks",
+        team: "UI/UX • Frontend • Backend",
+        techStack: "React • Next.js • Node.js",
       },
     },
+
     {
-      tabLabel: "On-Demand App",
+      tabLabel: "Mobile App",
       tabIcon: FiSmartphone,
-      title: "On-Demand Service Booking App",
+
+      title: "Cross-Platform Mobile Applications",
+
       description:
-        "Building a cross-platform mobile app that connects customers with service providers in real time, with live tracking, secure in-app payments, and instant booking for a smooth end-to-end experience.",
-      tags: ["React Native", "On-Demand", "Mobile"],
+        "Create scalable Android and iOS applications with intuitive user experiences, cloud connectivity, and enterprise-grade performance.",
+
+      tags: ["Flutter", "Android", "iOS"],
+
       stats: [
         {
-          value: "50K+",
-          label: "App Downloads",
-          arrow: "up",
+          value: "2x",
+          label: "Faster Development",
           icon: FiSmartphone,
+          arrow: "up",
         },
-        { value: "4.7", label: "App Store Rating", arrow: "up", icon: FiCheck },
-        { value: "30%", label: "Booking Time", arrow: "down", icon: FiX },
+        {
+          value: "99%",
+          label: "Crash-Free",
+          icon: FiShield,
+          arrow: "up",
+        },
+        {
+          value: "One Code",
+          label: "Multiple Platforms",
+          icon: FiLayers,
+          arrow: "up",
+        },
       ],
-      image: "/home-test/mobile-1.png",
+
       features: [
         {
-          title: "Real-Time Tracking",
-          description: "Live location updates for every booking, end to end",
-          icon: FiCompass,
-          colorClass:
-            "bg-[#6320a3] text-white shadow-[0_4px_12px_rgba(99,32,163,0.2)]",
+          title: "Cross-Platform Apps",
+          description: "Single codebase for Android and iOS.",
+          icon: FiSmartphone,
+          colorClass: "bg-[#ff7a1a]",
         },
         {
-          title: "Secure Payments",
-          description: "Multiple payment gateways integrated safely in-app",
-          icon: FiCreditCard,
-          colorClass:
-            "bg-[#ff7a1a] text-white shadow-[0_4px_12px_rgba(255,122,26,0.2)]",
+          title: "Cloud Integration",
+          description: "Secure backend and real-time synchronization.",
+          icon: FiCloud,
+          colorClass: "bg-[#2563eb]",
         },
         {
-          title: "Instant Notifications",
-          description: "Push alerts keep users updated at every step",
-          icon: FiMessageSquare,
-          colorClass:
-            "bg-[#34c759] text-white shadow-[0_4px_12px_rgba(52,199,89,0.2)]",
+          title: "Push Notifications",
+          description: "Keep users engaged with instant updates.",
+          icon: FiBell,
+          colorClass: "bg-[#10b981]",
         },
       ],
+
       details: {
-        industry: "On-Demand Services",
-        duration: "4 Months",
-        team: "Mobile Developers, Backend Engineers, QA Testers",
-        techStack: "React Native, Firebase, Node.js, Stripe",
+        industry: "Mobile Applications",
+        duration: "6–16 Weeks",
+        team: "Flutter • Android • iOS",
+        techStack: "Flutter • Firebase • Node.js",
+      },
+    },
+
+    {
+      tabLabel: "Enterprise",
+      tabIcon: FiBriefcase,
+
+      title: "Enterprise Software Solutions",
+
+      description:
+        "Custom ERP, CRM, and enterprise platforms designed to streamline operations, improve collaboration, and support long-term business growth.",
+
+      tags: ["ERP", "CRM", "Cloud"],
+
+      stats: [
+        {
+          value: "100K+",
+          label: "Transactions",
+          icon: FiDatabase,
+          arrow: "up",
+        },
+        {
+          value: "99.9%",
+          label: "Availability",
+          icon: FiShield,
+          arrow: "up",
+        },
+        {
+          value: "24/7",
+          label: "Enterprise Support",
+          icon: FiTrendingUp,
+          arrow: "up",
+        },
+      ],
+
+      features: [
+        {
+          title: "ERP & CRM Systems",
+          description: "Custom business management solutions.",
+          icon: FiBriefcase,
+          colorClass: "bg-[#ff7a1a]",
+        },
+        {
+          title: "API Integration",
+          description: "Connect existing software and services.",
+          icon: FiGitMerge,
+          colorClass: "bg-[#2563eb]",
+        },
+        {
+          title: "Cloud Deployment",
+          description: "Secure, scalable cloud infrastructure.",
+          icon: FiCloud,
+          colorClass: "bg-[#10b981]",
+        },
+      ],
+
+      details: {
+        industry: "Enterprise Software",
+        duration: "Custom Timeline",
+        team: "Full-Stack Engineers",
+        techStack: "React • Node.js • AWS",
       },
     },
   ];
@@ -576,33 +665,38 @@ export default function TestPagesClient() {
   const processSteps = [
     {
       number: "01",
-      title: "Discovery",
-      description: "We analyze your business needs and challenges.",
+      title: "Discovery & Consulting",
+      description:
+        "We understand your business goals, project requirements, target users, and technical challenges.",
       icon: FiSearch,
     },
     {
       number: "02",
-      title: "Strategy",
-      description: "We design the right solution for your business.",
-      icon: FiTarget,
+      title: "Planning & Design",
+      description:
+        "We create the project roadmap, system architecture, UI/UX, and choose the right technology stack.",
+      icon: FiLayers, // import { FiLayers } from "react-icons/fi";
     },
     {
       number: "03",
-      title: "Development",
-      description: "We build, test & iterate with agility.",
-      icon: FiCodesandbox,
+      title: "Development & AI",
+      description:
+        "We build scalable web, mobile, cloud, and AI solutions using React, Flutter, Node.js, Python, OpenAI, and more.",
+      icon: FiCode, // import { FiCode } from "react-icons/fi";
     },
     {
       number: "04",
-      title: "Deployment",
-      description: "We deploy securely & seamlessly.",
+      title: "Testing & Deployment",
+      description:
+        "We ensure quality through testing and deploy securely for high performance and reliability.",
       icon: FaRocket,
     },
     {
       number: "05",
-      title: "Support",
-      description: "We optimize & support for continuous growth.",
-      icon: FaHeadset,
+      title: "Support & Growth",
+      description:
+        "We provide ongoing maintenance, feature enhancements, monitoring, and continuous technical support.",
+      icon: FaChartLine, // import { FaChartLine } from "react-icons/fa";
     },
   ];
 
@@ -1127,15 +1221,15 @@ export default function TestPagesClient() {
             {/* Tab Switcher */}
             <div className="flex flex-col gap-8">
               {/* Tabs selector */}
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap justify-center items-center gap-3 max-w-5xl mx-auto">
                 {caseStudies.map((study, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveCaseStudy(idx)}
-                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold cursor-pointer transition-all duration-300 ${
+                    className={`min-w-[170px] h-11 flex items-center justify-center gap-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
                       activeCaseStudy === idx
                         ? "bg-[#e06c16] text-white shadow-md shadow-[#e06c16]/20"
-                        : "bg-white border border-slate-200/80 text-[#334155] hover:bg-slate-50 hover:text-slate-800"
+                        : "bg-white border border-slate-200 text-[#334155] hover:bg-slate-50"
                     }`}
                   >
                     {/* Icon */}
@@ -1390,7 +1484,6 @@ export default function TestPagesClient() {
         <Row>
           <div className="w-full relative">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-stretch">
-              
               {/* Left Column: Industries We Serve */}
               <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
                 <div>
@@ -1442,7 +1535,6 @@ export default function TestPagesClient() {
 
                 {/* Stats & Map Flex Layout (Fixed Responsive Gap & Wrapping) */}
                 <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-6 flex-1 gap-8 sm:gap-4">
-                  
                   {/* Stats list stack */}
                   <div className="flex flex-col gap-6 z-10 w-full sm:w-[160px] shrink-0 pt-2">
                     <div>
@@ -1485,7 +1577,6 @@ export default function TestPagesClient() {
 
                   {/* Map taking remaining space (Removed negative bottom margin) */}
                   <div className="relative flex-1 w-full aspect-[1.4/1] sm:aspect-[1.8/1] flex items-center justify-center">
-                    
                     {/* World Map Background (Changed to contain for responsive scaling) */}
                     <div
                       className="absolute inset-0 opacity-95 pointer-events-none"
@@ -1496,7 +1587,6 @@ export default function TestPagesClient() {
                         backgroundSize: "contain",
                       }}
                     />
-                    
                     {/* Adjusted Pins */}
                     <MapPin top="30%" left="18%" /> {/* North America West */}
                     <MapPin top="38%" left="26%" /> {/* North America East */}
@@ -1506,7 +1596,6 @@ export default function TestPagesClient() {
                     <MapPin top="40%" left="60%" /> {/* Middle East */}
                     <MapPin top="52%" left="69%" /> {/* India */}
                     <MapPin top="70%" left="81%" /> {/* Australia */}
-                    
                     {/* Our Global Network Widget Card */}
                     <div className="absolute -bottom-10 sm:-bottom-20 right-0 sm:right-5 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[140px] sm:w-[180px] z-20 text-white hidden md:block">
                       <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">

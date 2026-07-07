@@ -3,7 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCode, FiServer, FiCloud, FiDatabase } from "react-icons/fi";
+import {
+  FiCode,
+  FiServer,
+  FiCloud,
+  FiDatabase,
+  FiFilter,
+} from "react-icons/fi";
 import { FaBrain, FaInfinity } from "react-icons/fa";
 import { BsShieldCheck } from "react-icons/bs";
 import TechBackground from "./TechBackground";
@@ -226,7 +232,6 @@ export default function TechnologyShowcase() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // MATHEMATICALLY PERFECT ELLIPSE COORDINATES
   const getSlotProps = (index: number, total: number) => {
     if (total === 6) {
       return [
@@ -240,10 +245,10 @@ export default function TechnologyShowcase() {
     }
 
     return [
-      { top: "27%", left: "73%" }, // Top Right
-      { top: "73%", left: "73%" }, // Bottom Right
-      { top: "73%", left: "27%" }, // Bottom Left
-      { top: "27%", left: "27%" }, // Top Left
+      { top: "27%", left: "73%" },
+      { top: "73%", left: "73%" },
+      { top: "73%", left: "27%" },
+      { top: "27%", left: "27%" },
     ][index];
   };
 
@@ -275,19 +280,76 @@ export default function TechnologyShowcase() {
           </p>
         </div>
 
-        {/* ORBITAL SHOWCASE CENTER */}
+        {/* --- FILTER SECTION MOVED TO TOP --- */}
+        <div className="w-full flex flex-col items-center mb-12 z-30">
+          {/* Explicit Filter Label so users know what to do */}
+          <div className="flex items-center gap-2 mb-6">
+            <FiFilter className="w-4 h-4 md:w-5 md:h-5 text-slate-400" />
+            <h3 className="font-semibold text-xs md:text-sm tracking-widest text-slate-300 uppercase">
+              Select a Category to Filter
+            </h3>
+          </div>
 
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 w-full">
+            {categories.map((card) => {
+              const Icon = card.icon;
+              const isActive = activeTab === card.id;
+
+              return (
+                <button
+                  key={card.id}
+                  onClick={() =>
+                    setActiveTab(card.id as keyof typeof technologies)
+                  }
+                  // EXPLICIT CURSOR-POINTER AND HOVER EFFECTS
+                  className={`group relative flex flex-col items-start p-4 md:p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 transform active:scale-95 ${
+                    isActive
+                      ? "bg-gradient-to-r from-blue-950/60 to-indigo-950/40 border-blue-500 shadow-[0_0_22px_rgba(59,130,246,0.25)]"
+                      : "bg-[#0a1220]/80 border-slate-700/50 hover:border-blue-500/50 hover:bg-[#0c182d] hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(59,130,246,0.1)]"
+                  } backdrop-blur-sm`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTabMarker"
+                      className="absolute left-4 right-4 bottom-0 h-[2px] bg-blue-500 rounded-full"
+                    />
+                  )}
+                  <div
+                    className={`mb-3 p-2 rounded-full border transition-all duration-300 group-hover:scale-110 ${
+                      isActive
+                        ? "bg-blue-500/20 border-blue-400/50"
+                        : "bg-slate-800/80 border-slate-600 group-hover:border-blue-400/30"
+                    }`}
+                  >
+                    <Icon
+                      className={`w-5 h-5 transition-colors duration-300 ${
+                        isActive
+                          ? "text-blue-400 animate-pulse"
+                          : `${card.color} group-hover:text-blue-300`
+                      }`}
+                    />
+                  </div>
+                  <h4 className="text-white font-extrabold text-sm md:text-base mb-1 tracking-tight">
+                    {card.label}
+                  </h4>
+                  <p className="text-slate-400 text-[10px] md:text-xs leading-snug whitespace-pre-line font-medium">
+                    {card.desc}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ORBITAL SHOWCASE CENTER */}
         {isDesktop ? (
           <div className="relative w-full max-w-[1200px] h-[680px] flex items-center justify-center my-6 transform scale-90 lg:scale-100">
-            {/* Background Glow */}
             <div className="absolute w-[450px] h-[450px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)] pointer-events-none z-0" />
 
-            {/* Concentric Rings */}
             <div className="absolute w-[700px] h-[700px] rounded-full border border-blue-500/10 pointer-events-none" />
             <div className="absolute w-[550px] h-[550px] rounded-full border border-blue-500/15 pointer-events-none" />
             <div className="absolute w-[400px] h-[400px] rounded-full border border-[#D68029]/10 pointer-events-none" />
 
-            {/* AI Core */}
             <motion.div
               className="absolute z-30 flex items-center justify-center"
               animate={{ y: [0, -10, 0], scale: [1, 1.03, 1] }}
@@ -305,7 +367,6 @@ export default function TechnologyShowcase() {
               />
             </motion.div>
 
-            {/* Dynamic Technology Nodes */}
             <AnimatePresence mode="popLayout">
               {technologies[activeTab].map((tech, idx) => {
                 const layout = getSlotProps(
@@ -333,7 +394,6 @@ export default function TechnologyShowcase() {
                     }}
                   >
                     <div className="relative flex flex-col items-center justify-center">
-                      {/* BUBBLE */}
                       <motion.div
                         whileHover={{ scale: 1.08, y: -6 }}
                         transition={{ duration: 0.3 }}
@@ -351,7 +411,6 @@ export default function TechnologyShowcase() {
                         </div>
                       </motion.div>
 
-                      {/* FIXED ROUNDED LABEL CARD */}
                       <div className="absolute -bottom-15 w-[130px] px-2 py-2 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-xl text-center shadow-lg z-20">
                         <h3 className="text-white font-semibold text-[13px] leading-tight">
                           {tech.label}
@@ -367,8 +426,7 @@ export default function TechnologyShowcase() {
             </AnimatePresence>
           </div>
         ) : (
-          /* MOBILE GRID */
-          <div className="w-full min-h-[300px] mb-10 mt-6 px-2">
+          <div className="w-full min-h-[300px] mt-2 px-2">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -404,48 +462,6 @@ export default function TechnologyShowcase() {
             </AnimatePresence>
           </div>
         )}
-
-        {/* BOTTOM TABS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 w-full mt-6 z-30">
-          {categories.map((card) => {
-            const Icon = card.icon;
-            const isActive = activeTab === card.id;
-
-            return (
-              <button
-                key={card.id}
-                onClick={() =>
-                  setActiveTab(card.id as keyof typeof technologies)
-                }
-                className={`group relative flex flex-col items-start p-4 md:p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 ${
-                  isActive
-                    ? "bg-gradient-to-r from-blue-950/40 to-indigo-950/20 border-blue-500/40 shadow-[0_0_22px_rgba(59,130,246,0.15)]"
-                    : "bg-[#0a1220]/80 border-slate-700/50 hover:border-slate-500 hover:bg-[#0c182d]/80"
-                } backdrop-blur-sm`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTabMarker"
-                    className="absolute left-4 right-4 bottom-0 h-[2px] bg-blue-500 rounded-full"
-                  />
-                )}
-                <div
-                  className={`mb-3 p-2 rounded-full border transition-all duration-300 group-hover:scale-105 ${isActive ? "bg-blue-500/10 border-blue-500/30" : "bg-slate-800/50 border-slate-700"}`}
-                >
-                  <Icon
-                    className={`w-5 h-5 ${isActive ? "text-blue-400 animate-pulse" : card.color}`}
-                  />
-                </div>
-                <h4 className="text-white font-extrabold text-sm md:text-base mb-1 tracking-tight">
-                  {card.label}
-                </h4>
-                <p className="text-slate-400 text-[10px] md:text-xs leading-snug whitespace-pre-line font-medium">
-                  {card.desc}
-                </p>
-              </button>
-            );
-          })}
-        </div>
 
         {/* FOOTER BADGES */}
         <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-12 pb-10 z-30 text-slate-300 text-xs md:text-sm font-semibold uppercase tracking-wider">
