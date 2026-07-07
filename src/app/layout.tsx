@@ -114,7 +114,8 @@ export default async function RootLayout({
           href="https://inspiretechnosolution.com/"
         />
         <link rel="icon" href={websiteSettings?.favicon || "/favicon.ico"} />
-        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="shortcut icon" href="/favicon.ico" /> 
+        <link rel="apple-touch-icon" href="/favicon.png" />
         {/*  <GoogleTagManager gtmId="GTM-5FSVQSMT" /> */}
         {scripts.map((script, index) => {
           if (script.src) {

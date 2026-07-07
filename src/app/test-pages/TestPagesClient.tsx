@@ -667,7 +667,7 @@ export default function TestPagesClient() {
     ) || [];
 
   return (
-    <main className="relative w-full bg-white text-gray-900 overflow-x-hidden">
+    <main className="relative w-full bg-white text-gray-900 ">
       {/* ── SECTION 1: HERO SECTION ── */}
       <Hero
         heroSecton={homePageData?.heroSecton}
@@ -1384,153 +1384,161 @@ export default function TestPagesClient() {
       <TechnologyShowcase />
       <WhyChoosePremium items={whyChooseData} />
       {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE (FULL WIDTH) ── */}
-      <Section className="bg-[#fafcff] py-12 lg:py-16 relative overflow-hidden border-y border-slate-100 !max-w-full !px-0">
+      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE (FULL WIDTH) ── */}
+      <Section className="bg-[#fafcff] py-12 lg:py-16 relative overflow-hidden border-y border-slate-100">
         {/* Full width container with responsive padding */}
-        <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 relative">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-stretch">
-            {/* Left Column: Industries We Serve */}
-            <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
-              <div>
-                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
-                  INDUSTRIES WE SERVE
-                </span>
-                <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25] mb-6">
-                  AI solutions tailored for <br className="hidden sm:block" />
-                  every industry
-                </h2>
+        <Row>
+          <div className="w-full relative">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-stretch">
+              
+              {/* Left Column: Industries We Serve */}
+              <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
+                <div>
+                  <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
+                    INDUSTRIES WE SERVE
+                  </span>
+                  <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25] mb-6">
+                    AI solutions tailored for <br className="hidden sm:block" />
+                    every industry
+                  </h2>
 
-                {/* Grid of 8 cards */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {industryCards.map((card, idx) => {
-                    const Icon = card.icon;
-                    return (
-                      <motion.div
-                        key={idx}
-                        whileHover={{ y: -2 }}
-                        className="bg-white border border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#d68029] mb-2 shrink-0">
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <span className="text-[13px] font-bold text-slate-700 leading-tight">
-                          {card.title}
-                        </span>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Vertical Divider */}
-            <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
-
-            {/* Right Column: Global Presence */}
-            <div className="flex-1 flex flex-col justify-start w-full lg:w-[50%]">
-              <div className="mb-4">
-                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
-                  GLOBAL PRESENCE
-                </span>
-                <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25]">
-                  Serving Clients <br className="hidden sm:block" />
-                  Worldwide
-                </h2>
-              </div>
-
-              {/* Stats & Map Flex Layout */}
-              <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-4 flex-1">
-                {/* Stats list stack */}
-                <div className="flex flex-col gap-6 z-10 w-full sm:w-[150px] shrink-0 pt-2">
-                  <div>
-                    <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                      20+
-                    </span>
-                    <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                      Countries
-                    </span>
-                  </div>
-                  <div>
-                    <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                      40+
-                    </span>
-                    <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                      Happy Clients
-                    </span>
-                  </div>
-
-                  {/* 150+ and 24/7 Side by Side */}
-                  <div className="flex gap-10">
-                    <div>
-                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                        750+
-                      </span>
-                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                        Projects
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                        24/7
-                      </span>
-                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                        Support Coverage
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Map taking remaining space */}
-                <div className="relative flex-1 w-full aspect-[1.8/1] flex items-center justify-center bottom-25">
-                  {/* World Map Background */}
-                  <div
-                    className="absolute inset-0 opacity-95 pointer-events-none"
-                    style={{
-                      backgroundImage: 'url("/home-test/map.png")',
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "left top",
-                      backgroundSize: "100% auto",
-                    }}
-                  />
-                  {/* Adjusted Pins */}
-                  <MapPin top="30%" left="18%" /> {/* North America West */}
-                  <MapPin top="38%" left="26%" /> {/* North America East */}
-                  <MapPin top="68%" left="32%" /> {/* South America */}
-                  <MapPin top="34%" left="50%" /> {/* Europe */}
-                  <MapPin top="54%" left="53%" /> {/* Africa */}
-                  <MapPin top="40%" left="60%" /> {/* Middle East */}
-                  <MapPin top="52%" left="69%" /> {/* India */}
-                  <MapPin top="70%" left="81%" /> {/* Australia */}
-                  {/* Our Global Network Widget Card */}
-                  <div className="absolute -bottom-33 right-5 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[160px] sm:w-[180px] z-20 text-white hidden md:block">
-                    <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
-                      Our Global Network
-                    </h4>
-                    <ul className="flex flex-col gap-2.5">
-                      {[
-                        "North America",
-                        "Europe",
-                        "Middle East",
-                        "Asia Pacific",
-                      ].map((region) => (
-                        <li
-                          key={region}
-                          className="flex items-center justify-between text-[11px] text-slate-300 hover:text-[#d68029] transition-colors cursor-pointer group"
+                  {/* Grid of 8 cards */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {industryCards.map((card, idx) => {
+                      const Icon = card.icon;
+                      return (
+                        <motion.div
+                          key={idx}
+                          whileHover={{ y: -2 }}
+                          className="bg-white border border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
                         >
-                          <div className="flex items-center gap-1.5">
-                            <FaMapMarkerAlt className="text-[#d68029] text-[10px]" />
-                            <span>{region}</span>
+                          <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#d68029] mb-2 shrink-0">
+                            <Icon className="w-5 h-5" />
                           </div>
-                          <FiChevronRight className="text-slate-500 group-hover:text-[#d68029] transition-colors" />
-                        </li>
-                      ))}
-                    </ul>
+                          <span className="text-[13px] font-bold text-slate-700 leading-tight">
+                            {card.title}
+                          </span>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Vertical Divider (Hidden on mobile) */}
+              <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
+
+              {/* Right Column: Global Presence */}
+              <div className="flex-1 flex flex-col justify-start w-full lg:w-[50%]">
+                <div className="mb-4">
+                  <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
+                    GLOBAL PRESENCE
+                  </span>
+                  <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25]">
+                    Serving Clients <br className="hidden sm:block" />
+                    Worldwide
+                  </h2>
+                </div>
+
+                {/* Stats & Map Flex Layout (Fixed Responsive Gap & Wrapping) */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-6 flex-1 gap-8 sm:gap-4">
+                  
+                  {/* Stats list stack */}
+                  <div className="flex flex-col gap-6 z-10 w-full sm:w-[160px] shrink-0 pt-2">
+                    <div>
+                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                        20+
+                      </span>
+                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                        Countries
+                      </span>
+                    </div>
+                    <div>
+                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                        40+
+                      </span>
+                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                        Happy Clients
+                      </span>
+                    </div>
+
+                    {/* 750+ and 24/7 Side by Side */}
+                    <div className="flex gap-8 sm:gap-10">
+                      <div>
+                        <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                          750+
+                        </span>
+                        <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                          Projects
+                        </span>
+                      </div>
+                      <div>
+                        <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                          24/7
+                        </span>
+                        <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                          Support Coverage
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Map taking remaining space (Removed negative bottom margin) */}
+                  <div className="relative flex-1 w-full aspect-[1.4/1] sm:aspect-[1.8/1] flex items-center justify-center">
+                    
+                    {/* World Map Background (Changed to contain for responsive scaling) */}
+                    <div
+                      className="absolute inset-0 opacity-95 pointer-events-none"
+                      style={{
+                        backgroundImage: 'url("/home-test/map.png")',
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center center",
+                        backgroundSize: "contain",
+                      }}
+                    />
+                    
+                    {/* Adjusted Pins */}
+                    <MapPin top="30%" left="18%" /> {/* North America West */}
+                    <MapPin top="38%" left="26%" /> {/* North America East */}
+                    <MapPin top="68%" left="32%" /> {/* South America */}
+                    <MapPin top="34%" left="50%" /> {/* Europe */}
+                    <MapPin top="54%" left="53%" /> {/* Africa */}
+                    <MapPin top="40%" left="60%" /> {/* Middle East */}
+                    <MapPin top="52%" left="69%" /> {/* India */}
+                    <MapPin top="70%" left="81%" /> {/* Australia */}
+                    
+                    {/* Our Global Network Widget Card */}
+                    <div className="absolute -bottom-10 sm:-bottom-20 right-0 sm:right-5 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[140px] sm:w-[180px] z-20 text-white hidden md:block">
+                      <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
+                        Our Global Network
+                      </h4>
+                      <ul className="flex flex-col gap-2.5">
+                        {[
+                          "North America",
+                          "Europe",
+                          "Middle East",
+                          "Asia Pacific",
+                        ].map((region) => (
+                          <li
+                            key={region}
+                            className="flex items-center justify-between text-[11px] text-slate-300 hover:text-[#d68029] transition-colors cursor-pointer group"
+                          >
+                            <div className="flex items-center gap-1.5">
+                              <FaMapMarkerAlt className="text-[#d68029] text-[10px]" />
+                              <span>{region}</span>
+                            </div>
+                            <FiChevronRight className="text-slate-500 group-hover:text-[#d68029] transition-colors" />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </Row>
       </Section>
 
       <Reviews />
