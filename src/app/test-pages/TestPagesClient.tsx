@@ -39,6 +39,9 @@ import {
   FiBell,
   FiBriefcase,
   FiDatabase,
+  FiExternalLink,
+  FiGithub,
+  FiShoppingBag,
 } from "react-icons/fi";
 import {
   FaLongArrowAltRight,
@@ -280,6 +283,113 @@ const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M12 13c0 1 1 2 2 2h3.5" />
   </svg>
 );
+
+// --- NEW DATA FOR AI EXPERTISE & PORTFOLIO ---
+const aiExpertise = [
+  {
+    category: "Generative AI & LLMs",
+    icon: FiMessageSquare,
+    description:
+      "Implementing state-of-the-art language models for intelligent text generation, summarization, and comprehension.",
+    tools: [
+      "OpenAI GPT-4",
+      "Anthropic Claude 3",
+      "Meta Llama 3",
+      "Google Gemini",
+    ],
+    color: "from-blue-500/20 to-indigo-500/10",
+    iconColor: "text-blue-400",
+  },
+  {
+    category: "RAG & Vector Databases",
+    icon: FiDatabase,
+    description:
+      "Enhancing AI accuracy by securely connecting LLMs to your private enterprise data and knowledge bases.",
+    tools: ["Pinecone", "Milvus", "LangChain", "LlamaIndex"],
+    color: "from-[#d68029]/20 to-[#d68029]/5",
+    iconColor: "text-[#d68029]",
+  },
+  {
+    category: "AI Agents & Automation",
+    icon: FiCpu,
+    description:
+      "Building autonomous AI agents that plan, execute, and automate complex multi-step workflows with zero human intervention.",
+    tools: ["AutoGPT", "CrewAI", "Zapier AI", "Custom Agents"],
+    color: "from-emerald-500/20 to-teal-500/10",
+    iconColor: "text-emerald-400",
+  },
+  {
+    category: "Computer Vision",
+    icon: FiMonitor,
+    description:
+      "Extracting meaningful information from digital images, videos, and visual inputs for automated analysis.",
+    tools: ["OpenCV", "YOLO", "TensorFlow", "PyTorch"],
+    color: "from-purple-500/20 to-fuchsia-500/10",
+    iconColor: "text-purple-400",
+  },
+];
+
+const portfolioProjects = [
+  {
+    title: "OneChat AI",
+    category: "AI SaaS Platform",
+    description:
+      "A powerful all-in-one AI platform built with Flutter Web, Node.js, and React. Features include AI chat, image generation, video generation, document processing, PDF tools, AI writing, Google Authentication, Stripe subscriptions, affiliate system, SEO optimization, and dozens of integrated AI models with a modern, scalable architecture.",
+    icon: FiCpu,
+    stack: [
+      "Flutter Web",
+      "Node.js",
+      "React",
+      "Next.js",
+      "OpenAI",
+      "Stripe",
+      "Google OAuth",
+      "AWS",
+    ],
+    image: "portfolio/onechat-ai.png",
+    theme: "blue",
+  },
+
+  {
+    title: "MyCRA",
+    category: "E-Commerce Platform",
+    description:
+      "A modern e-commerce platform designed for a seamless online shopping experience. Developed with secure authentication, Google Login, Stripe payment integration, responsive product catalog, order management, customer accounts, and a scalable backend for high-performance online retail operations.",
+    icon: FiShoppingBag,
+    stack: [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Stripe",
+      "Google OAuth",
+      "Express.js",
+      "REST API",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2070&auto=format&fit=crop",
+    theme: "orange",
+  },
+
+  {
+    title: "Unity Healthcare",
+    category: "Healthcare E-Commerce",
+    description:
+      "A healthcare commerce platform built using Next.js and Node.js for selling healthcare and wellness products online. Includes secure user authentication, product management, shopping cart, online payments, order tracking, admin dashboard, SEO optimization, and a fast, responsive user experience.",
+    icon: FiHeart,
+    stack: [
+      "Next.js",
+      "Node.js",
+      "React",
+      "MongoDB",
+      "Stripe",
+      "Tailwind CSS",
+      "REST API",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop",
+    theme: "emerald",
+  },
+];
 
 export default function TestPagesClient() {
   const { navStructure } = useWebsiteSettings();
@@ -675,14 +785,14 @@ export default function TestPagesClient() {
       title: "Planning & Design",
       description:
         "We create the project roadmap, system architecture, UI/UX, and choose the right technology stack.",
-      icon: FiLayers, // import { FiLayers } from "react-icons/fi";
+      icon: FiLayers,
     },
     {
       number: "03",
       title: "Development & AI",
       description:
         "We build scalable web, mobile, cloud, and AI solutions using React, Flutter, Node.js, Python, OpenAI, and more.",
-      icon: FiCode, // import { FiCode } from "react-icons/fi";
+      icon: FiCode,
     },
     {
       number: "04",
@@ -696,7 +806,7 @@ export default function TestPagesClient() {
       title: "Support & Growth",
       description:
         "We provide ongoing maintenance, feature enhancements, monitoring, and continuous technical support.",
-      icon: FaChartLine, // import { FaChartLine } from "react-icons/fa";
+      icon: FaChartLine,
     },
   ];
 
@@ -780,8 +890,7 @@ export default function TestPagesClient() {
         </Row>
       </Section>
 
-      {/* ── SECTION 3: OUR SERVICES (UPDATED TO MATCH IMAGE 2) ── */}
-      {/* ── SECTION 3: OUR SERVICES (UPDATED TO MATCH IMAGE 2) ── */}
+      {/* ── SECTION 3: OUR SERVICES ── */}
       <Section className="bg-white py-20 lg:py-28 relative">
         <Row>
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
@@ -856,7 +965,7 @@ export default function TestPagesClient() {
               <div className="flex-1 flex flex-col gap-6">
                 {/* Row 1 - 2 Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[48%]">
-                  {/* AI Chatbots */}
+                  {/* Web Dev */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -885,7 +994,7 @@ export default function TestPagesClient() {
                     </div>
                   </motion.div>
 
-                  {/* Custom AI Dev */}
+                  {/* Mobile App */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -917,7 +1026,7 @@ export default function TestPagesClient() {
 
                 {/* Row 2 - 3 Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[48%]">
-                  {/* AI Consulting */}
+                  {/* UI/UX */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -946,7 +1055,7 @@ export default function TestPagesClient() {
                     </div>
                   </motion.div>
 
-                  {/* Web Dev */}
+                  {/* eCommerce */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -980,6 +1089,7 @@ export default function TestPagesClient() {
           </div>
         </Row>
       </Section>
+
       {/* ============================
           CHALLENGES VS SOLUTIONS
       ============================= */}
@@ -1134,8 +1244,84 @@ export default function TestPagesClient() {
         </div>
       </Section>
 
+      {/* ── NEW SECTION: AI EXPERTISE ── */}
+      <Section className="bg-[#030812] py-24 relative overflow-hidden">
+        {/* Subtle background grids/glows for premium AI feel */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute w-full h-full bg-[radial-gradient(circle_at_top,rgba(214,128,41,0.05)_0%,transparent_50%)]" />
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+        </div>
+
+        <Row className="relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[#d68029] text-xs font-extrabold uppercase tracking-widest block mb-3">
+              AI Capabilities
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-[40px] font-extrabold text-white leading-[1.2]">
+              Our <span className="text-[#d68029]">AI Expertise</span> &
+              Technologies
+            </h2>
+            <p className="text-slate-400 fonts_16 mt-4">
+              We leverage state-of-the-art artificial intelligence models,
+              frameworks, and infrastructure to build intelligent,
+              next-generation applications.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
+            {aiExpertise.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group relative bg-[#0a1220]/80 backdrop-blur-md border border-slate-800 rounded-[24px] p-8 hover:bg-[#0c182d] hover:border-slate-700 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-5 mb-6">
+                    <div
+                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center shrink-0 border border-white/5`}
+                    >
+                      <Icon className={`w-7 h-7 ${item.iconColor}`} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#d68029] transition-colors duration-300">
+                        {item.category}
+                      </h3>
+                      <p className="text-slate-400 text-sm leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Tech Chips */}
+                  <div className="flex flex-wrap gap-2.5">
+                    {item.tools.map((tool, toolIdx) => (
+                      <span
+                        key={toolIdx}
+                        className="px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-[12px] font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors cursor-default"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </Row>
+      </Section>
+
       {/* ── SECTION 4: OUR DEVELOPMENT PROCESS & INDUSTRIES / CASE STUDIES ── */}
-      <Section className="bg-white relative overflow-hidden">
+      <Section className="bg-white relative overflow-hidden py-24">
         <Row>
           {/* Section Heading */}
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -1198,7 +1384,7 @@ export default function TestPagesClient() {
           </div>
 
           {/* Dynamic Full Width Case Studies Showcase */}
-          <div className="mt-16 pt-16 max-w-[1400px] w-full mx-auto">
+          <div className="mt-24 pt-16 max-w-[1400px] w-full mx-auto">
             {/* Heading */}
             <div className="text-center max-w-2xl mx-auto mb-12">
               <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-3">
@@ -1245,7 +1431,6 @@ export default function TestPagesClient() {
                 ))}
               </div>
 
-              {/* Showcase Container */}
               {/* Showcase Container */}
               <motion.div
                 key={activeCaseStudy}
@@ -1475,10 +1660,118 @@ export default function TestPagesClient() {
           </div>
         </Row>
       </Section>
+
+      {/* ── NEW SECTION: PORTFOLIO SHOWCASE (PREMIUM BENTO GRID) ── */}
+      <Section className="bg-gray-50 py-24 relative overflow-hidden border-t border-slate-200">
+        <Row>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[#d68029] text-xs font-extrabold uppercase tracking-widest block mb-3">
+              Featured Work
+            </span>
+            <h2 className="common-h2 text-[#0d1b2a]">
+              Our <span className="text-[#d68029]">Portfolio</span>
+            </h2>
+            <p className="text-slate-500 fonts_16 mt-4">
+              Explore some of our recent projects where we've transformed
+              complex business requirements into elegant, high-performance
+              digital solutions.
+            </p>
+          </div>
+
+          {/* Bento Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-[1300px] mx-auto">
+            {portfolioProjects.map((project, idx) => {
+              // First item is the large featured project on the left
+              const isFeatured = idx === 0;
+              const ProjectIcon = project.icon;
+
+              const gradientMap: Record<string, string> = {
+                blue: "from-blue-600/80 to-indigo-900/90",
+                orange: "from-[#d68029]/80 to-orange-900/90",
+                emerald: "from-emerald-600/80 to-teal-900/90",
+              };
+              const activeGradient =
+                gradientMap[project.theme] || gradientMap.blue;
+
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className={`group relative rounded-[28px] overflow-hidden bg-[#0d1b2a] border border-[#1a2c42] shadow-2xl flex flex-col hover:border-slate-600 transition-colors duration-300 ${
+                    isFeatured
+                      ? "lg:col-span-7 lg:row-span-2"
+                      : "lg:col-span-5 lg:row-span-1"
+                  }`}
+                >
+                  {/* Top: Image / Visual Showcase Area */}
+                  <div
+                    className={`relative w-full bg-[#050a14] overflow-hidden ${
+                      isFeatured ? "flex-1 min-h-[300px]" : "h-[220px] shrink-0"
+                    }`}
+                  >
+                    {/* Actual Project Image */}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out"
+                    />
+
+                    {/* Dark gradient overlay to blend smoothly into the bottom text area */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b2a] via-[#0d1b2a]/20 to-transparent pointer-events-none" />
+
+                    {/* LIVE Badge overlaid on top right */}
+                    <div className="absolute top-5 right-5 px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-2 shadow-lg z-10">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+                        Live
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Bottom: Text & Details Area */}
+                  {/* Changed to shrink-0 and removed flex-1 from children so it hugs the content naturally */}
+                  <div className="flex flex-col p-6 md:p-8 relative z-10 shrink-0">
+                    <span className="text-[#d68029] text-[11px] font-bold tracking-widest uppercase mb-2">
+                      {project.category}
+                    </span>
+                    <h3
+                      className={`font-extrabold text-white mb-3 tracking-tight ${
+                        isFeatured ? "text-3xl" : "text-2xl"
+                      }`}
+                    >
+                      {project.title}
+                    </h3>
+
+                    <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                      {project.description}
+                    </p>
+
+                    {/* Tech Stack Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {project.stack.map((tech, techIdx) => (
+                        <span
+                          key={techIdx}
+                          className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[11px] font-medium text-slate-300 hover:bg-white/10 transition-colors cursor-default"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </Row>
+      </Section>
+
       <TechnologyShowcase />
       <WhyChoosePremium items={whyChooseData} />
-      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE (FULL WIDTH) ── */}
-      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE (FULL WIDTH) ── */}
+
+      {/* ── SECTION 5: GLOBAL PRESENCE & INDUSTRIES WE SERVE ── */}
       <Section className="bg-[#fafcff] py-12 lg:py-16 relative overflow-hidden border-y border-slate-100">
         {/* Full width container with responsive padding */}
         <Row>
@@ -1575,9 +1868,9 @@ export default function TestPagesClient() {
                     </div>
                   </div>
 
-                  {/* Map taking remaining space (Removed negative bottom margin) */}
+                  {/* Map taking remaining space */}
                   <div className="relative flex-1 w-full aspect-[1.4/1] sm:aspect-[1.8/1] flex items-center justify-center">
-                    {/* World Map Background (Changed to contain for responsive scaling) */}
+                    {/* World Map Background */}
                     <div
                       className="absolute inset-0 opacity-95 pointer-events-none"
                       style={{
