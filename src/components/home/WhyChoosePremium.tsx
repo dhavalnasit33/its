@@ -103,7 +103,7 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
       <div className="pointer-events-none absolute top-[-50px] right-[-150px] w-[500px] h-[500px] rounded-full bg-[#d68029]/10 blur-[130px]" />
       
       <Row>
-        <div className="relative z-10 w-[94%] mx-auto flex flex-col gap-16">
+        <div className="relative z-10  mx-auto flex flex-col gap-16">
           
           {/* ── Section Header ── */}
           <div className="text-center mx-auto flex flex-col items-center gap-4 ">
@@ -134,7 +134,7 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.18 }}
-              className="text-slate-500 text-[14px] sm:text-[16px] leading-relaxed font-medium mt-2 max-w-3xl"
+              className="text-slate-500 text-[14px] sm:text-[18px] leading-relaxed font-medium mt-2 max-w-3xl"
             >
               We combine technology, expertise, and commitment to deliver
               exceptional solutions that help your business grow.
