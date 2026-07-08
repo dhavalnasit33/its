@@ -1345,7 +1345,7 @@ export default function TestPagesClient() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="group relative bg-[#0a1220]/80 backdrop-blur-md border border-slate-800 rounded-[24px] p-8 hover:bg-[#0c182d] hover:border-slate-700 transition-all duration-300"
+                  className="group relative cursor-pointer bg-[#0a1220]/80 backdrop-blur-md border border-slate-800 rounded-[24px] p-8 hover:bg-[#0c182d] hover:border-slate-700 transition-all duration-300"
                 >
                   <div className="flex items-start gap-5 mb-6">
                     <div
@@ -1368,7 +1368,7 @@ export default function TestPagesClient() {
                     {item.tools.map((tool, toolIdx) => (
                       <span
                         key={toolIdx}
-                        className="px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-[12px] font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors cursor-default"
+                        className="px-3 py-1.5 cursor-pointer rounded-lg bg-slate-800/50 border border-slate-700/50 text-[12px] font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors cursor-default"
                       >
                         {tool}
                       </span>
@@ -1410,10 +1410,10 @@ export default function TestPagesClient() {
                   <button
                     key={idx}
                     onClick={() => setActiveStep(idx)}
-                    className={`flex items-center gap-3 px-6 py-4 rounded-[18px] w-full md:w-auto transition-all duration-300 text-left relative overflow-hidden ${
+                    className={`flex items-center cursor-pointer gap-3 px-6 py-4 rounded-[18px] w-full md:w-auto transition-all duration-300 text-left relative overflow-hidden ${
                       isActive
                         ? "bg-[#0d1b2a] text-white shadow-lg shadow-[#0d1b2a]/20 scale-[1.02]"
-                        : "hover:bg-slate-50 text-slate-600"
+                        : "hover:bg-slate-100 text-slate-600"
                     }`}
                   >
                     {/* Step Icon or Completed Check */}
@@ -1692,7 +1692,7 @@ export default function TestPagesClient() {
                   <button
                     key={idx}
                     onClick={() => setActiveCaseStudy(idx)}
-                    className={`min-w-[170px] h-11 flex items-center justify-center gap-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
+                    className={`min-w-[170px] h-11 cursor-pointer flex items-center justify-center gap-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
                       activeCaseStudy === idx
                         ? "bg-[#e06c16] text-white shadow-md shadow-[#e06c16]/20"
                         : "bg-white border border-slate-200 text-[#334155] hover:bg-slate-50"
@@ -1760,7 +1760,7 @@ export default function TestPagesClient() {
                       return (
                         <div
                           key={statIdx}
-                          className="bg-[#28384d] rounded-2xl p-5 flex flex-col justify-center transition-transform hover:-translate-y-1 duration-300"
+                          className="bg-[#28384d] cursor-pointer rounded-2xl p-5 flex flex-col justify-center transition-transform hover:-translate-y-1 duration-300"
                         >
                           <div className="flex items-center gap-3 mb-2">
                             <div className="w-10 h-10 rounded-full bg-[#ff7a1a] flex items-center justify-center shrink-0">
@@ -1825,7 +1825,7 @@ export default function TestPagesClient() {
                               duration: 0.5,
                             }}
                             key={featIdx}
-                            className="group relative bg-white/70 backdrop-blur-xl border border-white rounded-[24px] p-5 lg:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(214,128,41,0.08)] hover:-translate-y-1 transition-all duration-400 cursor-default overflow-hidden"
+                            className="group relative cursor-pointer bg-white/70 backdrop-blur-xl border border-white rounded-[24px] p-5 lg:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(214,128,41,0.08)] hover:-translate-y-1 transition-all duration-400 cursor-default overflow-hidden"
                           >
                             {/* Accent Line on hover */}
                             <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#ff7a1a] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -2034,7 +2034,7 @@ export default function TestPagesClient() {
                       {project.stack.map((tech, techIdx) => (
                         <span
                           key={techIdx}
-                          className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[11px] font-medium text-slate-300 hover:bg-white/10 transition-colors cursor-default"
+                          className="px-3 py-1.5 cursor-pointer  bg-white/5 border border-white/10 rounded-lg text-[11px] font-medium text-slate-300 hover:bg-white/10 transition-colors cursor-default"
                         >
                           {tech}
                         </span>
@@ -2076,7 +2076,7 @@ export default function TestPagesClient() {
                         <motion.div
                           key={idx}
                           whileHover={{ y: -2 }}
-                          className="bg-white border border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
+                          className="bg-white border cursor-pointer border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
                         >
                           <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#d68029] mb-2 shrink-0">
                             <Icon className="w-5 h-5" />

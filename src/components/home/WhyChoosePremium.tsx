@@ -47,7 +47,7 @@ function WhyChooseCard({ item, index }: CardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.08 }}
-      className="
+      className=" cursor-pointer
         group relative bg-white 
         rounded-tl-[40px] rounded-br-[40px] rounded-tr-xl rounded-bl-xl 
         p-8 pt-10 pb-12 mb-6 
