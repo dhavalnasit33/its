@@ -2292,20 +2292,20 @@ export default function TestPagesClient() {
               </motion.div>
             </motion.div>
 
-            {/* ── RIGHT LAPTOP SLIDER COLUMN ── */}
             {/* ── RIGHT SLIDER COLUMN ── */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-              // Added min-w-0 to prevent the grid column from breaking its width
               className="relative w-full flex flex-col justify-center min-w-0"
+              style={{ clipPath: "inset(-100px -2000px -100px 0px)" }}
             >
               <Swiper
-                modules={[Autoplay, Pagination]}
-                spaceBetween={30}
+                modules={[Autoplay]}
+                spaceBetween={24}
                 slidesPerView={1.2}
+                centeredSlides={false}
                 loop={true}
                 speed={1000}
                 autoplay={{
@@ -2314,22 +2314,21 @@ export default function TestPagesClient() {
                 }}
                 pagination={{ clickable: true }}
                 breakpoints={{
-                  320: { slidesPerView: 1, spaceBetween: 20 },
-                  768: { slidesPerView: 1.1, spaceBetween: 30 },
-                  1024: { slidesPerView: 1.25, spaceBetween: 40 },
+                  320: { slidesPerView: 1, spaceBetween: 16 },
+                  768: { slidesPerView: 1.1, spaceBetween: 20 },
+                  1024: { slidesPerView: 1.2, spaceBetween: 24 },
                 }}
-                // REMOVED !overflow-visible to fix the left overlap issue
-                className="w-full h-full pb-16"
+                className="w-[108%] lg:w-[112%] h-[440px] lg:h-[470px] xl:h-[500px] pb-16 !overflow-visible"
               >
                 {portfolioWorks.length > 0 ? (
                   portfolioWorks.map((work) => (
                     <SwiperSlide key={work._id} className="pt-2">
                       {/* Clean, Simple Image Card */}
-                      <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] rounded-[24px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-slate-100 group">
+                      <div className="relative w-full  rounded-[24px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-slate-100 group">
                         <img
                           src={work.image}
                           alt={work.title}
-                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                          className="w-full aspect-640/450 object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                       </div>
                     </SwiperSlide>
