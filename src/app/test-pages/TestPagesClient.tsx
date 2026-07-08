@@ -73,6 +73,11 @@ import {
 } from "@/types";
 import Button from "@/components/Button";
 import FAQ from "@/components/FAQ";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
 
 const MapPin = ({ top, left }: { top: string; left: string }) => (
   
@@ -318,17 +323,10 @@ export default function TestPagesClient() {
 
   const router = useRouter();
   const [whyChooseData, setWhyChooseData] = React.useState<WhyChooseItem[]>([]);
-  const [portfolioWorks, setPortfolioWorks] = React.useState<CreativeWork[]>(
-    [],
-  );
-  const [activeSlide, setActiveSlide] = React.useState(0);
-  const [hoveredService, setHoveredService] = React.useState<number | null>(
+  const [portfolioWorks, setPortfolioWorks] = React.useState<CreativeWork[]>([]);
+ const [hoveredService, setHoveredService] = React.useState<number | null>(
     null,
   );
-  const sliderTimerRef = React.useRef<ReturnType<typeof setInterval> | null>(
-    null,
-  );
-
   const stepDeliverables = [
     [
       "Requirement Analysis",
@@ -398,12 +396,9 @@ export default function TestPagesClient() {
     // Fetch web-development creative works for portfolio slider
     const fetchPortfolioWorks = async () => {
       try {
-        const res = await apiService<PaginatedResponse<CreativeWork>>(
-          "/creative-work",
-          {
-            params: { limit: 12, category: "6a0c58a850ca8a2da030dc58" },
-          },
-        );
+        const res = await apiService<PaginatedResponse<CreativeWork>>("/creative-work", {
+          params: { page:1,  limit: 12, category: "6a0c58a850ca8a2da030dc58" },
+        });
         if (res.success && res.data?.length) {
           setPortfolioWorks(res.data);
         }
@@ -414,17 +409,7 @@ export default function TestPagesClient() {
     fetchPortfolioWorks();
   }, []);
 
-  // Auto-play portfolio slider
-  useEffect(() => {
-    if (portfolioWorks.length <= 1) return;
-    sliderTimerRef.current = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % portfolioWorks.length);
-    }, 3500);
-    return () => {
-      if (sliderTimerRef.current) clearInterval(sliderTimerRef.current);
-    };
-  }, [portfolioWorks.length]);
-
+   
   const caseStudies = [
     {
       tabLabel: "Popular",
@@ -2295,140 +2280,58 @@ export default function TestPagesClient() {
               </motion.div>
             </motion.div>
 
-            {/* ── RIGHT LAPTOP SLIDER COLUMN ── */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-              className="relative w-full flex flex-col items-center"
-            >
-              {/* Ambient glow behind laptop */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[80%] h-[60%] rounded-full bg-[#d68029]/10 blur-3xl" />
-              </div>
-
-              {/* Laptop frame wrapper */}
-              <div className="relative w-full max-w-[620px] mx-auto">
-                {/* ─── Laptop body ─── */}
-                <div className="relative w-full">
-                  {/* Screen bezel */}
-                  <div className="relative bg-[#1a1a2e] rounded-t-[16px] rounded-b-[4px] shadow-2xl border border-[#2d2d4e] pt-[5%] px-[3.5%] pb-[2%]">
-                    {/* Camera notch */}
-                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#333355]" />
-
-                    {/* Screen area */}
-                    <div className="relative w-full aspect-[16/10] bg-gray-900 rounded-[8px] overflow-hidden shadow-inner">
-                      {/* Slides */}
-                      {portfolioWorks.length > 0 ? (
-                        portfolioWorks.map((work, idx) => (
-                          <div
-                            key={work._id}
-                            className="absolute inset-0 transition-opacity duration-700 ease-in-out"
-                            style={{
-                              opacity: activeSlide === idx ? 1 : 0,
-                              zIndex: activeSlide === idx ? 2 : 1,
-                            }}
-                          >
-                            <img
-                              src={work.image}
-                              alt={work.title}
-                              className="w-full h-full object-cover object-top"
-                            />
-                            {/* Project title overlay at bottom */}
-                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-4">
-                              <p className="text-white text-sm font-bold leading-tight">
-                                {work.title}
-                              </p>
-                              <p className="text-[#d68029] text-[11px] font-semibold uppercase tracking-wider mt-0.5">
-                                Web Development
-                              </p>
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        // Skeleton placeholder while loading
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#0d1b2a] to-[#1a2c42] flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 border-2 border-[#d68029]/30 border-t-[#d68029] rounded-full animate-spin mx-auto mb-3" />
-                            <p className="text-slate-500 text-xs">
-                              Loading projects...
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Laptop base/hinge */}
-                  <div className="relative bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] h-[14px] rounded-b-[4px] shadow-md">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[25%] h-[6px] bg-[#111] rounded-b-[8px]" />
-                  </div>
-
-                  {/* Laptop stand */}
-                  <div className="relative flex justify-center">
-                    <div
-                      className="bg-gradient-to-b from-[#1a1a1a] to-[#111] shadow-xl"
-                      style={{
-                        width: "35%",
-                        height: "18px",
-                        clipPath: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
-                      }}
-                    />
-                  </div>
-
-                  {/* Laptop foot bar */}
-                  <div className="flex justify-center">
-                    <div className="w-[55%] h-[4px] bg-gradient-to-r from-transparent via-[#333] to-transparent rounded-full" />
-                  </div>
-                </div>
-
-                {/* Slider dot indicators */}
-                {portfolioWorks.length > 1 && (
-                  <div className="flex justify-center gap-2 mt-6">
-                    {portfolioWorks.map((_, dotIdx) => (
-                      <button
-                        key={dotIdx}
-                        onClick={() => {
-                          setActiveSlide(dotIdx);
-                          if (sliderTimerRef.current)
-                            clearInterval(sliderTimerRef.current);
-                          sliderTimerRef.current = setInterval(() => {
-                            setActiveSlide(
-                              (prev) => (prev + 1) % portfolioWorks.length,
-                            );
-                          }, 3500);
-                        }}
-                        className={`transition-all duration-300 rounded-full cursor-pointer ${
-                          activeSlide === dotIdx
-                            ? "w-6 h-2.5 bg-[#d68029]"
-                            : "w-2.5 h-2.5 bg-slate-300 hover:bg-[#d68029]/60"
-                        }`}
-                        aria-label={`Go to slide ${dotIdx + 1}`}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                {/* Project name caption below */}
-                {portfolioWorks.length > 0 && (
-                  <div className="text-center mt-4">
-                    <motion.p
-                      key={activeSlide}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
-                      className="text-[#0d1b2a] font-bold text-[15px] tracking-tight"
-                    >
-                      {portfolioWorks[activeSlide]?.title}
-                    </motion.p>
-                    <p className="text-[#d68029] text-[12px] font-semibold uppercase tracking-widest mt-0.5">
-                      Web Development
-                    </p>
-                  </div>
-                )}
-              </div>
-            </motion.div>
+            {/* ── RIGHT LAPTOP SLIDER COLUMN ── */} 
+{/* ── RIGHT SLIDER COLUMN ── */}
+<motion.div
+  initial={{ opacity: 0, x: 30 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+  // Added min-w-0 to prevent the grid column from breaking its width
+  className="relative w-full flex flex-col justify-center min-w-0"
+>
+  <Swiper
+    modules={[Autoplay, Pagination]}
+    spaceBetween={30}
+    slidesPerView={1.2}
+    loop={true}
+    speed={1000}
+    autoplay={{
+      delay: 2500,
+      disableOnInteraction: false,
+    }}
+    pagination={{ clickable: true }}
+    breakpoints={{
+      320: { slidesPerView: 1, spaceBetween: 20 },
+      768: { slidesPerView: 1.1, spaceBetween: 30 },
+      1024: { slidesPerView: 1.25, spaceBetween: 40 },
+    }}
+    // REMOVED !overflow-visible to fix the left overlap issue
+    className="w-full h-full pb-16"
+  >
+    {portfolioWorks.length > 0 ? (
+      portfolioWorks.map((work) => (
+        <SwiperSlide key={work._id} className="pt-2">
+          {/* Clean, Simple Image Card */}
+          <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] rounded-[24px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-slate-100 group">
+            <img
+              src={work.image}
+              alt={work.title}
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+        </SwiperSlide>
+      ))
+    ) : (
+      // Loading Skeleton
+      <SwiperSlide>
+        <div className="bg-slate-100 rounded-[24px] aspect-[16/10] flex items-center justify-center">
+          <div className="w-12 h-12 border-4 border-[#d68029]/30 border-t-[#d68029] rounded-full animate-spin" />
+        </div>
+      </SwiperSlide>
+    )}
+  </Swiper>
+</motion.div>
           </div>
         </Row>
       </Section>
