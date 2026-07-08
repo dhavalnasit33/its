@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import {
   FiCheck,
@@ -50,7 +50,7 @@ import {
   FaChartLine,
   FaStar,
 } from "react-icons/fa";
-
+import { useRouter } from "next/navigation"
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Hero from "@/components/home/Hero";
@@ -64,11 +64,18 @@ import EngagementModels from "@/components/home/EngagementModel";
 import TechnologyShowcase from "@/components/home/TechnologyShowcase";
 import WhyChoosePremium from "@/components/home/WhyChoosePremium";
 import apiService from "@/lib/apiService";
-import { HomePageData, SingleResponse, WhyChooseItem, CreativeWork, PaginatedResponse } from "@/types";
+import {
+  HomePageData,
+  SingleResponse,
+  WhyChooseItem,
+  CreativeWork,
+  PaginatedResponse,
+} from "@/types";
 import Button from "@/components/Button";
 import FAQ from "@/components/FAQ";
 
 const MapPin = ({ top, left }: { top: string; left: string }) => (
+  
   <div
     className="absolute -translate-x-1/2 -translate-y-full group cursor-pointer"
     style={{ top, left }}
@@ -119,7 +126,8 @@ const homeFAQs = [
       "We follow an agile development approach that includes discovery, planning, UI/UX design, development, testing, deployment, and post-launch support. Clients receive regular progress updates and milestone reviews throughout the project.",
   },
   {
-    question: "How do you ensure the security of our application and business data?",
+    question:
+      "How do you ensure the security of our application and business data?",
     answer:
       "Security is integrated into every stage of development. We implement secure coding standards, encrypted data storage, role-based access control, authentication, regular security reviews, and NDA agreements whenever required.",
   },
@@ -134,7 +142,8 @@ const homeFAQs = [
       "Yes. We offer ongoing maintenance, security updates, performance optimization, bug fixes, cloud monitoring, feature enhancements, and long-term technical support to keep your software running efficiently.",
   },
   {
-    question: "How long does it typically take to develop a custom software solution?",
+    question:
+      "How long does it typically take to develop a custom software solution?",
     answer:
       "Project timelines depend on complexity, features, and integrations. After understanding your requirements, we provide a detailed project roadmap with estimated milestones, delivery schedule, and development timeline.",
   },
@@ -144,7 +153,8 @@ const homeFAQs = [
       "Project pricing is based on your business requirements, project scope, technology stack, integrations, and timeline. After an initial consultation, we provide a transparent proposal with detailed estimates and deliverables.",
   },
   {
-    question: "Why should businesses choose Inspire Techno Solution as their technology partner?",
+    question:
+      "Why should businesses choose Inspire Techno Solution as their technology partner?",
     answer:
       "We combine technical expertise, AI innovation, scalable development practices, transparent communication, and long-term support to deliver secure, high-performance digital solutions that help businesses innovate, grow, and stay competitive.",
   },
@@ -209,41 +219,6 @@ const AIConsultingIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const WebDevIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={props.className}
-  >
-    <rect x="3" y="3" width="18" height="15" rx="2" />
-    <line x1="3" y1="8" x2="21" y2="8" />
-    <line x1="9" y1="8" x2="9" y2="18" />
-    <circle cx="6" cy="5.5" r="0.5" fill="currentColor" />
-    <circle cx="8" cy="5.5" r="0.5" fill="currentColor" />
-    <circle cx="10" cy="5.5" r="0.5" fill="currentColor" />
-  </svg>
-);
-
-const MobileAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={props.className}
-  >
-    <rect x="5" y="2" width="14" height="20" rx="2.5" />
-    <line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="3" />
-    <rect x="8" y="5" width="8" height="10" rx="1" strokeWidth="1.5" />
-    <circle cx="12" cy="10" r="1.5" strokeWidth="1.5" />
-  </svg>
-);
 
 const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -264,111 +239,74 @@ const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 // --- NEW DATA FOR AI EXPERTISE & PORTFOLIO ---
-const aiExpertise = [
+const aiServices = [
   {
-    category: "Generative AI & LLMs",
-    icon: FiMessageSquare,
+    title: "AI Chatbot Development",
+    route: "/ai-chatbot-development",
+    icon: ChatbotIcon,
     description:
-      "Implementing state-of-the-art language models for intelligent text generation, summarization, and comprehension.",
-    tools: [
-      "OpenAI GPT-4",
-      "Anthropic Claude 3",
-      "Meta Llama 3",
-      "Google Gemini",
+      "We design intelligent AI assistants that automate customer interactions, improve support efficiency, and deliver natural conversations across web, mobile, and messaging platforms.",
+    highlights: [
+      "Enterprise AI assistants",
+      "Customer support automation",
+      "Internal knowledge assistants",
+      "Multi-channel chatbot deployment",
+      "LLM-powered conversational experiences",
     ],
-    color: "from-blue-500/20 to-indigo-500/10",
+    color: "from-blue-600/10 via-indigo-600/5 to-transparent",
+    hoverBg: "hover:bg-blue-950/20",
+    borderColor: "group-hover:border-blue-500/30",
+    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(59,130,246,0.25)]",
+    iconBg: "bg-blue-500/10 border-blue-500/20",
     iconColor: "text-blue-400",
+    cta: "Explore Service",
   },
   {
-    category: "RAG & Vector Databases",
-    icon: FiDatabase,
+    title: "AI Product Development",
+    route: "/ai-product-development",
+    icon: CustomAIDevIcon,
     description:
-      "Enhancing AI accuracy by securely connecting LLMs to your private enterprise data and knowledge bases.",
-    tools: ["Pinecone", "Milvus", "LangChain", "LlamaIndex"],
-    color: "from-[#d68029]/20 to-[#d68029]/5",
+      "From concept to deployment, we build production-ready AI products that solve real business challenges with modern machine learning and generative AI technologies.",
+    highlights: [
+      "End-to-end AI product engineering",
+      "LLM integration",
+      "Custom AI applications",
+      "AI workflow automation",
+      "Scalable production systems",
+    ],
+    color: "from-[#d68029]/15 via-orange-600/5 to-transparent",
+    hoverBg: "hover:bg-amber-950/10",
+    borderColor: "group-hover:border-[#d68029]/30",
+    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(214,128,41,0.25)]",
+    iconBg: "bg-[#d68029]/10 border-[#d68029]/20",
     iconColor: "text-[#d68029]",
+    cta: "View Solution",
   },
   {
-    category: "AI Agents & Automation",
-    icon: FiCpu,
+    title: "AI Strategy Consulting",
+    route: "/ai-strategy-consulting",
+    icon: AIConsultingIcon,
     description:
-      "Building autonomous AI agents that plan, execute, and automate complex multi-step workflows with zero human intervention.",
-    tools: ["AutoGPT", "CrewAI", "Zapier AI", "Custom Agents"],
-    color: "from-emerald-500/20 to-teal-500/10",
+      "We help organizations identify high-impact AI opportunities, create implementation strategies, and build practical roadmaps for long-term business value.",
+    highlights: [
+      "AI transformation roadmap",
+      "AI readiness assessment",
+      "Use-case discovery",
+      "Technology selection",
+      "ROI planning",
+      "Enterprise AI adoption",
+    ],
+    color: "from-emerald-600/10 via-teal-600/5 to-transparent",
+    hoverBg: "hover:bg-emerald-950/10",
+    borderColor: "group-hover:border-emerald-500/30",
+    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(16,185,129,0.25)]",
+    iconBg: "bg-emerald-500/10 border-emerald-500/20",
     iconColor: "text-emerald-400",
-  },
-  {
-    category: "Computer Vision",
-    icon: FiMonitor,
-    description:
-      "Extracting meaningful information from digital images, videos, and visual inputs for automated analysis.",
-    tools: ["OpenCV", "YOLO", "TensorFlow", "PyTorch"],
-    color: "from-purple-500/20 to-fuchsia-500/10",
-    iconColor: "text-purple-400",
+    cta: "Explore Service",
   },
 ];
 
-const portfolioProjects = [
-  {
-    title: "OneChat AI",
-    category: "AI SaaS Platform",
-    description:
-      "A powerful all-in-one AI platform built with Flutter Web, Node.js, and React. Features include AI chat, image generation, video generation, document processing, PDF tools, AI writing, Google Authentication, Stripe subscriptions, affiliate system, SEO optimization, and dozens of integrated AI models with a modern, scalable architecture.",
-    icon: FiCpu,
-    stack: [
-      "Flutter Web",
-      "Node.js",
-      "React",
-      "Next.js",
-      "OpenAI",
-      "Stripe",
-      "Google OAuth",
-      "AWS",
-    ],
-    image: "portfolio/onechat-ai.png",
-    theme: "blue",
-  },
 
-  {
-    title: "MyCRA",
-    category: "E-Commerce Platform",
-    description:
-      "A modern e-commerce platform designed for a seamless online shopping experience. Developed with secure authentication, Google Login, Stripe payment integration, responsive product catalog, order management, customer accounts, and a scalable backend for high-performance online retail operations.",
-    icon: FiShoppingBag,
-    stack: [
-      "React",
-      "Node.js",
-      "MongoDB",
-      "Stripe",
-      "Google OAuth",
-      "Express.js",
-      "REST API",
-    ],
-    image:
-      "https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2070&auto=format&fit=crop",
-    theme: "orange",
-  },
-
-  {
-    title: "Unity Healthcare",
-    category: "Healthcare E-Commerce",
-    description:
-      "A healthcare commerce platform built using Next.js and Node.js for selling healthcare and wellness products online. Includes secure user authentication, product management, shopping cart, online payments, order tracking, admin dashboard, SEO optimization, and a fast, responsive user experience.",
-    icon: FiHeart,
-    stack: [
-      "Next.js",
-      "Node.js",
-      "React",
-      "MongoDB",
-      "Stripe",
-      "Tailwind CSS",
-      "REST API",
-    ],
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop",
-    theme: "emerald",
-  },
-];
 
 export default function TestPagesClient() {
   const { navStructure } = useWebsiteSettings();
@@ -377,10 +315,19 @@ export default function TestPagesClient() {
   const [homePageData, setHomePageData] = React.useState<HomePageData | null>(
     null,
   );
+
+  const router = useRouter();
   const [whyChooseData, setWhyChooseData] = React.useState<WhyChooseItem[]>([]);
-  const [portfolioWorks, setPortfolioWorks] = React.useState<CreativeWork[]>([]);
+  const [portfolioWorks, setPortfolioWorks] = React.useState<CreativeWork[]>(
+    [],
+  );
   const [activeSlide, setActiveSlide] = React.useState(0);
-  const sliderTimerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+  const [hoveredService, setHoveredService] = React.useState<number | null>(
+    null,
+  );
+  const sliderTimerRef = React.useRef<ReturnType<typeof setInterval> | null>(
+    null,
+  );
 
   const stepDeliverables = [
     [
@@ -450,11 +397,13 @@ export default function TestPagesClient() {
 
     // Fetch web-development creative works for portfolio slider
     const fetchPortfolioWorks = async () => {
-    
       try {
-        const res = await apiService<PaginatedResponse<CreativeWork>>("/creative-work", {
-          params: {   limit: 12, category: "6a0c58a850ca8a2da030dc58" },
-        });
+        const res = await apiService<PaginatedResponse<CreativeWork>>(
+          "/creative-work",
+          {
+            params: { limit: 12, category: "6a0c58a850ca8a2da030dc58" },
+          },
+        );
         if (res.success && res.data?.length) {
           setPortfolioWorks(res.data);
         }
@@ -1343,80 +1292,253 @@ export default function TestPagesClient() {
         </div>
       </Section>
 
-      {/* ── NEW SECTION: AI EXPERTISE ── */}
-      <Section className="bg-[#030812] py-24 relative overflow-hidden">
-        {/* Subtle background grids/glows for premium AI feel */}
+      {/* ── NEW SECTION: AI EXPERTISE (3D Holographic Console Concept) ── */}
+      <Section className="bg-[#030812] pt-24 pb-32 lg:pt-32 lg:pb-40 relative overflow-hidden">
+        {/* Subtle background grids/glows */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute w-full h-full bg-[radial-gradient(circle_at_top,rgba(214,128,41,0.05)_0%,transparent_50%)]" />
+          <div className="absolute w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(214,128,41,0.08)_0%,transparent_70%)]" />
           <div
             className="absolute inset-0 opacity-[0.03]"
             style={{
-              backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
-              backgroundSize: "32px 32px",
+              backgroundImage:
+                "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+              transform:
+                "perspective(1000px) rotateX(60deg) translateY(-100px) translateZ(-200px)",
             }}
           />
         </div>
 
-        <Row className="relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-[#d68029] text-xs font-extrabold uppercase tracking-widest block mb-3">
-              AI Capabilities
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-[40px] font-extrabold text-white leading-[1.2]">
-              Our <span className="text-[#d68029]">AI Expertise</span> &
-              Technologies
-            </h2>
-            <p className="text-slate-400 fonts_16 mt-4">
-              We leverage state-of-the-art artificial intelligence models,
-              frameworks, and infrastructure to build intelligent,
-              next-generation applications.
-            </p>
-          </div>
+        {/* IIFE to safely use local variables for the interactive state without cluttering your main component */}
+        {(() => {
+          // Fallback to 0 so the hologram is never empty
+          const activeIndex = hoveredService !== null ? hoveredService : 0;
+          const activeData = aiServices[activeIndex];
+          const ActiveIcon = activeData.icon;
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
-            {aiExpertise.map((item, idx) => {
-              const Icon = item.icon;
-              return (
+          return (
+            <Row className="relative z-10">
+              {/* Section Header */}
+              <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
                 <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="group relative cursor-pointer bg-[#0a1220]/80 backdrop-blur-md border border-slate-800 rounded-[24px] p-8 hover:bg-[#0c182d] hover:border-slate-700 transition-all duration-300"
+                  className="inline-block mb-4"
                 >
-                  <div className="flex items-start gap-5 mb-6">
-                    <div
-                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center shrink-0 border border-white/5`}
-                    >
-                      <Icon className={`w-7 h-7 ${item.iconColor}`} />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#d68029] transition-colors duration-300">
-                        {item.category}
-                      </h3>
-                      <p className="text-slate-400 text-sm leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Tech Chips */}
-                  <div className="flex flex-wrap gap-2.5">
-                    {item.tools.map((tool, toolIdx) => (
-                      <span
-                        key={toolIdx}
-                        className="px-3 py-1.5 cursor-pointer rounded-lg bg-slate-800/50 border border-slate-700/50 text-[12px] font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors cursor-default"
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
+                  <span className="px-5 py-2 rounded-full bg-[#d68029]/10 border border-[#d68029]/30 text-[#d68029] text-xs font-extrabold uppercase tracking-widest backdrop-blur-md">
+                    Advanced AI Systems
+                  </span>
                 </motion.div>
-              );
-            })}
-          </div>
-        </Row>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+                  Intelligent{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d68029] to-[#ffaa55]">
+                    Core Capabilities
+                  </span>
+                </h2>
+                <p className="text-slate-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+                  Hover over our terminal to project real-time capabilities into
+                  our 3D visualization core.
+                </p>
+              </div>
+
+              {/* Split Layout: 3D Hologram (Left) + Terminal Menu (Right) */}
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 w-full max-w-[1200px] mx-auto">
+                {/* ── LEFT: 3D HOLOGRAPHIC CORE ── */}
+                <div
+                  className="w-full lg:w-1/2 flex items-center justify-center min-h-[400px] sm:min-h-[500px]"
+                  style={{ perspective: "1500px" }}
+                >
+                  <motion.div
+                    animate={{
+                      rotateX: [60, 63, 60],
+                      rotateZ: [-35, -32, -35],
+                      y: [0, -15, 0],
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px]"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {/* Depth Layer 0: Shadow Glow */}
+                    <div
+                      className="absolute inset-0 bg-[#d68029]/30 blur-[80px] rounded-full"
+                      style={{ transform: "translateZ(-120px)" }}
+                    />
+
+                    {/* Depth Layer 1: Base Processor Plate */}
+                    <div
+                      className="absolute inset-0 bg-[#061020]/80 border border-slate-700/50 rounded-[40px] backdrop-blur-xl shadow-2xl"
+                      style={{ transform: "translateZ(-40px)" }}
+                    >
+                      {/* Inner Tech Grid */}
+                      <div className="absolute inset-4 border border-slate-600/20 rounded-[28px] bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-[size:20px_20px] opacity-10" />
+                    </div>
+
+                    {/* Depth Layer 2: Orbiting Data Rings */}
+                    <motion.div
+                      animate={{ rotateZ: 360 }}
+                      transition={{
+                        duration: 30,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="absolute -inset-10 border-[2px] border-dashed border-[#d68029]/20 rounded-full"
+                      style={{ transform: "translateZ(10px)" }}
+                    />
+                    <motion.div
+                      animate={{ rotateZ: -360 }}
+                      transition={{
+                        duration: 40,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="absolute -inset-20 border border-slate-600/30 rounded-full"
+                      style={{ transform: "translateZ(20px)" }}
+                    >
+                      <div className="absolute top-0 left-1/2 w-2 h-2 bg-[#d68029] rounded-full shadow-[0_0_10px_#d68029] -translate-x-1/2 -translate-y-1/2" />
+                    </motion.div>
+
+                    {/* Depth Layer 3: Glass Prism */}
+                    <div
+                      className="absolute inset-8 bg-[#d68029]/5 border border-[#d68029]/30 rounded-[30px] backdrop-blur-md"
+                      style={{ transform: "translateZ(50px)" }}
+                    />
+
+                
+                    {/* Depth Layer 4: Dynamic Projected Content (The Hologram) */}
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeIndex}
+                        initial={{
+                          opacity: 0,
+                          scale: 0.8,
+                          filter: "blur(10px)",
+                          z: 120,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          scale: 1,
+                          filter: "blur(0px)",
+                          z: 100,
+                        }}
+                        exit={{
+                          opacity: 0,
+                          scale: 1.2,
+                          filter: "blur(10px)",
+                          z: 120,
+                        }}
+                        transition={{ duration: 0.4 }}
+                        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                        // style={{ transform: "translateZ(150px)" }}
+                      >
+                        {/* 3D Icon Container */}
+                        <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-[24px] bg-[#0d1b2a]/90 border border-[#d68029]/50 flex items-center justify-center shadow-[0_0_40px_rgba(214,128,41,0.5)] backdrop-blur-2xl relative overflow-hidden top-15 right-10">
+                          {/* Inner light sweep */}
+                          <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite]" />
+                          <ActiveIcon className="w-12 h-12 sm:w-14 sm:h-14 text-[#d68029]" />
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </motion.div>
+                </div>
+
+                {/* ── RIGHT: INTERACTIVE TERMINAL MENU ── */}
+                <div className="w-full lg:w-1/2 flex flex-col gap-4 relative z-20">
+                  {aiServices.map((service, idx) => {
+                    const isActive = activeIndex === idx;
+
+                    return (
+                      <div
+  key={idx}
+  onMouseEnter={() => setHoveredService(idx)}
+  onClick={() => router.push(service.route)}
+  className={`relative cursor-pointer transition-all duration-500 overflow-hidden rounded-2xl ${
+    isActive
+      ? "bg-slate-900/50 border border-slate-700/50 backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
+      : "bg-transparent border border-transparent hover:bg-slate-900/20"
+  }`}
+>
+                        {/* Active Accent Line */}
+                        <div
+                          className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-500 ${
+                            isActive
+                              ? "bg-[#d68029] shadow-[0_0_15px_#d68029]"
+                              : "bg-slate-800"
+                          }`}
+                        />
+
+                        {/* Always Visible Header */}
+                        <div className="flex items-center gap-6 p-6 sm:p-8">
+                          <span
+                            className={`text-xl font-black font-mono transition-colors duration-300 ${
+                              isActive ? "text-[#d68029]" : "text-slate-700"
+                            }`}
+                          >
+                            0{idx + 1}
+                          </span>
+                          <h3
+                            className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${
+                              isActive ? "text-white" : "text-slate-400"
+                            }`}
+                          >
+                            {service.title}
+                          </h3>
+                        </div>
+
+                        {/* Expandable Content Panel */}
+                        <AnimatePresence>
+                          {isActive && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden px-6 sm:px-8 pb-8"
+                            >
+                              <div className="pl-12 border-l border-slate-800 ml-[11px]">
+                                <p className="text-slate-400 text-[15px] leading-relaxed mb-6">
+                                  {service.description}
+                                </p>
+
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                                  {service.highlights
+                                    .slice(0, 4)
+                                    .map((item, i) => (
+                                      <li
+                                        key={i}
+                                        className="flex items-start gap-2.5 text-sm text-slate-300"
+                                      >
+                                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#d68029] shrink-0 shadow-[0_0_5px_#d68029]" />
+                                        <span className="leading-tight">
+                                          {item}
+                                        </span>
+                                      </li>
+                                    ))}
+                                </ul>
+
+                                <a
+                                  href={service.route}
+                                  className="inline-flex items-center gap-2 text-[#d68029] text-sm font-bold uppercase tracking-wider hover:text-white transition-colors group/btn"
+                                >
+                                  {service.cta}
+                                  <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
+                                </a>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Row>
+          );
+        })()}
       </Section>
 
       {/* ── SECTION 4: OUR DEVELOPMENT PROCESS & INDUSTRIES / CASE STUDIES ── */}
@@ -2065,7 +2187,6 @@ export default function TestPagesClient() {
 
         <Row>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
-
             {/* ── LEFT CONTENT COLUMN ── */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -2085,8 +2206,8 @@ export default function TestPagesClient() {
               {/* Main Headline */}
               <h2 className="text-[clamp(28px,4vw,46px)] font-extrabold text-[#0d1b2a] leading-[1.15] tracking-tight mb-6">
                 Building Digital Products{" "}
-                <span className="text-[#d68029]">That Drive</span>{" "}
-                Business Growth
+                <span className="text-[#d68029]">That Drive</span> Business
+                Growth
               </h2>
 
               {/* Supporting Paragraph */}
@@ -2129,7 +2250,10 @@ export default function TestPagesClient() {
                     >
                       {/* Icon Circle */}
                       <div className="w-10 h-10 rounded-full bg-[#d68029]/8 border border-[#d68029]/15 flex items-center justify-center shrink-0 group-hover:bg-[#d68029]/15 transition-colors duration-300">
-                        <Icon className="w-4.5 h-4.5 text-[#d68029]" strokeWidth={1.8} />
+                        <Icon
+                          className="w-4.5 h-4.5 text-[#d68029]"
+                          strokeWidth={1.8}
+                        />
                       </div>
                       <span className="text-[14px] font-semibold text-[#0d1b2a] leading-tight">
                         {item.label}
@@ -2153,12 +2277,16 @@ export default function TestPagesClient() {
                     background: "#D68029",
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.background = "#0D1B2A";
-                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 30px rgba(13,27,42,0.35)";
+                    (e.currentTarget as HTMLAnchorElement).style.background =
+                      "#0D1B2A";
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                      "0 8px 30px rgba(13,27,42,0.35)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.background = "#D68029";
-                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 30px rgba(214,128,41,0.35)";
+                    (e.currentTarget as HTMLAnchorElement).style.background =
+                      "#D68029";
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                      "0 8px 30px rgba(214,128,41,0.35)";
                   }}
                 >
                   Explore Portfolio
@@ -2182,19 +2310,15 @@ export default function TestPagesClient() {
 
               {/* Laptop frame wrapper */}
               <div className="relative w-full max-w-[620px] mx-auto">
-
                 {/* ─── Laptop body ─── */}
                 <div className="relative w-full">
-
                   {/* Screen bezel */}
                   <div className="relative bg-[#1a1a2e] rounded-t-[16px] rounded-b-[4px] shadow-2xl border border-[#2d2d4e] pt-[5%] px-[3.5%] pb-[2%]">
-
                     {/* Camera notch */}
                     <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#333355]" />
 
                     {/* Screen area */}
                     <div className="relative w-full aspect-[16/10] bg-gray-900 rounded-[8px] overflow-hidden shadow-inner">
-
                       {/* Slides */}
                       {portfolioWorks.length > 0 ? (
                         portfolioWorks.map((work, idx) => (
@@ -2213,8 +2337,12 @@ export default function TestPagesClient() {
                             />
                             {/* Project title overlay at bottom */}
                             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-4">
-                              <p className="text-white text-sm font-bold leading-tight">{work.title}</p>
-                              <p className="text-[#d68029] text-[11px] font-semibold uppercase tracking-wider mt-0.5">Web Development</p>
+                              <p className="text-white text-sm font-bold leading-tight">
+                                {work.title}
+                              </p>
+                              <p className="text-[#d68029] text-[11px] font-semibold uppercase tracking-wider mt-0.5">
+                                Web Development
+                              </p>
                             </div>
                           </div>
                         ))
@@ -2223,7 +2351,9 @@ export default function TestPagesClient() {
                         <div className="absolute inset-0 bg-gradient-to-br from-[#0d1b2a] to-[#1a2c42] flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 border-2 border-[#d68029]/30 border-t-[#d68029] rounded-full animate-spin mx-auto mb-3" />
-                            <p className="text-slate-500 text-xs">Loading projects...</p>
+                            <p className="text-slate-500 text-xs">
+                              Loading projects...
+                            </p>
                           </div>
                         </div>
                       )}
@@ -2261,9 +2391,12 @@ export default function TestPagesClient() {
                         key={dotIdx}
                         onClick={() => {
                           setActiveSlide(dotIdx);
-                          if (sliderTimerRef.current) clearInterval(sliderTimerRef.current);
+                          if (sliderTimerRef.current)
+                            clearInterval(sliderTimerRef.current);
                           sliderTimerRef.current = setInterval(() => {
-                            setActiveSlide((prev) => (prev + 1) % portfolioWorks.length);
+                            setActiveSlide(
+                              (prev) => (prev + 1) % portfolioWorks.length,
+                            );
                           }, 3500);
                         }}
                         className={`transition-all duration-300 rounded-full cursor-pointer ${
@@ -2296,10 +2429,8 @@ export default function TestPagesClient() {
                 )}
               </div>
             </motion.div>
-
           </div>
         </Row>
-
       </Section>
 
       <TechnologyShowcase />
