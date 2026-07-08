@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import {
@@ -42,6 +42,7 @@ import {
   FiExternalLink,
   FiGithub,
   FiShoppingBag,
+  FiArrowRight,
 } from "react-icons/fi";
 import {
   FaLongArrowAltRight,
@@ -63,7 +64,7 @@ import EngagementModels from "@/components/home/EngagementModel";
 import TechnologyShowcase from "@/components/home/TechnologyShowcase";
 import WhyChoosePremium from "@/components/home/WhyChoosePremium";
 import apiService from "@/lib/apiService";
-import { HomePageData, SingleResponse, WhyChooseItem } from "@/types";
+import { HomePageData, SingleResponse, WhyChooseItem, CreativeWork, PaginatedResponse } from "@/types";
 import Button from "@/components/Button";
 import FAQ from "@/components/FAQ";
 
@@ -86,88 +87,66 @@ const MapPin = ({ top, left }: { top: string; left: string }) => (
   </div>
 );
 
-const trainingFAQs = [
+const homeFAQs = [
   {
-    question: "What types of IT training programs do you offer?",
+    question: "What types of software development services do you offer?",
     answer:
-      "We offer comprehensive, job-oriented training courses across multiple disciplines including Full-Stack Web Development (React.js, Next.js, Node.js, Express, MongoDB), Mobile App Development (Flutter, React Native), UI/UX Design and Prototyping (Figma, Adobe XD), PHP & Laravel Development, and Digital Marketing & SEO. All courses are taught by industry experts with hands-on labs.",
+      "We provide end-to-end software development services including AI solutions, custom software development, web applications, mobile apps, enterprise software, SaaS platforms, cloud solutions, UI/UX design, and business automation tailored to your requirements.",
   },
   {
-    question: "Who can apply for your internship programs?",
+    question: "Can you develop custom AI solutions for our business?",
     answer:
-      "Our internship programs are open to college students, recent graduates, self-taught developers, and career switchers looking to build their professional portfolios. We accept applicants with basic programming or design knowledge who want to gain hands-on, real-world experience working on live client projects.",
+      "Yes. We design and develop custom AI solutions such as AI chatbots, virtual assistants, workflow automation, document processing, recommendation engines, generative AI applications, and LLM-powered business platforms that align with your business goals.",
   },
   {
-    question: "Do you provide placement assistance after course completion?",
+    question: "How do you ensure the software can scale as our business grows?",
     answer:
-      "Yes, we provide 100% placement assistance. This includes resume-building workshops, career counseling sessions, mock interview preparation, soft skills improvement, and direct placement opportunities through our network of hiring partners.",
+      "Our solutions are built using scalable architectures, cloud-native technologies, and industry best practices. This allows your application to support increasing users, data, and business growth without major redevelopment.",
   },
   {
-    question: "What is the duration of the training and internship courses?",
+    question: "Can you work with our existing software or legacy systems?",
     answer:
-      "The duration varies depending on the course. On average, our technical training courses run for 3 to 6 months, offering flexible batch timings to accommodate students and working professionals. Our internships typically range from 2 to 6 months.",
+      "Absolutely. We can modernize legacy applications, integrate with existing systems, migrate outdated platforms, and add new features while minimizing disruption to your business operations.",
   },
   {
-    question: "Will I work on live client projects during the internship?",
+    question: "What technologies do you specialize in?",
     answer:
-      "Absolutely. Unlike standard classroom assignments, our internship programs focus entirely on practical experience. You will work alongside senior engineers on live client websites, mobile apps, and digital marketing campaigns, helping you build a high-quality portfolio.",
+      "Our team specializes in React, Next.js, Node.js, Flutter, Python, Laravel, .NET, MongoDB, PostgreSQL, AWS, Docker, OpenAI, Gemini, Claude, LangChain, and other modern web, mobile, cloud, and AI technologies.",
   },
   {
-    question: "Will I receive a certificate of completion?",
+    question: "How do you manage the software development process?",
     answer:
-      "Yes, upon successful completion of your training or internship program, you will be awarded an industry-recognized Certificate of Completion. For interns, we also provide a detailed letter of recommendation highlighting the specific projects you worked on and your key technical contributions.",
+      "We follow an agile development approach that includes discovery, planning, UI/UX design, development, testing, deployment, and post-launch support. Clients receive regular progress updates and milestone reviews throughout the project.",
   },
   {
-    question: "What is the fee structure for the courses?",
+    question: "How do you ensure the security of our application and business data?",
     answer:
-      "Our fee structure is highly competitive and designed to be affordable for students. We offer flexible payment plans, installment options, and special discounts for early registration. Please contact our support team or fill out the enquiry form for detailed pricing on specific courses.",
+      "Security is integrated into every stage of development. We implement secure coding standards, encrypted data storage, role-based access control, authentication, regular security reviews, and NDA agreements whenever required.",
   },
   {
-    question: "Are the classes conducted online or offline?",
+    question: "Will we have a dedicated development team for our project?",
     answer:
-      "We offer hybrid options to suit your needs. You can choose to attend in-person classes at our institute for hands-on, face-to-face learning and collaboration, or participate in interactive online live sessions if you prefer learning from home.",
+      "Yes. Depending on your project scope, you'll work with a dedicated team that may include a project manager, solution architect, UI/UX designer, developers, QA engineers, and technical consultants to ensure smooth project execution.",
   },
   {
-    question:
-      "Do I need a technical background or computer science degree to enroll?",
+    question: "Do you provide maintenance and technical support after launch?",
     answer:
-      "No, a technical background or a CS degree is not required. Our IT training courses are structured from basic to advanced levels, making them accessible to beginners, self-taught individuals, and career switchers.",
+      "Yes. We offer ongoing maintenance, security updates, performance optimization, bug fixes, cloud monitoring, feature enhancements, and long-term technical support to keep your software running efficiently.",
   },
   {
-    question:
-      "Is there a coding test or interview to qualify for the internship program?",
+    question: "How long does it typically take to develop a custom software solution?",
     answer:
-      "We conduct a basic assessment or fit-call interview to evaluate your fundamental knowledge and passion. This helps us place you in the correct track (Web, Mobile, Design, or Marketing) to ensure you get the maximum benefit from the internship.",
-  },
-  // --- NEW SEO-FRIENDLY FAQS ADDED BELOW ---
-  {
-    question:
-      "Do you offer weekend batches or flexible timings for working professionals?",
-    answer:
-      "Yes, we offer flexible learning options, including weekend batches and evening classes. These are specifically designed for working professionals who want to upgrade their skills in software development, mobile app creation, or digital marketing without leaving their current jobs.",
+      "Project timelines depend on complexity, features, and integrations. After understanding your requirements, we provide a detailed project roadmap with estimated milestones, delivery schedule, and development timeline.",
   },
   {
-    question: "What makes your IT training institute different from others?",
+    question: "How do you estimate the cost of a software development project?",
     answer:
-      "Our IT training institute focuses on 100% practical, project-based learning. Instead of just theoretical concepts, our industry-expert trainers guide you through hands-on projects, sandbox environments, and corporate-level assignments, ensuring you are completely job-ready for the modern tech industry upon graduation.",
+      "Project pricing is based on your business requirements, project scope, technology stack, integrations, and timeline. After an initial consultation, we provide a transparent proposal with detailed estimates and deliverables.",
   },
   {
-    question:
-      "Do you provide portfolio building and interview preparation support?",
+    question: "Why should businesses choose Inspire Techno Solution as their technology partner?",
     answer:
-      "Yes, comprehensive portfolio building is a core part of our UI/UX design, web development, and digital marketing training. You will complete multiple capstone projects to showcase to employers. Additionally, we conduct technical mock interviews and HR screening prep to help you stand out to hiring managers.",
-  },
-  {
-    question:
-      "Are these certification courses valid for jobs abroad or remote tech roles?",
-    answer:
-      "Absolutely. The modern tech stacks we teach—such as React, Node.js, Flutter, and UI/UX design—are highly sought after by employers globally. The industry-recognized Certificate of Completion you receive adds significant value to your resume, making you a strong candidate for both local and remote tech jobs.",
-  },
-  {
-    question:
-      "Can I switch to a career in IT if I am from a non-technical background?",
-    answer:
-      "Absolutely! Many of our most successful students and interns come from non-IT backgrounds like commerce, arts, or non-computer engineering. Our foundational modules in software development, UI/UX design, and digital marketing are tailored to help career switchers build practical skills from scratch. With dedicated mentorship, step-by-step guidance, and real-world projects, you can smoothly transition into a high-paying tech career regardless of your previous degree.",
+      "We combine technical expertise, AI innovation, scalable development practices, transparent communication, and long-term support to deliver secure, high-performance digital solutions that help businesses innovate, grow, and stay competitive.",
   },
 ];
 
@@ -399,13 +378,41 @@ export default function TestPagesClient() {
     null,
   );
   const [whyChooseData, setWhyChooseData] = React.useState<WhyChooseItem[]>([]);
+  const [portfolioWorks, setPortfolioWorks] = React.useState<CreativeWork[]>([]);
+  const [activeSlide, setActiveSlide] = React.useState(0);
+  const sliderTimerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   const stepDeliverables = [
-    ["Requirement Analysis", "Target Audience Definition", "Tech Feasibility Study", "Consulting Report"],
-    ["Project Roadmap Design", "Wireframes & UI UX Mockups", "System Architecture Plan", "Sprint Planning"],
-    ["Responsive Frontend Coding", "Robust Backend Systems", "AI Model / LLM Integration", "API Development"],
-    ["QA Testing & Bug Fixes", "Security Auditing", "CI/CD Cloud Deployment", "Performance Optimization"],
-    ["24/7 Monitoring & Support", "Continuous Backups", "SLA Maintenance", "Feature Roadmap Planning"]
+    [
+      "Requirement Analysis",
+      "Target Audience Definition",
+      "Tech Feasibility Study",
+      "Consulting Report",
+    ],
+    [
+      "Project Roadmap Design",
+      "Wireframes & UI UX Mockups",
+      "System Architecture Plan",
+      "Sprint Planning",
+    ],
+    [
+      "Responsive Frontend Coding",
+      "Robust Backend Systems",
+      "AI Model / LLM Integration",
+      "API Development",
+    ],
+    [
+      "QA Testing & Bug Fixes",
+      "Security Auditing",
+      "CI/CD Cloud Deployment",
+      "Performance Optimization",
+    ],
+    [
+      "24/7 Monitoring & Support",
+      "Continuous Backups",
+      "SLA Maintenance",
+      "Feature Roadmap Planning",
+    ],
   ];
 
   const stepDurations = [
@@ -413,7 +420,7 @@ export default function TestPagesClient() {
     "2 - 3 Weeks",
     "4 - 8 Weeks",
     "2 - 3 Weeks",
-    "Ongoing / SLA"
+    "Ongoing / SLA",
   ];
 
   React.useEffect(() => {
@@ -440,7 +447,34 @@ export default function TestPagesClient() {
       }
     };
     fetchWhyChoose();
+
+    // Fetch web-development creative works for portfolio slider
+    const fetchPortfolioWorks = async () => {
+    
+      try {
+        const res = await apiService<PaginatedResponse<CreativeWork>>("/creative-work", {
+          params: {   limit: 12, category: "6a0c58a850ca8a2da030dc58" },
+        });
+        if (res.success && res.data?.length) {
+          setPortfolioWorks(res.data);
+        }
+      } catch (err) {
+        console.error("Error fetching portfolio works:", err);
+      }
+    };
+    fetchPortfolioWorks();
   }, []);
+
+  // Auto-play portfolio slider
+  useEffect(() => {
+    if (portfolioWorks.length <= 1) return;
+    sliderTimerRef.current = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % portfolioWorks.length);
+    }, 3500);
+    return () => {
+      if (sliderTimerRef.current) clearInterval(sliderTimerRef.current);
+    };
+  }, [portfolioWorks.length]);
 
   const caseStudies = [
     {
@@ -1027,7 +1061,8 @@ export default function TestPagesClient() {
                 {/* Row 1 - 2 Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[48%]">
                   {/* Web Dev */}
-                  <motion.div
+                  <motion.a
+                    href="/reactjs-development"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -1053,10 +1088,11 @@ export default function TestPagesClient() {
                     <div className="mt-4 flex items-center">
                       <FaLongArrowAltRight className="w-4 h-4 text-[#d68029] group-hover:translate-x-2 transition-transform duration-300" />
                     </div>
-                  </motion.div>
+                  </motion.a>
 
                   {/* Mobile App */}
-                  <motion.div
+                  <motion.a
+                    href="/flutter-app-development"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -1082,13 +1118,14 @@ export default function TestPagesClient() {
                     <div className="mt-4 flex items-center">
                       <FaLongArrowAltRight className="w-4 h-4 text-[#d68029] group-hover:translate-x-2 transition-transform duration-300" />
                     </div>
-                  </motion.div>
+                  </motion.a>
                 </div>
 
                 {/* Row 2 - 3 Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[48%]">
                   {/* UI/UX */}
-                  <motion.div
+                  <motion.a
+                    href="/uiux-design"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -1114,10 +1151,11 @@ export default function TestPagesClient() {
                     <div className="mt-4 flex items-center">
                       <FaLongArrowAltRight className="w-4 h-4 text-[#d68029] group-hover:translate-x-2 transition-transform duration-300" />
                     </div>
-                  </motion.div>
+                  </motion.a>
 
                   {/* eCommerce */}
-                  <motion.div
+                  <motion.a
+                    href="/wordpress-development"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -1143,7 +1181,7 @@ export default function TestPagesClient() {
                     <div className="mt-4 flex items-center">
                       <FaLongArrowAltRight className="w-4 h-4 text-[#d68029] group-hover:translate-x-2 transition-transform duration-300" />
                     </div>
-                  </motion.div>
+                  </motion.a>
                 </div>
               </div>
             </div>
@@ -1393,7 +1431,8 @@ export default function TestPagesClient() {
               Our <span className="text-[#d68029]">Development</span> Process
             </h2>
             <p className="text-slate-500 mt-4 text-sm sm:text-base max-w-xl mx-auto">
-              We follow a structured, collaborative methodology to transform your ideas into scalable, production-ready digital products.
+              We follow a structured, collaborative methodology to transform
+              your ideas into scalable, production-ready digital products.
             </p>
           </div>
 
@@ -1422,8 +1461,8 @@ export default function TestPagesClient() {
                         isActive
                           ? "bg-[#d68029] border-[#d68029] text-white"
                           : isCompleted
-                          ? "bg-emerald-50 border-emerald-250 text-emerald-600"
-                          : "bg-slate-100 border-slate-200 text-slate-500"
+                            ? "bg-emerald-50 border-emerald-250 text-emerald-600"
+                            : "bg-slate-100 border-slate-200 text-slate-500"
                       }`}
                     >
                       {isCompleted ? (
@@ -1485,16 +1524,30 @@ export default function TestPagesClient() {
                 >
                   {activeStep === 0 && (
                     <div className="w-full font-mono text-[13px] text-slate-350 bg-slate-900/40 p-5 rounded-2xl border border-slate-800/80">
-                      <p className="text-[#d68029] font-bold">// 1. Discovery & Consulting</p>
-                      <p className="text-slate-500 mt-2">Initializing project scope analysis...</p>
+                      <p className="text-[#d68029] font-bold">
+                        // 1. Discovery & Consulting
+                      </p>
+                      <p className="text-slate-500 mt-2">
+                        Initializing project scope analysis...
+                      </p>
                       <div className="mt-4 space-y-1">
-                        <p className="text-emerald-400">✓ Target audience identified</p>
-                        <p className="text-emerald-400">✓ Tech stack options evaluated</p>
-                        <p className="text-blue-400">⚡ Core challenges mapping: Complete</p>
+                        <p className="text-emerald-400">
+                          ✓ Target audience identified
+                        </p>
+                        <p className="text-emerald-400">
+                          ✓ Tech stack options evaluated
+                        </p>
+                        <p className="text-blue-400">
+                          ⚡ Core challenges mapping: Complete
+                        </p>
                       </div>
                       <div className="mt-4 bg-slate-950/80 p-2.5 rounded border border-slate-800 flex justify-between items-center">
-                        <span className="text-slate-550">Project Readiness:</span>
-                        <span className="font-bold text-emerald-400">98% Fit</span>
+                        <span className="text-slate-550">
+                          Project Readiness:
+                        </span>
+                        <span className="font-bold text-emerald-400">
+                          98% Fit
+                        </span>
                       </div>
                     </div>
                   )}
@@ -1502,26 +1555,36 @@ export default function TestPagesClient() {
                   {activeStep === 1 && (
                     <div className="w-full bg-[#070e1c] border border-slate-800/60 p-6 rounded-2xl flex flex-col gap-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-xs font-bold text-slate-400">Figma Wireframe Preview</span>
+                        <span className="text-xs font-bold text-slate-400">
+                          Figma Wireframe Preview
+                        </span>
                         <span className="w-2.5 h-2.5 rounded-full bg-[#d68029] animate-pulse" />
                       </div>
                       <div className="grid grid-cols-3 gap-2">
                         <div className="h-20 bg-slate-800/40 rounded-lg border border-slate-800/30 flex flex-col justify-between p-2">
-                          <span className="text-[9px] text-slate-500">Header</span>
+                          <span className="text-[9px] text-slate-500">
+                            Header
+                          </span>
                           <div className="h-1.5 w-8 bg-slate-700 rounded" />
                         </div>
                         <div className="h-20 bg-[#d68029]/10 rounded-lg border border-[#d68029]/30 flex flex-col justify-between p-2">
-                          <span className="text-[9px] text-[#d68029] font-bold">Hero Section</span>
+                          <span className="text-[9px] text-[#d68029] font-bold">
+                            Hero Section
+                          </span>
                           <div className="h-1.5 w-12 bg-[#d68029] rounded" />
                         </div>
                         <div className="h-20 bg-slate-800/40 rounded-lg border border-slate-800/30 flex flex-col justify-between p-2">
-                          <span className="text-[9px] text-slate-500">Footer</span>
+                          <span className="text-[9px] text-slate-500">
+                            Footer
+                          </span>
                           <div className="h-1.5 w-6 bg-slate-700 rounded" />
                         </div>
                       </div>
                       <div className="text-[11px] text-slate-400 flex justify-between bg-slate-950/60 p-2 rounded">
                         <span>Roadmap Duration:</span>
-                        <span className="text-slate-200 font-bold">12 Weeks Total</span>
+                        <span className="text-slate-200 font-bold">
+                          12 Weeks Total
+                        </span>
                       </div>
                     </div>
                   )}
@@ -1532,30 +1595,72 @@ export default function TestPagesClient() {
                         <span>File: app/page.tsx</span>
                         <span className="text-[#d68029]">React 18</span>
                       </div>
-                      <p><span className="text-purple-400">import</span> React <span className="text-purple-400">from</span> <span className="text-green-300">&apos;react&apos;</span>;</p>
-                      <p><span className="text-purple-400">import</span> &#123; OpenAI &#125; <span className="text-purple-400">from</span> <span className="text-green-300">&apos;openai&apos;</span>;</p>
-                      <p className="mt-2 text-slate-500">// Creating AI pipeline</p>
-                      <p><span className="text-blue-400">const</span> <span className="text-yellow-300">initAI</span> = <span className="text-purple-400">async</span> () =&gt; &#123;</p>
-                      <p className="pl-4">await <span className="text-blue-300">openai.chat.completions.create</span>(&#123; ... &#125;)</p>
+                      <p>
+                        <span className="text-purple-400">import</span> React{" "}
+                        <span className="text-purple-400">from</span>{" "}
+                        <span className="text-green-300">
+                          &apos;react&apos;
+                        </span>
+                        ;
+                      </p>
+                      <p>
+                        <span className="text-purple-400">import</span> &#123;
+                        OpenAI &#125;{" "}
+                        <span className="text-purple-400">from</span>{" "}
+                        <span className="text-green-300">
+                          &apos;openai&apos;
+                        </span>
+                        ;
+                      </p>
+                      <p className="mt-2 text-slate-500">
+                        // Creating AI pipeline
+                      </p>
+                      <p>
+                        <span className="text-blue-400">const</span>{" "}
+                        <span className="text-yellow-300">initAI</span> ={" "}
+                        <span className="text-purple-400">async</span> () =&gt;
+                        &#123;
+                      </p>
+                      <p className="pl-4">
+                        await{" "}
+                        <span className="text-blue-300">
+                          openai.chat.completions.create
+                        </span>
+                        (&#123; ... &#125;)
+                      </p>
                       <p>&#125;;</p>
                     </div>
                   )}
 
                   {activeStep === 3 && (
                     <div className="w-full bg-slate-900/30 border border-slate-800/80 p-6 rounded-2xl flex flex-col gap-3">
-                      <span className="text-xs font-bold text-slate-400">Quality Assurance Summary</span>
+                      <span className="text-xs font-bold text-slate-400">
+                        Quality Assurance Summary
+                      </span>
                       <div className="space-y-2">
                         <div className="flex justify-between items-center bg-slate-950 p-2.5 rounded border border-slate-800">
-                          <span className="text-[11px] text-slate-300">Unit Tests Passed</span>
-                          <span className="text-emerald-400 font-bold text-xs">142/142 (100%)</span>
+                          <span className="text-[11px] text-slate-300">
+                            Unit Tests Passed
+                          </span>
+                          <span className="text-emerald-400 font-bold text-xs">
+                            142/142 (100%)
+                          </span>
                         </div>
                         <div className="flex justify-between items-center bg-slate-950 p-2.5 rounded border border-slate-800">
-                          <span className="text-[11px] text-slate-300">Lighthouse Performance</span>
-                          <span className="text-emerald-400 font-bold text-xs">98 / 100</span>
+                          <span className="text-[11px] text-slate-300">
+                            Lighthouse Performance
+                          </span>
+                          <span className="text-emerald-400 font-bold text-xs">
+                            98 / 100
+                          </span>
                         </div>
                         <div className="flex justify-between items-center bg-slate-950 p-2.5 rounded border border-slate-800">
-                          <span className="text-[11px] text-slate-300">Security Check</span>
-                          <span className="text-[#d68029] font-bold text-xs">Passed A+</span>
+                          <span className="text-[11px] text-slate-300">
+                            Security Check
+                          </span>
+                          <span className="text-[#d68029] font-bold text-xs">
+                            Passed A+
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1564,8 +1669,12 @@ export default function TestPagesClient() {
                   {activeStep === 4 && (
                     <div className="w-full bg-[#070e1c] border border-slate-800/60 p-5 rounded-2xl flex flex-col gap-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-xs font-bold text-slate-400">24/7 Monitoring Dashboard</span>
-                        <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold animate-pulse">LIVE</span>
+                        <span className="text-xs font-bold text-slate-400">
+                          24/7 Monitoring Dashboard
+                        </span>
+                        <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold animate-pulse">
+                          LIVE
+                        </span>
                       </div>
                       <div className="flex items-end gap-1 h-20 px-2 bg-slate-950 rounded-lg justify-between pt-4">
                         <div className="w-4 bg-emerald-500 h-[60%] rounded-t" />
@@ -1579,11 +1688,15 @@ export default function TestPagesClient() {
                       <div className="grid grid-cols-2 gap-2 text-center text-[10px]">
                         <div className="bg-slate-900 p-2 rounded">
                           <span className="block text-slate-500">Uptime</span>
-                          <span className="font-bold text-slate-200">99.99%</span>
+                          <span className="font-bold text-slate-200">
+                            99.99%
+                          </span>
                         </div>
                         <div className="bg-slate-900 p-2 rounded">
                           <span className="block text-slate-500">Response</span>
-                          <span className="font-bold text-slate-200">142ms</span>
+                          <span className="font-bold text-slate-200">
+                            142ms
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1645,17 +1758,20 @@ export default function TestPagesClient() {
                   {/* Actions / CTA bar */}
                   <div className="border-t border-slate-100 pt-6 mt-auto flex items-center gap-4 flex-wrap">
                     <Button
-                 text="Request Consulting"
-                 bgColor="#0d1b2a"
-                    hoverColor="#D27E2B"
-                href="#contact-form-section"
-                              icon="/navbar/btn_icon.png"
+                      text="Request Consulting"
+                      bgColor="#0d1b2a"
+                      hoverColor="#D27E2B"
+                      href="#contact-form-section"
+                      icon="/navbar/btn_icon.png"
                     />
                     {/* <button className="h-11 px-6 rounded-xl bg-[#0d1b2a] text-white text-sm font-bold shadow-md hover:bg-[#1a2c42] hover:shadow-lg transition-all duration-300 flex items-center gap-2">
                       Request Consulting <FiChevronRight className="w-4 h-4" />
                     </button> */}
                     <span className="text-[13px] font-semibold text-slate-500">
-                      Estimated duration: <strong className="text-slate-800">{stepDurations[activeStep]}</strong>
+                      Estimated duration:{" "}
+                      <strong className="text-slate-800">
+                        {stepDurations[activeStep]}
+                      </strong>
                     </span>
                   </div>
                 </motion.div>
@@ -1941,111 +2057,249 @@ export default function TestPagesClient() {
         </Row>
       </Section>
 
-      {/* ── NEW SECTION: PORTFOLIO SHOWCASE (PREMIUM BENTO GRID) ── */}
-      <Section className="bg-gray-50 py-24 relative overflow-hidden border-t border-slate-200">
+      {/* ── SECTION: PREMIUM PORTFOLIO SHOWCASE ── */}
+      <Section className="bg-white py-20 lg:py-28 relative overflow-hidden">
+        {/* Subtle decorative background elements */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#d68029]/[0.03] blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#0d1b2a]/[0.03] blur-3xl pointer-events-none" />
+
         <Row>
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-[#d68029] text-xs font-extrabold uppercase tracking-widest block mb-3">
-              Featured Work
-            </span>
-            <h2 className="common-h2 text-[#0d1b2a]">
-              Our <span className="text-[#d68029]">Portfolio</span>
-            </h2>
-            <p className="text-slate-500 fonts_16 mt-4">
-              Explore some of our recent projects where we've transformed
-              complex business requirements into elegant, high-performance
-              digital solutions.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
 
-          {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-[1300px] mx-auto">
-            {portfolioProjects.map((project, idx) => {
-              // First item is the large featured project on the left
-              const isFeatured = idx === 0;
-              const ProjectIcon = project.icon;
+            {/* ── LEFT CONTENT COLUMN ── */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="flex flex-col max-w-xl"
+            >
+              {/* Premium Label */}
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-[#d68029] text-[11px] font-extrabold uppercase tracking-[0.2em]">
+                  FEATURED PROJECTS
+                </span>
+                <div className="flex-1 h-px bg-gradient-to-r from-[#d68029]/50 to-transparent max-w-[80px]" />
+              </div>
 
-              const gradientMap: Record<string, string> = {
-                blue: "from-blue-600/80 to-indigo-900/90",
-                orange: "from-[#d68029]/80 to-orange-900/90",
-                emerald: "from-emerald-600/80 to-teal-900/90",
-              };
-              const activeGradient =
-                gradientMap[project.theme] || gradientMap.blue;
+              {/* Main Headline */}
+              <h2 className="text-[clamp(28px,4vw,46px)] font-extrabold text-[#0d1b2a] leading-[1.15] tracking-tight mb-6">
+                Building Digital Products{" "}
+                <span className="text-[#d68029]">That Drive</span>{" "}
+                Business Growth
+              </h2>
 
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`group relative rounded-[28px] overflow-hidden bg-[#0d1b2a] border border-[#1a2c42] shadow-2xl flex flex-col hover:border-slate-600 transition-colors duration-300 ${
-                    isFeatured
-                      ? "lg:col-span-7 lg:row-span-2"
-                      : "lg:col-span-5 lg:row-span-1"
-                  }`}
-                >
-                  {/* Top: Image / Visual Showcase Area */}
-                  <div
-                    className={`relative w-full bg-[#050a14] overflow-hidden ${
-                      isFeatured ? "flex-1 min-h-[300px]" : "h-[220px] shrink-0"
-                    }`}
-                  >
-                    {/* Actual Project Image */}
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out"
-                    />
+              {/* Supporting Paragraph */}
+              <p className="text-[#6b7280] text-base sm:text-[17px] leading-[1.8] mb-10 font-normal">
+                Explore a selection of our recent AI platforms, enterprise
+                software, mobile applications, SaaS products, and
+                high-performance business websites built for startups and global
+                enterprises.
+              </p>
 
-                    {/* Dark gradient overlay to blend smoothly into the bottom text area */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b2a] via-[#0d1b2a]/20 to-transparent pointer-events-none" />
-
-                    {/* LIVE Badge overlaid on top right */}
-                    <div className="absolute top-5 right-5 px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full flex items-center gap-2 shadow-lg z-10">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
-                        Live
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Bottom: Text & Details Area */}
-                  {/* Changed to shrink-0 and removed flex-1 from children so it hugs the content naturally */}
-                  <div className="flex flex-col p-6 md:p-8 relative z-10 shrink-0">
-                    <span className="text-[#d68029] text-[11px] font-bold tracking-widest uppercase mb-2">
-                      {project.category}
-                    </span>
-                    <h3
-                      className={`font-extrabold text-white mb-3 tracking-tight ${
-                        isFeatured ? "text-3xl" : "text-2xl"
-                      }`}
+              {/* 2×2 Feature Highlights Grid */}
+              <div className="grid grid-cols-2 gap-4 mb-10">
+                {[
+                  {
+                    icon: FiCpu,
+                    label: "AI Development",
+                  },
+                  {
+                    icon: FiDatabase,
+                    label: "Enterprise Software",
+                  },
+                  {
+                    icon: FiSmartphone,
+                    label: "Mobile Applications",
+                  },
+                  {
+                    icon: FiCloud,
+                    label: "SaaS Platforms",
+                  },
+                ].map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.1 + idx * 0.08 }}
+                      className="flex items-center gap-3.5 p-4 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_6px_24px_rgba(214,128,41,0.10)] hover:border-[#d68029]/20 transition-all duration-300 group cursor-default"
                     >
-                      {project.title}
-                    </h3>
+                      {/* Icon Circle */}
+                      <div className="w-10 h-10 rounded-full bg-[#d68029]/8 border border-[#d68029]/15 flex items-center justify-center shrink-0 group-hover:bg-[#d68029]/15 transition-colors duration-300">
+                        <Icon className="w-4.5 h-4.5 text-[#d68029]" strokeWidth={1.8} />
+                      </div>
+                      <span className="text-[14px] font-semibold text-[#0d1b2a] leading-tight">
+                        {item.label}
+                      </span>
+                    </motion.div>
+                  );
+                })}
+              </div>
 
-                    <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                      {project.description}
-                    </p>
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.45 }}
+              >
+                <a
+                  href="/our-portfolio"
+                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-white text-[15px] tracking-wide shadow-[0_8px_30px_rgba(214,128,41,0.35)] transition-all duration-300"
+                  style={{
+                    background: "#D68029",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.background = "#0D1B2A";
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 30px rgba(13,27,42,0.35)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.background = "#D68029";
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 30px rgba(214,128,41,0.35)";
+                  }}
+                >
+                  Explore Portfolio
+                  <FiArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </motion.div>
+            </motion.div>
 
-                    {/* Tech Stack Tags */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.map((tech, techIdx) => (
-                        <span
-                          key={techIdx}
-                          className="px-3 py-1.5 cursor-pointer  bg-white/5 border border-white/10 rounded-lg text-[11px] font-medium text-slate-300 hover:bg-white/10 transition-colors cursor-default"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+            {/* ── RIGHT LAPTOP SLIDER COLUMN ── */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+              className="relative w-full flex flex-col items-center"
+            >
+              {/* Ambient glow behind laptop */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-[80%] h-[60%] rounded-full bg-[#d68029]/10 blur-3xl" />
+              </div>
+
+              {/* Laptop frame wrapper */}
+              <div className="relative w-full max-w-[620px] mx-auto">
+
+                {/* ─── Laptop body ─── */}
+                <div className="relative w-full">
+
+                  {/* Screen bezel */}
+                  <div className="relative bg-[#1a1a2e] rounded-t-[16px] rounded-b-[4px] shadow-2xl border border-[#2d2d4e] pt-[5%] px-[3.5%] pb-[2%]">
+
+                    {/* Camera notch */}
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#333355]" />
+
+                    {/* Screen area */}
+                    <div className="relative w-full aspect-[16/10] bg-gray-900 rounded-[8px] overflow-hidden shadow-inner">
+
+                      {/* Slides */}
+                      {portfolioWorks.length > 0 ? (
+                        portfolioWorks.map((work, idx) => (
+                          <div
+                            key={work._id}
+                            className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+                            style={{
+                              opacity: activeSlide === idx ? 1 : 0,
+                              zIndex: activeSlide === idx ? 2 : 1,
+                            }}
+                          >
+                            <img
+                              src={work.image}
+                              alt={work.title}
+                              className="w-full h-full object-cover object-top"
+                            />
+                            {/* Project title overlay at bottom */}
+                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-4">
+                              <p className="text-white text-sm font-bold leading-tight">{work.title}</p>
+                              <p className="text-[#d68029] text-[11px] font-semibold uppercase tracking-wider mt-0.5">Web Development</p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        // Skeleton placeholder while loading
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#0d1b2a] to-[#1a2c42] flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 border-2 border-[#d68029]/30 border-t-[#d68029] rounded-full animate-spin mx-auto mb-3" />
+                            <p className="text-slate-500 text-xs">Loading projects...</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
-                </motion.div>
-              );
-            })}
+
+                  {/* Laptop base/hinge */}
+                  <div className="relative bg-gradient-to-b from-[#2d2d2d] to-[#1a1a1a] h-[14px] rounded-b-[4px] shadow-md">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[25%] h-[6px] bg-[#111] rounded-b-[8px]" />
+                  </div>
+
+                  {/* Laptop stand */}
+                  <div className="relative flex justify-center">
+                    <div
+                      className="bg-gradient-to-b from-[#1a1a1a] to-[#111] shadow-xl"
+                      style={{
+                        width: "35%",
+                        height: "18px",
+                        clipPath: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
+                      }}
+                    />
+                  </div>
+
+                  {/* Laptop foot bar */}
+                  <div className="flex justify-center">
+                    <div className="w-[55%] h-[4px] bg-gradient-to-r from-transparent via-[#333] to-transparent rounded-full" />
+                  </div>
+                </div>
+
+                {/* Slider dot indicators */}
+                {portfolioWorks.length > 1 && (
+                  <div className="flex justify-center gap-2 mt-6">
+                    {portfolioWorks.map((_, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        onClick={() => {
+                          setActiveSlide(dotIdx);
+                          if (sliderTimerRef.current) clearInterval(sliderTimerRef.current);
+                          sliderTimerRef.current = setInterval(() => {
+                            setActiveSlide((prev) => (prev + 1) % portfolioWorks.length);
+                          }, 3500);
+                        }}
+                        className={`transition-all duration-300 rounded-full cursor-pointer ${
+                          activeSlide === dotIdx
+                            ? "w-6 h-2.5 bg-[#d68029]"
+                            : "w-2.5 h-2.5 bg-slate-300 hover:bg-[#d68029]/60"
+                        }`}
+                        aria-label={`Go to slide ${dotIdx + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Project name caption below */}
+                {portfolioWorks.length > 0 && (
+                  <div className="text-center mt-4">
+                    <motion.p
+                      key={activeSlide}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="text-[#0d1b2a] font-bold text-[15px] tracking-tight"
+                    >
+                      {portfolioWorks[activeSlide]?.title}
+                    </motion.p>
+                    <p className="text-[#d68029] text-[12px] font-semibold uppercase tracking-widest mt-0.5">
+                      Web Development
+                    </p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+
           </div>
         </Row>
+
       </Section>
 
       <TechnologyShowcase />
@@ -2206,7 +2460,7 @@ export default function TestPagesClient() {
       <Reviews />
       <Testimonials />
       <FAQ
-        faqs={trainingFAQs}
+        faqs={homeFAQs}
         title="Frequently Asked Questions (FAQ)"
         sideTitle="Have Queries?"
         sideSubtitle="We are here to Answer you..."
