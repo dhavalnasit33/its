@@ -50,7 +50,7 @@ import {
   FaChartLine,
   FaStar,
 } from "react-icons/fa";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Hero from "@/components/home/Hero";
@@ -64,6 +64,7 @@ import EngagementModels from "@/components/home/EngagementModel";
 import TechnologyShowcase from "@/components/home/TechnologyShowcase";
 import WhyChoosePremium from "@/components/home/WhyChoosePremium";
 import apiService from "@/lib/apiService";
+
 import {
   HomePageData,
   SingleResponse,
@@ -78,9 +79,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-
 const MapPin = ({ top, left }: { top: string; left: string }) => (
-  
   <div
     className="absolute -translate-x-1/2 -translate-y-full group cursor-pointer"
     style={{ top, left }}
@@ -224,7 +223,6 @@ const AIConsultingIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-
 const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 24 24"
@@ -311,8 +309,6 @@ const aiServices = [
   },
 ];
 
-
-
 export default function TestPagesClient() {
   const { navStructure } = useWebsiteSettings();
   const [activeCaseStudy, setActiveCaseStudy] = React.useState(0);
@@ -323,8 +319,10 @@ export default function TestPagesClient() {
 
   const router = useRouter();
   const [whyChooseData, setWhyChooseData] = React.useState<WhyChooseItem[]>([]);
-  const [portfolioWorks, setPortfolioWorks] = React.useState<CreativeWork[]>([]);
- const [hoveredService, setHoveredService] = React.useState<number | null>(
+  const [portfolioWorks, setPortfolioWorks] = React.useState<CreativeWork[]>(
+    [],
+  );
+  const [hoveredService, setHoveredService] = React.useState<number | null>(
     null,
   );
   const stepDeliverables = [
@@ -368,6 +366,24 @@ export default function TestPagesClient() {
     "Ongoing / SLA",
   ];
 
+  async function getRandomPortfolioProjects(): Promise<CreativeWork[]> {
+    try {
+      const response = await apiService<SingleResponse<CreativeWork[]>>(
+        "/creative-work/creative-work-random",
+        {
+          bypassCacheRead: true, // ensure we always request a fresh random set from the server
+        },
+      );
+      if (response.success && Array.isArray(response.data)) {
+        return response.data;
+      }
+      return [];
+    } catch (error) {
+      console.error("Error fetching random portfolio projects:", error);
+      return [];
+    }
+  }
+
   React.useEffect(() => {
     const fetchHomepageData = async () => {
       try {
@@ -393,14 +409,12 @@ export default function TestPagesClient() {
     };
     fetchWhyChoose();
 
-    // Fetch web-development creative works for portfolio slider
+    // Fetch random creative works for portfolio slider
     const fetchPortfolioWorks = async () => {
       try {
-        const res = await apiService<PaginatedResponse<CreativeWork>>("/creative-work", {
-          params: { page:1,  limit: 12, category: "6a0c58a850ca8a2da030dc58" },
-        });
-        if (res.success && res.data?.length) {
-          setPortfolioWorks(res.data);
+        const data = await getRandomPortfolioProjects();
+        if (data && data.length) {
+          setPortfolioWorks(data);
         }
       } catch (err) {
         console.error("Error fetching portfolio works:", err);
@@ -409,7 +423,6 @@ export default function TestPagesClient() {
     fetchPortfolioWorks();
   }, []);
 
-   
   const caseStudies = [
     {
       tabLabel: "Popular",
@@ -1393,7 +1406,6 @@ export default function TestPagesClient() {
                       style={{ transform: "translateZ(50px)" }}
                     />
 
-                
                     {/* Depth Layer 4: Dynamic Projected Content (The Hologram) */}
                     <AnimatePresence mode="wait">
                       <motion.div
@@ -1438,15 +1450,15 @@ export default function TestPagesClient() {
 
                     return (
                       <div
-  key={idx}
-  onMouseEnter={() => setHoveredService(idx)}
-  onClick={() => router.push(service.route)}
-  className={`relative cursor-pointer transition-all duration-500 overflow-hidden rounded-2xl ${
-    isActive
-      ? "bg-slate-900/50 border border-slate-700/50 backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
-      : "bg-transparent border border-transparent hover:bg-slate-900/20"
-  }`}
->
+                        key={idx}
+                        onMouseEnter={() => setHoveredService(idx)}
+                        onClick={() => router.push(service.route)}
+                        className={`relative cursor-pointer transition-all duration-500 overflow-hidden rounded-2xl ${
+                          isActive
+                            ? "bg-slate-900/50 border border-slate-700/50 backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
+                            : "bg-transparent border border-transparent hover:bg-slate-900/20"
+                        }`}
+                      >
                         {/* Active Accent Line */}
                         <div
                           className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-500 ${
@@ -2280,58 +2292,58 @@ export default function TestPagesClient() {
               </motion.div>
             </motion.div>
 
-            {/* ── RIGHT LAPTOP SLIDER COLUMN ── */} 
-{/* ── RIGHT SLIDER COLUMN ── */}
-<motion.div
-  initial={{ opacity: 0, x: 30 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-  // Added min-w-0 to prevent the grid column from breaking its width
-  className="relative w-full flex flex-col justify-center min-w-0"
->
-  <Swiper
-    modules={[Autoplay, Pagination]}
-    spaceBetween={30}
-    slidesPerView={1.2}
-    loop={true}
-    speed={1000}
-    autoplay={{
-      delay: 2500,
-      disableOnInteraction: false,
-    }}
-    pagination={{ clickable: true }}
-    breakpoints={{
-      320: { slidesPerView: 1, spaceBetween: 20 },
-      768: { slidesPerView: 1.1, spaceBetween: 30 },
-      1024: { slidesPerView: 1.25, spaceBetween: 40 },
-    }}
-    // REMOVED !overflow-visible to fix the left overlap issue
-    className="w-full h-full pb-16"
-  >
-    {portfolioWorks.length > 0 ? (
-      portfolioWorks.map((work) => (
-        <SwiperSlide key={work._id} className="pt-2">
-          {/* Clean, Simple Image Card */}
-          <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] rounded-[24px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-slate-100 group">
-            <img
-              src={work.image}
-              alt={work.title}
-              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-        </SwiperSlide>
-      ))
-    ) : (
-      // Loading Skeleton
-      <SwiperSlide>
-        <div className="bg-slate-100 rounded-[24px] aspect-[16/10] flex items-center justify-center">
-          <div className="w-12 h-12 border-4 border-[#d68029]/30 border-t-[#d68029] rounded-full animate-spin" />
-        </div>
-      </SwiperSlide>
-    )}
-  </Swiper>
-</motion.div>
+            {/* ── RIGHT LAPTOP SLIDER COLUMN ── */}
+            {/* ── RIGHT SLIDER COLUMN ── */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+              // Added min-w-0 to prevent the grid column from breaking its width
+              className="relative w-full flex flex-col justify-center min-w-0"
+            >
+              <Swiper
+                modules={[Autoplay, Pagination]}
+                spaceBetween={30}
+                slidesPerView={1.2}
+                loop={true}
+                speed={1000}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                pagination={{ clickable: true }}
+                breakpoints={{
+                  320: { slidesPerView: 1, spaceBetween: 20 },
+                  768: { slidesPerView: 1.1, spaceBetween: 30 },
+                  1024: { slidesPerView: 1.25, spaceBetween: 40 },
+                }}
+                // REMOVED !overflow-visible to fix the left overlap issue
+                className="w-full h-full pb-16"
+              >
+                {portfolioWorks.length > 0 ? (
+                  portfolioWorks.map((work) => (
+                    <SwiperSlide key={work._id} className="pt-2">
+                      {/* Clean, Simple Image Card */}
+                      <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] rounded-[24px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-slate-100 group">
+                        <img
+                          src={work.image}
+                          alt={work.title}
+                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  ))
+                ) : (
+                  // Loading Skeleton
+                  <SwiperSlide>
+                    <div className="bg-slate-100 rounded-[24px] aspect-[16/10] flex items-center justify-center">
+                      <div className="w-12 h-12 border-4 border-[#d68029]/30 border-t-[#d68029] rounded-full animate-spin" />
+                    </div>
+                  </SwiperSlide>
+                )}
+              </Swiper>
+            </motion.div>
           </div>
         </Row>
       </Section>
