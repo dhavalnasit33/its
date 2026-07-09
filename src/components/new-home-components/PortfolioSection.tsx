@@ -36,7 +36,7 @@ export default function PortfolioSection({ portfolioWorks }: PortfolioSectionPro
           >
             {/* Premium Label */}
             <div className="flex items-center gap-3 mb-6">
-               <SectionBadge title="RECENT PROJECTS" />
+               <SectionBadge title="OUR RECENT PROJECTS" />
               <div className="flex-1 h-px bg-gradient-to-r from-[#d68029]/50 to-transparent max-w-[80px]" />
             </div>
 

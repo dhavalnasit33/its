@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+
 import {
   FiCode,
   FiServer,
@@ -12,6 +13,7 @@ import {
 } from "react-icons/fi";
 import { FaBrain, FaInfinity } from "react-icons/fa";
 import { BsShieldCheck } from "react-icons/bs";
+
 import TechBackground from "./TechBackground";
 import Row from "../Row";
 import SectionBadge from "../new-home-components/SectionBadge";
@@ -53,6 +55,7 @@ const technologies: Record<
       desc: "Modern Android Language",
     },
   ],
+
   "Back-End": [
     {
       image: "/technologies/java.svg",
@@ -85,6 +88,7 @@ const technologies: Record<
       desc: "Sleek PHP Web Framework",
     },
   ],
+
   "Front-End": [
     {
       image: "/technologies/html.svg",
@@ -117,6 +121,7 @@ const technologies: Record<
       desc: "Styling & Responsive Layout",
     },
   ],
+
   DevOps: [
     {
       image: "/technologies/aws.svg",
@@ -149,6 +154,7 @@ const technologies: Record<
       desc: "Microsoft Enterprise Cloud",
     },
   ],
+
   Database: [
     {
       image: "/technologies/my-sql.svg",
@@ -228,8 +234,10 @@ export default function TechnologyShowcase() {
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+
     handleResize();
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -258,6 +266,7 @@ export default function TechnologyShowcase() {
       <div className="absolute inset-0 z-0">
         <TechBackground />
       </div>
+
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(15,23,42,0)_0%,rgba(3,8,18,1)_80%)] pointer-events-none z-10" />
 
       <div className="w-full max-w-[1400px] relative z-20 px-4 flex flex-col items-center">
@@ -297,7 +306,6 @@ export default function TechnologyShowcase() {
                   onClick={() =>
                     setActiveTab(card.id as keyof typeof technologies)
                   }
-                  // EXPLICIT CURSOR-POINTER AND HOVER EFFECTS
                   className={`group relative flex flex-col items-start p-4 md:p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 transform active:scale-95 ${
                     isActive
                       ? "bg-gradient-to-r from-blue-950/60 to-indigo-950/40 border-blue-500 shadow-[0_0_22px_rgba(59,130,246,0.25)]"
@@ -437,6 +445,7 @@ export default function TechnologyShowcase() {
                     className="flex flex-col items-center justify-center p-6 bg-[#050d18]/70 border border-white/5 rounded-2xl shadow-lg relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
+
                     <div className="w-14 h-14 rounded-full bg-[#030810] border border-blue-500/20 flex items-center justify-center relative mb-3">
                       <Image
                         src={tech.image}
@@ -446,9 +455,11 @@ export default function TechnologyShowcase() {
                         className="object-contain"
                       />
                     </div>
+
                     <span className="text-sm font-extrabold text-white tracking-tight">
                       {tech.label}
                     </span>
+
                     <span className="text-[10px] text-slate-500 mt-1 font-semibold text-center">
                       {tech.desc}
                     </span>
@@ -460,20 +471,23 @@ export default function TechnologyShowcase() {
         )}
 
         {/* FOOTER BADGES */}
-        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-12 pb-10 z-30 text-slate-300 text-xs md:text-sm font-semibold uppercase tracking-wider">
+        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-20 pb-10 z-30 text-slate-300 text-xs md:text-sm font-semibold uppercase tracking-wider">
           <div className="flex items-center gap-2">
             <BsShieldCheck className="text-[#D68029] text-base" />
             <span>Enterprise Grade</span>
           </div>
           <span className="w-1 h-1 rounded-full bg-blue-500 hidden md:block"></span>
+
           <div className="flex items-center gap-2">
             <span>Scalable Solutions</span>
           </div>
           <span className="w-1 h-1 rounded-full bg-blue-500 hidden md:block"></span>
+
           <div className="flex items-center gap-2">
             <span>Secure Architectures</span>
           </div>
           <span className="w-1 h-1 rounded-full bg-blue-500 hidden md:block"></span>
+
           <div className="flex items-center gap-2">
             <span>AI-First</span>
           </div>

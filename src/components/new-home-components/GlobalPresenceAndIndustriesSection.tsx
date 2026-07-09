@@ -191,24 +191,22 @@ export default function GlobalPresenceAndIndustriesSection() {
                     </span>
                   </div>
 
-                  {/* 750+ and 24/7 Side by Side */}
-                  <div className="flex gap-8 sm:gap-10">
-                    <div>
-                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                        750+
-                      </span>
-                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                        Projects
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
-                        24/7
-                      </span>
-                      <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
-                        Support Coverage
-                      </span>
-                    </div>
+                  <div>
+                    <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                      750+
+                    </span>
+                    <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                      Projects
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
+                      24/7
+                    </span>
+                    <span className="block text-[11px] font-bold text-slate-500 mt-1 uppercase tracking-wide">
+                      Support Coverage
+                    </span>
                   </div>
                 </div>
 

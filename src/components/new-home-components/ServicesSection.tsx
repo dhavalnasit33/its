@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { FiPenTool , FiCode,FiTablet ,FiShoppingCart   } from "react-icons/fi";
+import { FiPenTool, FiCode, FiTablet, FiShoppingCart } from "react-icons/fi";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
@@ -52,7 +52,7 @@ export default function ServicesSection() {
           {/* Left Column: Heading & Button */}
           <div className="w-full lg:w-[28%] flex flex-col justify-start pt-4">
             <SectionBadge title=" OUR SERVICES" />
-            
+
             <h2 className="text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#0d1b2a] leading-[1.2] mt-3 mb-6">
               Intelligent Solutions for Modern Businesses
             </h2>
@@ -104,11 +104,10 @@ export default function ServicesSection() {
                     AI Automation
                   </h3>
 
-                  <p className="text-slate-300 leading-8 [max-w-260px]">
-                    Automate repetitive tasks, streamline business workflows,
-                    and eliminate manual processes to boost productivity, reduce
-                    operational costs, and improve overall efficiency across
-                    your organization.
+                  <p className="text-slate-300 leading-8 max-w-[260px]">
+                    Automate repetitive tasks, streamline workflows, and reduce
+                    manual effort to boost productivity, lower costs, and
+                    improve business efficiency.
                   </p>
                 </div>
 
@@ -136,7 +135,7 @@ export default function ServicesSection() {
                       </div>
 
                       <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
-                        Web Development
+                        Web <br /> Development
                       </h4>
                     </div>
 
