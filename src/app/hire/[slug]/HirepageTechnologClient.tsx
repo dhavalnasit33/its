@@ -385,7 +385,7 @@ export default function HirepageTechnologClient({ subPageSlug }: { subPageSlug?:
                         </div>
                       </motion.div>
                     </div>
-                    <div className="flex relative min-h-px  w-full max-w-full  rounded-xl border border-[#ffffff08] bg-white/[0.04] p-5 lg:p-6 shadow-[0_24px_80px_-28px_rgba(0,0,0,0.7)] backdrop-blur-md sm:p-8 ">
+                    <div className="flex relative min-h-px  w-full max-w-full  rounded-xl border border-[#ffffff08] bg-white/4 p-5 lg:p-6 shadow-[0_24px_80px_-28px_rgba(0,0,0,0.7)] backdrop-blur-md sm:p-8 ">
                       <div className="w-full relative flex flex-col items-center content-center justify-center">
                         <motion.div
                           initial={{ opacity: 0, y: -60 }}

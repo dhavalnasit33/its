@@ -1482,7 +1482,7 @@ export default function ContactFooterPage() {
                   <div className=" absolute left-0 top-0 h-full w-0.5 bg-linear-to-b from-[#e6e6e6] via-[#0d1b2a] to-[#e6e6e6] " />
 
                   <p className="text-[13px] text-[#161616] uppercase">
-                    Mail to our HR Department
+                    Mail to our Support Team
                   </p>
 
                   <Link
@@ -1667,14 +1667,16 @@ export default function ContactFooterPage() {
                 >
                   Ai Chatbot Development
                 </Link>
+                <span className="mx-2 text-[#D68029]">|</span>
               </li>
               <li className="list-none py-1">
                 <Link
                   href="/ai-product-development"
                   className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
                 >
-                  Ai Product Development  
+                  Ai Product Development
                 </Link>
+                <span className="mx-2 text-[#D68029]">|</span>
               </li>
               <li className="list-none py-1">
                 <Link
