@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getSeoData } from "@/lib/seoService";
-import HomeClient from "./home/HomeClient";
+import TestPagesClient from "./test-pages/TestPagesClient";
 import apiService from "@/lib/apiService";
 import { HomePageData, SingleResponse } from "@/types";
 
@@ -115,7 +115,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <HomeClient initialData={homepageData || undefined} />
+      <TestPagesClient />
     </>
   );
 }
