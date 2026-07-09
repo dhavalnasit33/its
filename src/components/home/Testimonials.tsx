@@ -567,7 +567,7 @@ const Testimonials: React.FC = () => {
     };
 
     return (
-        <Section className="bg-white common_background_gradient">
+        <Section className="bg-white common_background_gradient py-20 lg:py-28">
             {/* <div className="w-full max-w-[90%] lg:max-w-[80%] relative mx-auto px-4 "> */}
             <Row >
                 <div className="text-center pb-5 mb-2.5 w-full">

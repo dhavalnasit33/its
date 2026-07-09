@@ -14,6 +14,7 @@ import { FaBrain, FaInfinity } from "react-icons/fa";
 import { BsShieldCheck } from "react-icons/bs";
 import TechBackground from "./TechBackground";
 import Row from "../Row";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 // Original technologies dataset
 const technologies: Record<
@@ -253,7 +254,7 @@ export default function TechnologyShowcase() {
   };
 
   return (
-    <section className="w-full relative min-h-screen bg-[#030812] overflow-hidden select-none py-20 flex flex-col items-center justify-center">
+    <section className="w-full relative min-h-screen bg-[#030812] overflow-hidden select-none py-20 lg:py-28 flex flex-col items-center justify-center">
       <div className="absolute inset-0 z-0">
         <TechBackground />
       </div>
@@ -262,12 +263,7 @@ export default function TechnologyShowcase() {
       <div className="w-full max-w-[1400px] relative z-20 px-4 flex flex-col items-center">
         {/* TOP HEADER */}
         <div className="text-center w-full mb-10 flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700/50 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-            <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-slate-300 uppercase">
-              OUR TECHNOLOGY ECOSYSTEM
-            </span>
-          </div>
+          <SectionBadge title="OUR TECHNOLOGY ECOSYSTEM" />
 
           <h2 className="text-center w-full common-h2 text-white">
             <span className="text-[#d68029]">Technologies</span> That We Work

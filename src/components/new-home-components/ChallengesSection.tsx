@@ -43,7 +43,7 @@ export default function ChallengesSection() {
   return (
     <Section
       id="challenges-section"
-      className="relative overflow-hidden bg-gradient-to-b from-[#030d22] to-[#081838] py-24"
+      className="relative overflow-hidden bg-gradient-to-b from-[#030d22] to-[#081838] py-20 lg:py-28"
     >
       {/* ================= Background Glow ================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">

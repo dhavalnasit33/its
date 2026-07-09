@@ -10,6 +10,7 @@ import apiService from "@/lib/apiService";
 import TechBackground from "./TechBackground";
 import Section from "../Section";
 import Row from "../Row";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 const themes = [
   {
@@ -22,7 +23,8 @@ const themes = [
     button: "bg-[#0EA5E9] hover:bg-[#0EA5E9] text-white",
   },
   {
-    gradient: "from-[#D68029]/70 via-[rgba(214, 128, 41, 0.8)]/10 to-slate-600/10",
+    gradient:
+      "from-[#D68029]/70 via-[rgba(214, 128, 41, 0.8)]/10 to-slate-600/10",
     box: "bg-[#D68029]",
     bg: "bg-[#D68029]/20",
     border: "border-[#D68029]/40 hover:border-[#D68029]",
@@ -44,13 +46,12 @@ export default function EngagementModels() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-
   useEffect(() => {
     const fetchModels = async () => {
       try {
         setLoading(true);
         const res = await apiService<{ success: boolean; data: any[] }>(
-          "/engagement-model"
+          "/engagement-model",
         );
 
         const items = Array.isArray(res.data) ? res.data : [];
@@ -70,7 +71,7 @@ export default function EngagementModels() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <Section className="overflow-hidden">
+    <Section className="overflow-hidden py-20 lg:py-28">
       {/* <video
         autoPlay
         loop
@@ -90,24 +91,24 @@ export default function EngagementModels() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-          className="flex flex-col justify-center mb-6 w-full relative "
+          className="flex flex-col justify-center mb-6 w-full relative text-center"
         >
+          <SectionBadge title="Our Engagement Model" />
           <h2 className="common-h2 text-center w-full  text-black ">
-
             <span className="text-[#D68029]">Build Your Dream</span>{" "}
             <span className="text-white">Team With Our Engagement Model</span>
           </h2>
           <Motion />
         </motion.div>
 
-
         <div
-          className={`grid gap-8 w-full mx-auto relative justify-center ${models.length === 1
-            ? "grid-cols-1"
-            : models.length === 2
-              ? "grid-cols-1 md:grid-cols-2"
-              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-            }`}
+          className={`grid gap-8 w-full mx-auto relative justify-center ${
+            models.length === 1
+              ? "grid-cols-1"
+              : models.length === 2
+                ? "grid-cols-1 md:grid-cols-2"
+                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          }`}
         >
           {models.map((model, index) => {
             const theme = themes[index % themes.length];
@@ -123,13 +124,13 @@ export default function EngagementModels() {
             const supportItem = details.find(
               (d) =>
                 d.toLowerCase().includes("24x7") ||
-                d.toLowerCase().includes("24*7")
+                d.toLowerCase().includes("24*7"),
             );
 
             const filteredDetails = details.filter(
               (d) =>
                 !d.toLowerCase().includes("24x7") &&
-                !d.toLowerCase().includes("24*7")
+                !d.toLowerCase().includes("24*7"),
             );
 
             const normalItems = filteredDetails.slice(0, -2);
@@ -146,8 +147,6 @@ export default function EngagementModels() {
                 className={` relative p-7 rounded-2xl justify-between text-white flex flex-col  overflow-hidden transition 
                   bg-linear-to-br ${theme.gradient}  border ${theme.border} 
                 `}
-
-
                 style={{
                   boxShadow:
                     index === 0
@@ -174,9 +173,10 @@ export default function EngagementModels() {
                 }}
               >
                 <div>
-
                   <div className="flex items-center gap-4  mb-6">
-                    <div className={`w-14 h-14 ${theme.box} backdrop-blur-md rounded-md flex items-center justify-center`}>
+                    <div
+                      className={`w-14 h-14 ${theme.box} backdrop-blur-md rounded-md flex items-center justify-center`}
+                    >
                       <Image
                         src={model.modelImage}
                         alt={model.modelTitle}
@@ -188,8 +188,8 @@ export default function EngagementModels() {
                     <h3 className="text-xl font-bold ">{model.modelTitle}</h3>
                   </div>
 
-
-                  <p className="text-sm text-white opacity-70 leading-relaxed mb-4"
+                  <p
+                    className="text-sm text-white opacity-70 leading-relaxed mb-4"
                     dangerouslySetInnerHTML={{
                       __html: model?.modelDescription || "",
                     }}
@@ -197,12 +197,12 @@ export default function EngagementModels() {
                   {/* {model.modelDescription}
                   </p> */}
 
-
-
                   <ul className="text-sm text-white  space-y-2 mb-6 text-left">
-
                     {normalItems.map((detail, i) => (
-                      <li key={i} className="flex items-center gap-2 text-white opacity-70">
+                      <li
+                        key={i}
+                        className="flex items-center gap-2 text-white opacity-70"
+                      >
                         <span className="w-1 h-1 bg-white opacity-70 rounded-full" />
                         {detail}
                       </li>
@@ -212,46 +212,52 @@ export default function EngagementModels() {
                 <div>
                   <ul>
                     <li className="list-none">
-                      <div className={`rounded-md p-4 border ${theme.bg} ${theme.border}`}>
-
+                      <div
+                        className={`rounded-md p-4 border ${theme.bg} ${theme.border}`}
+                      >
                         {boxItems.map((detail, i) => (
                           <div
                             key={i}
                             className={`
                               flex items-center gap-2
-                              ${i === 0
-                                ? `font-bold text-xl ${theme.text} mb-1`
-                                : "text-xs text-white opacity-70 "
+                              ${
+                                i === 0
+                                  ? `font-bold text-xl ${theme.text} mb-1`
+                                  : "text-xs text-white opacity-70 "
                               }
                             `}
                           >
                             {detail}
                           </div>
                         ))}
-
                       </div>
                     </li>
-
                   </ul>
 
                   {supportItem && (
                     <li className="flex items-center gap-2 text-white/80 my-10">
-                      <Image src="/home/Checkmark.png" alt="check" width={16} height={16} />
+                      <Image
+                        src="/home/Checkmark.png"
+                        alt="check"
+                        width={16}
+                        height={16}
+                      />
                       24x7 Support
                     </li>
                   )}
 
                   <Link href="/hire">
-                    <div className={`
+                    <div
+                      className={`
                     w-full text-center py-3 rounded-md font-semibold
                     transition duration-300
                     ${theme.button}
                     hover:shadow-lg hover:scale-105
-                  `}>
+                  `}
+                    >
                       Get Started
                     </div>
                   </Link>
-
                 </div>
               </motion.div>
             );
@@ -262,14 +268,3 @@ export default function EngagementModels() {
     </Section>
   );
 }
-
-
-
-
-
-
-
-
-
-
-

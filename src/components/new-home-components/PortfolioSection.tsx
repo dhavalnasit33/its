@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import { CreativeWork } from "@/types";
 
 import "swiper/css";
+import SectionBadge from "./SectionBadge";
 
 interface PortfolioSectionProps {
   portfolioWorks: CreativeWork[];
@@ -35,9 +36,7 @@ export default function PortfolioSection({ portfolioWorks }: PortfolioSectionPro
           >
             {/* Premium Label */}
             <div className="flex items-center gap-3 mb-6">
-              <span className="text-[#d68029] text-[11px] font-extrabold uppercase tracking-[0.2em]">
-                FEATURED PROJECTS
-              </span>
+               <SectionBadge title="RECENT PROJECTS" />
               <div className="flex-1 h-px bg-gradient-to-r from-[#d68029]/50 to-transparent max-w-[80px]" />
             </div>
 

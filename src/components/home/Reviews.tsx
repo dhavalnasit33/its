@@ -72,7 +72,7 @@ const Reviews: React.FC = () => {
   const displayLogos = [...logos, ...logos, ...logos, ...logos];
 
   return (
-    <Section className=" bg-white  text-center overflow-hidden">
+    <Section className=" bg-white text-center overflow-hidden py-20 lg:py-28">
       <style dangerouslySetInnerHTML={{ __html: marqueeStyles }} />
       <div className="w-full relative">
         {/* <div className="text-center pb-10 mb-2.5 w-full"> */}

@@ -7,6 +7,7 @@ import { WhyChooseItem } from "@/types";
 import Section from "../Section";
 import Motion from "../motionbar";
 import Row from "../Row";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 interface WhyChoosePremiumProps {
   items: WhyChooseItem[];
@@ -107,15 +108,8 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
           
           {/* ── Section Header ── */}
           <div className="text-center mx-auto flex flex-col items-center gap-4 ">
-            <motion.span
-              initial={{ opacity: 0, y: -12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-sm font-black uppercase tracking-widest text-[#d68029]"
-            >
-              WHY CHOOSE INSPIRE
-            </motion.span>
+            <SectionBadge title="WHY CHOOSE INSPIRE" />
+            
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}

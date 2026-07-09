@@ -34,6 +34,7 @@ import {
 } from "react-icons/fa";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
+import SectionBadge from "./SectionBadge";
  
 const caseStudies = [
   {
@@ -320,15 +321,13 @@ export default function CaseStudiesSection() {
   const [activeCaseStudy, setActiveCaseStudy] = useState(0);
 
   return (
-    <Section className="bg-white relative overflow-hidden py-24">
+    <Section className="bg-white relative overflow-hidden py-20 lg:py-28">
       <Row>
         {/* Dynamic Full Width Case Studies Showcase */}
-        <div className="mt-24 pt-16 max-w-[1400px] w-full mx-auto">
+        <div className="max-w-[1400px] w-full mx-auto">
           {/* Heading */}
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-3">
-              CASE STUDIES
-            </span>
+             <SectionBadge title=" CASE STUDIES" />
             <h2 className="common-h2 text-[#0d1b2a]">
               Real Results,{" "}
               <span className="relative inline-block">

@@ -37,7 +37,7 @@ export default function FAQ({
   };
 
   return (
-    <Section>
+    <Section className="py-20 lg:py-28">
       <Row className="flex gap-8 flex-col">
         <div className="flex flex-wrap w-full relative content-start">
           {/* FAQ Header */}

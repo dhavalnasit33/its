@@ -20,6 +20,7 @@ import {
 } from "react-icons/fi";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
+import SectionBadge from "./SectionBadge";
 
 const MapPin = ({ top, left }: { top: string; left: string }) => (
   <div
@@ -117,7 +118,7 @@ const industryCards = [
 
 export default function GlobalPresenceAndIndustriesSection() {
   return (
-    <Section className="bg-[#fafcff] py-12 lg:py-16 relative overflow-hidden border-y border-slate-100">
+    <Section className="bg-[#fafcff] py-20 lg:py-28 relative overflow-hidden border-y border-slate-100">
       {/* Full width container with responsive padding */}
       <Row>
         <div className="w-full relative">
@@ -125,9 +126,8 @@ export default function GlobalPresenceAndIndustriesSection() {
             {/* Left Column: Industries We Serve */}
             <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
               <div>
-                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
-                  INDUSTRIES WE SERVE
-                </span>
+                <SectionBadge title="INDUSTRIES WE SERVE" />
+
                 <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25] mb-6">
                   AI solutions tailored for <br className="hidden sm:block" />
                   every industry
@@ -162,9 +162,8 @@ export default function GlobalPresenceAndIndustriesSection() {
             {/* Right Column: Global Presence */}
             <div className="flex-1 flex flex-col justify-start w-full lg:w-[50%]">
               <div className="mb-4">
-                <span className="text-[#d68029] text-xs font-bold uppercase tracking-widest block mb-2">
-                  GLOBAL PRESENCE
-                </span>
+                <SectionBadge title="GLOBAL PRESENCE" />
+
                 <h2 className="text-3xl md:text-[32px] font-bold text-[#0d1b2a] leading-[1.25]">
                   Serving Clients <br className="hidden sm:block" />
                   Worldwide

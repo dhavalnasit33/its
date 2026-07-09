@@ -4,10 +4,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { FiSmartphone, FiShield } from "react-icons/fi";
+import { FiPenTool , FiCode,FiTablet ,FiShoppingCart   } from "react-icons/fi";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
+import SectionBadge from "./SectionBadge";
 
 const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -50,17 +51,15 @@ export default function ServicesSection() {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
           {/* Left Column: Heading & Button */}
           <div className="w-full lg:w-[28%] flex flex-col justify-start pt-4">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#d68029]">
-              OUR SERVICES
-            </span>
+            <SectionBadge title=" OUR SERVICES" />
+            
             <h2 className="text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#0d1b2a] leading-[1.2] mt-3 mb-6">
               Intelligent Solutions for Modern Businesses
             </h2>
             <p className="text-slate-500 fonts_16 leading-relaxed mb-8 max-w-sm">
               End-to-end AI and software development services designed to
               transform your ideas into digital reality. We build scalable,
-              innovative solutions that drive growth and deliver lasting
-              value.
+              innovative solutions that drive growth and deliver lasting value.
             </p>
             <Button
               text="View All Services"
@@ -106,8 +105,10 @@ export default function ServicesSection() {
                   </h3>
 
                   <p className="text-slate-300 leading-8 [max-w-260px]">
-                    Automate repetitive tasks and workflows to boost
-                    productivity and reduce operational costs.
+                    Automate repetitive tasks, streamline business workflows,
+                    and eliminate manual processes to boost productivity, reduce
+                    operational costs, and improve overall efficiency across
+                    your organization.
                   </p>
                 </div>
 
@@ -131,7 +132,7 @@ export default function ServicesSection() {
                   <div>
                     <div className="flex items-center gap-4 mb-4">
                       <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600">
-                        <AIAutomationIcon className="w-5 h-5" />
+                        <FiCode className="w-5 h-5" />
                       </div>
 
                       <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
@@ -160,8 +161,8 @@ export default function ServicesSection() {
                 >
                   <div>
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-full border border-orange-200 bg-orange-100 flex items-center justify-center text-[#d68029]">
-                        <FiSmartphone className="w-5 h-5" />
+                      <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600">
+                        <FiTablet className="w-5 h-5" />
                       </div>
 
                       <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
@@ -194,7 +195,7 @@ export default function ServicesSection() {
                   <div>
                     <div className="flex items-center gap-4 mb-4">
                       <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600">
-                        <FiShield className="w-5 h-5" />
+                        <FiPenTool className="w-5 h-5" />
                       </div>
 
                       <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
@@ -224,7 +225,7 @@ export default function ServicesSection() {
                   <div>
                     <div className="flex items-center gap-4 mb-4">
                       <div className="w-12 h-12 rounded-full border border-slate-200 bg-slate-200 flex items-center justify-center text-slate-600">
-                        <AIConsultingIcon className="w-5 h-5" />
+                        <FiShoppingCart className="w-5 h-5" />
                       </div>
 
                       <h4 className="text-lg font-bold text-[#0d1b2a] leading-snug">
@@ -233,8 +234,8 @@ export default function ServicesSection() {
                     </div>
 
                     <p className="fonts_16 text-gray-600">
-                      Develop fast, secure, and user-friendly eCommerce and
-                      CMS websites.
+                      Develop fast, secure, and user-friendly eCommerce and CMS
+                      websites.
                     </p>
                   </div>
                   <div className="mt-4 flex items-center">
