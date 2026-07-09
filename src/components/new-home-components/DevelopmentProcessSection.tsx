@@ -23,11 +23,7 @@ import {
   FiBriefcase,
   FiCloud,
   FiBell,
-  FiDatabase,
-  FiChevronRight,
-  FiTarget,
-  FiCalendar,
-  FiUsers,
+  FiDatabase, 
   FiTrendingUp,
 } from "react-icons/fi";
 import { FaRocket, FaChartLine, FaStar } from "react-icons/fa";
@@ -423,7 +419,7 @@ export default function DevelopmentProcessSection() {
       <Row>
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-           <SectionBadge title="METHODOLOGY" />
+           <SectionBadge title="HOW WE WORK" />
           <h2 className="common-h2 text-[#0d1b2a]">
             Our <span className="text-[#d68029]">Development</span> Process
           </h2>
@@ -708,7 +704,7 @@ export default function DevelopmentProcessSection() {
                 <div>
                   {/* Stage number bubble */}
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d68029]/10 text-[#d68029] text-xs font-extrabold uppercase tracking-wider mb-6">
-                    Phase {processSteps[activeStep].number}
+                    Step {processSteps[activeStep].number}
                   </div>
 
                   {/* Step Title */}
@@ -749,13 +745,7 @@ export default function DevelopmentProcessSection() {
                     hoverColor="#D27E2B"
                     href="#contact-form-section"
                     icon="/navbar/btn_icon.png"
-                  />
-                  <span className="text-[13px] font-semibold text-slate-500">
-                    Estimated duration:{" "}
-                    <strong className="text-slate-800">
-                      {stepDurations[activeStep]}
-                    </strong>
-                  </span>
+                  /> 
                 </div>
               </motion.div>
             </div>
