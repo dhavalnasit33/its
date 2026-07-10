@@ -11,49 +11,124 @@ import {
 import SectionBadge from "./SectionBadge";
 import Row from "../Row";
 
+const ChatbotIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    <rect x="8" y="8" width="8" height="5.5" rx="1.5" strokeWidth="1.5" />
+    <circle cx="10.5" cy="11" r="0.75" fill="currentColor" />
+    <circle cx="13.5" cy="11" r="0.75" fill="currentColor" />
+    <path d="M10 13.8h4" strokeWidth="1" />
+    <line x1="12" y1="8" x2="12" y2="6.5" strokeWidth="1.5" />
+    <circle cx="12" cy="6" r="0.5" fill="currentColor" />
+  </svg>
+);
+
+const CustomAIDevIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <circle cx="12" cy="12" r="3" />
+    <path
+      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+      strokeWidth="2.5"
+    />
+    <circle cx="12" cy="5" r="1.2" fill="currentColor" />
+    <circle cx="12" cy="19" r="1.2" fill="currentColor" />
+    <circle cx="5" cy="12" r="1.2" fill="currentColor" />
+    <circle cx="19" cy="12" r="1.2" fill="currentColor" />
+  </svg>
+);
+
+const AIConsultingIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    <circle cx="12" cy="11.5" r="3" strokeWidth="1.5" />
+    <path d="M12 8.5v3M10.5 11.5h3" strokeWidth="1.5" />
+  </svg>
+);
 // Mock data structure assumption for preview context
 const aiServices = [
   {
-    title: "Neural Language Modelling",
+    title: "AI Chatbot Development",
+    route: "/ai-chatbot-development",
+    icon: ChatbotIcon,
     description:
-      "Deploy hyper-tuned transformer topologies for zero-shot context inference and autonomous reasoning.",
+      "We design intelligent AI assistants that automate customer interactions, improve support efficiency, and deliver natural conversations across web, mobile, and messaging platforms.",
     highlights: [
-      "Context Window Scaling",
-      "RLHF Alignment",
-      "Low-Latency Tokens",
-      "Edge Deployment",
+      "Enterprise AI assistants",
+      "Customer support automation",
+      "Internal knowledge assistants",
+      "Multi-channel chatbot deployment",
     ],
-    route: "/services/nlp",
-    cta: "Initialize Core",
-    icon: FiCpu,
+    color: "from-blue-600/10 via-indigo-600/5 to-transparent",
+    hoverBg: "hover:bg-blue-950/20",
+    borderColor: "group-hover:border-blue-500/30",
+    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(59,130,246,0.25)]",
+    iconBg: "bg-blue-500/10 border-blue-500/20",
+    iconColor: "text-blue-400",
+    cta: "Explore Service",
   },
   {
-    title: "Multimodal Synthesis",
+    title: "AI Product Development",
+    route: "/ai-product-development",
+    icon: CustomAIDevIcon,
     description:
-      "Generate cinematic latent imagery and real-time temporal video sequences directly from vector embeddings.",
+      "From concept to deployment, we build production-ready AI products that solve real business challenges with modern machine learning and generative AI technologies.",
     highlights: [
-      "Diffusion Fine-Tuning",
-      "Temporal Consistency",
-      "Zero-Shot Generation",
-      "Vector Search",
+      "End-to-end AI product engineering",
+      "LLM integration",
+      "Custom AI applications",
+      "AI workflow automation",
     ],
-    route: "/services/multimodal",
-    cta: "Launch Engine",
-    icon: FiActivity,
+    color: "from-[#d68029]/15 via-orange-600/5 to-transparent",
+    hoverBg: "hover:bg-amber-950/10",
+    borderColor: "group-hover:border-[#d68029]/30",
+    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(214,128,41,0.25)]",
+    iconBg: "bg-[#d68029]/10 border-[#d68029]/20",
+    iconColor: "text-[#d68029]",
+    cta: "View Solution",
   },
   {
-    title: "Autonomous Agent Swarms",
+    title: "AI Strategy Consulting",
+    route: "/ai-strategy-consulting",
+    icon: AIConsultingIcon,
     description:
-      "Orchestrate multi-agent cognitive loops capable of self-correction, tool execution, and live workflow routing.",
+      "We help organizations identify high-impact AI opportunities, create implementation strategies, and build practical roadmaps for long-term business value.",
     highlights: [
-      "Dynamic Task Splitting",
-      "Memory Persistence",
-      "API Interoperability",
-      "Safe Sandbox",
+      "AI transformation roadmap",
+      "AI readiness assessment",
+      "Use-case discovery",
+      "Technology selection",
     ],
-    route: "/services/agents",
-    cta: "Deploy Swarm",
-    icon: FiTerminal,
+    color: "from-emerald-600/10 via-teal-600/5 to-transparent",
+    hoverBg: "hover:bg-emerald-950/10",
+    borderColor: "group-hover:border-emerald-500/30",
+    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(16,185,129,0.25)]",
+    iconBg: "bg-emerald-500/10 border-emerald-500/20",
+    iconColor: "text-emerald-400",
+    cta: "Explore Service",
   },
 ];
 
@@ -256,7 +331,7 @@ export default function AIExpertiseSection() {
                             e.stopPropagation();
                             router.push(service.route);
                           }}
-                          className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-[#d68029] hover:text-[#ffaa55] transition-colors group/btn"
+                          className="inline-flex items-center gap-2 cursor-pointer text-xs font-mono font-bold uppercase tracking-widest text-[#d68029] hover:text-[#ffaa55] transition-colors group/btn"
                         >
                           <span>{service.cta}</span>
                           <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
