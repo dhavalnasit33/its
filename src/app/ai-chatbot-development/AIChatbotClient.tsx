@@ -7,7 +7,7 @@ import Testimonials from "@/components/home/Testimonials";
 import FAQ from "@/components/FAQ";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import PlatformSlider from "@/components/home/PlatformSlider";
-import StatsGrid from "@/components/home/RoundStatsCard"; 
+import StatsGrid from "@/components/home/RoundStatsCard";
 // Import AI Chatbot Sub-components
 import Hero from "@/components/ai-chatbot-dev/Hero";
 import AIChatbotSolutions from "@/components/ai-chatbot-dev/AIChatbotSolutions";
@@ -103,7 +103,7 @@ export default function AIChatbotClient() {
     })),
   };
 
-const services =
+  const services =
     navStructure?.servicesNav?.flatMap(
       (category) =>
         category.links?.map((service) => ({
@@ -111,7 +111,6 @@ const services =
           slug: service.slug,
         })) || [],
     ) || [];
-
 
   return (
     <>
@@ -133,7 +132,6 @@ const services =
         {/* ── 1. Hero Section ── */}
         <Hero />
 
-
         {/* ── 2. Platform Slider (reused from home) ── */}
         <Section className="bg-[#0d1b2a] z-10 py-6!">
           <Row>
@@ -151,27 +149,24 @@ const services =
         {/* ── 2. Solutions Grid ── */}
         <AIChatbotSolutions />
 
-  
         {/* ── 3. Conversation Flow ── */}
         <ConversationFlow />
 
         {/* ── 5. Industry Use Cases ── */}
         <IndustryUseCases />
-        
-      {/* ── 4. Powerful Capabilities ── */}
+
+        {/* ── 8. Development Process ── */}
+        <DevelopmentProcess />
+        {/* ── 4. Powerful Capabilities ── */}
         <PowerfulCapabilities />
 
-{/* ── 12. Final CTA Banner ── */}
+        {/* ── 12. Final CTA Banner ── */}
         <FinalCTA />
         {/* ── 6. Integrations Grid ── */}
         <Integrations />
 
-        {/* ── 8. Development Process ── */}
-        <DevelopmentProcess />
-
         {/* ── 7. Why AI Chatbots Comparison ── */}
         <WhyAIChatbots />
-
 
         {/* ── 9. Success Metrics & Statistics ── */}
         <SuccessMetrics />
@@ -181,8 +176,6 @@ const services =
 
         {/* ── 11. FAQ Accordion ── */}
         <FAQ faqs={CHATBOT_FAQS} />
-
-        
       </main>
     </>
   );

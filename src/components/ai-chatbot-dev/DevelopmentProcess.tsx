@@ -17,6 +17,7 @@ import {
 } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 const PROCESS_STEPS = [
   {
@@ -38,14 +39,14 @@ const PROCESS_STEPS = [
     title: "Knowledge Base",
     desc: "Import documents, FAQs, APIs, and data sources to build a smart foundation.",
     icon: LuBook,
-    pos: "lg:left-[28%] lg:top-[75%]",
+    pos: "lg:left-[72%] lg:top-[18%]",
   },
   {
     num: "04",
     title: "LLM Integration",
     desc: "Integrate advanced LLMs, configure prompts, and connect the right APIs and tools.",
     icon: LuPuzzle,
-    pos: "lg:left-[50%] lg:top-[90%]",
+    pos: "lg:left-[88%] lg:top-[45%]",
   },
   {
     num: "05",
@@ -59,14 +60,14 @@ const PROCESS_STEPS = [
     title: "Deployment",
     desc: "Launch across your platforms — web, WhatsApp, Slack, voice & more.",
     icon: LuRocket,
-    pos: "lg:left-[72%] lg:top-[18%]",
+    pos: "lg:left-[50%] lg:top-[90%]",
   },
   {
     num: "07",
     title: "Optimization",
     desc: "Monitor performance, analyze conversations, and continuously improve results.",
     icon: LuTrendingUp,
-    pos: "lg:left-[88%] lg:top-[45%]",
+    pos: "lg:left-[28%] lg:top-[75%]",
   },
 ];
 
@@ -121,39 +122,25 @@ export default function DevelopmentProcess() {
       </div>
 
       <Row className="relative z-10 max-w-[1400px] mx-auto">
-        {/* ── HEADER SECTION ── */}
-        <div className="text-center mb-8 lg:mb-12 max-w-3xl mx-auto relative z-20">
-          <div className="inline-flex items-center gap-2 px-5 py-1.5 rounded-full bg-[#0c1327] border border-blue-500/30 mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(59,130,246,0.15)]">
-            <LuSparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="text-[11px] font-bold uppercase tracking-widest text-cyan-300">
-              OUR METHODOLOGY
-            </span>
-          </div>
-
-          <motion.h2
+        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight"
+            className="inline-block mb-4"
           >
+            <SectionBadge title="OUR METHODOLOGY" />
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight">
             AI Chatbot{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d68029] to-[#ffaa55]">
               Development Process
             </span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
-          >
-            A strategic, human-centered approach powered by AI.
-            <br className="hidden sm:block" />
-            From discovery to optimization — built for real impact.
-          </motion.p>
+          </h2>
+          <p className="text-slate-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+            A strategic, human-centered approach powered by AI. From discovery
+            to optimization — built for real impact.
+          </p>
         </div>
 
         {/* ── RADIAL LAYOUT AREA ── */}
@@ -176,14 +163,14 @@ export default function DevelopmentProcess() {
             <motion.div
               animate={{ y: [-5, 5, -5] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="relative w-[340px] h-[340px] flex items-center justify-center"
+              className="relative w-[450px] h-[450px] flex items-center justify-center"
             >
               <div className="absolute inset-0 bg-blue-600/20 rounded-full blur-[60px] animate-[pulse_3s_infinite]" />
 
               <img
                 src="/ai-strategy/ai-chartbot-development/mind.png"
                 alt="AI Core Brain"
-                className="w-[280px] h-[280px] object-contain relative z-10 drop-shadow-[0_0_35px_rgba(59,130,246,0.6)]"
+                className="w-[430px] h-[430px] object-contain relative z-10 drop-shadow-[0_0_35px_rgba(59,130,246,0.6)]"
               />
             </motion.div>
           </div>
@@ -233,7 +220,7 @@ export default function DevelopmentProcess() {
         </div>
 
         {/* ── BOTTOM FEATURE BAR ── */}
-        <div className="mt-8 lg:mt-12 relative z-20">
+        <div className="mt-12 lg:mt-16 relative z-20">
           <div className="bg-[#0b1021]/80 border border-white/5 border-t-white/10 backdrop-blur-xl rounded-full p-4 lg:px-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/5">
               {BOTTOM_FEATURES.map((feature, idx) => {

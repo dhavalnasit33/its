@@ -1,165 +1,109 @@
-"use client";
-
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { FiArrowRight } from "react-icons/fi";
-import Section from "@/components/Section";
-import Row from "@/components/Row";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FiArrowRight,
+  FiCpu,
+  FiTerminal,
+  FiShield,
+  FiActivity,
+} from "react-icons/fi";
 import SectionBadge from "./SectionBadge";
+import Row from "../Row";
 
-// Custom SVG components
-const ChatbotIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={props.className}
-  >
-    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-    <rect x="8" y="8" width="8" height="5.5" rx="1.5" strokeWidth="1.5" />
-    <circle cx="10.5" cy="11" r="0.75" fill="currentColor" />
-    <circle cx="13.5" cy="11" r="0.75" fill="currentColor" />
-    <path d="M10 13.8h4" strokeWidth="1" />
-    <line x1="12" y1="8" x2="12" y2="6.5" strokeWidth="1.5" />
-    <circle cx="12" cy="6" r="0.5" fill="currentColor" />
-  </svg>
-);
-
-const CustomAIDevIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={props.className}
-  >
-    <circle cx="12" cy="12" r="3" />
-    <path
-      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
-      strokeWidth="2.5"
-    />
-    <circle cx="12" cy="5" r="1.2" fill="currentColor" />
-    <circle cx="12" cy="19" r="1.2" fill="currentColor" />
-    <circle cx="5" cy="12" r="1.2" fill="currentColor" />
-    <circle cx="19" cy="12" r="1.2" fill="currentColor" />
-  </svg>
-);
-
-const AIConsultingIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={props.className}
-  >
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    <circle cx="12" cy="11.5" r="3" strokeWidth="1.5" />
-    <path d="M12 8.5v3M10.5 11.5h3" strokeWidth="1.5" />
-  </svg>
-);
-
+// Mock data structure assumption for preview context
 const aiServices = [
   {
-    title: "AI Chatbot Development",
-    route: "/ai-chatbot-development",
-    icon: ChatbotIcon,
+    title: "Neural Language Modelling",
     description:
-      "We design intelligent AI assistants that automate customer interactions, improve support efficiency, and deliver natural conversations across web, mobile, and messaging platforms.",
+      "Deploy hyper-tuned transformer topologies for zero-shot context inference and autonomous reasoning.",
     highlights: [
-      "Enterprise AI assistants",
-      "Customer support automation",
-      "Internal knowledge assistants",
-      "Multi-channel chatbot deployment",
-      "LLM-powered conversational experiences",
+      "Context Window Scaling",
+      "RLHF Alignment",
+      "Low-Latency Tokens",
+      "Edge Deployment",
     ],
-    color: "from-blue-600/10 via-indigo-600/5 to-transparent",
-    hoverBg: "hover:bg-blue-950/20",
-    borderColor: "group-hover:border-blue-500/30",
-    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(59,130,246,0.25)]",
-    iconBg: "bg-blue-500/10 border-blue-500/20",
-    iconColor: "text-blue-400",
-    cta: "Explore Service",
+    route: "/services/nlp",
+    cta: "Initialize Core",
+    icon: FiCpu,
   },
   {
-    title: "AI Product Development",
-    route: "/ai-product-development",
-    icon: CustomAIDevIcon,
+    title: "Multimodal Synthesis",
     description:
-      "From concept to deployment, we build production-ready AI products that solve real business challenges with modern machine learning and generative AI technologies.",
+      "Generate cinematic latent imagery and real-time temporal video sequences directly from vector embeddings.",
     highlights: [
-      "End-to-end AI product engineering",
-      "LLM integration",
-      "Custom AI applications",
-      "AI workflow automation",
-      "Scalable production systems",
+      "Diffusion Fine-Tuning",
+      "Temporal Consistency",
+      "Zero-Shot Generation",
+      "Vector Search",
     ],
-    color: "from-[#d68029]/15 via-orange-600/5 to-transparent",
-    hoverBg: "hover:bg-amber-950/10",
-    borderColor: "group-hover:border-[#d68029]/30",
-    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(214,128,41,0.25)]",
-    iconBg: "bg-[#d68029]/10 border-[#d68029]/20",
-    iconColor: "text-[#d68029]",
-    cta: "View Solution",
+    route: "/services/multimodal",
+    cta: "Launch Engine",
+    icon: FiActivity,
   },
   {
-    title: "AI Strategy Consulting",
-    route: "/ai-strategy-consulting",
-    icon: AIConsultingIcon,
+    title: "Autonomous Agent Swarms",
     description:
-      "We help organizations identify high-impact AI opportunities, create implementation strategies, and build practical roadmaps for long-term business value.",
+      "Orchestrate multi-agent cognitive loops capable of self-correction, tool execution, and live workflow routing.",
     highlights: [
-      "AI transformation roadmap",
-      "AI readiness assessment",
-      "Use-case discovery",
-      "Technology selection",
-      "ROI planning",
-      "Enterprise AI adoption",
+      "Dynamic Task Splitting",
+      "Memory Persistence",
+      "API Interoperability",
+      "Safe Sandbox",
     ],
-    color: "from-emerald-600/10 via-teal-600/5 to-transparent",
-    hoverBg: "hover:bg-emerald-950/10",
-    borderColor: "group-hover:border-emerald-500/30",
-    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(16,185,129,0.25)]",
-    iconBg: "bg-emerald-500/10 border-emerald-500/20",
-    iconColor: "text-emerald-400",
-    cta: "Explore Service",
+    route: "/services/agents",
+    cta: "Deploy Swarm",
+    icon: FiTerminal,
   },
 ];
 
 export default function AIExpertiseSection() {
   const router = useRouter();
-  // Switched to track the active clicked service, defaulting to 0 so the first is open
-  const [activeService, setActiveService] = useState<number>(0); 
+  const [activeService, setActiveService] = useState<number>(0);
+  const [isHovered, setIsHovered] = useState<number | null>(null);
 
   const activeData = aiServices[activeService];
   const ActiveIcon = activeData.icon;
 
   return (
-    <Section className="bg-[#030812] py-20 lg:py-28 relative overflow-hidden">
-      {/* Subtle background grids/glows */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(214,128,41,0.08)_0%,transparent_70%)]" />
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-            transform:
-              "perspective(1000px) rotateX(60deg) translateY(-100px) translateZ(-200px)",
-          }}
-        />
+    <section className="bg-[#050914] py-24 lg:py-32 relative overflow-hidden font-sans">
+      {/* ── IMMERSIVE GLOW & AMBIENT GRIDS ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(214,128,41,0.06)_0%,transparent_60%)] blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-blue-600/5 blur-[150px]" />
+
+        {/* Sci-Fi Perspective Grid */}
+        <div className="absolute bottom-[-10%] left-0 w-full h-[50%] opacity-15 transform perspective-[1000px] rotateX-[75deg]">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#d6802915_1px,transparent_1px),linear-gradient(to_bottom,#d6802915_1px,transparent_1px)] bg-[size:50px_50px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#050B14] to-[#050B14]" />
+        </div>
       </div>
 
-      <Row className="relative z-10">
+      {/* ── BACKGROUND ELEMENTS ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(30,58,138,0.2)_0%,transparent_60%)] blur-3xl" />
+
+        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-[150px]" />
+        <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-600/15 blur-[120px]" />
+
+        <div className="absolute bottom-[-20%] left-0 w-full h-[60%] opacity-20 transform-[perspective(1000px)_rotateX(75deg)]">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f46e533_1px,transparent_1px),linear-gradient(to_bottom,#4f46e533_1px,transparent_1px)] bg-[size:40px_40px]" />
+          <div className="absolute inset-0 bg-linear-to-t from-transparent via-[#050914] to-[#050914]" />
+        </div>
+
+        {/* 3D FLOATING DECORATIONS */}
+        <div className="absolute top-[10%] left-[5%] hidden 2xl:flex flex-col gap-4 animate-[bounce_8s_infinite]">
+          <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-12" />
+        </div>
+        <div className="absolute top-[15%] right-[5%] hidden 2xl:flex flex-col gap-2 animate-[pulse_6s_infinite]">
+          <div className="w-12 h-12 rounded-xl bg-linear-to-br from-purple-400/20 to-blue-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(168,85,247,0.3)] transform -rotate-12 translate-x-4" />
+          <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-6" />
+        </div>
+        <div className="absolute bottom-[10%] left-[5%] hidden 2xl:block w-32 h-32 rounded-full border-16 border-blue-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(59,130,246,0.2)] border-t-blue-400/30 border-l-blue-400/30 transform rotateX-45 rotate-12 animate-[spin_20s_linear_infinite]" />
+        <div className="absolute bottom-[15%] right-[8%] hidden 2xl:block w-24 h-24 rounded-full border-12 border-purple-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(168,85,247,0.2)] border-t-purple-400/30 border-r-purple-400/30 transform rotateX-45 -rotate-12 animate-[spin_15s_linear_infinite_reverse]" />
+      </div>
+
+      <Row className="relative z-10 max-w-[1400px] mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
           <motion.div
@@ -170,211 +114,162 @@ export default function AIExpertiseSection() {
           >
             <SectionBadge title=" Advanced AI Systems" />
           </motion.div>
+
           <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight">
             Intelligent{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d68029] to-[#ffaa55]">
               Core Capabilities
             </span>
           </h2>
+
           <p className="text-slate-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Click on our terminal to project real-time capabilities into our
-            3D visualization core.
+            Click on our terminal to project real-time capabilities into our 3D
+            visualization core.
           </p>
         </div>
 
-        {/* Split Layout: 3D Hologram (Left) + Terminal Menu (Right) */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 w-full max-w-[1200px] mx-auto">
-          
-          {/* ── LEFT: 3D HOLOGRAPHIC CORE (Unchanged) ── */}
-          <div
-            className="w-full lg:w-1/2 flex items-center justify-center min-h-[400px] sm:min-h-[500px]"
-            style={{ perspective: "1500px" }}
-          >
+        {/* Split Grid: Interactive 3D Holographic Core (Left) + Command Cards (Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* ── LEFT: HOLOGRAPHIC DIAGNOSTIC CORE (5 Cols) ── */}
+          <div className="lg:col-span-5 flex items-center justify-center min-h-[420px] sm:min-h-[480px] relative">
+            {/* HUD Reticles */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+              <div className="w-[320px] h-[320px] sm:w-[380px] sm:h-[380px] rounded-full border border-dashed border-[#d68029]/20 animate-[spin_40s_linear_infinite]" />
+              <div className="absolute w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] rounded-full border border-[#d68029]/10 animate-[spin_25s_linear_infinite_reverse]" />
+            </div>
+
             <motion.div
               animate={{
-                rotateX: [60, 63, 60],
-                rotateZ: [-35, -32, -35],
-                y: [0, -15, 0],
+                rotateX: [15, 20, 15],
+                rotateZ: [-10, -5, -10],
+                y: [0, -10, 0],
               }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px]"
-              style={{ transformStyle: "preserve-3d" }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-[280px] h-[350px] sm:w-[320px] sm:h-[400px] rounded-[32px] bg-[#0A1424]/90 border border-slate-700/60 p-6 flex flex-col justify-between shadow-[0_0_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden group"
             >
-              {/* Depth Layer 0: Shadow Glow */}
-              <div
-                className="absolute inset-0 bg-[#d68029]/30 blur-[80px] rounded-full"
-                style={{ transform: "translateZ(-120px)" }}
-              />
+              {/* Scanline overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[size:100%_4px] pointer-events-none opacity-40" />
 
-              {/* Depth Layer 1: Base Processor Plate */}
-              <div
-                className="absolute inset-0 bg-[#061020]/80 border border-slate-700/50 rounded-[40px] backdrop-blur-xl shadow-2xl"
-                style={{ transform: "translateZ(-40px)" }}
-              >
-                {/* Inner Tech Grid */}
-                <div className="absolute inset-4 border border-slate-600/20 rounded-[28px] bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-[size:20px_20px] opacity-10" />
+              {/* Top HUD Telemetry */}
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-4 relative z-10">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#d68029] animate-ping" />
+                  <span className="text-[11px] font-mono text-[#d68029] tracking-wider uppercase">
+                    Node_ID: 0{activeService + 1}
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono text-slate-500 uppercase">
+                  Status: Active
+                </span>
               </div>
 
-              {/* Depth Layer 2: Orbiting Data Rings */}
-              <motion.div
-                animate={{ rotateZ: 360 }}
-                transition={{
-                  duration: 30,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                className="absolute -inset-10 border-[2px] border-dashed border-[#d68029]/20 rounded-full"
-                style={{ transform: "translateZ(10px)" }}
-              />
-              <motion.div
-                animate={{ rotateZ: -360 }}
-                transition={{
-                  duration: 40,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                className="absolute -inset-20 border border-slate-600/30 rounded-full"
-                style={{ transform: "translateZ(20px)" }}
-              >
-                <div className="absolute top-0 left-1/2 w-2 h-2 bg-[#d68029] rounded-full shadow-[0_0_10px_#d68029] -translate-x-1/2 -translate-y-1/2" />
-              </motion.div>
+              {/* Center Hologram Icon Container */}
+              <div className="my-auto flex flex-col items-center justify-center relative z-10">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-[#12233B] to-[#0D1826] border border-[#d68029]/40 flex items-center justify-center shadow-[0_0_35px_rgba(214,128,41,0.25)] relative">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-[#d68029]/10 to-transparent animate-pulse" />
+                  <ActiveIcon className="w-12 h-12 text-[#d68029]" />
+                </div>
+                <h4 className="text-white font-bold text-center mt-5 text-lg tracking-wide">
+                  {activeData.title}
+                </h4>
+              </div>
 
-              {/* Depth Layer 3: Glass Prism */}
-              <div
-                className="absolute inset-8 bg-[#d68029]/5 border border-[#d68029]/30 rounded-[30px] backdrop-blur-md"
-                style={{ transform: "translateZ(50px)" }}
-              />
-
-              {/* Depth Layer 4: Dynamic Projected Content (The Hologram) */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeService}
-                  initial={{
-                    opacity: 0,
-                    scale: 0.8,
-                    filter: "blur(10px)",
-                    z: 120,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    filter: "blur(0px)",
-                    z: 100,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 1.2,
-                    filter: "blur(10px)",
-                    z: 120,
-                  }}
-                  transition={{ duration: 0.4 }}
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                >
-                  {/* 3D Icon Container */}
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-[24px] bg-[#0d1b2a]/90 border border-[#d68029]/50 flex items-center justify-center shadow-[0_0_40px_rgba(214,128,41,0.5)] backdrop-blur-2xl relative overflow-hidden top-15 right-10">
-                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite]" />
-                    <ActiveIcon className="w-12 h-12 sm:w-14 sm:h-14 text-[#d68029]" />
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+              {/* Bottom Telemetry Bar */}
+              <div className="bg-[#050B14]/80 rounded-xl p-3 border border-slate-800/80 font-mono text-[11px] text-slate-400 flex items-center justify-between relative z-10">
+                <span>LATENCY: 12ms</span>
+                <span className="text-[#d68029]">SYNC OK</span>
+              </div>
             </motion.div>
           </div>
 
-          {/* ── RIGHT: INTERACTIVE TERMINAL MENU ── */}
-          <div className="w-full lg:w-1/2 flex flex-col gap-4 relative z-20">
+          {/* ── RIGHT: INTERACTIVE COMMAND NODES (7 Cols) ── */}
+          <div className="lg:col-span-7 flex flex-col gap-4">
             {aiServices.map((service, idx) => {
               const isActive = activeService === idx;
 
               return (
-                <div
+                <motion.div
                   key={idx}
-                  // MODIFICATION 1: Changed to onClick to handle expansion
-                  onClick={() => setActiveService(idx)} 
-                  className={`relative cursor-pointer transition-all duration-500 overflow-hidden rounded-2xl ${
+                  onClick={() => setActiveService(idx)}
+                  onHoverStart={() => setIsHovered(idx)}
+                  onHoverEnd={() => setIsHovered(null)}
+                  className={`relative cursor-pointer transition-all duration-300 rounded-2xl border p-6 sm:p-7 overflow-hidden ${
                     isActive
-                      ? "bg-slate-900/50 border border-slate-700/50 backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
-                      : "bg-transparent border border-transparent hover:bg-slate-900/20"
+                      ? "bg-[#0A1424]/90 border-[#d68029]/50 shadow-[0_8px_30px_rgba(214,128,41,0.12)]"
+                      : "bg-[#080E1B]/50 border-slate-800/80 hover:border-slate-700/80 hover:bg-[#0A1424]/40"
                   }`}
                 >
-                  {/* Active Accent Line */}
+                  {/* Left glowing marker */}
                   <div
-                    className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-500 ${
-                      isActive
-                        ? "bg-[#d68029] shadow-[0_0_15px_#d68029]"
-                        : "bg-slate-800"
-                    }`}
+                    className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-300 ${isActive ? "bg-[#d68029] shadow-[0_0_12px_#d68029]" : "bg-transparent"}`}
                   />
 
-                  {/* Always Visible Header */}
-                  <div className="flex items-center gap-6 p-6 sm:p-8">
-                    <span
-                      className={`text-xl font-black font-mono transition-colors duration-300 ${
-                        isActive ? "text-[#d68029]" : "text-slate-700"
-                      }`}
+                  {/* Header Row */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <span
+                        className={`text-sm font-mono font-bold tracking-widest ${isActive ? "text-[#d68029]" : "text-slate-600"}`}
+                      >
+                        0{idx + 1}
+                      </span>
+                      <h3
+                        className={`text-lg sm:text-xl font-bold transition-colors ${isActive ? "text-white" : "text-slate-300"}`}
+                      >
+                        {service.title}
+                      </h3>
+                    </div>
+                    <div
+                      className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all ${isActive ? "border-[#d68029] bg-[#d68029]/10 text-[#d68029] rotate-90" : "border-slate-800 text-slate-600"}`}
                     >
-                      0{idx + 1}
-                    </span>
-                    <h3
-                      className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${
-                        isActive ? "text-white" : "text-slate-400"
-                      }`}
-                    >
-                      {service.title}
-                    </h3>
+                      <FiArrowRight className="w-3.5 h-3.5" />
+                    </div>
                   </div>
 
-                  {/* Expandable Content Panel */}
+                  {/* Expanded Body Panel */}
                   <AnimatePresence>
                     {isActive && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden px-6 sm:px-8 pb-8"
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden pt-4 mt-4 border-t border-slate-800/80"
                       >
-                        <div className="pl-12 border-l border-slate-800 ml-[11px]">
-                          <p className="text-slate-400 text-[15px] leading-relaxed mb-6">
-                            {service.description}
-                          </p>
+                        <p className="text-slate-400 text-sm leading-relaxed mb-5">
+                          {service.description}
+                        </p>
 
-                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                            {service.highlights.slice(0, 4).map((item, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-2.5 text-sm text-slate-300"
-                              >
-                                <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#d68029] shrink-0 shadow-[0_0_5px_#d68029]" />
-                                <span className="leading-tight">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-
-                          {/* MODIFICATION 2: Converted to a button with stopPropagation */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation(); // Stops the card's onClick from firing again
-                              router.push(service.route); // Handles the navigation
-                            }}
-                            className="inline-flex cursor-pointer items-center gap-2 text-[#d68029] text-sm font-bold uppercase tracking-wider hover:text-white transition-colors group/btn"
-                          >
-                            {service.cta}
-                            <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
-                          </button>
+                        <div className="grid grid-cols-2 gap-2.5 mb-6">
+                          {service.highlights.map((item, i) => (
+                            <div
+                              key={i}
+                              className="flex items-center gap-2 text-xs font-mono text-slate-300 bg-[#050B14]/60 px-3 py-2 rounded-lg border border-slate-800/60"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
+                              {item}
+                            </div>
+                          ))}
                         </div>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(service.route);
+                          }}
+                          className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-[#d68029] hover:text-[#ffaa55] transition-colors group/btn"
+                        >
+                          <span>{service.cta}</span>
+                          <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
+                        </button>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
           </div>
         </div>
       </Row>
-    </Section>
+    </section>
   );
 }
