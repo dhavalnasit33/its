@@ -14,6 +14,8 @@ import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 import IndustriesWeTransform from "@/components/ai-strategy/IndustriesWeTransform";
 import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
 import CTA from "@/components/common/CTA";
+import SolutionBlueprint from "@/components/ai-strategy/SolutionBlueprint";
+import MaturityIndex from "@/components/ai-strategy/MaturityIndex";
 
 export default function AIStrategyClient() {
   const { navStructure } = useWebsiteSettings();
@@ -126,6 +128,11 @@ export default function AIStrategyClient() {
 
         {/* ── 6. AI Consulting Timeline / Process ── */}
         <Timeline />
+
+        {/* ── 6.5. AI Maturity Index ── */}
+        <MaturityIndex />
+        {/* ── 7.5. AI Solution Blueprint Configurator ── */}
+        <SolutionBlueprint />
 
         {/* ── 7. Industries We Transform ── */}
         <IndustriesWeTransform />

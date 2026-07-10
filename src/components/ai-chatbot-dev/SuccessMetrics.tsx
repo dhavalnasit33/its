@@ -94,7 +94,7 @@ export default function SuccessMetrics() {
   const fillPath = `${linePath} L 460 160 L 40 160 Z`;
 
   return (
-    <section className="bg-[#FAFBFF] border-y border-slate-100/50 py-24 lg:py-32 select-none relative overflow-hidden">
+    <section className="bg-[#FAFBFF] border-y border-slate-100/50 py-24 lg:py-32  relative overflow-hidden">
       {/* ── AMBIENT SAAS BACKGROUND SYSTEM ── */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(210,126,43,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(210,126,43,0.012)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
       <div className="absolute top-[10%] left-[-15%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#D27E2B]/8 to-transparent blur-[135px] pointer-events-none" />

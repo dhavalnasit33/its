@@ -133,7 +133,7 @@ function SolutionCard({ solution, index }: SolutionCardProps) {
 
 export default function Solutions() {
   return (
-    <Section id="ai-solutions" >
+    <Section id="ai-solutions" className="py-20! lg:py-28!">
       <Row>
         {/* Header */}
         <div className="text-center mb-12">

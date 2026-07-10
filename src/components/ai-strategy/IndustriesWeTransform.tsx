@@ -476,7 +476,7 @@ export default function IndustriesWeTransform() {
   };
 
   return (
-    <Section className="bg-white py-16 lg:py-24">
+    <Section className="bg-white py-20! lg:py-28!">
       <div ref={sectionRef}>
         <Row>
           {/* Section Heading */}

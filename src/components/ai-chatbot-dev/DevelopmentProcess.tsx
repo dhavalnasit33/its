@@ -96,7 +96,7 @@ const BOTTOM_FEATURES = [
 
 export default function DevelopmentProcess() {
   return (
-    <Section className="bg-[#050914] py-20 lg:py-32 overflow-hidden relative select-none">
+    <Section className="bg-[#050914] py-20 lg:py-32 overflow-hidden relative">
       {/* ── BACKGROUND ELEMENTS ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(30,58,138,0.2)_0%,transparent_60%)] blur-3xl" />

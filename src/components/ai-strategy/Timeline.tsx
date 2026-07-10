@@ -54,7 +54,7 @@ function StepIcon({ index }: { index: number }) {
 
 export default function Timeline() {
   return (
-    <Section className=" overflow-hidden bg-[#0d1b2a]" style={{
+    <Section className="py-20! lg:py-28! overflow-hidden bg-[#0d1b2a]" style={{
 						background: `
 						radial-gradient(circle at 18% 20%, rgba(214, 128, 41, 0.15), transparent 28%),
 						radial-gradient(circle at 85% 70%, rgba(14, 165, 233, 0.15), transparent 20%),
