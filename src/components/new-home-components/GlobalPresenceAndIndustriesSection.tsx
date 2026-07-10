@@ -22,22 +22,34 @@ import Section from "@/components/Section";
 import Row from "@/components/Row";
 import SectionBadge from "./SectionBadge";
 
-const MapPin = ({ top, left }: { top: string; left: string }) => (
+const MapPin = ({
+  top,
+  left,
+  label,
+}: {
+  top: string;
+  left: string;
+  label?: string;
+}) => (
   <div
     className="absolute -translate-x-1/2 -translate-y-full group cursor-pointer"
     style={{ top, left }}
   >
     {/* Ping Animation */}
-    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-orange-400 animate-ping opacity-30"></span>
+    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-orange-400 animate-ping opacity-30"></span>
 
     {/* Marker */}
-    <FaMapMarkerAlt
-      size={22}
-      className="text-[#d68029] drop-shadow-lg relative z-10"
-    />
+    <FaMapMarkerAlt className="text-[#d68029] drop-shadow-lg relative z-10 w-3.5 h-3.5 sm:w-[22px] sm:h-[22px]" />
 
     {/* White Center Dot */}
-    <span className="absolute top-[7px] left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white z-20"></span>
+    <span className="absolute top-[4px] sm:top-[7px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white z-20"></span>
+
+    {/* Tooltip on hover */}
+    {label && (
+      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 whitespace-nowrap rounded-md bg-[#030b1a] px-2 py-1 text-[10px] font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100">
+        {label}
+      </span>
+    )}
   </div>
 );
 
@@ -124,7 +136,7 @@ export default function GlobalPresenceAndIndustriesSection() {
         <div className="w-full relative">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-stretch">
             {/* Left Column: Industries We Serve */}
-            <div className="flex-1 flex flex-col justify-between w-full lg:w-[48%]">
+            <div className="flex-1 flex flex-col justify-between w-full lg:w-[44%]">
               <div>
                 <SectionBadge title="INDUSTRIES WE SERVE" />
 
@@ -141,7 +153,7 @@ export default function GlobalPresenceAndIndustriesSection() {
                       <motion.div
                         key={idx}
                         whileHover={{ y: -2 }}
-                        className="bg-white border cursor-pointer border-slate-100 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] hover:border-slate-200 transition-all duration-300 min-h-[120px] justify-center"
+                        className="bg-white border cursor-pointer border-[#d68029]/10 hover:border-[#d68029]/50 rounded-2xl py-3 px-2 flex flex-col items-center text-center shadow-[0_2px_15px_rgba(0,0,0,0.015)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)]   transition-all duration-300 min-h-[120px] justify-center"
                       >
                         <div className="w-10 h-10 rounded-xl bg-[#f0f4f8] flex items-center justify-center text-[#d68029] mb-2 shrink-0">
                           <Icon className="w-5 h-5" />
@@ -160,7 +172,7 @@ export default function GlobalPresenceAndIndustriesSection() {
             <div className="hidden lg:block w-px bg-slate-200/80 mx-2" />
 
             {/* Right Column: Global Presence */}
-            <div className="flex-1 flex flex-col justify-start w-full lg:w-[50%]">
+            <div className="flex-1 flex flex-col justify-start w-full lg:w-[54%] pb-10 sm:pb-16 lg:pb-4">
               <div className="mb-4">
                 <SectionBadge title="GLOBAL PRESENCE" />
 
@@ -171,9 +183,9 @@ export default function GlobalPresenceAndIndustriesSection() {
               </div>
 
               {/* Stats & Map Flex Layout (Fixed Responsive Gap & Wrapping) */}
-              <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-6 flex-1 gap-8 sm:gap-4">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start w-full relative mt-6 flex-1 gap-8 sm:gap-3">
                 {/* Stats list stack */}
-                <div className="flex flex-col gap-6 z-10 w-full sm:w-[160px] shrink-0 pt-2">
+                <div className="flex flex-col gap-6 z-10 w-full sm:w-[130px] shrink-0 pt-2">
                   <div>
                     <span className="block text-4xl font-bold text-[#d68029] tracking-tight">
                       20+
@@ -211,10 +223,10 @@ export default function GlobalPresenceAndIndustriesSection() {
                 </div>
 
                 {/* Map taking remaining space */}
-                <div className="relative flex-1 w-full aspect-[1.4/1] sm:aspect-[1.8/1] flex items-center justify-center">
+                <div className="relative flex-1 w-full min-w-0 aspect-[1.5/1] sm:aspect-[1.7/1] lg:aspect-[1.55/1] flex items-center justify-center">
                   {/* World Map Background */}
                   <div
-                    className="absolute inset-0 opacity-95 pointer-events-none"
+                    className="absolute inset-0 opacity-95 pointer-events-none scale-[1.15] sm:scale-125 lg:scale-[1.35]"
                     style={{
                       backgroundImage: 'url("/home-test/map.png")',
                       backgroundRepeat: "no-repeat",
@@ -222,17 +234,17 @@ export default function GlobalPresenceAndIndustriesSection() {
                       backgroundSize: "contain",
                     }}
                   />
-                  {/* Adjusted Pins */}
-                  <MapPin top="30%" left="18%" /> {/* North America West */}
-                  <MapPin top="38%" left="26%" /> {/* North America East */}
-                  <MapPin top="68%" left="32%" /> {/* South America */}
-                  <MapPin top="34%" left="50%" /> {/* Europe */}
-                  <MapPin top="54%" left="53%" /> {/* Africa */}
-                  <MapPin top="40%" left="60%" /> {/* Middle East */}
-                  <MapPin top="52%" left="69%" /> {/* India */}
-                  <MapPin top="70%" left="81%" /> {/* Australia */}
+                     {/* Adjusted Pins */}
+                  <MapPin top="17%" left="8%" /> {/* North America West */}
+                  <MapPin top="28%" left="12%" /> {/* North America East */}
+                  <MapPin top="66%" left="23%" /> {/* South America */}
+                  <MapPin top="30%" left="48%" /> {/* Europe */}
+                  <MapPin top="50%" left="52%" /> {/* Africa */}
+                  <MapPin top="16%" left="82%" /> {/* Russia */}
+                  <MapPin top="44%" left="78%" /> {/* India */}
+                  <MapPin top="73%" left="98%" /> {/* Australia */}
                   {/* Our Global Network Widget Card */}
-                  <div className="absolute -bottom-10 sm:-bottom-20 right-0 sm:right-5 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[140px] sm:w-[180px] z-20 text-white hidden md:block">
+                  <div className="absolute -bottom-8 sm:-bottom-14 lg:-bottom-16 right-0 sm:right-2 bg-[#030b1a] border border-[#d68029]/30 rounded-xl p-3 sm:p-4 shadow-2xl w-[130px] sm:w-[160px] lg:w-[180px] z-20 text-white hidden sm:block">
                     <h4 className="text-xs font-bold text-white mb-3 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
                       Our Global Network

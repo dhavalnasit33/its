@@ -415,7 +415,7 @@ export default function DevelopmentProcessSection() {
   const [activeCaseStudy, setActiveCaseStudy] = useState(0);
 
   return (
-    <Section className="bg-white relative overflow-hidden py-20 lg:py-28 common_background_gradient">
+    <Section className="bg-white relative overflow-hidden py-14.5!  common_background_gradient">
       <Row>
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-16">
