@@ -289,7 +289,7 @@ export default function TechnologyShowcase() {
         {/* --- FILTER SECTION MOVED TO TOP --- */}
         <div className="w-full flex flex-col items-center mb-12 z-30">
           {/* Explicit Filter Label so users know what to do */}
-          <div className="flex items-center gap-2 mb-6">
+          <div className="flex items-center gap-2 mb-12">
             <FiFilter className="w-4 h-4 md:w-5 md:h-5 text-slate-400" />
             <h3 className="font-semibold text-xs md:text-sm tracking-widest text-slate-300 uppercase">
               Select a Category to Filter
@@ -307,18 +307,18 @@ export default function TechnologyShowcase() {
                   onClick={() =>
                     setActiveTab(card.id as keyof typeof technologies)
                   }
-                  className={`group relative flex flex-col items-start p-4 md:p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 transform active:scale-95 ${
+                  className={`group relative flex flex-col sm:flex-row items-start sm:items-center p-4 md:p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 transform active:scale-95 ${
                     isActive
-                      ? "bg-gradient-to-r from-blue-950/60 to-indigo-950/40 border-blue-500 shadow-[0_0_22px_rgba(59,130,246,0.25)]"
+                      ? "bg-linear-to-r from-blue-950/60 to-indigo-950/40 border-blue-500 shadow-[0_0_22px_rgba(59,130,246,0.25)]"
                       : "bg-[#0a1220]/80 border-slate-700/50 hover:border-blue-500/50 hover:bg-[#0c182d] hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(59,130,246,0.1)]"
                   } backdrop-blur-sm`}
                 >
-                  {isActive && (
+                  {/* {isActive && (
                     <motion.div
                       layoutId="activeTabMarker"
                       className="absolute left-4 right-4 bottom-0 h-[2px] bg-blue-500 rounded-full"
                     />
-                  )}
+                  )} */}
                   <div
                     className={`mb-3 p-2 rounded-full border transition-all duration-300 group-hover:scale-110 ${
                       isActive
@@ -334,12 +334,15 @@ export default function TechnologyShowcase() {
                       }`}
                     />
                   </div>
+                  <div className="flex flex-col sm:px-4 ">
+
                   <h4 className="text-white font-extrabold text-sm md:text-base mb-1 tracking-tight">
                     {card.label}
                   </h4>
                   <p className="text-slate-400 text-[10px] md:text-xs leading-snug whitespace-pre-line font-medium">
                     {card.desc}
                   </p>
+                  </div>
                 </button>
               );
             })}

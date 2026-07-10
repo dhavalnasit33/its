@@ -345,7 +345,7 @@ export default function Navbar({ navStructure }: NavbarProps) {
                               ))} 
                             </div>
                           </div>
-                          <div className="bg-blue-950 text-white p-10 flex items-center">
+                          <div className="bg-[#0D1B2A] text-white p-10 flex items-center">
                             <div className="grid grid-cols-3 gap-6 w-full text-center">
                               {stats.map((stat, index) => (
                                 <div
