@@ -17,6 +17,7 @@ import { BsShieldCheck } from "react-icons/bs";
 import TechBackground from "./TechBackground";
 import Row from "../Row";
 import SectionBadge from "../new-home-components/SectionBadge";
+import Section from "../Section";
 
 // Original technologies dataset
 const technologies: Record<
@@ -262,7 +263,7 @@ export default function TechnologyShowcase() {
   };
 
   return (
-    <section className="w-full relative min-h-screen bg-[#030812] overflow-hidden select-none py-20 lg:py-28 flex flex-col items-center justify-center">
+    <Section className="w-full relative min-h-screen bg-[#030812] overflow-hidden select-none   flex flex-col items-center justify-center">
       <div className="absolute inset-0 z-0">
         <TechBackground />
       </div>
@@ -471,7 +472,7 @@ export default function TechnologyShowcase() {
         )}
 
         {/* FOOTER BADGES */}
-        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-20 pb-10 z-30 text-slate-300 text-xs md:text-sm font-semibold uppercase tracking-wider">
+        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-20   z-30 text-slate-300 text-xs md:text-sm font-semibold uppercase tracking-wider">
           <div className="flex items-center gap-2">
             <BsShieldCheck className="text-[#D68029] text-base" />
             <span>Enterprise Grade</span>
@@ -493,6 +494,6 @@ export default function TechnologyShowcase() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

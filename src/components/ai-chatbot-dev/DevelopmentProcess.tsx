@@ -103,21 +103,21 @@ export default function DevelopmentProcess() {
         <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-[150px]" />
         <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-600/15 blur-[120px]" />
 
-        <div className="absolute bottom-[-20%] left-0 w-full h-[60%] opacity-20 [transform:perspective(1000px)_rotateX(75deg)]">
+        <div className="absolute bottom-[-20%] left-0 w-full h-[60%] opacity-20 transform-[perspective(1000px)_rotateX(75deg)]">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f46e533_1px,transparent_1px),linear-gradient(to_bottom,#4f46e533_1px,transparent_1px)] bg-[size:40px_40px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#050914] to-[#050914]" />
+          <div className="absolute inset-0 bg-linear-to-t from-transparent via-[#050914] to-[#050914]" />
         </div>
 
         {/* 3D FLOATING DECORATIONS */}
         <div className="absolute top-[10%] left-[5%] hidden 2xl:flex flex-col gap-4 animate-[bounce_8s_infinite]">
-          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-12" />
+          <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-12" />
         </div>
         <div className="absolute top-[15%] right-[5%] hidden 2xl:flex flex-col gap-2 animate-[pulse_6s_infinite]">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400/20 to-blue-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(168,85,247,0.3)] transform -rotate-12 translate-x-4" />
-          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-6" />
+          <div className="w-12 h-12 rounded-xl bg-linear-to-br from-purple-400/20 to-blue-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(168,85,247,0.3)] transform -rotate-12 translate-x-4" />
+          <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-6" />
         </div>
-        <div className="absolute bottom-[10%] left-[5%] hidden 2xl:block w-32 h-32 rounded-full border-[16px] border-blue-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(59,130,246,0.2)] border-t-blue-400/30 border-l-blue-400/30 transform rotateX-45 rotate-12 animate-[spin_20s_linear_infinite]" />
-        <div className="absolute bottom-[15%] right-[8%] hidden 2xl:block w-24 h-24 rounded-full border-[12px] border-purple-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(168,85,247,0.2)] border-t-purple-400/30 border-r-purple-400/30 transform rotateX-45 -rotate-12 animate-[spin_15s_linear_infinite_reverse]" />
+        <div className="absolute bottom-[10%] left-[5%] hidden 2xl:block w-32 h-32 rounded-full border-16 border-blue-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(59,130,246,0.2)] border-t-blue-400/30 border-l-blue-400/30 transform rotateX-45 rotate-12 animate-[spin_20s_linear_infinite]" />
+        <div className="absolute bottom-[15%] right-[8%] hidden 2xl:block w-24 h-24 rounded-full border-12 border-purple-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(168,85,247,0.2)] border-t-purple-400/30 border-r-purple-400/30 transform rotateX-45 -rotate-12 animate-[spin_15s_linear_infinite_reverse]" />
       </div>
 
       <Row className="relative z-10 max-w-[1400px] mx-auto">

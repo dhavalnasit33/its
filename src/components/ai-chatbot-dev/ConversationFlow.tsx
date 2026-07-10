@@ -156,7 +156,7 @@ function IsoPlatform({
 
       {/* Main card surface */}
       <div
-        className="relative rounded-[20px] border bg-gradient-to-br from-[#0d1f3a] to-[#07111e] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-400"
+        className="relative rounded-[20px] border bg-linear-to-br from-[#0d1f3a] to-[#07111e] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-400"
         style={{
           borderColor: `${step.color}55`,
           boxShadow: `0 0 0 1px ${step.color}22, 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 ${step.color}22`,
@@ -429,7 +429,7 @@ function MobileFlowCard({
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.08 }}
-            className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${step.gradient} opacity-90`}
+            className={`flex h-full w-full items-center justify-center bg-linear-to-br ${step.gradient} opacity-90`}
             style={{ clipPath: OCTAGON_CLIP }}
           >
             <IconComponent className="h-4.5 w-4.5 text-white" />
@@ -552,7 +552,7 @@ export default function ConversationFlow() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mx-auto mt-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-300 sm:text-xs"
+            className="mx-auto mt-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-white/4 px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-300 sm:text-xs"
           >
             <span className="text-[#3B82F6]">Steps 01–04 Understand</span>
             <LuArrowRight className="h-3.5 w-3.5 text-slate-500" />
@@ -575,7 +575,7 @@ export default function ConversationFlow() {
           </div>
 
           {/* CENTER: AI Engine Hub */}
-          <div className="relative z-10 flex w-[28%] flex-shrink-0 items-center justify-center">
+          <div className="relative z-10 flex w-[28%] shrink-0 items-center justify-center">
             <AIEngineHub allColors={allColors} />
           </div>
 
@@ -589,7 +589,7 @@ export default function ConversationFlow() {
 
         {/* ── MOBILE / TABLET TIMELINE ── */}
         <div className="relative mx-auto mt-8 block w-full max-w-2xl px-4 lg:hidden">
-          <div className="absolute z-0 bottom-4 left-[38px] top-4 w-0.5 bg-gradient-to-b from-[#3B82F6] via-[#EC4899] to-[#14B8A6]/30 md:left-[46px]" />
+          <div className="absolute z-0 bottom-4 left-[38px] top-4 w-0.5 bg-linear-to-b from-[#3B82F6] via-[#EC4899] to-[#14B8A6]/30 md:left-[46px]" />
           <div className="flex flex-col">
             {ALL_STEPS.map((step, idx) => (
               <MobileFlowCard key={step.number} step={step} index={idx} />
@@ -620,7 +620,7 @@ export default function ConversationFlow() {
                   borderColor: "#D27E2B",
                   boxShadow: "0 18px 40px rgba(210,126,43,0.25)",
                 }}
-                className="rounded-[20px] border border-white/10 bg-white/[0.04] p-5 shadow-sm backdrop-blur-md transition-all duration-300"
+                className="rounded-[20px] border border-white/10 bg-white/4 p-5 shadow-sm backdrop-blur-md transition-all duration-300"
               >
                 <div className="mb-2 flex items-center gap-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D27E2B]/10 text-[#D27E2B] transition-all duration-300">

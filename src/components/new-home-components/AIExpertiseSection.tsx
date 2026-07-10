@@ -136,11 +136,10 @@ const aiServices = [
 
 export default function AIExpertiseSection() {
   const router = useRouter();
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
+  // Switched to track the active clicked service, defaulting to 0 so the first is open
+  const [activeService, setActiveService] = useState<number>(0); 
 
-  // Fallback to 0 so the hologram is never empty
-  const activeIndex = hoveredService !== null ? hoveredService : 0;
-  const activeData = aiServices[activeIndex];
+  const activeData = aiServices[activeService];
   const ActiveIcon = activeData.icon;
 
   return (
@@ -178,14 +177,15 @@ export default function AIExpertiseSection() {
             </span>
           </h2>
           <p className="text-slate-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Hover over our terminal to project real-time capabilities into our
+            Click on our terminal to project real-time capabilities into our
             3D visualization core.
           </p>
         </div>
 
         {/* Split Layout: 3D Hologram (Left) + Terminal Menu (Right) */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 w-full max-w-[1200px] mx-auto">
-          {/* ── LEFT: 3D HOLOGRAPHIC CORE ── */}
+          
+          {/* ── LEFT: 3D HOLOGRAPHIC CORE (Unchanged) ── */}
           <div
             className="w-full lg:w-1/2 flex items-center justify-center min-h-[400px] sm:min-h-[500px]"
             style={{ perspective: "1500px" }}
@@ -252,7 +252,7 @@ export default function AIExpertiseSection() {
               {/* Depth Layer 4: Dynamic Projected Content (The Hologram) */}
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={activeIndex}
+                  key={activeService}
                   initial={{
                     opacity: 0,
                     scale: 0.8,
@@ -276,7 +276,6 @@ export default function AIExpertiseSection() {
                 >
                   {/* 3D Icon Container */}
                   <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-[24px] bg-[#0d1b2a]/90 border border-[#d68029]/50 flex items-center justify-center shadow-[0_0_40px_rgba(214,128,41,0.5)] backdrop-blur-2xl relative overflow-hidden top-15 right-10">
-                    {/* Inner light sweep */}
                     <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite]" />
                     <ActiveIcon className="w-12 h-12 sm:w-14 sm:h-14 text-[#d68029]" />
                   </div>
@@ -288,13 +287,13 @@ export default function AIExpertiseSection() {
           {/* ── RIGHT: INTERACTIVE TERMINAL MENU ── */}
           <div className="w-full lg:w-1/2 flex flex-col gap-4 relative z-20">
             {aiServices.map((service, idx) => {
-              const isActive = activeIndex === idx;
+              const isActive = activeService === idx;
 
               return (
                 <div
                   key={idx}
-                  onMouseEnter={() => setHoveredService(idx)}
-                  onClick={() => router.push(service.route)}
+                  // MODIFICATION 1: Changed to onClick to handle expansion
+                  onClick={() => setActiveService(idx)} 
                   className={`relative cursor-pointer transition-all duration-500 overflow-hidden rounded-2xl ${
                     isActive
                       ? "bg-slate-900/50 border border-slate-700/50 backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
@@ -355,13 +354,17 @@ export default function AIExpertiseSection() {
                             ))}
                           </ul>
 
-                          <a
-                            href={service.route}
-                            className="inline-flex items-center gap-2 text-[#d68029] text-sm font-bold uppercase tracking-wider hover:text-white transition-colors group/btn"
+                          {/* MODIFICATION 2: Converted to a button with stopPropagation */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation(); // Stops the card's onClick from firing again
+                              router.push(service.route); // Handles the navigation
+                            }}
+                            className="inline-flex cursor-pointer items-center gap-2 text-[#d68029] text-sm font-bold uppercase tracking-wider hover:text-white transition-colors group/btn"
                           >
                             {service.cta}
                             <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
-                          </a>
+                          </button>
                         </div>
                       </motion.div>
                     )}
