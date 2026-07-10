@@ -20,6 +20,7 @@ import {
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import TechBackground from "@/components/home/TechBackground";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 /* ─────────────────────────────────────────────
    DATA – unchanged from original
@@ -151,7 +152,9 @@ function IsoPlatform({
       {/* 3-D depth bottom layer (shadow/depth illusion) */}
       <div
         className="absolute left-2 top-3 h-full w-full rounded-[20px] opacity-40"
-        style={{ background: `linear-gradient(135deg, ${step.color}20, transparent)` }}
+        style={{
+          background: `linear-gradient(135deg, ${step.color}20, transparent)`,
+        }}
       />
 
       {/* Main card surface */}
@@ -165,7 +168,9 @@ function IsoPlatform({
         {/* Soft top edge highlight (reflection) */}
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-[20px] opacity-60"
-          style={{ background: `linear-gradient(90deg, transparent, ${step.color}99, transparent)` }}
+          style={{
+            background: `linear-gradient(90deg, transparent, ${step.color}99, transparent)`,
+          }}
         />
 
         {/* Icon + Title header – no floating animation */}
@@ -256,7 +261,14 @@ function ZigZagConnectors({ colors }: { colors: string[] }) {
       >
         <defs>
           {colors.slice(0, 4).map((c, i) => (
-            <linearGradient key={i} id={`lc-${i}`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient
+              key={i}
+              id={`lc-${i}`}
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
               <stop offset="0%" stopColor={c} stopOpacity="0.9" />
               <stop offset="100%" stopColor={c} stopOpacity="0.3" />
             </linearGradient>
@@ -264,7 +276,12 @@ function ZigZagConnectors({ colors }: { colors: string[] }) {
         </defs>
         {leftPaths.map((d, i) => (
           <g key={i}>
-            <path d={d} stroke={`url(#lc-${i})`} strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
+            <path
+              d={d}
+              stroke={`url(#lc-${i})`}
+              strokeWidth={1.5}
+              vectorEffect="non-scaling-stroke"
+            />
             <motion.path
               d={d}
               stroke={colors[i]}
@@ -273,7 +290,12 @@ function ZigZagConnectors({ colors }: { colors: string[] }) {
               fill="none"
               strokeDasharray="5 40"
               animate={{ strokeDashoffset: [0, -45] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "linear", delay: i * 0.25 }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "linear",
+                delay: i * 0.25,
+              }}
             />
           </g>
         ))}
@@ -288,7 +310,14 @@ function ZigZagConnectors({ colors }: { colors: string[] }) {
       >
         <defs>
           {colors.slice(4).map((c, i) => (
-            <linearGradient key={i} id={`rc-${i}`} x1="100%" y1="0%" x2="0%" y2="0%">
+            <linearGradient
+              key={i}
+              id={`rc-${i}`}
+              x1="100%"
+              y1="0%"
+              x2="0%"
+              y2="0%"
+            >
               <stop offset="0%" stopColor={c} stopOpacity="0.9" />
               <stop offset="100%" stopColor={c} stopOpacity="0.3" />
             </linearGradient>
@@ -296,7 +325,12 @@ function ZigZagConnectors({ colors }: { colors: string[] }) {
         </defs>
         {rightPaths.map((d, i) => (
           <g key={i}>
-            <path d={d} stroke={`url(#rc-${i})`} strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
+            <path
+              d={d}
+              stroke={`url(#rc-${i})`}
+              strokeWidth={1.5}
+              vectorEffect="non-scaling-stroke"
+            />
             <motion.path
               d={d}
               stroke={colors[i + 4]}
@@ -305,7 +339,12 @@ function ZigZagConnectors({ colors }: { colors: string[] }) {
               fill="none"
               strokeDasharray="5 40"
               animate={{ strokeDashoffset: [0, 45] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "linear", delay: i * 0.25 }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "linear",
+                delay: i * 0.25,
+              }}
             />
           </g>
         ))}
@@ -329,7 +368,11 @@ function AIEngineHub({ allColors }: { allColors: string[] }) {
         <motion.div
           key={i}
           animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
-          transition={{ duration: 7 + i * 2.5, repeat: Infinity, ease: "linear" }}
+          transition={{
+            duration: 7 + i * 2.5,
+            repeat: Infinity,
+            ease: "linear",
+          }}
           className="absolute rounded-full"
           style={{
             width: `${140 + i * 50}px`,
@@ -358,7 +401,10 @@ function AIEngineHub({ allColors }: { allColors: string[] }) {
         {/* Top highlight reflection */}
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-[28px]"
-          style={{ background: "linear-gradient(90deg, transparent, rgba(210,126,43,0.8), transparent)" }}
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(210,126,43,0.8), transparent)",
+          }}
         />
 
         <motion.div
@@ -462,13 +508,18 @@ function MobileFlowCard({
             Step {step.number}
           </span>
         </div>
-        <p className="mb-3 text-base sm:text-md  font-medium leading-relaxed text-white">{step.desc}</p>
+        <p className="mb-3 text-base sm:text-md  font-medium leading-relaxed text-white">
+          {step.desc}
+        </p>
         <div className="flex flex-wrap gap-1.5">
           {step.tags.map((tag) => (
             <span
               key={tag}
               className="rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white"
-              style={{ borderColor: `${step.color}55`, backgroundColor: `${step.color}14` }}
+              style={{
+                borderColor: `${step.color}55`,
+                backgroundColor: `${step.color}14`,
+              }}
             >
               {tag}
             </span>
@@ -506,9 +557,19 @@ export default function ConversationFlow() {
         <motion.div
           key={idx}
           animate={{ y: [0, -18, 0], opacity: [0.25, 0.6, 0.25] }}
-          transition={{ duration: p.dur, repeat: Infinity, ease: "easeInOut", delay: p.delay }}
+          transition={{
+            duration: p.dur,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: p.delay,
+          }}
           className="pointer-events-none absolute rounded-full bg-[#D27E2B] blur-[1.5px]"
-          style={{ width: `${p.size}px`, height: `${p.size}px`, top: p.top, left: p.left }}
+          style={{
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            top: p.top,
+            left: p.left,
+          }}
         />
       ))}
 
@@ -516,13 +577,12 @@ export default function ConversationFlow() {
         {/* ── HEADER ── */}
         <div className="relative z-10 mx-auto mb-12 max-w-3xl text-center lg:mb-10">
           <motion.span
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-5 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#D27E2B] shadow-sm"
+            className="inline-block mb-4"
           >
-            Workflow Architecture
+            <SectionBadge title=" Workflow Architecture" />
           </motion.span>
 
           <motion.h2
@@ -544,7 +604,8 @@ export default function ConversationFlow() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mx-auto mt-4 max-w-xl text-base font-medium text-slate-100"
           >
-            A smart 8-step process that turns conversations into meaningful actions
+            A smart 8-step process that turns conversations into meaningful
+            actions
           </motion.p>
 
           <motion.div
@@ -606,10 +667,30 @@ export default function ConversationFlow() {
           className="relative z-10 mx-auto mt-20 grid w-full max-w-4xl grid-cols-2 gap-4 px-4 md:grid-cols-4"
         >
           {[
-            { label: "Avg. Execution", val: "< 85ms", desc: "NLU + LLM Latency", icon: LuZap },
-            { label: "Resolution rate", val: "94.2%", desc: "Autonomous matches", icon: LuActivity },
-            { label: "Integration coverage", val: "50+ Tools", desc: "CRMs, Databases & APIs", icon: LuCpu },
-            { label: "System Security", val: "Enterprise SOC2", desc: "Data encryption & Guardrails", icon: LuShield },
+            {
+              label: "Avg. Execution",
+              val: "< 85ms",
+              desc: "NLU + LLM Latency",
+              icon: LuZap,
+            },
+            {
+              label: "Resolution rate",
+              val: "94.2%",
+              desc: "Autonomous matches",
+              icon: LuActivity,
+            },
+            {
+              label: "Integration coverage",
+              val: "50+ Tools",
+              desc: "CRMs, Databases & APIs",
+              icon: LuCpu,
+            },
+            {
+              label: "System Security",
+              val: "Enterprise SOC2",
+              desc: "Data encryption & Guardrails",
+              icon: LuShield,
+            },
           ].map((stat, idx) => {
             const Icon = stat.icon;
             return (
@@ -630,8 +711,12 @@ export default function ConversationFlow() {
                     {stat.label}
                   </span>
                 </div>
-                <div className="text-xl font-black text-white sm:text-2xl">{stat.val}</div>
-                <p className="mt-1 text-[10px] font-semibold text-slate-200 sm:text-[11px]">{stat.desc}</p>
+                <div className="text-xl font-black text-white sm:text-2xl">
+                  {stat.val}
+                </div>
+                <p className="mt-1 text-[10px] font-semibold text-slate-200 sm:text-[11px]">
+                  {stat.desc}
+                </p>
               </motion.div>
             );
           })}

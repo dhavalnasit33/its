@@ -13,10 +13,11 @@ import {
   LuTruck,
   LuLaptop,
   LuBot,
-  LuSend, 
+  LuSend,
 } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 const INDUSTRIES = [
   {
@@ -37,7 +38,8 @@ const INDUSTRIES = [
       botName: "Health Bot",
       avatar: "🏥",
       userMsg: "Can I book an appointment with Dr. Smith?",
-      botMsg: "I found an open slot today at 4:30 PM. Would you like me to book it for you? 📅",
+      botMsg:
+        "I found an open slot today at 4:30 PM. Would you like me to book it for you? 📅",
     },
   },
   {
@@ -58,7 +60,8 @@ const INDUSTRIES = [
       botName: "Wealth Guard",
       avatar: "💳",
       userMsg: "What's my credit card balance?",
-      botMsg: "Your current balance is $420.50. Payment is due by next Tuesday, July 8th. 📆",
+      botMsg:
+        "Your current balance is $420.50. Payment is due by next Tuesday, July 8th. 📆",
     },
   },
   {
@@ -79,7 +82,8 @@ const INDUSTRIES = [
       botName: "Retail Concierge",
       avatar: "🛍️",
       userMsg: "Where is my parcel #1029?",
-      botMsg: "Your parcel is with the courier and will arrive today between 1:00 PM and 3:00 PM. 📦",
+      botMsg:
+        "Your parcel is with the courier and will arrive today between 1:00 PM and 3:00 PM. 📦",
     },
   },
   {
@@ -100,7 +104,8 @@ const INDUSTRIES = [
       botName: "Inspire Campus",
       avatar: "🎓",
       userMsg: "When is the Python exam?",
-      botMsg: "The Python Basics exam is scheduled for July 12th at 10:00 AM in Room 302. 📝",
+      botMsg:
+        "The Python Basics exam is scheduled for July 12th at 10:00 AM in Room 302. 📝",
     },
   },
   {
@@ -121,7 +126,8 @@ const INDUSTRIES = [
       botName: "Property Finder",
       avatar: "🏡",
       userMsg: "Are there 3-bed houses under $400k?",
-      botMsg: "Yes, I found 3 matching properties in your target zip code. Would you like to view the list? 📋",
+      botMsg:
+        "Yes, I found 3 matching properties in your target zip code. Would you like to view the list? 📋",
     },
   },
   {
@@ -142,7 +148,8 @@ const INDUSTRIES = [
       botName: "Fly Assist",
       avatar: "✈️",
       userMsg: "Can I add 1 extra bag to flight AA-34?",
-      botMsg: "Yes, you can add 1 bag for $35. Would you like to charge your card on file? 💳",
+      botMsg:
+        "Yes, you can add 1 bag for $35. Would you like to charge your card on file? 💳",
     },
   },
   {
@@ -163,7 +170,8 @@ const INDUSTRIES = [
       botName: "LogiBot",
       avatar: "🚛",
       userMsg: "What's the status of cargo container 88A?",
-      botMsg: "Container 88A has cleared customs and is currently en route to the dispatch hub. 📍",
+      botMsg:
+        "Container 88A has cleared customs and is currently en route to the dispatch hub. 📍",
     },
   },
   {
@@ -184,14 +192,16 @@ const INDUSTRIES = [
       botName: "Cart Genius",
       avatar: "⚡",
       userMsg: "Do you have any active promo codes?",
-      botMsg: "I've applied coupon 'SAVE15' for 15% off your order! Your new total is $84.15. 🛒",
+      botMsg:
+        "I've applied coupon 'SAVE15' for 15% off your order! Your new total is $84.15. 🛒",
     },
   },
 ];
 
 export default function IndustryUseCases() {
   const [activeTab, setActiveTab] = useState(INDUSTRIES[0].id);
-  const activeData = INDUSTRIES.find((ind) => ind.id === activeTab) || INDUSTRIES[0];
+  const activeData =
+    INDUSTRIES.find((ind) => ind.id === activeTab) || INDUSTRIES[0];
 
   return (
     <Section className="py-24! overflow-hidden relative">
@@ -202,14 +212,14 @@ export default function IndustryUseCases() {
         {/* ── Header ── */}
         <div className="relative z-10 mx-auto mb-14 max-w-3xl text-center">
           <motion.span
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-4 inline-flex items-center rounded-full border border-[#D27E2B]/20 bg-[#D27E2B]/8 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#D27E2B]"
+            className="inline-block mb-4"
           >
-            Use Cases
+            <SectionBadge title=" Use Cases" />
           </motion.span>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -228,7 +238,8 @@ export default function IndustryUseCases() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mx-auto mt-5 max-w-xl text-sm font-medium text-gray-500 sm:text-base"
           >
-            Tailored AI chatbot solutions for every industry — from healthcare to ecommerce.
+            Tailored AI chatbot solutions for every industry — from healthcare
+            to ecommerce.
           </motion.p>
         </div>
 
@@ -317,9 +328,15 @@ export default function IndustryUseCases() {
                       {/* Stat badge */}
                       <div
                         className="flex flex-col items-end rounded-xl px-3.5 py-2 text-right"
-                        style={{ background: `${activeData.color}08`, border: `1px solid ${activeData.color}20` }}
+                        style={{
+                          background: `${activeData.color}08`,
+                          border: `1px solid ${activeData.color}20`,
+                        }}
                       >
-                        <span className="text-xl font-black leading-none" style={{ color: activeData.color }}>
+                        <span
+                          className="text-xl font-black leading-none"
+                          style={{ color: activeData.color }}
+                        >
                           {activeData.stat.value}
                         </span>
                         <span className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-gray-400">
@@ -352,14 +369,17 @@ export default function IndustryUseCases() {
                             className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
                             style={{ background: `${activeData.color}18` }}
                           >
-                            <LuCheck className="h-3 w-3" style={{ color: activeData.color }} />
+                            <LuCheck
+                              className="h-3 w-3"
+                              style={{ color: activeData.color }}
+                            />
                           </span>
-                          <span className="text-xs font-semibold text-gray-700 sm:text-sm">{benefit}</span>
+                          <span className="text-xs font-semibold text-gray-700 sm:text-sm">
+                            {benefit}
+                          </span>
                         </motion.div>
                       ))}
                     </div>
-
-                  
                   </div>
 
                   {/* Chat Preview Right */}
@@ -397,7 +417,10 @@ export default function IndustryUseCases() {
                             Online
                           </span>
                         </div>
-                        <LuBot className="h-4 w-4 opacity-50" style={{ color: activeData.color }} />
+                        <LuBot
+                          className="h-4 w-4 opacity-50"
+                          style={{ color: activeData.color }}
+                        />
                       </div>
 
                       {/* Messages */}

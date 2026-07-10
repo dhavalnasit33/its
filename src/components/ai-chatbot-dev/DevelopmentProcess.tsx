@@ -131,9 +131,9 @@ export default function DevelopmentProcess() {
           >
             <SectionBadge title="OUR METHODOLOGY" />
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+          <h2 className="common-h2 text-white">
             AI Chatbot{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d68029] to-[#ffaa55]">
+            <span className="text-[#D27E2B]">
               Development Process
             </span>
           </h2>

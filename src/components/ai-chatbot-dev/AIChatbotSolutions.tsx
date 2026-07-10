@@ -14,60 +14,69 @@ import {
 } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 const SOLUTIONS = [
   {
     title: "Website Chatbots",
-    description: "Engage visitors, answer queries, capture contact details, and generate qualified leads in real-time on your site.",
+    description:
+      "Engage visitors, answer queries, capture contact details, and generate qualified leads in real-time on your site.",
     icon: LuGlobe,
     color: "#3B82F6",
     illustration: "🌐",
   },
   {
     title: "Customer Support Bots",
-    description: "Provide 24/7 support, resolve repetitive questions instantly, and route complex tickets to human agents.",
+    description:
+      "Provide 24/7 support, resolve repetitive questions instantly, and route complex tickets to human agents.",
     icon: LuLifeBuoy,
     color: "#10B981",
     illustration: "🛠️",
   },
   {
     title: "Sales Assistants",
-    description: "Recommend products, answer pricing queries, qualify prospects, and close more deals automatically.",
+    description:
+      "Recommend products, answer pricing queries, qualify prospects, and close more deals automatically.",
     icon: LuCoins,
     color: "#F59E0B",
     illustration: "💰",
   },
   {
     title: "WhatsApp AI Bots",
-    description: "Automate customer conversations, broadcast updates, and support clients directly inside WhatsApp.",
+    description:
+      "Automate customer conversations, broadcast updates, and support clients directly inside WhatsApp.",
     icon: LuMessageSquare,
     color: "#25D366",
     illustration: "💬",
   },
   {
     title: "Voice AI Agents",
-    description: "Deliver human-like speech interactions for phone support, call routing, and voice-assisted workflows.",
+    description:
+      "Deliver human-like speech interactions for phone support, call routing, and voice-assisted workflows.",
     icon: LuMic,
     color: "#8B5CF6",
     illustration: "🎙️",
   },
   {
     title: "Knowledge Base Bots",
-    description: "Instantly search through documents, wiki databases, FAQs, and company policies to answer customer queries.",
+    description:
+      "Instantly search through documents, wiki databases, FAQs, and company policies to answer customer queries.",
     icon: LuBookOpen,
     color: "#EC4899",
     illustration: "📚",
   },
   {
     title: "HR & Recruitment Bots",
-    description: "Screen job applicants, answer candidate queries, coordinate interviews, and streamline employee onboarding.",
+    description:
+      "Screen job applicants, answer candidate queries, coordinate interviews, and streamline employee onboarding.",
     icon: LuUsers,
     color: "#14B8A6",
     illustration: "👥",
   },
   {
     title: "Internal Employee Bots",
-    description: "Help internal teams query IT requests, access HR portal guidelines, search policy docs, and request database logs.",
+    description:
+      "Help internal teams query IT requests, access HR portal guidelines, search policy docs, and request database logs.",
     icon: LuKey,
     color: "#64748B",
     illustration: "🔑",
@@ -81,13 +90,12 @@ export default function AIChatbotSolutions() {
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <motion.span
-            initial={{ opacity: 0, y: -10 }}
+             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center rounded-full border border-gray-200 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#D27E2B] mb-5 shadow-sm"
+            className="inline-block mb-4"
           >
-            AI Solutions We Build
+            <SectionBadge title="  AI Solutions We Build" />
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -96,7 +104,8 @@ export default function AIChatbotSolutions() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="common-h2 text-[#0F172A]"
           >
-            AI Chatbot Solutions <span className="text-[#D27E2B]">We Build</span>
+            AI Chatbot Solutions{" "}
+            <span className="text-[#D27E2B]">We Build</span>
           </motion.h2>
           <div className="w-12 h-1 bg-[#D27E2B] mx-auto mt-4 rounded-full" />
         </div>
@@ -119,7 +128,10 @@ export default function AIChatbotSolutions() {
                   <div className="flex items-center justify-between mb-6">
                     <div
                       className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${sol.color}15`, color: sol.color }}
+                      style={{
+                        backgroundColor: `${sol.color}15`,
+                        color: sol.color,
+                      }}
                     >
                       <Icon className="w-5.5 h-5.5" />
                     </div>
@@ -133,7 +145,6 @@ export default function AIChatbotSolutions() {
                     {sol.description}
                   </p>
                 </div>
-
               </motion.div>
             );
           })}

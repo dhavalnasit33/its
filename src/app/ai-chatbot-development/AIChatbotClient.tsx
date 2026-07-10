@@ -19,6 +19,7 @@ import WhyAIChatbots from "@/components/ai-chatbot-dev/WhyAIChatbots";
 import DevelopmentProcess from "@/components/ai-chatbot-dev/DevelopmentProcess";
 import SuccessMetrics from "@/components/ai-chatbot-dev/SuccessMetrics";
 import FinalCTA from "@/components/ai-chatbot-dev/FinalCTA";
+import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
 
 const CHATBOT_FAQS = [
   {
@@ -128,7 +129,7 @@ export default function AIChatbotClient() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <main className="relative bg-white ">
+      <main className="relative">
         {/* ── 1. Hero Section ── */}
         <Hero />
 
@@ -145,6 +146,9 @@ export default function AIChatbotClient() {
             <StatsGrid columns={4} bordered />
           </Row>
         </Section>
+
+        {/* ── 4. Trusted Technologies Marquee ── */}
+        <GlobalLogoMarquee />
 
         {/* ── 2. Solutions Grid ── */}
         <AIChatbotSolutions />

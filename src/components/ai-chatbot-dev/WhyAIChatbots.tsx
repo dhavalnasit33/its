@@ -6,6 +6,7 @@ import { LuCheck, LuX, LuSparkles } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import Image from "next/image";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 const COMPARISON_ROWS = [
   {
@@ -51,19 +52,20 @@ export default function WhyAIChatbots() {
         {/* Header Block: Centered at the top */}
         <div className="relative z-10 mx-auto mb-16 max-w-3xl text-center">
           <motion.span
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#D27E2B] mb-5 shadow-sm"
+            className="inline-block mb-4"
           >
-            Why Choose Us
+            <SectionBadge title="Why Choose Us" />
           </motion.span>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-black text-white leading-tight mb-4"
+            className="common-h2 text-white"
           >
             Why AI Chatbots <span className="text-[#D27E2B]">Are Better</span>
           </motion.h2>
@@ -74,7 +76,9 @@ export default function WhyAIChatbots() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-medium"
           >
-            Traditional support teams are limited by shifts, capacity, and human variance. AI chatbots resolve up to 80% of customer queries instantly, scaling down cost and overhead.
+            Traditional support teams are limited by shifts, capacity, and human
+            variance. AI chatbots resolve up to 80% of customer queries
+            instantly, scaling down cost and overhead.
           </motion.p>
         </div>
 
@@ -93,7 +97,11 @@ export default function WhyAIChatbots() {
               <div className="absolute inset-0 rounded-full bg-[#D27E2B]/10 blur-3xl scale-110 z-0 pointer-events-none" />
               <motion.div
                 animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="z-10 w-full"
               >
                 <Image
@@ -114,8 +122,12 @@ export default function WhyAIChatbots() {
 
             {/* Table Header */}
             <div className="grid grid-cols-3 bg-[#0c1827] border-b border-white/5 px-6 py-5 text-xs sm:text-sm font-black uppercase tracking-widest items-stretch">
-              <span className="text-left text-slate-400 border-r border-white/5 pr-4 flex items-center">Features</span>
-              <span className="text-left text-slate-400 border-r border-white/5 px-4 flex items-center justify-start">Traditional Support</span>
+              <span className="text-left text-slate-400 border-r border-white/5 pr-4 flex items-center">
+                Features
+              </span>
+              <span className="text-left text-slate-400 border-r border-white/5 px-4 flex items-center justify-start">
+                Traditional Support
+              </span>
               <span className="text-left text-[#D27E2B] pl-4 flex items-center justify-start gap-1.5">
                 <LuSparkles className="w-3.5 h-3.5" />
                 AI Chatbot
@@ -137,18 +149,20 @@ export default function WhyAIChatbots() {
                   <span className="text-left text-white font-extrabold group-hover:text-[#D27E2B] transition-colors border-r border-white/5 pr-4 py-4 flex items-center">
                     {row.feature}
                   </span>
-                  
+
                   {/* Traditional Support Column */}
                   <span className="text-left text-slate-400 font-medium flex justify-start items-center gap-1.5 border-r border-white/5 px-4 py-4">
                     <LuX className="w-4 h-4 text-red-500/80 shrink-0" />
                     <span className="text-slate-400/90">{row.traditional}</span>
                   </span>
-                  
+
                   {/* AI Chatbot Column (Highlighted with left alignment) */}
                   <div className="py-2.5 pl-4 flex items-center">
                     <div className="w-full py-2 px-3.5 rounded-xl bg-[#D27E2B]/5 border border-[#D27E2B]/10 flex justify-start items-center gap-2 shadow-[inset_0_1px_0_rgba(210,126,43,0.1)] group-hover:border-[#D27E2B]/30 group-hover:bg-[#D27E2B]/10 transition-all duration-300">
                       <LuCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                      <span className="text-white font-extrabold">{row.chatbot}</span>
+                      <span className="text-white font-extrabold">
+                        {row.chatbot}
+                      </span>
                     </div>
                   </div>
                 </motion.div>

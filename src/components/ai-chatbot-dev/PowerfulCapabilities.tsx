@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import Image from "next/image";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 const BASE = "/ai-strategy/ai-chartbot-development";
 
@@ -78,20 +79,20 @@ export default function PowerfulCapabilities() {
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto flex flex-col items-center">
           <motion.span
-            initial={{ opacity: 0, y: -10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center rounded-full bg-[#D27E2B]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#D27E2B] mb-5"
-          >
-            Capabilities
-          </motion.span>
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      className="inline-block mb-4"
+                    >
+                      <SectionBadge title="Capabilities" />
+                    </motion.span>
+          
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-extrabold text-[#0F172A]"
+            className="common-h2 text-[#0F172A]"
           >
             Powerful{" "}
             <span className="text-[#D27E2B]">Capabilities</span>

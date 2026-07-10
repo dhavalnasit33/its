@@ -7,6 +7,7 @@ import Row from "@/components/Row";
 import Section from "@/components/Section";
 import Button from "@/components/Button";
 import Image from "next/image";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 export default function FinalCTA() {
   return (
@@ -20,14 +21,15 @@ export default function FinalCTA() {
           {/* Left Column: CTA Headers */}
           <div className="flex-1 text-center lg:text-left space-y-6">
             <motion.span
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#D27E2B]"
-            >
-              Transform Your Customer Experience
-            </motion.span>
-            <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold leading-tight text-white">
+                                  initial={{ opacity: 0, y: 20 }}
+                                  whileInView={{ opacity: 1, y: 0 }}
+                                  viewport={{ once: true }}
+                                  className="inline-block mb-4"
+                                >
+                                  <SectionBadge title="Transform Your Customer Experience" />
+                                </motion.span>
+            
+            <h2 className="common-h2 text-white mb-4">
               Ready to Build Your <span className="text-[#D27E2B]">Custom AI Chatbot?</span>
             </h2>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-lg font-medium">
