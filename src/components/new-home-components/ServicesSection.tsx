@@ -110,7 +110,7 @@ const ServiceCard = ({ icon, title, desc, delay, className, href }: any) => (
 
 export default function ServicesSection() {
   return (
-    <Section className="bg-white py-24 lg:py-32 relative overflow-hidden font-sans">
+    <section className="bg-white py-24 lg:py-32 relative overflow-hidden font-sans">
       <Row className="relative z-10 max-w-[1320px] mx-auto px-4">
         {/* Top Centered Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-8 lg:mb-10">
@@ -166,7 +166,6 @@ export default function ServicesSection() {
         {/* Orbit Layout Container */}
         <div className="relative w-full h-auto lg:h-[950px] flex flex-col gap-6 lg:block">
           {/* Orbit Rings (Slightly enhanced opacity since lines are gone) */}
-          <div className="hidden lg:block absolute top-[210px] left-1/2 -translate-x-1/2 w-[420px] h-[540px] rounded-full border-dashed border-slate-300/80 animate-[spin_40s_linear_infinite] pointer-events-none" />
           <div className="hidden lg:block absolute top-[180px] left-1/2 -translate-x-1/2 w-[520px] h-[520px] rounded-full border-dashed border-slate-300/80 animate-[spin_40s_linear_infinite] pointer-events-none" />
           <div className="hidden lg:block absolute top-[145px] left-1/2 -translate-x-1/2 w-[590px] h-[590px] rounded-full border border-slate-200/60 animate-[spin_30s_linear_infinite_reverse] pointer-events-none" />
           <div className="hidden lg:block absolute top-[110px] left-1/2 -translate-x-1/2 w-[660px] h-[660px] rounded-full border border-slate-100/80 animate-[spin_50s_linear_infinite] pointer-events-none" />
@@ -179,7 +178,7 @@ export default function ServicesSection() {
           <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="hidden lg:flex absolute top-[100px] left-1/2 -translate-x-1/2 w-[680px] xl:w-[780px] h-[680px] xl:h-[780px] z-10 pointer-events-none items-center justify-center"
+            className="hidden lg:flex absolute top-[60px] left-1/2 -translate-x-1/2 w-[780px] xl:w-[880px] h-[780px] xl:h-[880px] z-10 pointer-events-none items-center justify-center"
           >
             {/* Main orange glow - slightly larger and brighter to fill space */}
             <div className="absolute w-[480px] h-[480px] rounded-full bg-[#D68029]/20 blur-[100px]" />
@@ -203,7 +202,7 @@ export default function ServicesSection() {
             {/* --- LEFT SIDE CARDS --- */}
             <ServiceCard
               title="AI & ML Development"
-              desc="Automate repetitive tasks, streamline workflows, and reduce manual effort to boost productivity, lower costs, and improve business efficiency."
+              desc="Automate workflows, reduce manual effort, and improve business efficiency with AI."
               icon={<AIAutomationIcon className="w-6 h-6 text-[#d68029]" />}
               className="lg:absolute lg:top-[100px] lg:left-[20px] xl:left-[40px]"
               delay={0.1}
@@ -268,6 +267,6 @@ export default function ServicesSection() {
           </div>
         </div>
       </Row>
-    </Section>
+    </section>
   );
 }
