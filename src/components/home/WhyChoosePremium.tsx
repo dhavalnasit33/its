@@ -7,6 +7,7 @@ import { WhyChooseItem } from "@/types";
 import Section from "../Section";
 import Row from "../Row";
 import Button from "../Button";
+import SectionBadge from "../new-home-components/SectionBadge";
 
 interface WhyChoosePremiumProps {
   items: WhyChooseItem[];
@@ -17,10 +18,9 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
     <Section className="relative py-20 lg:py-24 bg-white overflow-hidden border-t border-slate-100">
       {/* Decorative background glow */}
       <div className="pointer-events-none absolute top-[-50px] right-[-150px] w-[500px] h-[500px] rounded-full bg-[#d68029]/5 blur-[130px]" />
-      
+
       <Row>
         <div className="relative z-10 w-full flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
-          
           {/* ── LEFT COLUMN: Text & Action Button ── */}
           <div className="w-full lg:w-[32%] flex flex-col justify-start items-start pt-2">
             <SectionBadge title="WHY CHOOSE INSPIRE" />
@@ -28,7 +28,8 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
               Your Success is Our Commitment
             </h2>
             <p className="text-slate-500 fonts_16 leading-relaxed mb-8 max-w-sm">
-              We combine creativity, technology and strategy to deliver exceptional digital solutions.
+              We combine creativity, technology and strategy to deliver
+              exceptional digital solutions.
             </p>
             <Button
               text="Know More About Us"
@@ -60,7 +61,9 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
                       width={28}
                       height={28}
                       className="object-contain text-[#d68029]"
-                      style={{ filter: "drop-shadow(0px 1px 1px rgba(214,128,41,0.2))" }}
+                      style={{
+                        filter: "drop-shadow(0px 1px 1px rgba(214,128,41,0.2))",
+                      }}
                     />
                   </div>
 
@@ -77,10 +80,11 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
                 </motion.div>
               ))
             ) : (
-              <p className="text-left text-gray-400 text-sm col-span-3">No data available.</p>
+              <p className="text-left text-gray-400 text-sm col-span-3">
+                No data available.
+              </p>
             )}
           </div>
-
         </div>
       </Row>
     </Section>

@@ -68,7 +68,7 @@ const AIConsultingIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M12 8.5v3M10.5 11.5h3" strokeWidth="1.5" />
   </svg>
 );
-// Mock data structure assumption for preview context
+
 const aiServices = [
   {
     title: "AI Chatbot Development",
@@ -82,12 +82,6 @@ const aiServices = [
       "Internal knowledge assistants",
       "Multi-channel chatbot deployment",
     ],
-    color: "from-blue-600/10 via-indigo-600/5 to-transparent",
-    hoverBg: "hover:bg-blue-950/20",
-    borderColor: "group-hover:border-blue-500/30",
-    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(59,130,246,0.25)]",
-    iconBg: "bg-blue-500/10 border-blue-500/20",
-    iconColor: "text-blue-400",
     cta: "Explore Service",
   },
   {
@@ -102,12 +96,6 @@ const aiServices = [
       "Custom AI applications",
       "AI workflow automation",
     ],
-    color: "from-[#d68029]/15 via-orange-600/5 to-transparent",
-    hoverBg: "hover:bg-amber-950/10",
-    borderColor: "group-hover:border-[#d68029]/30",
-    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(214,128,41,0.25)]",
-    iconBg: "bg-[#d68029]/10 border-[#d68029]/20",
-    iconColor: "text-[#d68029]",
     cta: "View Solution",
   },
   {
@@ -122,12 +110,6 @@ const aiServices = [
       "Use-case discovery",
       "Technology selection",
     ],
-    color: "from-emerald-600/10 via-teal-600/5 to-transparent",
-    hoverBg: "hover:bg-emerald-950/10",
-    borderColor: "group-hover:border-emerald-500/30",
-    glowColor: "group-hover:shadow-[0_0_50px_-12px_rgba(16,185,129,0.25)]",
-    iconBg: "bg-emerald-500/10 border-emerald-500/20",
-    iconColor: "text-emerald-400",
     cta: "Explore Service",
   },
 ];
@@ -135,10 +117,16 @@ const aiServices = [
 export default function AIExpertiseSection() {
   const router = useRouter();
   const [activeService, setActiveService] = useState<number>(0);
-  const [isHovered, setIsHovered] = useState<number | null>(null);
+  const [latency, setLatency] = useState<number>(12);
 
   const activeData = aiServices[activeService];
   const ActiveIcon = activeData.icon;
+
+  const handleTabChange = (idx: number) => {
+    setActiveService(idx);
+    // Simulate a network ping/latency update when the core reboots
+    setLatency(Math.floor(Math.random() * 30) + 8);
+  };
 
   return (
     <section className="bg-[#050914] py-24 lg:py-32 relative overflow-hidden font-sans">
@@ -146,36 +134,6 @@ export default function AIExpertiseSection() {
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(214,128,41,0.06)_0%,transparent_60%)] blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-blue-600/5 blur-[150px]" />
-
-        {/* Sci-Fi Perspective Grid */}
-        <div className="absolute bottom-[-10%] left-0 w-full h-[50%] opacity-15 transform perspective-[1000px] rotateX-[75deg]">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#d6802915_1px,transparent_1px),linear-gradient(to_bottom,#d6802915_1px,transparent_1px)] bg-[size:50px_50px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#050B14] to-[#050B14]" />
-        </div>
-      </div>
-
-      {/* ── BACKGROUND ELEMENTS ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(30,58,138,0.2)_0%,transparent_60%)] blur-3xl" />
-
-        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-[150px]" />
-        <div className="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-600/15 blur-[120px]" />
-
-        <div className="absolute bottom-[-20%] left-0 w-full h-[60%] opacity-20 transform-[perspective(1000px)_rotateX(75deg)]">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f46e533_1px,transparent_1px),linear-gradient(to_bottom,#4f46e533_1px,transparent_1px)] bg-[size:40px_40px]" />
-          <div className="absolute inset-0 bg-linear-to-t from-transparent via-[#050914] to-[#050914]" />
-        </div>
-
-        {/* 3D FLOATING DECORATIONS */}
-        <div className="absolute top-[10%] left-[5%] hidden 2xl:flex flex-col gap-4 animate-[bounce_8s_infinite]">
-          <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-12" />
-        </div>
-        <div className="absolute top-[15%] right-[5%] hidden 2xl:flex flex-col gap-2 animate-[pulse_6s_infinite]">
-          <div className="w-12 h-12 rounded-xl bg-linear-to-br from-purple-400/20 to-blue-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(168,85,247,0.3)] transform -rotate-12 translate-x-4" />
-          <div className="w-16 h-16 rounded-xl bg-linear-to-br from-blue-400/20 to-purple-500/10 border-t-2 border-l-2 border-white/20 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transform rotate-6" />
-        </div>
-        <div className="absolute bottom-[10%] left-[5%] hidden 2xl:block w-32 h-32 rounded-full border-16 border-blue-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(59,130,246,0.2)] border-t-blue-400/30 border-l-blue-400/30 transform rotateX-45 rotate-12 animate-[spin_20s_linear_infinite]" />
-        <div className="absolute bottom-[15%] right-[8%] hidden 2xl:block w-24 h-24 rounded-full border-12 border-purple-500/10 backdrop-blur-sm shadow-[0_0_30px_rgba(168,85,247,0.2)] border-t-purple-400/30 border-r-purple-400/30 transform rotateX-45 -rotate-12 animate-[spin_15s_linear_infinite_reverse]" />
       </div>
 
       <Row className="relative z-10 max-w-[1400px] mx-auto">
@@ -203,11 +161,11 @@ export default function AIExpertiseSection() {
           </p>
         </div>
 
-        {/* Split Grid: Interactive 3D Holographic Core (Left) + Command Cards (Right) */}
+        {/* Split Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* ── LEFT: HOLOGRAPHIC DIAGNOSTIC CORE (5 Cols) ── */}
+          {/* ── LEFT: HOLOGRAPHIC DIAGNOSTIC CORE ── */}
           <div className="lg:col-span-5 flex items-center justify-center min-h-[420px] sm:min-h-[480px] relative">
-            {/* HUD Reticles */}
+            {/* Ambient HUD Rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
               <div className="w-[320px] h-[320px] sm:w-[380px] sm:h-[380px] rounded-full border border-dashed border-[#d68029]/20 animate-[spin_40s_linear_infinite]" />
               <div className="absolute w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] rounded-full border border-[#d68029]/10 animate-[spin_25s_linear_infinite_reverse]" />
@@ -222,124 +180,198 @@ export default function AIExpertiseSection() {
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
               className="relative w-[280px] h-[350px] sm:w-[320px] sm:h-[400px] rounded-[32px] bg-[#0A1424]/90 border border-slate-700/60 p-6 flex flex-col justify-between shadow-[0_0_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden group"
             >
-              {/* Scanline overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[size:100%_4px] pointer-events-none opacity-40" />
+              {/* Scanline overlay base */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[size:100%_4px] pointer-events-none opacity-40 z-0" />
+
+              {/* Dynamic Laser Scanline on Tab Change */}
+              <AnimatePresence>
+                <motion.div
+                  key={`scan-${activeService}`}
+                  initial={{ top: "-20%", opacity: 0 }}
+                  animate={{ top: "120%", opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.9, ease: "easeInOut" }}
+                  className="absolute left-0 right-0 h-24 bg-gradient-to-b from-transparent via-[#d68029]/30 to-transparent z-40 pointer-events-none border-b-2 border-[#d68029]/60 shadow-[0_5px_25px_rgba(214,128,41,0.4)]"
+                />
+              </AnimatePresence>
 
               {/* Top HUD Telemetry */}
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-4 relative z-10">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#d68029] animate-ping" />
-                  <span className="text-[11px] font-mono text-[#d68029] tracking-wider uppercase">
-                    Node_ID: 0{activeService + 1}
-                  </span>
+                  <motion.span
+                    key={`ping-${activeService}`}
+                    initial={{ scale: 1.5, backgroundColor: "#fff" }}
+                    animate={{ scale: 1, backgroundColor: "#d68029" }}
+                    className="w-2 h-2 rounded-full animate-ping"
+                  />
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={activeService}
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 5 }}
+                      className="text-[11px] font-mono text-[#d68029] tracking-wider uppercase"
+                    >
+                      Node_ID: 0{activeService + 1}
+                    </motion.span>
+                  </AnimatePresence>
                 </div>
                 <span className="text-[10px] font-mono text-slate-500 uppercase">
                   Status: Active
                 </span>
               </div>
 
-              {/* Center Hologram Icon Container */}
-              <div className="my-auto flex flex-col items-center justify-center relative z-10">
-                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-[#12233B] to-[#0D1826] border border-[#d68029]/40 flex items-center justify-center shadow-[0_0_35px_rgba(214,128,41,0.25)] relative">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-[#d68029]/10 to-transparent animate-pulse" />
-                  <ActiveIcon className="w-12 h-12 text-[#d68029]" />
-                </div>
-                <h4 className="text-white font-bold text-center mt-5 text-lg tracking-wide">
-                  {activeData.title}
-                </h4>
+              {/* Center Hologram - 3D Cube Rotation Effect */}
+              <div className="my-auto flex flex-col items-center justify-center relative z-10 min-h-[160px] perspective-[1000px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeService}
+                    initial={{ opacity: 0, rotateY: 90, scale: 0.6 }}
+                    animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotateY: -90, scale: 0.6 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="flex flex-col items-center"
+                  >
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-[#12233B] to-[#0D1826] border border-[#d68029]/40 flex items-center justify-center shadow-[0_0_35px_rgba(214,128,41,0.25)] relative overflow-hidden">
+                      {/* Inner pulsing core */}
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-[#d68029]/10 to-transparent animate-pulse" />
+                      <ActiveIcon className="w-12 h-12 text-[#d68029] relative z-10" />
+                    </div>
+                    <h4 className="text-white font-bold text-center mt-5 text-lg tracking-wide">
+                      {activeData.title}
+                    </h4>
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               {/* Bottom Telemetry Bar */}
               <div className="bg-[#050B14]/80 rounded-xl p-3 border border-slate-800/80 font-mono text-[11px] text-slate-400 flex items-center justify-between relative z-10">
-                <span>LATENCY: 12ms</span>
-                <span className="text-[#d68029]">SYNC OK</span>
+                <motion.span
+                  key={latency}
+                  initial={{ color: "#d68029", opacity: 0 }}
+                  animate={{ color: "#94a3b8", opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  LATENCY: {latency}ms
+                </motion.span>
+                <motion.span
+                  key={`sync-${activeService}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-[#d68029]"
+                >
+                  SYNC OK
+                </motion.span>
               </div>
             </motion.div>
           </div>
 
-          {/* ── RIGHT: INTERACTIVE COMMAND NODES (7 Cols) ── */}
+          {/* ── RIGHT: INTERACTIVE COMMAND NODES ── */}
           <div className="lg:col-span-7 flex flex-col gap-4">
             {aiServices.map((service, idx) => {
               const isActive = activeService === idx;
 
               return (
-                <motion.div
+                <div
                   key={idx}
-                  onClick={() => setActiveService(idx)}
-                  onHoverStart={() => setIsHovered(idx)}
-                  onHoverEnd={() => setIsHovered(null)}
-                  className={`relative cursor-pointer transition-all duration-300 rounded-2xl border p-6 sm:p-7 overflow-hidden ${
+                  onClick={() => handleTabChange(idx)}
+                  className={`relative cursor-pointer transition-all duration-300 rounded-2xl p-[2px] overflow-hidden ${
                     isActive
-                      ? "bg-[#0A1424]/90 border-[#d68029]/50 shadow-[0_8px_30px_rgba(214,128,41,0.12)]"
-                      : "bg-[#080E1B]/50 border-slate-800/80 hover:border-slate-700/80 hover:bg-[#0A1424]/40"
+                      ? "shadow-[0_8px_30px_rgba(214,128,41,0.15)]"
+                      : "hover:shadow-lg"
                   }`}
                 >
-                  {/* Left glowing marker */}
+                  {/* Outer Gradient Wrapper for Active State */}
                   <div
-                    className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-300 ${isActive ? "bg-[#d68029] shadow-[0_0_12px_#d68029]" : "bg-transparent"}`}
+                    className={`absolute inset-0 transition-opacity duration-300 ${
+                      isActive
+                        ? "bg-gradient-to-r from-[#d68029] to-[#ffaa55] opacity-100"
+                        : "bg-slate-800/80 hover:bg-slate-700/80 opacity-100"
+                    }`}
                   />
 
-                  {/* Header Row */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <span
-                        className={`text-sm font-mono font-bold tracking-widest ${isActive ? "text-[#d68029]" : "text-slate-600"}`}
-                      >
-                        0{idx + 1}
-                      </span>
-                      <h3
-                        className={`text-lg sm:text-xl font-bold transition-colors ${isActive ? "text-white" : "text-slate-300"}`}
-                      >
-                        {service.title}
-                      </h3>
-                    </div>
+                  {/* Inner Card Content */}
+                  <div className="relative h-full bg-[#080E1B] rounded-[14px] p-6 sm:p-7 z-10 transition-colors duration-300">
+                    {/* Left glowing marker */}
                     <div
-                      className={`w-7 h-7 rounded-full border flex items-center justify-center transition-all ${isActive ? "border-[#d68029] bg-[#d68029]/10 text-[#d68029] rotate-90" : "border-slate-800 text-slate-600"}`}
-                    >
-                      <FiArrowRight className="w-3.5 h-3.5" />
-                    </div>
-                  </div>
+                      className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-300 ${
+                        isActive
+                          ? "bg-[#d68029] shadow-[0_0_12px_#d68029]"
+                          : "bg-transparent"
+                      }`}
+                    />
 
-                  {/* Expanded Body Panel */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="overflow-hidden pt-4 mt-4 border-t border-slate-800/80"
-                      >
-                        <p className="text-slate-400 text-sm leading-relaxed mb-5">
-                          {service.description}
-                        </p>
-
-                        <div className="grid grid-cols-2 gap-2.5 mb-6">
-                          {service.highlights.map((item, i) => (
-                            <div
-                              key={i}
-                              className="flex items-center gap-2 text-xs font-mono text-slate-300 bg-[#050B14]/60 px-3 py-2 rounded-lg border border-slate-800/60"
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
-                              {item}
-                            </div>
-                          ))}
-                        </div>
-
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            router.push(service.route);
-                          }}
-                          className="inline-flex items-center gap-2 cursor-pointer text-xs font-mono font-bold uppercase tracking-widest text-[#d68029] hover:text-[#ffaa55] transition-colors group/btn"
+                    {/* Header Row */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <span
+                          className={`text-sm font-mono font-bold tracking-widest ${
+                            isActive ? "text-[#d68029]" : "text-slate-600"
+                          }`}
                         >
-                          <span>{service.cta}</span>
-                          <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+                          0{idx + 1}
+                        </span>
+                        <h3
+                          className={`text-lg sm:text-xl font-bold transition-colors ${
+                            isActive ? "text-white" : "text-slate-300"
+                          }`}
+                        >
+                          {service.title}
+                        </h3>
+                      </div>
+                      <div
+                        className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                          isActive
+                            ? "border-[#d68029] bg-[#d68029]/10 text-[#d68029] rotate-90"
+                            : "border-slate-800 text-slate-600"
+                        }`}
+                      >
+                        <FiArrowRight className="w-4 h-4" />
+                      </div>
+                    </div>
+
+                    {/* Expanded Body Panel */}
+                    <AnimatePresence>
+                      {isActive && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden pt-4 mt-4 border-t border-slate-800/80"
+                        >
+                          <p className="text-slate-400 text-sm leading-relaxed mb-5">
+                            {service.description}
+                          </p>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                            {service.highlights.map((item, i) => (
+                              <div
+                                key={i}
+                                className="flex items-center gap-2 text-xs font-mono text-slate-300 bg-[#050B14]/80 px-3 py-2.5 rounded-lg border border-slate-800/60"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
+                                {item}
+                              </div>
+                            ))}
+                          </div>
+
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(service.route);
+                            }}
+                            className="inline-flex items-center gap-2 cursor-pointer text-xs font-mono font-bold uppercase tracking-widest text-[#d68029] bg-[#d68029]/10 hover:bg-[#d68029] hover:text-white px-5 py-2.5 rounded-full transition-all duration-300 group/btn"
+                          >
+                            <span>{service.cta}</span>
+                            <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
               );
             })}
           </div>

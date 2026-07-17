@@ -130,7 +130,7 @@ export default function MaturityIndex() {
         </motion.p>
       </div>
       {/* 3D SVG Background: Complex Orbits & Chrome Spheres */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 mt-10">
         <svg
           className="w-[1800px] h-[1000px] opacity-90"
           viewBox="0 0 1800 1000"
