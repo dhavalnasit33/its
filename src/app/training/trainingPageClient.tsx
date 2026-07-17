@@ -193,66 +193,86 @@ const heroTrustPoints = [
 const trainingFAQs = [
   {
     question: "What types of IT training programs do you offer?",
-    answer: "We offer comprehensive, job-oriented training courses across multiple disciplines including Full-Stack Web Development (React.js, Next.js, Node.js, Express, MongoDB), Mobile App Development (Flutter, React Native), UI/UX Design and Prototyping (Figma, Adobe XD), PHP & Laravel Development, and Digital Marketing & SEO. All courses are taught by industry experts with hands-on labs."
+    answer:
+      "We offer comprehensive, job-oriented training courses across multiple disciplines including Full-Stack Web Development (React.js, Next.js, Node.js, Express, MongoDB), Mobile App Development (Flutter, React Native), UI/UX Design and Prototyping (Figma, Adobe XD), PHP & Laravel Development, and Digital Marketing & SEO. All courses are taught by industry experts with hands-on labs.",
   },
   {
     question: "Who can apply for your internship programs?",
-    answer: "Our internship programs are open to college students, recent graduates, self-taught developers, and career switchers looking to build their professional portfolios. We accept applicants with basic programming or design knowledge who want to gain hands-on, real-world experience working on live client projects."
+    answer:
+      "Our internship programs are open to college students, recent graduates, self-taught developers, and career switchers looking to build their professional portfolios. We accept applicants with basic programming or design knowledge who want to gain hands-on, real-world experience working on live client projects.",
   },
   {
     question: "Do you provide placement assistance after course completion?",
-    answer: "Yes, we provide 100% placement assistance. This includes resume-building workshops, career counseling sessions, mock interview preparation, soft skills improvement, and direct placement opportunities through our network of hiring partners."
+    answer:
+      "Yes, we provide 100% placement assistance. This includes resume-building workshops, career counseling sessions, mock interview preparation, soft skills improvement, and direct placement opportunities through our network of hiring partners.",
   },
   {
     question: "What is the duration of the training and internship courses?",
-    answer: "The duration varies depending on the course. On average, our technical training courses run for 3 to 6 months, offering flexible batch timings to accommodate students and working professionals. Our internships typically range from 2 to 6 months."
+    answer:
+      "The duration varies depending on the course. On average, our technical training courses run for 3 to 6 months, offering flexible batch timings to accommodate students and working professionals. Our internships typically range from 2 to 6 months.",
   },
   {
     question: "Will I work on live client projects during the internship?",
-    answer: "Absolutely. Unlike standard classroom assignments, our internship programs focus entirely on practical experience. You will work alongside senior engineers on live client websites, mobile apps, and digital marketing campaigns, helping you build a high-quality portfolio."
+    answer:
+      "Absolutely. Unlike standard classroom assignments, our internship programs focus entirely on practical experience. You will work alongside senior engineers on live client websites, mobile apps, and digital marketing campaigns, helping you build a high-quality portfolio.",
   },
   {
     question: "Will I receive a certificate of completion?",
-    answer: "Yes, upon successful completion of your training or internship program, you will be awarded an industry-recognized Certificate of Completion. For interns, we also provide a detailed letter of recommendation highlighting the specific projects you worked on and your key technical contributions."
+    answer:
+      "Yes, upon successful completion of your training or internship program, you will be awarded an industry-recognized Certificate of Completion. For interns, we also provide a detailed letter of recommendation highlighting the specific projects you worked on and your key technical contributions.",
   },
   {
     question: "What is the fee structure for the courses?",
-    answer: "Our fee structure is highly competitive and designed to be affordable for students. We offer flexible payment plans, installment options, and special discounts for early registration. Please contact our support team or fill out the enquiry form for detailed pricing on specific courses."
+    answer:
+      "Our fee structure is highly competitive and designed to be affordable for students. We offer flexible payment plans, installment options, and special discounts for early registration. Please contact our support team or fill out the enquiry form for detailed pricing on specific courses.",
   },
   {
     question: "Are the classes conducted online or offline?",
-    answer: "We offer hybrid options to suit your needs. You can choose to attend in-person classes at our institute for hands-on, face-to-face learning and collaboration, or participate in interactive online live sessions if you prefer learning from home."
+    answer:
+      "We offer hybrid options to suit your needs. You can choose to attend in-person classes at our institute for hands-on, face-to-face learning and collaboration, or participate in interactive online live sessions if you prefer learning from home.",
   },
   {
-    question: "Do I need a technical background or computer science degree to enroll?",
-    answer: "No, a technical background or a CS degree is not required. Our IT training courses are structured from basic to advanced levels, making them accessible to beginners, self-taught individuals, and career switchers."
+    question:
+      "Do I need a technical background or computer science degree to enroll?",
+    answer:
+      "No, a technical background or a CS degree is not required. Our IT training courses are structured from basic to advanced levels, making them accessible to beginners, self-taught individuals, and career switchers.",
   },
   {
-    question: "Is there a coding test or interview to qualify for the internship program?",
-    answer: "We conduct a basic assessment or fit-call interview to evaluate your fundamental knowledge and passion. This helps us place you in the correct track (Web, Mobile, Design, or Marketing) to ensure you get the maximum benefit from the internship."
+    question:
+      "Is there a coding test or interview to qualify for the internship program?",
+    answer:
+      "We conduct a basic assessment or fit-call interview to evaluate your fundamental knowledge and passion. This helps us place you in the correct track (Web, Mobile, Design, or Marketing) to ensure you get the maximum benefit from the internship.",
   },
   // --- NEW SEO-FRIENDLY FAQS ADDED BELOW ---
   {
-    question: "Do you offer weekend batches or flexible timings for working professionals?",
-    answer: "Yes, we offer flexible learning options, including weekend batches and evening classes. These are specifically designed for working professionals who want to upgrade their skills in software development, mobile app creation, or digital marketing without leaving their current jobs."
+    question:
+      "Do you offer weekend batches or flexible timings for working professionals?",
+    answer:
+      "Yes, we offer flexible learning options, including weekend batches and evening classes. These are specifically designed for working professionals who want to upgrade their skills in software development, mobile app creation, or digital marketing without leaving their current jobs.",
   },
   {
     question: "What makes your IT training institute different from others?",
-    answer: "Our IT training institute focuses on 100% practical, project-based learning. Instead of just theoretical concepts, our industry-expert trainers guide you through hands-on projects, sandbox environments, and corporate-level assignments, ensuring you are completely job-ready for the modern tech industry upon graduation."
+    answer:
+      "Our IT training institute focuses on 100% practical, project-based learning. Instead of just theoretical concepts, our industry-expert trainers guide you through hands-on projects, sandbox environments, and corporate-level assignments, ensuring you are completely job-ready for the modern tech industry upon graduation.",
   },
   {
-    question: "Do you provide portfolio building and interview preparation support?",
-    answer: "Yes, comprehensive portfolio building is a core part of our UI/UX design, web development, and digital marketing training. You will complete multiple capstone projects to showcase to employers. Additionally, we conduct technical mock interviews and HR screening prep to help you stand out to hiring managers."
+    question:
+      "Do you provide portfolio building and interview preparation support?",
+    answer:
+      "Yes, comprehensive portfolio building is a core part of our UI/UX design, web development, and digital marketing training. You will complete multiple capstone projects to showcase to employers. Additionally, we conduct technical mock interviews and HR screening prep to help you stand out to hiring managers.",
   },
   {
-    question: "Are these certification courses valid for jobs abroad or remote tech roles?",
-    answer: "Absolutely. The modern tech stacks we teach—such as React, Node.js, Flutter, and UI/UX design—are highly sought after by employers globally. The industry-recognized Certificate of Completion you receive adds significant value to your resume, making you a strong candidate for both local and remote tech jobs."
+    question:
+      "Are these certification courses valid for jobs abroad or remote tech roles?",
+    answer:
+      "Absolutely. The modern tech stacks we teach—such as React, Node.js, Flutter, and UI/UX design—are highly sought after by employers globally. The industry-recognized Certificate of Completion you receive adds significant value to your resume, making you a strong candidate for both local and remote tech jobs.",
   },
   {
-    question: "Can I switch to a career in IT if I am from a non-technical background?",
-    answer: "Absolutely! Many of our most successful students and interns come from non-IT backgrounds like commerce, arts, or non-computer engineering. Our foundational modules in software development, UI/UX design, and digital marketing are tailored to help career switchers build practical skills from scratch. With dedicated mentorship, step-by-step guidance, and real-world projects, you can smoothly transition into a high-paying tech career regardless of your previous degree."
-  }
-
+    question:
+      "Can I switch to a career in IT if I am from a non-technical background?",
+    answer:
+      "Absolutely! Many of our most successful students and interns come from non-IT backgrounds like commerce, arts, or non-computer engineering. Our foundational modules in software development, UI/UX design, and digital marketing are tailored to help career switchers build practical skills from scratch. With dedicated mentorship, step-by-step guidance, and real-world projects, you can smoothly transition into a high-paying tech career regardless of your previous degree.",
+  },
 ];
 export default function TrainingPageClient({
   initialData,
@@ -674,13 +694,19 @@ export default function TrainingPageClient({
               Professional IT Training & Internships
             </p>
             <h2 className="common-h2">
-              Accelerate Your Career with Industry-Leading <span className="text-[#D68029]">Tech Training & Internship Programs</span>
+              Accelerate Your Career with Industry-Leading{" "}
+              <span className="text-[#D68029]">
+                Tech Training & Internship Programs
+              </span>
             </h2>
             <div className="mt-4 flex justify-center mb-2">
               <Motion />
             </div>
             <p className="text-lg font-normal text-[#6f6f6f] leading-8 tracking-wide mt-3 ">
-              Gain in-demand technical skills, work on live client projects, and secure your future with our comprehensive, job-oriented IT training courses and professional hands-on internships designed for developers, designers, and marketers.
+              Gain in-demand technical skills, work on live client projects, and
+              secure your future with our comprehensive, job-oriented IT
+              training courses and professional hands-on internships designed
+              for developers, designers, and marketers.
             </p>
           </motion.div>
 
@@ -707,7 +733,10 @@ export default function TrainingPageClient({
                   </h3>
                 </div>
                 <p className="text-gray-500 text-sm sm:text-base">
-                  Master cutting-edge technologies with structured, expert-led training courses. Build a solid theoretical foundation and transition into practical skills with real-world coding projects.
+                  Master cutting-edge technologies with structured, expert-led
+                  training courses. Build a solid theoretical foundation and
+                  transition into practical skills with real-world coding
+                  projects.
                 </p>
               </div>
 
@@ -778,7 +807,9 @@ export default function TrainingPageClient({
                   </h3>
                 </div>
                 <p className="text-gray-300 text-sm sm:text-base">
-                  Bridge the gap between academic learning and industry demands. Work on live projects, gain real corporate exposure, and build a high-caliber professional portfolio.
+                  Bridge the gap between academic learning and industry demands.
+                  Work on live projects, gain real corporate exposure, and build
+                  a high-caliber professional portfolio.
                 </p>
               </div>
 
@@ -1063,7 +1094,6 @@ export default function TrainingPageClient({
         </Row>
       </Section>
 
-   
       {/* NEW SECTION: ITS Institute Facilities */}
       <Section className=" bg-white ">
         {/* Left Decorative Image */}
@@ -1179,7 +1209,7 @@ export default function TrainingPageClient({
           </div>
 
           {/* CONTENT GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start cursor-pointer">
             {/* LEFT SIDE: 4 CARDS */}
             <motion.div
               className="grid grid-cols-1 sm:grid-cols-2 gap-6 order-2 lg:order-1 mt-10"

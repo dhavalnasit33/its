@@ -10,10 +10,6 @@ import {
   LuShieldCheck,
   LuRocket,
   LuTrendingUp,
-  LuShield,
-  LuUsers,
-  LuCpu,
-  LuActivity,
 } from "react-icons/lu";
 import SectionBadge from "../new-home-components/SectionBadge";
 
@@ -22,7 +18,8 @@ const STEPS = [
   {
     id: "01",
     title: "Discovery",
-    description: "We analyze your business needs, challenges, and opportunities to define the right AI potential.",
+    description:
+      "We analyze your business needs, challenges, and opportunities to define the right AI potential.",
     icon: LuSearch,
     color: "#3b82f6", // Blue
     glow: "shadow-[0_0_30px_rgba(59,130,246,0.3)]",
@@ -30,7 +27,8 @@ const STEPS = [
   {
     id: "02",
     title: "AI Strategy",
-    description: "We create a tailored AI strategy and roadmap aligned with your business goals and growth plan.",
+    description:
+      "We create a tailored AI strategy and roadmap aligned with your business goals and growth plan.",
     icon: LuBrain,
     color: "#f97316", // Orange
     glow: "shadow-[0_0_30px_rgba(249,115,22,0.3)]",
@@ -38,7 +36,8 @@ const STEPS = [
   {
     id: "03",
     title: "Solution Design",
-    description: "We design intelligent architecture, workflows, and user experiences that deliver value.",
+    description:
+      "We design intelligent architecture, workflows, and user experiences that deliver value.",
     icon: LuPenTool,
     color: "#6366f1", // Indigo
     glow: "shadow-[0_0_30px_rgba(99,102,241,0.3)]",
@@ -46,7 +45,8 @@ const STEPS = [
   {
     id: "04",
     title: "Development",
-    description: "We build, integrate, and train AI models and applications with highest standards.",
+    description:
+      "We build, integrate, and train AI models and applications with highest standards.",
     icon: LuCode,
     color: "#f59e0b", // Amber
     glow: "shadow-[0_0_30px_rgba(245,158,11,0.3)]",
@@ -54,7 +54,8 @@ const STEPS = [
   {
     id: "05",
     title: "Testing & Security",
-    description: "Rigorous testing for accuracy, security, and performance to ensure reliability.",
+    description:
+      "Rigorous testing for accuracy, security, and performance to ensure reliability.",
     icon: LuShieldCheck,
     color: "#0ea5e9", // Sky Blue
     glow: "shadow-[0_0_30px_rgba(14,165,233,0.3)]",
@@ -62,7 +63,8 @@ const STEPS = [
   {
     id: "06",
     title: "Deployment",
-    description: "We deploy AI solutions seamlessly with zero disruption to your business operations.",
+    description:
+      "We deploy AI solutions seamlessly with zero disruption to your business operations.",
     icon: LuRocket,
     color: "#a855f7", // Purple
     glow: "shadow-[0_0_30px_rgba(168,85,247,0.3)]",
@@ -70,7 +72,8 @@ const STEPS = [
   {
     id: "07",
     title: "Continuous Optimization",
-    description: "We continuously monitor, learn, and optimize AI models to improve performance over time.",
+    description:
+      "We continuously monitor, learn, and optimize AI models to improve performance over time.",
     icon: LuTrendingUp,
     color: "#f97316", // Orange
     glow: "shadow-[0_0_30px_rgba(249,115,22,0.3)]",
@@ -79,13 +82,13 @@ const STEPS = [
 
 // Pre-calculated coordinates for 7 items on a 340px radius (shared by cards + connector lines)
 const POSITIONS = [
-  { x: 0, y: -340 },     // 01: Top Center
-  { x: 266, y: -211 },   // 02: Top Right
-  { x: 331, y: 75 },     // 03: Right
-  { x: 147, y: 306 },    // 04: Bottom Right
-  { x: -147, y: 306 },   // 05: Bottom Left
-  { x: -331, y: 75 },    // 06: Left
-  { x: -266, y: -211 },  // 07: Top Left
+  { x: 0, y: -340 }, // 01: Top Center
+  { x: 266, y: -211 }, // 02: Top Right
+  { x: 331, y: 75 }, // 03: Right
+  { x: 147, y: 306 }, // 04: Bottom Right
+  { x: -147, y: 306 }, // 05: Bottom Left
+  { x: -331, y: 75 }, // 06: Left
+  { x: -266, y: -211 }, // 07: Top Left
 ];
 
 export default function AiDeliveryFramework() {
@@ -99,7 +102,6 @@ export default function AiDeliveryFramework() {
       <div className="absolute bottom-0 right-0 w-[500px] h-[300px] bg-indigo-900/10 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Header section */}
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <motion.div
@@ -127,18 +129,18 @@ export default function AiDeliveryFramework() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-slate-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed"
           >
-            A proven end-to-end approach to deliver intelligent AI solutions that drive real business impact.
+            A proven end-to-end approach to deliver intelligent AI solutions
+            that drive real business impact.
           </motion.p>
         </div>
 
-     {/* ========================================= */}
+        {/* ========================================= */}
         {/* DESKTOP VIEW: Perfect Polygonal Layout (xl+) */}
         {/* ========================================= */}
         <div className="hidden xl:flex relative w-full h-[850px] items-center justify-center  ">
-          
           {/* Dashed background orbit circle (680px diameter = 340px radius) */}
           <div className="absolute w-[680px] h-[680px] rounded-full border border-dashed border-slate-700/50 animate-[spin_120s_linear_infinite]" />
-          
+
           {/* Connector Lines: hub -> each step, brighten + animate on hover */}
           <svg
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none z-10"
@@ -166,74 +168,41 @@ export default function AiDeliveryFramework() {
                   }}
                   transition={{
                     opacity: { duration: 0.3 },
-                    strokeDashoffset: { duration: 1, repeat: isActive ? Infinity : 0, ease: "linear" },
+                    strokeDashoffset: {
+                      duration: 1,
+                      repeat: isActive ? Infinity : 0,
+                      ease: "linear",
+                    },
                   }}
                 />
               );
             })}
           </svg>
 
-          {/* Central Hub */}
+          {/* Central Hub - Cleaned up to properly display the provided image */}
           <motion.div
             animate={{
               scale: hoveredStep !== null ? 1.05 : 1,
             }}
             transition={{ duration: 0.3 }}
-            className="absolute z-20 flex items-center justify-center w-48 h-48"
+            className="absolute z-20 flex items-center justify-center w-[280px] h-[280px]"
           >
-            {/* Soft ambient glow */}
-            <div className="absolute w-[230px] h-[230px] rounded-full bg-orange-500/10 blur-[60px] animate-pulse" />
+            {/* Soft ambient back-glow for the image */}
+            <div className="absolute w-[200px] h-[200px] rounded-full bg-orange-500/20 blur-[50px] animate-pulse" />
 
-            {/* Rotating multi-color gradient ring, built from every step's color */}
+            {/* Animated Image Hub body */}
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[212px] h-[212px] rounded-full"
-              style={{
-                background:
-                  "conic-gradient(from 0deg, #3b82f6, #6366f1, #a855f7, #f97316, #f59e0b, #0ea5e9, #3b82f6)",
-                padding: "2px",
-                WebkitMask:
-                  "radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px))",
-                mask: "radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px))",
-              }}
-            />
-
-            {/* Thin counter-rotating dashed ring for depth */}
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[196px] h-[196px] rounded-full border border-dashed border-white/10"
-            />
-
-            {/* Hub body */}
-            <div className="relative w-48 h-48 rounded-full bg-gradient-to-br from-[#16283f] via-[#122036] to-[#0c1728] border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center overflow-hidden">
-              {/* Dot grid texture */}
-              <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1px)",
-                  backgroundSize: "14px 14px",
-                }}
+              animate={{ y: [-8, 8, -8] }} // Continuous floating breathing animation
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-full h-full flex items-center justify-center z-10"
+            >
+              <img
+                src="/ai-service/ai-core-animated.png"
+                alt="AI Core Animated Processing"
+                // Removed rounded-full and added object-contain so the 3D cube displays perfectly
+                className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(249,115,22,0.4)]"
               />
-
-              {/* Glass sheen sweep */}
-              <motion.div
-                animate={{ x: [-220, 220] }}
-                transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.5 }}
-                className="absolute w-20 h-full bg-white/10 blur-xl rotate-12"
-              />
-
-              {/* Icon badge */}
-              <div className="relative z-10 w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-3 shadow-[0_0_25px_rgba(249,115,22,0.35)]">
-                <LuBrain className="w-8 h-8 text-orange-400" />
-              </div>
-
-              <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-orange-500 font-bold tracking-widest uppercase text-sm text-center px-4">
-                AI Core Process
-              </span>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Radial Steps - Using precise X/Y offsets for a perfect 7-sided shape */}
@@ -264,17 +233,29 @@ export default function AiDeliveryFramework() {
                   >
                     <div
                       className="w-12 h-12 rounded-full flex items-center justify-center mb-4 border border-slate-600/50 bg-[#0d1b2a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_0_25px_currentColor]"
-                      style={{ boxShadow: `0 0 15px ${step.color}40`, color: step.color }}
+                      style={{
+                        boxShadow: `0 0 15px ${step.color}40`,
+                        color: step.color,
+                      }}
                     >
-                      <step.icon className="w-5 h-5" style={{ color: step.color }} />
+                      <step.icon
+                        className="w-5 h-5"
+                        style={{ color: step.color }}
+                      />
                     </div>
 
-                    <div className="absolute -top-3 bg-[#0d1b2a] px-2 text-[11px] font-black tracking-widest transition-transform duration-300 group-hover:scale-110" style={{ color: step.color }}>
+                    <div
+                      className="absolute -top-3 bg-[#0d1b2a] px-2 text-[11px] font-black tracking-widest transition-transform duration-300 group-hover:scale-110"
+                      style={{ color: step.color }}
+                    >
                       {step.id}
                     </div>
 
                     <h3 className="text-white font-bold text-[15px] mb-2 transition-colors duration-300">
-                      <span className="group-hover:text-[color:var(--step-color)]" style={{ ["--step-color" as any]: step.color }}>
+                      <span
+                        className="group-hover:text-[color:var(--step-color)]"
+                        style={{ ["--step-color" as any]: step.color }}
+                      >
                         {step.title}
                       </span>
                     </h3>
@@ -308,13 +289,21 @@ export default function AiDeliveryFramework() {
                   className="absolute -top-7 w-14 h-14 rounded-full flex items-center justify-center border-2 border-[#0d1b2a] bg-[#101f33] z-10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
                   style={{ boxShadow: `0 0 15px ${step.color}40` }}
                 >
-                  <step.icon className="w-6 h-6" style={{ color: step.color }} />
+                  <step.icon
+                    className="w-6 h-6"
+                    style={{ color: step.color }}
+                  />
                 </div>
 
-                <div className="text-[13px] font-black tracking-widest mb-1" style={{ color: step.color }}>
+                <div
+                  className="text-[13px] font-black tracking-widest mb-1"
+                  style={{ color: step.color }}
+                >
                   {step.id}
                 </div>
-                <h3 className="text-white font-bold text-lg mb-3">{step.title}</h3>
+                <h3 className="text-white font-bold text-lg mb-3">
+                  {step.title}
+                </h3>
                 <p className="text-slate-400 text-sm leading-relaxed">
                   {step.description}
                 </p>
@@ -325,8 +314,18 @@ export default function AiDeliveryFramework() {
                 <div className="flex flex-col items-center justify-center h-12 opacity-60">
                   <svg width="24" height="100%" className="overflow-visible">
                     <defs>
-                      <marker id={`arrow-down-${idx}`} markerWidth="8" markerHeight="8" refX="4" refY="8" orient="auto">
-                        <polygon points="0 0, 8 0, 4 8" fill={STEPS[idx].color} />
+                      <marker
+                        id={`arrow-down-${idx}`}
+                        markerWidth="8"
+                        markerHeight="8"
+                        refX="4"
+                        refY="8"
+                        orient="auto"
+                      >
+                        <polygon
+                          points="0 0, 8 0, 4 8"
+                          fill={STEPS[idx].color}
+                        />
                       </marker>
                     </defs>
                     <motion.line
@@ -340,7 +339,11 @@ export default function AiDeliveryFramework() {
                       markerEnd={`url(#arrow-down-${idx})`}
                       initial={{ strokeDashoffset: -10 }}
                       animate={{ strokeDashoffset: 0 }}
-                      transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 0.8,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                     />
                   </svg>
                 </div>
@@ -348,9 +351,6 @@ export default function AiDeliveryFramework() {
             </React.Fragment>
           ))}
         </div>
-
-      
-
       </div>
     </section>
   );
