@@ -83,7 +83,7 @@ export default function PortfolioSection({ portfolioWorks }: PortfolioSectionPro
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.1 + idx * 0.08 }}
-                    className="flex items-center gap-3.5 p-4 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_6px_24px_rgba(214,128,41,0.10)] hover:border-[#d68029]/20 transition-all duration-300 group cursor-default"
+                    className="flex items-center hover:cursor-pointer gap-3.5 p-4 rounded-2xl border   bg-white shadow-[0_2px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_15px_30px_rgba(214,128,41,0.06)] border-[#d68029]/10 hover:border-[#d68029]/50  transition-all duration-300 group cursor-default"
                   >
                     {/* Icon Circle */}
                     <div className="w-10 h-10 rounded-full bg-[#d68029]/8 border border-[#d68029]/15 flex items-center justify-center shrink-0 group-hover:bg-[#d68029]/15 transition-colors duration-300">
@@ -146,7 +146,7 @@ export default function PortfolioSection({ portfolioWorks }: PortfolioSectionPro
                       <img
                         src={work.image}
                         alt={work.title}
-                        className="w-full aspect-[640/450] object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full aspect-[640/450] group-hover:cursor-pointer object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     </div>
                   </SwiperSlide>

@@ -12,6 +12,8 @@ import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
 import Hero from "@/components/ai-services/Hero"; 
 import ChooseYourAISolution from "@/components/ai-services/ChooseYourAISolution";
+import BusinessChallengesVsOutcomes from "@/components/ai-services/BusinessChallengesVsOutcomes";
+import AiDeliveryFramework from "@/components/ai-services/AiDeliveryFramework";
 
 const AI_SERVICES_FAQS = [
   {
@@ -123,6 +125,8 @@ export default function AIServicesClient() {
         <GlobalLogoMarquee />
 
     <ChooseYourAISolution/>
+    <AiDeliveryFramework />
+    <BusinessChallengesVsOutcomes />
 
         {/* 9. CTA */}
         <CTA highlightedText="Enterprise AI Solution?" />
