@@ -10,10 +10,11 @@ import FAQ from "@/components/FAQ";
 import CTA from "@/components/common/CTA";
 import { useWebsiteSettings } from "@/context/WebsiteSettingsContext";
 
-import Hero from "@/components/ai-services/Hero"; 
+import Hero from "@/components/ai-services/Hero";
 import ChooseYourAISolution from "@/components/ai-services/ChooseYourAISolution";
 import BusinessChallengesVsOutcomes from "@/components/ai-services/BusinessChallengesVsOutcomes";
 import AiDeliveryFramework from "@/components/ai-services/AiDeliveryFramework";
+import IndustriesWeServe from "@/components/ai-services/IndustriesWeServe";
 
 const AI_SERVICES_FAQS = [
   {
@@ -124,12 +125,14 @@ export default function AIServicesClient() {
         {/* 4. Trusted Technologies Marquee */}
         <GlobalLogoMarquee />
 
-    <ChooseYourAISolution/>
-    <AiDeliveryFramework />
-    <BusinessChallengesVsOutcomes />
+        <ChooseYourAISolution />
+        <AiDeliveryFramework />
+        <BusinessChallengesVsOutcomes />
+
+        {/* <IndustriesWeServe /> */}
 
         {/* 9. CTA */}
-        <CTA highlightedText="Enterprise AI Solution?" />
+        {/* <CTA highlightedText="Enterprise AI Solution?" /> */}
 
         {/* 10. Testimonials */}
         <Testimonials />

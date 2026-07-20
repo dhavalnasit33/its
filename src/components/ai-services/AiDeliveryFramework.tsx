@@ -82,15 +82,14 @@ const STEPS = [
 
 // Pre-calculated coordinates for 7 items on a 340px radius (shared by cards + connector lines)
 const POSITIONS = [
-  { x: 0, y: -340 }, // 01: Top Center
-  { x: 266, y: -211 }, // 02: Top Right
-  { x: 331, y: 75 }, // 03: Right
-  { x: 147, y: 306 }, // 04: Bottom Right
-  { x: -147, y: 306 }, // 05: Bottom Left
-  { x: -331, y: 75 }, // 06: Left
-  { x: -266, y: -211 }, // 07: Top Left
+  { x: 0, y: -380 },
+  { x: 310, y: -240 },
+  { x: 390, y: 90 },
+  { x: 175, y: 355 },
+  { x: -175, y: 355 },
+  { x: -390, y: 90 },
+  { x: -310, y: -240 },
 ];
-
 export default function AiDeliveryFramework() {
   const [hoveredStep, setHoveredStep] = React.useState<number | null>(null);
 
@@ -103,7 +102,7 @@ export default function AiDeliveryFramework() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header section */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-28 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -137,13 +136,13 @@ export default function AiDeliveryFramework() {
         {/* ========================================= */}
         {/* DESKTOP VIEW: Perfect Polygonal Layout (xl+) */}
         {/* ========================================= */}
-        <div className="hidden xl:flex relative w-full h-[850px] items-center justify-center  ">
+        <div className="hidden xl:flex relative w-full h-[980px] items-center justify-center  ">
           {/* Dashed background orbit circle (680px diameter = 340px radius) */}
-          <div className="absolute w-[680px] h-[680px] rounded-full border border-dashed border-slate-700/50 animate-[spin_120s_linear_infinite]" />
+          <div className="absolute w-[820px] h-[820px] rounded-full border border-dashed border-slate-700/50 animate-[spin_120s_linear_infinite]" />
 
           {/* Connector Lines: hub -> each step, brighten + animate on hover */}
           <svg
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none z-10"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[840px] h-[840px] pointer-events-none z-10"
             viewBox="-350 -350 700 700"
           >
             {STEPS.map((step, idx) => {
@@ -185,7 +184,7 @@ export default function AiDeliveryFramework() {
               scale: hoveredStep !== null ? 1.05 : 1,
             }}
             transition={{ duration: 0.3 }}
-            className="absolute z-20 flex items-center justify-center w-[280px] h-[280px]"
+            className="absolute z-20 flex items-center justify-center w-[390px] h-[390px]"
           >
             {/* Soft ambient back-glow for the image */}
             <div className="absolute w-[200px] h-[200px] rounded-full bg-orange-500/20 blur-[50px] animate-pulse" />
@@ -200,7 +199,7 @@ export default function AiDeliveryFramework() {
                 src="/ai-service/ai-core-animated.png"
                 alt="AI Core Animated Processing"
                 // Removed rounded-full and added object-contain so the 3D cube displays perfectly
-                className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(249,115,22,0.4)]"
+                className="w-full h-full object-contain drop-shadow-[0_0_60px_rgba(59,130,246,.65)]"
               />
             </motion.div>
           </motion.div>
@@ -212,7 +211,7 @@ export default function AiDeliveryFramework() {
             return (
               <div
                 key={step.id}
-                className="absolute top-1/2 left-1/2 w-[240px] z-30"
+                className="absolute top-1/2 left-1/2 w-[280px] z-30"
                 style={{
                   // Perfectly places the exact center of the card on the designated coordinate
                   transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`,
@@ -229,17 +228,17 @@ export default function AiDeliveryFramework() {
                   className="group cursor-pointer"
                 >
                   <div
-                    className={`relative flex flex-col items-center text-center p-5 rounded-2xl bg-[#101f33] border border-slate-700/50 group-hover:bg-[#152840] group-hover:border-slate-500/60 transition-all duration-300 ${step.glow}`}
+                    className={`relative flex flex-col items-center text-center p-7 rounded-2xl bg-[#101f33] border border-slate-700/50 group-hover:bg-[#152840] group-hover:border-slate-500/60 transition-all duration-300 ${step.glow}`}
                   >
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center mb-4 border border-slate-600/50 bg-[#0d1b2a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_0_25px_currentColor]"
+                      className="w-16 h-16 rounded-full flex items-center justify-center mb-4 border border-slate-600/50 bg-[#0d1b2a] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_0_25px_currentColor]"
                       style={{
                         boxShadow: `0 0 15px ${step.color}40`,
                         color: step.color,
                       }}
                     >
                       <step.icon
-                        className="w-5 h-5"
+                        className="w-7 h-7"
                         style={{ color: step.color }}
                       />
                     </div>
@@ -251,7 +250,7 @@ export default function AiDeliveryFramework() {
                       {step.id}
                     </div>
 
-                    <h3 className="text-white font-bold text-[15px] mb-2 transition-colors duration-300">
+                    <h3 className="text-white font-bold text-xl mb-2 transition-colors duration-300">
                       <span
                         className="group-hover:text-[color:var(--step-color)]"
                         style={{ ["--step-color" as any]: step.color }}
