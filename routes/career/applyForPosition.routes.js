@@ -818,8 +818,8 @@ const nodemailer = require("nodemailer");
 const axios = require("axios");
 const ApplyPosition = require("../../models/career/applyForPosition");
 const { protect } = require("../../middlewares/auth");
-// ✅ Juno multer setup hatavyo — secureUpload middleware use karo
 const secureUpload = require("../../middlewares/secureUpload");
+const { getUserEmailHtml, getAdminEmailHtml } = require("../../utils/emailTemplates");
 
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY;
 const router = express.Router();
@@ -1050,24 +1050,21 @@ router.post("/", secureUpload("uploads/position_apply"), async (req, res) => {
       from: `"${name}" <${email}>`,
       to: process.env.EMAIL_USER,
       subject: "📄 New Job Application Received",
-      html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:700px; margin:auto;">
-                    <h2 style="color:#333;">New Job Application</h2>
-                    <p>You have received a new application for <b>${populatedApp.positionApplied?.name || positionApplied}</b></p>
-                    <table style="width:100%; border-collapse: collapse; margin-top:15px;">
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Name:</b></td><td style="padding:8px; border:1px solid #ddd;">${name}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Email:</b></td><td style="padding:8px; border:1px solid #ddd;">${email}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Phone:</b></td><td style="padding:8px; border:1px solid #ddd;">${phone}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Graduation:</b></td><td style="padding:8px; border:1px solid #ddd;">${graduation}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Experience:</b></td><td style="padding:8px; border:1px solid #ddd;">${experience}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Current CTC:</b></td><td style="padding:8px; border:1px solid #ddd;">${currentCTC}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Notice Period:</b></td><td style="padding:8px; border:1px solid #ddd;">${noticePeriod}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Message:</b></td><td style="padding:8px; border:1px solid #ddd;">${message}</td></tr>
-                    </table>
-                    <br/>
-                    <p style="color:#555;">Best Regards,<br/>Inspire Techno Solution Website</p>
-                </div>
-            `,
+      html: getAdminEmailHtml(
+        `Job Application: ${populatedApp.positionApplied?.name || positionApplied}`,
+        "Careers Application",
+        {
+          name: name,
+          email: email,
+          phone: phone,
+          position: populatedApp.positionApplied?.name || positionApplied,
+          graduation: graduation,
+          experience: experience,
+          currentCTC: currentCTC,
+          noticePeriod: noticePeriod,
+          message: message,
+        }
+      ),
       attachments: fileUrl
         ? [
             {
@@ -1085,30 +1082,20 @@ router.post("/", secureUpload("uploads/position_apply"), async (req, res) => {
       from: `"Inspire Techno Solution" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "✅ Application Received - Inspire Techno Solution",
-      html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:600px; margin:auto;">
-                    <div style="text-align:center; margin-bottom:20px;">
-                        <img src="cid:companylogo" alt="Inspire Techno Solution" style="width:120px;"/>
-                    </div>
-                    <h2 style="color:#333;">Hi ${name},</h2>
-                    <p style="font-size:15px; color:#444; line-height:1.6;">
-                        Thank you for applying for the position of
-                        <b style="color:#d35400;">${populatedApp.positionApplied?.name || positionApplied}</b>.
-                    </p>
-                    <p style="font-size:15px; color:#444; line-height:1.6;">
-                        We have received your application and our HR team will review your details shortly.
-                    </p>
-                    <div style="margin:20px 0; padding:10px; background:#f9f9f9; border-left:4px solid #d35400;">
-                        <p style="margin:0; font-size:14px; color:#555;"><b>Your message:</b></p>
-                        <p style="margin:5px 0 0; font-size:14px; color:#444;">${message}</p>
-                    </div>
-                    <p style="color:#555;">Best regards,<br/>The Inspire Techno Solution HR Team</p>
-                    <hr style="margin:20px 0;"/>
-                    <p style="font-size:12px; color:#777; text-align:center;">
-                        📞 +91 93272 20484 | 📧 support@inspiretechnosolution.com | 🌐 www.inspiretechnosolution.com
-                    </p>
-                </div>
-            `,
+      html: getUserEmailHtml(
+        name,
+        populatedApp.positionApplied?.name || positionApplied,
+        `Thank you for applying for the position of ${populatedApp.positionApplied?.name || positionApplied} at Inspire Techno Solution. Our HR team has received your application and will review your profile.`,
+        {
+          email: email,
+          phone: phone,
+          graduation: graduation,
+          experience: experience,
+          currentCTC: currentCTC,
+          noticePeriod: noticePeriod,
+          message: message,
+        }
+      ),
       attachments: [
         {
           filename: "logo.png",

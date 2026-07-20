@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
+const { getUserEmailHtml, getAdminEmailHtml } = require("../../utils/emailTemplates");
 const { CronJob } = require("cron");
 const axios = require("axios");
 const Contact = require("../../models/footer/contact_footer");
@@ -309,30 +310,22 @@ router.post("/", secureUpload(), async (req, res) => {
     await newContact.save();
 
     let adminMailOptions = {
-      // from: email,
-      // to: process.env.EMAIL_USER, // ✅ Replace with your admin email
-      from: `"${firstname} ${lastname}" <${email}>`, // ✅ user who submitted the form
-      to: process.env.EMAIL_USER, // ✅ goes to your company inbox
+      from: `"${firstname} ${lastname}" <${email}>`,
+      to: process.env.EMAIL_USER,
       subject: "📩 New Contact Form Submission",
-      html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:700px; margin:auto;">
-                    <h2 style="color:#333;">New Contact Request</h2>
-                    <p>You have received a new contact form submission:</p>
-      
-                    <table style="width:100%; border-collapse: collapse; margin-top:15px;">
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>First Name:</b></td><td style="padding:8px; border:1px solid #ddd;">${firstname}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Last Name:</b></td><td style="padding:8px; border:1px solid #ddd;">${lastname}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Email:</b></td><td style="padding:8px; border:1px solid #ddd;">${email}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Phone:</b></td><td style="padding:8px; border:1px solid #ddd;">${phone}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Subject:</b></td><td style="padding:8px; border:1px solid #ddd;">${subject}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>message: </b></td><td style="padding:8px; border:1px solid #ddd;">${message}</td></tr>
-                    </table>
-
-      
-                    <br/>
-                    <p style="color:#555;">Best Regards,<br/>Inspire Techno Solution Website</p>
-                </div>
-            `,
+      html: getAdminEmailHtml(
+        `Contact Request: ${subject}`,
+        "Contact Form Submission",
+        {
+          firstName: firstname,
+          lastName: lastname,
+          email: email,
+          phone: phone,
+          subject: subject,
+          budget: budget || "Not specified",
+          message: message,
+        }
+      ),
       attachments: fileUrl
         ? [
             {
@@ -349,33 +342,19 @@ router.post("/", secureUpload(), async (req, res) => {
     let userMailOptions = {
       from: `"Inspire Techno Solution" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: " Thank you for reaching out to us ",
-      html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:600px; margin:auto;">
-                    <div style="text-align:center; margin-bottom:20px;">
-                        <img  src="cid:companylogo" alt="Inspire Techno Solution" style="width:120px;"/>
-                    </div>
-                    <h2 style="color:#333;">Hi ${firstname},</h2>
-                    <p style="font-size:15px; color:#444; line-height:1.6;">
-                        Thank you for contacting <b>Inspire Techno Solution</b> with the subject:
-                        <br/><b style="color:#d35400;">${subject}</b>
-                    </p>
-                    <p style="font-size:15px; color:#444; line-height:1.6;">
-                        We have received your message and one of our specialists will reach out to you shortly.
-                    </p>
-
-                    <div style="margin:20px 0; padding:10px; background:#f9f9f9; border-left:4px solid #d35400;">
-                        <p style="margin:0; font-size:14px; color:#555;"><b>Your message: </b></p>
-                        <p style="margin:5px 0 0; font-size:14px; color:#444;">${message}</p>
-                    </div>
-
-                    <p style="color:#555;">Best regards,<br/>The Inspire Techno Solution Team</p>
-                    <hr style="margin:20px 0;"/>
-                    <p style="font-size:12px; color:#777; text-align:center;">
-                        📞 +91 93272 20484 | 📧 support@inspiretechnosolution.com | 🌐 www.inspiretechnosolution.com
-                    </p>
-                </div>
-            `,
+      subject: "Thank you for reaching out to us",
+      html: getUserEmailHtml(
+        firstname,
+        subject,
+        "We have received your contact request and our specialists will review it and get back to you shortly.",
+        {
+          email: email,
+          phone: phone,
+          subject: subject,
+          budget: budget || "Not specified",
+          message: message,
+        }
+      ),
       attachments: [
         {
           filename: "logo.png",

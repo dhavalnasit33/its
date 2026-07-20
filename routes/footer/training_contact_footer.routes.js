@@ -2,6 +2,8 @@ const express = require("express");
 const TranningContact = require("../../models/footer/tranning_contact_footer");
 const { protect } = require("../../middlewares/auth");
 const nodemailer = require("nodemailer");
+const path = require("path");
+const { getUserEmailHtml, getAdminEmailHtml } = require("../../utils/emailTemplates");
 const axios = require("axios");
 
 const router = express.Router();
@@ -173,22 +175,18 @@ router.post("/", async (req, res) => {
             from: `"${fullname}" <${email}>`,
             to: process.env.EMAIL_USER,
             subject: "📩 New Training Contact Form Submission",
-            html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:700px; margin:auto;">
-                    <h2 style="color:#333;">New Training Contact Request</h2>
-                    <p>You have received a new training contact form submission:</p>
-                    <table style="width:100%; border-collapse: collapse; margin-top:15px;">
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Full Name:</b></td><td style="padding:8px; border:1px solid #ddd;">${fullname}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Email:</b></td><td style="padding:8px; border:1px solid #ddd;">${email}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Phone:</b></td><td style="padding:8px; border:1px solid #ddd;">${phone}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Location:</b></td><td style="padding:8px; border:1px solid #ddd;">${location}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Course:</b></td><td style="padding:8px; border:1px solid #ddd;">${selectedCourse}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Message:</b></td><td style="padding:8px; border:1px solid #ddd;">${message}</td></tr>
-                    </table>
-                    <br/>
-                    <p style="color:#555;">Best Regards,<br/>Inspire Techno Solution Website</p>
-                </div>
-            `,
+            html: getAdminEmailHtml(
+                `Training Contact Request: ${selectedCourse}`,
+                "Training Enquiry",
+                {
+                    fullName: fullname,
+                    email: email,
+                    phone: phone,
+                    location: location,
+                    selectedCourse: selectedCourse,
+                    message: message,
+                }
+            ),
         };
 
         await transporter.sendMail(adminMailOptions);
@@ -200,27 +198,25 @@ router.post("/", async (req, res) => {
             from: `"Inspire Techno Solution" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "✅ Thank you for contacting us about Training",
-            html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:600px; margin:auto;">
-                    <h2 style="color:#333;">Hi ${fullname},</h2>
-                    <p style="font-size:15px; color:#444; line-height:1.6;">
-                        Thank you for contacting <b>Inspire Techno Solution</b> about our training program:
-                        <br/><b style="color:#d35400;">${selectedCourse}</b>
-                    </p>
-                    <p style="font-size:15px; color:#444; line-height:1.6;">
-                        We have received your message and one of our training specialists will reach out to you shortly.
-                    </p>
-                    <div style="margin:20px 0; padding:10px; background:#f9f9f9; border-left:4px solid #d35400;">
-                        <p style="margin:0; font-size:14px; color:#555;"><b>Your message: </b></p>
-                        <p style="margin:5px 0 0; font-size:14px; color:#444;">${message}</p>
-                    </div>
-                    <p style="color:#555;">Best regards,<br/>The Inspire Techno Solution Team</p>
-                    <hr style="margin:20px 0;"/>
-                    <p style="font-size:12px; color:#777; text-align:center;">
-                        📞 +91 93272 20484 | 📧 support@inspiretechnosolution.com | 🌐 www.inspiretechnosolution.com
-                    </p>
-                </div>
-            `,
+            html: getUserEmailHtml(
+                fullname,
+                selectedCourse,
+                "Thank you for contacting Inspire Techno Solution about our training programs. One of our training specialists will connect with you soon.",
+                {
+                    email: email,
+                    phone: phone,
+                    location: location,
+                    selectedCourse: selectedCourse,
+                    message: message,
+                }
+            ),
+            attachments: [
+                {
+                    filename: "logo.png",
+                    path: path.join(__dirname, "../../assets/logo.png"),
+                    cid: "companylogo",
+                },
+            ],
         };
 
         await transporter.sendMail(userMailOptions);

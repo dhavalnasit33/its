@@ -8,6 +8,7 @@ const Enquiry = require("../../models/enquiry/Enquiry");
 const { protect } = require("../../middlewares/auth");
 const secureUpload = require("../../middlewares/secureUpload");
 const User = require("../../models/user");
+const { getUserEmailHtml, getAdminEmailHtml } = require("../../utils/emailTemplates");
 
 const router = express.Router();
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY;
@@ -143,28 +144,34 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
             populatedEnquiry = await savedEnquiry.populate("positionApplied", "name");
         }
 
+        const enquiryFields = {
+            name: finalName,
+            email: email,
+            phone: phone,
+            type: type,
+            subject: subject || undefined,
+            selectedCourse: selectedCourse || undefined,
+            position: populatedEnquiry.positionApplied?.name || undefined,
+            graduation: graduation || undefined,
+            experience: experience || undefined,
+            currentCTC: currentCTC || undefined,
+            noticePeriod: noticePeriod || undefined,
+            location: location || undefined,
+            budget: budget || undefined,
+            recruitment: recruitment || undefined,
+            message: message,
+        };
+
         // --- Send Admin Email ---
         const adminMailOptions = {
             from: `"${finalName}" <${email}>`,
             to: process.env.EMAIL_USER,
             subject: `📩 New ${type} Request: ${subject || finalName}`,
-            html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:700px; margin:auto;">
-                    <h2 style="color:#333;">New ${type} Submission</h2>
-                    <table style="width:100%; border-collapse: collapse; margin-top:15px;">
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Type:</b></td><td style="padding:8px; border:1px solid #ddd;">${type}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Name:</b></td><td style="padding:8px; border:1px solid #ddd;">${finalName}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Email:</b></td><td style="padding:8px; border:1px solid #ddd;">${email}</td></tr>
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Phone:</b></td><td style="padding:8px; border:1px solid #ddd;">${phone}</td></tr>
-                        ${subject ? `<tr><td style="padding:8px; border:1px solid #ddd;"><b>Subject/Topic:</b></td><td style="padding:8px; border:1px solid #ddd;">${subject}</td></tr>` : ""}
-                        ${selectedCourse ? `<tr><td style="padding:8px; border:1px solid #ddd;"><b>Course:</b></td><td style="padding:8px; border:1px solid #ddd;">${selectedCourse}</td></tr>` : ""}
-                        ${populatedEnquiry.positionApplied ? `<tr><td style="padding:8px; border:1px solid #ddd;"><b>Position:</b></td><td style="padding:8px; border:1px solid #ddd;">${populatedEnquiry.positionApplied.name}</td></tr>` : ""}
-                        <tr><td style="padding:8px; border:1px solid #ddd;"><b>Message:</b></td><td style="padding:8px; border:1px solid #ddd;">${message}</td></tr>
-                    </table>
-                    <br/>
-                    <p style="color:#555;">Best Regards,<br/>Inspire Techno Solution Website</p>
-                </div>
-            `,
+            html: getAdminEmailHtml(
+                `New ${type} Submission: ${subject || finalName}`,
+                `${type} Request`,
+                enquiryFields
+            ),
             attachments: fileUrl ? [{ filename: req.file.filename, path: path.join(process.cwd(), fileUrl) }] : [],
         };
         await transporter.sendMail(adminMailOptions);
@@ -174,17 +181,19 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
             from: `"Inspire Techno Solution" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: `✅ We received your ${type} request`,
-            html: `
-                <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:600px; margin:auto;">
-                    <h2 style="color:#333;">Hi ${finalName},</h2>
-                    <p>Thank you for reaching out to <b>Inspire Techno Solution</b> regarding your <b>${type}</b> request.</p>
-                    <p>We have received your details and our team will get back to you shortly.</p>
-                    <hr style="margin:20px 0;"/>
-                    <p style="font-size:12px; color:#777; text-align:center;">
-                        📞 +91 93272 20484 | 📧 support@inspiretechnosolution.com
-                    </p>
-                </div>
-            `,
+            html: getUserEmailHtml(
+                finalName,
+                subject || type,
+                `Thank you for contacting Inspire Techno Solution regarding your ${type} request. Our team has received your submission and will get back to you shortly.`,
+                enquiryFields
+            ),
+            attachments: [
+                {
+                    filename: "logo.png",
+                    path: path.join(__dirname, "../../assets/logo.png"),
+                    cid: "companylogo",
+                },
+            ],
         };
         await transporter.sendMail(userMailOptions);
 

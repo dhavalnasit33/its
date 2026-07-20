@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY;
 const path = require("path");
 const { protect } = require("../../middlewares/auth");
+const { getUserEmailHtml, getAdminEmailHtml } = require("../../utils/emailTemplates");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -186,24 +187,20 @@ router.post("/", async (req, res) => {
     // --- Admin Mail ---
     let adminMailOptions = {
       from: `"${name}" <${email}>`,
-      to: process.env.EMAIL_USER, // company inbox
+      to: process.env.EMAIL_USER,
       subject: `📌 New Hire Request - ${subject}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:700px; margin:auto;">
-            <h2 style="color:#333;">New Hire Request</h2>
-            <p>You have received a new hire request from <b>${name}</b></p>
-            <table style="width:100%; border-collapse: collapse; margin-top:15px;">
-                <tr><td style="padding:8px; border:1px solid #ddd;"><b>Name:</b></td><td style="padding:8px; border:1px solid #ddd;">${name}</td></tr>
-                <tr><td style="padding:8px; border:1px solid #ddd;"><b>Email:</b></td><td style="padding:8px; border:1px solid #ddd;">${email}</td></tr>
-                <tr><td style="padding:8px; border:1px solid #ddd;"><b>Phone:</b></td><td style="padding:8px; border:1px solid #ddd;">${phone}</td></tr>
-                <tr><td style="padding:8px; border:1px solid #ddd;"><b>Subject:</b></td><td style="padding:8px; border:1px solid #ddd;">${subject}</td></tr>
-                <tr><td style="padding:8px; border:1px solid #ddd;"><b>recruitment:</b></td><td style="padding:8px; border:1px solid #ddd;">${recruitment}</td></tr>
-                <tr><td style="padding:8px; border:1px solid #ddd;"><b>Message:</b></td><td style="padding:8px; border:1px solid #ddd;">${message}</td></tr>
-            </table>
-            <br/>
-            <p style="color:#555;">Best Regards,<br/>Inspire Techno Solution Website</p>
-        </div>
-    `,
+      html: getAdminEmailHtml(
+        `Hire Developer Request: ${subject}`,
+        "Hire Request",
+        {
+          name: name,
+          email: email,
+          phone: phone,
+          subject: subject,
+          recruitment: recruitment,
+          message: message,
+        }
+      ),
     };
     await transporter.sendMail(adminMailOptions);
 
@@ -212,31 +209,18 @@ router.post("/", async (req, res) => {
       from: `"Inspire Techno Solution" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "✅ We Received Your Hire Request - Inspire Techno Solution",
-      html: `
-        <div style="font-family: Arial, sans-serif; padding:20px; border:1px solid #eee; border-radius:8px; max-width:600px; margin:auto;">
-            <div style="text-align:center; margin-bottom:20px;">
-                <img src="cid:companylogo" alt="Inspire Techno Solution" style="width:120px;"/>
-            </div>
-            <h2 style="color:#333;">Hi ${name},</h2>
-            <p style="font-size:15px; color:#444; line-height:1.6;">
-               Thank you for reaching out to <b style="color:#d35400;">Inspire Techno Solution</b> regarding <b>${subject}</b>.
-            </p>
-            <p style="font-size:15px; color:#444; line-height:1.6;">
-                We have received your request and our team will get back to you shortly.
-            </p>
-            <div style="margin:20px 0; padding:10px; background:#f9f9f9; border-left:4px solid #d35400;">
-                <p style="margin:0; font-size:14px; color:#555;"><b>Your recruitment: </b></p>
-                <p style="margin:5px 0 0; font-size:14px; color:#444;">${recruitment}</p>
-                <p style="margin:10px 0 0; font-size:14px; color:#555;"><b>Your Message: </b></p>
-                <p style="margin:5px 0 0; font-size:14px; color:#444;">${message}</p>
-            </div>
-            <p style="color:#555;">Best regards,<br/>The Inspire Techno Solution Team</p>
-            <hr style="margin:20px 0;"/>
-            <p style="font-size:12px; color:#777; text-align:center;">
-                📞 +91 93272 20484 | 📧 support@inspiretechnosolution.com | 🌐 www.inspiretechnosolution.com
-            </p>
-        </div>
-    `,
+      html: getUserEmailHtml(
+        name,
+        subject,
+        "We have received your hire request. Our recruitment and consulting team will review your requirements and get back to you shortly.",
+        {
+          email: email,
+          phone: phone,
+          subject: subject,
+          recruitment: recruitment,
+          message: message,
+        }
+      ),
       attachments: [
         {
           filename: "logo.png",
