@@ -13,7 +13,7 @@ import SectionBadge from "./SectionBadge";
 const SERVICES = [
   {
     title: "Web Development",
-    desc: "Modern, scalable and high-performance websites and web applications.",
+    desc: "Fast, responsive, and secure custom web platforms built using modern scalable frameworks.",
     image: "/home-test/web-development.png",
     tags: ["React", "Next.js", "Node.js", "+3"],
     href: "/reactjs-development",
@@ -22,12 +22,12 @@ const SERVICES = [
       softBg: "#EEF5FF",
       hoverGlow: "rgba(59,130,246,0.25)",
     },
-    positionClass: "xl:absolute xl:left-[240px] xl:top-[20px]",
+    positionClass: "xl:absolute xl:left-[246px] xl:top-[30px]",
     delay: 0.1,
   },
   {
     title: "Mobile App Development",
-    desc: "Native and cross-platform mobile applications for iOS & Android.",
+    desc: "Native and cross-platform mobile apps with fluid animations and secure integrations.",
     image: "/home-test/mobile-app-development.png",
     tags: ["Flutter", "Android", "iOS", "+1"],
     href: "/flutter-app-development",
@@ -36,12 +36,12 @@ const SERVICES = [
       softBg: "#F0FFF5",
       hoverGlow: "rgba(34,197,94,0.22)",
     },
-    positionClass: "xl:absolute xl:left-[620px] xl:top-[20px]",
+    positionClass: "xl:absolute xl:left-[613px] xl:top-[30px]",
     delay: 0.2,
   },
   {
     title: "UI/UX & Design",
-    desc: "User-centered designs that create intuitive and engaging experiences.",
+    desc: "User-friendly designs backed by research, wireframing, and high-fidelity interactive prototypes.",
     image: "/home-test/ui-ux-design.png",
     tags: ["UI Design", "UX Research", "Figma"],
     href: "/uiux-design",
@@ -50,12 +50,12 @@ const SERVICES = [
       softBg: "#F7F2FF",
       hoverGlow: "rgba(139,92,246,0.25)",
     },
-    positionClass: "xl:absolute xl:left-[50px] xl:top-[315px]",
+    positionClass: "xl:absolute xl:left-[62px] xl:top-[346px]",
     delay: 0.3,
   },
   {
     title: "eCommerce & CMS Development",
-    desc: "Powerful eCommerce and CMS solutions to grow your online business.",
+    desc: "Robust eCommerce storefronts and flexible CMS architecture with smooth checkout experiences.",
     image: "/home-test/ecommerce-cms.png",
     tags: ["Shopify", "WooCommerce", "WordPress"],
     href: "/wordpress-development",
@@ -64,26 +64,26 @@ const SERVICES = [
       softBg: "#FFF8EC",
       hoverGlow: "rgba(245,158,11,0.25)",
     },
-    positionClass: "xl:absolute xl:left-[810px] xl:top-[315px]",
+    positionClass: "xl:absolute xl:left-[797px] xl:top-[346px]",
     delay: 0.4,
   },
   {
-    title: "AI Solutions",
-    desc: "Intelligent automation and AI-powered solutions that simplify and accelerate your business.",
+    title: "AI & ML Development",
+    desc: "Advanced machine learning models and conversational AI that automate enterprise operations.",
     image: "/home-test/ai-solutions.png",
     tags: ["AI Chatbots", "AI Agents", "Automation", "+3"],
-    href: "/our-service",
+    href: "/ai-chatbot-development",
     theme: {
       primary: "#D68029",
       softBg: "#FFF5EA",
       hoverGlow: "rgba(214,128,41,0.28)",
     },
-    positionClass: "xl:absolute xl:left-[240px] xl:top-[610px]",
+    positionClass: "xl:absolute xl:left-[246px] xl:top-[662px]",
     delay: 0.5,
   },
   {
     title: "Custom Software Development",
-    desc: "Custom-built software solutions tailored to your unique business needs.",
+    desc: "Bespoke, secure software architectures tailored to simplify and automate your operations.",
     image: "/home-test/custom-software.png",
     tags: ["SaaS", "ERP", "CRM", "+2"],
     href: "/our-service",
@@ -92,7 +92,7 @@ const SERVICES = [
       softBg: "#EFF6FF",
       hoverGlow: "rgba(37,99,235,0.22)",
     },
-    positionClass: "xl:absolute xl:left-[620px] xl:top-[610px]",
+    positionClass: "xl:absolute xl:left-[613px] xl:top-[662px]",
     delay: 0.6,
   },
 ];
@@ -189,7 +189,7 @@ const HexGridBg = () => {
               filter={isHovered ? 'url(#hexShadowHover)' : 'url(#hexShadow)'}
               style={{
                 transition: 'fill 0.35s ease, stroke 0.35s ease, transform 0.35s ease',
-                cursor: 'default',
+                cursor: 'pointer',
                 transformOrigin: `${x}px ${y}px`,
                 transform: isHovered ? 'scale(1.05)' : 'scale(1)',
               }}
@@ -260,46 +260,47 @@ const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
         </svg>
       </div>
 
-      {/* Card Contents */}
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-between py-9 px-7 text-center">
+      {/* Card Contents — constrained to the hexagon's safe (flat-side) zone so nothing
+          can render past the pointed top/bottom tips of the SVG shape behind it */}
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center pt-9 pb-4 px-8 text-center overflow-hidden">
         {/* Top: 3D Illustration / Icon */}
-        <div className="relative w-[115px] h-[115px] flex items-center justify-center mt-1 group-hover:scale-108 transition-transform duration-500">
+        <div className="relative w-[76px] h-[76px] flex items-center justify-center shrink-0 group-hover:scale-108 transition-transform duration-500 mb-2">
           {/* Subtle Glow behind Icon */}
-          <div 
-            className="absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
+          <div
+            className="absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             style={{ backgroundColor: theme.softBg }}
           />
           <Image
             src={image}
             alt={title}
-            width={110}
-            height={110}
+            width={68}
+            height={68}
             className="object-contain relative z-10"
             priority
           />
         </div>
 
         {/* Middle: Content */}
-        <div className="flex-1 flex flex-col items-center justify-center   max-w-[270px]">
-          <h4 className="text-[17px] font-extrabold text-[#0D1B2A] leading-tight mb-2 group-hover:text-[var(--hover-color)] transition-colors duration-500"
+        <div className="flex flex-col items-center justify-center max-w-[240px] mb-3 shrink-0">
+          <h4 className="text-[16px] font-extrabold text-[#0D1B2A] leading-snug mb-1.5 group-hover:text-[var(--hover-color)] transition-colors duration-500"
               style={{
                 "--hover-color": theme.primary,
               } as React.CSSProperties}>
             {title}
           </h4>
-          <p className="text-[12px] lg:text-[14px] text-slate-500 leading-relaxed font-medium">
+          <p className="text-[14px] text-slate-500 leading-relaxed font-normal line-clamp-3">
             {desc}
           </p>
         </div>
 
         {/* Bottom: Tags & Action Button */}
-        <div className="w-full flex flex-col items-center gap-4 mt-auto">
+        <div className="w-full flex flex-col items-center gap-2.5 shrink-0">
           {/* Tags */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[280px]">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[220px]">
             {tags.map((tag, idx) => (
               <span
                 key={idx}
-                className="text-[12px] font-bold tracking-wider px-2 py-0.5 rounded-full"
+                className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full whitespace-nowrap"
                 style={{
                   backgroundColor: theme.softBg,
                   color: theme.primary,
@@ -311,11 +312,11 @@ const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
           </div>
 
           {/* Action Arrow Button */}
-          <div 
-            className="w-8.5 h-8.5 rounded-full flex items-center justify-center text-white transition-all duration-500 group-hover:scale-105"
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white transition-all duration-500 group-hover:scale-105"
             style={{ backgroundColor: theme.primary }}
           >
-            <FiArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:rotate-[-45deg]" />
+            <FiArrowRight className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:rotate-[-45deg]" />
           </div>
         </div>
       </div>
@@ -363,7 +364,7 @@ your ideas into digital reality. We build scalable, innovative solutions
 that optimize workflows, drive growth, and deliver lasting value.
 
           </motion.p>
-           <motion.div
+           {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -378,18 +379,18 @@ that optimize workflows, drive growth, and deliver lasting value.
               hoverColor="#D27E2B"
               href="#contact-form-section"
             />
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Honeycomb Layout Container */}
-        <div className="relative w-full h-auto xl:h-[1050px] flex flex-col items-center gap-8 xl:block max-w-[1200px] mx-auto">
+        <div className="relative w-full h-auto xl:h-[1082px] flex flex-col items-center gap-8 xl:block max-w-[1200px] mx-auto">
           
           {/* Central Dark Hexagon (Desktop Only) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="hidden xl:flex absolute left-[430px] top-[315px] w-[340px] h-[390px] flex-col items-center justify-center text-center p-9 z-20"
+            className="hidden xl:flex absolute left-[430px] top-[346px] w-[340px] h-[390px] flex-col items-center justify-center text-center p-9 z-20"
           >
             <div className="absolute inset-0 w-full h-full filter drop-shadow-[0_15px_35px_rgba(15,23,42,0.35)] z-0">
               <svg viewBox="0 0 100 115" className="w-full h-full fill-[#0B1528] stroke-amber-500/35 stroke-[1.5]">
@@ -414,17 +415,32 @@ that optimize workflows, drive growth, and deliver lasting value.
             </div>
             
             <div className="relative z-10 text-white flex flex-col items-center justify-center h-full">
-              {/* Outer icon decoration */}
-              <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center mb-5 bg-white/5">
-                <div className="w-7 h-7 border-2 border-amber-500 rotate-45 flex items-center justify-center">
-                  <div className="w-2.5 h-2.5 bg-white rounded-full animate-ping" />
+              {/* Animated icon badge */}
+              <div className="relative w-20 h-20 flex items-center justify-center mb-6">
+                {/* Soft breathing glow behind everything */}
+                <div className="absolute inset-0 rounded-full bg-amber-500/25 blur-xl animate-pulse" />
+
+                {/* Slow-rotating dashed outer ring */}
+                <div className="absolute inset-0 rounded-full border border-dashed border-amber-500/50 animate-[spin_9s_linear_infinite]" />
+
+                {/* Static faint inner ring for depth */}
+                <div className="absolute inset-[6px] rounded-full border border-white/15 bg-white/5" />
+
+                {/* Orbiting spark dot */}
+                <div className="absolute inset-0 animate-[spin_5s_linear_infinite]">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_10px_3px_rgba(245,158,11,0.7)]" />
+                </div>
+
+                {/* Center diamond, counter-rotating slowly for a subtle shimmer */}
+                <div className="relative w-8 h-8 rotate-45 rounded-[4px] bg-gradient-to-br from-amber-300 via-amber-500 to-amber-600 shadow-[0_0_18px_rgba(245,158,11,0.55)] animate-[spin_9s_linear_infinite_reverse] flex items-center justify-center">
+                  <div className="w-2 h-2 -rotate-45 bg-white rounded-full" />
                 </div>
               </div>
-              
+
               <h3 className="text-2xl font-extrabold tracking-tight mb-4">
                 Complete <span className="text-amber-500 block">Digital Solutions</span>
               </h3>
-              <p className="text-[13px] text-slate-300 font-semibold leading-relaxed max-w-[230px]">
+              <p className="text-[14px] text-slate-300 font-semibold leading-relaxed max-w-[250px]">
                 Building powerful digital products that help your business grow and scale.
               </p>
             </div>
