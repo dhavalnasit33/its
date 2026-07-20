@@ -1065,3 +1065,19 @@ html {
   background: rgb(214, 128, 41);
   display: inline-block;
 }
+
+/* Hexagon styles for ServicesSection */
+.services_hex_background {
+  position: relative;
+  overflow: hidden;
+  background: #fafbfd;
+}
+
+.services_hex_background::before {
+  content: none;
+}
+
+
+
+
+

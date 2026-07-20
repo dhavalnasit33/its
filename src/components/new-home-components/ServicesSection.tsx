@@ -3,124 +3,342 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FaLongArrowAltRight } from "react-icons/fa";
-import {
-  FiPenTool,
-  FiCode,
-  FiTablet,
-  FiShoppingCart,
-  FiTool,
-} from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
 import Button from "@/components/Button";
 import SectionBadge from "./SectionBadge";
 
-const AIAutomationIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={props.className}
-  >
-    <circle cx="12" cy="6" r="3" />
-    <circle cx="6" cy="18" r="3" />
-    <circle cx="18" cy="18" r="3" />
-    <path d="M12 9v4c0 1-1 2-2 2H7.5" />
-    <path d="M12 13c0 1 1 2 2 2h3.5" />
-  </svg>
-);
+// Service definitions with matching themes and tags
+const SERVICES = [
+  {
+    title: "Web Development",
+    desc: "Modern, scalable and high-performance websites and web applications.",
+    image: "/home-test/web-development.png",
+    tags: ["React", "Next.js", "Node.js", "+3"],
+    href: "/reactjs-development",
+    theme: {
+      primary: "#3B82F6",
+      softBg: "#EEF5FF",
+      hoverGlow: "rgba(59,130,246,0.25)",
+    },
+    positionClass: "xl:absolute xl:left-[240px] xl:top-[20px]",
+    delay: 0.1,
+  },
+  {
+    title: "Mobile App Development",
+    desc: "Native and cross-platform mobile applications for iOS & Android.",
+    image: "/home-test/mobile-app-development.png",
+    tags: ["Flutter", "Android", "iOS", "+1"],
+    href: "/flutter-app-development",
+    theme: {
+      primary: "#22C55E",
+      softBg: "#F0FFF5",
+      hoverGlow: "rgba(34,197,94,0.22)",
+    },
+    positionClass: "xl:absolute xl:left-[620px] xl:top-[20px]",
+    delay: 0.2,
+  },
+  {
+    title: "UI/UX & Design",
+    desc: "User-centered designs that create intuitive and engaging experiences.",
+    image: "/home-test/ui-ux-design.png",
+    tags: ["UI Design", "UX Research", "Figma"],
+    href: "/uiux-design",
+    theme: {
+      primary: "#8B5CF6",
+      softBg: "#F7F2FF",
+      hoverGlow: "rgba(139,92,246,0.25)",
+    },
+    positionClass: "xl:absolute xl:left-[50px] xl:top-[315px]",
+    delay: 0.3,
+  },
+  {
+    title: "eCommerce & CMS Development",
+    desc: "Powerful eCommerce and CMS solutions to grow your online business.",
+    image: "/home-test/ecommerce-cms.png",
+    tags: ["Shopify", "WooCommerce", "WordPress"],
+    href: "/wordpress-development",
+    theme: {
+      primary: "#F59E0B",
+      softBg: "#FFF8EC",
+      hoverGlow: "rgba(245,158,11,0.25)",
+    },
+    positionClass: "xl:absolute xl:left-[810px] xl:top-[315px]",
+    delay: 0.4,
+  },
+  {
+    title: "AI Solutions",
+    desc: "Intelligent automation and AI-powered solutions that simplify and accelerate your business.",
+    image: "/home-test/ai-solutions.png",
+    tags: ["AI Chatbots", "AI Agents", "Automation", "+3"],
+    href: "/our-service",
+    theme: {
+      primary: "#D68029",
+      softBg: "#FFF5EA",
+      hoverGlow: "rgba(214,128,41,0.28)",
+    },
+    positionClass: "xl:absolute xl:left-[240px] xl:top-[610px]",
+    delay: 0.5,
+  },
+  {
+    title: "Custom Software Development",
+    desc: "Custom-built software solutions tailored to your unique business needs.",
+    image: "/home-test/custom-software.png",
+    tags: ["SaaS", "ERP", "CRM", "+2"],
+    href: "/our-service",
+    theme: {
+      primary: "#2563EB",
+      softBg: "#EFF6FF",
+      hoverGlow: "rgba(37,99,235,0.22)",
+    },
+    positionClass: "xl:absolute xl:left-[620px] xl:top-[610px]",
+    delay: 0.6,
+  },
+];
 
-function FloatingParticles() {
-  const particles = Array.from({ length: 24 });
+// 3D Hexagon Grid Background with interactive hover
+const HexGridBg = () => {
+  const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);
+
+  // Pointy-top hexagon grid (like reference image)
+  const COLS = 22;
+  const ROWS = 16;
+  const R = 52;     // circumradius (center to vertex)
+  const GAP = 5;    // gap between hexes
+
+  // Pointy-top hex: vertices at 30°, 90°, 150°, 210°, 270°, 330°
+  const hexPoints = (cx: number, cy: number, r: number) => {
+    const angles = [30, 90, 150, 210, 270, 330];
+    return angles
+      .map((a) => {
+        const rad = (Math.PI / 180) * a;
+        return `${cx + r * Math.cos(rad)},${cy + r * Math.sin(rad)}`;
+      })
+      .join(' ');
+  };
+
+  const hexes: { x: number; y: number; idx: number }[] = [];
+  // Pointy-top layout spacing
+  const colW = Math.sqrt(3) * R + GAP;
+  const rowH = 1.5 * R + GAP;
+
+  for (let row = 0; row < ROWS; row++) {
+    for (let col = 0; col < COLS; col++) {
+      const x = col * colW + (row % 2 === 0 ? 0 : colW / 2);
+      const y = row * rowH;
+      hexes.push({ x: x + R, y: y + R, idx: row * COLS + col });
+    }
+  }
+
+  const totalW = COLS * colW + colW / 2 + R;
+  const totalH = ROWS * rowH + R;
+
+  const HOVER_COLORS = [
+    '#3B82F6', '#22C55E', '#8B5CF6',
+    '#F59E0B', '#D68029', '#2563EB',
+    '#EC4899', '#14B8A6',
+  ];
 
   return (
-    <>
-      {particles.map((_, i) => {
-        const size = Math.random() * 6 + 3;
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const duration = Math.random() * 8 + 8;
-        const delay = Math.random() * 5;
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${totalW} ${totalH}`}
+        preserveAspectRatio="xMidYMid slice"
+        xmlns="http://www.w3.org/2000/svg"
+        className="absolute inset-0 w-full h-full pointer-events-none xl:pointer-events-auto"
+      >
+        <defs>
+          {/* Linear gradient from top-left to bottom-right — flat lit tile look */}
+          <linearGradient id="hexNormal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="50%" stopColor="#f8fafc" />
+            <stop offset="100%" stopColor="#e8edf2" />
+          </linearGradient>
+          {/* Per-color hover gradients */}
+          {HOVER_COLORS.map((c, i) => (
+            <linearGradient key={i} id={`hexHover${i}`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="60%" stopColor={c} stopOpacity="0.10" />
+              <stop offset="100%" stopColor={c} stopOpacity="0.22" />
+            </linearGradient>
+          ))}
+          <filter id="hexShadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodColor="#b0bec5" floodOpacity="0.22" />
+          </filter>
+          <filter id="hexShadowHover" x="-8%" y="-8%" width="116%" height="116%">
+            <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#64748b" floodOpacity="0.3" />
+          </filter>
+        </defs>
 
-        return (
-          <motion.div
-            key={i}
-            className="absolute rounded-full pointer-events-none"
-            style={{
-              width: size,
-              height: size,
-              left: `${left}%`,
-              top: `${top}%`,
-              background:
-                i % 3 === 0 ? "#D68029" : i % 2 === 0 ? "#FFD18A" : "#0D1B2A",
-              boxShadow:
-                i % 3 === 0
-                  ? "0 0 18px rgba(214,128,41,.8)"
-                  : "0 0 12px rgba(13,27,42,.25)",
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 10, 0],
-              opacity: [0.2, 1, 0.2],
-              scale: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration,
-              repeat: Infinity,
-              delay,
-              ease: "easeInOut",
-            }}
-          />
-        );
-      })}
-    </>
+        {hexes.map(({ x, y, idx }) => {
+          const isHovered = hoveredIdx === idx;
+          const colorIdx = idx % HOVER_COLORS.length;
+          const fill = isHovered ? `url(#hexHover${colorIdx})` : 'url(#hexNormal)';
+          const stroke = isHovered ? HOVER_COLORS[colorIdx] : '#dde3ea';
+          const strokeW = isHovered ? 1.5 : 0.7;
+          return (
+            <polygon
+              key={idx}
+              points={hexPoints(x, y, R - GAP / 2)}
+              fill={fill}
+              stroke={stroke}
+              strokeWidth={strokeW}
+              filter={isHovered ? 'url(#hexShadowHover)' : 'url(#hexShadow)'}
+              style={{
+                transition: 'fill 0.35s ease, stroke 0.35s ease, transform 0.35s ease',
+                cursor: 'default',
+                transformOrigin: `${x}px ${y}px`,
+                transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+              }}
+              onMouseEnter={() => setHoveredIdx(idx)}
+              onMouseLeave={() => setHoveredIdx(null)}
+            />
+          );
+        })}
+      </svg>
+    </div>
   );
-}
+};
 
-// Reusable Card Component with smooth fade-up animation
-const ServiceCard = ({ icon, title, desc, delay, className, href }: any) => (
-  <motion.a
-    href={href || "#"}
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7, delay, ease: "easeOut" }}
-    className={`flex bg-gradient-to-b from-white to-[#fcfdff] p-7 rounded-[30px] border border-white/90 shadow-[0_2px_8px_rgba(15,23,42,0.04),0_20px_45px_rgba(15,23,42,0.08),0_45px_80px_rgba(15,23,42,0.05),inset_0_1px_0_rgba(255,255,255,0.9)] hover:shadow-[0_10px_30px_rgba(214,128,41,0.15),0_30px_70px_rgba(15,23,42,0.10)] hover:-translate-y-3 hover:scale-[1.02] transition-all duration-500 group w-full lg:w-[370px] xl:w-[420px] relative overflow-hidden cursor-pointer z-20 ${className}`}
-  >
-    <div className="absolute -inset-6 rounded-[40px] bg-[#D68029]/10 blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
-    {/* <div className="absolute inset-0 rounded-[30px] bg-gradient-to-b from-white/80 via-white/30 to-transparent pointer-events-none" /> */}
-    <div className="shrink-0 w-[58px] h-[58px] rounded-full bg-gradient-to-br from-[#22364b] via-[#102235] to-[#081522] flex items-center justify-center mr-5 shadow-[0_8px_25px_rgba(13,27,42,0.35),inset_0_1px_2px_rgba(255,255,255,0.15)] ring-1 ring-white/10 group-hover:scale-110 transition-all duration-500">
-      {icon}
-    </div>
-    <div className="flex-1 pb-6">
-      <h4 className="text-[16px] font-extrabold text-[#0d1b2a] mb-2 leading-tight group-hover:text-[#d68029] transition-colors">
-        {title}
-      </h4>
-      <p className="text-[13px] text-slate-500 leading-[1.6]">{desc}</p>
-    </div>
-    <div className="absolute bottom-5 right-5">
-      <FaLongArrowAltRight className="w-4 h-4 text-[#d68029] group-hover:translate-x-1 transition-transform" />
-    </div>
-  </motion.a>
-);
+
+
+const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
+  const { title, desc, image, tags, href, theme, delay } = service;
+
+  return (
+    <motion.a
+      href={href}
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      className={`group relative w-[340px] h-[390px] flex flex-col items-center justify-center cursor-pointer transition-all duration-500 hover:-translate-y-3 outline-none focus:outline-none`}
+    >
+      {/* Theme-related background hover glow */}
+      <div 
+        className="absolute -inset-10 rounded-[50px] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"
+        style={{
+          background: `radial-gradient(circle, ${theme.hoverGlow} 0%, transparent 70%)`
+        }}
+      />
+
+      {/* Background SVG Hexagon with Shadow and Border */}
+      <div 
+        className="absolute inset-0 w-full h-full transition-all duration-500 filter drop-shadow-[0_8px_20px_rgba(15,23,42,0.04)] group-hover:drop-shadow-[0_22px_40px_var(--hover-glow)] z-0"
+        style={{
+          "--hover-glow": theme.hoverGlow,
+        } as React.CSSProperties}
+      >
+        <svg
+          viewBox="0 0 100 115"
+          className="w-full h-full fill-white stroke-[#E5E7EB] stroke-[1.2] transition-colors duration-500"
+        >
+          <path
+            d="M 50 3
+               Q 50 3 52 4
+               L 96 29
+               Q 98 31 98 34
+               L 98 81
+               Q 98 84 96 86
+               L 52 111
+               Q 50 112 48 111
+               L 4 86
+               Q 2 84 2 81
+               L 2 34
+               Q 2 31 4 29
+               L 48 4
+               Q 50 3 50 3
+               Z"
+            className="group-hover:stroke-[var(--hover-color)] transition-all duration-500"
+            style={{
+              "--hover-color": theme.primary,
+            } as React.CSSProperties}
+          />
+        </svg>
+      </div>
+
+      {/* Card Contents */}
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-between py-9 px-7 text-center">
+        {/* Top: 3D Illustration / Icon */}
+        <div className="relative w-[115px] h-[115px] flex items-center justify-center mt-1 group-hover:scale-108 transition-transform duration-500">
+          {/* Subtle Glow behind Icon */}
+          <div 
+            className="absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
+            style={{ backgroundColor: theme.softBg }}
+          />
+          <Image
+            src={image}
+            alt={title}
+            width={110}
+            height={110}
+            className="object-contain relative z-10"
+            priority
+          />
+        </div>
+
+        {/* Middle: Content */}
+        <div className="flex-1 flex flex-col items-center justify-center   max-w-[270px]">
+          <h4 className="text-[17px] font-extrabold text-[#0D1B2A] leading-tight mb-2 group-hover:text-[var(--hover-color)] transition-colors duration-500"
+              style={{
+                "--hover-color": theme.primary,
+              } as React.CSSProperties}>
+            {title}
+          </h4>
+          <p className="text-[12px] lg:text-[14px] text-slate-500 leading-relaxed font-medium">
+            {desc}
+          </p>
+        </div>
+
+        {/* Bottom: Tags & Action Button */}
+        <div className="w-full flex flex-col items-center gap-4 mt-auto">
+          {/* Tags */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[280px]">
+            {tags.map((tag, idx) => (
+              <span
+                key={idx}
+                className="text-[12px] font-bold tracking-wider px-2 py-0.5 rounded-full"
+                style={{
+                  backgroundColor: theme.softBg,
+                  color: theme.primary,
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Action Arrow Button */}
+          <div 
+            className="w-8.5 h-8.5 rounded-full flex items-center justify-center text-white transition-all duration-500 group-hover:scale-105"
+            style={{ backgroundColor: theme.primary }}
+          >
+            <FiArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:rotate-[-45deg]" />
+          </div>
+        </div>
+      </div>
+    </motion.a>
+  );
+};
 
 export default function ServicesSection() {
   return (
-    <section className="bg-white py-24 lg:py-32 relative overflow-hidden font-sans">
-      <Row className="relative z-10 max-w-[1320px] mx-auto px-4">
+    <Section className="services_hex_background py-20   relative font-sans">
+      {/* 3D Interactive Hexagon Grid Background */}
+      <HexGridBg />
+
+      <Row className="relative z-10 mx-auto px-4">
         {/* Top Centered Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-8 lg:mb-10">
+        <div className="text-center max-w-4xl mx-auto mb-8 ">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="inline-block mb-4"
           >
-            <SectionBadge title=" OUR SERVICES" />
+            <SectionBadge title="OUR SERVICES" />
           </motion.div>
 
           <motion.h2
@@ -138,14 +356,14 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-slate-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-8"
+            className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8"
           >
-            End-to-end AI and software development services designed to
-            transform your ideas into digital reality. We build scalable,
-            innovative solutions that drive growth and deliver lasting value.
-          </motion.p>
+            End-to-end AI and software development services designed to transform
+your ideas into digital reality. We build scalable, innovative solutions
+that optimize workflows, drive growth, and deliver lasting value.
 
-          <motion.div
+          </motion.p>
+           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -163,110 +381,70 @@ export default function ServicesSection() {
           </motion.div>
         </div>
 
-        {/* Orbit Layout Container */}
-        <div className="relative w-full h-auto lg:h-[950px] flex flex-col gap-6 lg:block">
-          {/* Orbit Rings (Slightly enhanced opacity since lines are gone) */}
-          <div className="hidden lg:block absolute top-[180px] left-1/2 -translate-x-1/2 w-[520px] h-[520px] rounded-full border-dashed border-slate-300/80 animate-[spin_40s_linear_infinite] pointer-events-none" />
-          <div className="hidden lg:block absolute top-[145px] left-1/2 -translate-x-1/2 w-[590px] h-[590px] rounded-full border border-slate-200/60 animate-[spin_30s_linear_infinite_reverse] pointer-events-none" />
-          <div className="hidden lg:block absolute top-[110px] left-1/2 -translate-x-1/2 w-[660px] h-[660px] rounded-full border border-slate-100/80 animate-[spin_50s_linear_infinite] pointer-events-none" />
-
-          <div className="absolute inset-0 pointer-events-none z-10">
-            <FloatingParticles />
-          </div>
-
-          {/* Central Globe (Boosted background glow for depth) */}
+        {/* Honeycomb Layout Container */}
+        <div className="relative w-full h-auto xl:h-[1050px] flex flex-col items-center gap-8 xl:block max-w-[1200px] mx-auto">
+          
+          {/* Central Dark Hexagon (Desktop Only) */}
           <motion.div
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="hidden lg:flex absolute top-[60px] left-1/2 -translate-x-1/2 w-[780px] xl:w-[880px] h-[780px] xl:h-[880px] z-10 pointer-events-none items-center justify-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="hidden xl:flex absolute left-[430px] top-[315px] w-[340px] h-[390px] flex-col items-center justify-center text-center p-9 z-20"
           >
-            {/* Main orange glow - slightly larger and brighter to fill space */}
-            <div className="absolute w-[480px] h-[480px] rounded-full bg-[#D68029]/20 blur-[100px]" />
-
-            {/* Blue depth glow */}
-            <div className="absolute w-[650px] h-[650px] rounded-full bg-[#0D1B2A]/5 blur-[150px]" />
-
-            <div className="absolute w-[650px] h-[650px] rounded-full bg-[#0D1B3A]/5 blur-[150px]" />
-
-            <Image
-              src="/home-test/center-globe.png"
-              alt="Global Network"
-              fill
-              priority
-              className="object-contain drop-shadow-[0_30px_60px_rgba(214,128,41,0.25)]"
-            />
+            <div className="absolute inset-0 w-full h-full filter drop-shadow-[0_15px_35px_rgba(15,23,42,0.35)] z-0">
+              <svg viewBox="0 0 100 115" className="w-full h-full fill-[#0B1528] stroke-amber-500/35 stroke-[1.5]">
+                <path
+                  d="M 50 3
+                     Q 50 3 52 4
+                     L 96 29
+                     Q 98 31 98 34
+                     L 98 81
+                     Q 98 84 96 86
+                     L 52 111
+                     Q 50 112 48 111
+                     L 4 86
+                     Q 2 84 2 81
+                     L 2 34
+                     Q 2 31 4 29
+                     L 48 4
+                     Q 50 3 50 3
+                     Z"
+                />
+              </svg>
+            </div>
+            
+            <div className="relative z-10 text-white flex flex-col items-center justify-center h-full">
+              {/* Outer icon decoration */}
+              <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center mb-5 bg-white/5">
+                <div className="w-7 h-7 border-2 border-amber-500 rotate-45 flex items-center justify-center">
+                  <div className="w-2.5 h-2.5 bg-white rounded-full animate-ping" />
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-extrabold tracking-tight mb-4">
+                Complete <span className="text-amber-500 block">Digital Solutions</span>
+              </h3>
+              <p className="text-[13px] text-slate-300 font-semibold leading-relaxed max-w-[230px]">
+                Building powerful digital products that help your business grow and scale.
+              </p>
+            </div>
           </motion.div>
 
-          {/* Cards Grid - Adjusted for a mathematically perfect ellipse */}
-          <div className="flex flex-col gap-6 lg:block lg:w-full lg:h-full z-20 relative">
-            {/* --- LEFT SIDE CARDS --- */}
-            <ServiceCard
-              title="AI & ML Development"
-              desc="Automate workflows, reduce manual effort, and improve business efficiency with AI."
-              icon={<AIAutomationIcon className="w-6 h-6 text-[#d68029]" />}
-              className="lg:absolute lg:top-[100px] lg:left-[20px] xl:left-[40px]"
-              delay={0.1}
-            />
-
-            <ServiceCard
-              title="Mobile App Developer"
-              desc="Develop powerful Android, iOS, and cross-platform mobile applications."
-              icon={<FiTablet className="w-6 h-6 text-[#d68029]" />}
-              className="lg:absolute lg:top-[390px] lg:left-[-30px] xl:left-[-10px]"
-              delay={0.3}
-              href="/flutter-app-development"
-            />
-
-            <ServiceCard
-              title="eCommerce & CMS Development"
-              desc="Develop fast, secure, and user-friendly eCommerce and CMS websites."
-              icon={<FiShoppingCart className="w-6 h-6 text-[#d68029]" />}
-              className="lg:absolute lg:bottom-[130px] lg:left-[20px] xl:left-[40px]"
-              delay={0.5}
-              href="/wordpress-development"
-            />
-
-            {/* --- RIGHT SIDE CARDS --- */}
-            <ServiceCard
-              title="Web Development"
-              desc="Modern, scalable and high-performance web applications built with latest technologies."
-              icon={<FiCode className="w-6 h-6 text-[#f5a53b]" />}
-              className="lg:absolute lg:top-[100px] lg:right-[20px] xl:right-[40px]"
-              delay={0.2}
-              href="/reactjs-development"
-            />
-
-            <ServiceCard
-              title="UI/UX & Design Services"
-              desc="Design intuitive and engaging user experiences that delight customers."
-              icon={<FiPenTool className="w-6 h-6 text-[#d68029]" />}
-              className="lg:absolute lg:top-[390px] lg:right-[-30px] xl:right-[-10px]"
-              delay={0.4}
-              href="/uiux-design"
-            />
-
-            <ServiceCard
-              title="Custom Development"
-              desc="Build tailor-made software solutions engineered around your unique business needs."
-              icon={<FiTool className="w-6 h-6 text-[#d68029]" />}
-              className="lg:absolute lg:bottom-[130px] lg:right-[20px] xl:right-[40px]"
-              delay={0.6}
-              href="/our-service"
-            />
+          {/* Cards Grid */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 xl:block relative z-10">
+            {SERVICES.map((service, index) => (
+              <div 
+                key={index} 
+                className={`${service.positionClass} flex justify-center w-full xl:w-auto`}
+              >
+                <HexagonCard service={service} />
+              </div>
+            ))}
           </div>
 
-          {/* Central Image Fallback for Mobile Only */}
-          <div className="flex lg:hidden w-full justify-center mt-12 relative h-[500px]">
-            <Image
-              src="/home-test/center-globe.png"
-              alt="Global Network"
-              fill
-              className="object-contain scale-125"
-              sizes="100vw"
-            />
-          </div>
+          
         </div>
       </Row>
-    </section>
+    </Section>
   );
 }
