@@ -129,7 +129,7 @@ export default function AIServicesClient() {
         <AiDeliveryFramework />
         <BusinessChallengesVsOutcomes />
 
-        {/* <IndustriesWeServe /> */}
+        <IndustriesWeServe />
 
         {/* 9. CTA */}
         {/* <CTA highlightedText="Enterprise AI Solution?" /> */}
