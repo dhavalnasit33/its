@@ -9,7 +9,7 @@ const getLogoHeader = () => {
       <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; text-align: center;">
         <tr>
           <td align="center" style="vertical-align: middle;">
-            <img src="cid:companylogo" alt="Inspire Techno Solution" style="height: 48px; width: auto; display: block; margin: 0 auto;" />
+            <img src="cid:companylogo" alt="Inspire Techno Solution" style="max-height: 52px; height: auto; width: auto; max-width: 220px; display: block; margin: 0 auto; border: 0; outline: none; text-decoration: none;" />
           </td>
         </tr>
         <tr>

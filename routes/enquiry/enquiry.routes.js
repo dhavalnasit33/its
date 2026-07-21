@@ -172,7 +172,14 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
                 `${type} Request`,
                 enquiryFields
             ),
-            attachments: fileUrl ? [{ filename: req.file.filename, path: path.join(process.cwd(), fileUrl) }] : [],
+            attachments: [
+                {
+                    filename: "logo.png",
+                    path: path.join(process.cwd(), "assets/logo.png"),
+                    cid: "companylogo",
+                },
+                ...(fileUrl ? [{ filename: req.file.filename, path: path.join(process.cwd(), fileUrl) }] : []),
+            ],
         };
         await transporter.sendMail(adminMailOptions);
 
@@ -190,7 +197,7 @@ router.post("/", secureUpload("uploads/enquiries"), async (req, res) => {
             attachments: [
                 {
                     filename: "logo.png",
-                    path: path.join(__dirname, "../../assets/logo.png"),
+                    path: path.join(process.cwd(), "assets/logo.png"),
                     cid: "companylogo",
                 },
             ],

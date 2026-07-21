@@ -326,14 +326,21 @@ router.post("/", secureUpload(), async (req, res) => {
           message: message,
         }
       ),
-      attachments: fileUrl
-        ? [
-            {
-              filename: req.file.filename,
-              path: path.join(process.cwd(), fileUrl),
-            },
-          ]
-        : [],
+      attachments: [
+        {
+          filename: "logo.png",
+          path: path.join(process.cwd(), "assets/logo.png"),
+          cid: "companylogo",
+        },
+        ...(fileUrl
+          ? [
+              {
+                filename: req.file.filename,
+                path: path.join(process.cwd(), fileUrl),
+              },
+            ]
+          : []),
+      ],
     };
 
     // Send to admin
@@ -358,7 +365,7 @@ router.post("/", secureUpload(), async (req, res) => {
       attachments: [
         {
           filename: "logo.png",
-          path: path.join(__dirname, "../../assets/logo.png"),
+          path: path.join(process.cwd(), "assets/logo.png"),
           cid: "companylogo",
         },
       ],

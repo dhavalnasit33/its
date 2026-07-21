@@ -187,6 +187,13 @@ router.post("/", async (req, res) => {
                     message: message,
                 }
             ),
+            attachments: [
+                {
+                    filename: "logo.png",
+                    path: path.join(process.cwd(), "assets/logo.png"),
+                    cid: "companylogo",
+                },
+            ],
         };
 
         await transporter.sendMail(adminMailOptions);
@@ -213,7 +220,7 @@ router.post("/", async (req, res) => {
             attachments: [
                 {
                     filename: "logo.png",
-                    path: path.join(__dirname, "../../assets/logo.png"),
+                    path: path.join(process.cwd(), "assets/logo.png"),
                     cid: "companylogo",
                 },
             ],
