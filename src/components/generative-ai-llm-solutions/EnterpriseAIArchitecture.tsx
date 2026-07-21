@@ -13,7 +13,6 @@ import {
   FiCloud,
   FiActivity,
   FiSettings,
-  FiChevronRight,
   FiDatabase,
   FiUsers,
   FiLayers,
@@ -28,13 +27,12 @@ import {
   FiBriefcase,
   FiGlobe,
   FiMail,
-  FiCheck
+  FiChevronRight,
 } from "react-icons/fi";
-import Section from "@/components/Section";
-import Row from "@/components/Row";
 import SectionBadge from "../new-home-components/SectionBadge";
+import Section from "@/components/Section";
 
-// --- Data Constants ---
+// --- DATA FROM SOURCE ---
 const TECH_CHIPS = [
   { label: "RAG", icon: FiZap },
   { label: "Vector Database", icon: FiDatabase },
@@ -53,7 +51,8 @@ const ARCHITECTURE_STEPS = [
     num: "01",
     title: "Data Sources",
     subtitle: "Ingest structured and unstructured enterprise assets.",
-    image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-1.png",
+    image:
+      "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-1.png",
     bullets: [
       { icon: FiFileText, label: "Unstructured Files (PDF, DOCX, Markdown)" },
       { icon: FiDatabase, label: "Relational DBs (PostgreSQL, MySQL)" },
@@ -61,51 +60,83 @@ const ARCHITECTURE_STEPS = [
       { icon: FiGlobe, label: "SaaS Application APIs" },
       { icon: FiCloud, label: "Cloud Buckets (AWS S3, Google Cloud Storage)" },
       { icon: FiMail, label: "Communication Logs (Outlook, Gmail)" },
-      { icon: FiServer, label: "Internal Knowledge Wikis (Notion, Confluence)" },
+      {
+        icon: FiServer,
+        label: "Internal Knowledge Wikis (Notion, Confluence)",
+      },
     ],
   },
   {
     num: "02",
     title: "Ingest & Process",
     subtitle: "Clean, split, and vectorize raw data pipelines.",
-    image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-2.png",
+    image:
+      "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-2.png",
     items: [
-      { icon: FiSettings, title: "Semantic Parsing & Chunking", desc: "Noise Filtering & Overlap Analysis", detail: "Normalizes raw text format boundaries, strips markup, and splits documentation files into contextually coherent paragraphs based on semantic transitions." },
-      { icon: FiShare2, title: "Embedding Vector Generation", desc: "Text-to-Numeric Matrix Conversion", detail: "Routes processed text chunks through embedding models (e.g. OpenAI text-embedding-3-small, Cohere v3) to compute high-dimensional semantic arrays." },
-      { icon: FiTarget, title: "Automated Metadata Tagging", desc: "Attribute Extraction & Enrichment", detail: "Applies entity recognition pipelines to catalog vectors with security clearances, update timestamps, tags, and document origin markers." },
+      {
+        icon: FiSettings,
+        title: "Semantic Parsing & Chunking",
+        desc: "Noise Filtering & Overlap Analysis",
+        detail:
+          "Normalizes raw text format boundaries, strips markup, and splits documentation files into contextually coherent paragraphs based on semantic transitions.",
+      },
+      {
+        icon: FiShare2,
+        title: "Embedding Vector Generation",
+        desc: "Text-to-Numeric Matrix Conversion",
+        detail:
+          "Routes processed text chunks through embedding models (e.g. OpenAI text-embedding-3-small, Cohere v3) to compute high-dimensional semantic arrays.",
+      },
+      {
+        icon: FiTarget,
+        title: "Automated Metadata Tagging",
+        desc: "Attribute Extraction & Enrichment",
+        detail:
+          "Applies entity recognition pipelines to catalog vectors with security clearances, update timestamps, tags, and document origin markers.",
+      },
     ],
   },
   {
     num: "03",
     title: "Knowledge Engine",
     subtitle: "Store, cache, and index vectorized intelligence.",
-    image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-3.png",
+    image:
+      "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-3.png",
     caption: "Enterprise AI Core Memory",
-    tags: ["Vector Databases (Pinecone, Qdrant)", "Graph Database (Neo4j GraphRAG)", "Hybrid Keyword-Semantic Search", "Hierarchical Storage Cache"],
+    tags: [
+      "Vector Databases (Pinecone, Qdrant)",
+      "Graph Database (Neo4j GraphRAG)",
+      "Hybrid Keyword-Semantic Search",
+      "Hierarchical Storage Cache",
+    ],
   },
   {
     num: "04",
     title: "Retrieve & Reason",
     subtitle: "Orchestrate context assembly and reasoning models.",
-    image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-4.png",
+    image:
+      "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-4.png",
     items: [
       {
-        image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-4.1.png",
+        icon: FiSearch,
         title: "Hybrid Retrieval Engine",
-        desc: "Vector Similiarity & Keyword Matching",
-        detail: "Performs real-time cosine similarity search across vector indexes combined with BM25 keyword matching to gather the top-K most relevant reference chunks.",
+        desc: "Vector Similarity & Keyword Matching",
+        detail:
+          "Performs real-time cosine similarity search across vector indexes combined with BM25 keyword matching to gather the top-K most relevant reference chunks.",
       },
       {
-        image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-4.2.png",
+        icon: FiCpu,
         title: "Autonomous Agent Orchestrator",
         desc: "Task Planner & Multi-Tool Router",
-        detail: "Executes dynamic ReAct loops to route user questions, access external SaaS APIs, execute SQL query tools, and manage conversation memory states.",
+        detail:
+          "Executes dynamic ReAct loops to route user questions, access external SaaS APIs, execute SQL query tools, and manage conversation memory states.",
       },
       {
-        image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-setp-4.3.png",
+        icon: FiLayers,
         title: "Frontier LLM Synthesizer",
         desc: "Prompt Processing & Semantic Guardrails",
-        detail: "Evaluates context chunks and prompt structures using leading reasoning models (GPT-4o, Claude 3.5 Sonnet) while applying toxic content and jailbreak guardrails.",
+        detail:
+          "Evaluates context chunks and prompt structures using leading reasoning models (GPT-4o, Claude 3.5 Sonnet) while applying toxic content and jailbreak guardrails.",
       },
     ],
   },
@@ -113,55 +144,111 @@ const ARCHITECTURE_STEPS = [
     num: "05",
     title: "Generate & Deliver",
     subtitle: "Deliver factual outputs and trigger integrated actions.",
-    image: "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-5.png",
+    image:
+      "/ai-strategy/generative-ai-llm-development/enterprise-ai-architecture-step-5.png",
     items: [
       {
         icon: FiGlobe,
         title: "Unified Web Dashboards & Chatbots",
         desc: "Conversational UI & Charts Rendering",
-        detail: "Embeds chat widgets, tabular summary components, and visual reasoning pathways directly within your web apps and internal admin panels."
+        detail:
+          "Embeds chat widgets, tabular summary components, and visual reasoning pathways directly within your web apps and internal admin panels.",
       },
       {
         icon: FiMail,
         title: "Workplace Chatbot Routing",
         desc: "Slack & Microsoft Teams Workflows",
-        detail: "Deploys secure communication bots that respond to user queries directly inside employee channels, complete with context links."
+        detail:
+          "Deploys secure communication bots that respond to user queries directly inside employee channels, complete with context links.",
       },
       {
         icon: FiUsers,
         title: "Intelligent Human Escalation",
         desc: "Zendesk & Salesforce CRM Handoff",
-        detail: "Gracefully routes conversation logs and ticket summaries to live support representatives if prompt validation scores drop below parameters."
-      }
+        detail:
+          "Gracefully routes conversation logs and ticket summaries to live support representatives if prompt validation scores drop below parameters.",
+      },
     ],
   },
 ];
 
 const OUTPUT_CARDS = [
-  { icon: FiMessageSquare, title: "AI Chatbot", desc: "Intelligent conversations that understand your business context.", color: "#7C3AED", bg: "#F3EEFE" },
-  { icon: FiSearch, title: "Enterprise Search", desc: "Find anything across your documents, data, and knowledge base.", color: "#D68029", bg: "#FDF1E4" },
-  { icon: FiCpu, title: "AI Copilot", desc: "Assist employees with tasks, summaries, insights, and recommendations.", color: "#2563EB", bg: "#EAF1FE" },
-  { icon: FiZap, title: "Workflow Automation", desc: "Automate processes and actions using AI agents and tools.", color: "#16A34A", bg: "#E9F9EF" },
-  { icon: FiBarChart2, title: "Analytics & Insights", desc: "Generate reports, trends, and insights from your enterprise data.", color: "#0EA5B7", bg: "#E5F7FA" },
+  {
+    icon: FiMessageSquare,
+    title: "AI Chatbot",
+    desc: "Intelligent conversations that understand your business context.",
+    color: "#7C3AED",
+    bg: "#F3EEFE",
+  },
+  {
+    icon: FiSearch,
+    title: "Enterprise Search",
+    desc: "Find anything across your documents, data, and knowledge base.",
+    color: "#D68029",
+    bg: "#FDF1E4",
+  },
+  {
+    icon: FiCpu,
+    title: "AI Copilot",
+    desc: "Assist employees with tasks, summaries, insights, and recommendations.",
+    color: "#2563EB",
+    bg: "#EAF1FE",
+  },
+  {
+    icon: FiZap,
+    title: "Workflow Automation",
+    desc: "Automate processes and actions using AI agents and tools.",
+    color: "#16A34A",
+    bg: "#E9F9EF",
+  },
+  {
+    icon: FiBarChart2,
+    title: "Analytics & Insights",
+    desc: "Generate reports, trends, and insights from your enterprise data.",
+    color: "#0EA5B7",
+    bg: "#E5F7FA",
+  },
 ];
 
 const TRUST_STRIP = [
-  { icon: FiShield, title: "Enterprise Security", desc: "SOC 2 • GDPR • HIPAA" },
+  {
+    icon: FiShield,
+    title: "Enterprise Security",
+    desc: "SOC 2 • GDPR • HIPAA",
+  },
   { icon: FiLock, title: "Private & Secure", desc: "Your data stays yours" },
-  { icon: FiCloud, title: "Scalable Architecture", desc: "Built for enterprise scale" },
-  { icon: FiActivity, title: "High Performance", desc: "Fast, reliable, and efficient" },
-  { icon: FiShield, title: "Fully Customizable", desc: "Tailored to your needs" },
+  {
+    icon: FiCloud,
+    title: "Scalable Architecture",
+    desc: "Built for enterprise scale",
+  },
+  {
+    icon: FiActivity,
+    title: "High Performance",
+    desc: "Fast, reliable, and efficient",
+  },
+  {
+    icon: FiShield,
+    title: "Fully Customizable",
+    desc: "Tailored to your needs",
+  },
 ];
 
-export default function EnterpriseAIArchitecture() {
+export default function PremiumAIArchitecture() {
   const [activeIdx, setActiveIdx] = useState(0);
   const activeStep = ARCHITECTURE_STEPS[activeIdx];
 
   return (
-    <Section className="bg-[#FCFCFD] py-20 lg:py-32 relative overflow-hidden">
-      <Row className="">
-        {/* ── 1. Header & Description ── */}
-        <div className="text-center max-w-4xl mx-auto mb-12">
+    <Section className="relative w-full bg-[#F4F7FA] overflow-hidden py-24 lg:py-32 font-sans">
+      {/* Blueprint Grid Background - Extremely clean and subtle */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
+        <div className="absolute top-0 left-0 right-0 h-[40vh] bg-gradient-to-b from-white to-transparent" />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-8 relative z-10">
+        {/* --- 1. Header Section --- */}
+        <div className="text-center max-w-4xl mx-auto mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -176,9 +263,9 @@ export default function EnterpriseAIArchitecture() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-extrabold text-[#0B1E35] leading-tight mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-black text-[#0B1E35] leading-tight mb-6 tracking-tight"
           >
-            Enterprise Generative <span className="text-[#D68029]">AI & LLM Architecture</span>
+            Generative AI <span className="text-[#D68029]">Pipeline</span>
           </motion.h2>
 
           <motion.p
@@ -186,209 +273,213 @@ export default function EnterpriseAIArchitecture() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-slate-500 text-base md:text-lg leading-relaxed"
+            className="text-slate-500 text-lg font-medium max-w-2xl mx-auto leading-relaxed"
           >
-            A modern, secure, and scalable architecture that transforms your enterprise data into
-            intelligent conversations, insights, and automation.
+            A secure, mathematically robust 5-stage architecture that transforms
+            your raw enterprise data into highly intelligent, autonomous
+            workflows.
           </motion.p>
         </div>
 
-        {/* ── 2. Technology Chips ── */}
+        {/* --- 2. Sleek Tech Marquee --- */}
+        {/* Replaces the messy floating background chips with a structured scrolling banner */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
+          className="w-full max-w-5xl mx-auto overflow-hidden relative mb-20 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-20 before:bg-gradient-to-r before:from-[#F4F7FA] before:to-transparent before:z-10 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-20 after:bg-gradient-to-l after:from-[#F4F7FA] after:to-transparent after:z-10"
         >
-          {TECH_CHIPS.map((chip, idx) => {
-            const Icon = chip.icon;
-            return (
-              <div
-                key={idx}
-                className="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-[#0B1E35] shadow-[0_2px_10px_rgba(0,0,0,0.03)] flex items-center gap-2"
-              >
-                <Icon className="w-3.5 h-3.5 text-[#D68029]" />
-                {chip.label}
-              </div>
-            );
-          })}
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+            className="flex w-max gap-4"
+          >
+            {/* Double the array for seamless infinite loop */}
+            {[...TECH_CHIPS, ...TECH_CHIPS].map((chip, idx) => {
+              const Icon = chip.icon;
+              return (
+                <div
+                  key={idx}
+                  className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full shadow-sm text-sm font-bold text-slate-600 shrink-0"
+                >
+                  <Icon className="w-4 h-4 text-[#D68029]" />
+                  {chip.label}
+                </div>
+              );
+            })}
+          </motion.div>
         </motion.div>
 
-        {/* ── 3. Interactive Step Selector + Detail Panel ── */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-16 items-start">
-          {/* Left: vertical stepper */}
-          <div className="w-full lg:w-[280px] shrink-0 lg:sticky lg:top-24">
-            <div className="relative flex flex-row lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-              {ARCHITECTURE_STEPS.map((step, idx) => {
-                const isActive = idx === activeIdx;
-                const isLast = idx === ARCHITECTURE_STEPS.length - 1;
-                return (
-                  <div key={step.num} className="relative flex lg:flex-col shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setActiveIdx(idx)}
-                      className={`cursor-pointer group flex items-center gap-3 w-full text-left px-3 py-3 rounded-2xl transition-all duration-300 ${
-                        isActive ? "bg-[#FDF1E4]" : "hover:bg-slate-50"
-                      }`}
+        {/* --- 3. Dynamic Island Pipeline Navigator --- */}
+        <div className="relative w-full max-w-4xl mx-auto mb-10 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 px-2 ">
+          {/* Connecting Track Line */}
+          <div className="absolute top-1/2 left-8 right-8 h-1 bg-slate-200 rounded-full -translate-y-1/2 z-0 hidden lg:block" />
+
+          <div className="flex items-center justify-between gap-3 min-w-[600px] lg:min-w-0  cursor-pointer">
+            {ARCHITECTURE_STEPS.map((step, idx) => {
+              const isActive = activeIdx === idx;
+              return (
+                <motion.button
+                  key={step.num}
+                  layout
+                  onClick={() => setActiveIdx(idx)}
+                  style={{ cursor: "pointer" }}
+                  className={`relative z-10 flex cursor-pointer items-center justify-center rounded-full border-2 outline-none transition-colors duration-300 shadow-sm ${
+                    isActive
+                      ? "bg-[#D68029] border-[#D68029] text-white px-6 py-3 h-14"
+                      : "bg-white border-slate-200 text-slate-400 w-14 h-14 hover:border-[#D68029]/50 hover:text-[#D68029]"
+                  }`}
+                >
+                  <span className="font-black text-lg">{step.num}</span>
+                  {isActive && (
+                    <motion.span
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="ml-3 font-bold whitespace-nowrap text-[15px]"
                     >
-                      <span
-                        className={`relative z-10 w-9 h-9 shrink-0 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 ${
-                          isActive
-                            ? "bg-[#D68029] border-[#D68029] text-white shadow-[0_4px_14px_rgba(214,128,41,0.35)]"
-                            : "bg-white border-slate-200 text-slate-400 group-hover:border-[#D68029]/40 group-hover:text-[#D68029]"
-                        }`}
-                      >
-                        {step.num}
-                      </span>
-                      <span className="min-w-0">
-                        <span
-                          className={`block text-sm font-bold leading-tight whitespace-nowrap lg:whitespace-normal ${
-                            isActive ? "text-[#0B1E35]" : "text-slate-500 group-hover:text-[#0B1E35]"
-                          }`}
-                        >
-                          {step.title}
-                        </span>
-                        <span className="hidden lg:block text-xs text-slate-400 leading-tight mt-0.5">{step.subtitle}</span>
-                      </span>
-                    </button>
-
-                    {/* connecting line */}
-                    {!isLast && (
-                      <div
-                        className={`lg:ml-[35px] w-6 lg:w-0.5 h-0.5 lg:h-6 self-center lg:self-auto shrink-0 transition-colors duration-300 ${
-                          idx < activeIdx ? "bg-[#D68029]" : "bg-slate-200"
-                        }`}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                      {step.title}
+                    </motion.span>
+                  )}
+                </motion.button>
+              );
+            })}
           </div>
+        </div>
 
-          {/* Right: detail panel */}
-          <div className="flex-1 w-full min-w-0">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeStep.num}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white border border-slate-100 rounded-[28px] p-6 md:p-8 shadow-[0_15px_50px_rgba(11,30,53,0.06)]"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                  {/* Illustration */}
-                  {activeStep.image && (
-                    <div className="relative w-full h-[280px] md:h-[340px] rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 via-white to-orange-50/50 overflow-hidden order-1 md:order-none">
-                      <div className="absolute -inset-6 rounded-full blur-3xl opacity-30 bg-[#D68029]/40" />
+        {/* --- 4. Premium Glass Detail Panel --- */}
+        <div className="w-full max-w-6xl mx-auto mb-20">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeStep.num}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="bg-white rounded-[2.5rem] p-6 lg:p-12 shadow-[0_20px_60px_rgba(11,30,53,0.05)] border border-slate-100"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                {/* Left: Holographic Image Area */}
+                {activeStep.image && (
+                  <div className="relative w-full h-[320px] md:h-[450px] rounded-[2rem] bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-100 overflow-hidden flex items-center justify-center">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(214,128,41,0.05)_0%,transparent_70%)]" />
+                    <motion.div
+                      animate={{ y: [-5, 5, -5] }}
+                      transition={{
+                        duration: 6,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="relative w-[85%] h-[85%]"
+                    >
                       <Image
                         src={activeStep.image}
                         alt={activeStep.title}
                         fill
-                        sizes="(max-width: 768px) 90vw, 420px"
-                        className="object-contain relative z-10 p-6"
+                        sizes="(max-width: 768px) 90vw, 500px"
+                        className="object-contain drop-shadow-xl"
                       />
+                    </motion.div>
+                  </div>
+                )}
+
+                {/* Right: Technical Content */}
+                <div className="flex flex-col cursor-pointer">
+                  <span className="text-[#D68029] font-black tracking-widest uppercase text-xs mb-3">
+                    Stage {activeStep.num}
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-[#0B1E35] mb-4 leading-tight">
+                    {activeStep.title}
+                  </h3>
+                  <p className="text-slate-500 text-base md:text-lg mb-8 font-medium">
+                    {activeStep.subtitle}
+                  </p>
+
+                  {/* Feature Items List (Stages 2, 4, 5) */}
+                  {activeStep.items && (
+                    <div className="flex flex-col gap-4">
+                      {activeStep.items.map((item, iIdx) => {
+                        const ItemIcon = item.icon;
+                        return (
+                          <div
+                            key={iIdx}
+                            className="flex items-start gap-4 p-5 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:border-[#D68029]/20 transition-all duration-300"
+                          >
+                            <div className="w-12 h-12 shrink-0 rounded-xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-[#D68029]">
+                              <ItemIcon className="w-5 h-5" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-[15px] font-black text-[#0B1E35] mb-1">
+                                {item.title}
+                              </p>
+                              <p className="text-[13px] text-slate-500 font-bold mb-2">
+                                {item.desc}
+                              </p>
+                              {item.detail && (
+                                <p className="text-[13px] text-slate-400 font-medium leading-relaxed border-t border-slate-200 pt-2">
+                                  {item.detail}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
 
-                  {/* Text content */}
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="w-9 h-9 rounded-full bg-[#D68029]/15 text-[#D68029] flex items-center justify-center text-sm font-bold">
-                        {activeStep.num}
-                      </span>
-                      <h3 className="text-xl md:text-2xl font-bold text-[#0B1E35]">{activeStep.title}</h3>
-                    </div>
-                    <p className="text-slate-500 text-sm mb-6 leading-relaxed">{activeStep.subtitle}</p>
-
-                    {activeStep.caption && (
-                      <p className="text-sm font-bold text-[#D68029] mb-3">{activeStep.caption}</p>
-                    )}
-
-                    {/* Tags (step 3) */}
-                    {activeStep.tags && (
-                      <div className="grid grid-cols-2 gap-2 mb-2">
-                        {activeStep.tags.map((tag, tIdx) => (
+                  {/* Bullets List (Stage 1) */}
+                  {activeStep.bullets && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {activeStep.bullets.map((b, bIdx) => {
+                        const BulletIcon = b.icon;
+                        return (
                           <div
-                            key={tIdx}
-                            className="text-xs cursor-pointer font-semibold px-3 py-2.5 rounded-xl text-center border bg-white border-[#D68029]/20 text-[#0B1E35] transition-all duration-300 hover:border-[#D68029]/50 hover:bg-[#D68029]/5"
+                            key={bIdx}
+                            className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-[#D68029]/20 transition-colors"
                           >
-                            {tag}
+                            <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-[#D68029] shrink-0">
+                              <BulletIcon className="w-4 h-4" />
+                            </div>
+                            <span className="text-[13px] font-bold text-slate-700">
+                              {b.label}
+                            </span>
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        );
+                      })}
+                    </div>
+                  )}
 
-                    {/* Items (steps 2, 4 & 5) */}
-                    {activeStep.items && (
-                      <div className="flex flex-col gap-3">
-                        {activeStep.items.map((item, iIdx) => {
-                          const ItemIcon = "icon" in item ? item.icon : null;
-                          const itemImage = "image" in item ? item.image : null;
-                          return (
-                            <div
-                              key={iIdx}
-                              className="flex items-start cursor-pointer gap-4 px-4 py-4 rounded-xl bg-slate-50 border border-slate-100 transition-all duration-300 hover:bg-[#FDF1E4] hover:border-[#D68029]/30"
-                            >
-                              <div className="relative w-11 h-11 shrink-0 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#D68029] overflow-hidden">
-                                {itemImage ? (
-                                  <Image src={itemImage} alt={item.title} fill sizes="40px" className="object-contain p-1.5" />
-                                ) : ItemIcon ? (
-                                  <ItemIcon className="w-5 h-5" />
-                                ) : null}
-                              </div>
-                              <div className="text-left flex-1">
-                                <p className="text-sm font-bold text-[#0B1E35] leading-tight mb-1">{item.title}</p>
-                                <p className="text-xs text-slate-500 font-semibold leading-normal mb-1">{item.desc}</p>
-                                {item.detail && (
-                                  <p className="text-[11px] text-gray-400 font-medium leading-relaxed mt-2 pt-2 border-t border-slate-150">{item.detail}</p>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
+                  {/* Tags (Stage 3) */}
+                  {activeStep.tags && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {activeStep.tags.map((tag, tIdx) => (
+                        <div
+                          key={tIdx}
+                          className="px-4 py-2 rounded-xl bg-[#0B1E35] text-white text-xs font-bold tracking-wide shadow-sm"
+                        >
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
-                    {/* Bullets (step 1) */}
-                    {activeStep.bullets && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                        {activeStep.bullets.map((b, bIdx) => {
-                          const BulletIcon = b.icon;
-                          return (
-                            <div key={bIdx} className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg transition-colors duration-300 cursor-pointer hover:bg-[#FDF1E4]">
-                              <div className="w-7 h-7 shrink-0 rounded-md bg-[#D68029]/10 flex items-center justify-center text-[#D68029]">
-                                <BulletIcon className="w-3.5 h-3.5" />
-                              </div>
-                              <span className="text-sm text-slate-600">{b.label}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-
-                    {/* Next step button */}
-                    {activeIdx < ARCHITECTURE_STEPS.length - 1 && (
-                      <button
-                        type="button"
-                        onClick={() => setActiveIdx(activeIdx + 1)}
-                        className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#D68029] hover:gap-2.5 transition-all duration-300 cursor-pointer"
-                      >
-                        Next: {ARCHITECTURE_STEPS[activeIdx + 1].title}
-                        <FiChevronRight className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
+                  {/* Next Step Button */}
+                  {activeIdx < ARCHITECTURE_STEPS.length - 1 && (
+                    <button
+                      onClick={() => setActiveIdx(activeIdx + 1)}
+                      className="mt-8 self-start inline-flex items-center gap-2 text-sm font-black text-[#D68029] hover:text-[#0B1E35] transition-colors cursor-pointer"
+                    >
+                      Next: {ARCHITECTURE_STEPS[activeIdx + 1].title}
+                      <FiChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* ── 4. Bottom Output Cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-16">
+        {/* --- 5. Output Cards Grid --- */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-16 max-w-7xl mx-auto">
           {OUTPUT_CARDS.map((card, idx) => {
             const Icon = card.icon;
             return (
@@ -399,48 +490,59 @@ export default function EnterpriseAIArchitecture() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 * idx }}
                 whileHover={{ y: -6 }}
-                className="bg-white border border-slate-100 rounded-[24px] p-6 shadow-[0_8px_30px_rgba(11,30,53,0.03)] hover:shadow-[0_18px_40px_rgba(214,128,41,0.10)] transition-all duration-300 group"
+                className="bg-white border border-slate-200 rounded-[24px] p-6 shadow-sm hover:shadow-xl transition-all duration-300 group"
               >
                 <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 shadow-sm border border-white/50"
                   style={{ backgroundColor: card.bg, color: card.color }}
                 >
                   <Icon className="w-5 h-5" />
                 </div>
-                <h4 className="text-base font-bold text-[#0B1E35] mb-2">{card.title}</h4>
-                <p className="text-slate-500 text-sm leading-relaxed">{card.desc}</p>
-                <div className="w-8 h-1 rounded-full mt-4 transition-all duration-300 group-hover:w-12" style={{ backgroundColor: card.color }} />
+                <h4 className="text-[16px] font-black text-[#0B1E35] mb-2">
+                  {card.title}
+                </h4>
+                <p className="text-slate-500 text-[13px] font-medium leading-relaxed">
+                  {card.desc}
+                </p>
+
+                <div
+                  className="w-8 h-1 rounded-full mt-5 transition-all duration-300 group-hover:w-full opacity-50 group-hover:opacity-100"
+                  style={{ backgroundColor: card.color }}
+                />
               </motion.div>
             );
           })}
         </div>
 
-        {/* ── 5. Bottom Trust Strip ── */}
+        {/* --- 6. Trust Strip --- */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="bg-slate-50 border border-slate-100 rounded-[24px] p-6 md:p-8"
+          className="bg-[#0B1E35] rounded-[24px] p-6 md:p-8 shadow-xl max-w-5xl mx-auto"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {TRUST_STRIP.map((item, idx) => {
               const Icon = item.icon;
               return (
-                <div key={idx} className="flex items-center gap-3">
-                  <div className="w-10 h-10 shrink-0 rounded-xl bg-[#2563EB]/10 flex items-center justify-center text-[#2563EB]">
-                    <Icon className="w-5 h-5" />
+                <div key={idx} className="flex items-center gap-4 group">
+                  <div className="w-10 h-10 shrink-0 rounded-full bg-white/10 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-[#D68029] group-hover:scale-110">
+                    <Icon className="w-4 h-4" />
                   </div>
                   <div>
-                    <h5 className="text-sm font-bold text-[#0B1E35] leading-tight">{item.title}</h5>
-                    <p className="text-xs font-medium text-slate-500 leading-tight">{item.desc}</p>
+                    <h5 className="text-[13px] font-bold text-white leading-tight mb-0.5">
+                      {item.title}
+                    </h5>
+                    <p className="text-[11px] font-semibold text-slate-400 leading-tight tracking-wide">
+                      {item.desc}
+                    </p>
                   </div>
                 </div>
               );
             })}
           </div>
         </motion.div>
-      </Row>
+      </div>
     </Section>
   );
 }

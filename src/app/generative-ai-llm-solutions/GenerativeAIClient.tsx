@@ -16,35 +16,42 @@ import LLMProcess from "@/components/generative-ai-llm-solutions/LLMProcess";
 import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
 import CTA from "@/components/common/CTA";
 import EnterpriseAIArchitecture from "@/components/generative-ai-llm-solutions/EnterpriseAIArchitecture";
+import IntegratedAIArchitecture from "@/components/generative-ai-llm-solutions/3DEnterpriseAI";
 
 const GENERATIVE_AI_FAQS = [
   {
-    question: "What is Retrieval-Augmented Generation (RAG) and why is it useful?",
+    question:
+      "What is Retrieval-Augmented Generation (RAG) and why is it useful?",
     answer:
       "RAG is a framework that connects Large Language Models (LLMs) dynamically to external, verified data sources (like company wiki directories, manuals, database records). Instead of relying on static training weights which can cause model hallucination, the LLM queries the vector index first to generate accurate, source-cited responses.",
   },
   {
-    question: "Can we fine-tune open-source models like Llama 3, Mistral, or Qwen?",
+    question:
+      "Can we fine-tune open-source models like Llama 3, Mistral, or Qwen?",
     answer:
       "Yes, absolutely. We clean and format your internal training data, create instruction-response pairs, and run supervised fine-tuning (SFT) or Parameter-Efficient Fine-Tuning (PEFT/LoRA) on GPU instances. This allows you to host private models tailored to your brand voice and data privacy needs.",
   },
   {
-    question: "How do you handle enterprise data privacy with public LLM models?",
+    question:
+      "How do you handle enterprise data privacy with public LLM models?",
     answer:
       "For public models (like OpenAI or Anthropic), we enforce strict data privacy protocols. We route queries through API endpoints that guarantee zero data retention for training. Additionally, we filter personal identifiable information (PII) before it leaves your systems. For absolute compliance, we deploy open-weights models inside private VPC boundaries.",
   },
   {
-    question: "Can these models connect to vector databases and corporate systems?",
+    question:
+      "Can these models connect to vector databases and corporate systems?",
     answer:
       "Yes. We integrate generative AI solutions with leading vector databases (Pinecone, Milvus, Qdrant, Chroma, pgvector) and orchestrate pipelines via frameworks like LangChain and LlamaIndex. This lets your models query SQL databases, search document repositories, and update CRMs automatically.",
   },
   {
-    question: "How do you evaluate generative AI performance and hallucination rates?",
+    question:
+      "How do you evaluate generative AI performance and hallucination rates?",
     answer:
       "We implement comprehensive evaluation matrices (e.g., using Ragas or G-Eval) to score model answers on faithfulness, answer relevance, context recall, and semantic correctness. We run rigorous automated validation sweeps before deploying prompt changes to production.",
   },
   {
-    question: "What are the token costs and compute resource constraints at scale?",
+    question:
+      "What are the token costs and compute resource constraints at scale?",
     answer:
       "We build semantic caching layers (like GPTCache) to reduce redundant API queries, optimizing prompt lengths and choosing cost-efficient model sizes (like GPT-4o-mini or quantized local models) where applicable. We monitor usage statistics closely to maintain balanced token-cost profiles.",
   },
@@ -153,6 +160,7 @@ export default function GenerativeAIClient() {
 
         {/* ── 6. Process Step Workflow ── */}
         {/* <LLMProcess /> */}
+        {/* <IntegratedAIArchitecture /> */}
 
         {/* ── 7. Call To Action Banner ── */}
         <CTA highlightedText="Generative AI Solution?" />
