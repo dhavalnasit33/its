@@ -72,7 +72,7 @@ const SERVICES = [
     desc: "Advanced machine learning models and conversational AI that automate enterprise operations.",
     image: "/home-test/ai-solutions.png",
     tags: ["AI Chatbots", "AI Agents", "Automation", "+3"],
-    href: "/ai-chatbot-development",
+    href: "/ai-services",
     theme: {
       primary: "#D68029",
       softBg: "#FFF5EA",
@@ -97,115 +97,7 @@ const SERVICES = [
   },
 ];
 
-// 3D Hexagon Grid Background with interactive hover
-const HexGridBg = () => {
-  const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);
-
-  // Pointy-top hexagon grid (like reference image)
-  const COLS = 22;
-  const ROWS = 16;
-  const R = 52;     // circumradius (center to vertex)
-  const GAP = 5;    // gap between hexes
-
-  // Pointy-top hex: vertices at 30°, 90°, 150°, 210°, 270°, 330°
-  const hexPoints = (cx: number, cy: number, r: number) => {
-    const angles = [30, 90, 150, 210, 270, 330];
-    return angles
-      .map((a) => {
-        const rad = (Math.PI / 180) * a;
-        return `${cx + r * Math.cos(rad)},${cy + r * Math.sin(rad)}`;
-      })
-      .join(' ');
-  };
-
-  const hexes: { x: number; y: number; idx: number }[] = [];
-  // Pointy-top layout spacing
-  const colW = Math.sqrt(3) * R + GAP;
-  const rowH = 1.5 * R + GAP;
-
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
-      const x = col * colW + (row % 2 === 0 ? 0 : colW / 2);
-      const y = row * rowH;
-      hexes.push({ x: x + R, y: y + R, idx: row * COLS + col });
-    }
-  }
-
-  const totalW = COLS * colW + colW / 2 + R;
-  const totalH = ROWS * rowH + R;
-
-  const HOVER_COLORS = [
-    '#3B82F6', '#22C55E', '#8B5CF6',
-    '#F59E0B', '#D68029', '#2563EB',
-    '#EC4899', '#14B8A6',
-  ];
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      <svg
-        width="100%"
-        height="100%"
-        viewBox={`0 0 ${totalW} ${totalH}`}
-        preserveAspectRatio="xMidYMid slice"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute inset-0 w-full h-full pointer-events-none xl:pointer-events-auto"
-      >
-        <defs>
-          {/* Linear gradient from top-left to bottom-right — flat lit tile look */}
-          <linearGradient id="hexNormal" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="50%" stopColor="#f8fafc" />
-            <stop offset="100%" stopColor="#e8edf2" />
-          </linearGradient>
-          {/* Per-color hover gradients */}
-          {HOVER_COLORS.map((c, i) => (
-            <linearGradient key={i} id={`hexHover${i}`} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="60%" stopColor={c} stopOpacity="0.10" />
-              <stop offset="100%" stopColor={c} stopOpacity="0.22" />
-            </linearGradient>
-          ))}
-          <filter id="hexShadow" x="-5%" y="-5%" width="110%" height="110%">
-            <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodColor="#b0bec5" floodOpacity="0.22" />
-          </filter>
-          <filter id="hexShadowHover" x="-8%" y="-8%" width="116%" height="116%">
-            <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#64748b" floodOpacity="0.3" />
-          </filter>
-        </defs>
-
-        {hexes.map(({ x, y, idx }) => {
-          const isHovered = hoveredIdx === idx;
-          const colorIdx = idx % HOVER_COLORS.length;
-          const fill = isHovered ? `url(#hexHover${colorIdx})` : 'url(#hexNormal)';
-          const stroke = isHovered ? HOVER_COLORS[colorIdx] : '#dde3ea';
-          const strokeW = isHovered ? 1.5 : 0.7;
-          return (
-            <polygon
-              key={idx}
-              points={hexPoints(x, y, R - GAP / 2)}
-              fill={fill}
-              stroke={stroke}
-              strokeWidth={strokeW}
-              filter={isHovered ? 'url(#hexShadowHover)' : 'url(#hexShadow)'}
-              style={{
-                transition: 'fill 0.35s ease, stroke 0.35s ease, transform 0.35s ease',
-                cursor: 'pointer',
-                transformOrigin: `${x}px ${y}px`,
-                transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-              }}
-              onMouseEnter={() => setHoveredIdx(idx)}
-              onMouseLeave={() => setHoveredIdx(null)}
-            />
-          );
-        })}
-      </svg>
-    </div>
-  );
-};
-
-
-
-const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
+const HexagonCard = ({ service }: { service: (typeof SERVICES)[0] }) => {
   const { title, desc, image, tags, href, theme, delay } = service;
 
   return (
@@ -218,23 +110,25 @@ const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
       className={`group relative w-[340px] h-[390px] flex flex-col items-center justify-center cursor-pointer transition-all duration-500 hover:-translate-y-3 outline-none focus:outline-none`}
     >
       {/* Theme-related background hover glow */}
-      <div 
+      <div
         className="absolute -inset-10 rounded-[50px] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"
         style={{
-          background: `radial-gradient(circle, ${theme.hoverGlow} 0%, transparent 70%)`
+          background: `radial-gradient(circle, ${theme.hoverGlow} 0%, transparent 70%)`,
         }}
       />
 
       {/* Background SVG Hexagon with Shadow and Border */}
-      <div 
-        className="absolute inset-0 w-full h-full transition-all duration-500 filter drop-shadow-[0_8px_20px_rgba(15,23,42,0.04)] group-hover:drop-shadow-[0_22px_40px_var(--hover-glow)] z-0"
-        style={{
-          "--hover-glow": theme.hoverGlow,
-        } as React.CSSProperties}
+      <div
+        className="absolute inset-0 w-full h-full transition-all duration-500 filter drop-shadow-[0_8px_20px_rgba(15,23,42,0.04)] group-hover:drop-shadow-[0_8px_16px_var(--hover-glow)] z-0"
+        style={
+          {
+            "--hover-glow": theme.hoverGlow,
+          } as React.CSSProperties
+        }
       >
         <svg
           viewBox="0 0 100 115"
-          className="w-full h-full fill-white stroke-[#E5E7EB] stroke-[1.2] transition-colors duration-500"
+          className="w-full h-full fill-white stroke-[#E5E7EB] stroke-[0.5] transition-colors duration-500"
         >
           <path
             d="M 50 3
@@ -252,10 +146,12 @@ const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
                L 48 4
                Q 50 3 50 3
                Z"
-            className="group-hover:stroke-[var(--hover-color)] transition-all duration-500"
-            style={{
-              "--hover-color": theme.primary,
-            } as React.CSSProperties}
+            className="group-hover:stroke-[var(--hover-color)]  group-hover:stroke-[0.5]  transition-all duration-500"
+            style={
+              {
+                "--hover-color": theme.primary,
+              } as React.CSSProperties
+            }
           />
         </svg>
       </div>
@@ -281,14 +177,18 @@ const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
         </div>
 
         {/* Middle: Content */}
-        <div className="flex flex-col items-center justify-center max-w-[240px] mb-3 shrink-0">
-          <h4 className="text-[16px] font-extrabold text-[#0D1B2A] leading-snug mb-1.5 group-hover:text-[var(--hover-color)] transition-colors duration-500"
-              style={{
+        <div className="flex flex-col items-center justify-center max-w-[250px] mb-3 shrink-0">
+          <h4
+            className="text-sm lg:text-base font-extrabold text-[#0D1B2A] leading-snug mb-1.5 group-hover:text-[var(--hover-color)] transition-colors duration-500"
+            style={
+              {
                 "--hover-color": theme.primary,
-              } as React.CSSProperties}>
+              } as React.CSSProperties
+            }
+          >
             {title}
           </h4>
-          <p className="text-[14px] text-slate-500 leading-relaxed font-normal line-clamp-3">
+          <p className="text-sm lg:text-base text-slate-500 leading-relaxed font-normal line-clamp-3">
             {desc}
           </p>
         </div>
@@ -296,7 +196,7 @@ const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
         {/* Bottom: Tags & Action Button */}
         <div className="w-full flex flex-col items-center gap-2.5 shrink-0">
           {/* Tags */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[220px]">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-[250px]">
             {tags.map((tag, idx) => (
               <span
                 key={idx}
@@ -326,13 +226,10 @@ const HexagonCard = ({ service }: { service: typeof SERVICES[0] }) => {
 
 export default function ServicesSection() {
   return (
-    <Section className="services_hex_background py-20   relative font-sans">
-      {/* 3D Interactive Hexagon Grid Background */}
-      <HexGridBg />
-
+    <Section className="lg:py-18! common_background_gradient relative overflow-hidden">
       <Row className="relative z-10 mx-auto px-4">
         {/* Top Centered Header Section */}
-        <div className="text-center max-w-4xl mx-auto mb-8 ">
+        <div className="text-center max-w-3xl mx-auto mb-8 ">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -341,35 +238,35 @@ export default function ServicesSection() {
           >
             <SectionBadge title="OUR SERVICES" />
           </motion.div>
-
+ 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#0d1b2a] leading-[1.2] mt-3 mb-6"
+            className="common-h2 text-[#0d1b2a]"
           >
-            Intelligent Solutions for Modern Businesses
+            Custom Software, <span className="text-[#d68029]">  Web, Mobile &amp; AI</span> Development Services
           </motion.h2>
-
+ 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8"
+            className="text-slate-500 mt-4 text-sm sm:text-base max-w-3xl mx-auto"
           >
-            End-to-end AI and software development services designed to transform
-your ideas into digital reality. We build scalable, innovative solutions
-that optimize workflows, drive growth, and deliver lasting value.
-
+            Empower your business with custom software, web development, mobile
+applications, AI solutions, UI/UX design, cloud integration, and ongoing
+support. We build scalable, secure, and high-performance digital products
+tailored to your unique business needs.
           </motion.p>
            {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="flex justify-center w-full"
+            className="flex justify-center w-full mt-8"
           >
             <Button
               text="View All Services"
@@ -384,7 +281,6 @@ that optimize workflows, drive growth, and deliver lasting value.
 
         {/* Honeycomb Layout Container */}
         <div className="relative w-full h-auto xl:h-[1082px] flex flex-col items-center gap-8 xl:block max-w-[1200px] mx-auto">
-          
           {/* Central Dark Hexagon (Desktop Only) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -393,7 +289,10 @@ that optimize workflows, drive growth, and deliver lasting value.
             className="hidden xl:flex absolute left-[430px] top-[346px] w-[340px] h-[390px] flex-col items-center justify-center text-center p-9 z-20"
           >
             <div className="absolute inset-0 w-full h-full filter drop-shadow-[0_15px_35px_rgba(15,23,42,0.35)] z-0">
-              <svg viewBox="0 0 100 115" className="w-full h-full fill-[#0B1528] stroke-amber-500/35 stroke-[1.5]">
+              <svg
+                viewBox="0 0 100 115"
+                className="w-full h-full fill-[#0B1528] stroke-amber-500/35 stroke-1"
+              >
                 <path
                   d="M 50 3
                      Q 50 3 52 4
@@ -413,7 +312,7 @@ that optimize workflows, drive growth, and deliver lasting value.
                 />
               </svg>
             </div>
-            
+
             <div className="relative z-10 text-white flex flex-col items-center justify-center h-full">
               {/* Animated icon badge */}
               <div className="relative w-20 h-20 flex items-center justify-center mb-6">
@@ -438,10 +337,12 @@ that optimize workflows, drive growth, and deliver lasting value.
               </div>
 
               <h3 className="text-2xl font-extrabold tracking-tight mb-4">
-                Complete <span className="text-amber-500 block">Digital Solutions</span>
+                Complete{" "}
+                <span className="text-amber-500 block">Digital Solutions</span>
               </h3>
               <p className="text-[14px] text-slate-300 font-semibold leading-relaxed max-w-[250px]">
-                Building powerful digital products that help your business grow and scale.
+                Building powerful digital products that help your business grow
+                and scale.
               </p>
             </div>
           </motion.div>
@@ -449,16 +350,14 @@ that optimize workflows, drive growth, and deliver lasting value.
           {/* Cards Grid */}
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 xl:block relative z-10">
             {SERVICES.map((service, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`${service.positionClass} flex justify-center w-full xl:w-auto`}
               >
                 <HexagonCard service={service} />
               </div>
             ))}
           </div>
-
-          
         </div>
       </Row>
     </Section>

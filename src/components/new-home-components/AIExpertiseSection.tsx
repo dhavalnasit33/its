@@ -129,7 +129,7 @@ export default function AIExpertiseSection() {
   };
 
   return (
-    <section className="bg-[#050914] py-24 lg:py-32 relative overflow-hidden font-sans">
+    <section className="bg-[#050914] lg:py-24!  relative overflow-hidden ">
       {/* ── IMMERSIVE GLOW & AMBIENT GRIDS ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(214,128,41,0.06)_0%,transparent_60%)] blur-[120px]" />

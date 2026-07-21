@@ -25,7 +25,7 @@ export default function Footer() {
   } = useWebsiteSettings();
 
   return (
-    <footer className="font-sans ">
+    <footer className="">
       {/* Top Section */}
       <div className="relative bg-cover bg-center py-12 px-6" >
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-gray-800">

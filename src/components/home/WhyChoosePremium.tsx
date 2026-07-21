@@ -57,7 +57,7 @@ export default function WhyChoosePremium({ items }: WhyChoosePremiumProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
-                  className="flex flex-col sm:flex-row items-start gap-4 p-5 rounded-[22px] border   bg-[#fffcf8]/40 hover:bg-white border-[#d68029]/10 hover:border-[#d68029]/50 hover:shadow-[0_15px_30px_rgba(214,128,41,0.06)] transition-all duration-300 group"
+                  className="flex flex-col sm:flex-row items-start gap-4 p-5 cursor-pointer rounded-[22px] border   bg-[#fffcf8]/40 hover:bg-white border-[#d68029]/10 hover:border-[#d68029]/50 hover:shadow-[0_15px_30px_rgba(214,128,41,0.06)] transition-all duration-300 group"
                 >
                   {/* Icon Container with theme background */}
                   <div className="w-12 h-12 rounded-xl bg-[#d68029]/10 flex items-center justify-center shrink-0 border border-[#d68029]/10 group-hover:scale-105 group-hover:bg-[#d68029] transition-all duration-300">

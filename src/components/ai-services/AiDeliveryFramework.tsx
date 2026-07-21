@@ -94,7 +94,7 @@ export default function AiDeliveryFramework() {
   const [hoveredStep, setHoveredStep] = React.useState<number | null>(null);
 
   return (
-    <section className="relative bg-[#0d1b2a] py-24 overflow-hidden font-sans">
+    <section className="relative bg-[#0d1b2a] py-24 overflow-hidden ">
       {/* Background Ambient Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-900/20 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[300px] bg-orange-900/10 blur-[100px] rounded-full pointer-events-none" />
