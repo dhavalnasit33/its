@@ -15,6 +15,7 @@ import GenerativeAISolutions from "@/components/generative-ai-llm-solutions/Gene
 import LLMProcess from "@/components/generative-ai-llm-solutions/LLMProcess";
 import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
 import CTA from "@/components/common/CTA";
+import EnterpriseAIArchitecture from "@/components/generative-ai-llm-solutions/EnterpriseAIArchitecture";
 
 const GENERATIVE_AI_FAQS = [
   {
@@ -148,8 +149,10 @@ export default function GenerativeAIClient() {
         {/* ── 5. Solutions Grid ── */}
         <GenerativeAISolutions />
 
+        <EnterpriseAIArchitecture />
+
         {/* ── 6. Process Step Workflow ── */}
-        <LLMProcess />
+        {/* <LLMProcess /> */}
 
         {/* ── 7. Call To Action Banner ── */}
         <CTA highlightedText="Generative AI Solution?" />
