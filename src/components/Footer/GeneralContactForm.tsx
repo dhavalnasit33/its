@@ -87,7 +87,14 @@ const contactSchema = z.object({
         .email("Invalid email address"),
     phone: z
         .string()
-        .min(10, { message: "Phone number must be at least 10 digits" }),
+        .min(1, "Phone number is required")
+        .refine(
+            (val) => {
+                const cleaned = val.replace(/\D/g, "");
+                return cleaned.length >= 10 && cleaned.length <= 15;
+            },
+            { message: "Phone number must contain 10 to 15 digits" }
+        ),
     message: z
         .string()
         .min(10, { message: "Message must be at least 10 characters" }),
@@ -395,15 +402,20 @@ export default function GeneralContactForm() {
                             <input
                                 type="tel"
                                 placeholder="Phone Number"
-                                maxLength={10}
-                                pattern="\d{10}"
+                                maxLength={15}
+                                onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                                    e.currentTarget.value = e.currentTarget.value.replace(/[^\d+]/g, "");
+                                }}
                                 className={`w-full border-b border-gray-300 focus:border-[#d68029] focus:outline-none py-2 ${errors.phone ? "border-red-500" : ""
                                     }`}
                                 {...register("phone", {
                                     required: "Phone number is required",
-                                    pattern: {
-                                        value: /^\d{10}$/,
-                                        message: "Phone number must be exactly 10 digits",
+                                    validate: (val) => {
+                                        const cleaned = (val || "").replace(/\D/g, "");
+                                        if (cleaned.length < 10 || cleaned.length > 15) {
+                                            return "Phone number must contain 10 to 15 digits";
+                                        }
+                                        return true;
                                     },
                                 })}
                             />

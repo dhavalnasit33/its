@@ -88,7 +88,7 @@
 // const applySchema = z.object({
 //     name: z.string().min(3, "Full name must be at least 3 characters"),
 //     email: z.string().email("Invalid email address"),
-//     phone: z.string().regex(/^\d{10}$/, "Phone number must be exactly 10 digits"),
+//     phone: z.string().min(1, "Phone number is required").refine((val) => { const cleaned = val.replace(/\D/g, ""); return cleaned.length >= 10 && cleaned.length <= 15; }, { message: "Phone number must contain 10 to 15 digits" }),
 //     graduation: z.string().min(2, "Graduation is required"),
 //     experience: z.string().min(1, "Experience is required"),
 //     positionApplied: z.string().min(1, "Please select a position"),
@@ -572,7 +572,16 @@ function validateFile(file: File): string | null {
 const applySchema = z.object({
     name: z.string().min(3, "Full name must be at least 3 characters"),
     email: z.string().email("Invalid email address"),
-    phone: z.string().regex(/^\d{10}$/, "Phone number must be exactly 10 digits"),
+    phone: z
+        .string()
+        .min(1, "Phone number is required")
+        .refine(
+            (val) => {
+                const cleaned = val.replace(/\D/g, "");
+                return cleaned.length >= 10 && cleaned.length <= 15;
+            },
+            { message: "Phone number must contain 10 to 15 digits" }
+        ),
     graduation: z.string().min(2, "Graduation is required"),
     experience: z.string().min(1, "Experience is required"),
     positionApplied: z.string().min(1, "Please select a position"),
@@ -804,6 +813,13 @@ export default function ApplyPositionModal({
                             fullWidth
                             variant="outlined"
                             size="small"
+                            inputProps={{
+                                maxLength: 15,
+                            }}
+                            onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                                const target = e.currentTarget;
+                                target.value = target.value.replace(/[^\d+]/g, "");
+                            }}
                         />
                         <TextField
                             {...register("email")}

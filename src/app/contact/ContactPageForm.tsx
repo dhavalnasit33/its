@@ -536,12 +536,20 @@ export default function ContactPageForm() {
                                         <input
                                             type="tel"
                                             placeholder="Phone Number"
+                                            maxLength={15}
+                                            onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                                                e.currentTarget.value = e.currentTarget.value.replace(/[^\d+]/g, "");
+                                            }}
                                             {...register("phone", {
                                                 required: "Phone number is required",
-                                                pattern: { value: /^\d{10}$/, message: "Must be 10 digits" },
+                                                validate: (val) => {
+                                                    const cleaned = (val || "").replace(/\D/g, "");
+                                                    if (cleaned.length < 10 || cleaned.length > 15) {
+                                                        return "Phone number must contain 10 to 15 digits";
+                                                    }
+                                                    return true;
+                                                },
                                             })}
-                                            maxLength={10}
-                                            pattern="\d{10}"
                                             className="flex h-10 w-full text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-ring 
                                                 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 bg-transparent border-0 border-b border-[#ffffff14] rounded-none 
                                                 px-0 py-7 text-white opacity-60 placeholder:text-white/60 focus-visible:ring-0 focus-visible:border-[#d68029] focus-visible:outline-none"

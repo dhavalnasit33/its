@@ -36,9 +36,17 @@ import { GOOGLE_CAPTACH_CLIENT_KEY } from "@/config";
 const hireSchema = z.object({
     name: z.string().min(3, "Full name must be at least 3 characters"),
     email: z.string().email("Invalid email address"),
-    phone: z.string().refine(matchIsValidTel, {
-        message: "Please enter a valid phone number",
-    }),
+    phone: z.string().refine(
+        (val) => {
+            if (!val) return false;
+            if (matchIsValidTel(val)) return true;
+            const cleaned = val.replace(/\D/g, "");
+            return cleaned.length >= 10 && cleaned.length <= 15;
+        },
+        {
+            message: "Please enter a valid phone number",
+        }
+    ),
     recruitment: z.string().min(1, "Please select a recruitment type"),
     subject: z.string().min(1, "Please select a subject"),
     message: z.string().min(10, "Message must be at least 10 characters"),

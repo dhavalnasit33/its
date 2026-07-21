@@ -637,6 +637,14 @@ useEffect(() => {
 const handleChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 ) => {
+  if (e.target.name === "phone") {
+    const cleaned = e.target.value.replace(/[^\d+]/g, "").slice(0, 15);
+    setFormData({
+      ...formData,
+      phone: cleaned,
+    });
+    return;
+  }
   setFormData({
     ...formData,
     [e.target.name]: e.target.value,
@@ -797,7 +805,11 @@ if (!isOpen) return null;
                                 onChange={handleChange}
                                 type="tel"
                                 placeholder="Phone Number"
-                              className="w-full border-b border-gray-300 py-2"
+                                maxLength={15}
+                                onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                                    e.currentTarget.value = e.currentTarget.value.replace(/[^\d+]/g, "");
+                                }}
+                                className="w-full border-b border-gray-300 py-2"
                           />    
                       </div>
                   </div>
