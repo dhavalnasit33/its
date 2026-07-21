@@ -24,14 +24,14 @@ export const metadata: Metadata = {
       "Partner with us to deploy custom enterprise Generative AI applications, Retrieval-Augmented Generation (RAG) platforms, and fine-tuned LLM models.",
     url: "https://inspiretechnosolution.com/generative-ai-llm-solutions",
     type: "website",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Generative AI & LLM Solutions | Inspire Techno Solution",
     description:
       "Partner with us to deploy custom enterprise Generative AI applications, Retrieval-Augmented Generation (RAG) platforms, and fine-tuned LLM models.",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
     site: "@inspiretechnosolution",
   },
 };

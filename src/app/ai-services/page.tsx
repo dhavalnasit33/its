@@ -28,7 +28,7 @@ export const metadata: Metadata = {
       "Build enterprise AI solutions including AI strategy, AI chatbots, AI automation, AI agents, AI product development, and Generative AI services for modern businesses.",
     url: "https://inspiretechnosolution.com/ai-services",
     type: "website",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
   },
   twitter: {
     card: "summary_large_image",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
       "Enterprise AI Solutions & Development Services | Inspire Techno Solution",
     description:
       "Build enterprise AI solutions including AI strategy, AI chatbots, AI automation, AI agents, AI product development, and Generative AI services for modern businesses.",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
     site: "@inspiretechnosolution",
   },
 };

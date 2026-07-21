@@ -27,14 +27,14 @@ export const metadata: Metadata = {
       "We design, build, and deploy premium AI products, from autonomous agents to enterprise machine learning systems. Partner with our expert team.",
     url: "https://inspiretechnosolution.com/ai-product-development",
     type: "website",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "AI Product Development Services | Inspire Techno Solution",
     description:
       "We design, build, and deploy premium AI products, from autonomous agents to enterprise machine learning systems. Partner with our expert team.",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
     site: "@inspiretechnosolution",
   },
 };

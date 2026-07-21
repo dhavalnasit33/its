@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { LuCheck, LuCalendar } from "react-icons/lu";
+import { LuCheck, LuArrowRight, LuArrowDown } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
 import Button from "@/components/Button";
@@ -51,7 +51,7 @@ export default function Hero() {
             {/* Description */}
             <motion.p
               {...fadeUp(0.2)}
-              className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-8 lg:max-w-2xl"
+              className="text-[#6f6f6f] text-base sm:text-lg md:text-[18px] font-medium leading-7 sm:leading-8 mb-8 lg:max-w-xl"
             >
               We build intelligent AI solutions that automate operations,
               enhance customer experiences, and drive growth. From
@@ -68,19 +68,25 @@ export default function Hero() {
               <Button
                 bgColor="#D27E2B"
                 hoverColor="#0F172A"
-                text="Explore AI Services"
-                href="#ai-solutions"
+                text="Talk to Our Experts"
+                href="#contact-form-section"
                 icon="/navbar/btn_icon.png"
               />
-              <motion.div className="border border-[#D27E2B]/40 hover:border-[#D68029] bg-white relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0F172A] hover:text-[#ffffff] transition-all duration-700 ease-in-out group shadow-xs">
+              <motion.div className="border border-[#172240]/40 hover:border-[#D68029] bg-[#172240] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#ffffff] hover:text-[#ffffff] transition-all duration-700 ease-in-out group shadow-xs">
                 <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded group-hover:w-full group-hover:h-full"></span>
                 <a
-                  href="#contact-form-section"
+                  href="/our-service"
                   className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-7 sm:py-3 cursor-pointer font-semibold"
                 >
                   <span className="flex flex-row gap-2.5 items-center justify-center">
-                    Book Consultation
-                    <LuCalendar className="w-4 h-4 text-[#D27E2B] transition-all duration-700 group-hover:text-white" />
+                    Explore Our Services
+                    <Image
+                      src="/navbar/btn_icon.png"
+                      alt="Arrow"
+                      width={20}
+                      height={20}
+                      className="transition-all duration-700 invert ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert w-5 h-5"
+                    />
                   </span>
                 </a>
               </motion.div>

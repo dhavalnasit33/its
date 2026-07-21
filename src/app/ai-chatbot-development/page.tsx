@@ -24,14 +24,14 @@ export const metadata: Metadata = {
       "We design, build, and deploy enterprise AI chatbots and automation workflows to streamline operation processes and customer experiences.",
     url: "https://inspiretechnosolution.com/ai-chatbot-development",
     type: "website",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "AI Chatbot Development | Inspire Techno Solution",
     description:
       "Deploy intelligent conversational AI solutions powered by GPT, Claude, and custom LLMs.",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
     site: "@inspiretechnosolution",
   },
 };

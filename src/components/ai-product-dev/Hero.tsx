@@ -11,6 +11,8 @@ import {
   LuDatabaseZap,
   LuTrendingUp,
   LuCheck,
+  LuArrowRight,
+  LuArrowDown,
 } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "@/components/Section";
@@ -149,7 +151,7 @@ export default function Hero() {
                 href="#contact-form-section"
                 icon="/navbar/btn_icon.png"
               />
-              <motion.div className="border border-[#0d1b2a] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0d1b2a] hover:text-[#ffffff] transition-all duration-700 ease-in-out group">
+              <motion.div className="border border-[#0d1b2a] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden bg-[#0F172A] text-[#ffffff] hover:text-[#ffffff] transition-all duration-700 ease-in-out group">
                 <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded group-hover:w-full group-hover:h-full"></span>
                 <a
                   href="#ai-solutions"
@@ -162,8 +164,9 @@ export default function Hero() {
                       alt="Arrow"
                       width={20}
                       height={20}
-                      className="transition-all duration-700 ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert w-5 h-5"
+                      className="transition-all duration-700 ease-in-out brightness-0 invert group-hover:brightness-0 group-hover:invert w-5 h-5 rotate-90"
                     />
+
                   </span>
                 </a>
               </motion.div>

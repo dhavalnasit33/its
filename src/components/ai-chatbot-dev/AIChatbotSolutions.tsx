@@ -85,7 +85,7 @@ const SOLUTIONS = [
 
 export default function AIChatbotSolutions() {
   return (
-    <Section className=" py-20!">
+    <Section id="chatbot-solutions" className=" py-20!">
       <Row>
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">

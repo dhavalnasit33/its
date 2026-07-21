@@ -18,6 +18,8 @@ import {
   LuArrowRight,
 } from "react-icons/lu";
 import SectionBadge from "../new-home-components/SectionBadge";
+import Section from "../Section";
+import Row from "../Row";
 
 // --- TYPES ---
 interface SolutionData {
@@ -308,14 +310,17 @@ export default function Ultimate3DEcosystem() {
   };
 
   return (
+
     // Beautiful, ultra-premium soft background
-    <section className="bg-gradient-to-b from-[#F4F7FA] to-[#EAEFF5] py-32 lg:py-40 relative overflow-hidden min-h-[1300px] flex flex-col items-center justify-start">
+    <Section id="solutions"  className="bg-gradient-to-b from-[#F4F7FA] to-[#EAEFF5]  relative overflow-hidden">
+
       {/* --- ADD THIS TO GLOBAL CSS OR TAILWIND CONFIG FOR THE SWEEP EFFECT --- */}
       <style>{`
         @keyframes shimmer {
           100% { transform: translateX(200%) skewX(-30deg); }
         }
       `}</style>
+<Row className=" min-h-[1300px] flex flex-col items-center justify-start">
 
       {/* Deep Background Ambience */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -325,7 +330,7 @@ export default function Ultimate3DEcosystem() {
         <div className="absolute bottom-[-20%] left-0 w-full h-[60%] bg-[linear-gradient(rgba(15,23,42,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.05)_1px,transparent_1px)] bg-[size:100px_100px] [transform:perspective(1000px)_rotateX(75deg)] [mask-image:linear-gradient(transparent,black)]" />
       </div>
 
-      <div className="text-center mb-8 lg:mb-12 max-w-4xl mx-auto flex flex-col items-center relative z-20 px-4">
+      <div className="text-center   max-w-4xl mx-auto flex flex-col items-center relative z-20 px-4">
         <motion.span
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -334,16 +339,27 @@ export default function Ultimate3DEcosystem() {
         >
           <SectionBadge title=" Intelligence Core" />
         </motion.span>
+  <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-5xl font-extrabold text-[#0B1E35] leading-tight mb-6"
+          >
+           What We <span className="text-[#D27E2B]">Build</span>
+          </motion.h2>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="common-h2 text-[#0F172A] whitespace-nowrap text-2xl sm:text-3xl lg:text-4xl"
-        >
-          What We <span className="text-[#D27E2B]">Build</span>
-        </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-slate-500 text-base md:text-lg leading-relaxed"
+          >
+       Powerful AI solutions and enterprise-grade systems built to transform the way you work.
+          </motion.p>
+    
+       
       </div>
 
       {/* --- DESKTOP 3D ENGINE STAGE --- */}
@@ -418,6 +434,7 @@ export default function Ultimate3DEcosystem() {
           );
         })}
       </div>
-    </section>
+</Row>
+    </Section>
   );
 }

@@ -25,13 +25,13 @@ export const metadata: Metadata = {
       "Build smarter AI-powered business solutions with expert strategy and consulting services.",
     url: "https://inspiretechnosolution.com/ai-strategy-consulting",
     type: "website",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "AI Strategy & Consulting | Inspire Techno Solution",
     description: "Build smarter AI-powered business solutions.",
-    images: ["/feature-logo.jpg"],
+    images: ["https://inspiretechnosolution.com/feature-logo.jpg"],
     site: "@inspiretechnosolution",
   },
 };

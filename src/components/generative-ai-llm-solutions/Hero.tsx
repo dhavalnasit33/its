@@ -58,14 +58,20 @@ export default function Hero() {
                 href="#contact-form-section"
                 icon="/navbar/btn_icon.png"
               />
-              <motion.div className="border border-[#0F172A]/20 hover:border-[#D27E2B] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0F172A] hover:text-[#ffffff] transition-all duration-700 ease-in-out group bg-white shadow-sm">
+              <motion.div className="border border-[#172240]/40 hover:border-[#D68029] bg-[#172240] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#ffffff] hover:text-[#ffffff] transition-all duration-700 ease-in-out group shadow-xs">
                 <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded group-hover:w-full group-hover:h-full"></span>
                 <a
-                  href="#contact-form-section"
+                  href="#solutions"
                   className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-3 cursor-pointer font-semibold flex items-center gap-2"
                 >
-                  Schedule AI Consultation
-                  <LuCalendar className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
+                  Explore Solutions
+                  <Image
+                    src="/navbar/btn_icon.png"
+                    alt="Arrow"
+                    width={20}
+                    height={20}
+                    className="transition-all duration-700 invert ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert w-5 h-5 rotate-90"
+                  />
                 </a>
               </motion.div>
             </motion.div>

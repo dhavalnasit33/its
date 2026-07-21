@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";  
+import { LuArrowDown } from "react-icons/lu";
 import Row from "@/components/Row";
 import Section from "../Section";
 import Button from "../Button";
@@ -80,24 +81,23 @@ export default function Hero() {
                   bgColor="#D68029"
                   hoverColor="#0d1b2a"
                   text=" Book Free Consultation"
+                  icon="/navbar/btn_icon.png"
                   href="#contact-form-section"
               />
-            <motion.div className="border border-[#0d1b2a] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden text-[#0d1b2a] hover:text-[#ffffff] transition-all duration-700 ease-in-out group"
+            <motion.div className="border border-[#0d1b2a] hover:border-[#D68029] relative w-auto inline-flex items-center justify-center rounded-lg overflow-hidden bg-[#0F172A] text-[#ffffff] hover:text-[#ffffff] transition-all duration-700 ease-in-out group"
                   >
                   <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D68029] rounded   group-hover:w-full group-hover:h-full"></span>
-                  <a href="/our-service"
+                  <a href="#ai-solutions"
                       className="relative tracking-tight text-sm sm:text-base  px-6 py-3 sm:px-8 sm:py-3 cursor-pointer font-semibold">
                       <span className="flex flex-row gap-3 items-center justify-center">
-                          Explore Our Services
-                          <div className="group">
-                          <Image
-                              src="/navbar/btn_icon.png"
-                              alt="FRAME"
-                              width={20}
-                              height={20}
-                                className="transition-all duration-700 ease-in-out brightness-0 group-hover:brightness-0 group-hover:invert w-5 h-5"
-                          />
-                          </div>
+                           Explore Solutions
+                           <Image
+                             src="/navbar/btn_icon.png"
+                             alt="Arrow"
+                             width={20}
+                             height={20}
+                             className="transition-all duration-700 ease-in-out brightness-0 invert group-hover:brightness-0 group-hover:invert w-5 h-5 rotate-90"
+                           />
                       </span>
                   </a>
               </motion.div>

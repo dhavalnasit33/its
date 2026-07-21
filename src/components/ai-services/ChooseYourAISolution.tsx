@@ -123,7 +123,7 @@ const ServiceCard = ({
 
 export default function ChooseYourAISolution() {
   return (
-    <Section className="relative bg-gradient-to-b from-white via-slate-50/60 to-white py-24 lg:py-36 overflow-hidden">
+    <Section id="ai-solutions" className="relative bg-gradient-to-b from-white via-slate-50/60 to-white py-24 lg:py-36 overflow-hidden">
       {/* High-end ambient holographic background lighting */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(210,126,43,0.08)_0%,rgba(15,23,42,0.03)_50%,transparent_80%)] rounded-full blur-[90px]" />
