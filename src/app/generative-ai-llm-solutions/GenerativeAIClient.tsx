@@ -17,6 +17,8 @@ import GlobalLogoMarquee from "@/components/common/GlobalLogoMarquee";
 import CTA from "@/components/common/CTA";
 import EnterpriseAIArchitecture from "@/components/generative-ai-llm-solutions/EnterpriseAIArchitecture";
 import IntegratedAIArchitecture from "@/components/generative-ai-llm-solutions/3DEnterpriseAI";
+import EnterpriseAICommandCenter from "@/components/generative-ai-llm-solutions/EnterpriseAICommandCenter";
+import EnterpriseAIKnowledgePlatform from "@/components/generative-ai-llm-solutions/EnterpriseAIKnowledgePlatform";
 
 const GENERATIVE_AI_FAQS = [
   {
@@ -157,6 +159,8 @@ export default function GenerativeAIClient() {
         <GenerativeAISolutions />
 
         <EnterpriseAIArchitecture />
+        <EnterpriseAICommandCenter />
+        <EnterpriseAIKnowledgePlatform />
 
         {/* ── 6. Process Step Workflow ── */}
         {/* <LLMProcess /> */}
