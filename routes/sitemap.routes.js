@@ -58,13 +58,16 @@ router.get("/sitemap.xml", async (req, res) => {
     res.send(sitemapIndexXml);
   } catch (error) {
     console.error("❌ Error generating sitemap index:", error);
-    res.status(500).send("Internal Server Error: Could not generate sitemap index.");
+    res
+      .status(500)
+      .send("Internal Server Error: Could not generate sitemap index.");
   }
 });
 
 // 2. Main Sitemap (Single / Independent Pages)
 router.get("/sitemap-main.xml", async (req, res) => {
   const baseUrl = process.env.Loc_url || "https://inspiretechnosolution.com";
+
   try {
     const seoDbPages = await SeoManager.find(
       {
@@ -74,11 +77,31 @@ router.get("/sitemap-main.xml", async (req, res) => {
           { linkedType: null },
         ],
       },
-      "slug updatedAt"
+      "slug updatedAt",
     ).lean();
 
-    const urls = seoDbPages.map((page) => {
+    // Static pages to always include
+    const staticPages = [
+      { slug: "ai-chatbot-development" },
+      { slug: "ai-product-development" },
+      { slug: "ai-strategy-consulting" },
+      { slug: "ai-services" },
+    ];
+
+    const today = new Date();
+
+    const urls = [
+      ...seoDbPages.map((page) => ({
+        slug: page.slug,
+        updatedAt: page.updatedAt,
+      })),
+      ...staticPages.map((page) => ({
+        slug: page.slug,
+        updatedAt: today,
+      })),
+    ].map((page) => {
       const path = page.slug === "home" ? "/" : `/${page.slug}`;
+
       return {
         loc: path,
         priority: path === "/" ? 1.0 : 0.9,
@@ -105,7 +128,9 @@ ${urls
     res.send(sitemapXml);
   } catch (error) {
     console.error("❌ Error generating main sitemap:", error);
-    res.status(500).send("Internal Server Error: Could not generate main sitemap.");
+    res
+      .status(500)
+      .send("Internal Server Error: Could not generate main sitemap.");
   }
 });
 
@@ -113,7 +138,10 @@ ${urls
 router.get("/sitemap-hire.xml", async (req, res) => {
   const baseUrl = process.env.Loc_url || "https://inspiretechnosolution.com";
   try {
-    const seoDbPages = await SeoManager.find({ linkedType: "hire" }, "slug updatedAt").lean();
+    const seoDbPages = await SeoManager.find(
+      { linkedType: "hire" },
+      "slug updatedAt",
+    ).lean();
 
     const urls = seoDbPages.map((page) => ({
       loc: `/hire/${page.slug}`,
@@ -140,7 +168,9 @@ ${urls
     res.send(sitemapXml);
   } catch (error) {
     console.error("❌ Error generating hire sitemap:", error);
-    res.status(500).send("Internal Server Error: Could not generate hire sitemap.");
+    res
+      .status(500)
+      .send("Internal Server Error: Could not generate hire sitemap.");
   }
 });
 
@@ -175,7 +205,9 @@ ${urls
     res.send(sitemapXml);
   } catch (error) {
     console.error("❌ Error generating blog sitemap:", error);
-    res.status(500).send("Internal Server Error: Could not generate blog sitemap.");
+    res
+      .status(500)
+      .send("Internal Server Error: Could not generate blog sitemap.");
   }
 });
 
@@ -183,7 +215,10 @@ ${urls
 router.get("/sitemap-services.xml", async (req, res) => {
   const baseUrl = process.env.Loc_url || "https://inspiretechnosolution.com";
   try {
-    const seoDbPages = await SeoManager.find({ linkedType: "service" }, "slug updatedAt").lean();
+    const seoDbPages = await SeoManager.find(
+      { linkedType: "service" },
+      "slug updatedAt",
+    ).lean();
 
     const urls = seoDbPages.map((page) => ({
       loc: `/${page.slug}`,
@@ -210,7 +245,9 @@ ${urls
     res.send(sitemapXml);
   } catch (error) {
     console.error("❌ Error generating services sitemap:", error);
-    res.status(500).send("Internal Server Error: Could not generate services sitemap.");
+    res
+      .status(500)
+      .send("Internal Server Error: Could not generate services sitemap.");
   }
 });
 
