@@ -34,7 +34,8 @@ interface SolutionData {
 const SOLUTIONS: SolutionData[] = [
   {
     title: "AI Copilots",
-    description: "Context-aware assistants to automate complex operations.",
+    description:
+      "Context-aware enterprise AI copilots designed to automate multi-step operational workflows, streamline decision-making, and assist domain experts with instant data synthesis.",
     icon: LuBot,
     color: "#3B82F6",
     angle: 0,
@@ -42,14 +43,15 @@ const SOLUTIONS: SolutionData[] = [
   {
     title: "RAG Systems",
     description:
-      "Deploy semantic search vector databases for highly accurate answers.",
+      "Production-grade Retrieval-Augmented Generation architectures integrated with vector databases for ultra-accurate, hallucination-free enterprise knowledge retrieval.",
     icon: LuDatabase,
     color: "#F97316",
     angle: 60,
   }, // Bottom Right
   {
     title: "Custom GPTs",
-    description: "Train specialized models optimized for proprietary datasets.",
+    description:
+      "Fine-tuned open-source and proprietary LLMs optimized specifically for your domain taxonomy, compliance guardrails, and proprietary corporate intelligence.",
     icon: LuChevronsUp,
     color: "#8B5CF6",
     angle: 120,
@@ -57,7 +59,7 @@ const SOLUTIONS: SolutionData[] = [
   {
     title: "Chatbots",
     description:
-      "Build pipelines that handle customer care and resolve queries instantly.",
+      "Omnichannel conversational AI engines that execute multi-intent customer support, automate ticket resolutions, and seamlessly integrate with backend CRMs.",
     icon: LuMessageSquare,
     color: "#10B981",
     angle: 180,
@@ -65,7 +67,7 @@ const SOLUTIONS: SolutionData[] = [
   {
     title: "Doc Intelligence",
     description:
-      "Extract structured insights and metadata from massive archives.",
+      "Advanced OCR and multimodal LLM pipelines that extract structured data, classify financial records, and summarize complex legal contracts at scale.",
     icon: LuFileText,
     color: "#F43F5E",
     angle: 240,
@@ -73,7 +75,7 @@ const SOLUTIONS: SolutionData[] = [
   {
     title: "Content Gen",
     description:
-      "Accelerate marketing copywriting matching your brand guidelines.",
+      "Enterprise content synthesis platforms tailored to your brand voice, automating technical documentation, marketing copy, and multi-format reports.",
     icon: LuSparkles,
     color: "#06B6D4",
     angle: 300,
@@ -182,17 +184,9 @@ const GlassTerminal = ({
             </h3>
           </div>
 
-          <p className="text-slate-500 text-[15px] font-medium leading-relaxed mb-6">
+          <p className="text-slate-500 text-[15px] font-medium leading-relaxed mb-0">
             {sol.description}
           </p>
-
-          <div
-            className="flex items-center gap-2 text-sm font-bold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-            style={{ color: sol.color }}
-          >
-            <span>Explore Architecture</span>
-            <LuArrowRight className="w-4 h-4" />
-          </div>
         </div>
       </motion.div>
     </motion.div>

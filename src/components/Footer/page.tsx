@@ -1685,7 +1685,25 @@ export default function ContactFooterPage() {
                 >
                   Ai Strategy Consulting
                 </Link>
+                <span className="mx-2 text-[#D68029]">|</span>
               </li>
+              <li className="list-none py-1">
+                <Link
+                  href="/generative-ai-llm-solutions"
+                  className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
+                >
+                  Generative AI & LLM Solutions
+                </Link>
+                {/* <span className="mx-2 text-[#D68029]">|</span> */}
+              </li>
+              {/* <li className="list-none py-1">
+                <Link
+                  href="/agentic-ai-development-services"
+                  className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
+                >
+                  Agentic AI Development Services
+                </Link>
+              </li> */}
             </ul>
           </div>
           <div>

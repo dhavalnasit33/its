@@ -239,7 +239,7 @@ export default function PremiumAIArchitecture() {
   const activeStep = ARCHITECTURE_STEPS[activeIdx];
 
   return (
-    <Section className="relative w-full bg-[#F4F7FA] overflow-hidden py-24 lg:py-32 font-sans">
+    <Section className="relative w-full bg-[#F4F7FA]   overflow-hidden ">
       {/* Blueprint Grid Background - Extremely clean and subtle */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
@@ -280,35 +280,50 @@ export default function PremiumAIArchitecture() {
             workflows.
           </motion.p>
         </div>
+      </div>
 
-        {/* --- 2. Sleek Tech Marquee --- */}
-        {/* Replaces the messy floating background chips with a structured scrolling banner */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="w-full max-w-5xl mx-auto overflow-hidden relative mb-20 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-20 before:bg-gradient-to-r before:from-[#F4F7FA] before:to-transparent before:z-10 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-20 after:bg-gradient-to-l after:from-[#F4F7FA] after:to-transparent after:z-10"
-        >
-          <motion.div
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-            className="flex w-max gap-4"
-          >
-            {/* Double the array for seamless infinite loop */}
-            {[...TECH_CHIPS, ...TECH_CHIPS].map((chip, idx) => {
-              const Icon = chip.icon;
-              return (
-                <div
-                  key={idx}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full shadow-sm text-sm font-bold text-slate-600 shrink-0"
-                >
-                  <Icon className="w-4 h-4 text-[#D68029]" />
-                  {chip.label}
-                </div>
-              );
-            })}
-          </motion.div>
-        </motion.div>
+      {/* --- 2. Sleek Tech Marquee (Full-Width End-to-End) --- */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="w-full overflow-hidden relative mb-20 py-2 select-none z-10 group"
+      >
+        {/* Fade edges for smooth entry/exit */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#F4F7FA] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[#F4F7FA] to-transparent z-10 pointer-events-none" />
+
+        <div className="flex gap-4 items-center w-max animate-marquee group-hover:[animation-play-state:paused] py-2">
+          {[...TECH_CHIPS, ...TECH_CHIPS, ...TECH_CHIPS].map((chip, idx) => {
+            const Icon = chip.icon;
+            return (
+              <div
+                key={idx}
+                className="flex items-center gap-2.5 px-6 py-3 bg-white border border-slate-200/90 rounded-full shadow-sm text-sm font-bold text-slate-700 hover:text-slate-900 hover:border-[#D68029]/50 hover:shadow-md transition-all duration-300 transform hover:scale-105 cursor-pointer shrink-0"
+              >
+                <Icon className="w-4.5 h-4.5 text-[#D68029]" />
+                {chip.label}
+              </div>
+            );
+          })}
+        </div>
+
+        <style jsx>{`
+          @keyframes marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-33.333%);
+            }
+          }
+          .animate-marquee {
+            animation: marquee 25s linear infinite;
+          }
+        `}</style>
+      </motion.div>
+
+      <div className="max-w-[1440px] mx-auto px-4 lg:px-8 relative z-10">
 
         {/* --- 3. Dynamic Island Pipeline Navigator --- */}
         <div className="relative w-full max-w-4xl mx-auto mb-10 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 px-2 ">
@@ -347,7 +362,7 @@ export default function PremiumAIArchitecture() {
         </div>
 
         {/* --- 4. Premium Glass Detail Panel --- */}
-        <div className="w-full max-w-6xl mx-auto mb-20">
+        <div className="w-full  mx-auto mb-20">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeStep.num}

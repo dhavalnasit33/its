@@ -142,20 +142,6 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
           {solution.title}
         </h3>
         <p className="text-gray-600 fonts_16 flex-1">{solution.description}</p>
-
-        {/* Learn More */}
-        <div className="mt-5 pt-4 border-t border-gray-100">
-          <a
-            href="#contact-form-section"
-            className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-300 group-hover:gap-3"
-            style={{ color: solution.accent }}
-          >
-            Learn More
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </div>
       </div>
     </motion.div>
   );

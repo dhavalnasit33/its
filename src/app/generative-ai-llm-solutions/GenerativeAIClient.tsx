@@ -19,6 +19,7 @@ import EnterpriseAIArchitecture from "@/components/generative-ai-llm-solutions/E
 import IntegratedAIArchitecture from "@/components/generative-ai-llm-solutions/3DEnterpriseAI";
 import EnterpriseAICommandCenter from "@/components/generative-ai-llm-solutions/EnterpriseAICommandCenter";
 import EnterpriseAIKnowledgePlatform from "@/components/generative-ai-llm-solutions/EnterpriseAIKnowledgePlatform";
+import DepartmentAISolutions from "@/components/generative-ai-llm-solutions/DepartmentAISolutions";
 
 const GENERATIVE_AI_FAQS = [
   {
@@ -161,6 +162,9 @@ export default function GenerativeAIClient() {
         <EnterpriseAIArchitecture />
         <EnterpriseAICommandCenter />
         <EnterpriseAIKnowledgePlatform />
+
+        {/* ── 6. Department AI Solutions ── */}
+        <DepartmentAISolutions />
 
         {/* ── 6. Process Step Workflow ── */}
         {/* <LLMProcess /> */}

@@ -376,7 +376,7 @@ export default function ThreeDEnterpriseAI() {
   }, []);
 
   return (
-    <section className="relative w-full h-screen min-h-[800px] bg-[#FAFAFA] overflow-hidden font-sans flex items-center justify-center">
+    <section className="relative w-full h-screen min-h-[800px] bg-[#FAFAFA] overflow-hidden flex items-center justify-center">
       <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-indigo-100/40 rounded-full blur-[120px] pointer-events-none" />
 
