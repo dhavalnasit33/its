@@ -13,6 +13,8 @@ import CTA from "@/components/common/CTA";
 
 // Import Agentic AI Sub-components
 import Hero from "@/components/agentic-ai-development-services/Hero";
+import AgentDecisionEngine from "@/components/agentic-ai-development-services/AgentDecisionEngine";
+import CyclicAIFlow from "@/components/agentic-ai-development-services/CyclicAIFlow";
 
 const AGENTIC_AI_FAQS = [
   {
@@ -40,8 +42,7 @@ const AGENTIC_AI_FAQS = [
       "We implement strict human-in-the-loop (HITL) approval gates for critical actions (such as wire transfers or email dispatches), deterministic output schema validation, maximum iteration caps, and automated verification loops before task completion.",
   },
   {
-    question:
-      "Can multiple specialized AI agents collaborate with each other?",
+    question: "Can multiple specialized AI agents collaborate with each other?",
     answer:
       "Yes, absolutely. We specialize in Multi-Agent Collaboration systems where specialized agents (e.g. Sales Agent, Finance Agent, Legal Agent, HR Agent) delegate sub-tasks, negotiate data handoffs, and report progress back to an AI Master Orchestrator.",
   },
@@ -148,6 +149,9 @@ export default function AgenticAIClient() {
 
         {/* ── 4. Trusted Technologies Marquee ── */}
         <GlobalLogoMarquee />
+
+        <AgentDecisionEngine />
+        <CyclicAIFlow />
 
         {/* ── 5. Call To Action Banner ── */}
         <CTA highlightedText="Autonomous AI Workforce?" />
