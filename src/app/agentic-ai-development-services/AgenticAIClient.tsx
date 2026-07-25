@@ -19,6 +19,7 @@ import AgentDecisionEngine from "@/components/agentic-ai-development-services/Ag
 import CyclicAIFlow from "@/components/agentic-ai-development-services/CyclicAIFlow";
 // import WhyAgenticAI from "@/components/agentic-ai-development-services/WhyAgenticAI";
 import AgenticTechStack from "@/components/agentic-ai-development-services/AgenticTechStack";
+import WhyAgenticAI from "@/components/agentic-ai-development-services/WhyAgenticAI";
 
 const AGENTIC_AI_FAQS = [
   {
@@ -161,11 +162,10 @@ export default function AgenticAIClient() {
 
         {/* ── Section 5: Multi-Agent Collaboration (Dark Theme - bg-[#0d1b2a]) ── */}
         <MultiAgentCollaboration />
-        {/* <WhyAgenticAI /> */}
+        <WhyAgenticAI />
 
         {/* ── Section 7: Agentic Tech Stack (Light Theme Base) ── */}
         <AgenticTechStack />
-
 
         {/* ── 5. Call To Action Banner ── */}
         <CTA highlightedText="Autonomous AI Workforce?" />

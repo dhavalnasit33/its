@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Image from "next/image";
+import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
-  LuShieldCheck,
   LuBrain,
   LuLayers,
   LuLightbulb,
   LuListChecks,
   LuUserCheck,
   LuLock,
+  LuChevronsUp,
+  LuChevronsDown,
 } from "react-icons/lu";
+
 import Section from "../Section";
 import Row from "../Row";
 import SectionBadge from "../new-home-components/SectionBadge";
@@ -19,37 +20,27 @@ import SectionBadge from "../new-home-components/SectionBadge";
 // ==========================================
 // 1. DATA CONFIGURATION
 // ==========================================
-
 const FEATURES_LEFT = [
   {
     id: "auto-decision",
     title: "Autonomous\nDecision Making",
     description:
-      "AI agents analyze data, evaluate scenarios, and make decisions — without constant human intervention.",
-    imageSrc: "/assets/images/brain-icon.png",
+      "AI agents analyze data, evaluate scenarios,\nand make decisions seamlessly.",
     icon: LuBrain,
-    delay: 0.1,
-    yPos: "20%",
   },
   {
     id: "tool-integration",
     title: "Enterprise\nTool Integration",
     description:
-      "Seamlessly connects with your existing systems, APIs, and databases to get work done across your ecosystem.",
-    imageSrc: "/assets/images/puzzle-icon.png",
+      "Seamlessly connects with your existing\nsystems, APIs, and databases.",
     icon: LuLayers,
-    delay: 0.3,
-    yPos: "50%",
   },
   {
     id: "continuous-learning",
     title: "Continuous\nLearning",
     description:
-      "Agents learn from outcomes, adapt to changes, and improve performance over time.",
-    imageSrc: "/assets/images/bulb-icon.png",
+      "Agents learn from outcomes, adapt to\nchanges, and improve over time.",
     icon: LuLightbulb,
-    delay: 0.5,
-    yPos: "80%",
   },
 ];
 
@@ -58,293 +49,383 @@ const FEATURES_RIGHT = [
     id: "multi-step",
     title: "Multi-Step\nTask Execution",
     description:
-      "Handles complex workflows from start to finish — breaking down goals into actions and delivering results.",
-    imageSrc: "/assets/images/checklist-icon.png",
+      "Handles complex workflows from start to\nfinish with flawless execution.",
     icon: LuListChecks,
-    delay: 0.2,
-    yPos: "20%",
   },
   {
     id: "human-approval",
     title: "Human\nApproval Workflows",
     description:
-      "Built-in checkpoints and approval layers ensure humans stay in control where it matters most.",
-    imageSrc: "/assets/images/human-shield-icon.png",
+      "Built-in checkpoints ensure humans stay in\ncontrol where it matters.",
     icon: LuUserCheck,
-    delay: 0.4,
-    yPos: "50%",
   },
   {
     id: "enterprise-security",
     title: "Enterprise\nSecurity",
     description:
-      "Built with enterprise-grade security, compliance, and data privacy at every layer.",
-    imageSrc: "/assets/images/lock-icon.png",
+      "Built with enterprise-grade security,\ncompliance, and data privacy.",
     icon: LuLock,
-    delay: 0.6,
-    yPos: "80%",
   },
 ];
 
 // ==========================================
-// 2. 3D CAMERA PARALLAX WRAPPER
+// 2. ANIMATED SVG CONNECTOR COMPONENT
 // ==========================================
+const ConnectorSVG = ({
+  isLeft,
+  index,
+}: {
+  isLeft: boolean;
+  index: number;
+}) => {
+  const strokeColor = isLeft ? "#93C5FD" : "#FDBA74";
+  const nodeColor = isLeft ? "#3B82F6" : "#F97316";
 
-function ParallaxContainer({ children }: { children: React.ReactNode }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  let pathD = "";
+  let node1 = { x: 0, y: 0 };
+  let node2 = { x: 0, y: 0 };
 
-  const smoothX = useSpring(mouseX, { damping: 50, stiffness: 400, mass: 0.5 });
-  const smoothY = useSpring(mouseY, { damping: 50, stiffness: 400, mass: 0.5 });
+  if (isLeft) {
+    if (index === 0) {
+      pathD = "M 0 15 L 30 15 L 100 85";
+      node1 = { x: 30, y: 15 };
+      node2 = { x: 100, y: 85 };
+    } else if (index === 1) {
+      pathD = "M 0 50 L 100 50";
+      node1 = { x: 50, y: 50 };
+      node2 = { x: 100, y: 50 };
+    } else {
+      pathD = "M 0 85 L 30 85 L 100 15";
+      node1 = { x: 30, y: 85 };
+      node2 = { x: 100, y: 15 };
+    }
+  } else {
+    if (index === 0) {
+      pathD = "M 100 15 L 70 15 L 0 85";
+      node1 = { x: 70, y: 15 };
+      node2 = { x: 0, y: 85 };
+    } else if (index === 1) {
+      pathD = "M 100 50 L 0 50";
+      node1 = { x: 50, y: 50 };
+      node2 = { x: 0, y: 50 };
+    } else {
+      pathD = "M 100 85 L 70 85 L 0 15";
+      node1 = { x: 70, y: 85 };
+      node2 = { x: 0, y: 15 };
+    }
+  }
 
-  const rotateX = useTransform(smoothY, [-1, 1], [4, -4]);
-  const rotateY = useTransform(smoothX, [-1, 1], [-4, 4]);
+  return (
+    <div
+      className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-[4rem] xl:w-[6rem] h-[120px] pointer-events-none z-0 ${
+        isLeft
+          ? "right-[-4rem] xl:right-[-6rem]"
+          : "left-[-4rem] xl:left-[-6rem]"
+      }`}
+    >
+      <motion.svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+      >
+        <motion.path
+          d={pathD}
+          stroke={strokeColor}
+          strokeWidth="1.5"
+          fill="none"
+          variants={{
+            hidden: { pathLength: 0, opacity: 0 },
+            visible: {
+              pathLength: 1,
+              opacity: 1,
+              transition: {
+                duration: 1.2,
+                ease: "easeInOut",
+                delay: 0.3 + index * 0.2,
+              },
+            },
+          }}
+        />
+        {(index === 0 || index === 2) && (
+          <motion.circle
+            cx={node1.x}
+            cy={node1.y}
+            r="3"
+            fill="#fff"
+            stroke={nodeColor}
+            strokeWidth="1.5"
+            variants={{
+              hidden: { scale: 0, opacity: 0 },
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: { delay: 0.8 + index * 0.2 },
+              },
+            }}
+          />
+        )}
+        <motion.circle
+          cx={node2.x}
+          cy={node2.y}
+          r="4"
+          fill={nodeColor}
+          variants={{
+            hidden: { scale: 0, opacity: 0 },
+            visible: {
+              scale: 1,
+              opacity: 1,
+              transition: { delay: 1 + index * 0.2 },
+            },
+          }}
+        />
+      </motion.svg>
+    </div>
+  );
+};
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth) * 2 - 1;
-      const y = (e.clientY / innerHeight) * 2 - 1;
-      mouseX.set(x);
-      mouseY.set(y);
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+// ==========================================
+// 3. 3D INTERACTIVE CARD COMPONENT
+// ==========================================
+function InteractiveCard({
+  feature,
+  index,
+  direction,
+}: {
+  feature: any;
+  index: number;
+  direction: "left" | "right";
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const Icon = feature.icon;
+  const isLeft = direction === "left";
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20 });
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["6deg", "-6deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-6deg", "6deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / width - 0.5);
+    y.set(mouseY / height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  const accentColor = isLeft ? "text-[#3B82F6]" : "text-[#F97316]";
+  const dashColor = isLeft ? "bg-[#3B82F6]" : "bg-[#F97316]";
+
+  let marginClass = "";
+  if (index === 0) marginClass = "lg:-mt-16";
+  if (index === 2) marginClass = "lg:mt-16";
+
+  const floatAnimation = {
+    y: [0, -4, 0],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: index * 0.5,
+    },
+  };
+
+  // FIX: Properly isolate padding so lg:p-7 doesn't override the side padding
+  const paddingClass = isLeft
+    ? "py-6 pl-6 pr-[4.5rem] lg:py-7 lg:pl-7 lg:pr-[5.5rem]"
+    : "py-6 pr-6 pl-[4.5rem] lg:py-7 lg:pr-7 lg:pl-[5.5rem]";
 
   return (
     <motion.div
-      className="w-full relative flex flex-col items-center justify-center"
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-        perspective: "2000px",
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, x: isLeft ? -40 : 40, y: 0 }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      // animate={floatAnimation}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        delay: index * 0.15,
       }}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className={`relative flex items-center w-full max-w-[350px] z-10 cursor-pointer group ${marginClass} ${
+        isLeft ? "ml-auto" : "mr-auto"
+      }`}
     >
-      {children}
+      <ConnectorSVG isLeft={isLeft} index={index} />
+
+      {/* Main Card Body */}
+      <div
+        className={`relative w-full bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 transition-all duration-300 group-hover:shadow-[0_15px_40px_rgb(0,0,0,0.08)] z-10 text-left ${paddingClass}`}
+      >
+        <h3 className="text-[15px] font-bold leading-snug whitespace-pre-line mb-2 text-slate-800 transition-colors duration-300 group-hover:text-slate-900">
+          {feature.title}
+        </h3>
+        <p className="text-[12px] font-medium leading-relaxed text-slate-500 whitespace-pre-line mb-4">
+          {feature.description}
+        </p>
+        <div
+          className={`h-[3px] w-6 rounded-full ${dashColor} transition-all duration-300 group-hover:w-10`}
+        />
+      </div>
+
+      {/* Overlapping Icon Base */}
+      <div
+        style={{ transform: "translateZ(15px)" }}
+        className={`absolute top-1/2 -translate-y-1/2 ${
+          isLeft ? "-right-6" : "-left-6"
+        } w-16 h-16 bg-white rounded-2xl shadow-[0_8px_20px_rgb(0,0,0,0.06)] border border-slate-50 flex items-center justify-center z-20 transition-transform duration-300 group-hover:scale-105`}
+      >
+        <div
+          className={`w-11 h-11 rounded-full shadow-[inset_0_3px_8px_rgb(0,0,0,0.06)] bg-slate-50/50 flex items-center justify-center`}
+        >
+          <Icon className={`w-5 h-5 ${accentColor}`} />
+        </div>
+      </div>
     </motion.div>
   );
 }
 
 // ==========================================
-// 3. BACKGROUND CONNECTIONS (SVG PATHS)
+// 4. BACKGROUND
 // ==========================================
-
-const ConnectionLines = () => {
+const StaticBackground = () => {
   return (
-    <div className="absolute inset-0 pointer-events-none hidden lg:block z-0">
-      <svg className="w-full h-full" preserveAspectRatio="none">
-        {/* Dynamic Dashed Lines */}
-        <g stroke="#E2E8F0" strokeWidth="1.5" strokeDasharray="4 6">
-          {/* Top Left */}
-          <path d="M 28% 22% Q 40% 30% 50% 50%" fill="none" />
-          <circle cx="28%" cy="22%" r="3" fill="#D27E2B" />
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-visible hidden lg:flex">
+      <div className="absolute top-[8%] flex flex-col items-center text-slate-300/50">
+        <LuChevronsUp size={24} />
+      </div>
+      <div className="absolute bottom-[8%] flex flex-col items-center text-slate-300/50">
+        <LuChevronsDown size={24} />
+      </div>
 
-          {/* Middle Left */}
-          <path d="M 25% 50% L 50% 50%" fill="none" />
-          <circle cx="25%" cy="50%" r="3" fill="#D27E2B" />
-
-          {/* Bottom Left */}
-          <path d="M 28% 78% Q 40% 70% 50% 50%" fill="none" />
-          <circle cx="28%" cy="78%" r="3" fill="#D27E2B" />
-
-          {/* Top Right */}
-          <path d="M 72% 22% Q 60% 30% 50% 50%" fill="none" />
-          <circle cx="72%" cy="22%" r="3" fill="#D27E2B" />
-
-          {/* Middle Right */}
-          <path d="M 75% 50% L 50% 50%" fill="none" />
-          <circle cx="75%" cy="50%" r="3" fill="#D27E2B" />
-
-          {/* Bottom Right */}
-          <path d="M 72% 78% Q 60% 70% 50% 50%" fill="none" />
-          <circle cx="72%" cy="78%" r="3" fill="#D27E2B" />
-        </g>
-
-        {/* Orbital decorative rings in center */}
-        <circle
-          cx="50%"
-          cy="50%"
-          r="14%"
-          fill="none"
-          stroke="#F1F5F9"
-          strokeWidth="1"
-        />
-        <circle
-          cx="50%"
-          cy="50%"
-          r="18%"
-          fill="none"
-          stroke="#F8FAFC"
-          strokeWidth="1"
-          strokeDasharray="4 4"
-        />
-      </svg>
+      <div className="absolute w-[440px] h-[440px] xl:w-[580px] xl:h-[580px] rounded-full border border-slate-200/30" />
+      <div className="absolute w-[340px] h-[340px] xl:w-[460px] xl:h-[460px] rounded-full border border-slate-200/20" />
     </div>
   );
 };
 
-// Node Icon/Image Component with Fallback
-function FeatureIcon({ imageSrc, IconComponent }: { imageSrc: string; IconComponent: React.ElementType }) {
-  const [imgError, setImgError] = React.useState(false);
-
-  if (!imgError && imageSrc) {
-    return (
-      <img
-        src={imageSrc}
-        alt="Feature Icon"
-        onError={() => setImgError(true)}
-        className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-md"
-      />
-    );
-  }
-
-  return <IconComponent className="w-7 h-7 text-[#D27E2B]" />;
-}
-
 // ==========================================
-// 4. MAIN COMPONENT
+// 5. MAIN COMPONENT
 // ==========================================
-
 export default function WhyAgenticAI() {
   return (
-    <Section className="relative w-full overflow-hidden bg-slate-50/70 border-t border-slate-200/70 py-20 lg:py-28 text-slate-900">
-      {/* Light Theme Brand Warm Glow */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
-        <div className="w-[800px] h-[800px] bg-gradient-to-br from-orange-100/50 via-amber-50/40 to-transparent rounded-full blur-[120px] opacity-60" />
-      </div>
-
+    <Section className="relative w-full overflow-hidden bg-[#F8FAFC] py-24 lg:py-32 font-sans perspective-1000">
       <Row>
-        {/* Header Section */}
-        <div className="text-center mb-16 sm:mb-24 max-w-3xl mx-auto relative z-10 flex flex-col items-center gap-3">
-          <SectionBadge title="WHY BUSINESSES TRUST AGENTIC AI" />
-
-          <h2 className="text-3xl sm:text-4xl md:text-[42px] font-extrabold leading-tight tracking-tight text-[#0F172A]">
-            Why Businesses <span className="text-[#D27E2B]">Choose Agentic AI</span>
-          </h2>
-
-          <p className="text-slate-600 text-sm sm:text-base font-medium max-w-2xl leading-relaxed">
-            Agentic AI goes beyond passive automation — it reasons, plans, decides, and executes complex enterprise workflows autonomously with full human oversight.
-          </p>
-        </div>
-
-        {/* Radial 3D Layout Section */}
-        <div className="relative w-full max-w-[1400px] mx-auto">
-          <ParallaxContainer>
-            <ConnectionLines />
-
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12 lg:gap-8 items-center w-full relative z-10">
-              {/* Left Column Nodes */}
-              <div className="flex flex-col gap-10 lg:gap-16 relative">
-                {FEATURES_LEFT.map((feature) => (
-                  <motion.div
-                    key={feature.id}
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: feature.delay }}
-                    className="flex flex-row items-center gap-6 group lg:justify-end text-left lg:text-right"
-                    style={{ transformStyle: "preserve-3d" }}
-                  >
-                    <div className="order-2 lg:order-1 flex-1">
-                      <h3 className="text-base sm:text-lg font-black text-[#0F172A] mb-2 whitespace-pre-line leading-snug group-hover:text-[#D27E2B] transition-colors">
-                        {feature.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-[280px] ml-0 lg:ml-auto">
-                        {feature.description}
-                      </p>
-                      <div className="w-10 h-[2.5px] bg-slate-200 mt-3 ml-0 lg:ml-auto group-hover:bg-[#D27E2B] transition-colors duration-300 rounded-full" />
-                    </div>
-
-                    {/* Left Node 3D Image Base */}
-                    <motion.div
-                      whileHover={{ scale: 1.08, translateZ: 25 }}
-                      className="order-1 lg:order-2 w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl flex items-center justify-center bg-white border border-slate-200/90 shadow-xs hover:shadow-md hover:border-[#D27E2B]/50 transition-all relative z-10"
-                    >
-                      <FeatureIcon imageSrc={feature.imageSrc} IconComponent={feature.icon} />
-                    </motion.div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Central Core Image */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, type: "spring" }}
-                className="relative w-60 h-60 sm:w-72 sm:h-72 lg:w-80 lg:h-80 mx-auto my-8 lg:my-0 flex items-center justify-center"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                {/* Outer soft glow behind core */}
-                <div className="absolute inset-6 bg-orange-400/20 rounded-full blur-[40px]" />
-
-                <motion.div
-                  whileHover={{ scale: 1.05, translateZ: 35 }}
-                  className="relative z-10 w-full h-full flex items-center justify-center p-4"
-                >
-                  <img
-                    src="/ai-strategy/agentic-ai-development-services/central-ai-core.png"
-                    alt="Central AI Engine"
-                    onError={(e) => {
-                      (e.target as HTMLElement).style.display = "none";
-                    }}
-                    className="w-full h-full object-contain drop-shadow-[0_15px_35px_rgba(210,126,43,0.2)]"
-                  />
-                </motion.div>
-              </motion.div>
-
-              {/* Right Column Nodes */}
-              <div className="flex flex-col gap-10 lg:gap-16 relative">
-                {FEATURES_RIGHT.map((feature) => (
-                  <motion.div
-                    key={feature.id}
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: feature.delay }}
-                    className="flex flex-row items-center gap-6 group text-left"
-                    style={{ transformStyle: "preserve-3d" }}
-                  >
-                    {/* Right Node 3D Image Base */}
-                    <motion.div
-                      whileHover={{ scale: 1.08, translateZ: 25 }}
-                      className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl flex items-center justify-center bg-white border border-slate-200/90 shadow-xs hover:shadow-md hover:border-[#D27E2B]/50 transition-all relative z-10"
-                    >
-                      <FeatureIcon imageSrc={feature.imageSrc} IconComponent={feature.icon} />
-                    </motion.div>
-
-                    <div className="flex-1">
-                      <h3 className="text-base sm:text-lg font-black text-[#0F172A] mb-2 whitespace-pre-line leading-snug group-hover:text-[#D27E2B] transition-colors">
-                        {feature.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-[280px]">
-                        {feature.description}
-                      </p>
-                      <div className="w-10 h-[2.5px] bg-slate-200 mt-3 group-hover:bg-[#D27E2B] transition-colors duration-300 rounded-full" />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </ParallaxContainer>
-
-          {/* Bottom Floating Assurance Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
+        <div className="text-center mb-16 max-w-3xl mx-auto relative z-10">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-            className="mt-16 mx-auto max-w-2xl bg-white border border-slate-200/90 rounded-2xl p-5 sm:px-8 shadow-xs hover:shadow-md hover:border-[#D27E2B]/50 transition-all flex items-center justify-center gap-4 relative z-20"
+            className="inline-block mb-4"
           >
-            <div className="w-11 h-11 shrink-0 rounded-xl bg-[#D27E2B] flex items-center justify-center text-white shadow-xs">
-              <LuShieldCheck className="w-6 h-6" />
+            <SectionBadge title="AI Orchestration Engine" />
+          </motion.span>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="common-h2 text-slate-900"
+          >
+            Powering Every{" "}
+            <span className="text-[#D27E2B]">Intelligent AI Workflow</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-5 text-lg text-slate-600 leading-8 max-w-3xl mx-auto"
+          >
+            Connect AI agents, enterprise tools, and human approvals through one
+            intelligent orchestration engine.
+          </motion.p>
+        </div>
+        <div className="relative w-full max-w-[1280px] mx-auto min-h-[600px] flex items-center justify-center mt-5">
+          <StaticBackground />
+
+          <div
+            className="grid
+              grid-cols-1
+              lg:grid-cols-[350px_480px_350px]
+              gap-0
+              items-center
+              justify-center
+              w-full"
+          >
+            <div className="flex flex-col gap-10">
+              {FEATURES_LEFT.map((feature, i) => (
+                <InteractiveCard
+                  key={feature.id}
+                  feature={feature}
+                  index={i}
+                  direction="left"
+                />
+              ))}
             </div>
-            <p className="text-xs sm:text-sm md:text-base text-slate-700 font-extrabold leading-snug">
-              Agentic AI empowers your enterprise to operate smarter, make faster decisions, and scale operations with 100% governance.
-            </p>
-          </motion.div>
+
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, type: "spring", bounce: 0.3 }}
+              className="
+                relative
+                w-[320px]
+                h-[320px]
+                lg:w-[480px]
+                lg:h-[480px]
+                mx-auto
+                flex
+                items-center
+                justify-center
+                shrink-0
+                z-20
+                group"
+            >
+              <motion.img
+                animate={{ y: [-6, 6, -6] }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                src="ai-strategy/agentic-ai-development-services/ai-core-3d.png"
+                alt="AI Hexagonal Core"
+                className="w-[115%] h-[115%] object-contain drop-shadow-2xl"
+              />
+            </motion.div>
+
+            <div className="flex flex-col gap-10">
+              {FEATURES_RIGHT.map((feature, i) => (
+                <InteractiveCard
+                  key={feature.id}
+                  feature={feature}
+                  index={i}
+                  direction="right"
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </Row>
     </Section>
