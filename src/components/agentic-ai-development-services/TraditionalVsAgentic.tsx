@@ -81,19 +81,19 @@ const AGENTIC_WORKFLOW_STEPS = [
 
 // Connected Brand Tool Logos
 const BRAND_LOGOS = [
-  { name: "Salesforce", logo: "/ai-strategy/ai-chartbot-development/salesforce-logo.svg" },
-  { name: "HubSpot", logo: "/ai-strategy/ai-chartbot-development/hubspot-logo.svg" },
-  { name: "Slack", logo: "/ai-strategy/ai-chartbot-development/slack-logo.svg" },
-  { name: "Google Drive", logo: "/ai-strategy/ai-chartbot-development/google-drive.svg" },
+  { name: "Salesforce", logo: "/ai-strategy/brand-image/salesforce-logo.svg" },
+  { name: "HubSpot", logo: "/ai-strategy/brand-image/hubspot-logo.svg" },
+  { name: "Slack", logo: "/ai-strategy/brand-image/slack-logo.svg" },
+  { name: "Google Drive", logo: "/ai-strategy/brand-image/google-drive.svg" },
   { name: "Gmail", logo: "/ai-strategy/brand-image/gmail-logo.svg" },
-  { name: "Notion", logo: "/ai-strategy/ai-chartbot-development/notion-logo.svg" },
+  { name: "Notion", logo: "/ai-strategy/brand-image/notion-logo.svg" },
   { name: "Jira", logo: "/ai-strategy/brand-image/jira-logo.svg" },
   { name: "Stripe", logo: "/ai-strategy/brand-image/stripe-logo.svg" },
 ];
 
 export default function TraditionalVsAgentic() {
   return (
-    <Section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden text-slate-900 bg-slate-50/60 border-t border-slate-200/60">
+    <Section id="agentic-paradigm-shift" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden text-slate-900 bg-slate-50/60 border-t border-slate-200/60">
       <Row>
         {/* Section Header */}
         <motion.div

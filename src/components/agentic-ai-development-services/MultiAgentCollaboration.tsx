@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LuBot,
@@ -13,6 +13,8 @@ import {
   LuCircleCheck,
   LuSparkles,
   LuActivity,
+  LuChevronDown,
+  LuChevronRight,
 } from "react-icons/lu";
 import Section from "../Section";
 import Row from "../Row";
@@ -113,6 +115,20 @@ const AGENT_ROLES = [
   },
 ];
 
+type Point = { x: number; y: number };
+type CanvasPoints = {
+  coordinatorBottom: Point;
+  researchTop: Point;
+  researchBottom: Point;
+  planningTop: Point;
+  planningBottom: Point;
+  executionTop: Point;
+  executionBottom: Point;
+  qualityTop: Point;
+  qualityBottom: Point;
+  deliveryTop: Point;
+} | null;
+
 export default function MultiAgentCollaboration() {
   const [activeAgentId, setActiveAgentId] = useState("coordinator");
   const panelRef = React.useRef<HTMLDivElement>(null);
@@ -125,6 +141,76 @@ export default function MultiAgentCollaboration() {
   const execution = AGENT_ROLES[3];
   const quality = AGENT_ROLES[4];
   const delivery = AGENT_ROLES[5];
+
+  // ── Circuit Canvas connector measurement ──
+  // Instead of faking the bus lines with fixed-percentage CSS (which drifts out
+  // of alignment whenever the cards reflow/wrap), we measure the real on-screen
+  // position of each socket dot and draw the connectors as an SVG overlay sized
+  // to those exact coordinates. This keeps every line perfectly attached to its
+  // node regardless of viewport width, font loading, or content length.
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const dotRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [points, setPoints] = useState<CanvasPoints>(null);
+
+  const setDotRef = (key: string) => (el: HTMLDivElement | null) => {
+    dotRefs.current[key] = el;
+  };
+
+  const measure = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const canvasRect = canvas.getBoundingClientRect();
+
+    const center = (key: string): Point | null => {
+      const el = dotRefs.current[key];
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return {
+        x: r.left + r.width / 2 - canvasRect.left,
+        y: r.top + r.height / 2 - canvasRect.top,
+      };
+    };
+
+    const keys = [
+      "coordinatorBottom",
+      "researchTop",
+      "researchBottom",
+      "planningTop",
+      "planningBottom",
+      "executionTop",
+      "executionBottom",
+      "qualityTop",
+      "qualityBottom",
+      "deliveryTop",
+    ] as const;
+
+    const next: Record<string, Point> = {};
+    for (const key of keys) {
+      const p = center(key);
+      if (!p) return; // bail if layout isn't ready yet; try again next tick
+      next[key] = p;
+    }
+    setPoints(next as unknown as CanvasPoints);
+  }, []);
+
+  useLayoutEffect(() => {
+    // Measure after paint, then again on the next frame to catch any
+    // font/webfont-driven reflow, and whenever the canvas resizes.
+    measure();
+    const raf = requestAnimationFrame(measure);
+
+    const ro = new ResizeObserver(() => measure());
+    if (canvasRef.current) ro.observe(canvasRef.current);
+    window.addEventListener("resize", measure);
+    window.addEventListener("load", measure);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("load", measure);
+    };
+  }, [measure]);
 
   const handleAgentSelect = (id: string) => {
     setActiveAgentId(id);
@@ -159,87 +245,263 @@ export default function MultiAgentCollaboration() {
         {/* ── Main Layout: Mission Control Canvas (Left) + Inspection Panel (Right) ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
           
-          {/* ── LEFT COLUMN: MISSION CONTROL CANVAS (Col-1 to Col-7) ── */}
+          {/* ── LEFT COLUMN: ARCHITECTURAL CIRCUIT CANVAS (Col-1 to Col-7) ── */}
           <motion.div
             {...fadeUp(0.1)}
-            className="lg:col-span-7 bg-slate-950/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col items-center justify-between min-h-[580px]"
+            className="lg:col-span-7 bg-slate-950/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-2xl relative overflow-hidden flex flex-col items-center justify-between min-h-[620px]"
           >
-            {/* Mission Control Canvas Header */}
+            {/* Canvas System Header */}
             <div className="w-full flex items-center justify-between pb-4 border-b border-slate-800/80 mb-6">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#D27E2B] shadow-[0_0_8px_#D27E2B]" />
                 <h3 className="text-xs font-black uppercase tracking-wider text-slate-300">
-                  MISSION CONTROL CANVAS
+                  SYSTEM ARCHITECTURE CANVAS
                 </h3>
               </div>
               <span className="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
-                Real-time Data Flow
+                Circuit Bus Connected
               </span>
             </div>
 
-            {/* ── CANVAS TREE NODE DIAGRAM CONTAINER ── */}
-            <div className="w-full relative flex flex-col items-center gap-0 py-2">
-              
-              {/* LEVEL 1: COORDINATOR AGENT (Top Center) */}
-              <div className="relative z-10 flex justify-center w-full">
+            {/* ── ARCHITECTURAL CIRCUIT BOARD NETWORK ── */}
+            {/* Connector lines are drawn as an SVG overlay from measured socket
+                positions (see `points`/`measure` above), so they always land
+                exactly on each node's dot instead of relying on % guesses. */}
+            <div ref={canvasRef} className="w-full relative flex flex-col items-center gap-14 sm:gap-16 py-2">
+
+              {/* SVG Connector Overlay */}
+              {points && (
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none z-0"
+                  aria-hidden="true"
+                >
+                  {/* Coordinator ➔ Research / Planning / Execution */}
+                  {(() => {
+                    const midY =
+                      points.coordinatorBottom.y +
+                      (Math.min(points.researchTop.y, points.planningTop.y, points.executionTop.y) -
+                        points.coordinatorBottom.y) /
+                        2;
+                    const branches: [Point, string][] = [
+                      [points.researchTop, "#3B82F6"],
+                      [points.planningTop, "#8B5CF6"],
+                      [points.executionTop, "#F59E0B"],
+                    ];
+                    return branches.map(([to, color], i) => (
+                      <path
+                        key={`bus1-${i}`}
+                        d={`M ${points.coordinatorBottom.x} ${points.coordinatorBottom.y} L ${points.coordinatorBottom.x} ${midY} L ${to.x} ${midY} L ${to.x} ${to.y}`}
+                        fill="none"
+                        stroke={color}
+                        strokeOpacity={0.65}
+                        strokeWidth={2}
+                        strokeDasharray="5 5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    ));
+                  })()}
+
+                  {/* Research / Planning / Execution ➔ Quality Review */}
+                  {(() => {
+                    const midY2 =
+                      (Math.max(points.researchBottom.y, points.planningBottom.y, points.executionBottom.y) +
+                        points.qualityTop.y) /
+                      2;
+                    const branches: [Point, string][] = [
+                      [points.researchBottom, "#3B82F6"],
+                      [points.planningBottom, "#8B5CF6"],
+                      [points.executionBottom, "#F59E0B"],
+                    ];
+                    return branches.map(([from, color], i) => (
+                      <path
+                        key={`bus2-${i}`}
+                        d={`M ${from.x} ${from.y} L ${from.x} ${midY2} L ${points.qualityTop.x} ${midY2} L ${points.qualityTop.x} ${points.qualityTop.y}`}
+                        fill="none"
+                        stroke={color}
+                        strokeOpacity={0.65}
+                        strokeWidth={2}
+                        strokeDasharray="5 5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    ));
+                  })()}
+
+                  {/* Quality Review ➔ Delivery */}
+                  <path
+                    d={`M ${points.qualityBottom.x} ${points.qualityBottom.y} L ${points.deliveryTop.x} ${points.deliveryTop.y}`}
+                    fill="none"
+                    stroke="#06B6D4"
+                    strokeOpacity={0.7}
+                    strokeWidth={2}
+                    strokeDasharray="5 5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+
+              {/* Bus Pill Badges, positioned at the exact elbow midpoints */}
+              {points && (
+                <>
+                  <div
+                    className="absolute z-10 -translate-x-1/2 -translate-y-1/2 bg-white/95 text-slate-900 border border-slate-300 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1 whitespace-nowrap"
+                    style={{
+                      left:
+                        points.coordinatorBottom.x,
+                      top:
+                        points.coordinatorBottom.y +
+                        (Math.min(points.researchTop.y, points.planningTop.y, points.executionTop.y) -
+                          points.coordinatorBottom.y) /
+                          2,
+                    }}
+                  >
+                    <span>Task Distribution Bus</span>
+                    <LuChevronRight className="w-3 h-3 text-[#D27E2B]" />
+                  </div>
+
+                  <div
+                    className="absolute z-10 -translate-x-1/2 -translate-y-1/2 bg-slate-900 text-purple-300 border border-purple-500/40 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1 whitespace-nowrap"
+                    style={{
+                      left: points.qualityTop.x,
+                      top:
+                        (Math.max(points.researchBottom.y, points.planningBottom.y, points.executionBottom.y) +
+                          points.qualityTop.y) /
+                        2,
+                    }}
+                  >
+                    <span>Artifact Convergence</span>
+                    <LuChevronDown className="w-3 h-3 text-purple-400" />
+                  </div>
+
+                  <div
+                    className="absolute z-10 -translate-x-1/2 -translate-y-1/2 bg-slate-900 text-cyan-300 border border-cyan-500/40 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-xs"
+                    style={{
+                      left: points.qualityBottom.x,
+                      top: (points.qualityBottom.y + points.deliveryTop.y) / 2,
+                    }}
+                  >
+                    Validated Stream
+                  </div>
+                </>
+              )}
+
+              {/* ── LEVEL 1: ORCHESTRATION HUB (Coordinator Node) ── */}
+              <div className="relative z-10 flex flex-col items-center">
                 <NodeCard
                   agent={coordinator}
                   isActive={activeAgentId === coordinator.id}
                   onClick={() => handleAgentSelect(coordinator.id)}
                   badgeText="Master Router"
                 />
+
+                {/* Bottom Circuit Output Terminal Socket */}
+                <div
+                  ref={setDotRef("coordinatorBottom")}
+                  className="w-5 h-5 rounded-full bg-slate-950 border-2 border-[#D27E2B] flex items-center justify-center shadow-md -mt-2.5 z-20"
+                >
+                  <LuChevronDown className="w-3 h-3 text-[#D27E2B]" />
+                </div>
               </div>
 
-              {/* CONNECTOR 1: Coordinator -> Middle Row (Branching Laser Line) */}
-              <div className="w-full flex flex-col items-center py-1 z-0">
-                <div className="w-0.5 h-5 bg-gradient-to-b from-[#D27E2B] via-[#D27E2B]/80 to-purple-500 shadow-[0_0_8px_#D27E2B]" />
-                <div className="hidden sm:block w-3/4 h-0.5 bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#F59E0B] opacity-60" />
+              {/* ── LEVEL 2: PARALLEL PROCESSING ENGINE (Research, Planning, Execution) ── */}
+              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 w-full">
+
+                {/* Research Agent Node */}
+                <div className="flex flex-col items-center">
+                  <div
+                    ref={setDotRef("researchTop")}
+                    className="w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 flex items-center justify-center shadow-xs -mb-2 z-20"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  </div>
+                  <NodeCard
+                    agent={research}
+                    isActive={activeAgentId === research.id}
+                    onClick={() => handleAgentSelect(research.id)}
+                  />
+                  <div
+                    ref={setDotRef("researchBottom")}
+                    className="w-4 h-4 rounded-full bg-slate-950 border-2 border-blue-500 flex items-center justify-center shadow-xs -mt-2 z-20"
+                  >
+                    <LuChevronDown className="w-2.5 h-2.5 text-blue-400" />
+                  </div>
+                </div>
+
+                {/* Planning Agent Node */}
+                <div className="flex flex-col items-center">
+                  <div
+                    ref={setDotRef("planningTop")}
+                    className="w-4 h-4 rounded-full bg-slate-950 border-2 border-purple-500 flex items-center justify-center shadow-xs -mb-2 z-20"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                  </div>
+                  <NodeCard
+                    agent={planning}
+                    isActive={activeAgentId === planning.id}
+                    onClick={() => handleAgentSelect(planning.id)}
+                  />
+                  <div
+                    ref={setDotRef("planningBottom")}
+                    className="w-4 h-4 rounded-full bg-slate-950 border-2 border-purple-500 flex items-center justify-center shadow-xs -mt-2 z-20"
+                  >
+                    <LuChevronDown className="w-2.5 h-2.5 text-purple-400" />
+                  </div>
+                </div>
+
+                {/* Execution Agent Node */}
+                <div className="flex flex-col items-center">
+                  <div
+                    ref={setDotRef("executionTop")}
+                    className="w-4 h-4 rounded-full bg-slate-950 border-2 border-amber-500 flex items-center justify-center shadow-xs -mb-2 z-20"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  </div>
+                  <NodeCard
+                    agent={execution}
+                    isActive={activeAgentId === execution.id}
+                    onClick={() => handleAgentSelect(execution.id)}
+                  />
+                  <div
+                    ref={setDotRef("executionBottom")}
+                    className="w-4 h-4 rounded-full bg-slate-950 border-2 border-amber-500 flex items-center justify-center shadow-xs -mt-2 z-20"
+                  >
+                    <LuChevronDown className="w-2.5 h-2.5 text-amber-400" />
+                  </div>
+                </div>
+
               </div>
 
-              {/* LEVEL 2: MIDDLE ROW (Research, Planning, Execution) */}
-              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full">
-                <NodeCard
-                  agent={research}
-                  isActive={activeAgentId === research.id}
-                  onClick={() => handleAgentSelect(research.id)}
-                />
-                <NodeCard
-                  agent={planning}
-                  isActive={activeAgentId === planning.id}
-                  onClick={() => handleAgentSelect(planning.id)}
-                />
-                <NodeCard
-                  agent={execution}
-                  isActive={activeAgentId === execution.id}
-                  onClick={() => handleAgentSelect(execution.id)}
-                />
-              </div>
-
-              {/* CONNECTOR 2: Middle Row -> Quality Review Agent (Converging Laser Line) */}
-              <div className="w-full flex flex-col items-center py-1 z-0">
-                <div className="hidden sm:block w-3/4 h-0.5 bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#F59E0B] opacity-60" />
-                <div className="w-0.5 h-5 bg-gradient-to-b from-purple-500 to-[#10B981] shadow-[0_0_8px_#8B5CF6]" />
-              </div>
-
-              {/* LEVEL 3: QUALITY REVIEW AGENT (Lower Middle) */}
-              <div className="relative z-10 flex justify-center w-full">
+              {/* ── LEVEL 3: VERIFICATION & COMPLIANCE (Quality Review Node) ── */}
+              <div className="relative z-10 flex flex-col items-center">
+                <div
+                  ref={setDotRef("qualityTop")}
+                  className="w-4 h-4 rounded-full bg-slate-950 border-2 border-emerald-500 flex items-center justify-center shadow-xs -mb-2 z-20"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                </div>
                 <NodeCard
                   agent={quality}
                   isActive={activeAgentId === quality.id}
                   onClick={() => handleAgentSelect(quality.id)}
                   badgeText="Compliance Guard"
                 />
-              </div>
-
-              {/* CONNECTOR 3: Quality Review -> Delivery Agent (Direct Vertical Glowing Laser Line) */}
-              <div className="w-full flex flex-col items-center py-1 z-0">
-                <div className="w-0.5 h-6 bg-gradient-to-b from-[#10B981] to-[#06B6D4] shadow-[0_0_10px_#10B981] relative">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#06B6D4] -translate-x-[2px] shadow-[0_0_8px_#06B6D4] animate-bounce" />
+                <div
+                  ref={setDotRef("qualityBottom")}
+                  className="w-5 h-5 rounded-full bg-slate-950 border-2 border-emerald-500 flex items-center justify-center shadow-md -mt-2.5 z-20"
+                >
+                  <LuChevronDown className="w-3 h-3 text-emerald-400" />
                 </div>
               </div>
 
-              {/* LEVEL 4: DELIVERY AGENT (Bottom Center) */}
-              <div className="relative z-10 flex justify-center w-full">
+              {/* ── LEVEL 4: DISPATCH OUTPUT (Delivery Agent Node) ── */}
+              <div className="relative z-10 flex flex-col items-center">
+                <div
+                  ref={setDotRef("deliveryTop")}
+                  className="w-4 h-4 rounded-full bg-slate-950 border-2 border-cyan-500 flex items-center justify-center shadow-xs -mb-2 z-20"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                </div>
                 <NodeCard
                   agent={delivery}
                   isActive={activeAgentId === delivery.id}
@@ -254,9 +516,9 @@ export default function MultiAgentCollaboration() {
             <div className="w-full pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 font-bold mt-4">
               <span className="flex items-center gap-1.5 text-emerald-400">
                 <LuActivity className="w-3.5 h-3.5 animate-spin" />
-                Inter-Agent Memory Syncing
+                Orthogonal Bus Synchronized
               </span>
-              <span className="text-slate-500">6 Synchronized Nodes</span>
+              <span className="text-slate-500">6 Synchronized Ports</span>
             </div>
           </motion.div>
 
@@ -264,7 +526,7 @@ export default function MultiAgentCollaboration() {
           <motion.div
             ref={panelRef}
             {...fadeUp(0.2)}
-            className="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-md min-h-[580px] flex flex-col justify-between"
+            className="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-md min-h-[620px] flex flex-col justify-between"
           >
             {/* Ambient Background Aura */}
             <div
@@ -392,7 +654,7 @@ function NodeCard({
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       onClick={onClick}
-      className={`p-3 sm:p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center justify-between gap-3 shadow-md relative overflow-hidden group ${
+      className={`p-3 sm:p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center justify-between gap-3 shadow-md relative overflow-hidden group min-w-[140px] sm:min-w-[150px] ${
         isActive
           ? "bg-slate-800/95 border-[#D27E2B] shadow-lg shadow-[#D27E2B]/15 ring-1 ring-[#D27E2B]/50"
           : "bg-slate-900/90 border-slate-800 hover:border-slate-700 hover:bg-slate-800/80"

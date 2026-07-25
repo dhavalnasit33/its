@@ -73,29 +73,27 @@ export default function Hero() {
   const [imgError, setImgError] = React.useState(false);
 
   return (
-    <Section className=" lg:py-10! common_background_gradient relative overflow-hidden text-slate-900">
+    <Section className="  lg:py-0! common_background_gradient   overflow-hidden text-slate-900">
       <Row>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-14 relative z-10 w-full">
           
           {/* ── Left Column: Headline & Value Proposition ── */}
-          <div className="w-full max-w-full lg:max-w-[40%]">
+          <div className="w-full max-w-full lg:max-w-[48%]">
             
             {/* Sub-badge */}
             <motion.div {...fadeUp(0)}>
-              <span className="inline-flex items-center gap-2 text-[#D27E2B] text-xs sm:text-sm font-extrabold uppercase tracking-widest mb-4">
-                <span className="w-6 h-0.5 bg-[#D27E2B]" />
-                AUTONOMOUS AI WORKFORCE
+              <span className="inline-flex items-center gap-2 text-[#D27E2B] text-xs sm:text-sm font-extrabold uppercase tracking-widest mb-6">
+                <span className="w-5 h-0.5 bg-[#D27E2B]" />
+                Agentic AI Development Services
               </span>
             </motion.div>
 
             {/* Main Headline */}
             <motion.h1
               {...fadeUp(0.1)}
-              className="text-4xl md:text-[46px] xl:text-[54px] font-black mb-6 leading-[1.12] tracking-tight text-slate-900"
+              className="text-4xl md:text-[46px] xl:text-[54px] font-extrabold mb-6 leading-[1.15] tracking-tight text-[#0F172A]"
             >
-              Agentic AI <br />
-              Development <br />
-              <span className="text-[#D27E2B]">Services</span>
+              Autonomous Agentic AI <span className="text-[#D27E2B]">Development Services</span> for Enterprise Operations
             </motion.h1>
 
             {/* Value Description */}
@@ -103,7 +101,7 @@ export default function Hero() {
               {...fadeUp(0.2)}
               className="text-slate-600 text-base sm:text-lg leading-relaxed mb-8 max-w-xl font-medium"
             >
-              Build intelligent AI agents that can reason, plan, make decisions, use business tools, collaborate with other agents, and execute complex workflows autonomously.
+              Build intelligent AI agents that can reason, plan, make decisions, use business tools, collaborate with other agents, and execute complex enterprise workflows autonomously.
             </motion.p>
 
             {/* CTAs */}
@@ -122,7 +120,7 @@ export default function Hero() {
               <motion.div className="border border-slate-900/30 hover:border-[#D27E2B] bg-slate-900 relative w-auto inline-flex items-center justify-center rounded-xl overflow-hidden text-white hover:text-white transition-all duration-700 ease-in-out group shadow-sm">
                 <span className="absolute w-0 h-0 transition-all duration-700 ease-in-out bg-[#D27E2B] rounded-lg group-hover:w-full group-hover:h-full"></span>
                 <a
-                  href="#contact-form-section"
+                  href="#agentic-paradigm-shift"
                   className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-7 sm:py-3.5 cursor-pointer font-bold flex items-center gap-2 z-10"
                 >
                   Schedule Consultation
@@ -149,7 +147,7 @@ export default function Hero() {
             {/* ── 1. ANIMATED BACKGROUND ELEMENTS BEHIND IMAGE ── */}
             
             {/* Multi-layered Pulsing Light Orbs */}
-            <div className="absolute w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-[#D27E2B]/20 via-blue-500/15 to-purple-500/15 blur-3xl scale-125 z-0 animate-pulse" />
+            <div className="absolute w-80 h-80   rounded-full bg-gradient-to-tr from-[#D27E2B]/20 via-blue-500/15 to-purple-500/15 blur-2xl scale-105 z-0 animate-pulse" />
             <div className="absolute top-4 left-6 w-56 h-56 rounded-full bg-[#D27E2B]/15 blur-3xl z-0 animate-pulse" />
             <div className="absolute bottom-4 right-6 w-60 h-60 rounded-full bg-blue-600/15 blur-3xl z-0 animate-pulse" />
 
@@ -203,12 +201,12 @@ export default function Hero() {
             {!imgError ? (
               <div className="relative w-full z-10 flex justify-center">
                 <Image
-                  src="/ai-strategy/agentic-ai-development-services/hero-section-image-agentict-ai.png"
+                  src="/ai-strategy/agentic-ai-development-services/hero-section-image-agentict-ai-1.png"
                   alt="Agentic AI Development Services - Autonomous AI Workforce"
-                  width={850}
-                  height={850}
+                  width={780}
+                  height={780}
                   priority
-                  className="object-contain w-full h-auto drop-shadow-2xl scale-105 transition-transform duration-500 hover:scale-[1.05]"
+                  className="object-contain w-full h-auto drop-shadow-xl relative scale-110"
                   onError={() => setImgError(true)}
                 />
               </div>
