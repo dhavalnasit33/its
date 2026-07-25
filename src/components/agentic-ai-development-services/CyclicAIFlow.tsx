@@ -166,7 +166,7 @@ const AnimatedPaths = ({ activeNode }: { activeNode: string | null }) => {
     <svg
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
-      className="absolute inset-0 w-full h-full  drop-shadow-lg"
+      className="absolute inset-0 w-full h-full drop-shadow-lg"
       style={{ zIndex: 0 }}
     >
       <defs>
@@ -204,13 +204,13 @@ const AnimatedPaths = ({ activeNode }: { activeNode: string | null }) => {
               transition: "opacity 0.4s ease-in-out",
             }}
           >
-            {/* 3D Track Base */}
+            {/* 3D Track Base (Dark Mode adjusted stroke) */}
             <path
               d={d}
               fill="none"
-              stroke="#CBD5E1"
+              stroke="#334155"
               strokeWidth="0.4"
-              className="opacity-40"
+              className="opacity-60"
               strokeDasharray="1 1"
             />
 
@@ -266,10 +266,10 @@ const NodeCard = ({ node, isActive, isHovered, onHover }: any) => {
         <div
           className={`relative flex items-center gap-4 p-3 pr-5 rounded-2xl transition-all duration-500 backdrop-blur-xl border ${
             isHovered
-              ? "bg-white shadow-[0_20px_40px_rgba(0,0,0,0.12)] border-slate-300"
+              ? "bg-slate-800 shadow-[0_20px_40px_rgba(0,0,0,0.5)] border-slate-600"
               : isActive
-                ? "bg-white shadow-[0_10px_20px_rgba(0,0,0,0.04)] border-slate-200/80"
-                : "bg-white/40 opacity-40 shadow-none border-transparent scale-95"
+                ? "bg-slate-800/90 shadow-[0_10px_20px_rgba(0,0,0,0.3)] border-slate-700/80"
+                : "bg-slate-800/40 opacity-40 shadow-none border-transparent scale-95"
           }`}
         >
           <div
@@ -293,7 +293,7 @@ const NodeCard = ({ node, isActive, isHovered, onHover }: any) => {
             <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-0.5">
               Stage {NODES.indexOf(node) + 1}
             </p>
-            <h4 className="text-sm font-semibold text-slate-800 whitespace-nowrap">
+            <h4 className="text-sm font-semibold text-slate-200 whitespace-nowrap">
               {node.label}
             </h4>
           </div>
@@ -329,7 +329,7 @@ const AICoreEngine = ({ isHoveringNode }: { isHoveringNode: boolean }) => {
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute inset-0 rounded-full border border-dashed border-blue-200/70"
+          className="absolute inset-0 rounded-full border border-dashed border-blue-500/30"
         />
 
         {/* Middle Ring */}
@@ -340,7 +340,7 @@ const AICoreEngine = ({ isHoveringNode }: { isHoveringNode: boolean }) => {
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute inset-6 rounded-full border border-blue-300/60"
+          className="absolute inset-6 rounded-full border border-blue-400/30"
         />
 
         {/* Inner Ring */}
@@ -351,29 +351,29 @@ const AICoreEngine = ({ isHoveringNode }: { isHoveringNode: boolean }) => {
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute inset-14 rounded-full border border-orange-300/50"
+          className="absolute inset-14 rounded-full border border-orange-400/30"
         />
 
         {/* Ambient Glow */}
         <motion.div
           animate={{
             scale: [1, 1.15, 1],
-            opacity: [0.25, 0.45, 0.25],
+            opacity: [0.15, 0.35, 0.15],
           }}
           transition={{
             duration: 4,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute w-52 h-52 rounded-full bg-gradient-to-r from-blue-400/20 via-indigo-300/20 to-orange-300/20 blur-3xl"
+          className="absolute w-52 h-52 rounded-full bg-gradient-to-r from-blue-500/20 via-indigo-400/20 to-orange-400/20 blur-3xl"
         />
 
-        {/* Glass Platform */}
+        {/* Glass Platform (Dark Mode) */}
         <motion.div
           whileHover={{
             scale: 1.05,
           }}
-          className="relative w-40 h-40 rounded-[34px] bg-white/95 backdrop-blur-xl border border-slate-100 flex items-center justify-center overflow-hidden shadow-[0_30px_80px_rgba(15,23,42,0.12)]"
+          className="relative w-40 h-40 rounded-[34px] bg-slate-800/90 backdrop-blur-xl border border-slate-700 flex items-center justify-center overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
         >
           {/* Moving Shine */}
           <motion.div
@@ -385,7 +385,7 @@ const AICoreEngine = ({ isHoveringNode }: { isHoveringNode: boolean }) => {
               repeat: Infinity,
               ease: "linear",
             }}
-            className="absolute inset-0 h-[220%] bg-gradient-to-b from-transparent via-blue-100/40 to-transparent"
+            className="absolute inset-0 h-[220%] bg-gradient-to-b from-transparent via-blue-500/10 to-transparent"
           />
 
           {/* Soft Glow */}
@@ -398,11 +398,11 @@ const AICoreEngine = ({ isHoveringNode }: { isHoveringNode: boolean }) => {
               duration: 3,
               repeat: Infinity,
             }}
-            className="absolute w-28 h-28 rounded-full bg-blue-400/20 blur-2xl"
+            className="absolute w-28 h-28 rounded-full bg-blue-500/20 blur-2xl"
           />
 
           {/* Core */}
-          <div className="relative z-10 w-24 h-24 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center shadow-inner">
+          <div className="relative z-10 w-24 h-24 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 flex items-center justify-center shadow-inner border border-slate-800">
             <motion.div
               animate={{
                 scale: [1, 1.12, 1],
@@ -431,7 +431,7 @@ const AICoreEngine = ({ isHoveringNode }: { isHoveringNode: boolean }) => {
               repeat: Infinity,
               delay: angle / 180,
             }}
-            className="absolute w-3.5 h-3.5 rounded-full bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.8)]"
+            className="absolute w-3.5 h-3.5 rounded-full bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)]"
             style={{
               left: `calc(50% + ${Math.cos((angle * Math.PI) / 180) * 130}px)`,
               top: `calc(50% + ${Math.sin((angle * Math.PI) / 180) * 130}px)`,
@@ -449,7 +449,7 @@ const AICoreEngine = ({ isHoveringNode }: { isHoveringNode: boolean }) => {
             duration: 3,
             repeat: Infinity,
           }}
-          className="absolute -bottom-14 bg-slate-900 text-white text-xs font-bold tracking-[0.25em] uppercase px-5 py-2 rounded-full shadow-xl"
+          className="absolute -bottom-14 bg-slate-950 text-slate-200 text-xs font-bold tracking-[0.25em] uppercase px-5 py-2 rounded-full shadow-2xl border border-slate-800"
         >
           AI Engine
         </motion.div>
@@ -489,15 +489,16 @@ export default function NeuralCanvasFlow() {
   };
 
   return (
-    <Section className="relative w-full overflow-hidden bg-[#FAFAFC]">
+    <Section className="relative w-full overflow-hidden bg-[#0B1120]">
+      {/* Dark Theme Grid Background */}
       <div
-        className="absolute inset-0 opacity-[0.3]"
+        className="absolute inset-0 opacity-[0.4]"
         style={{
-          backgroundImage: `radial-gradient(#94A3B8 1.5px, transparent 1.5px)`,
+          backgroundImage: `radial-gradient(#334155 1.5px, transparent 1.5px)`,
           backgroundSize: "32px 32px",
         }}
       />
-      <div className="text-center mb-16 max-w-3xl mx-auto ">
+      <div className="text-center mb-16 max-w-3xl mx-auto relative z-10">
         <motion.span
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -511,7 +512,7 @@ export default function NeuralCanvasFlow() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="common-h2 text-[#0F172A]"
+          className="common-h2 text-slate-100"
         >
           A Live autonomous{" "}
           <span className="text-[#D27E2B]"> decision routing.</span>
