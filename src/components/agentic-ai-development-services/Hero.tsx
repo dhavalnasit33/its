@@ -73,12 +73,12 @@ export default function Hero() {
   const [imgError, setImgError] = React.useState(false);
 
   return (
-    <Section className="lg:py-20! common_background_gradient relative overflow-hidden text-slate-900">
+    <Section className=" lg:py-10! common_background_gradient relative overflow-hidden text-slate-900">
       <Row>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-14 relative z-10 w-full">
           
           {/* ── Left Column: Headline & Value Proposition ── */}
-          <div className="w-full max-w-full lg:max-w-[48%]">
+          <div className="w-full max-w-full lg:max-w-[40%]">
             
             {/* Sub-badge */}
             <motion.div {...fadeUp(0)}>
@@ -137,124 +137,78 @@ export default function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* 6 Key Trust Badges */}
-            <motion.div
-              {...fadeUp(0.4)}
-              className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-10 pt-6 border-t border-slate-200/80 text-xs font-black text-slate-700"
-            >
-              <div className="flex items-center gap-2 bg-white/70 border border-slate-200/80 px-3 py-2 rounded-xl shadow-xs">
-                <LuCpu className="w-4 h-4 text-[#D27E2B]" />
-                <span>Multi-Agent Systems</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/70 border border-slate-200/80 px-3 py-2 rounded-xl shadow-xs">
-                <LuWorkflow className="w-4 h-4 text-blue-600" />
-                <span>Autonomous Workflows</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/70 border border-slate-200/80 px-3 py-2 rounded-xl shadow-xs">
-                <LuShieldCheck className="w-4 h-4 text-purple-600" />
-                <span>Human-in-the-Loop</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/70 border border-slate-200/80 px-3 py-2 rounded-xl shadow-xs">
-                <LuBriefcase className="w-4 h-4 text-emerald-600" />
-                <span>Enterprise Ready</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/70 border border-slate-200/80 px-3 py-2 rounded-xl shadow-xs">
-                <LuZap className="w-4 h-4 text-amber-500" />
-                <span>Tool Calling (MCP)</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/70 border border-slate-200/80 px-3 py-2 rounded-xl shadow-xs">
-                <LuBot className="w-4 h-4 text-cyan-600" />
-                <span>Secure Deployment</span>
-              </div>
-            </motion.div>
-
           </div>
 
-          {/* ── Right Column: Hero 3D Graphic Image + Floating Badges ── */}
+          {/* ── Right Column: Hero 3D Graphic Image with Animated Backdrop ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-            className="w-full lg:w-[52%] flex justify-center items-center relative min-h-[460px] sm:min-h-[500px]"
+            className="w-full lg:w-[60%] flex justify-center items-center relative min-h-[460px] sm:min-h-[520px]"
           >
-            {/* Glowing Ambient Radial Halo */}
-            <div className="absolute w-84 h-84 rounded-full bg-gradient-to-tr from-[#D27E2B]/15 via-blue-500/10 to-purple-500/10 blur-3xl scale-125 z-0" />
-
-            {/* FLOATING ROUND CARDS & TOOL LOGOS (Framing the Main Image) */}
+            {/* ── 1. ANIMATED BACKGROUND ELEMENTS BEHIND IMAGE ── */}
             
-            {/* Floating Card 1: Top Left */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="absolute -top-3 -left-2 sm:left-4 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-3 shadow-xl z-20 hidden sm:flex items-center gap-3"
-            >
-              <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 font-bold shrink-0">
-                <LuCpu className="w-5 h-5 animate-pulse" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <h4 className="text-xs font-black text-slate-900">AI Master Orchestrator</h4>
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                </div>
-                <p className="text-[10px] text-slate-500 font-semibold">100% Autonomous Execution</p>
-              </div>
-            </motion.div>
+            {/* Multi-layered Pulsing Light Orbs */}
+            <div className="absolute w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-[#D27E2B]/20 via-blue-500/15 to-purple-500/15 blur-3xl scale-125 z-0 animate-pulse" />
+            <div className="absolute top-4 left-6 w-56 h-56 rounded-full bg-[#D27E2B]/15 blur-3xl z-0 animate-pulse" />
+            <div className="absolute bottom-4 right-6 w-60 h-60 rounded-full bg-blue-600/15 blur-3xl z-0 animate-pulse" />
 
-            {/* Floating Card 2: Top Right */}
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 0.5 }}
-              className="absolute top-4 -right-2 sm:right-2 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-3 shadow-xl z-20 hidden sm:flex items-center gap-3"
-            >
-              <div className="w-9 h-9 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 font-bold shrink-0">
-                <LuWorkflow className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-black text-slate-900">Multi-Agent Engine</h4>
-                <p className="text-[10px] text-purple-600 font-bold">LangGraph & CrewAI</p>
-              </div>
-            </motion.div>
+            {/* Dual Rotating SVG Orbital Tech Rings */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+              <motion.svg
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+                className="w-[90%] h-[90%] max-w-[500px] max-h-[500px] opacity-25 text-[#D27E2B]"
+                viewBox="0 0 400 400"
+              >
+                <circle
+                  cx="200"
+                  cy="200"
+                  r="180"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeDasharray="8 8"
+                />
+                <circle cx="200" cy="20" r="4" fill="currentColor" />
+                <circle cx="380" cy="200" r="4" fill="currentColor" />
+              </motion.svg>
 
-            {/* Floating Card 3: Bottom Left */}
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 4.2, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-6 -left-2 sm:left-2 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-3 shadow-xl z-20 hidden sm:flex items-center gap-3"
-            >
-              <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#D27E2B] font-bold shrink-0">
-                <LuZap className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-black text-slate-900">MCP Tool Calling</h4>
-                <p className="text-[10px] text-slate-500 font-semibold">Salesforce, SAP, Slack, GitHub</p>
-              </div>
-            </motion.div>
+              <motion.svg
+                animate={{ rotate: -360 }}
+                transition={{ repeat: Infinity, duration: 28, ease: "linear" }}
+                className="absolute w-[75%] h-[75%] max-w-[420px] max-h-[420px] opacity-20 text-blue-600"
+                viewBox="0 0 300 300"
+              >
+                <circle
+                  cx="150"
+                  cy="150"
+                  r="135"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeDasharray="6 6"
+                />
+                <circle cx="150" cy="15" r="3.5" fill="currentColor" />
+                <circle cx="15" cy="150" r="3.5" fill="currentColor" />
+              </motion.svg>
+            </div>
 
-            {/* Floating Card 4: Bottom Right */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 3.8, ease: "easeInOut", delay: 0.8 }}
-              className="absolute bottom-2 -right-2 sm:right-4 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-3 shadow-xl z-20 hidden sm:flex items-center gap-3"
-            >
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-bold shrink-0">
-                <LuShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-black text-slate-900">Human-in-the-Loop</h4>
-                <p className="text-[10px] text-emerald-600 font-bold">100% Reliable Audit Trail</p>
-              </div>
-            </motion.div>
+            {/* Glowing Tech Spark Nodes */}
+            <div className="absolute top-12 left-10 w-2.5 h-2.5 rounded-full bg-[#D27E2B] shadow-[0_0_12px_#D27E2B] animate-ping z-0" />
+            <div className="absolute bottom-16 right-12 w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_12px_#3B82F6] animate-ping z-0" />
+            <div className="absolute top-20 right-16 w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_#8B5CF6] animate-pulse z-0" />
 
             {/* MAIN IMAGE DISPLAY */}
             {!imgError ? (
               <div className="relative w-full z-10 flex justify-center">
                 <Image
-                  src="/ai-strategy/agentic-ai-development-services/hero-main-image.png"
+                  src="/ai-strategy/agentic-ai-development-services/hero-section-image-agentict-ai.png"
                   alt="Agentic AI Development Services - Autonomous AI Workforce"
                   width={850}
                   height={850}
                   priority
-                  className="object-contain w-full h-auto drop-shadow-2xl scale-105 transition-transform duration-500 hover:scale-[1.07]"
+                  className="object-contain w-full h-auto drop-shadow-2xl scale-105 transition-transform duration-500 hover:scale-[1.05]"
                   onError={() => setImgError(true)}
                 />
               </div>
@@ -263,7 +217,7 @@ export default function Hero() {
               <div className="w-full max-w-xl bg-white/90 backdrop-blur-md border border-slate-200/90 rounded-3xl p-6 sm:p-7 shadow-xl relative z-10 flex flex-col gap-5 overflow-hidden">
                 
                 {/* 1. Master Orchestrator Node */}
-                <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-4.5 border border-slate-800 shadow-md flex items-center justify-between gap-4 relative overflow-hidden">
+                <div className="bg-linear-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-4.5 border border-slate-800 shadow-md flex items-center justify-between gap-4 relative overflow-hidden">
                   <div className="flex items-center gap-3.5 relative z-10">
                     <div className="w-11 h-11 rounded-xl bg-[#D27E2B]/20 border border-[#D27E2B]/40 flex items-center justify-center text-[#D27E2B] shrink-0">
                       <LuCpu className="w-6 h-6 animate-pulse" />
@@ -309,7 +263,7 @@ export default function Hero() {
                       initial={{ opacity: 0, x: -12 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + idx * 0.1 }}
-                      className="bg-slate-50/90 border border-slate-200/80 rounded-xl p-3.5 flex items-center justify-between gap-3 shadow-xs hover:border-[#D27E2B]/40 hover:bg-white transition-all duration-300 group cursor-pointer"
+                      className="bg-slate-50/90 border cursor-pointer border-slate-200/80 rounded-xl p-3.5 flex items-center justify-between gap-3 shadow-xs hover:border-[#D27E2B]/40 hover:bg-white transition-all duration-300 group "
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <span className="w-8.5 h-8.5 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#D27E2B] shrink-0 shadow-xs group-hover:scale-105 transition-transform">

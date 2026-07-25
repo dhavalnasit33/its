@@ -13,6 +13,8 @@ import CTA from "@/components/common/CTA";
 
 // Import Agentic AI Sub-components
 import Hero from "@/components/agentic-ai-development-services/Hero";
+import TraditionalVsAgentic from "@/components/agentic-ai-development-services/TraditionalVsAgentic";
+import MultiAgentCollaboration from "@/components/agentic-ai-development-services/MultiAgentCollaboration";
 import AgentDecisionEngine from "@/components/agentic-ai-development-services/AgentDecisionEngine";
 import CyclicAIFlow from "@/components/agentic-ai-development-services/CyclicAIFlow";
 
@@ -150,8 +152,15 @@ export default function AgenticAIClient() {
         {/* ── 4. Trusted Technologies Marquee ── */}
         <GlobalLogoMarquee />
 
+        {/* ── Traditional AI vs Agentic AI Paradigm Shift (Light Theme) ── */}
+        <TraditionalVsAgentic />
+
         <AgentDecisionEngine />
+   
         <CyclicAIFlow />
+        {/* ── Section 5: Multi-Agent Collaboration (Dark Theme - bg-[#0d1b2a]) ── */}
+        <MultiAgentCollaboration />
+
 
         {/* ── 5. Call To Action Banner ── */}
         <CTA highlightedText="Autonomous AI Workforce?" />

@@ -24,6 +24,7 @@ import Image from "next/image";
 import SectionBadge from "../new-home-components/SectionBadge";
 
 const BASE = "/ai-strategy/ai-chartbot-development";
+const BASE_Brand_Logo = "/ai-strategy/brand-image";
 
 const TABS = [
   {
@@ -47,31 +48,31 @@ const TABS = [
     integrations: [
       {
         name: "WhatsApp",
-        image: `${BASE}/whatsapp-logo.svg`,
+        image: `${BASE_Brand_Logo}/whatsapp-logo.svg`,
         desc: "Connect with customers on WhatsApp in real-time.",
         status: "Connected",
       },
       {
         name: "Slack",
-        image: `${BASE}/slack-logo.svg`,
+        image: `${BASE_Brand_Logo}/slack-logo.svg`,
         desc: "Receive updates and respond within Slack.",
         status: "Connected",
       },
       {
         name: "Microsoft Teams",
-        image: `${BASE}/team.svg`,
+        image: `${BASE_Brand_Logo}/team.svg`,
         desc: "Collaborate and chat seamlessly with Teams.",
         status: "Connected",
       },
       {
         name: "Telegram",
-        image: `${BASE}/telegram-logo.svg`,
+        image: `${BASE_Brand_Logo}/telegram-logo.svg`,
         desc: "Engage with your audience on Telegram instantly.",
         status: "Connected",
       },
       {
         name: "Messenger",
-        image: `${BASE}/facebook-messenger-logo.svg`,
+        image: `${BASE_Brand_Logo}/facebook-messenger-logo.svg`,
         desc: "Reply to Facebook Messenger conversations.",
         status: "Connected",
       },
@@ -98,25 +99,25 @@ const TABS = [
     integrations: [
       {
         name: "HubSpot",
-        image: `${BASE}/hubspot-logo.svg`,
+        image: `${BASE_Brand_Logo}/hubspot-logo.svg`,
         desc: "Sync contacts and automate lead management.",
         status: "Connected",
       },
       {
         name: "Salesforce",
-        image: `${BASE}/salesforce-logo.svg`,
+        image: `${BASE_Brand_Logo}/salesforce-logo.svg`,
         desc: "Sync conversational data with Salesforce CRM.",
         status: "Connected",
       },
       {
         name: "Zoho CRM",
-        image: `${BASE}/zoho-logo.svg`,
+        image: `${BASE_Brand_Logo}/zoho-logo.svg`,
         desc: "Streamline customer relationships and deals.",
         status: "Connected",
       },
       {
         name: "Freshsales",
-        image: `${BASE}/freshsales.svg`,
+        image: `${BASE_Brand_Logo}/freshsales.svg`,
         desc: "Track sales pipelines and contact context.",
         status: "Connected",
       },
@@ -143,19 +144,19 @@ const TABS = [
     integrations: [
       {
         name: "Zendesk",
-        image: `${BASE}/zendesk.svg`,
+        image: `${BASE_Brand_Logo}/zendesk.svg`,
         desc: "Create and update tickets from conversations.",
         status: "Connected",
       },
       {
         name: "Freshdesk",
-        image: `${BASE}/freshdesk.svg`,
+        image: `${BASE_Brand_Logo}/freshdesk.svg`,
         desc: "Sync support queries and customer tickets.",
         status: "Connected",
       },
       {
         name: "Intercom",
-        image: `${BASE}/intercom-logo.svg`,
+        image: `${BASE_Brand_Logo}/intercom-logo.svg`,
         desc: "Deliver hybrid AI support with live chat.",
         status: "Connected",
       },
@@ -182,19 +183,19 @@ const TABS = [
     integrations: [
       {
         name: "Zapier",
-        image: `${BASE}/zapier.svg`,
+        image: `${BASE_Brand_Logo}/zapier.svg`,
         desc: "Connect your chatbot to 6,000+ business apps.",
         status: "Connected",
       },
       {
         name: "Make",
-        image: `${BASE}/make-logo.svg`,
+        image: `${BASE_Brand_Logo}/make-logo.svg`,
         desc: "Create complex visual automation scenarios.",
         status: "Connected",
       },
       {
         name: "n8n",
-        image: `${BASE}/n8n-logo.svg`,
+        image: `${BASE_Brand_Logo}/n8n-logo.svg`,
         desc: "Build secure node-based workflow integrations.",
         status: "Connected",
       },
@@ -221,19 +222,19 @@ const TABS = [
     integrations: [
       {
         name: "Shopify",
-        image: `${BASE}/shopify.svg`,
+        image: `${BASE_Brand_Logo}/shopify.svg`,
         desc: "Sync catalog and process order lookups.",
         status: "Connected",
       },
       {
         name: "WooCommerce",
-        image: `${BASE}/wooCommerce.svg`,
+        image: `${BASE_Brand_Logo}/wooCommerce.svg`,
         desc: "Automate WordPress store customer queries.",
         status: "Connected",
       },
       {
         name: "Magento",
-        image: `${BASE}/magento.svg`,
+        image: `${BASE_Brand_Logo}/magento.svg`,
         desc: "Enterprise ecommerce catalog integrations.",
         status: "Connected",
       },
@@ -260,25 +261,25 @@ const TABS = [
     integrations: [
       {
         name: "Google Drive",
-        image: `${BASE}/google-drive.svg`,
+        image: `${BASE_Brand_Logo}/google-drive.svg`,
         desc: "Ingest and search Drive docs securely.",
         status: "Connected",
       },
       {
         name: "Dropbox",
-        image: `${BASE}/dropbox-logo.svg`,
+        image: `${BASE_Brand_Logo}/dropbox-logo.svg`,
         desc: "Sync files to knowledge databases.",
         status: "Connected",
       },
       {
         name: "OneDrive",
-        image: `${BASE}/onedrive-logo.svg`,
+        image: `${BASE_Brand_Logo}/onedrive-logo.svg`,
         desc: "Access corporate SharePoint and OneDrive.",
         status: "Connected",
       },
       {
         name: "Notion",
-        image: `${BASE}/notion-logo.svg`,
+        image: `${BASE_Brand_Logo}/notion-logo.svg`,
         desc: "Search workspace wikis and knowledge bases.",
         status: "Connected",
       },

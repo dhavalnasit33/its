@@ -112,17 +112,17 @@ const OUTCOMES = [
 ];
 
 const ECOSYSTEM_LOGOS = [
-  { name: "Salesforce", path: "/ai-strategy/ai-chartbot-development/salesforce-logo.svg" },
-  { name: "SAP", path: "/ai-strategy/generative-ai-llm-development/SAP-logo.svg" },
-  { name: "Slack", path: "/ai-strategy/ai-chartbot-development/slack-logo.svg" },
-  { name: "Microsoft Teams", path: "/ai-strategy/ai-chartbot-development/team.svg" },
-  { name: "Google Drive", path: "/ai-strategy/ai-chartbot-development/google-drive.svg" },
-  { name: "SharePoint", path: "/ai-strategy/generative-ai-llm-development/microsoft-sharepoint.svg" },
-  { name: "Dropbox", path: "/ai-strategy/ai-chartbot-development/dropbox-logo.svg" },
-  { name: "OneDrive", path: "/ai-strategy/ai-chartbot-development/onedrive-logo.svg" },
-  { name: "AWS", path: "/ai-strategy/generative-ai-llm-development/aws-logo.svg" },
-  { name: "Microsoft Azure", path: "/ai-strategy/generative-ai-llm-development/azure-logo.svg" },
-  { name: "OpenAI", path: "/ai-strategy/generative-ai-llm-development/openai-logo.svg" },
+  { name: "Salesforce", path: "/ai-strategy/brand-image/salesforce-logo.svg" },
+  { name: "SAP", path: "/ai-strategy/brand-image/SAP-logo.svg" },
+  { name: "Slack", path: "/ai-strategy/brand-image/slack-logo.svg" },
+  { name: "Microsoft Teams", path: "/ai-strategy/brand-image/team.svg" },
+  { name: "Google Drive", path: "/ai-strategy/brand-image/google-drive.svg" },
+  { name: "SharePoint", path: "/ai-strategy/brand-image/microsoft-sharepoint.svg" },
+  { name: "Dropbox", path: "/ai-strategy/brand-image/dropbox-logo.svg" },
+  { name: "OneDrive", path: "/ai-strategy/brand-image/onedrive-logo.svg" },
+  { name: "AWS", path: "/ai-strategy/brand-image/aws-logo.svg" },
+  { name: "Microsoft Azure", path: "/ai-strategy/brand-image/azure-logo.svg" },
+  { name: "OpenAI", path: "/ai-strategy/brand-image/openai-logo.svg" },
 ];
 
 const TRUST_COLUMNS = [
