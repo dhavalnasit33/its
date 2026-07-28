@@ -20,40 +20,40 @@ const STEPS: StepData[] = [
   {
     id: "planning",
     num: "01",
-    title: "Goal & Planning",
-    desc: "Define the objective and formulate a strategic, high-level plan.",
+    title: "Goal Formulation",
+    desc: "Synthesize high-level business objectives into clear execution paths.",
     imagePath: "/ai-strategy/agentic-ai-development-services/01-planning.png",
     color: "#8B5CF6",
   },
   {
     id: "breakdown",
     num: "02",
-    title: "Task Breakdown",
-    desc: "Decompose complex plans into manageable, actionable steps.",
+    title: "Hierarchical Decomposition",
+    desc: "Deconstruct complex workflows into parallelizable, atomic tasks.",
     imagePath: "/ai-strategy/agentic-ai-development-services/02-breakdown.png",
     color: "#3B82F6",
   },
   {
     id: "memory",
     num: "03",
-    title: "Memory & Context",
-    desc: "Retrieve relevant knowledge and past experiences for context.",
+    title: "State & Vector Memory",
+    desc: "Retrieve long-term context, scratchpad history, and semantic knowledge.",
     imagePath: "/ai-strategy/agentic-ai-development-services/03-memory.png",
     color: "#06B6D4",
   },
   {
     id: "execution",
     num: "04",
-    title: "Tool Execution",
-    desc: "Select appropriate APIs and autonomously execute the tasks.",
+    title: "Deterministic Tool Calling",
+    desc: "Orchestrate API endpoints, SQL queries, and local data interfaces.",
     imagePath: "/ai-strategy/agentic-ai-development-services/04-execution.png",
     color: "#F97316",
   },
   {
     id: "reflection",
     num: "05",
-    title: "Learn & Reflect",
-    desc: "Evaluate task outcomes to continuously optimize future actions.",
+    title: "Self-Reflection & Critique",
+    desc: "Evaluate outcomes against goals to correct errors and optimize.",
     imagePath: "/ai-strategy/agentic-ai-development-services/05-reflection.png",
     color: "#10B981",
   },
@@ -207,7 +207,7 @@ export default function AgentDecisionEngine() {
             viewport={{ once: true }}
             className="inline-block mb-4"
           >
-            <SectionBadge title="Autonomous Thinking Flow" />
+            <SectionBadge title="Cognitive Reasoning Loop" />
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -216,7 +216,7 @@ export default function AgentDecisionEngine() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="common-h2 text-[#0F172A]"
           >
-            Agent Decision <span className="text-[#D27E2B]"> Engine</span>
+            Agent Cognitive <span className="text-[#D27E2B]"> Architecture</span>
           </motion.h2>
         </div>
 

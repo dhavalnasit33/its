@@ -343,13 +343,10 @@ export default function AgenticTechStack() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="common-h2 text-black"
           >
-            Agentic Tech
-            <span className="text-[#D27E2B]"> Stack</span>
+            Agentic Tech<span className="text-[#D27E2B]"> Stack</span>
           </motion.h2>
           <p className="text-slate-600 text-base sm:text-lg font-medium max-w-2xl leading-relaxed">
-            We build production-ready autonomous agents using industry-standard
-            frameworks, enterprise protocol bridges, and battle-tested cloud
-            platforms.
+            We architect robust agent infrastructures using leading foundation models, cycle-graph frameworks, vector memories, and secure integrations.
           </p>
         </div>
 

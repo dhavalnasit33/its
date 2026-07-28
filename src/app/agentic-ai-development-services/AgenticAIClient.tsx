@@ -168,7 +168,7 @@ export default function AgenticAIClient() {
         <AgenticTechStack />
 
         {/* ── 5. Call To Action Banner ── */}
-        <CTA highlightedText="Autonomous AI Workforce?" />
+        <CTA titlePrefix="Ready to Deploy Your" highlightedText="Autonomous AI Workforce?" />
 
         {/* ── 6. Testimonials ── */}
         <Testimonials />

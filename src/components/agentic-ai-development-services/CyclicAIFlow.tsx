@@ -22,7 +22,7 @@ import SectionBadge from "../new-home-components/SectionBadge";
 const NODES = [
   {
     id: "input",
-    label: "Ingestion",
+    label: "Event Intake",
     icon: LuReceipt,
     color: "#3B82F6",
     x: 15,
@@ -31,7 +31,7 @@ const NODES = [
   },
   {
     id: "read",
-    label: "OCR & Vision",
+    label: "Cognitive Parser",
     icon: LuBrain,
     color: "#6366F1",
     x: 30,
@@ -40,7 +40,7 @@ const NODES = [
   },
   {
     id: "extract",
-    label: "Data Parsing",
+    label: "Semantic Mapping",
     icon: LuDatabase,
     color: "#8B5CF6",
     x: 30,
@@ -49,7 +49,7 @@ const NODES = [
   },
   {
     id: "validate",
-    label: "ERP Sync",
+    label: "Enterprise Ledger Sync",
     icon: LuShieldCheck,
     color: "#10B981",
     x: 70,
@@ -58,7 +58,7 @@ const NODES = [
   },
   {
     id: "approve",
-    label: "Human in Loop",
+    label: "HITL Guardrails",
     icon: LuUserCheck,
     color: "#F59E0B",
     x: 70,
@@ -67,7 +67,7 @@ const NODES = [
   },
   {
     id: "pay",
-    label: "Ledger Update",
+    label: "State Finalization",
     icon: LuCalculator,
     color: "#EC4899",
     x: 85,
@@ -76,7 +76,7 @@ const NODES = [
   },
   {
     id: "notify",
-    label: "Alert Dispatched",
+    label: "Audit Telemetry",
     icon: LuBell,
     color: "#06B6D4",
     x: 85,
@@ -505,7 +505,7 @@ export default function NeuralCanvasFlow() {
           viewport={{ once: true }}
           className="inline-block mb-4"
         >
-          <SectionBadge title="System Topology" />
+          <SectionBadge title="Execution Topology" />
         </motion.span>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -514,8 +514,8 @@ export default function NeuralCanvasFlow() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="common-h2 text-slate-100"
         >
-          A Live autonomous{" "}
-          <span className="text-[#D27E2B]"> decision routing.</span>
+          Real-Time Agent Orchestration &{" "}
+          <span className="text-[#D27E2B]"> Execution Topology.</span>
         </motion.h2>
       </div>
 

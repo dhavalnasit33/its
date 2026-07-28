@@ -32,39 +32,39 @@ const fadeUp = (delay = 0) => ({
 
 // Connected Enterprise Tools
 const CONNECTED_TOOLS = [
-  { name: "CRM", label: "Salesforce / Hubspot", icon: LuTrendingUp, color: "text-blue-500 bg-blue-50 border-blue-100" },
-  { name: "ERP", label: "SAP / Oracle", icon: LuBriefcase, color: "text-[#D27E2B] bg-orange-50 border-orange-100" },
-  { name: "Slack", label: "Messaging Sync", icon: LuMessageSquare, color: "text-purple-500 bg-purple-50 border-purple-100" },
-  { name: "Email", label: "Outlook / Gmail", icon: LuMail, color: "text-red-500 bg-red-50 border-red-100" },
-  { name: "Calendar", label: "Auto Scheduling", icon: LuCalendar, color: "text-indigo-500 bg-indigo-50 border-indigo-100" },
-  { name: "GitHub", label: "Code & CI/CD", icon: LuCode, color: "text-slate-800 bg-slate-100 border-slate-200" },
-  { name: "Database", label: "SQL & Vector DB", icon: LuDatabase, color: "text-emerald-500 bg-emerald-50 border-emerald-100" },
+  { name: "CRM Integration", label: "Salesforce / HubSpot Sync", icon: LuTrendingUp, color: "text-blue-500 bg-blue-50 border-blue-100" },
+  { name: "ERP Hub", label: "SAP & Oracle Records", icon: LuBriefcase, color: "text-[#D27E2B] bg-orange-50 border-orange-100" },
+  { name: "Slack Link", label: "Intelligent Chat Sync", icon: LuMessageSquare, color: "text-purple-500 bg-purple-50 border-purple-100" },
+  { name: "Communications", label: "Automated Email Handlers", icon: LuMail, color: "text-red-500 bg-red-50 border-red-100" },
+  { name: "Scheduling", label: "Autonomous Calendar Agents", icon: LuCalendar, color: "text-indigo-500 bg-indigo-50 border-indigo-100" },
+  { name: "CI/CD & DevOps", label: "GitHub Code Automation", icon: LuCode, color: "text-slate-800 bg-slate-100 border-slate-200" },
+  { name: "Databases", label: "SQL & Vector Knowledge Bases", icon: LuDatabase, color: "text-emerald-500 bg-emerald-50 border-emerald-100" },
 ];
 
 // Workflow Execution Cards
 const WORKFLOW_CARDS = [
   {
-    title: "Sales Workflow",
-    agent: "Lead Qualification Agent",
+    title: "Lead Intelligence Hub",
+    agent: "Autonomous SDR Agent",
     status: "Executing Task",
     statusBg: "bg-emerald-50 text-emerald-600 border-emerald-200",
-    action: "Updating CRM Lead Score + Generating Proposal",
+    action: "Enriching Lead Records & Drafting Proposal Mockup",
     icon: LuTrendingUp,
   },
   {
-    title: "Finance Workflow",
-    agent: "Audit & Invoice Agent",
+    title: "Audit & Compliance Engine",
+    agent: "Financial Operations Agent",
     status: "Tool Calling",
     statusBg: "bg-blue-50 text-blue-600 border-blue-200",
-    action: "Reconciling SAP Invoices & Expense Approvals",
+    action: "Reconciling Cross-System Ledger Discrepancies",
     icon: LuBriefcase,
   },
   {
-    title: "HR Workflow",
-    agent: "Onboarding Co-Pilot",
+    title: "Operations Co-Pilot",
+    agent: "Workforce Orchestrator Agent",
     status: "Verified",
     statusBg: "bg-purple-50 text-purple-600 border-purple-200",
-    action: "Verifying Compliance & Scheduling Interviews",
+    action: "Verifying Audit Logs & Dispatching Notifications",
     icon: LuBot,
   },
 ];
@@ -84,7 +84,7 @@ export default function Hero() {
             <motion.div {...fadeUp(0)}>
               <span className="inline-flex items-center gap-2 text-[#D27E2B] text-xs sm:text-sm font-extrabold uppercase tracking-widest mb-6">
                 <span className="w-5 h-0.5 bg-[#D27E2B]" />
-                Agentic AI Development Services
+                Enterprise Agentic AI Solutions
               </span>
             </motion.div>
 
@@ -93,7 +93,7 @@ export default function Hero() {
               {...fadeUp(0.1)}
               className="text-4xl md:text-[46px] xl:text-[54px] font-extrabold mb-6 leading-[1.15] tracking-tight text-[#0F172A]"
             >
-              Autonomous Agentic AI <span className="text-[#D27E2B]">Development Services</span> for Enterprise Operations
+              Deploy Autonomous AI Agents to <span className="text-[#D27E2B]">Orchestrate Enterprise Workflows</span>
             </motion.h1>
 
             {/* Value Description */}
@@ -101,7 +101,7 @@ export default function Hero() {
               {...fadeUp(0.2)}
               className="text-slate-600 text-base sm:text-lg leading-relaxed mb-8 max-w-xl font-medium"
             >
-              Build intelligent AI agents that can reason, plan, make decisions, use business tools, collaborate with other agents, and execute complex enterprise workflows autonomously.
+              Design, build, and integrate custom AI agents that reason, plan, utilize enterprise tools, and execute complex multi-step workflows autonomously to drive operational efficiency.
             </motion.p>
 
             {/* CTAs */}
@@ -112,7 +112,7 @@ export default function Hero() {
               <Button
                 bgColor="#D27E2B"
                 hoverColor="#0F172A"
-                text="Build AI Agents"
+                text="Start Your Agentic AI Project"
                 href="#contact-form-section"
                 icon="/navbar/btn_icon.png"
               />
@@ -123,7 +123,7 @@ export default function Hero() {
                   href="#agentic-paradigm-shift"
                   className="relative tracking-tight text-sm sm:text-base px-6 py-3 sm:px-7 sm:py-3.5 cursor-pointer font-bold flex items-center gap-2 z-10"
                 >
-                  Schedule Consultation
+                  Talk to an AI Expert
                   <Image
                     src="/navbar/btn_icon.png"
                     alt="Arrow"

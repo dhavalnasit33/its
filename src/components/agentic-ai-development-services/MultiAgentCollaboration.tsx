@@ -31,84 +31,84 @@ const fadeUp = (delay = 0) => ({
 const AGENT_ROLES = [
   {
     id: "coordinator",
-    role: "Coordinator Agent",
-    tagline: "Master Router & Task Allocator",
+    role: "Orchestrator Agent",
+    tagline: "Workflow Director & Router",
     level: "top",
     icon: LuCpu,
     badgeBg: "bg-orange-500/15 text-[#D27E2B] border-[#D27E2B]/40",
     accentColor: "#D27E2B",
     description:
-      "Acts as the team leader. Analyzes high-level business goals, decomposes them into sub-tasks, and delegates responsibilities to specialized agents.",
+      "Decomposes complex organizational goals, dynamically routes tasks, and orchestrates the distributed execution flow of specialized sub-agents.",
     tools: ["OpenAI Agents SDK", "Goal Router", "State Store"],
     action: "Assigned 4 Sub-tasks • Routing Workflow Stream",
     status: "Active Orchestrator",
   },
   {
     id: "research",
-    role: "Research Agent",
-    tagline: "Data Discovery & Fact Extraction",
+    role: "Ingestion & Analysis Agent",
+    tagline: "Knowledge & Fact Retrieval",
     level: "middle-left",
     icon: LuSearch,
     badgeBg: "bg-blue-500/15 text-blue-400 border-blue-500/40",
     accentColor: "#3B82F6",
     description:
-      "Ingests structured and unstructured data, queries vector databases, extracts relevant context, and verifies factual data accuracy.",
+      "Queries vector databases, performs semantic lookup, and parses unstructured sources to feed contextually grounded facts into the workflow.",
     tools: ["Vector DB", "Web Crawler", "RAG Pipeline"],
     action: "Scraped 1,420 Records • Ingested Fact Context",
     status: "Data Ready",
   },
   {
     id: "planning",
-    role: "Planning Agent",
-    tagline: "Strategic Sequencer",
+    role: "Strategic Planning Agent",
+    tagline: "Execution Sequencer",
     level: "middle-center",
     icon: LuWorkflow,
     badgeBg: "bg-purple-500/15 text-purple-400 border-purple-500/40",
     accentColor: "#8B5CF6",
     description:
-      "Builds a deterministic, step-by-step execution roadmap. Evaluates alternative pathways, sets priority queues, and manages fallback logic.",
+      "Formulates execution graphs, manages state transitions, and resolves logic branches with robust fallback plans to ensure task closure.",
     tools: ["LangGraph", "Tree-of-Thought", "Plan Cache"],
     action: "Sequenced 6 Steps • Optimized Dependency Path",
     status: "Plan Verified",
   },
   {
     id: "execution",
-    role: "Execution Agent",
+    role: "Action & Integration Agent",
     tagline: "API & Tool Operator",
     level: "middle-right",
     icon: LuZap,
     badgeBg: "bg-amber-500/15 text-amber-400 border-amber-500/40",
     accentColor: "#F59E0B",
     description:
-      "Connects to enterprise software via Model Context Protocol (MCP). Invokes REST APIs, executes SQL queries, and runs external software tools.",
+      "Executes secure transactions, queries systems of record, and triggers API payloads across ERP, CRM, and cloud platforms via Model Context Protocol.",
     tools: ["MCP Protocol", "Salesforce API", "SAP Connector"],
     action: "Updated CRM Leads • Dispatched SAP Invoices",
     status: "Tool Execution Complete",
   },
   {
     id: "quality",
-    role: "Quality Review Agent",
-    tagline: "Compliance & Safety Guard",
+    role: "Guardrails & Compliance Agent",
+    tagline: "Safety & Validation Controller",
     level: "lower-middle",
     icon: LuShieldCheck,
     badgeBg: "bg-emerald-500/15 text-emerald-400 border-emerald-500/40",
     accentColor: "#10B981",
     description:
-      "Validates agent output against enterprise compliance rules, schema structures, and security policies before releasing final artifacts.",
+      "Enforces JSON schema alignment, audits execution logs, validates data structures, and acts as a security gatekeeper prior to publishing outputs.",
     tools: ["JSON Schema Validator", "Audit Logger", "HITL Gate"],
     action: "Validated 100% Compliance • Zero Violations",
     status: "Passed Guardrails",
   },
   {
     id: "delivery",
-    role: "Delivery Agent",
-    tagline: "Output Dispatch & Notification",
+    role: "Delivery & Telemetry Agent",
+    tagline: "Output Dispatcher",
     level: "bottom",
     icon: LuSend,
     badgeBg: "bg-cyan-500/15 text-cyan-400 border-cyan-500/40",
     accentColor: "#06B6D4",
     description:
-      "Formats final outputs into polished reports, notifies team members via Slack/Email, and records completed events in enterprise audit logs.",
+      "Formats finished deliverables into structured reports, updates telemetry dashboards, and updates stakeholders via email or communication hubs.",
     tools: ["Slack Bot", "Gmail Dispatcher", "Audit Store"],
     action: "Sent Executive Report • Notified 12 Stakeholders",
     status: "Delivery Confirmed",
@@ -233,12 +233,12 @@ export default function MultiAgentCollaboration() {
           {...fadeUp(0)}
           className="text-center mb-16 max-w-3xl mx-auto flex flex-col items-center gap-3 relative z-10"
         >
-          <SectionBadge title="INTER-AGENT TEAMWORK" />
+          <SectionBadge title="Multi-Agent Systems" />
           <h2 className="text-3xl sm:text-4xl md:text-[42px] font-black leading-tight tracking-tight text-white">
-            Multi-Agent <span className="text-[#D27E2B]">Collaboration</span>
+            Distributed Multi-Agent <span className="text-[#D27E2B]">Collaboration</span>
           </h2>
           <p className="text-slate-300 text-sm sm:text-base font-medium max-w-2xl leading-relaxed">
-            Specialized AI agents working together in a real-time mission control hierarchy to solve complex enterprise business operations.
+            Orchestrate specialized, role-based AI agents that communicate, negotiate, and delegate tasks to solve complex operational challenges.
           </p>
         </motion.div>
 

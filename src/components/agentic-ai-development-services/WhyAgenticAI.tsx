@@ -23,23 +23,23 @@ import SectionBadge from "../new-home-components/SectionBadge";
 const FEATURES_LEFT = [
   {
     id: "auto-decision",
-    title: "Autonomous\nDecision Making",
+    title: "Context-Aware\nDecisions",
     description:
-      "AI agents analyze data, evaluate scenarios,\nand make decisions seamlessly.",
+      "Agents analyze complex variables and execute\noptimal actions within defined boundaries.",
     icon: LuBrain,
   },
   {
     id: "tool-integration",
-    title: "Enterprise\nTool Integration",
+    title: "Secure API\nIntegration",
     description:
-      "Seamlessly connects with your existing\nsystems, APIs, and databases.",
+      "Seamlessly connects to legacy ERPs, CRMs,\ndatabases, and custom backend protocols.",
     icon: LuLayers,
   },
   {
     id: "continuous-learning",
-    title: "Continuous\nLearning",
+    title: "Self-Correcting\nExecution",
     description:
-      "Agents learn from outcomes, adapt to\nchanges, and improve over time.",
+      "Agents reflect on failed runs, retry queries,\nand automatically correct semantic errors.",
     icon: LuLightbulb,
   },
 ];
@@ -47,23 +47,23 @@ const FEATURES_LEFT = [
 const FEATURES_RIGHT = [
   {
     id: "multi-step",
-    title: "Multi-Step\nTask Execution",
+    title: "Hierarchical\nWorkflows",
     description:
-      "Handles complex workflows from start to\nfinish with flawless execution.",
+      "Run long-running, multi-stage tasks across\nmultiple departments with state persistence.",
     icon: LuListChecks,
   },
   {
     id: "human-approval",
-    title: "Human\nApproval Workflows",
+    title: "Human-in-the-Loop\nGates",
     description:
-      "Built-in checkpoints ensure humans stay in\ncontrol where it matters.",
+      "Integrate approval checkpoints for high-value\ntransactions and sensitive enterprise actions.",
     icon: LuUserCheck,
   },
   {
     id: "enterprise-security",
-    title: "Enterprise\nSecurity",
+    title: "Enterprise\nGovernance",
     description:
-      "Built with enterprise-grade security,\ncompliance, and data privacy.",
+      "Ensure absolute data privacy, full auditability,\nrole-based permissions, and VPC hosting.",
     icon: LuLock,
   },
 ];
@@ -335,7 +335,7 @@ export default function WhyAgenticAI() {
             viewport={{ once: true }}
             className="inline-block mb-4"
           >
-            <SectionBadge title="AI Orchestration Engine" />
+            <SectionBadge title="Intelligent Business Automation" />
           </motion.span>
 
           <motion.h2
@@ -345,8 +345,8 @@ export default function WhyAgenticAI() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="common-h2 text-slate-900"
           >
-            Powering Every{" "}
-            <span className="text-[#D27E2B]">Intelligent AI Workflow</span>
+            Engineered for{" "}
+            <span className="text-[#D27E2B]">Enterprise-Grade Automation</span>
           </motion.h2>
 
           <motion.p
@@ -356,8 +356,7 @@ export default function WhyAgenticAI() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-5 text-lg text-slate-600 leading-8 max-w-3xl mx-auto"
           >
-            Connect AI agents, enterprise tools, and human approvals through one
-            intelligent orchestration engine.
+            Scale your operational capacity with autonomous systems designed for predictability, security, and seamless tool integration.
           </motion.p>
         </div>
         <div className="relative w-full max-w-[1280px] mx-auto min-h-[600px] flex items-center justify-center mt-5">
