@@ -17,9 +17,13 @@ import TraditionalVsAgentic from "@/components/agentic-ai-development-services/T
 import MultiAgentCollaboration from "@/components/agentic-ai-development-services/MultiAgentCollaboration";
 import AgentDecisionEngine from "@/components/agentic-ai-development-services/AgentDecisionEngine";
 import CyclicAIFlow from "@/components/agentic-ai-development-services/CyclicAIFlow";
+<<<<<<< Updated upstream
 // import WhyAgenticAI from "@/components/agentic-ai-development-services/WhyAgenticAI";
 import AgenticTechStack from "@/components/agentic-ai-development-services/AgenticTechStack";
 import WhyAgenticAI from "@/components/agentic-ai-development-services/WhyAgenticAI";
+=======
+import AgenticTechStack from "@/components/agentic-ai-development-services/AgenticTechStack";
+>>>>>>> Stashed changes
 
 const AGENTIC_AI_FAQS = [
   {
@@ -166,6 +170,10 @@ export default function AgenticAIClient() {
 
         {/* ── Section 7: Agentic Tech Stack (Light Theme Base) ── */}
         <AgenticTechStack />
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
         {/* ── 5. Call To Action Banner ── */}
         <CTA titlePrefix="Ready to Deploy Your" highlightedText="Autonomous AI Workforce?" />
