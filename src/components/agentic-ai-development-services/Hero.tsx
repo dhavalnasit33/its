@@ -84,11 +84,7 @@ export default function Hero() {
             <motion.div {...fadeUp(0)}>
               <span className="inline-flex items-center gap-2 text-[#D27E2B] text-xs sm:text-sm font-extrabold uppercase tracking-widest mb-6">
                 <span className="w-5 h-0.5 bg-[#D27E2B]" />
-<<<<<<< Updated upstream
                 Enterprise Agentic AI Solutions
-=======
-                Agentic AI Development Services
->>>>>>> Stashed changes
               </span>
             </motion.div>
 
@@ -97,11 +93,7 @@ export default function Hero() {
               {...fadeUp(0.1)}
               className="text-4xl md:text-[46px] xl:text-[54px] font-extrabold mb-6 leading-[1.15] tracking-tight text-[#0F172A]"
             >
-<<<<<<< Updated upstream
               Deploy Autonomous AI Agents to <span className="text-[#D27E2B]">Orchestrate Enterprise Workflows</span>
-=======
-              Autonomous Agentic AI <span className="text-[#D27E2B]">Development Services</span> for Enterprise Operations
->>>>>>> Stashed changes
             </motion.h1>
 
             {/* Value Description */}
@@ -109,11 +101,7 @@ export default function Hero() {
               {...fadeUp(0.2)}
               className="text-slate-600 text-base sm:text-lg leading-relaxed mb-8 max-w-xl font-medium"
             >
-<<<<<<< Updated upstream
               Design, build, and integrate custom AI agents that reason, plan, utilize enterprise tools, and execute complex multi-step workflows autonomously to drive operational efficiency.
-=======
-              Build intelligent AI agents that can reason, plan, make decisions, use business tools, collaborate with other agents, and execute complex enterprise workflows autonomously.
->>>>>>> Stashed changes
             </motion.p>
 
             {/* CTAs */}
