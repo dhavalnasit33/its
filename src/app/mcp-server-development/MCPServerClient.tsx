@@ -16,6 +16,7 @@ import Hero from "@/components/mcp-server-development/Hero";
 import MCPServices from "@/components/mcp-server-development/MCPServices";
 import ConnectedSystems from "@/components/mcp-server-development/ConnectedSystems";
 import EnterpriseSecurity from "@/components/mcp-server-development/EnterpriseSecurity";
+import HowMCPWorks from "@/components/mcp-server-development/HowMCPWorks";
 
 const MCP_FAQS = [
   {
@@ -154,6 +155,8 @@ export default function MCPServerClient() {
 
         {/* ── 5. Enterprise MCP Development Services (6 Cards) ── */}
         <MCPServices />
+
+        <HowMCPWorks />
 
         {/* ── 6. Enterprise Systems We Connect (18 System Cards Grid) ── */}
         <ConnectedSystems />
