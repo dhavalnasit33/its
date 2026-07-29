@@ -12,8 +12,9 @@ import {
   LuActivity,
   LuCircleCheck,
   LuTerminal,
-  LuCpu,
   LuShieldAlert,
+  LuArrowRight,
+  LuCheck,
 } from "react-icons/lu";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
@@ -26,83 +27,101 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.5, ease: "easeOut" as const, delay },
 });
 
-const SECURITY_NODES = [
+const SECURITY_PILLARS = [
   {
-    id: "oauth",
-    title: "OAuth2 & OIDC Auth",
-    tagline: "Federated Identity & SSO",
+    id: "authentication",
+    step: "01",
+    title: "Authentication",
+    category: "Identity & Tokens",
+    statusText: "OAuth 2.0 / OpenID Connect",
     icon: LuKey,
     color: "#D27E2B",
     description:
-      "Federated Single Sign-On (SSO), JWT token validation, and OAuth2 scopes ensuring AI agents authenticate strictly as authorized corporate users.",
-    bullets: ["JWT Token Scopes", "Identity Provider SSO", "Token Auto-Rotation"],
-    terminalLog: "[AUTH_OK] OAuth2 Bearer token validated for user_id: enterprise_admin",
+      "Authenticate users and applications using OAuth 2.0 and OpenID Connect, allowing AI clients to securely obtain and validate access tokens through enterprise identity providers.",
+    bullets: ["OAuth 2.0 Flows", "Identity Providers", "Access Tokens"],
+    pipelineStep: "Identity Check",
+    telemetryLog: "[AUTH_OK] OAuth 2.0 access token validated.",
   },
   {
-    id: "rbac",
-    title: "RBAC Access Control",
-    tagline: "Least Privilege Enforcement",
+    id: "authorization",
+    step: "02",
+    title: "Authorization",
+    category: "Access Enforcement",
+    statusText: "Role-Based Access Control",
     icon: LuUserCheck,
     color: "#3B82F6",
     description:
-      "Granular tool execution permissions mapping AI assistant capabilities directly to individual employee authorization levels and security roles.",
-    bullets: ["Tool-Level Scopes", "User Role Mapping", "Least Privilege"],
-    terminalLog: "[RBAC_PASS] Permission check: Tool 'query_sql' allowed for role: AUDITOR",
+      "Define granular permissions so AI agents and users can access only the tools, APIs, and resources they are explicitly authorized to use.",
+    bullets: ["Granular Tool Scopes", "Role Mapping", "Least Privilege"],
+    pipelineStep: "Permission Gate",
+    telemetryLog: "[RBAC_PASS] Permission check passed for requested tool invocation.",
   },
   {
-    id: "encryption",
-    title: "TLS 1.3 & AES-256",
-    tagline: "End-to-End Data Protection",
+    id: "transport",
+    step: "03",
+    title: "Transport Security",
+    category: "In-Transit Protection",
+    statusText: "TLS Encryption",
     icon: LuLock,
     color: "#10B981",
     description:
-      "Strict in-transit TLS 1.3 protocol encryption and AES-256 at-rest database storage ensuring total corporate data privacy.",
-    bullets: ["TLS 1.3 Transport", "AES-256 Storage", "Zero-Knowledge"],
-    terminalLog: "[CRYPTO] Handshake complete • TLS 1.3 Cipher: ECDHE-RSA-AES256-GCM",
+      "Encrypt all communication between AI clients, MCP servers, and enterprise services using modern TLS protocols to protect data in transit.",
+    bullets: ["TLS 1.3 Encryption", "In-Transit Protection", "Certificate Validation"],
+    pipelineStep: "TLS Transport",
+    telemetryLog: "[TLS_OK] TLS 1.3 session established.",
   },
   {
     id: "audit",
-    title: "Immutable Audit Logs",
-    tagline: "Tamper-Proof Telemetry",
+    step: "04",
+    title: "Audit Logging",
+    category: "Operational Traceability",
+    statusText: "Audit Logging Enabled",
     icon: LuFileText,
     color: "#8B5CF6",
     description:
-      "Comprehensive, tamper-proof logging of every AI tool call, parameter payload, execution timestamp, and server response.",
-    bullets: ["SIEM Integration", "Tamper-Proof Logs", "Real-Time Telemetry"],
-    terminalLog: "[AUDIT_LOG] Event #8942 logged: 'update_record' executed with 0 warnings",
+      "Record authentication events, tool invocations, permission checks, and API activity to support operational monitoring and compliance requirements.",
+    bullets: ["Tool Invocations", "Event Traceability", "SIEM Monitoring"],
+    pipelineStep: "Audit Trail",
+    telemetryLog: "[AUDIT_LOG] Event recorded: Tool invocation logged successfully.",
   },
   {
     id: "secrets",
-    title: "Secrets Vault Sync",
-    tagline: "Zero Hardcoded Credentials",
+    step: "05",
+    title: "Secret Management",
+    category: "Credential Management",
+    statusText: "Credential Management",
     icon: LuShieldAlert,
     color: "#EC4899",
     description:
-      "Native integration with HashiCorp Vault, AWS KMS, and Azure Key Vault so API credentials and tokens never touch client code.",
-    bullets: ["HashiCorp Vault", "AWS KMS Sync", "Zero Leak Risk"],
-    terminalLog: "[VAULT] Dynamic secret leased from HashiCorp Vault (TTL: 3600s)",
+      "Securely manage API keys, access tokens, and service credentials using encrypted storage and controlled access policies.",
+    bullets: ["Encrypted Storage", "API Key Security", "Access Policies"],
+    pipelineStep: "Credential Vault",
+    telemetryLog: "[CREDENTIALS] Access token retrieved from secure credential store.",
   },
   {
     id: "ratelimit",
-    title: "Rate Limiting & DDoS",
-    tagline: "API Quotas & Throttling",
+    step: "06",
+    title: "Rate Limiting",
+    category: "Traffic Management",
+    statusText: "Rate Limiting Policies",
     icon: LuZap,
     color: "#F59E0B",
     description:
-      "Configurable API call quotas, circuit breakers, and rate limiters protecting internal microservices from spike overloads.",
-    bullets: ["Circuit Breakers", "API Quotas", "Burst Protection"],
-    terminalLog: "[THROTTLE] Rate limiter active: 1,200 req/min within safety threshold",
+      "Control request frequency and enforce usage policies to reduce abuse, prevent overload, and improve service reliability.",
+    bullets: ["Request Quotas", "Abuse Prevention", "Service Reliability"],
+    pipelineStep: "Traffic Sentinel",
+    telemetryLog: "[RATE_LIMIT] Request within configured rate limits.",
   },
 ];
 
 export default function EnterpriseSecurity() {
-  const [selectedNodeId, setSelectedNodeId] = useState<string>("oauth");
-  const selectedNode = SECURITY_NODES.find((n) => n.id === selectedNodeId) || SECURITY_NODES[0];
+  const [selectedId, setSelectedId] = useState<string>("authentication");
+  const activePillar = SECURITY_PILLARS.find((p) => p.id === selectedId) || SECURITY_PILLARS[0];
 
   return (
     <Section className="py-20 lg:py-28 relative overflow-hidden bg-[#070D1B] text-white border-t border-slate-800">
-      {/* Ambient Dark Holographic Glowing Background Orbs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-[radial-gradient(circle,rgba(210,126,43,0.12)_0%,rgba(16,185,129,0.08)_40%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
+      {/* Dark Ambient Glow Background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-[radial-gradient(circle,rgba(210,126,43,0.12)_0%,rgba(16,185,129,0.08)_40%,transparent_75%)] rounded-full blur-3xl pointer-events-none" />
 
       <Row>
         {/* Section Header */}
@@ -110,252 +129,305 @@ export default function EnterpriseSecurity() {
           {...fadeUp(0)}
           className="text-center mb-14 max-w-3xl mx-auto flex flex-col items-center gap-3 relative z-10"
         >
-          <SectionBadge title="ENTERPRISE SECURITY & GOVERNANCE" />
+          <SectionBadge title="ENTERPRISE SECURITY" />
 
           <h2 className="text-3xl sm:text-4xl md:text-[42px] font-extrabold leading-tight tracking-tight text-white">
-            Enterprise <span className="text-[#D27E2B]">Security Architecture</span>
+            Enterprise-Grade Security <br />
+            <span className="text-[#D27E2B]">Built Into Every MCP Server</span>
           </h2>
 
           <p className="text-slate-300 text-sm sm:text-base font-medium max-w-2xl leading-relaxed">
-            Our custom MCP servers are engineered with military-grade zero-trust protocols, granular role-based access controls, and full audit telemetry to safeguard corporate resources.
+            Security is built into every MCP server we develop. We implement authentication, authorization, encrypted communication, audit logging, and secure credential management to help AI applications interact safely with enterprise software and business data.
           </p>
         </motion.div>
 
-        {/* ── MISSION CONTROL GLASS DASHBOARD ── */}
-        <div className="relative w-full max-w-[1280px] mx-auto z-10">
-          
-          {/* Main Glass Panel Frame */}
-          <div className="bg-slate-900/50 backdrop-blur-2xl border border-slate-800/80 rounded-3xl p-6 sm:p-9 shadow-[0_0_80px_rgba(0,0,0,0.6)] relative overflow-hidden">
-            
-            {/* Top Security Status Bar */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-slate-800/80 mb-8 gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-emerald-500 animate-ping" />
-                <div>
-                  <h4 className="text-xs font-mono font-bold tracking-widest text-emerald-400 uppercase">
-                    ZERO-TRUST MCP SECURITY CONSOLE // ACTIVE
-                  </h4>
-                  <p className="text-[11px] text-slate-400 font-mono">
-                    System Status: SECURE • Zero Data Leaks • 100% Policy Enforced
-                  </p>
-                </div>
-              </div>
+        {/* ── 2-COLUMN BALANCED EQUAL-HEIGHT SECURITY ARCHITECTURE ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10">
 
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full font-bold">
-                  SOC2 READY
-                </span>
-                <span className="text-[11px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full font-bold">
-                  ISO 27001
-                </span>
-              </div>
-            </div>
+          {/* MOBILE / TABLET ONLY: Compact Wrapped Pillar Grid Selector (lg:hidden) */}
+          <div className="lg:hidden col-span-1 flex flex-wrap justify-center gap-2 mb-4 w-full">
+            {SECURITY_PILLARS.map((pillar, idx) => {
+              const Icon = pillar.icon;
+              const isSelected = selectedId === pillar.id;
+              return (
+                <button
+                  key={pillar.id}
+                  onClick={() => setSelectedId(pillar.id)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-bold transition-all shrink-0 ${
+                    isSelected
+                      ? "bg-slate-900 border-[#D27E2B] text-white shadow-md shadow-[#D27E2B]/20"
+                      : "bg-slate-950/80 border-slate-800 text-slate-400 hover:border-slate-700"
+                  }`}
+                >
+                  <Icon
+                    className="w-4 h-4 shrink-0"
+                    style={{ color: isSelected ? "#D27E2B" : pillar.color }}
+                  />
+                  <span>{pillar.step}. {pillar.title}</span>
+                </button>
+              );
+            })}
+          </div>
 
-            {/* Dashboard Grid (3 Columns Left | 6 Columns Glass Shield Terminal | 3 Columns Right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* DESKTOP ONLY (lg:grid): 6 Interactive Security Cards in 2-Column Grid */}
+          <div className="hidden lg:grid lg:col-span-6 grid-cols-1 sm:grid-cols-2 gap-4">
+            {SECURITY_PILLARS.map((pillar, idx) => {
+              const Icon = pillar.icon;
+              const isSelected = selectedId === pillar.id;
 
-              {/* LEFT COLUMN: 3 Glass Feature Panels */}
-              <div className="lg:col-span-3 flex flex-col gap-4">
-                {SECURITY_NODES.slice(0, 3).map((node, idx) => {
-                  const Icon = node.icon;
-                  const isSelected = selectedNodeId === node.id;
-                  return (
-                    <motion.div
-                      key={node.id}
-                      {...fadeUp(0.1 + idx * 0.05)}
-                      onClick={() => setSelectedNodeId(node.id)}
-                      className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden group ${
-                        isSelected
-                          ? "bg-slate-800/80 backdrop-blur-xl border-[#D27E2B] shadow-lg shadow-[#D27E2B]/10"
-                          : "bg-slate-950/40 backdrop-blur-md border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/60"
-                      }`}
-                    >
+              return (
+                <motion.div
+                  key={pillar.id}
+                  {...fadeUp(0.05 + idx * 0.04)}
+                  onClick={() => setSelectedId(pillar.id)}
+                  className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden flex flex-col justify-between group ${
+                    isSelected
+                      ? "bg-slate-900/90 border-[#D27E2B] shadow-lg shadow-[#D27E2B]/15"
+                      : "bg-slate-950/50 backdrop-blur-md border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/60"
+                  }`}
+                >
+                  {/* Left Active Accent Bar */}
+                  <div
+                    className="absolute top-0 left-0 bottom-0 w-1.5 transition-opacity"
+                    style={{
+                      backgroundColor: pillar.color,
+                      opacity: isSelected ? 1 : 0.3,
+                    }}
+                  />
+
+                  <div>
+                    <div className="flex items-center justify-between gap-2 pl-1.5 mb-3">
                       <div
-                        className="absolute top-0 left-0 bottom-0 w-1 transition-opacity"
+                        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border"
                         style={{
-                          backgroundColor: node.color,
-                          opacity: isSelected ? 1 : 0.3,
+                          backgroundColor: `${pillar.color}15`,
+                          borderColor: `${pillar.color}35`,
+                          color: pillar.color,
                         }}
-                      />
-
-                      <div className="flex items-center gap-3 mb-2 pl-2">
-                        <div
-                          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border"
-                          style={{
-                            backgroundColor: `${node.color}15`,
-                            borderColor: `${node.color}35`,
-                            color: node.color,
-                          }}
-                        >
-                          <Icon className="w-4.5 h-4.5" />
-                        </div>
-                        <div>
-                          <h4 className="text-xs font-bold text-white leading-snug">
-                            {node.title}
-                          </h4>
-                          <span
-                            className="text-[10px] font-mono font-bold uppercase tracking-wider"
-                            style={{ color: node.color }}
-                          >
-                            {node.tagline}
-                          </span>
-                        </div>
+                      >
+                        <Icon className="w-5 h-5" />
                       </div>
 
-                      <p className="text-[11px] text-slate-300 leading-relaxed font-medium pl-2 line-clamp-2">
-                        {node.description}
-                      </p>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* CENTER COLUMN: Interactive Glass Terminal & 3D Shield Console */}
-              <div className="lg:col-span-6 flex flex-col justify-between bg-slate-950/60 backdrop-blur-xl border border-slate-800/90 rounded-2xl p-6 relative overflow-hidden shadow-inner min-h-[380px]">
-                {/* Glowing Subtle Ambient Core */}
-                <div
-                  className="absolute inset-0 opacity-20 pointer-events-none transition-all duration-500"
-                  style={{
-                    background: `radial-gradient(circle at center, ${selectedNode.color} 0%, transparent 70%)`,
-                  }}
-                />
-
-                {/* Central Glass Shield Header */}
-                <div className="relative z-10 flex items-center justify-between border-b border-slate-800/80 pb-4 mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#D27E2B] to-amber-600 text-white flex items-center justify-center shadow-lg">
-                      <LuShieldCheck className="w-7 h-7" />
+                      <span
+                        className="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border"
+                        style={{
+                          backgroundColor: `${pillar.color}15`,
+                          borderColor: `${pillar.color}35`,
+                          color: pillar.color,
+                        }}
+                      >
+                        {pillar.category}
+                      </span>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-black text-white tracking-tight">
-                        {selectedNode.title}
-                      </h3>
-                      <p className="text-xs font-mono font-bold text-[#D27E2B]">
-                        {selectedNode.tagline}
-                      </p>
-                    </div>
+
+                    <h4 className="text-base sm:text-lg font-extrabold text-white leading-tight pl-1.5 mb-1.5">
+                      {pillar.title}
+                    </h4>
+
+                    <span className="text-xs font-mono font-extrabold text-[#D27E2B] pl-1.5 block mb-2">
+                      Status: {pillar.statusText}
+                    </span>
+
+                    <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed pl-1.5 line-clamp-2">
+                      {pillar.description}
+                    </p>
                   </div>
 
-                  <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full font-bold">
-                    ENFORCED
-                  </span>
+                  <div className="pt-3.5 mt-4 border-t border-slate-800/70 flex items-center justify-between pl-1.5">
+                    <span className="text-xs font-mono font-bold text-slate-400">
+                      LAYER {pillar.step}
+                    </span>
+                    <span
+                      className={`text-xs font-bold inline-flex items-center gap-1.5 ${
+                        isSelected ? "text-[#D27E2B]" : "text-slate-400 group-hover:text-slate-200"
+                      }`}
+                    >
+                      {isSelected ? "ACTIVE" : "INSPECT"} <LuArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* RIGHT COLUMN (6 Cols): Persistent Glass Gateway & Live Security Pipeline Console */}
+          <div className="lg:col-span-6 bg-slate-950/80 backdrop-blur-2xl border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden flex flex-col justify-between">
+            
+            {/* Top Console Status Bar */}
+            <div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-5 border-b border-slate-800/80 mb-6 gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 animate-ping" />
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-mono font-bold tracking-widest text-emerald-400 uppercase">
+                      ENTERPRISE MCP SECURITY GATEWAY // ACTIVE
+                    </h4>
+                    <p className="text-xs text-slate-400 font-mono">
+                      Real-Time Security Enforcement & Telemetry Stream
+                    </p>
+                  </div>
                 </div>
 
-                {/* Main Node Explanation & Bullets */}
-                <div className="relative z-10 mb-6">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 rounded-md font-bold">
+                    OAuth 2.0
+                  </span>
+                  <span className="text-xs font-mono text-blue-400 bg-blue-500/10 border border-blue-500/30 px-2.5 py-1 rounded-md font-bold">
+                    OpenID Connect
+                  </span>
+                  <span className="text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-md font-bold">
+                    TLS 1.3
+                  </span>
+                  <span className="text-xs font-mono text-purple-400 bg-purple-500/10 border border-purple-500/30 px-2.5 py-1 rounded-md font-bold">
+                    RBAC
+                  </span>
+                </div>
+              </div>
+
+              {/* 6-Step Visual Security Pipeline Checkpoints (Desktop / Tablet) */}
+              <div className="hidden sm:block mb-6">
+                <h5 className="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3 font-bold">
+                  SECURITY CONTROL CHECKPOINTS
+                </h5>
+
+                <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                  {SECURITY_PILLARS.map((p) => {
+                    const isCurrent = p.id === activePillar.id;
+                    return (
+                      <div
+                        key={p.id}
+                        onClick={() => setSelectedId(p.id)}
+                        className={`p-2.5 rounded-xl border flex flex-col items-center text-center cursor-pointer transition-all ${
+                          isCurrent
+                            ? "bg-slate-900 border-[#D27E2B] shadow-md shadow-[#D27E2B]/20"
+                            : "bg-slate-950 border-slate-800/80 text-slate-400 hover:border-slate-700"
+                        }`}
+                      >
+                        <span className="text-xs font-mono font-bold text-slate-400">
+                          {p.step}
+                        </span>
+                        <span
+                          className={`text-xs font-bold truncate max-w-full mt-0.5 ${
+                            isCurrent ? "text-white" : "text-slate-300"
+                          }`}
+                        >
+                          {p.title.split(" ")[0]}
+                        </span>
+                        <div
+                          className="w-2 h-2 rounded-full mt-1.5"
+                          style={{
+                            backgroundColor: isCurrent ? p.color : "#475569",
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Active Selected Node Deep-Dive Panel */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePillar.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25 }}
+                  className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 sm:p-6 mb-6 relative overflow-hidden"
+                >
+                  <div
+                    className="absolute top-0 left-0 right-0 h-1.5"
+                    style={{ backgroundColor: activePillar.color }}
+                  />
+
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 border"
+                        style={{
+                          backgroundColor: `${activePillar.color}20`,
+                          borderColor: `${activePillar.color}40`,
+                          color: activePillar.color,
+                        }}
+                      >
+                        {React.createElement(activePillar.icon, { className: "w-5 h-5 sm:w-6 sm:h-6" })}
+                      </div>
+                      <div>
+                        <span
+                          className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider"
+                          style={{ color: activePillar.color }}
+                        >
+                          {activePillar.category}
+                        </span>
+                        <h3 className="text-base sm:text-xl font-black text-white leading-tight">
+                          {activePillar.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <span className="text-[11px] sm:text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg shrink-0">
+                      {activePillar.statusText}
+                    </span>
+                  </div>
+
                   <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed mb-4">
-                    {selectedNode.description}
+                    {activePillar.description}
                   </p>
 
                   <div className="flex flex-wrap gap-2">
-                    {selectedNode.bullets.map((bullet, bIdx) => (
+                    {activePillar.bullets.map((bullet, bIdx) => (
                       <span
                         key={bIdx}
-                        className="text-xs font-mono font-bold text-slate-200 bg-slate-900/90 border border-slate-700/80 px-3 py-1 rounded-lg"
+                        className="text-xs font-mono font-bold text-slate-200 bg-slate-950 border border-slate-700/80 px-3 py-1.5 rounded-lg flex items-center gap-1.5"
                       >
-                        ✓ {bullet}
+                        <LuCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                        {bullet}
                       </span>
                     ))}
                   </div>
-                </div>
-
-                {/* Live Simulated Terminal Security Log */}
-                <div className="relative z-10 bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-[11px]">
-                  <div className="flex items-center justify-between text-slate-500 pb-2 mb-2 border-b border-slate-900 text-[10px]">
-                    <span className="flex items-center gap-1.5 text-slate-400">
-                      <LuTerminal className="w-3.5 h-3.5 text-[#D27E2B]" /> SECURITY_TELEMETRY_LOG.sh
-                    </span>
-                    <span className="text-emerald-400">● LIVE MONITORING</span>
-                  </div>
-
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={selectedNode.id}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 10 }}
-                      className="text-emerald-400 font-bold"
-                    >
-                      {selectedNode.terminalLog}
-                    </motion.p>
-                  </AnimatePresence>
-                </div>
-              </div>
-
-              {/* RIGHT COLUMN: 3 Glass Feature Panels */}
-              <div className="lg:col-span-3 flex flex-col gap-4">
-                {SECURITY_NODES.slice(3, 6).map((node, idx) => {
-                  const Icon = node.icon;
-                  const isSelected = selectedNodeId === node.id;
-                  return (
-                    <motion.div
-                      key={node.id}
-                      {...fadeUp(0.1 + idx * 0.05)}
-                      onClick={() => setSelectedNodeId(node.id)}
-                      className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden group ${
-                        isSelected
-                          ? "bg-slate-800/80 backdrop-blur-xl border-[#D27E2B] shadow-lg shadow-[#D27E2B]/10"
-                          : "bg-slate-950/40 backdrop-blur-md border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/60"
-                      }`}
-                    >
-                      <div
-                        className="absolute top-0 left-0 bottom-0 w-1 transition-opacity"
-                        style={{
-                          backgroundColor: node.color,
-                          opacity: isSelected ? 1 : 0.3,
-                        }}
-                      />
-
-                      <div className="flex items-center gap-3 mb-2 pl-2">
-                        <div
-                          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border"
-                          style={{
-                            backgroundColor: `${node.color}15`,
-                            borderColor: `${node.color}35`,
-                            color: node.color,
-                          }}
-                        >
-                          <Icon className="w-4.5 h-4.5" />
-                        </div>
-                        <div>
-                          <h4 className="text-xs font-bold text-white leading-snug">
-                            {node.title}
-                          </h4>
-                          <span
-                            className="text-[10px] font-mono font-bold uppercase tracking-wider"
-                            style={{ color: node.color }}
-                          >
-                            {node.tagline}
-                          </span>
-                        </div>
-                      </div>
-
-                      <p className="text-[11px] text-slate-300 leading-relaxed font-medium pl-2 line-clamp-2">
-                        {node.description}
-                      </p>
-                    </motion.div>
-                  );
-                })}
-              </div>
+                </motion.div>
+              </AnimatePresence>
 
             </div>
 
-            {/* Bottom Security Compliance Badges */}
-            <div className="mt-8 pt-5 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
-                <LuCircleCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>SOC2 Type II & HIPAA Compliance Architecture Ready</span>
+            {/* Live Terminal Output Box */}
+            <div className="bg-slate-950 border border-slate-800/90 rounded-xl p-3.5 sm:p-4 font-mono text-xs sm:text-sm">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-slate-400 pb-2 mb-2 border-b border-slate-900 gap-1 text-xs">
+                <span className="flex items-center gap-2 text-slate-300 font-bold">
+                  <LuTerminal className="w-4 h-4 text-[#D27E2B] shrink-0" /> SECURITY_TELEMETRY.log
+                </span>
+                <span className="text-emerald-400 font-bold text-[11px] sm:text-xs">● REAL-TIME MONITORING</span>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-slate-400">
-                <span className="bg-slate-950 px-2.5 py-1 rounded border border-slate-800">OAuth2.0</span>
-                <span className="bg-slate-950 px-2.5 py-1 rounded border border-slate-800">RBAC</span>
-                <span className="bg-slate-950 px-2.5 py-1 rounded border border-slate-800">AES-256</span>
-                <span className="bg-slate-950 px-2.5 py-1 rounded border border-slate-800">HashiCorp Vault</span>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={activePillar.id}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  className="text-emerald-400 font-bold leading-relaxed"
+                >
+                  {activePillar.telemetryLog}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            {/* Bottom Assurance Badges */}
+            <div className="mt-5 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-slate-400">
+              <span className="flex items-center gap-1.5 text-slate-300 font-bold">
+                <LuCircleCheck className="w-4 h-4 text-emerald-400" /> Security Controls Implemented
+              </span>
+
+              <div className="flex items-center gap-2">
+                <span className="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">OAuth 2.0</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">OpenID Connect</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">TLS 1.3</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">RBAC</span>
               </div>
             </div>
 
           </div>
+
         </div>
       </Row>
     </Section>
