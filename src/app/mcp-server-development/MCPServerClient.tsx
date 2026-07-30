@@ -17,6 +17,7 @@ import MCPServices from "@/components/mcp-server-development/MCPServices";
 import ConnectedSystems from "@/components/mcp-server-development/ConnectedSystems";
 import EnterpriseSecurity from "@/components/mcp-server-development/EnterpriseSecurity";
 import HowMCPWorks from "@/components/mcp-server-development/HowMCPWorks";
+import RealWorldWorkflows from "@/components/mcp-server-development/RealWorldWorkflows";
 
 const MCP_FAQS = [
   {
@@ -163,6 +164,7 @@ export default function MCPServerClient() {
 
         {/* ── 7. Enterprise Security Dashboard (Dark Theme) ── */}
         <EnterpriseSecurity />
+        <RealWorldWorkflows />
 
         {/* ── 8. Call To Action Banner ── */}
         <CTA highlightedText="Custom MCP Server for Your Enterprise?" />
