@@ -22,7 +22,7 @@ import SectionBadge from "../new-home-components/SectionBadge";
 const NODES = [
   {
     id: "input",
-    label: "Event Intake",
+    label: "Event Trigger",
     icon: LuReceipt,
     color: "#3B82F6",
     x: 15,
@@ -31,7 +31,7 @@ const NODES = [
   },
   {
     id: "read",
-    label: "Cognitive Parser",
+    label: "Context Retrieval",
     icon: LuBrain,
     color: "#6366F1",
     x: 30,
@@ -40,7 +40,7 @@ const NODES = [
   },
   {
     id: "extract",
-    label: "Semantic Mapping",
+    label: "Data Extraction",
     icon: LuDatabase,
     color: "#8B5CF6",
     x: 30,
@@ -49,7 +49,7 @@ const NODES = [
   },
   {
     id: "validate",
-    label: "Enterprise Ledger Sync",
+    label: "API Execution",
     icon: LuShieldCheck,
     color: "#10B981",
     x: 70,
@@ -58,7 +58,7 @@ const NODES = [
   },
   {
     id: "approve",
-    label: "HITL Guardrails",
+    label: "Human Approval",
     icon: LuUserCheck,
     color: "#F59E0B",
     x: 70,
@@ -67,7 +67,7 @@ const NODES = [
   },
   {
     id: "pay",
-    label: "State Finalization",
+    label: "State Commit",
     icon: LuCalculator,
     color: "#EC4899",
     x: 85,
@@ -76,7 +76,7 @@ const NODES = [
   },
   {
     id: "notify",
-    label: "Audit Telemetry",
+    label: "Multi-Channel Alert",
     icon: LuBell,
     color: "#06B6D4",
     x: 85,
@@ -505,7 +505,7 @@ export default function NeuralCanvasFlow() {
           viewport={{ once: true }}
           className="inline-block mb-4"
         >
-          <SectionBadge title="Execution Topology" />
+          <SectionBadge title="System Topology" />
         </motion.span>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -514,8 +514,8 @@ export default function NeuralCanvasFlow() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="common-h2 text-slate-100"
         >
-          Real-Time Agent Orchestration &{" "}
-          <span className="text-[#D27E2B]"> Execution Topology.</span>
+          A Live autonomous{" "}
+          <span className="text-[#D27E2B]"> decision routing.</span>
         </motion.h2>
       </div>
 

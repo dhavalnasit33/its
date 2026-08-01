@@ -29,34 +29,34 @@ const fadeUp = (delay = 0) => ({
 const TECH_CATEGORIES = [
   {
     id: "models",
-    category: "Foundation Models",
-    tagline: "The Reasoning Layer Powering Every Agent",
+    category: "AI Models We Integrate",
+    tagline: "Frontier Reasoning Models We Integrate Into Client Solutions",
     icon: LuBrain,
     accentColor: "#6366F1",
     items: [
       {
         name: "ChatGPT",
         logo: "/ai-strategy/brand-image/openai-logo.svg",
-        tag: "OpenAI",
-        desc: "Multimodal reasoning and chain-of-thought models powering tool-calling and complex task planning.",
+        tag: "OpenAI Models",
+        desc: "We integrate OpenAI's multimodal reasoning and chain-of-thought models into client applications for native tool-calling and complex task planning.",
         features: [
           "128K Context Window",
           "Native Function Calling",
-          "Multimodal Input",
+          "Multimodal Reasoning",
         ],
       },
       {
         name: "Claude",
         logo: "/ai-strategy/brand-image/claude-ai-logo.svg",
-        tag: "Anthropic",
-        desc: "Constitutional AI models tuned for long-context reasoning, coding accuracy, and safe autonomous behavior.",
+        tag: "Anthropic Models",
+        desc: "We leverage Anthropic's Claude models when client solutions require long-context document analysis, coding accuracy, and safe autonomous behavior.",
         features: ["200K+ Context Window", "Extended Thinking", "Computer Use"],
       },
       {
         name: "Gemini",
         logo: "/ai-strategy/brand-image/google-gemini-logo.svg",
         tag: "Google DeepMind",
-        desc: "Natively multimodal models with massive context windows for enterprise-scale document and video reasoning.",
+        desc: "We build enterprise solutions with Google Gemini when clients need massive context windows for multi-page document processing and video analysis.",
         features: [
           "1M+ Token Context",
           "Native Multimodality",
@@ -67,9 +67,9 @@ const TECH_CATEGORIES = [
         name: "Llama 3",
         logo: "/ai-strategy/brand-image/meta-logo.svg",
         tag: "Open Weights",
-        desc: "High-performance open-weights LLM for private enterprise deployment and fine-tuning.",
+        desc: "We fine-tune and deploy open-weights models like Llama 3 for clients requiring private on-premises or VPC hosting with full data privacy.",
         features: [
-          "Private Deployment",
+          "Private VPC Hosting",
           "Custom Fine-Tuning",
           "On-Premises AI",
         ],
@@ -78,32 +78,32 @@ const TECH_CATEGORIES = [
         name: "Mistral AI",
         logo: "/ai-strategy/brand-image/mistral-ai-logo.svg",
         icon: LuBrain,
-        tag: "Frontier LLM",
-        desc: "Efficient, high-speed open-weight models optimized for reasoning and agentic workflows.",
+        tag: "Frontier Models",
+        desc: "We implement Mistral models when building lightweight, ultra-fast agentic workflows with low latency requirement.",
         features: ["High Efficiency", "Mixture of Experts", "Low Latency"],
       },
       {
         name: "DeepSeek",
         logo: "/ai-strategy/brand-image/deepseek-logo.svg",
         icon: LuBrain,
-        tag: "Reasoning Model",
-        desc: "Advanced open-weights reasoning model specializing in complex math, code, and logic.",
+        tag: "Reasoning Models",
+        desc: "We integrate open reasoning models for clients needing specialized mathematical, code, and analytical logic execution.",
         features: ["Deep Reasoning", "Chain-of-Thought", "Code & Math Focus"],
       },
     ],
   },
   {
     id: "frameworks",
-    category: "Agent Frameworks",
-    tagline: "Autonomous Orchestration & Multi-Agent SDKs",
+    category: "Agent Development Frameworks",
+    tagline: "Frameworks We Use To Architect Autonomous Multi-Agent Systems",
     icon: LuCpu,
     accentColor: "#D27E2B",
     items: [
       {
         name: "OpenAI Agents SDK",
         logo: "/ai-strategy/brand-image/openai-logo.svg",
-        tag: "Core SDK",
-        desc: "Stateful agent loops, tool-calling schema enforcement, and handoff execution.",
+        tag: "Core Agent SDK",
+        desc: "We utilize OpenAI Agents SDK to build stateful agent loops, tool-calling schema enforcement, and multi-agent handoff routines.",
         features: [
           "Structured Outputs",
           "Native Tool Calling",
@@ -113,26 +113,26 @@ const TECH_CATEGORIES = [
       {
         name: "CrewAI",
         logo: "/ai-strategy/brand-image/crewai-logo.svg",
-        tag: "Role-Based Agents",
-        desc: "Autonomous multi-agent collaboration with role delegation and structured tasks.",
+        tag: "Role-Based Framework",
+        desc: "We build role-based multi-agent teams using CrewAI to automate complex cross-departmental business processes.",
         features: ["Process Automation", "Task Delegation", "Memory Stores"],
       },
       {
         name: "LangGraph",
         logo: "/ai-strategy/brand-image/langgraph-logo.svg",
-        tag: "Cyclic Graphs",
-        desc: "Stateful, multi-actor agent orchestration using directed cyclic graph architectures.",
+        tag: "Cyclic State Graphs",
+        desc: "We design resilient, stateful workflows using LangGraph for multi-step agent applications requiring cyclic loops and human checkpoints.",
         features: [
           "Human-in-the-loop",
-          "Time Travel Debugging",
           "State Persistence",
+          "Error Recovery",
         ],
       },
       {
         name: "AutoGen",
         logo: "/ai-strategy/brand-image/microsoft-logo.svg",
         tag: "Conversational Multi-Agent",
-        desc: "Multi-agent conversation framework for complex problem-solving workflows.",
+        desc: "We build multi-agent conversational networks using AutoGen to solve complex collaborative problem-solving tasks.",
         features: [
           "Code Execution",
           "Group Chat Manager",
@@ -143,8 +143,8 @@ const TECH_CATEGORIES = [
   },
   {
     id: "memory",
-    category: "Memory & Knowledge",
-    tagline: "Vector Storage & Retrieval for Long-Term Context",
+    category: "Enterprise Knowledge & Memory",
+    tagline: "Vector Memory & RAG Architectures We Implement",
     icon: LuDatabase,
     accentColor: "#EC4899",
     items: [
@@ -152,18 +152,18 @@ const TECH_CATEGORIES = [
         name: "Vector Database",
         icon: LuDatabase,
         tag: "Semantic Search",
-        desc: "Stores high-dimensional embeddings for fast semantic similarity search across unstructured content.",
+        desc: "We set up high-performance vector databases to allow AI agents to instantly search and retrieve relevant company knowledge.",
         features: [
           "Semantic Similarity Search",
-          "Embedding Storage",
-          "Approximate Nearest Neighbor",
+          "Embedding Indexing",
+          "Sub-Second Retrieval",
         ],
       },
       {
         name: "Knowledge Graph",
         icon: LuNetwork,
         tag: "Graph Reasoning",
-        desc: "Structures entities and relationships so agents can reason over connected facts instead of flat text chunks.",
+        desc: "We map business entities and relationships into knowledge graphs so agents can reason over connected business data.",
         features: [
           "Entity Relationships",
           "Graph Traversal Queries",
@@ -171,21 +171,21 @@ const TECH_CATEGORIES = [
         ],
       },
       {
-        name: "RAG",
+        name: "RAG Pipelines",
         icon: LuWorkflow,
         tag: "Retrieval-Augmented Generation",
-        desc: "Grounds model responses in retrieved documents instead of relying on parametric memory alone.",
+        desc: "We build enterprise RAG pipelines to ground agent responses directly in your verified company documents.",
         features: [
-          "Reduced Hallucination",
+          "Zero Hallucinations",
           "Dynamic Context Injection",
-          "Source Attribution",
+          "Source Citation",
         ],
       },
       {
-        name: "Redis",
+        name: "Redis Enterprise",
         logo: "/ai-strategy/brand-image/redis-logo.svg",
-        tag: "In-Memory Store",
-        desc: "In-memory data store used for low-latency caching, session state, and vector search extensions in agent pipelines.",
+        tag: "In-Memory Caching",
+        desc: "We configure Redis in-memory datastores for low-latency session memory and caching across active agent sessions.",
         features: [
           "Sub-Millisecond Latency",
           "Vector Search Module",
@@ -196,36 +196,36 @@ const TECH_CATEGORIES = [
   },
   {
     id: "integration",
-    category: "Enterprise Integration",
-    tagline: "Standardized Tooling & Secure Protocol Gateways",
+    category: "Business System Integration",
+    tagline: "Protocols & Gateways We Use To Connect AI With Software",
     icon: LuLayers,
     accentColor: "#3B82F6",
     items: [
       {
         name: "MCP (Model Context Protocol)",
         logo: "/ai-strategy/brand-image/model-context-protocol-(mcp)-logo.svg",
-        tag: "Universal Protocol",
-        desc: "Open standard for connecting AI agents securely to local data sources and enterprise tools.",
+        tag: "Standard Protocol",
+        desc: "We implement Model Context Protocol (MCP) servers to securely expose enterprise tools, databases, and APIs to AI agents.",
         features: [
-          "Standardized Schema",
-          "Secure Authorization",
-          "Universal Adapters",
+          "Standardized Schemas",
+          "Secure OAuth Authorization",
+          "Custom Tool Adapters",
         ],
       },
       {
-        name: "REST APIs",
+        name: "REST APIs & Webhooks",
         logo: "/ai-strategy/brand-image/rest-api-logo.svg",
         tag: "Enterprise Connectors",
-        desc: "Bidirectional HTTP integration with Salesforce, SAP, HubSpot, Jira, and custom backend APIs.",
-        features: ["OAuth2 / API Key", "Rate Limiting", "JSON Payload Mapping"],
+        desc: "We build custom REST API connectors to link AI agents with Salesforce, SAP, HubSpot, Zendesk, Jira, and internal backends.",
+        features: ["OAuth2 Security", "Rate Limiting", "JSON Payload Mapping"],
       },
       {
-        name: "Webhooks",
+        name: "Event Triggers",
         logo: "/ai-strategy/brand-image/webhook-logo.svg",
-        tag: "Event-Driven Hooks",
-        desc: "Real-time event listeners triggering AI agent workflows upon status changes or incoming data.",
+        tag: "Real-Time Listeners",
+        desc: "We set up event-driven webhooks so AI agents automatically trigger whenever customer requests or status changes occur.",
         features: [
-          "Asynchronous Triggers",
+          "Real-Time Automation",
           "Payload Verification",
           "Retry Pipelines",
         ],
@@ -234,48 +234,41 @@ const TECH_CATEGORIES = [
   },
   {
     id: "cloud",
-    category: "Cloud & Infrastructure",
-    tagline: "Scalable Enterprise Deployment Platforms",
+    category: "Production Deployment Stack",
+    tagline: "Cloud Platforms & Tools We Use To Deploy Secure Solutions",
     icon: LuCloud,
     accentColor: "#10B981",
     items: [
       {
-        name: "Azure AI",
+        name: "Microsoft Azure",
         logo: "/ai-strategy/brand-image/azure-logo.svg",
-        tag: "Enterprise Cloud",
-        desc: "Azure OpenAI Service, AI Search, vector indexing, and enterprise security compliance.",
-        features: ["Private Endpoints", "RBAC Security", "Vector Search"],
+        tag: "Cloud Deployment",
+        desc: "We deploy enterprise AI solutions on Microsoft Azure when organizations require private endpoints, HIPAA/SOC2 compliance, and RBAC security.",
+        features: ["Private Endpoints", "RBAC Governance", "Azure OpenAI Service"],
       },
       {
         name: "AWS",
         logo: "/ai-strategy/brand-image/aws-logo.svg",
         tag: "Cloud Infrastructure",
-        desc: "Amazon Bedrock, SageMaker, Lambda serverless execution, and S3 knowledge bases.",
-        features: ["Bedrock Agents", "Serverless Scale", "IAM Governance"],
+        desc: "We build cloud-native AI applications on AWS using Amazon Bedrock, Lambda serverless functions, and secure S3 knowledge bases.",
+        features: ["Bedrock Agents", "Serverless Scale", "IAM Security"],
       },
       {
-        name: "GCP (Google Cloud)",
+        name: "Google Cloud",
         logo: "/ai-strategy/brand-image/google-cloud-logo.svg",
-        tag: "AI Hypercomputer",
-        desc: "Vertex AI Agent Builder, Gemini Models, and BigQuery vector search integrations.",
-        features: ["Vertex AI Search", "Gemini 1.5 Pro", "Enterprise Privacy"],
+        tag: "AI Cloud Platform",
+        desc: "We deploy client AI workflows on Google Cloud Platform using Vertex AI and BigQuery vector search integrations.",
+        features: ["Vertex AI Search", "Gemini Integration", "Enterprise Privacy"],
       },
       {
-        name: "Kubernetes",
-        logo: "/ai-strategy/brand-image/kubernetes-logo.svg",
-        tag: "Container Orchestration",
-        desc: "Orchestrates containerized agent workloads with auto-scaling, self-healing, and rolling deployments.",
-        features: ["Auto-Scaling", "Self-Healing Pods", "Rolling Deployments"],
-      },
-      {
-        name: "Docker",
+        name: "Kubernetes & Docker",
         logo: "/ai-strategy/brand-image/docker-logo.svg",
-        tag: "Containerization",
-        desc: "Packages agents and their dependencies into portable, reproducible containers for any environment.",
+        tag: "Container Deployment",
+        desc: "We package and deploy client AI agent microservices using Docker containers and Kubernetes for reliable production operations.",
         features: [
-          "Reproducible Builds",
-          "Multi-Stage Images",
-          "Registry Distribution",
+          "Auto-Scaling Pods",
+          "Container Security",
+          "CI/CD Integration",
         ],
       },
     ],
@@ -327,12 +320,12 @@ export default function AgenticTechStack() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-b from-slate-200/40 via-white/10 to-transparent blur-3xl pointer-events-none" />
 
       <Row>
-        <div className="text-center mb-16 max-w-3xl mx-auto relative z-10">
+        <div className="text-center mb-16 max-w-3xl mx-auto flex flex-col items-center gap-3 relative z-10">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block mb-4"
+            className="inline-block  "
           >
             <SectionBadge title="ENTERPRISE STACK" />
           </motion.span>
@@ -343,17 +336,20 @@ export default function AgenticTechStack() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="common-h2 text-black"
           >
-            Agentic Tech<span className="text-[#D27E2B]"> Stack</span>
+            Agentic Tech
+            <span className="text-[#D27E2B]"> Stack</span>
           </motion.h2>
           <p className="text-slate-600 text-base sm:text-lg font-medium max-w-2xl leading-relaxed">
-            We architect robust agent infrastructures using leading foundation models, cycle-graph frameworks, vector memories, and secure integrations.
+            We build production-ready autonomous agents using industry-standard
+            frameworks, enterprise protocol bridges, and battle-tested cloud
+            platforms.
           </p>
         </div>
 
         {/* Logo Marquee */}
         <motion.div
           {...fadeUp(0.05)}
-          className="relative z-10 mb-16 w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden"
+          className="relative z-10 mb-16 w-screen  left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden"
         >
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-50/70 to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-50/70 to-transparent z-10 pointer-events-none" />
@@ -369,7 +365,7 @@ export default function AgenticTechStack() {
               return (
                 <div
                   key={i}
-                  className="flex items-center gap-3 mx-3 px-5 py-2.5 rounded-full bg-white border border-slate-200/80 shadow-sm shrink-0 transition-transform hover:scale-105"
+                  className="flex cursor-pointer items-center gap-3 mx-3 px-5 py-2.5 rounded-full bg-white border border-slate-200/80 shadow-sm shrink-0 transition-transform hover:scale-105"
                 >
                   <div className="w-5 h-5 shrink-0 flex items-center justify-center">
                     {toolObj.logo ? (

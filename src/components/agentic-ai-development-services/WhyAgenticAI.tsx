@@ -23,23 +23,23 @@ import SectionBadge from "../new-home-components/SectionBadge";
 const FEATURES_LEFT = [
   {
     id: "auto-decision",
-    title: "Context-Aware\nDecisions",
+    title: "Adaptive\nDecision Making",
     description:
-      "Agents analyze complex variables and execute\noptimal actions within defined boundaries.",
+      "AI agents analyze complex business variables,\nevaluate options, and select optimal actions.",
     icon: LuBrain,
   },
   {
     id: "tool-integration",
-    title: "Secure API\nIntegration",
+    title: "Business Tool\nIntegration",
     description:
-      "Seamlessly connects to legacy ERPs, CRMs,\ndatabases, and custom backend protocols.",
+      "Seamlessly connects with your existing\nCRMs, ERPs, databases, and APIs.",
     icon: LuLayers,
   },
   {
-    id: "continuous-learning",
-    title: "Self-Correcting\nExecution",
+    id: "persistent-memory",
+    title: "Persistent\nMemory & Context",
     description:
-      "Agents reflect on failed runs, retry queries,\nand automatically correct semantic errors.",
+      "Agents maintain multi-session context\nand operational history for accuracy.",
     icon: LuLightbulb,
   },
 ];
@@ -47,23 +47,23 @@ const FEATURES_LEFT = [
 const FEATURES_RIGHT = [
   {
     id: "multi-step",
-    title: "Hierarchical\nWorkflows",
+    title: "Reliable\nWorkflow Automation",
     description:
-      "Run long-running, multi-stage tasks across\nmultiple departments with state persistence.",
+      "Handles multi-stage business processes\nend-to-end without manual intervention.",
     icon: LuListChecks,
   },
   {
     id: "human-approval",
-    title: "Human-in-the-Loop\nGates",
+    title: "Human Approval\nCheckpoints",
     description:
-      "Integrate approval checkpoints for high-value\ntransactions and sensitive enterprise actions.",
+      "Built-in governance gates ensure human oversight\nfor critical business decisions.",
     icon: LuUserCheck,
   },
   {
     id: "enterprise-security",
-    title: "Enterprise\nGovernance",
+    title: "Enterprise Security\n& Governance",
     description:
-      "Ensure absolute data privacy, full auditability,\nrole-based permissions, and VPC hosting.",
+      "Built with SOC2 compliance, data privacy,\nrole-based access, and audit logging.",
     icon: LuLock,
   },
 ];
@@ -274,10 +274,10 @@ function InteractiveCard({
       <div
         className={`relative w-full bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 transition-all duration-300 group-hover:shadow-[0_15px_40px_rgb(0,0,0,0.08)] z-10 text-left ${paddingClass}`}
       >
-        <h3 className="text-[15px] font-bold leading-snug whitespace-pre-line mb-2 text-slate-800 transition-colors duration-300 group-hover:text-slate-900">
+        <h3 className="text-base font-extrabold leading-snug whitespace-pre-line mb-2 text-slate-900">
           {feature.title}
         </h3>
-        <p className="text-[12px] font-medium leading-relaxed text-slate-500 whitespace-pre-line mb-4">
+        <p className="text-xs sm:text-sm font-medium leading-relaxed text-slate-600 whitespace-pre-line mb-4">
           {feature.description}
         </p>
         <div
@@ -328,14 +328,14 @@ export default function WhyAgenticAI() {
   return (
     <Section className="relative w-full overflow-hidden bg-[#F8FAFC] py-24 lg:py-32 font-sans perspective-1000">
       <Row>
-        <div className="text-center mb-16 max-w-3xl mx-auto relative z-10">
+        <div className="text-center mb-16 max-w-3xl mx-auto flex flex-col items-center gap-3 relative z-10">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block mb-4"
+            className="inline-block  "
           >
-            <SectionBadge title="Intelligent Business Automation" />
+            <SectionBadge title="WHY CHOOSE AGENTIC AI" />
           </motion.span>
 
           <motion.h2
@@ -345,8 +345,8 @@ export default function WhyAgenticAI() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="common-h2 text-slate-900"
           >
-            Engineered for{" "}
-            <span className="text-[#D27E2B]">Enterprise-Grade Automation</span>
+            Why Enterprise Leaders Choose{" "}
+            <span className="text-[#D27E2B]">Agentic AI Solutions</span>
           </motion.h2>
 
           <motion.p
@@ -354,9 +354,9 @@ export default function WhyAgenticAI() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-5 text-lg text-slate-600 leading-8 max-w-3xl mx-auto"
+            className="  text-sm sm:text-base text-slate-600 leading-8 max-w-3xl mx-auto "
           >
-            Scale your operational capacity with autonomous systems designed for predictability, security, and seamless tool integration.
+            Replace passive chatbots with goal-driven AI agents that reason, connect directly to enterprise applications, and execute complex workflows end-to-end.
           </motion.p>
         </div>
         <div className="relative w-full max-w-[1280px] mx-auto min-h-[600px] flex items-center justify-center mt-5">

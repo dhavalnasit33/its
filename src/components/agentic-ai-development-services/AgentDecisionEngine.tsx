@@ -20,40 +20,32 @@ const STEPS: StepData[] = [
   {
     id: "planning",
     num: "01",
-    title: "Goal Formulation",
-    desc: "Synthesize high-level business objectives into clear execution paths.",
+    title: "Goal Alignment & Planning",
+    desc: "Synthesize high-level business objectives into structured execution plans and prioritized task sequences.",
     imagePath: "/ai-strategy/agentic-ai-development-services/01-planning.png",
     color: "#8B5CF6",
   },
   {
-    id: "breakdown",
+    id: "retrieval",
     num: "02",
-    title: "Hierarchical Decomposition",
-    desc: "Deconstruct complex workflows into parallelizable, atomic tasks.",
-    imagePath: "/ai-strategy/agentic-ai-development-services/02-breakdown.png",
+    title: "Context & Memory Retrieval",
+    desc: "Query vector memory, knowledge graphs, and internal databases for verified company context.",
+    imagePath: "/ai-strategy/agentic-ai-development-services/03-memory.png",
     color: "#3B82F6",
   },
   {
-    id: "memory",
-    num: "03",
-    title: "State & Vector Memory",
-    desc: "Retrieve long-term context, scratchpad history, and semantic knowledge.",
-    imagePath: "/ai-strategy/agentic-ai-development-services/03-memory.png",
-    color: "#06B6D4",
-  },
-  {
     id: "execution",
-    num: "04",
-    title: "Deterministic Tool Calling",
-    desc: "Orchestrate API endpoints, SQL queries, and local data interfaces.",
+    num: "03",
+    title: "Tool & API Execution",
+    desc: "Dynamically select and invoke enterprise software APIs, databases, and custom system connectors.",
     imagePath: "/ai-strategy/agentic-ai-development-services/04-execution.png",
     color: "#F97316",
   },
   {
-    id: "reflection",
-    num: "05",
-    title: "Self-Reflection & Critique",
-    desc: "Evaluate outcomes against goals to correct errors and optimize.",
+    id: "validation",
+    num: "04",
+    title: "Validation & Governance",
+    desc: "Enforce compliance guardrails, verify output accuracy, and trigger human-in-the-loop approvals.",
     imagePath: "/ai-strategy/agentic-ai-development-services/05-reflection.png",
     color: "#10B981",
   },
@@ -79,13 +71,11 @@ const StepCard = ({
         initial={{ opacity: 0, y: 30, z: 0 }}
         animate={{ opacity: 1, y: 0, z: 0 }}
         whileHover={{
-          scale: 1.05,
+          scale: 1.04,
           z: 40, // 3D Pop out effect on hover
-          rotateY: -5,
-          rotateX: 5,
+          rotateY: -4,
+          rotateX: 4,
         }}
-        // FIX: Applied delay ONLY to the initial mount animations (opacity & y),
-        // so hover happens instantly without glitches/delays causing the arrow to flicker.
         transition={{
           type: "spring",
           stiffness: 200,
@@ -93,16 +83,15 @@ const StepCard = ({
           opacity: { delay: index * 0.15, duration: 0.6 },
           y: { delay: index * 0.15, duration: 0.6 },
         }}
-        // FIX: Moved hover:z-50 directly to the card so it properly stays on top of the arrow
-        className="w-[230px] h-[330px] cursor-pointer bg-white/80 backdrop-blur-xl border border-white rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(210,126,43,0.12)] p-6 flex flex-col items-center text-center relative z-10 hover:z-50 transition-colors duration-300 group"
+        className="w-[250px] xl:w-[255px] min-h-[410px] cursor-pointer bg-white/95 backdrop-blur-xl border border-white/80 rounded-[2rem] shadow-[0_10px_35px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_rgba(210,126,43,0.14)] p-5 sm:p-6 flex flex-col items-center text-center relative z-10 hover:z-50 transition-colors duration-300 group"
         style={{ transformStyle: "preserve-3d" }}
       >
-        {/* Step Number */}
+        {/* Step Number Badge */}
         <div
-          className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold mb-5 bg-opacity-10 backdrop-blur-md border border-white/50 pointer-events-none"
+          className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold mb-3 bg-opacity-10 backdrop-blur-md border border-white/60 pointer-events-none shadow-xs shrink-0"
           style={{
             color: data.color,
-            backgroundColor: `${data.color}15`,
+            backgroundColor: `${data.color}18`,
             transform: "translateZ(20px)",
           }}
         >
@@ -111,7 +100,7 @@ const StepCard = ({
 
         {/* Title */}
         <h3
-          className="text-[15px] font-bold text-slate-800 mb-5 pointer-events-none"
+          className="text-base font-extrabold text-slate-900 mb-3 leading-snug pointer-events-none min-h-[44px] flex items-center justify-center"
           style={{ transform: "translateZ(25px)" }}
         >
           {data.title}
@@ -119,22 +108,22 @@ const StepCard = ({
 
         {/* 3D Image Area */}
         <div
-          className="relative w-28 h-28 mb-6 flex items-center justify-center pointer-events-none"
+          className="relative w-28 h-28 my-3 flex items-center justify-center pointer-events-none shrink-0"
           style={{ transform: "translateZ(40px)" }}
         >
           {/* Colored Glow Base */}
           <div
-            className="absolute bottom-0 w-24 h-5 rounded-[100%] blur-md opacity-30 mix-blend-multiply transition-opacity group-hover:opacity-50"
+            className="absolute bottom-0 w-24 h-5 rounded-[100%] blur-md opacity-35 mix-blend-multiply transition-opacity group-hover:opacity-60"
             style={{ backgroundColor: data.color }}
           />
           {/* Structural Base Pedestal */}
-          <div className="absolute bottom-[-10px] w-24 h-5 border border-slate-200/60 bg-gradient-to-b from-slate-50 to-slate-100/50 rounded-[100%] shadow-[inset_0_-4px_10px_rgba(0,0,0,0.04)]" />
+          <div className="absolute bottom-[-8px] w-24 h-5 border border-slate-200/60 bg-gradient-to-b from-slate-50 to-slate-100/50 rounded-[100%] shadow-[inset_0_-4px_10px_rgba(0,0,0,0.04)]" />
 
           {/* Continuous Floating Animation for Image */}
           <motion.img
             src={data.imagePath}
             alt={data.title}
-            animate={{ y: [-6, 6, -6] }}
+            animate={{ y: [-5, 5, -5] }}
             transition={{
               duration: 4 + (index % 2),
               repeat: Infinity,
@@ -149,7 +138,7 @@ const StepCard = ({
 
         {/* Description */}
         <p
-          className="text-xs leading-relaxed font-medium text-slate-500 mt-auto pointer-events-none"
+          className="text-xs sm:text-sm leading-relaxed font-medium text-slate-600 mt-auto pointer-events-none"
           style={{ transform: "translateZ(20px)" }}
         >
           {data.desc}
@@ -159,13 +148,13 @@ const StepCard = ({
       {/* Connecting Arrow */}
       {!isLast && (
         <div
-          className="hidden xl:flex w-10 items-center justify-center -mx-2 pointer-events-none relative z-0"
+          className="hidden xl:flex w-9 items-center justify-center -mx-0.5 pointer-events-none relative z-0"
           style={{ transform: "translateZ(10px)" }}
         >
           <motion.div
             animate={{ x: [0, 5, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-7 h-7 rounded-full bg-white border border-[#D27E2B]/20 shadow-md flex items-center justify-center text-[#D27E2B]"
+            className="w-7.5 h-7.5 rounded-full bg-white border border-[#D27E2B]/25 shadow-md flex items-center justify-center text-[#D27E2B]"
           >
             <FiChevronRight className="w-4 h-4" />
           </motion.div>
@@ -205,7 +194,7 @@ export default function AgentDecisionEngine() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block mb-4"
+            className="inline-block"
           >
             <SectionBadge title="Cognitive Reasoning Loop" />
           </motion.span>
@@ -216,8 +205,17 @@ export default function AgentDecisionEngine() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="common-h2 text-[#0F172A]"
           >
-            Agent Cognitive <span className="text-[#D27E2B]"> Architecture</span>
+            Agent Cognitive <span className="text-[#D27E2B]">Architecture</span>
           </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-slate-600 text-base sm:text-lg font-medium max-w-2xl leading-relaxed mt-4 mx-auto"
+          >
+            How our autonomous AI agents reason, plan, retrieve knowledge, execute software tools, and enforce enterprise governance.
+          </motion.p>
         </div>
 
         {/* 3D Flow Wrapper */}

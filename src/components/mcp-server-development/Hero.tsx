@@ -25,11 +25,11 @@ const TRUST_CHIPS = [
 
 export default function Hero() {
   return (
-    <Section className="common_background_gradient lg:py-24! overflow-hidden text-slate-900">
+    <Section className="common_background_gradient lg:py-18! overflow-hidden text-slate-900">
       <Row>
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
-          {/* ── Left Column: Value Proposition & Hero Info (Decreased Width & Content) ── */}
-          <div className="w-full z-10 max-w-full lg:max-w-[44%]">
+          {/* ── Left Column: Value Proposition & Hero Info (40% Width - 4:6 Ratio) ── */}
+          <div className="w-full z-10 max-w-full lg:max-w-[40%]">
             {/* Badge */}
             <motion.div {...fadeUp(0)}>
               <span className="inline-flex items-center gap-2 text-[#D27E2B] text-xs sm:text-sm font-extrabold uppercase tracking-widest mb-5">
@@ -105,14 +105,14 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* ── Right Column: Animated Graphic with SVG Tech Orbit Rings ── */}
+          {/* ── Right Column: Animated Graphic with SVG Tech Orbit Rings (60% Width - 4:6 Ratio) ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="relative z-10 w-full max-w-full lg:max-w-[56%] flex justify-center items-center"
+            className="relative z-10 w-full max-w-full lg:max-w-[60%] flex justify-center items-center"
           >
-            <div className="relative w-full max-w-[780px] mx-auto flex items-center justify-center py-4">
+            <div className="relative w-full max-w-[800px] mx-auto flex items-center justify-center py-4">
               {/* Outer Soft Glow Ring */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#D27E2B]/25 via-amber-400/15 to-indigo-500/20 blur-3xl scale-105 pointer-events-none animate-pulse" />
 
@@ -152,14 +152,16 @@ export default function Hero() {
                 </svg>
               </div>
 
-              {/* Central Image */}
+              {/* Central Image - Crisp HD Rendering */}
               <Image
-                src="/ai-strategy/mcp-server/hero-section-image-1.png"
+                src="/ai-strategy/mcp-server/main-hero-section.png"
                 alt="Custom MCP Server Development Services - Enterprise AI Gateway"
-                width={920}
-                height={920}
+                width={1200}
+                height={800}
                 priority
-                className="w-full h-auto object-contain relative z-10 drop-shadow-[0_25px_60px_rgba(210,126,43,0.25)] scale-110 sm:scale-120 lg:scale-125"
+                quality={100}
+                unoptimized
+                className="w-full h-auto object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(210,126,43,0.2)] "
               />
             </div>
           </motion.div>

@@ -31,8 +31,8 @@ const fadeUp = (delay = 0) => ({
 const AGENTIC_WORKFLOW_STEPS = [
   {
     step: "1",
-    title: "Objective Alignment",
-    desc: "Define target goals & business KPIs",
+    title: "Business Goal",
+    desc: "Define the desired outcome",
     icon: LuTarget,
     gradient: "from-purple-500 to-indigo-600 text-purple-600 bg-purple-50 border-purple-200",
     iconBg: "bg-purple-100/80 text-purple-600 border-purple-300",
@@ -40,39 +40,39 @@ const AGENTIC_WORKFLOW_STEPS = [
   {
     step: "2",
     title: "Reasoning & Planning",
-    desc: "Decompose goals into task graphs",
+    desc: "Analyze, break down & create a plan",
     icon: LuBrainCircuit,
     gradient: "from-indigo-500 to-blue-600 text-indigo-600 bg-indigo-50 border-indigo-200",
     iconBg: "bg-indigo-100/80 text-indigo-600 border-indigo-300",
   },
   {
     step: "3",
-    title: "Tool Orchestration",
-    desc: "Select APIs, models & memory context",
+    title: "Choose Tools",
+    desc: "Select the best APIs & data sources",
     icon: LuWrench,
     gradient: "from-purple-600 to-pink-600 text-purple-600 bg-purple-50 border-purple-200",
     iconBg: "bg-purple-100/80 text-purple-600 border-purple-300",
   },
   {
     step: "4",
-    title: "Workflow Execution",
-    desc: "Run actions across systems autonomously",
+    title: "Execute Tasks",
+    desc: "Run actions across multiple platforms",
     icon: LuCirclePlay,
     gradient: "from-orange-500 to-amber-600 text-orange-600 bg-orange-50 border-orange-200",
     iconBg: "bg-orange-100/80 text-orange-600 border-orange-300",
   },
   {
     step: "5",
-    title: "Verification & Guardrails",
-    desc: "Audit safety and validate structures",
+    title: "Verify Results",
+    desc: "Validate accuracy and completeness",
     icon: LuShieldCheck,
     gradient: "from-emerald-500 to-teal-600 text-emerald-600 bg-emerald-50 border-emerald-200",
     iconBg: "bg-emerald-100/80 text-emerald-600 border-emerald-300",
   },
   {
     step: "6",
-    title: "Deterministic Outcome",
-    desc: "Consolidate results and commit state",
+    title: "Completed Outcome",
+    desc: "Deliver final results automatically",
     icon: LuCircleCheckBig,
     gradient: "from-green-500 to-emerald-600 text-green-600 bg-green-50 border-green-200",
     iconBg: "bg-green-100/80 text-green-600 border-green-300",
@@ -100,13 +100,13 @@ export default function TraditionalVsAgentic() {
           {...fadeUp(0)}
           className="text-center mb-14 max-w-3xl mx-auto flex flex-col items-center gap-3"
         >
-          <SectionBadge title="A Paradigm Shift in Automation" />
+          <SectionBadge title="THE PARADIGM SHIFT" />
           <h2 className="text-3xl sm:text-4xl md:text-[42px] font-black leading-tight tracking-tight text-slate-900">
-            Generative Chatbots <span className="text-slate-400 font-medium">vs</span>{" "}
-            <span className="text-[#D27E2B]">Autonomous Agentic AI</span>
+            Traditional AI <span className="text-slate-400 font-medium">vs</span>{" "}
+            <span className="text-[#D27E2B]">Agentic AI</span>
           </h2>
           <p className="text-slate-600 text-sm sm:text-base font-medium max-w-2xl leading-relaxed">
-            Standard LLMs respond passively to prompts. Agentic AI proactively plans, runs tools, verifies outcomes, and achieves business goals autonomously.
+            Understand how Agentic AI transforms artificial intelligence from a passive conversational chatbot into an autonomous execution engine.
           </p>
         </motion.div>
 
@@ -133,16 +133,16 @@ export default function TraditionalVsAgentic() {
               {/* Pill Badge */}
               <div className="mb-5">
                 <span className="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-slate-100 text-slate-600 border border-slate-200">
-                  Generative Chatbots
+                  TRADITIONAL AI
                 </span>
               </div>
 
               {/* Title & Description */}
               <h3 className="text-2xl font-black text-slate-900 mb-2 tracking-tight">
-                Passive Prompt Responders
+                Responds to Prompts
               </h3>
               <p className="text-xs sm:text-sm text-slate-500 font-medium mb-6 leading-relaxed">
-                Constrained to single-turn responses without secure API environment access.
+                Traditional AI responds to a single user request and stops there.
               </p>
 
               {/* User Prompt Box */}
@@ -153,7 +153,7 @@ export default function TraditionalVsAgentic() {
                 <div>
                   <h4 className="text-xs font-black text-slate-900">User Prompt</h4>
                   <p className="text-xs text-slate-500 font-medium mt-0.5">
-                    "Compile a systems audit and sync records"
+                    "Generate a quarterly executive business report and reconcile customer accounts"
                   </p>
                 </div>
               </div>
@@ -171,7 +171,7 @@ export default function TraditionalVsAgentic() {
                 <div>
                   <h4 className="text-xs font-black text-slate-900">AI Response</h4>
                   <p className="text-xs text-slate-500 font-medium mt-0.5">
-                    "Here is a template on how to run a systems audit."
+                    "Here is a generic template outline for an executive report."
                   </p>
                 </div>
               </div>
@@ -179,24 +179,24 @@ export default function TraditionalVsAgentic() {
               {/* Warning List: Humans Still Need To */}
               <div className="bg-red-50/40 border border-red-100 rounded-2xl p-4 mb-6">
                 <h4 className="text-xs font-bold text-red-600 mb-3 flex items-center gap-1.5">
-                  Remaining Operational Overhead:
+                  Then what? Humans still need to:
                 </h4>
                 <ul className="flex flex-col gap-2 text-xs font-medium text-slate-600">
                   <li className="flex items-center gap-2">
                     <LuCircleX className="w-3.5 h-3.5 text-red-500 shrink-0" />
-                    <span>Manually query and extract siloed records</span>
+                    <span>Query Salesforce & SAP databases manually</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <LuCircleX className="w-3.5 h-3.5 text-red-500 shrink-0" />
-                    <span>Manually format data and generate reports</span>
+                    <span>Reconcile cross-system financial figures</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <LuCircleX className="w-3.5 h-3.5 text-red-500 shrink-0" />
-                    <span>Stitch context together across disparate tools</span>
+                    <span>Format charts & slides for leadership</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <LuCircleX className="w-3.5 h-3.5 text-red-500 shrink-0" />
-                    <span>Initiate follow-up actions and notify teams</span>
+                    <span>Distribute report & assign follow-up tasks</span>
                   </li>
                 </ul>
               </div>
@@ -206,15 +206,15 @@ export default function TraditionalVsAgentic() {
             <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-red-50 text-red-600 border border-red-200">
                 <LuCircleX className="w-3 h-3" />
-                Manual Overhead
+                Manual Effort
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-red-50 text-red-600 border border-red-200">
                 <LuCircleX className="w-3 h-3" />
-                No Tool Access
+                No API Access
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-red-50 text-red-600 border border-red-200">
                 <LuCircleX className="w-3 h-3" />
-                Stateless Output
+                One-Off Answer
               </span>
             </div>
           </motion.div>
@@ -231,19 +231,19 @@ export default function TraditionalVsAgentic() {
               {/* Header Badges */}
               <div className="flex items-center justify-between mb-5">
                 <span className="inline-block px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-orange-50 text-[#D27E2B] border border-orange-200">
-                  Autonomous Agentic AI
+                  AGENTIC AI
                 </span>
                 <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold bg-slate-900 text-white shadow-2xs">
-                  Goal-Driven execution
+                  Autonomous Work Engine
                 </span>
               </div>
 
               {/* Title & Description */}
               <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2 tracking-tight">
-                Executes Objectives. Guarantees Outcomes.
+                Executes Goals. Delivers Outcomes.
               </h3>
               <p className="text-xs sm:text-sm text-slate-500 font-medium mb-8 max-w-2xl leading-relaxed">
-                Orchestrates multi-agent workflows, integrates securely with enterprise tools, resolves logic loops, and completes operations.
+                Agentic AI understands goals, creates a plan, uses the right tools, executes tasks, verifies results, and delivers complete outcomes.
               </p>
 
               {/* ── 6-Step Horizontal Process Row with Connected Flow ── */}
