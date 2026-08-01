@@ -19,6 +19,8 @@ import {
   LuFileText,
   LuSparkles,
   LuArrowRight,
+  LuPlay,
+  LuPause,
 } from "react-icons/lu";
 import Section from "@/components/Section";
 import Row from "@/components/Row";
@@ -332,13 +334,22 @@ const WORKFLOW_LIBRARY: WorkflowItem[] = [
 export default function RealWorldWorkflows() {
   const [activeTabId, setActiveTabId] = useState<string>("customer-support");
   const [activeStepIndex, setActiveStepIndex] = useState<number | null>(0);
+  // Whether the pipeline is auto-advancing on its own vs. paused by user interaction
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   const activeWorkflow =
     WORKFLOW_LIBRARY.find((w) => w.id === activeTabId) || WORKFLOW_LIBRARY[0];
 
-  // Auto-cycle step highlight animation
+  // Reset to step 1 and resume auto-play whenever the workflow tab changes
   useEffect(() => {
     setActiveStepIndex(0);
+    setIsAutoPlaying(true);
+  }, [activeTabId]);
+
+  // Auto-cycle step highlight animation — only runs while isAutoPlaying is true,
+  // so a user click/hover reliably "sticks" instead of being overwritten a moment later
+  useEffect(() => {
+    if (!isAutoPlaying) return;
     const interval = setInterval(() => {
       setActiveStepIndex((prev) => {
         if (prev === null) return 0;
@@ -346,7 +357,21 @@ export default function RealWorldWorkflows() {
       });
     }, 2200);
     return () => clearInterval(interval);
-  }, [activeTabId, activeWorkflow.steps.length]);
+  }, [isAutoPlaying, activeTabId, activeWorkflow.steps.length]);
+
+  // User picked a step manually: show it immediately and pause auto-play so the
+  // selection doesn't get overridden a second later. Auto-play resumes after a
+  // short idle period so the demo keeps cycling if the user walks away.
+  const handleStepSelect = (idx: number) => {
+    setActiveStepIndex(idx);
+    setIsAutoPlaying(false);
+  };
+
+  useEffect(() => {
+    if (isAutoPlaying) return;
+    const resumeTimer = setTimeout(() => setIsAutoPlaying(true), 6000);
+    return () => clearTimeout(resumeTimer);
+  }, [isAutoPlaying, activeStepIndex]);
 
   return (
     <Section
@@ -389,6 +414,7 @@ export default function RealWorldWorkflows() {
                 onClick={() => {
                   setActiveTabId(item.id);
                   setActiveStepIndex(0);
+                  setIsAutoPlaying(true);
                 }}
                 className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-300 cursor-pointer ${
                   isActive
@@ -434,6 +460,31 @@ export default function RealWorldWorkflows() {
               <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-xl mx-auto leading-relaxed">
                 {activeWorkflow.subtitle}
               </p>
+
+              {/* Autoplay status / manual control — makes it clear the pipeline is
+                  interactive, and confirms to the user that their click registered */}
+              <button
+                onClick={() => setIsAutoPlaying((p) => !p)}
+                className="mt-4 inline-flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border cursor-pointer transition-colors"
+                style={{
+                  backgroundColor: isAutoPlaying ? `${activeWorkflow.color}10` : "#f1f5f9",
+                  borderColor: isAutoPlaying ? `${activeWorkflow.color}30` : "#cbd5e1",
+                  color: isAutoPlaying ? activeWorkflow.color : "#475569",
+                }}
+                title={isAutoPlaying ? "Pause auto-play" : "Resume auto-play"}
+              >
+                {isAutoPlaying ? (
+                  <>
+                    <LuPause className="w-3 h-3" />
+                    Auto-playing — click any step to pause
+                  </>
+                ) : (
+                  <>
+                    <LuPlay className="w-3 h-3" />
+                    Paused on your selection — click to resume
+                  </>
+                )}
+              </button>
             </div>
 
             {/* ── 📱 TABLET & MOBILE VIEW (< 1280px / < xl): CLEAN VERTICAL TIMELINE ── */}
@@ -452,7 +503,11 @@ export default function RealWorldWorkflows() {
                       {/* Left Column: Mini Gear Node + Connecting Line Segment */}
                       <div className="flex flex-col items-center shrink-0 w-12">
                         {/* Mini Gear Node */}
-                        <div className="relative shrink-0 w-12 h-12 flex items-center justify-center z-10">
+                        <div
+                          onClick={() => handleStepSelect(idx)}
+                          className="relative shrink-0 w-12 h-12 flex items-center justify-center z-10 cursor-pointer transition-transform duration-200 hover:scale-110"
+                          title={`View step ${step.stepNumber}: ${step.title}`}
+                        >
                           <motion.div
                             animate={isActive ? { rotate: 360 } : { rotate: 0 }}
                             transition={
@@ -514,7 +569,7 @@ export default function RealWorldWorkflows() {
 
                       {/* Right Step Content Card */}
                       <motion.div
-                        onClick={() => setActiveStepIndex(idx)}
+                        onClick={() => handleStepSelect(idx)}
                         whileHover={{ scale: 1.01 }}
                         className={`flex-1 cursor-pointer rounded-2xl border p-4 sm:p-5 transition-all duration-300 ${
                           isActive
@@ -550,8 +605,17 @@ export default function RealWorldWorkflows() {
                                 color: activeWorkflow.color,
                               }}
                             >
-                              <LuCheck className="w-3 h-3" />
-                              {isActive ? "ACTIVE" : "DONE"}
+                              {isActive ? (
+                                <motion.span
+                                  animate={{ opacity: [1, 0.3, 1] }}
+                                  transition={{ repeat: Infinity, duration: 1.2 }}
+                                  className="w-1.5 h-1.5 rounded-full"
+                                  style={{ backgroundColor: activeWorkflow.color }}
+                                />
+                              ) : (
+                                <LuCheck className="w-3 h-3" />
+                              )}
+                              {isActive ? "IN PROGRESS" : "DONE"}
                             </span>
                           )}
                         </div>
@@ -626,7 +690,11 @@ export default function RealWorldWorkflows() {
                     >
 
                       {/* 1. TOP GEAR NODE */}
-                      <div className="relative shrink-0 w-28 h-28 flex items-center justify-center mb-4 z-10">
+                      <div
+                        onClick={() => handleStepSelect(idx)}
+                        title={`View step ${step.stepNumber}: ${step.title}`}
+                        className="relative shrink-0 w-28 h-28 flex items-center justify-center mb-4 z-10 cursor-pointer transition-transform duration-200 group-hover:scale-105"
+                      >
                         <motion.div
                           animate={isActive ? { rotate: 360 } : { rotate: 0 }}
                           transition={
@@ -694,7 +762,7 @@ export default function RealWorldWorkflows() {
                         {/* Center Icon & Step Number */}
                         <div
                           className="relative z-10 flex flex-col items-center justify-center cursor-pointer"
-                          onClick={() => setActiveStepIndex(idx)}
+                          onClick={() => handleStepSelect(idx)}
                         >
                           <StepIcon
                             className="w-6 h-6 mb-0.5 transition-colors duration-300"
@@ -719,7 +787,7 @@ export default function RealWorldWorkflows() {
 
                       {/* 3. STEP CONTENT CARD (Positioned below Gear) */}
                       <motion.div
-                        onClick={() => setActiveStepIndex(idx)}
+                        onClick={() => handleStepSelect(idx)}
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: idx * 0.05 }}
@@ -759,8 +827,17 @@ export default function RealWorldWorkflows() {
                                   color: activeWorkflow.color,
                                 }}
                               >
-                                <LuCheck className="w-3 h-3" />
-                                {isActive ? "ACTIVE" : "DONE"}
+                                {isActive ? (
+                                  <motion.span
+                                    animate={{ opacity: [1, 0.3, 1] }}
+                                    transition={{ repeat: Infinity, duration: 1.2 }}
+                                    className="w-1.5 h-1.5 rounded-full"
+                                    style={{ backgroundColor: activeWorkflow.color }}
+                                  />
+                                ) : (
+                                  <LuCheck className="w-3 h-3" />
+                                )}
+                                {isActive ? "IN PROGRESS" : "DONE"}
                               </span>
                             )}
                           </div>

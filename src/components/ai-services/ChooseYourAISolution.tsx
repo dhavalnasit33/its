@@ -18,18 +18,18 @@ const LEFT_SERVICES = [
     href: "/ai-strategy-consulting",
   },
   {
-    id: "automation",
-    title: "AI Automation",
-    description: "Automate workflows and eliminate repetitive tasks.",
+    id: "mcp",
+    title: "MCP Server Development",
+    description: "Build custom Model Context Protocol servers to connect LLMs to databases and APIs.",
     icon: "/ai-service/ai-automation.png",
-    href: "#",
+    href: "/mcp-server-development",
   },
   {
     id: "agents",
     title: "AI Agents Development",
     description: "Autonomous AI agents that perform tasks and drive outcomes.",
     icon: "/ai-service/ai-agents-development.png",
-    href: "#",
+    href: "/agentic-ai-development-services",
   },
 ];
 
@@ -53,7 +53,7 @@ const RIGHT_SERVICES = [
     title: "Generative AI & LLM Solutions",
     description: "Leverage LLMs to create content, insights and smart apps.",
     icon: "/ai-service/generative-ai-llm-solutions.png",
-    href: "#",
+    href: "/generative-ai-llm-solutions",
   },
 ];
 

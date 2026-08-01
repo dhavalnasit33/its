@@ -1662,6 +1662,15 @@ export default function ContactFooterPage() {
             <ul className="flex flex-wrap">
               <li className="list-none py-1">
                 <Link
+                  href="/ai-services"
+                  className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
+                >
+                  AI Services
+                </Link>
+                <span className="mx-2 text-[#D68029]">|</span>
+              </li>
+              <li className="list-none py-1">
+                <Link
                   href="/ai-chatbot-development"
                   className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
                 >
@@ -1694,16 +1703,25 @@ export default function ContactFooterPage() {
                 >
                   Generative AI & LLM Solutions
                 </Link>
-                {/* <span className="mx-2 text-[#D68029]">|</span> */}
+                <span className="mx-2 text-[#D68029]">|</span>
               </li>
-              {/* <li className="list-none py-1">
+              <li className="list-none py-1">
                 <Link
                   href="/agentic-ai-development-services"
                   className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
                 >
                   Agentic AI Development Services
                 </Link>
-              </li> */}
+                <span className="mx-2 text-[#D68029]">|</span>
+              </li>
+              <li className="list-none py-1">
+                <Link
+                  href="/mcp-server-development"
+                  className="text-gray-700 hover:text-[#D68029] transition-all hover:underline text-[14px]"
+                >
+                  MCP Server Development
+                </Link> 
+              </li>
             </ul>
           </div>
           <div>

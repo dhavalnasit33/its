@@ -69,6 +69,63 @@ const AIConsultingIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const GenerativeAILLMIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M12 3v18M3 12h18" strokeDasharray="3 3" opacity="0.3" />
+    <path d="M9.5 9.5 12 7l2.5 2.5L12 12z" strokeWidth="1.5" />
+    <circle cx="12" cy="7" r="1.5" fill="currentColor" />
+    <circle cx="12" cy="17" r="1.5" fill="currentColor" />
+    <circle cx="7" cy="12" r="1.5" fill="currentColor" />
+    <circle cx="17" cy="12" r="1.5" fill="currentColor" />
+    <path d="M5 5l1.5 1.5M17.5 6.5L19 5M5 19l1.5-1.5M17.5 17.5L19 19" />
+  </svg>
+);
+
+const AgenticAIIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <path d="M12 2L2 7l10 5 10-5-10-5Z" />
+    <path d="M2 17l10 5 10-5" />
+    <path d="M2 12l10 5 10-5" />
+    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+  </svg>
+);
+
+const MCPServerIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={props.className}
+  >
+    <rect x="2" y="3" width="20" height="5" rx="1" />
+    <rect x="2" y="10" width="20" height="5" rx="1" />
+    <rect x="2" y="17" width="20" height="5" rx="1" />
+    <circle cx="6" cy="5.5" r="1" fill="currentColor" />
+    <circle cx="6" cy="12.5" r="1" fill="currentColor" />
+    <circle cx="6" cy="19.5" r="1" fill="currentColor" />
+    <path d="M18 5.5h2M18 12.5h2M18 19.5h2" />
+  </svg>
+);
+
 const aiServices = [
   {
     title: "AI Chatbot Development",
@@ -109,6 +166,48 @@ const aiServices = [
       "AI readiness assessment",
       "Use-case discovery",
       "Technology selection",
+    ],
+    cta: "Explore Service",
+  },
+  {
+    title: "Generative AI & LLM Solutions",
+    route: "/generative-ai-llm-solutions",
+    icon: GenerativeAILLMIcon,
+    description:
+      "We engineer customized generative AI pipelines and large language model (LLM) workflows that enhance content creation, internal semantic search, and intelligent software automation.",
+    highlights: [
+      "Custom LLM fine-tuning & prompt design",
+      "Retrieval-Augmented Generation (RAG)",
+      "Semantic search & vector databases",
+      "Secure API integrations for LLM models",
+    ],
+    cta: "View Solution",
+  },
+  {
+    title: "Agentic AI Development Services",
+    route: "/agentic-ai-development-services",
+    icon: AgenticAIIcon,
+    description:
+      "We build autonomous software agents capable of complex reasoning, multi-step task execution, tool use, and real-time planning to automate production workflows.",
+    highlights: [
+      "Multi-agent orchestration frameworks",
+      "Goal-driven planning & reflection",
+      "Software tool integration (APIs, DBs)",
+      "Custom agent memory systems",
+    ],
+    cta: "Explore Service",
+  },
+  {
+    title: "MCP Server Development",
+    route: "/mcp-server-development",
+    icon: MCPServerIcon,
+    description:
+      "We develop secure Model Context Protocol (MCP) servers to bridge the gap between AI foundation models and your private software stacks, databases, and APIs.",
+    highlights: [
+      "Custom protocol endpoints & tools",
+      "Secure data source integration",
+      "IDE and LLM client configurations",
+      "Real-time context synchronization",
     ],
     cta: "Explore Service",
   },
@@ -268,112 +367,93 @@ export default function AIExpertiseSection() {
           </div>
 
           {/* ── RIGHT: INTERACTIVE COMMAND NODES ── */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
-            {aiServices.map((service, idx) => {
-              const isActive = activeService === idx;
+          <div className="lg:col-span-7 flex flex-col gap-6">
+            {/* Tabs Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {aiServices.map((service, idx) => {
+                const isActive = activeService === idx;
+                const ServiceIcon = service.icon;
 
-              return (
-                <div
-                  key={idx}
-                  onClick={() => handleTabChange(idx)}
-                  className={`relative cursor-pointer transition-all duration-300 rounded-2xl p-[2px] overflow-hidden ${
-                    isActive
-                      ? "shadow-[0_8px_30px_rgba(214,128,41,0.15)]"
-                      : "hover:shadow-lg"
-                  }`}
-                >
-                  {/* Outer Gradient Wrapper for Active State */}
+                return (
                   <div
-                    className={`absolute inset-0 transition-opacity duration-300 ${
+                    key={idx}
+                    onClick={() => handleTabChange(idx)}
+                    className={`relative cursor-pointer transition-all duration-300 rounded-xl p-[2px] overflow-hidden ${
                       isActive
-                        ? "bg-gradient-to-r from-[#d68029] to-[#ffaa55] opacity-100"
-                        : "bg-slate-800/80 hover:bg-slate-700/80 opacity-100"
+                        ? "shadow-[0_8px_20px_rgba(214,128,41,0.15)]"
+                        : "hover:shadow-md"
                     }`}
-                  />
-
-                  {/* Inner Card Content */}
-                  <div className="relative h-full bg-[#080E1B] rounded-[14px] p-6 sm:p-7 z-10 transition-colors duration-300">
-                    {/* Left glowing marker */}
+                  >
+                    {/* Outer border gradient on active, slate on inactive */}
                     <div
-                      className={`absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-300 ${
+                      className={`absolute inset-0 transition-opacity duration-300 ${
                         isActive
-                          ? "bg-[#d68029] shadow-[0_0_12px_#d68029]"
-                          : "bg-transparent"
+                          ? "bg-gradient-to-r from-[#d68029] to-[#ffaa55] opacity-100"
+                          : "bg-slate-800/80 hover:bg-slate-700/80 opacity-100"
                       }`}
                     />
-
-                    {/* Header Row */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <span
-                          className={`text-sm font-mono font-bold tracking-widest ${
-                            isActive ? "text-[#d68029]" : "text-slate-600"
-                          }`}
-                        >
+                    
+                    {/* Inner content */}
+                    <div className="relative bg-[#080E1B] rounded-[10px] p-4 flex items-center justify-between z-10">
+                      <div className="flex items-center gap-3">
+                        <span className={`text-xs font-mono font-bold ${isActive ? "text-[#d68029]" : "text-slate-600"}`}>
                           0{idx + 1}
                         </span>
-                        <h3
-                          className={`text-lg sm:text-xl font-bold transition-colors ${
-                            isActive ? "text-white" : "text-slate-300"
-                          }`}
-                        >
+                        {/* Compact icon inside the tab */}
+                        <ServiceIcon className={`w-5 h-5 ${isActive ? "text-[#d68029]" : "text-slate-400"}`} />
+                        <h3 className={`text-sm font-bold transition-colors ${isActive ? "text-white" : "text-slate-300"}`}>
                           {service.title}
                         </h3>
                       </div>
-                      <div
-                        className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                          isActive
-                            ? "border-[#d68029] bg-[#d68029]/10 text-[#d68029] rotate-90"
-                            : "border-slate-800 text-slate-600"
-                        }`}
-                      >
-                        <FiArrowRight className="w-4 h-4" />
-                      </div>
                     </div>
-
-                    {/* Expanded Body Panel */}
-                    <AnimatePresence>
-                      {isActive && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden pt-4 mt-4 border-t border-slate-800/80"
-                        >
-                          <p className="text-slate-400 text-sm leading-relaxed mb-5">
-                            {service.description}
-                          </p>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                            {service.highlights.map((item, i) => (
-                              <div
-                                key={i}
-                                className="flex items-center gap-2 text-xs font-mono text-slate-300 bg-[#050B14]/80 px-3 py-2.5 rounded-lg border border-slate-800/60"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#d68029]" />
-                                {item}
-                              </div>
-                            ))}
-                          </div>
-
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              router.push(service.route);
-                            }}
-                            className="inline-flex items-center gap-2 cursor-pointer text-xs font-mono font-bold uppercase tracking-widest text-[#d68029] bg-[#d68029]/10 hover:bg-[#d68029] hover:text-white px-5 py-2.5 rounded-full transition-all duration-300 group/btn"
-                          >
-                            <span>{service.cta}</span>
-                            <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
-                          </button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
+                );
+              })}
+            </div>
+
+            {/* Active Service Details Card */}
+            <div className="relative rounded-2xl p-[2px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+              {/* Border glow gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#d68029]/40 via-amber-500/20 to-transparent" />
+              
+              {/* Inner card */}
+              <div className="relative bg-[#080E1B]/95 rounded-[14px] p-6 sm:p-8 z-10 border border-slate-800/50">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-xs font-mono font-bold text-[#d68029] bg-[#d68029]/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                    Capability 0{activeService + 1}
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-white">
+                    {activeData.title}
+                  </h3>
                 </div>
-              );
-            })}
+
+                <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
+                  {activeData.description}
+                </p>
+
+                {/* Highlights Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                  {activeData.highlights.map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-slate-300 bg-[#050B14]/80 px-4 py-3 rounded-lg border border-slate-800/60"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#d68029] shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA Button */}
+                <button
+                  onClick={() => router.push(activeData.route)}
+                  className="inline-flex items-center gap-2 cursor-pointer text-xs font-mono font-bold uppercase tracking-widest text-[#d68029] bg-[#d68029]/10 hover:bg-[#d68029] hover:text-white px-6 py-3 rounded-full transition-all duration-300 group/btn"
+                >
+                  <span>{activeData.cta}</span>
+                  <FiArrowRight className="transition-transform group-hover/btn:translate-x-1" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </Row>
