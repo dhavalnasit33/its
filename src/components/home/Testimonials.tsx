@@ -316,7 +316,7 @@ const Testimonials: React.FC = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+
   const [cardColors] = useState(() =>
     Array.from({ length: 500 }, () => Math.floor(Math.random() * 360)),
   );
@@ -364,13 +364,13 @@ const Testimonials: React.FC = () => {
     fetchPage(1);
   }, []);
 
-  useEffect(() => {
-    if (isPaused || testimonials.length < 3) return;
+ useEffect(() => {
+    if (testimonials.length < 3) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % testimonials.length);
     }, ROTATION_INTERVAL);
     return () => clearInterval(interval);
-  }, [isPaused, testimonials.length]);
+  }, [testimonials.length]);
 
   const handleNext = () => {
     if (testimonials.length === 0) return;
@@ -416,11 +416,7 @@ const Testimonials: React.FC = () => {
         </div>
       </Row>
 
-      <div
-        className="w-full relative z-20"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
+     <div className="w-full relative z-20">
         <Row className="overflow-hidden">
           {initialLoading && (
             <div className="py-5 w-full h-125">
@@ -502,7 +498,7 @@ const Testimonials: React.FC = () => {
                         : "#e2e8f0",
                     }}
                   >
-                    <div className="absolute top-0 left-0 right-0 h-[6px] bg-slate-100/50">
+                   <div className="absolute top-0 left-0 right-0 h-[6px] bg-slate-100/50">
                       {isCenter ? (
                         <div
                           key={activeIndex}
@@ -510,7 +506,7 @@ const Testimonials: React.FC = () => {
                           style={{
                             backgroundColor: `hsl(${cardHue},85%,45%)`,
                             animation: `fillProgress ${ROTATION_INTERVAL}ms linear forwards`,
-                            animationPlayState: isPaused ? "paused" : "running",
+                            animationPlayState: "running",
                           }}
                         />
                       ) : (
