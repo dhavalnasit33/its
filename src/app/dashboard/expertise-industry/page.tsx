@@ -178,7 +178,8 @@ export default function ExpertiesIndustriesPage() {
                   onChange={toggleSelectAll}
                 />
               </TableHead>
-              <TableHead className="w-20">Image</TableHead>
+              <TableHead className="w-20">Icon</TableHead>
+              <TableHead className="w-28">Background Image</TableHead>
               <TableHead className="w-1/4">Title</TableHead>
               <TableHead>Description</TableHead>
               <TableHead className="text-right w-24">Actions</TableHead>
@@ -193,6 +194,7 @@ export default function ExpertiesIndustriesPage() {
                   <TableRow key={i}>
                     <TableCell><Skeleton className="h-4 w-4" /></TableCell>
                     <TableCell><Skeleton className="h-10 w-10 rounded" /></TableCell>
+                    <TableCell><Skeleton className="h-10 w-16 rounded" /></TableCell>
                     <TableCell><Skeleton className="h-5 w-32" /></TableCell>
                     <TableCell><Skeleton className="h-5 w-48" /></TableCell>
                     <TableCell><Skeleton className="h-8 w-8 ml-auto" /></TableCell>
@@ -217,6 +219,17 @@ export default function ExpertiesIndustriesPage() {
                         alt={item.title}
                         className="h-10 w-10 rounded object-cover"
                       />
+                    </TableCell>
+                    <TableCell>
+                      {item.bgImage ? (
+                        <img
+                          src={item.bgImage}
+                          alt={`${item.title} bg`}
+                          className="h-10 w-16 rounded object-cover"
+                        />
+                      ) : (
+                        <span className="text-xs text-muted-foreground">Default</span>
+                      )}
                     </TableCell>
                     <TableCell className="font-medium">{item.title}</TableCell>
                     <TableCell className="max-w-md truncate">{item.description}</TableCell>

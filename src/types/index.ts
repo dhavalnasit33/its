@@ -275,6 +275,7 @@ export interface ExpertiesIndustries {
   title: string;
   description: string;
   image: string;
+  bgImage?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -1679,3 +1680,14 @@ export type ServiceCategoryFormValues = {
   category: string;
   image?: string;
 };
+
+/* -------------------- Expertise Industries -------------------- */
+export const ExpertiesIndustriesSchema = z.object({
+  _id: z.string().optional(),
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  image: z.string().min(1, "Icon image is required"),
+  bgImage: z.string().optional(),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
+});

@@ -15,7 +15,8 @@ import CustomCKEditor from "@/components/shared/Ckeditor";
 
 
 const industrySchema = z.object({
-  image: z.string().min(1, "Image is required"),
+  image: z.string().min(1, "Icon image is required"),
+  bgImage: z.string().optional(),
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "description is required").max(300, "Description cannot exceed 300 characters")
 });
@@ -36,7 +37,7 @@ export default function ExpertiesIndustryForm({ initialData, onSubmit, onCancel 
 
   const form = useForm<ExpertiesIndustryFormValues>({
     resolver: zodResolver(industrySchema),
-    defaultValues: initialData || { image: "", title: "", description: "" },
+    defaultValues: initialData || { image: "", bgImage: "", title: "", description: "" },
   });
 
 
@@ -56,16 +57,35 @@ export default function ExpertiesIndustryForm({ initialData, onSubmit, onCancel 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
-        {/* Image */}
+        {/* Icon Image */}
         <FormField
           control={form.control}
           name="image"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image</FormLabel>
+              <FormLabel>Icon Image</FormLabel>
               <FormControl>
                 <ImageUpload
                   value={field.value}
+                  onChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Background Image */}
+        <FormField
+          control={form.control}
+          name="bgImage"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Background Image</FormLabel>
+              <FormControl>
+                <ImageUpload
+                  value={field.value || ""}
                   onChange={field.onChange}
                   disabled={isSubmitting}
                 />
