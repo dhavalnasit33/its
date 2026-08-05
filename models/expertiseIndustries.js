@@ -14,6 +14,10 @@ const expertiseIndustriesSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        bgImage: {
+            type: String,
+            default: "",
+        },
     },
     { timestamps: true },
 );

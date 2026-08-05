@@ -4,7 +4,7 @@ module.exports = {
   Testimonials: ["image"],
 
   // ✅ ExpertiseIndustries
-  ExpertiseIndustries: ["image"],
+  ExpertiseIndustries: ["image", "bgImage"],
 
   // ✅ EngagementModel
   EngagementModel: ["modelImage"],

@@ -57,7 +57,7 @@ const cleanupOldImages = require("../middlewares/cleanupOldImages");
  */
 router.post("/", protect, async (req, res) => {
   try {
-    const { title, description, image } = req.body;
+    const { title, description, image, bgImage } = req.body;
     if (!title || !image || !description) {
       return res.status(400).json({
         success: false,
@@ -73,7 +73,7 @@ router.post("/", protect, async (req, res) => {
       });
     }
 
-    const expertise = new ExpertiseIndustries({ title, image, description });
+    const expertise = new ExpertiseIndustries({ title, image, description, bgImage: bgImage || "" });
     await expertise.save();
 
     res.status(201).json({
@@ -274,7 +274,7 @@ router.put(
   cleanupOldImages(ExpertiseIndustries, "ExpertiseIndustries"),
   async (req, res) => {
     try {
-      const { title, image, description } = req.body;
+      const { title, image, description, bgImage } = req.body;
       const id = req.params.id;
 
       if (!title || !image || !description) {
@@ -303,6 +303,9 @@ router.put(
       existingExpertise.title = title;
       existingExpertise.image = image;
       existingExpertise.description = description;
+      if (bgImage !== undefined) {
+        existingExpertise.bgImage = bgImage;
+      }
 
       await existingExpertise.save();
 

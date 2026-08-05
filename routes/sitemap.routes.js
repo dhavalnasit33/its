@@ -85,6 +85,9 @@ router.get("/sitemap-main.xml", async (req, res) => {
       { slug: "ai-chatbot-development" },
       { slug: "ai-product-development" },
       { slug: "ai-strategy-consulting" },
+      { slug: "generative-ai-llm-solutions" },
+      { slug: "agentic-ai-development-services" },
+      { slug: "mcp-server-development" },
       { slug: "ai-services" },
     ];
 
