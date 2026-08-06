@@ -209,6 +209,7 @@ export interface ExpertiesIndustries {
   title: string;
   description: string;
   image: string;
+  bgImage?: string;
   createdAt: string;
   updatedAt: string;
 }

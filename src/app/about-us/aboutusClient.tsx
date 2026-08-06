@@ -766,12 +766,12 @@ export default function AboutUsClient({
       {/* <section className="bg-[rgba(255,255,255,0.08)] relative -mb-1 ">
 				<span className="clipped-top bg-white h-[150px] w-full none lg:block rounded-tl-[100px] rounded-tr-[100px]" />
 			</section> */}
-
-      <Industries />
-      <TechnologyShowcase />
+      
+      <TechnologyShowcase/>
       <WhyChoosePremium items={whyChooseData} />
       <GlobalPresenceAndIndustriesSection />
-      <Reviews />
+     <Reviews/>
+      <Industries />
       <Testimonials />
     </>
   );
